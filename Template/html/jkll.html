@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Jkll</title>
+	<link rel="stylesheet" type="text/css" href="reset.css" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<link rel="stylesheet" type="text/css" href="media-queries.css" />
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<link href='http://fonts.googleapis.com/css?family=Droid+Serif:700,400,400italic,700italic' rel='stylesheet' type='text/css'>
+	
+	<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+    <!--toggle-->
+      <link rel="stylesheet" href="a/s/core.css">
+  <script src="a/j/libs/modernizr-2.5.3.min.js"></script>
+   <!--toggle-->
+   
+
+  <!--tree-->
+<link href="files/style.css" rel="stylesheet" type="text/css">
+
+
+<script type="text/javascript" src="files/all.js"></script>
+
+
+
+<script type="text/javascript" src="files/tinydropdown.js"></script>
+
+<script type="text/javascript" src="files/ddaccordion.js"></script>
+
+<script type="text/javascript" src="files/jquery-1.js"></script>
+
+
+
+<!-- Drop Down JS -->
+
+<script type="text/javascript" src="files/drop_down.js"></script>
+
+<script type="text/javascript">
+
+function openWin(location_id,imagename)
+
+{
+
+	
+
+myWindow=window.open('uploadfiles/location_images/'+location_id+'/'+imagename,'','width=700,height=500,location=0');
+
+
+
+myWindow.focus();
+
+}
+
+
+
+function validate_peo()
+
+{ 
+
+   
+
+	var flag=true;
+
+    var error='';
+
+	var nam=document.getElementById('name').value;
+
+	var email=document.getElementById("email").value;
+
+    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+	var phoneno = /^(?:\(\d{3}\)|\d{3}-)\d{3}-\d{4}$/;    
+
+   // var isvalid = emailRegexStr.test(email);
+
+	var cell=document.getElementById("m_phone").value;
+
+	if(nam=='')
+
+	{
+
+		alert("Please enter the name");
+
+		return false;
+
+	}
+
+	if(cell=='' && email=='')
+
+	{
+
+		alert("Warning: either the cell phone number or email is needed for all features to work.");
+
+		return true;
+
+	}
+
+	if(cell)
+
+	{
+
+	if(!cell.match(phoneno))  
+
+        {  
+
+        alert("Please enter the correct phone number.");  
+
+        return false;  
+
+        }  
+
+	}
+
+	
+
+	if(email)
+
+	{
+
+	if (!filter.test(email)) 
+
+{
+
+alert('Please enter the correct email address.');
+
+return false;
+
+}
+
+
+
+	}
+
+    
+
+	
+
+	 if(flag==false)
+
+        {
+
+            alert(error);
+
+            return flag;
+
+        }
+
+}
+
+ 
+
+/*--------------------------------------------------------------function created by reeta on 16.04.2013----------------*/
+
+function check_addProject()
+
+  { 
+
+    var countpro='';
+
+	var conf='';
+
+	var add_pro='';
+
+	var empty='';
+
+	var cid='';
+
+	var pid='';
+
+	 countpro=document.getElementById('num_pro').value;
+
+	if(countpro==0)
+
+	{  
+
+	 // conf=confirm("Is this Company also a Project Name?"); 
+
+	
+
+	  if(conf==false)
+
+	  {
+
+	    cid=document.getElementById('cid').value;
+
+		window.location.href = 'index.php?add_pro=1&pid=&cid='+cid+'&empty=1';
+
+		return false;
+
+	    }
+
+	  if(conf==true)
+
+	  {
+
+	     cid=document.getElementById('cid').value;
+
+	     window.location.href = 'index.php?add_pro=1&pid=&cid='+cid+'&countpro=1';
+
+		 return false;
+
+	  }
+
+  	}
+
+	if(countpro!=0)
+
+	{
+
+	
+
+		cid=document.getElementById('cid').value;
+
+		window.location.href = 'index.php?add_pro=1&pid=&cid='+cid+'&empty=1';
+
+		return false;
+
+	}
+
+  }
+
+  
+
+  /*--------------------------------------------------End here.--------------------------------------------------------------------*/
+
+function check_addfacility()
+
+  { 
+
+    var countfac='';
+
+	var conf='';
+
+	var addfac='';
+
+	var empty='';
+
+	var cid='';
+
+	var fid='';
+
+	
+
+    countfac=document.getElementById('num_fac').value;
+
+	if(countfac==0)
+
+	{  
+
+	  conf=confirm("Is this Company also a Facility?"); 
+
+	
+
+	  if(conf==false)
+
+	  {
+
+	    cid=document.getElementById('cid').value;
+
+		window.location.href = 'index.php?add_fac=1&fid=&cid='+cid+'&empty=1';
+
+		return false;
+
+	    }
+
+	  if(conf==true)
+
+	  {
+
+	     cid=document.getElementById('cid').value;
+
+	     window.location.href = 'index.php?add_fac=1&fid=&cid='+cid+'&com_fac=1';
+
+		 return false;
+
+	  }
+
+  	}
+
+	if(countfac!=0)
+
+	{
+
+	
+
+		cid=document.getElementById('cid').value;
+
+		window.location.href = 'index.php?add_fac=1&fid=&cid='+cid+'&empty=1';
+
+		return false;
+
+	}
+
+  }
+
+
+function assignment_validation()
+
+{
+
+	var flag=true;
+
+    var error='';
+
+	var people=document.getElementById('people').value; 	
+
+	var company=document.getElementById('company').value; 	
+
+	var facility=document.getElementById('facility').value; 
+
+	var permit=document.getElementById('permit').value;
+
+ 	
+
+	if(people=='')
+
+	{
+
+		alert("Please select people");
+
+		return false;
+
+	}	
+
+	if(company=='')
+
+	{
+
+		alert("Please select company");
+
+		return false;
+
+	}if(facility=='')
+
+	{
+
+		alert("Please select facility");
+
+		return false;
+
+	}if(permit=='')
+
+	{
+
+		alert("Please select permit");
+
+		return false;
+
+	}
+
+	
+
+	 if(flag==false)
+
+     {
+
+            alert(error);
+
+            return flag;
+
+     }
+
+ }
+
+;
+
+function checkAll(){
+
+	
+
+	$('input:checkbox.checkall').attr('checked','checked');
+
+    return false;
+
+	
+
+	  }
+
+function locale_submit(getid)
+
+{
+
+	document.getElementById('text').innerHTML ="<input type='hidden' name='localetypeid' id='localetypeid' value='"+getid+"' />";
+
+	// document.getElementById('localetypeid').value = getid;
+
+	 document.localetype.submit(); 
+
+}
+
+ddaccordion.init({
+
+	headerclass: "expandable", //Shared CSS class name of headers group that are expandable
+
+	contentclass: "categoryitems", //Shared CSS class name of contents group
+
+	revealtype: "click", //Reveal content when user clicks or onmouseover the header? Valid value: "click", "clickgo", or "mouseover"
+
+	mouseoverdelay: 200, //if revealtype="mouseover", set delay in milliseconds before header expands onMouseover
+
+	collapseprev: true, //Collapse previous content (so only one open at any time)? true/false 
+
+	defaultexpanded: [0], //index of content(s) open by default [index1, index2, etc]. [] denotes no content
+
+	onemustopen: false, //Specify whether at least one header should be open always (so never all headers closed)
+
+	animatedefault: true, //Should contents open by default be animated into view?
+
+	persiststate: true, //persist state of opened contents within browser session?
+
+	toggleclass: ["", "openheader"], //Two CSS classes to be applied to the header when it's collapsed and expanded, respectively ["class1", "class2"]
+
+	togglehtml: ["prefix", "", ""], //Additional HTML added to the header when it's collapsed and expanded, respectively  ["position", "html1", "html2"] (see docs)
+
+	animatespeed: "fast", //speed of animation: integer in milliseconds (ie: 200), or keywords "fast", "normal", or "slow"
+
+	oninit:function(headers, expandedindices){ //custom code to run when headers have initalized
+
+		//do nothing
+
+	},
+
+	onopenclose:function(header, index, state, isuseractivated){ //custom code to run whenever a header is opened or closed
+
+		//do nothing
+
+	}
+
+})
+
+</script><style type="text/css">
+.categoryitems{display: none}
+a.hiddenajaxlink{display: none}
+</style>
+</head>
+
+<body id="home">
+	<div id="wrapper">
+  <figure class="logo-small"><a href="index.html"><img src="images/logo.jpg"></a></figure >	
+  <nav id="nav" role="navigation">
+	<a href="#nav" title="Show navigation">Show navigation</a>
+	<a href="#" title="Hide navigation">Hide navigation</a>
+	<ul class="clearfix">
+		<li>
+			<a href="field.html" aria-haspopup="true"><span>Field Personnel</span></a>
+			<ul>
+				<li><a href="field.html">View/Assign Personnel</a></li>
+				<li><a href="add-personnel.html">Add Personnel</a></li>
+			
+			</ul>
+		</li>
+		<li>
+			<a href="map.html" aria-haspopup="true">Map</a>
+			
+		</li>
+		<li>
+			<a href="analytes.html" aria-haspopup="true"><span>Analytes</span></a>
+			<ul>
+				<li><a href="ground-water.html">Ground Water Personnel</a></li>
+				<li><a href="waste-water.html">Add Personnel</a></li>
+                <li><a href="air.html">Air</a></li>
+                <li><a href="soil.html">Soil</a></li>
+			
+			</ul>
+		</li>
+		<li><a href="forms.html"><span>Forms</span></a>
+        <ul>
+				<li><a href="create-new-survey.html">Create a New Survey</a></li>
+				<li><a href="view-edit-existing-survey.html">View/Edit Existing Survey</a></li>
+              
+			
+			</ul>
+        </li>
+        <li><a href="documents.html"><span>Documents</span></a>
+        <ul>
+				<li><a href="documents.html">Project Documents</a></li>
+			
+			
+			</ul>
+        
+        </li>
+        <li><a href="outside-resources.html"><span>Outside Resources</span></a>
+        <ul>
+				<li><a href="lab.html">Lab</a></li>
+				<li><a href="equipment-rental.html">Equipment Rental</a></li>
+                				<li><a href="contractor.html">Contractor</a></li>
+				<li><a href="driller.html">Driller</a></li>
+			
+			</ul>
+        
+        </li>
+	</ul>
+</nav>
+  <section class="left-aside">
+  <p class="aside-text">User Name: Brian Aiken<br/>
+<span><a href="#">Logout</a></span></p> 
+  <figure class="aside-bg"></figure>
+   <section class="left-asidebg">
+   <div class="content_left">
+
+				
+                              
+    
+    
+	<!-- CONTENT -->
+
+				  <div class="project_managers">			
+
+			
+					<div class="arrowlistmenu"> 
+                    
+                                   
+
+<!------------------------------------------start Project--------------------------------------------------------->
+
+                   
+						<p headerindex="0h" class="menuheader expandable arrow "><span class="accordprefix"></span>Projects<span class="accordsuffix"></span></p>
+
+	
+<ul style="display: none;" contentindex="0c" class="categoryitems">
+
+<li>
+<a href="tempe-doggie-dispensers.html">Tempe Doggie Dispensers</a></li> 
+
+<li>
+<a href="add-new-project.html" class="plus">Add New Project</a></li>
+
+ <li><a href="show-hide-projec.html">Show/Hide Projects</a></li>
+
+
+
+            </ul>    
+
+             <!------------------------------------------End -Project--------------------------------------------------------->
+
+         <div class="line">&nbsp;</div>     
+     
+ <!------------------------------------------start Tasks--------------------------------------------------------->
+<p headerindex="1h" class="menuheader expandable arrow "><span class="accordprefix"></span>Tasks<span class="accordsuffix"></span></p>
+<ul style="display: none;" contentindex="1c" class="categoryitems">
+
+
+<li>
+<a href="add-new-tasks.html" class="plus">Add New Task</a></li>
+
+<li><a href="show-hide-tasks.html">Show/Hide Tasks</a></li>
+
+            </ul>    
+
+
+ <!------------------------------------------end -Tasks--------------------------------------------------------->						
+ 
+ 					  <div class="line">&nbsp;</div>                
+             <!------------------------------------------start Locationss--------------------------------------------------------->
+
+ <p headerindex="2h" class="menuheader expandable arrow openheader"><span class="accordprefix"></span>Locations<span class="accordsuffix"></span></p>
+<ul style="display: block;" contentindex="2c" class="categoryitems">
+
+<li>
+<a href="kerala.html">kerala</a></li> 
+
+								<li><a href="add-new-location.html" class="plus">Add New Location</a></li>
+                                <li><a href="add-boundary.html" class="plus">Add Boundary</a></li>
+
+                                <li><a href="upload-location-list.html" class="plus">Upload Location List</a></li>
+
+<li><a href="show-hide-location.html">Show/Hide Locations</a></li>
+<li><a href="show-hide-boundaries.html">Show/Hide Boundaries</a></li>
+
+</ul> 
+
+<!------------------------------------------start Groups--------------------------------------------------------->				   		
+<p headerindex="3h" class="menuheader expandable arrow "><span class="accordprefix"></span>&nbsp;&nbsp;Location Groups<span class="accordsuffix"></span></p>
+ <ul contentindex="3c" class="categoryitems">
+
+
+</ul>               
+<p headerindex="4h" class="menuheader expandable arrow "><span class="accordprefix"></span>&nbsp;&nbsp;Boundary Groups<span class="accordsuffix"></span></p>
+ <ul contentindex="4c" class="categoryitems">
+
+<li>
+<a href="group.html">group</a></li> 
+<li>
+<a href="yu.html">yu</a></li> 
+<li>
+<a href="f.html">f</a></li> 
+<li>
+<a href="jkll.html" class="active">jkll</a></li> 
+
+</ul> 
+
+ <!------------------------------------------end -Locationss--------------------------------------------------------->						
+ 
+<div class="line">&nbsp;</div>
+
+<!------------------------------------------start Analytes--------------------------------------------------------->
+
+ <p headerindex="5h" class="menuheader expandable arrow "><span class="accordprefix"></span>Analytes<span class="accordsuffix"></span></p>
+<ul contentindex="5c" class="categoryitems">
+
+<li>
+<a href="#"></a></li> 
+<li>
+<a href="#"></a></li> 
+
+								<li><a href="add-new-analytes.html" class="plus">Add New Analyte(s)</a></li>
+                                
+                                <li><a href="upload-analyte-list.html" class="plus">Upload Analyte List</a></li>
+
+							 
+
+							<li><a href="show-hide-analyte.html">Show/Hide Analytes</a></li>
+
+</ul> 
+
+<!------------------------------------------start Groups--------------------------------------------------------->				   		
+<p headerindex="6h" class="menuheader expandable arrow "><span class="accordprefix"></span>&nbsp;&nbsp;Analyte Groups<span class="accordsuffix"></span></p>
+ <ul contentindex="6c" class="categoryitems">
+
+</ul>               
+ <!------------------------------------------end -Analytes--------------------------------------------------------->
+<div class="line">&nbsp;</div>						
+					  <p class="menuheader arrow"><span class="accordprefix"></span>Results</p>
+					</div>
+				</div>		
+			</div><br clear="all"/>
+   </section>
+  </section>
+  <section class="right-aside">
+    <h2>jkll</h2>
+    <div class="right-aside-inner-left"><p class="new-task-text">
+    
+    <div class="new-task-left">
+      <h6>&nbsp;</h6>    
+      <p>&nbsp;</p></div>
+     <div class="new-task-right">
+     
+   <h6><strong>Selected Boundaries</strong></h6>
+       <h6>&nbsp;</h6>
+         <h6>&nbsp;&nbsp;
+          <input type="checkbox" name="checkbox3" id="checkbox3">&nbsp;asd
+     </h6>
+       <h6>&nbsp;&nbsp;
+          <input type="checkbox" name="checkbox3" id="checkbox3">&nbsp;sdff
+     </h6>
+        <h6>&nbsp;&nbsp;
+          <input type="checkbox" name="checkbox3" id="checkbox3">&nbsp;Check/Uncheck all
+     </h6>
+         <h6>&nbsp;&nbsp;
+           <input type="submit" name="button" id="button" value="Go">
+        Remove selected from this group. </h6>
+         <h6>&nbsp;&nbsp;
+       	   <input type="submit" name="button3" id="button3" value="Go">
+   	    Delete this group. </h6><p>&nbsp;</p>
+       <p><h6><strong>Other Boundaries</strong></h6>
+        <h6>&nbsp;&nbsp;
+         <input type="checkbox" name="checkbox3" id="checkbox3">&nbsp;Check/Uncheck all
+             <h6>&nbsp;&nbsp;
+         <input type="checkbox" name="checkbox3" id="checkbox3">&nbsp;Check/Uncheck all
+         
+       </h6>
+       
+                    <h6>&nbsp;&nbsp;
+                      <input type="submit" name="button5" id="button5" value="Go">
+                      &nbsp;Add selected to group
+         
+       </h6>
+        <p>&nbsp;</p>
+       <h6>&nbsp;
+<input type="text" name="textfield2" id="textfield2"></p>
+       <input type="submit" name="button4" id="button4" value="Submit"></p>
+     </div>
+</div>
+    
+          
+    
+     
+    
+  </section>	
+    <br clear="all"/>
+</div> <!-- END Wrapper -->
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    
+<!---nav-->   
+    <script src="../../../ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="a/j/plugins.js"></script>
+<script src="a/j/script.js"></script>
+
+<!---tree-->  
+    
+    <script src="js/abixTreeList.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#tree').abixTreeList();
+        });
+    </script>
+</body>
+</html>

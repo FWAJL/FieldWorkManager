@@ -1,0 +1,78 @@
+
+/* END RESET CSS */
+
+/*
+============================================
+    BASE
+============================================
+*/
+
+
+
+/* self clearing floats */
+.group:after,.lastUnit:after {clear:both;display:block;visibility:hidden;overflow:hidden;height:0 !important;line-height:0;font-size:xx-large;content:" x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x ";}
+.group{*zoom:1;}
+
+/*
+============================================
+    THE GOODS
+============================================
+*/
+
+.navheader {
+  font-size: 14px;font-family: Arial, Helvetica, sans-serif;padding:10px 0 0 10px; color:#000; text-align:left; border:1px solid #F00
+}
+.slide-trigger {
+  
+  display: none; /* need this */
+  border: 1px solid #a0a0a0;
+  background-color:#fff;
+  height:50px;
+  cursor: pointer;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.slide-trigger span {
+  background-image: url("../i/dropdown-arrows.png");
+  background-position: 0 -14px;
+  display: block;
+  float: right;
+  margin-top: 7px;
+  height: 14px;
+  width: 32px;border:
+}
+
+.navigation {border:0px solid #F00; width:980px; height:56px;
+
+   background: url(../../images/nav-bg.jpg) left top repeat-x; height:56px; text-decoration:none; list-style-type:none; float:left; margin-top:20px
+
+}
+.navigation li {
+  float: left;
+}
+.navigation li a {
+  display: block;
+  color: #fff;
+height:56px; font-size: 14px;font-family: Arial, Helvetica, sans-serif;padding:0 45px 0 45px; color:#fff; line-height:52px; border:0px solid #F00
+}
+.navigation li a:hover { background: url(../../images/navh.jpg) left top repeat-x; height:56px; text-decoration:none;list-style-type:none;}
+
+.navigation li a.active { background: url(../../images/navh.jpg) left top repeat-x; height:56px; text-decoration:none;list-style-type:none}
+
+/*
+============================================
+    RESPONSIVENESS
+============================================
+*/
+
+@media only screen and (max-width: 560px) {
+  .slide-trigger { display: block; }
+    .no-js .slide-trigger { display: none; }
+  .navigation { display: none; }
+    .no-js .navigation { display: block; }
+  .navigation { margin: 0 15px; width: auto }
+  .navigation li { float: none; }
+  .navigation li a { border-bottom: 1px solid #fff; width:100%; background-color:#000; text-align:left;padding:0 5% 0 5%;z-index:1000; position: relative; top:0  }
+}
+

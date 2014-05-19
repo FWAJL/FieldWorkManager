@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project_managers>
+  <project_manager>
+    <pm_id>1</pm_id>
+    <username>test</username>
+    <password>test</password>
+    <hint>test</hint>
+    <pm_comp_name>FWA</pm_comp_name>
+    <pm_name>John Doe</pm_name>
+    <pm_address>123 St Somewhere, In the world</pm_address>
+    <pm_phone>0123456789</pm_phone>
+    <pm_email>test@example.com</pm_email>
+  </project_manager>
+</project_managers>

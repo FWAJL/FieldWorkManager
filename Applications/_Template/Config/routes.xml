@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<routes>
+  <route url="home" module="Home" action="index" />
+  <route url="about" module="About" action="index" />
+  <route url="resume" module="Resume" action="index" />
+  <route url="pricelist" module="PriceList" action="index" />
+  <route url="portfolio" module="Portfolio" action="index" />
+  <route url="faq" module="Fag" action="index" />
+  <route url="contact" module="Contact" action="index" />
+  <route url="testimonies" module="Testimonies" action="index" />
+  <route url="template" module="Template" action="index" />
+  
+  <route url="submitForm" module="SubmitForm" action="index" />
+</routes>
