@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <resource key="h3_title">
+    Dear visitor, welcome!
+  </resource>
+  <resource key="paragraph_1">
+    Thank you for visiting my personal web space. Maybe you know something about me already but let me give you a refreshing summary.
+  </resource>
+  <resource key="paragraph_2">
+    I am a young, motivated and passionate Web developer specialized not only in the .Net framework and C# development 
+          but also the open source technologies like PHP and JavaScript.
+  </resource>
+  <resource key="paragraph_3">
+    I worked over 4 years at Trust5 in Dublin in Ireland, a company in partnership with EA Mobile. 
+          At the end of 2013, I joined Trépia, an IT service provider company, and started a long term mission at Xerox Transports Inc. in Valence, France.
+  </resource>
+  <resource key="paragraph_4">
+    Wrapped around the work, you will find what motivates and inspires me constantly: 
+          my fiancée and wife to be, my bikes, my ukulele, my camera, my kitchen, my songs and music sheets, my sunglasses, my hiking boots and more.
+  </resource>
+  <resource key="resume_link_text">
+    My Resume »
+  </resource>
+</resources>

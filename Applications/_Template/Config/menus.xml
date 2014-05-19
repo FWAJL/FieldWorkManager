@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menus>
+  <menu id="header">
+    <numlinks>0</numlinks>
+    <links />
+  </menu>
+  <menu id="topright">
+    <numlinks>0</numlinks>
+    <links />
+  </menu>
+  <menu id="side">
+    <items>
+      <item type="simple">
+        <enabled>TRUE</enabled>
+        <href>home</href>
+        <cssClass>null</cssClass>
+        <label>Home</label>
+      </item>
+      <item type="simple">
+        <enabled>TRUE</enabled>
+        <href>background</href>
+        <cssClass>null</cssClass>
+        <label>Web background</label>
+      </item>
+      <item type="simple">
+        <enabled>TRUE</enabled>
+        <href>me</href>
+        <cssClass>null</cssClass>
+        <label>About me</label>
+      </item>
+      <item type="simple">
+        <enabled>FALSE</enabled>
+        <href>services</href>
+        <cssClass>null</cssClass>
+        <label>My services</label>
+      </item>
+      <item enabled="true" type="simple">$
+        <enabled>FALSE</enabled>
+        <href>http://jeremielitzler.net/Blog</href>
+        <cssClass>null</cssClass>
+        <label>Blog</label>
+      </item>
+      <item cssClass="" label="Fun fact" type="ddl">
+        <enabled>TRUE</enabled>
+        <links>
+          <link>
+            <enabled>TRUE</enabled>
+            <href>ride</href>
+            <cssClass>null</cssClass>
+            <label>I ride</label>
+          </link>
+          <link>
+            <enabled>TRUE</enabled>
+            <href>sing</href>
+            <cssClass>null</cssClass>
+            <label>I sing</label>
+          </link>
+          <link>
+            <enabled>TRUE</enabled>
+            <href>ukulele</href>
+            <cssClass>null</cssClass>
+            <label>I play ukulele</label>
+          </link>
+          <link>
+            <enabled>TRUE</enabled>
+            <href>cook</href>
+            <cssClass>null</cssClass>
+            <label>I am a chef</label>
+          </link>
+        </links>
+      </item>
+    </items>
+  </menu>
+</menus>
