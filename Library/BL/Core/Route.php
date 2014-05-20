@@ -24,6 +24,7 @@ class Route
   
   public function match($url)
   {
+      echo "<!-- `^".$this->url."$` -->";
     if (preg_match('`^'.$this->url.'$`', $url, $matches))
     {
       return $matches;
