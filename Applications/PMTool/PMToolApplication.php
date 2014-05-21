@@ -2,7 +2,7 @@
 
 namespace Applications\PMTool;
 
-class PMToolApplication extends \Library\BL\Core\Application {
+class PMToolApplication extends \Library\Application {
 
   public function __construct() {
     parent::__construct();

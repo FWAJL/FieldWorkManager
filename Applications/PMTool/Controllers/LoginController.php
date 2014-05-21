@@ -2,9 +2,9 @@
 
 namespace Applications\PMTool\Controllers;
 
-class LoginController extends \Library\BL\Core\BaseController {
+class LoginController extends \Library\BaseController {
   
-  public function Index(\Library\BL\Core\HTTPRequest $rq) {
+  public function executeIndex(\Library\HTTPRequest $rq) {
     //TODO: add resource using a Resource manage
     
     $resourceFileKey = "login";
@@ -16,7 +16,7 @@ class LoginController extends \Library\BL\Core\BaseController {
     $this->page->addVar('resume_url', $this->app->router->pageUrls[\Library\Enums\ResourceKeys\PublicPageUrls::ResumeUrl]);
   }
   
-  public function Authenticate(\Library\BL\Core\HTTPRequest $rq) {
+  /*public function Authenticate(\Library\BL\Core\HTTPRequest $rq) {
     $resourceFileKey = "login";
     $result = [
         "result" => 0,
@@ -41,6 +41,6 @@ class LoginController extends \Library\BL\Core\BaseController {
     
     
    
-  }
+  }*/
 
 }

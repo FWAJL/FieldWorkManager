@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/_Dropbox/Projects/FieldWorkAssistantMVC/Web/css/app/core-app-style.css</file>
-            <file>file:/D:/_Dropbox/Projects/FieldWorkAssistantMVC/Web/pmtool.php</file>
-            <file>file:/D:/_Dropbox/Projects/FieldWorkAssistantMVC/Web/css/app/app-style.css</file>
-            <file>file:/D:/_Dropbox/Projects/FieldWorkAssistantMVC/README.md</file>
-            <file>file:/D:/_Dropbox/Projects/FieldWorkAssistantMVC/.htaccess</file>
-            <file>file:/D:/_Dropbox/Projects/FieldWorkAssistantMVC/Applications/autoload.php</file>
-            <file>file:/D:/_Dropbox/Projects/FieldWorkAssistantMVC/Web/.htaccess</file>
+            <file>file:/D:/_Dropbox/Projects/FieldWorkAssistantMVC/Library/Globalization.php</file>
+            <file>file:/D:/_Dropbox/Projects/FieldWorkAssistantMVC/Applications/PMTool/Config/appsettings.xml</file>
+            <file>file:/D:/_Dropbox/Projects/FieldWorkAssistantMVC/Applications/PMTool/Controllers/LoginController.php</file>
+            <file>file:/D:/_Dropbox/Projects/FieldWorkAssistantMVC/Library/BaseController.php</file>
         </group>
     </open-files>
 </project-private>
