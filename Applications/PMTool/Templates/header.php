@@ -5,6 +5,7 @@
     <title><?php echo $this->app->pageTitle; ?></title>
     <link rel="stylesheet" type="text/css" href="Web/css/app/reset.css" />
     <link rel="stylesheet" type="text/css" href="Web/css/core/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="Web/css/addons/toastr.css" />
     <link rel="stylesheet" type="text/css" href="Web/css/app/core-app-style.css" />
     <link rel="stylesheet" type="text/css" href="Web/css/app/app-style.css" />
     <link rel="stylesheet" type="text/css" href="Web/css/app/theme.css" />

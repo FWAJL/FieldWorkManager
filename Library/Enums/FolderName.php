@@ -24,6 +24,9 @@ abstract class FolderName {
   const ConfigFolderName = "/Config/";
   const ResourceCommonFolderName = "/Resources/Common/";
   const ResourceLocalFolderName = "/Resources/Local/";
+  const WebJsAppFolderName = "";
+  const WebJsAppControllersFolderName = "";
+  
 }
 
 ?>

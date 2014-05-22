@@ -5,8 +5,8 @@ namespace Applications\PMTool\Controllers;
 class LoginController extends \Library\BaseController {
   
   public function executeIndex(\Library\HTTPRequest $rq) {
-    //TODO: add resource using a Resource manage
-    
+    //TODO: add resource using a Resource manager
+    //$authenticate_js_script_path = "authenticate.js";
     $resourceFileKey = "login";
     
     $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey,"page_title");
@@ -16,7 +16,7 @@ class LoginController extends \Library\BaseController {
     $this->page->addVar('resume_url', $this->app->router->pageUrls[\Library\Enums\ResourceKeys\PublicPageUrls::ResumeUrl]);
   }
   
-  /*public function Authenticate(\Library\BL\Core\HTTPRequest $rq) {
+  public function executeAuthenticate(\Library\BL\Core\HTTPRequest $rq) {
     $resourceFileKey = "login";
     $result = [
         "result" => 0,
@@ -33,7 +33,8 @@ class LoginController extends \Library\BaseController {
           "username" => $rq->postData("username"),
           "pwd" => $rq->postData("pwd")
       ];
-      //$pm = $manager->selectOne($user);
+      $pm = $manager->selectOne($result["user"]);
+      $result["user_returned"] = $pm;
       echo json_encode($result);
     } else {
       echo json_encode($result);
@@ -41,6 +42,6 @@ class LoginController extends \Library\BaseController {
     
     
    
-  }*/
+  }
 
 }
