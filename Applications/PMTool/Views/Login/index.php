@@ -3,16 +3,16 @@
     <h1><?php echo $resx["h1_title"]; ?></h1>
     <section class="login-box-small">
       <p>
-        <label><?php echo $resx["email_label"]; ?></label>
-        <input type="text" class="field" placeholder="<?php echo $resx["email_ph_text"]; ?>">
+        <label name="email"><?php echo $resx["email_label"]; ?></label>
+        <input name="email" type="text" class="field" placeholder="<?php echo $resx["email_ph_text"]; ?>">
       </p>
       <p>
-        <label><?php echo $resx["pwd_label"]; ?></label>
-        <input type="text" class="fieldb" placeholder="<?php echo $resx["pwd_ph_text"]; ?>"> </p>
+        <label name="pwd"><?php echo $resx["pwd_label"]; ?></label>
+        <input name="pwd" type="text" class="fieldb" placeholder="<?php echo $resx["pwd_ph_text"]; ?>"> </p>
       <p>
-        <input name="" type="checkbox" value="" />
+        <input name="remember_me" type="checkbox" value="" />
         <?php echo $resx["remember_me_label"]; ?>
-        <a href="#"  class="password">
+        <a href="#" name="forgot_pwd"  class="password">
           <?php echo $resx["forgot_pwd_label"]; ?>
         </a>
       </p>
