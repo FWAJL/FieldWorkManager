@@ -1,7 +1,7 @@
 <?php
 namespace Library\Entities;
 
-class News extends \Library\BO\Entity
+class News extends \Library\Entity
 {
   protected $auteur,
             $titre,
