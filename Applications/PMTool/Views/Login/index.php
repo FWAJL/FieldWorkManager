@@ -8,7 +8,7 @@
       </p>
       <p>
         <label><?php echo $resx["pwd_label"]; ?></label>
-        <input name="password" type="text" class="fieldb" placeholder="<?php echo $resx["pwd_ph_text"]; ?>">
+        <input name="password" type="password" class="fieldb" placeholder="<?php echo $resx["pwd_ph_text"]; ?>">
       </p>
       <p>
         <input name="remember_me" type="checkbox" value="" />
