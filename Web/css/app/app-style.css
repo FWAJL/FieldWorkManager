@@ -6,3 +6,8 @@
   top: 10px;
   left: 125px;
 }
+
+.validator {
+  display: none;
+  color: #FC7F6F;
+}
