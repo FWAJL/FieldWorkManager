@@ -4,7 +4,7 @@ namespace Applications\PMTool\Controllers;
 
 class LoginController extends \Library\BaseController {
   
-  public function executeIndex(\Library\HTTPRequest $rq) {
+  public function executeIndex(\Library\HttpRequest $rq) {
     //TODO: add resource using a Resource manage
     
     $resourceFileKey = "login";
@@ -16,31 +16,29 @@ class LoginController extends \Library\BaseController {
     $this->page->addVar('resume_url', $this->app->router->pageUrls[\Library\Enums\ResourceKeys\PublicPageUrls::ResumeUrl]);
   }
   
-  /*public function Authenticate(\Library\BL\Core\HTTPRequest $rq) {
-    $resourceFileKey = "login";
-    $result = [
-        "result" => 0,
-        "message" => $this->app->i8n->getLocalResource($resourceFileKey, "message_default_authenticate")
-    ];
-    
-    $manager = $this->managers->getManagerOf('Login');
-
-    //Let's retrieve the inputs from POST
-    //First, check the inputs. If valid, we'll continue.
-    if (\Library\BL\Utilities\FormUtility::CleanseInput($rq->postData("username")) &&
-            \Library\BL\Utilities\FormUtility::CleanseInput($rq->postData("pwd"))) {
-      $result["user"] = [
-          "username" => $rq->postData("username"),
-          "pwd" => $rq->postData("pwd")
-      ];
-      //$pm = $manager->selectOne($user);
-      echo json_encode($result);
-    } else {
-      echo json_encode($result);
-    }
-    
-    
-   
-  }*/
+//  public function executeAuthenticate(\Library\HttpRequest $rq) {
+//    $resourceFileKey = "login";
+//    $result = [
+//        "result" => 0,
+//        "message" => $this->app->i8n->getLocalResource($resourceFileKey, "message_default_authenticate")
+//    ];
+//    
+//    $manager = $this->managers->getManagerOf('Login');
+//
+//    //Let's retrieve the inputs from POST
+//    //First, check the inputs. If valid, we'll continue.
+//    if (\Library\FormUtility::CleanseInput($rq->postData("username")) &&
+//            \Library\FormUtility::CleanseInput($rq->postData("pwd"))) {
+//      $result["user"] = [
+//          "username" => $rq->postData("username"),
+//          "pwd" => $rq->postData("pwd")
+//      ];
+//      //$pm = $manager->selectOne($user);
+//      json_encode($result);
+//    } else {
+//      json_encode($result);
+//    }
+//    $this->page->addVar("result", $result);  
+//  }
 
 }
