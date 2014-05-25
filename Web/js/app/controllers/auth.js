@@ -1,11 +1,13 @@
 $(document).ready(function() {
-  if (validator.requiredInput()) {
-    $("#btn_login").click(function() {
+  $("#btn_login").click(function() {
+    if (true) {
       toastr.info("Logging...");
       //Retrieve data to send 
       auth.retrieveCredentials();
-    });
-  }
+    } else {
+      toastr.error("Your credentials are required !");
+    }
+  });
 });
 /***********
  * auth namespace 
@@ -14,7 +16,7 @@ $(document).ready(function() {
 (function(auth) {
   auth.retrieveCredentials = function() {
     var email = $("input[name=email]").val();
-    var pwd = $("input[name=pwd]").val();
-
+    var pwd = $("input[name=pwd]").val(); 
+    var valid = validator.requiredInput();
   };
 }(window.auth = window.auth || {}));

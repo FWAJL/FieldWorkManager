@@ -3,11 +3,15 @@
  * Responsible to validate inputs given by a user.
  */
 (function(validator) {
+  //Properties
+  validator.valid = false;
+  
   //Check that a input element has a value or not and send back result 
   validator.requiredInput = function() {
     $("input").each(function(i, data) {
       $(this).focusout(function() {
-        return $(this).val() === "" ? validator.emptyInputToast($(this).attr("name")) : true;
+        return $(this).val() === "" && $(this).attr("name") !== "remember_me" ? 
+          validator.emptyInputToast($(this).attr("name")) : true;
       });
     });
   }
