@@ -1,6 +1,6 @@
 <?php
 
-namespace Library;
+namespace Library\DAL;
 
 class Managers {
 
@@ -19,7 +19,7 @@ class Managers {
         }
 
         if (!isset($this->managers[$module])) {
-            $manager = '\\Library\\DAL\\' . $module . 'Manager_' . $this->api;
+            $manager = '\\Library\DAL\\Models\\' . $module . 'Manager_' . $this->api;
             $this->managers[$module] = new $manager($this->dao);
         }
 

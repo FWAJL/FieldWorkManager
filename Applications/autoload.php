@@ -3,7 +3,11 @@
 function autoload($class) {
   $file = __ROOT__ . str_replace('\\', '/', $class) . '.php';
   if (file_exists($file)) {
-    require $file;
+    try {
+      require_once $file;
+    } catch (Exception $exc) {
+      echo "<!--" . $exc->getMessage() . "-->";
+    }
   }
 }
 
