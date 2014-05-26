@@ -1,12 +1,7 @@
 $(document).ready(function() {
-  $("#btn_login").click(function() {
-    if (true) {
-      toastr.info("Logging...");
-      //Retrieve data to send 
-      auth.retrieveCredentials();
-    } else {
-      toastr.error("Your credentials are required !");
-    }
+  validator.requiredInput();    
+    $("#btn_login").click(function() {
+    auth.retrieveCredentials();
   });
 });
 /***********
@@ -16,7 +11,12 @@ $(document).ready(function() {
 (function(auth) {
   auth.retrieveCredentials = function() {
     var email = $("input[name=email]").val();
-    var pwd = $("input[name=pwd]").val(); 
-    var valid = validator.requiredInput();
+    var pwd = $("input[name=password]").val(); 
+    var valid = validator.checkAndClean();
+    if (valid) {
+        toastr.success("<p>Logging in! :)</p><p><u>Email:</u> "+email+" ; </p><p><u>Password:</u> ****;</p>");//TODO: use resource manager
+    } else {
+        toastr.error("Try again...");//TODO: use resource manager
+    }
   };
 }(window.auth = window.auth || {}));
