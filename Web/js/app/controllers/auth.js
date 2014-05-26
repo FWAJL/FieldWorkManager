@@ -16,7 +16,7 @@ $(document).ready(function() {
     var pwd = $("input[name=password]").val();
     var valid = validator.checkAndClean();
     if (valid) {
-      toastr.success("<p>Logging in! :)</p><p><u>Email:</u> " + email + " ; </p><p><u>Password:</u> ****;</p>");//TODO: use resource manager
+      toastr.success("<p>Logging in! :)</p><p><u>Email:</u> " + email + " ; </p><p><u>Password:</u> ****;</p><br/><p>NOT IMPLEMENTED YET</p>");//TODO: use resource manager
       return {"result": "success", "email": email, "pwd": pwd};
     } else {
       toastr.error("Try again...");//TODO: use resource manager
