@@ -12,8 +12,7 @@ abstract class BaseController extends ApplicationComponent {
 
     public function __construct(Application $app, $module, $action) {
         parent::__construct($app);
-
-        $this->managers = new \Library\DAL\Managers('PDO', PDOFactory::getMysqlConnexion());
+        $this->managers = new \Library\DAL\Managers('PDO', PDOFactory::getMysqlConnexion($app));
         $this->page = new Page($app);
 
         $this->setModule($module);
