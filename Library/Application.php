@@ -29,7 +29,6 @@ abstract class Application {
     $this->i8n = new Globalization($this);    
     $this->imageUtil = new ImageUtility($this);    
     $this->locale = $this->httpRequest->initLanguage($this, "browser");
-    echo '<!-- locale=' . $this->locale . ' -->';
     $this->name = '';
   }
   public function initConfig() {
@@ -42,7 +41,9 @@ abstract class Application {
 //    $router->LoadAvailableRoutes($this);
     $this->router->LoadAvailableRoutes($this);
     $matchedRoute = $this->FindRouteMatch();
-
+    if ($matchedRoute->type() === "ws") {
+      $this->router()->isWsCall = true;
+    }
     // On ajoute les variables de l'URL au tableau $_GET.
     $_GET = array_merge($_GET, $matchedRoute->vars());
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <routes>
-  <route url="login" module="Authenticate" action="loadView" />
-  <route url="auth" module="Authenticate" action="authenticate" />
+  <route url="login" module="Authenticate" action="loadView" type="ui" />
+  <route url="auth" module="Authenticate" action="authenticate" type="ws" />
 
 </routes>

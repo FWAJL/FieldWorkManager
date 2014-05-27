@@ -6,6 +6,7 @@ class Router extends ApplicationComponent{
 
   protected $routes = array();
   public $pageUrls = array();
+  public $isWsCall= false;
 
   const NO_ROUTE = 1;
 
@@ -61,7 +62,7 @@ class Router extends ApplicationComponent{
       $this->pageUrls[$route->getAttribute('module')."Url"] = $route->getAttribute('url');
 
       // On ajoute la route au routeur.
-      $this->addRoute(new Route($route->getAttribute('url'), $route->getAttribute('module'), $route->getAttribute('action'), $vars));
+      $this->addRoute(new Route($route->getAttribute('url'), $route->getAttribute('module'), $route->getAttribute('action'), $vars, $route->getAttribute('type')));
     }
   }
 

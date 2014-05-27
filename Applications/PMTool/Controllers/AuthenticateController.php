@@ -14,7 +14,11 @@ class AuthenticateController extends \Library\BaseController {
 
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
   }
-
+  
+  /*
+   * Method that receives the call from JS Client to login a user
+   * Return the result whether the user can be logged in
+   */
   public function executeAuthenticate(\Library\HttpRequest $rq) {
     $resourceFileKey = "login";
     $result = array(
@@ -35,9 +39,10 @@ class AuthenticateController extends \Library\BaseController {
           "pwd" => "password"//$rq->postData("pwd")
       );
       $result["user_returned"] = $manager->selectOne($result["user_sent"]);
-      echo json_encode($result, JSON_PRETTY_PRINT);
+      header('Content-Type: application/json');
+      echo json_encode($result["user_returned"], 128);
     } else {
-      echo json_encode($result, JSON_PRETTY_PRINT);
+      echo json_encode($result["user_returned"], 128);
     }
   }
 
