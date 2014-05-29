@@ -25,21 +25,36 @@ class AuthenticateController extends \Library\BaseController {
     $result = array(
         "result" => 0,
         "message" => $this->app->i8n->getLocalResource($resourceFileKey, "message_default_authenticate"),
-        "user_sent" => array(),
-        "user_returned" => array()
     );
 
     $manager = $this->managers->getManagerOf('Login');
 
     //Let's retrieve the inputs from POST
     //First, check the inputs. If valid, we'll continue.
-    $result["user_sent"] = array(
-        "username" => "test", //$rq->postData("username"),
-        "pwd" => "password"//$rq->postData("pwd")
+    $user_sent = array(
+        "username" => $rq->postData("email"), //$rq->postData("username"),
+        "pwd" => $rq->postData("pwd")//$rq->postData("pwd")
     );
-    $result["user_returned"] = $manager->selectOne($result["user_sent"]);
+    //Search for user in DB and return him
+    $user_db = $manager->selectOne($user_sent);
+    
+    //If user_db is null, set error message
+    //TODO: add resources
+    if (is_null($user_db)) {
+      $result["result"] = 0;
+      $result["message"] = "User not found! Please check your credentials.";
+    } else {
+      $this->LoginUser($user_sent, $user_db);
+      $result["result"] = 1;
+      $result["message"] = "Logged in! Going to your projects... Please wait.";      
+    }
     header('Content-Type: application/json');
-    echo json_encode($result["user_returned"], 128);
+    echo json_encode($result, 128);
+  }
+  
+  private function LoginUser($user_in, $user_out) {
+    
+    return true;
   }
 
 }

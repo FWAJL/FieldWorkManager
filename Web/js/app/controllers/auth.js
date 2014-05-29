@@ -2,7 +2,7 @@ $(document).ready(function() {
   validator.requiredInput();
   $("#btn_login").click(function() {
     var post_data = auth.retrieveCredentials();
-    if (post_data["result"] === "success")
+    if (post_data['result'] === "success")
       auth.login(post_data);
   });
 });
@@ -23,12 +23,14 @@ $(document).ready(function() {
     }
   };
   auth.login = function(credentials) {
-    var result = $.ajax({
-      url: "auth",
-      data: credentials, //data,
-      type: 'POST',
-      contentType: 'application/json',
-      dataType: 'json'
+    datacx.post("auth", credentials).then(function(reply) {
+      if (reply.result === !1) {
+        toastr.error(reply.message);
+      } else {
+        toastr.success(reply.message);
+        //Now redirect to project page
+        
+      }
     });
   };
 }(window.auth = window.auth || {}));
