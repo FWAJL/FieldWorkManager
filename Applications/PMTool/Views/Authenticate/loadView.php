@@ -1,3 +1,4 @@
+<?php if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 <section  class="login-container">
   <figure class="login-box">
     <h1><?php echo $resx["h1_title"]; ?></h1>

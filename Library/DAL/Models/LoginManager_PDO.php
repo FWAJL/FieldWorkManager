@@ -1,6 +1,7 @@
 <?php
 
 namespace Library\DAL\Models;
+if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
 class LoginManager_PDO extends \Library\DAL\BaseManager {
 

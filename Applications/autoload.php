@@ -10,7 +10,7 @@ function autoload($class) {
     }
   }
 }
-
+define('__EXECUTION_ACCESS_RESTRICTION__', true);
 define('__BASEURL__', '/FieldWorkAssistantMVC/');
 define('__ROOT__', dirname(dirname(__FILE__)) . '/');
 

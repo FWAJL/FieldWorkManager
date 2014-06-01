@@ -1,8 +1,9 @@
 <?php
 
 namespace Applications\PMTool\Controllers;
+if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-class AboutController extends \Library\BaseController {
+class ThisController extends \Library\BaseController {
 
   public function executeIndex(\Library\HTTPRequest $request) {
     //TODO: add resource using a Resource manage
