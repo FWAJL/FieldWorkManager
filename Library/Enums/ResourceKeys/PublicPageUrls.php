@@ -12,19 +12,28 @@
  */
 
 namespace Library\Enums\ResourceKeys;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+  exit('No direct script access allowed');
 
 class PublicPageUrls {
   /**
    * Relative Urls
    */
+
+  const LoginUrl = "loginUrl";
+  const LogoutUrl = "logoutUrl";
+  const ProjectsUrl = "projectsUrl";
+  const AuthenticationUrl = "authUrl";
+
   /**
    * Absolute Urls
    */
-    const HomeUrl = "HomeUrl";
-    const AboutUrl = "AboutUrl";
-    const ResumeUrl = "ResumeUrl";
-    const ContactUrl = "ContactUrl";
+  /*
+   * Template
+   */
+  const TemplateUrl = "tmp";
+
 }
 
 ?>

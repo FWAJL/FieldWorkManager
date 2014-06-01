@@ -6,18 +6,13 @@ if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script acces
 class ThisController extends \Library\BaseController {
 
   public function executeIndex(\Library\HTTPRequest $request) {
-    //TODO: add resource using a Resource manage
-    $this->page->addVar('title', 'About');
-    
-    $resourceFileKey = "about";
+    //TODO: add js resource using a Resource manager
+    //$file_path_to_include = "filename.js";
+    $resourceFileKey = "_tmp";
 
-    $this->page->addVar('h3_title', $this->app->i8n->getLocalResource($resourceFileKey,"h3_title"));
-    $this->page->addVar('paragraph_1', $this->app->i8n->getLocalResource($resourceFileKey,"paragraph_1"));
-    $this->page->addVar('paragraph_2', $this->app->i8n->getLocalResource($resourceFileKey,"paragraph_2"));
-    $this->page->addVar('paragraph_3', $this->app->i8n->getLocalResource($resourceFileKey,"paragraph_3"));
-    $this->page->addVar('paragraph_4', $this->app->i8n->getLocalResource($resourceFileKey,"paragraph_4"));
-    $this->page->addVar('resume_link_text', $this->app->i8n->getLocalResource($resourceFileKey,"resume_link_text"));
-    $this->page->addVar('resume_url', $this->app->router->pageUrls[\Library\Enums\ResourceKeys\PublicPageUrls::ResumeUrl]);    
+    $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
+    $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
+    $this->page->addVar('tmp_url', $this->app->router->pageUrls[\Library\Enums\ResourceKeys\PublicPageUrls::TemplateUrl]);
   }
 
 }

@@ -5,7 +5,7 @@ namespace Library;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 abstract class Application {
 
-  protected $httpRequest;
+  public $httpRequest;
   protected $httpResponse;
   public $name;
   public $locale;
@@ -14,7 +14,7 @@ abstract class Application {
   public $pageUrls;
   public $logoImageUrl;
 
-  protected $user;
+  public $user;
   protected $config;
   public $i8n;
   public $imageUtil;

@@ -60,7 +60,7 @@ class Router extends ApplicationComponent{
         $vars = explode(',', $route->getAttribute('vars'));
       }
       // We store the page Url to be used globally in the app
-      $this->pageUrls[$route->getAttribute('module')."Url"] = $route->getAttribute('url');
+      $this->pageUrls[$route->getAttribute('url')."Url"] = $route->getAttribute('url');
 
       // On ajoute la route au routeur.
       $this->addRoute(new Route($route->getAttribute('url'), $route->getAttribute('module'), $route->getAttribute('action'), $vars, $route->getAttribute('type')));

@@ -12,18 +12,18 @@ class User extends ApplicationComponent {
   }
 
   public function getFlash() {
-    $flash = $_SESSION['flash'];
-    unset($_SESSION['flash']);
+    $flash = $_SESSION[Enums\SessionKeys::UserFlash];
+    unset($_SESSION[Enums\SessionKeys::UserFlash]);
 
     return $flash;
   }
 
   public function hasFlash() {
-    return isset($_SESSION['flash']);
+    return isset($_SESSION[Enums\SessionKeys::UserFlash]);
   }
 
   public function isAuthenticated() {
-    return isset($_SESSION['auth']) && $_SESSION['auth'] === true;
+    return isset($_SESSION[Enums\SessionKeys::UserAuthenticated]) && $_SESSION[Enums\SessionKeys::UserAuthenticated] === true;
   }
 
   public function setAttribute($attr, $value) {
@@ -35,11 +35,11 @@ class User extends ApplicationComponent {
       throw new \InvalidArgumentException('Value of method User::setAuthenticated() must be a boolean');
     }
 
-    $_SESSION['auth'] = $authenticated;
+    $_SESSION[Enums\SessionKeys::UserAuthenticated] = $authenticated;
   }
 
   public function setFlash($value) {
-    $_SESSION['flash'] = $value;
+    $_SESSION[Enums\SessionKeys::UserFlash] = $value;
   }
 
 }

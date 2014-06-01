@@ -1,31 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
-  <resource key="page_title">
-    Login - Field Work Assistant
-  </resource>
-  <resource key="h1_title">
-    Login
-  </resource>
-  <resource key="email_label">
-    Email:
-  </resource>
-  <resource key="email_ph_text">
-    example@mail.com
-  </resource>
-  <resource key="pwd_label">
-    Pasword:
-  </resource>
-  <resource key="pwd_ph_text">
-    ********
-  </resource>
-  <resource key="remember_me_label">
-    Remember me
-  </resource>
-  <resource key="forgot_pwd_label">
-    Forgot password
-  </resource>
-  <resource key="login_btn_text">
-    Login now
-  </resource>
-  <resource key="message_default_authenticate">Authenticate default message</resource>
+  <resource key="page_title">Login - Field Work Assistant</resource>
+  <resource key="h1_title">Login</resource>
+  <resource key="email_label">Email:</resource>
+  <resource key="email_ph_text">example@mail.com</resource>
+  <resource key="pwd_label">Pasword:</resource>
+  <resource key="pwd_ph_text">********</resource>
+  <resource key="remember_me_label">Remember me</resource>
+  <resource key="forgot_pwd_label">Forgot password</resource>
+  <resource key="login_btn_text">Login now</resource>
+  <resource key="message_error">User not found! Please check your credentials.</resource>
+  <resource key="message_success">Logged in! Going to your projects... Please wait.</resource>
 </resources>
