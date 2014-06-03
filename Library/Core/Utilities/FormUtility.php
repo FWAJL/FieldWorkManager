@@ -1,6 +1,7 @@
 <?php
 
-namespace Library;
+namespace Library\Core\Utilities;
+if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
 class FormUtility {
   /**
@@ -10,7 +11,7 @@ class FormUtility {
    * @return type bool
    */
   static function CleanseInput($data_to_clean) {
-    return $data_to_clean !== mysql_escape_string($data_to_clean);
+    return $data_to_clean !== mysql_real_escape_string($data_to_clean);
   }
   
 

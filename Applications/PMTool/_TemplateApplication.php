@@ -1,15 +1,17 @@
 <?php
 
 namespace Applications\PMTool;
+if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-class PMToolApplication extends \Library\Application {
+class ThisApplication extends \Library\Application {
 
   public function __construct() {
     parent::__construct();
 
     $this->name = 'PMTool';
     $this->context()->setLanguage();
-    
+    $this->logoImageUrl = $this->imageUtil->getImageUrl("logo.jpg");
+
   }
 
   public function run() {

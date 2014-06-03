@@ -2,9 +2,10 @@
 
 namespace Library;
 
+if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 abstract class Application {
 
-  protected $httpRequest;
+  public $httpRequest;
   protected $httpResponse;
   public $name;
   public $locale;
@@ -13,8 +14,8 @@ abstract class Application {
   public $pageUrls;
   public $logoImageUrl;
 
-  protected $user;
-  protected $config;
+  public $user;
+  public $config;
   public $i8n;
   public $imageUtil;
 
@@ -29,7 +30,6 @@ abstract class Application {
     $this->i8n = new Globalization($this);    
     $this->imageUtil = new ImageUtility($this);    
     $this->locale = $this->httpRequest->initLanguage($this, "browser");
-    echo '<!-- locale=' . $this->locale . ' -->';
     $this->name = '';
   }
   public function initConfig() {
@@ -42,7 +42,9 @@ abstract class Application {
 //    $router->LoadAvailableRoutes($this);
     $this->router->LoadAvailableRoutes($this);
     $matchedRoute = $this->FindRouteMatch();
-
+    if ($matchedRoute->type() === "ws") {
+      $this->router()->isWsCall = true;
+    }
     // On ajoute les variables de l'URL au tableau $_GET.
     $_GET = array_merge($_GET, $matchedRoute->vars());
 
