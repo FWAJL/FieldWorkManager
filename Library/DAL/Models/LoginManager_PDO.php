@@ -1,22 +1,46 @@
 <?php
 
 namespace Library\DAL\Models;
+if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
 class LoginManager_PDO extends \Library\DAL\BaseManager {
 
-  public function selectOne($id) {
-    $sql = 'SELECT * FROM project_manager where pm_id = '. $id . 'LIMIT 0, 1;';
+    /**
+     * Select a PM from its username or password
+     * 
+     * @param ProjectManager $pm
+     * @return array the selected row in the db
+     */
+  public function selectOne($pm_in) {
+    if ($pm_in->username() !== "") {//Check if the user is giving his username and that there is a value
+          $sql = 'SELECT * FROM project_manager where `username` = \''. $pm_in->username() . '\' LIMIT 0, 1;';
+
+    } else if ($pm_in->pm_email() !== "") {//Check if the user is giving an email
+          $sql = 'SELECT * FROM project_manager where `email` = \''. $pm_in->pm_email() . '\' LIMIT 0, 1;';
+
+    } else {
+      return NULL;
+    }
+    $query = $this->dao->query($sql);
+    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Library\BO\ProjectManager');
     
-    $requete = $this->dao->query($sql);
-    $requete->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Library\BO\ProjectManager');
+    $pm_out = $query->fetchAll();
+    $query->closeCursor();
     
-    $pm = $requete->fetchAll();
-    $requete->closeCursor();
-    
-    return $pm;
-    
+    return $pm_out;    
   }
-
+  /**
+     * Select a PM from its username or password
+     * 
+     * @param ProjectManager $pm
+     * @return array the selected row in the db
+     */
+  public function update($pm)
+  {
+      $sql = $this->dao->prepare("UPDATE project_manager set `password` = :password WHERE `pm_id` = :pm_id;");
+      $sql->bindValue(":pm_id", $pm->pm_id(), \PDO::PARAM_INT);
+      $sql->bindValue(":password", $pm->password(), \PDO::PARAM_STR);
+      
+      $sql->execute();
+  }
 }
-
-?>

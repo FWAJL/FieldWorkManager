@@ -11,4 +11,10 @@
 
 
 /* TEXTBOX */
+
+
+/* VALIDATION */
+.required {
+    border: 4px solid #f00;
+}
   

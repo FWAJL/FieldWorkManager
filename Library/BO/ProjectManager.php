@@ -1,8 +1,9 @@
 <?php
 
 namespace Library\BO;
+if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-class News extends \Library\BL\Core\Entity {
+class ProjectManager extends \Library\Entity {
 
   protected $pm_id,
           $username,
@@ -29,14 +30,6 @@ class News extends \Library\BL\Core\Entity {
 
   // SETTERS //
 
-  public function setPmId($pm_id) {
-    if (!is_int($pm_id) || empty($pm_id)) {
-      $this->erreurs[] = self::PM_ID_ERR;
-    } else {
-      $this->pm_id = $pm_id;
-    }
-  }
-  
   public function setUserName($username) {
     if (!is_string($username) || empty($username)) {
       $this->erreurs[] = self::USERNAME_ERR;
