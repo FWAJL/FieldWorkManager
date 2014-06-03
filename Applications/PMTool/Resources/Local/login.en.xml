@@ -4,6 +4,8 @@
   <resource key="h1_title">Login</resource>
   <resource key="email_label">Email:</resource>
   <resource key="email_ph_text">example@mail.com</resource>
+  <resource key="username_label">Username:</resource>
+  <resource key="username_ph_text"></resource>
   <resource key="pwd_label">Pasword:</resource>
   <resource key="pwd_ph_text">********</resource>
   <resource key="remember_me_label">Remember me</resource>

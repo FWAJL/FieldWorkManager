@@ -8,7 +8,7 @@
 
   //Check that a input element has a value or not and send back result
   validator.checkInput = function(element) {
-    return (element.val() === "" && element.attr("name") !== "remember_me") ? false : true;
+    return (element.val() === "" && element.attr("name") !== "remember_me" && element.attr("name") !== "email") ? false : true;
   };
   validator.requiredInput = function() {
     $("input").each(function(i, data) {

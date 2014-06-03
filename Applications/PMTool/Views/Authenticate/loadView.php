@@ -3,9 +3,13 @@
   <figure class="login-box">
     <h1><?php echo $resx["h1_title"]; ?></h1>
     <section class="login-box-small">
-      <p>
+      <p style="display: none;">
         <label><?php echo $resx["email_label"]; ?></label>
         <input name="email" type="text" class="field" placeholder="<?php echo $resx["email_ph_text"]; ?>">
+      </p>
+      <p>
+        <label><?php echo $resx["username_label"]; ?></label>
+        <input name="username" type="text" class="field" placeholder="<?php echo $resx["username_ph_text"]; ?>">
       </p>
       <p>
         <label><?php echo $resx["pwd_label"]; ?></label>

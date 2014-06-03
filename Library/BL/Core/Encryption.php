@@ -35,7 +35,7 @@ class Encryption {
     public function Encrypt($public_key, $data) {
         $args = $this->InitEncryption($public_key);        
         //Encrypt the data after serializing it (usefull for arrays)
-        $data_encrypted = mcrypt_encrypt($args["algo"], $args["private_key"], serialize($data), $args["mode"], $iv);
+        $data_encrypted = mcrypt_encrypt($args["algo"], $args["private_key"], serialize($data), $args["mode"], $args["iv"]);
         //Encode the encrypted data (usefull when storing it in a db
         return trim(base64_encode($data_encrypted));
     }
@@ -49,7 +49,7 @@ class Encryption {
     public function Decrypt($public_key, $data) {
         $args = $this->InitEncryption($public_key);        
         //Encrypt the data after serializing it (usefull for arrays)
-        $data_encrypted = mcrypt_decrypt($args["algo"], $args["private_key"], base64_decode($data), $args["mode"], $iv);
+        $data_encrypted = mcrypt_decrypt($args["algo"], $args["private_key"], base64_decode($data), $args["mode"],  $args["iv"]);
         //Encode the encrypted data (usefull when storing it in a db
         return unserialize($data_encrypted);
     }
@@ -102,13 +102,13 @@ class Encryption {
         switch($source) {
                 case "dev_random":
                         // on créé un vecteur d'initialisation selon la taille maximale possible
-                        $iv = mcrypt_create_iv(mcrypt_get_iv_size($algo, $mode), MCRYPT_DEV_RANDOM);
+                        $iv = mcrypt_create_iv(mcrypt_get_iv_size($params["algo"], $params["mode"]), MCRYPT_DEV_RANDOM);
                 break;
                 case "dev_urandom":
-                        $iv = mcrypt_create_iv(mcrypt_get_iv_size($algo, $mode), MCRYPT_DEV_URANDOM);
+                        $iv = mcrypt_create_iv(mcrypt_get_iv_size($params["algo"], $params["mode"]), MCRYPT_DEV_URANDOM);
                 break;
                 default:
-                        $iv = mcrypt_create_iv(mcrypt_get_iv_size($algo, $mode), MCRYPT_RAND);
+                        $iv = mcrypt_create_iv(mcrypt_get_iv_size($params["algo"], $params["mode"]), MCRYPT_RAND);
                 break;
         }
 

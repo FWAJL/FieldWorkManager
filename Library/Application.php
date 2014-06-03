@@ -15,7 +15,7 @@ abstract class Application {
   public $logoImageUrl;
 
   public $user;
-  protected $config;
+  public $config;
   public $i8n;
   public $imageUtil;
 

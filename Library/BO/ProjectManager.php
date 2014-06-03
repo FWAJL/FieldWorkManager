@@ -3,7 +3,7 @@
 namespace Library\BO;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-class News extends \Library\Entity {
+class ProjectManager extends \Library\Entity {
 
   protected $pm_id,
           $username,

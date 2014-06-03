@@ -13,10 +13,11 @@ $(document).ready(function() {
 (function(auth) {
   auth.retrieveCredentials = function() {
     var email = $("input[name=email]").val();
+    var username = $("input[name=username]").val();
     var pwd = $("input[name=password]").val();
     var valid = validator.checkAndClean();//if input are clean...
     if (valid) {
-      return {"result": "success", "email": email, "pwd": pwd};//return array with data
+      return {"result": "success", "email": email, "username": username, "pwd": pwd};//return array with data
     } else {
       toastr.error("Try again...");//TODO: use resource manager
     }

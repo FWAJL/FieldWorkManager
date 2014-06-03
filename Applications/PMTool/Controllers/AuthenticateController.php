@@ -66,12 +66,13 @@ class AuthenticateController extends \Library\BaseController {
     $data_sent = $rq->post_ajax(NULL, FALSE);
 
     //Then, retrieve the login and password.
-    $user_request = array(
-        "username" => $data_sent["email"],
-        "pwd" => $data_sent["pwd"]
-    );
+    $user = new \Library\BO\ProjectManager();
+    $user->setPmEmail($data_sent["email"]);
+    $user->setUserName($data_sent["username"]);
+    $user->setPassword($data_sent["pwd"]);
+
     //Search for user in DB and return him
-    $user_db = $manager->selectOne($user_request);
+    $user_db = $manager->selectOne($user);
 
     //Decrypt password to check if match is found
     
@@ -82,9 +83,14 @@ class AuthenticateController extends \Library\BaseController {
       header('Location: ' . __BASEURL__ . "login");
     } else {
       //User is correct so log him in and set result to success
-      $this->LoginUser($user_request, $user_db);
+      $protect = new \Library\BL\Core\Encryption();
+//      echo "<!--pwd:" . $user->password() . "-->";
+      $user->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $user->password()));
+//      echo "<!--pwd:" . $user->password() . "-->";
+      $manager->update($user);
+      $this->LoginUser();
       $result["result"] = 1;
-      $result["message"] = $this->app->i8n->getLocalResource($resourceFileKey, "message_error");
+      $result["message"] = $this->app->i8n->getLocalResource($resourceFileKey, "message_success");
     }
     
     header('Content-Type: application/json');
@@ -104,10 +110,8 @@ class AuthenticateController extends \Library\BaseController {
   /**
    * Method that logs in a user in the session.
    * 
-   * @param type $user_in
-   * @param type $user_out
    */
-  private function LoginUser($user_in, $user_out) {
+  private function LoginUser() {
     $this->app->user->setAuthenticated();
   }
 
