@@ -5,7 +5,7 @@ if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script acces
 
 class ProjectManager extends \Library\Entity {
 
-  protected $pm_id,
+  public $pm_id,
           $username,
           $password,
           $hint,
