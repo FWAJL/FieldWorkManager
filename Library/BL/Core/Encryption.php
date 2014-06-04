@@ -35,9 +35,9 @@ class Encryption {
     public function Encrypt($public_key, $data) {
         $args = $this->InitEncryption($public_key);        
         //Encrypt the data after serializing it (usefull for arrays)
-        $data_encrypted = mcrypt_encrypt($args["algo"], $args["private_key"], serialize($data), $args["mode"], $args["iv"]);
+        $data_encrypted = mcrypt_encrypt($args["algo"], $args["private_key"], $data, $args["mode"], $args["iv"]);
         //Encode the encrypted data (usefull when storing it in a db
-        return trim(base64_encode($data_encrypted));
+        return $data_encrypted;
     }
         /**
      * Decrypt some data
@@ -49,9 +49,9 @@ class Encryption {
     public function Decrypt($public_key, $data) {
         $args = $this->InitEncryption($public_key);        
         //Encrypt the data after serializing it (usefull for arrays)
-        $data_encrypted = mcrypt_decrypt($args["algo"], $args["private_key"], base64_decode($data), $args["mode"],  $args["iv"]);
+        $data_decrypted = mcrypt_decrypt($args["algo"], $args["private_key"], $data, $args["mode"],  $args["iv"]);
         //Encode the encrypted data (usefull when storing it in a db
-        return unserialize($data_encrypted);
+        return $data_decrypted;
     }
     /**
      * Initialize the values to encrypt

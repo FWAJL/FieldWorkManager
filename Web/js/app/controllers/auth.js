@@ -24,7 +24,7 @@ $(document).ready(function() {
   };
   auth.login = function(credentials) {
     datacx.post("auth", credentials).then(function(reply) {//call AJAX method to call Login WebService
-      if (reply.result === !1) {//has an error
+      if (reply === null || reply.result === !1) {//has an error
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
