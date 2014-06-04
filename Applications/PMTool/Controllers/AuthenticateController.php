@@ -5,9 +5,9 @@
  * @package		Basic MVC framework
  * @author		FWA DEV Team
  * @copyright	Copyright (c) 2014
- * @license		
- * @link		
- * @since		
+ * @license
+ * @link
+ * @since
  * @filesource
  */
 // ------------------------------------------------------------------------
@@ -19,7 +19,7 @@
  * @subpackage	Controllers
  * @category	AuthenticateController
  * @author		FWA Dev Team
- * @link		
+ * @link
  */
 
 namespace Applications\PMTool\Controllers;
@@ -31,9 +31,9 @@ class AuthenticateController extends \Library\BaseController {
 
   /**
    * Method that loads the Login view.
-   * 
+   *
    * It loads the page title and the resources to load in the placeholders
-   * 
+   *
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeLoadView(\Library\HttpRequest $rq) {
@@ -47,59 +47,48 @@ class AuthenticateController extends \Library\BaseController {
 
   /**
    * Method that receives the call from JS Client to login a user
-   * 
+   *
    * @param \Library\HttpRequest $rq: the request
    * @return json object A JSON object with the result bool value and success/error message
    */
   public function executeAuthenticate(\Library\HttpRequest $rq) {
-    $resourceFileKey = "login";
     //Initialize the response to error.
-    $result = array(
-        "result" => 0,
-        "message" => $this->app->i8n->getLocalResource($resourceFileKey, "message_error")
-    );
-
-    //Load interface to query the database
-    $manager = $this->managers->getManagerOf('Login');
+    $result = $this->ManageResponseWS();
 
     //Let's retrieve the inputs from AJAX POST request
     $data_sent = $rq->post_ajax(NULL, FALSE);
 
     //Then, retrieve the login and password.
-    $user = new \Library\BO\ProjectManager();
-    $user->setPmEmail($data_sent["email"]);
-    $user->setUserName($data_sent["username"]);
-    $user->setPassword($data_sent["pwd"]);
+    $user = $this->PrepareUserObject($data_sent);
 
+    //Load interface to query the database
+    $manager = $this->managers->getManagerOf('Login');
     //Search for user in DB and return him
     $user_db = $manager->selectOne($user);
-
-    //Decrypt password to check if match is found
     
     
+//    echo $user->password();
+//    echo " ". $user_db[0]->password;
+//    $this->IsPasswordCorrect($user->password(), $user_db[0]->password);
     //If user_db is null or not matching, set error message
-    if (is_null($user_db)) {
+    if (is_null($user_db) && !$this->IsPasswordCorrect($user->password(), $user_db[0]->password)) {
       //TODO: redirect after 3 sec
       header('Location: ' . __BASEURL__ . "login");
     } else {
+      if (isset($data_sent["encrypt_pwd"])) {
+        $this->EncryptUserPassword($manager, $user, $user_db);
+      }
       //User is correct so log him in and set result to success
-      $protect = new \Library\BL\Core\Encryption();
-//      echo "<!--pwd:" . $user->password() . "-->";
-      $user->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $user->password()));
-//      echo "<!--pwd:" . $user->password() . "-->";
-      $manager->update($user);
-      $this->LoginUser();
-      $result["result"] = 1;
-      $result["message"] = $this->app->i8n->getLocalResource($resourceFileKey, "message_success");
+      $result = $this->ManageResponseWS("success");
     }
-    
+
     header('Content-Type: application/json');
-    echo json_encode($result, 128);//Encode response to pretty JSON
+    echo json_encode($result, 128); //Encode response to pretty JSON
   }
 
   /**
    * Method that logout a user from the session and then redirect him to Login page.
-   * 
+   *
    * @param \Library\HttpRequest $rq
    */
   public function executeDisconnect(\Library\HttpRequest $rq) {
@@ -107,12 +96,64 @@ class AuthenticateController extends \Library\BaseController {
     header('Location: ' . __BASEURL__ . "login");
   }
 
+  private function PrepareUserObject($data_sent) {
+    $user = new \Library\BO\ProjectManager();
+    $user->setPmEmail($data_sent["email"]);
+    $user->setUserName($data_sent["username"]);
+    $user->setPassword($data_sent["pwd"]);
+    return $user;
+  }
   /**
    * Method that logs in a user in the session.
-   * 
+   *
    */
   private function LoginUser() {
     $this->app->user->setAuthenticated();
+  }
+/**
+ * 
+ * @param DAL\BaseManager $manager
+ * @param BO\ProjectManager $user_in
+ * @param array(BO\ProjectManager) $user_db
+ */
+  private function EncryptUserPassword($manager, $user_in, $user_db) {
+    $protect = new \Library\BL\Core\Encryption();
+    $user_in->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $user_in->password()));
+    $user_in->pm_id = $user_db[0]->pm_id;
+    $manager->update($user_in);
+  }
+  /**
+   * Check if the password is matching
+   *
+   * @param string $password_given
+   * @param string $password_db
+   * @return boolean
+   */
+  private function IsPasswordCorrect($password_given, $password_db) {
+    $protect = new \Library\BL\Core\Encryption();
+    echo $protect->Decrypt($this->app->config->get("encryption_key"), $password_db);
+    return $password_given === $password_db;
+  }
+
+  /**
+   * 
+   * @param string $step
+   * @return array
+   */
+  private function ManageResponseWS($step = "init") {
+    $resourceFileKey = "login";
+    if ($step === "success") {
+      $this->LoginUser();
+      return array(
+        "result" => 1,
+        "message" => $this->app->i8n->getLocalResource($resourceFileKey, "message_success")
+      );
+    } else {
+      return array(
+        "result" => 0,
+        "message" => $this->app->i8n->getLocalResource($resourceFileKey, "message_error")
+      );
+    }
   }
 
 }
