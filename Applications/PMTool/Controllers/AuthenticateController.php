@@ -65,17 +65,15 @@ class AuthenticateController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf('Login');
     //Search for user in DB and return him
     $user_db = $manager->selectOne($user);
-    
-    
-//    echo $user->password();
-//    echo " ". $user_db[0]->password;
-//    $this->IsPasswordCorrect($user->password(), $user_db[0]->password);
+
+//    var_dump($user_db);
+//    echo count($user_db);
     //If user_db is null or not matching, set error message
-    if (is_null($user_db) && !$this->IsPasswordCorrect($user->password(), $user_db[0]->password)) {
+    if (count($user_db) === 0) {
       //TODO: redirect after 3 sec
-      header('Location: ' . __BASEURL__ . "login");
+      //header('Location: ' . __BASEURL__ . "login");
     } else {
-      if (isset($data_sent["encrypt_pwd"])) {
+      if (!isset($data_sent["encrypt_pwd"])) {
         $this->EncryptUserPassword($manager, $user, $user_db);
       }
       //User is correct so log him in and set result to success
@@ -97,12 +95,15 @@ class AuthenticateController extends \Library\BaseController {
   }
 
   private function PrepareUserObject($data_sent) {
+    $protect = new \Library\BL\Core\Encryption();
+
     $user = new \Library\BO\ProjectManager();
     $user->setPmEmail($data_sent["email"]);
     $user->setUserName($data_sent["username"]);
-    $user->setPassword($data_sent["pwd"]);
+    $user->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $data_sent["pwd"]));
     return $user;
   }
+
   /**
    * Method that logs in a user in the session.
    *
@@ -110,29 +111,18 @@ class AuthenticateController extends \Library\BaseController {
   private function LoginUser() {
     $this->app->user->setAuthenticated();
   }
-/**
- * 
- * @param DAL\BaseManager $manager
- * @param BO\ProjectManager $user_in
- * @param array(BO\ProjectManager) $user_db
- */
+
+  /**
+   * 
+   * @param DAL\BaseManager $manager
+   * @param BO\ProjectManager $user_in
+   * @param array(BO\ProjectManager) $user_db
+   */
   private function EncryptUserPassword($manager, $user_in, $user_db) {
     $protect = new \Library\BL\Core\Encryption();
     $user_in->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $user_in->password()));
     $user_in->pm_id = $user_db[0]->pm_id;
     $manager->update($user_in);
-  }
-  /**
-   * Check if the password is matching
-   *
-   * @param string $password_given
-   * @param string $password_db
-   * @return boolean
-   */
-  private function IsPasswordCorrect($password_given, $password_db) {
-    $protect = new \Library\BL\Core\Encryption();
-    echo $protect->Decrypt($this->app->config->get("encryption_key"), $password_db);
-    return $password_given === $password_db;
   }
 
   /**
