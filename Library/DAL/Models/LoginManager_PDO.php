@@ -15,9 +15,9 @@ class LoginManager_PDO extends \Library\DAL\BaseManager {
    */
   public function selectOne($pm_in) {
     if ($pm_in->username() !== "") {//Check if the user is giving his username and that there is a value
-      $sql = 'SELECT * FROM project_manager where `username` = \'' . $pm_in->username() . '\' LIMIT 0, 1;';
+      $sql = 'SELECT * FROM project_manager where `username` = \'' . $pm_in->username() . '\' AND `password` = \''. $pm_in->password() . '\' LIMIT 0, 1;';
     } else if ($pm_in->pm_email() !== "") {//Check if the user is giving an email
-      $sql = 'SELECT * FROM project_manager where `email` = \'' . $pm_in->pm_email() . '\' LIMIT 0, 1;';
+      $sql = 'SELECT * FROM project_manager where `email` = \'' . $pm_in->pm_email() . '\' AND `password` = \''. $pm_in->password() . '\' LIMIT 0, 1;';
     } else {
       return NULL;
     }
