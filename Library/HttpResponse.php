@@ -1,9 +1,11 @@
 <?php
 
 namespace Library;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-class HTTPResponse extends ApplicationComponent {
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+  exit('No direct script access allowed');
+
+class HttpResponse extends ApplicationComponent {
 
   protected $page;
 
@@ -18,7 +20,7 @@ class HTTPResponse extends ApplicationComponent {
 
   public function displayError($errorCode) {
     $this->page = new Page($this->app);
-    $this->page->setContentFile(__ROOT__.'Errors/'.$errorCode.'.html');
+    $this->page->setContentFile(__ROOT__ . 'Errors/' . $errorCode . '.html');
 
     //$this->addHeader('HTTP/1.0 404 Not Found');
 
@@ -52,8 +54,19 @@ class HTTPResponse extends ApplicationComponent {
    */
   public function setCookie($params) {
     setcookie(
-            $params['name'], $params['value'], $params['expire'], $params['path'], $params['domain'], $params['secure'], $params['httpOnly']
+        $params['name'], $params['value'], $params['expire'], $params['path'], $params['domain'], $params['secure'], $params['httpOnly']
     );
+  }
+
+  /**
+   * Set content type to JSON when replying to AJAX call and encode the data sent back.
+   * 
+   * @param array $response
+   * @return json
+   */
+  public static function encodeJson($response) {
+    header('Content-Type: application/json');
+    return json_encode($response, 128); //Encode response to pretty JSON
   }
 
 }

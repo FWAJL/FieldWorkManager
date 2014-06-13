@@ -29,7 +29,7 @@ if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script acces
 abstract class SessionKeys {
   const UserAuthenticated = "user_auth";
   const UserFlash = 'user_flash';
-  
+  const UserConnected = "user_connected";
 }
 
 ?>
