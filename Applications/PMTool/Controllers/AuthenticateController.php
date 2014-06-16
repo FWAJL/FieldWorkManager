@@ -36,7 +36,7 @@ class AuthenticateController extends \Library\BaseController {
    *
    * @param \Library\HttpRequest $rq: the request
    */
-  public function executeLoadView(\Library\HttpRequest $rq) {
+  public function executeLoadLoginView(\Library\HttpRequest $rq) {
     //TODO: add resource using a Resource manager
     //$authenticate_js_script_path = "authenticate.js";
     $resourceFileKey = "login";

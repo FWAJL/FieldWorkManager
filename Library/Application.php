@@ -13,6 +13,7 @@ abstract class Application {
   public $pageTitle;
   public $pageUrls;
   public $logoImageUrl;
+  public $scriptsToAdd;
 
   public $user;
   public $config;
@@ -37,11 +38,10 @@ abstract class Application {
   }
 
   public function getController() {
-//    //
-//    $router = new \Library\Router;
-//    $router->LoadAvailableRoutes($this);
     $this->router->LoadAvailableRoutes($this);
     $matchedRoute = $this->FindRouteMatch();
+    $this->scriptsToAdd = $matchedRoute->scriptsToAdd();
+    
     if ($matchedRoute->type() === "ws") {
       $this->router()->isWsCall = true;
     }
