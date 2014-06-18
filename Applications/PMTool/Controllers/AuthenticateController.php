@@ -36,7 +36,7 @@ class AuthenticateController extends \Library\BaseController {
    *
    * @param \Library\HttpRequest $rq: the request
    */
-  public function executeLoadView(\Library\HttpRequest $rq) {
+  public function executeLoadLoginView(\Library\HttpRequest $rq) {
     //TODO: add resource using a Resource manager
     //$authenticate_js_script_path = "authenticate.js";
     $resourceFileKey = "login";
@@ -56,7 +56,7 @@ class AuthenticateController extends \Library\BaseController {
     $result = $this->ManageResponseWS();
 
     //Let's retrieve the inputs from AJAX POST request
-    $data_sent = $rq->post_ajax(NULL, FALSE);
+    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
 
     //Then, retrieve the login and password.
     $user = $this->PrepareUserObject($data_sent);
@@ -66,8 +66,6 @@ class AuthenticateController extends \Library\BaseController {
     //Search for user in DB and return him
     $user_db = $manager->selectOne($user);
 
-//    var_dump($user_db);
-//    echo count($user_db);
     //If user_db is null or not matching, set error message
     if (count($user_db) === 0) {
       //TODO: redirect after 3 sec
@@ -77,11 +75,10 @@ class AuthenticateController extends \Library\BaseController {
         $this->EncryptUserPassword($manager, $user, $user_db);
       }
       //User is correct so log him in and set result to success
-      $result = $this->ManageResponseWS("success");
+      $result = $this->ManageResponseWS("success", $user_db);
     }
-
-    header('Content-Type: application/json');
-    echo json_encode($result, 128); //Encode response to pretty JSON
+    //return the JSON data
+    echo \Library\HttpResponse::encodeJson($result);
   }
 
   /**
@@ -91,15 +88,16 @@ class AuthenticateController extends \Library\BaseController {
    */
   public function executeDisconnect(\Library\HttpRequest $rq) {
     $this->app->user->setAuthenticated(FALSE);
+    $this->app->user->unsetAttribute(\Library\Enums\SessionKeys::UserConnected);
     header('Location: ' . __BASEURL__ . "login");
   }
 
   private function PrepareUserObject($data_sent) {
     $protect = new \Library\BL\Core\Encryption();
 
-    $user = new \Library\BO\ProjectManager();
-    $user->setPmEmail($data_sent["email"]);
-    $user->setUserName($data_sent["username"]);
+    $user = new \Library\BO\Project_manager();
+    $user->setPm_email($data_sent["email"]);
+    $user->setUsername($data_sent["username"]);
     $user->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $data_sent["pwd"]));
     return $user;
   }
@@ -108,11 +106,15 @@ class AuthenticateController extends \Library\BaseController {
    * Method that logs in a user in the session.
    *
    */
-  private function LoginUser() {
+  private function LoginUser($pm_user) {
+    //set authenticated flag
     $this->app->user->setAuthenticated();
+    //store user in session
+    $this->app->user->setAttribute(\Library\Enums\SessionKeys::UserConnected, $pm_user);
   }
 
   /**
+   * Encrypt the user password
    * 
    * @param DAL\BaseManager $manager
    * @param BO\ProjectManager $user_in
@@ -130,10 +132,10 @@ class AuthenticateController extends \Library\BaseController {
    * @param string $step
    * @return array
    */
-  private function ManageResponseWS($step = "init") {
+  private function ManageResponseWS($step = "init", $user = NULL) {
     $resourceFileKey = "login";
     if ($step === "success") {
-      $this->LoginUser();
+      $this->LoginUser($user);
       return array(
         "result" => 1,
         "message" => $this->app->i8n->getLocalResource($resourceFileKey, "message_success")
