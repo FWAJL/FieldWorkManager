@@ -98,7 +98,12 @@ class AuthenticateController extends \Library\BaseController {
     $user = new \Library\BO\Project_manager();
     $user->setPm_email($data_sent["email"]);
     $user->setUsername($data_sent["username"]);
-    $user->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $data_sent["pwd"]));
+    if (!isset($data_sent["encrypt_pwd"])) {
+      $user->setPassword($data_sent["pwd"]);
+    } else {
+      $user->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $data_sent["pwd"]));
+    }
+    
     return $user;
   }
 
