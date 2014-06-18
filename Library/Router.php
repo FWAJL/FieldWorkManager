@@ -63,8 +63,27 @@ class Router extends ApplicationComponent{
       $this->pageUrls[$route->getAttribute('url')."Url"] = $route->getAttribute('url');
 
       // On ajoute la route au routeur.
-      $this->addRoute(new Route($route->getAttribute('url'), $route->getAttribute('module'), $route->getAttribute('action'), $vars, $route->getAttribute('type')));
+      $this->addRoute(
+          new Route(
+              $route->getAttribute('url'), 
+              $route->getAttribute('module'), 
+              $route->getAttribute('action'), 
+              $vars, 
+              $route->getAttribute('type'),
+              $this->LoadScriptsToAdd($route)
+              ));      
     }
   }
-
+/**
+ * Store the script urls to add to the loading view
+ * 
+ * @param DOMDocument element $route
+ */
+  public function LoadScriptsToAdd($route) {
+    $scripts = "";
+    foreach ($route->getElementsByTagName('script') as $script) {
+      $scripts .= '<script type="application/javascript" src="' . $script->getAttribute('value') . '"></script>';
+    }
+    return $scripts;
+  }
 }

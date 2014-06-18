@@ -11,13 +11,15 @@ class Route {
   protected $varsNames;
   protected $vars = array();
   protected $type;
+  protected $scriptsToAdd = "";
 
-  public function __construct($url, $module, $action, array $varsNames, $type) {
+  public function __construct($url, $module, $action, array $varsNames, $type, $scriptsToAdd) {
     $this->setUrl($url);
     $this->setModule($module);
     $this->setAction($action);
     $this->setVarsNames($varsNames);
     $this->setType($type);
+    $this->setScriptsToAdd($scriptsToAdd);
   }
 
   public function hasVars() {
@@ -63,6 +65,10 @@ class Route {
       $this->type = $type;
     }
   }
+  
+  public function setScriptsToAdd($scriptsToAdd) {
+    return $this->scriptsToAdd = $scriptsToAdd;
+  }
 
   public function action() {
     return $this->action;
@@ -82,6 +88,9 @@ class Route {
 
   public function type() {
     return $this->type;
+  }
+  public function scriptsToAdd() {
+    return $this->scriptsToAdd;
   }
 
 }
