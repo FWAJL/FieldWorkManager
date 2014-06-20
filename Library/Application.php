@@ -13,7 +13,8 @@ abstract class Application {
   public $pageTitle;
   public $pageUrls;
   public $logoImageUrl;
-  public $scriptsToAdd;
+  public $jsScriptsToAdd;
+  public $cssFilesToAdd;
 
   public $user;
   public $config;
@@ -40,7 +41,8 @@ abstract class Application {
   public function getController() {
     $this->router->LoadAvailableRoutes($this);
     $matchedRoute = $this->FindRouteMatch();
-    $this->scriptsToAdd = $matchedRoute->scriptsToAdd();
+    $this->jsScriptsToAdd = $matchedRoute->jsScriptsToAdd();
+    $this->cssFilesToAdd = $matchedRoute->cssFilesToAdd();
     
     if ($matchedRoute->type() === "ws") {
       $this->router()->isWsCall = true;

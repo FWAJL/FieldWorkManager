@@ -7,9 +7,7 @@
     <link rel="stylesheet" type="text/css" href="Web/css/core/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="Web/css/addons/toastr.css" />
     <link rel="stylesheet" type="text/css" href="Web/css/app/core-app-style.css" />
-    <link rel="stylesheet" type="text/css" href="Web/css/app/app-style.css" />
-    <link rel="stylesheet" type="text/css" href="Web/css/app/theme.css" />
-    <link rel="stylesheet" type="text/css" href="Web/css/app/media-queries.css" />
+    <?php echo $this->app->cssFilesToAdd; ?>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">

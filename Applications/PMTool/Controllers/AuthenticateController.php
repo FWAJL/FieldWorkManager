@@ -43,6 +43,8 @@ class AuthenticateController extends \Library\BaseController {
 
     $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
+    
+    $this->executeDisconnect($rq,FALSE);
   }
 
   /**
@@ -86,10 +88,10 @@ class AuthenticateController extends \Library\BaseController {
    *
    * @param \Library\HttpRequest $rq
    */
-  public function executeDisconnect(\Library\HttpRequest $rq) {
+  public function executeDisconnect(\Library\HttpRequest $rq, $redirect = TRUE) {
     $this->app->user->setAuthenticated(FALSE);
     $this->app->user->unsetAttribute(\Library\Enums\SessionKeys::UserConnected);
-    header('Location: ' . __BASEURL__ . "login");
+    if ($redirect) header('Location: ' . __BASEURL__ . "login");
   }
 
   private function PrepareUserObject($data_sent) {
