@@ -66,25 +66,28 @@ class Router extends ApplicationComponent {
 
       // On ajoute la route au routeur.
       $route_config = array(
-          "route_xml"=> $route,
-          "vars"=> $vars,
-          "javascript"=> $this->_LoadScriptsToAdd($route),
-          "css"=>  $this->_LoadCssFiles($route)
+          "route_xml" => $route,
+          "vars" => $vars,
+          "js_head" => $this->_GetJsFiles($route, "head"),
+          "js_html" => $this->_GetJsFiles($route, "html"),
+          "css" => $this->_LoadCssFiles($route)
       );
       $this->addRoute(new Route($route_config));
     }
   }
 
   /**
-   * Store the script urls to add to the loading view
+   * Store the script urls to add to the loading view or to the head element
    * 
    * @param type $route
    * @return string
    */
-  private function _LoadScriptsToAdd($route) {
+  private function _GetJsFiles($route, $destination) {
     $scripts = "";
     foreach ($route->getElementsByTagName('js_file') as $script) {
-      $scripts .= '<script type="application/javascript" src="' . $script->getAttribute('value') . '"></script>';
+      if ($script->getAttribute('use') === $destination) {
+        $scripts .= '<script type="application/javascript" src="' . $script->getAttribute('value') . '"></script>';
+      }
     }
     return $scripts;
   }

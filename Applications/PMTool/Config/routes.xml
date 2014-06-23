@@ -2,19 +2,27 @@
 <routes>
   <!-- UI routes -->
   <route url="login" module="Authenticate" action="loadLoginView" type="ui">
-    <js_file value="Web/js/app/validator.js"/>
-    <js_file value="Web/js/app/services/dataservice.js"/>
-    <js_file value="Web/js/app/controllers/auth.js"/>     
-    <css_file value="Web/css/app/app-style.css"/>
-    <css_file value="Web/css/app/theme.css"/>
-    <css_file value="Web/css/app/media-queries.css"/>
+    <js_file use="html" value="Web/js/app/validator.js"/>
+    <js_file use="html" value="Web/js/app/services/dataservice.js"/>
+    <js_file use="html" value="Web/js/app/controllers/auth.js"/>     
+    <css_file use="html" value="Web/css/app/app-style.css"/>
+    <css_file use="html" value="Web/css/app/theme.css"/>
+    <css_file use="html" value="Web/css/app/media-queries.css"/>
   </route>
   <route url="logout" module="Authenticate" action="disconnect" type="ui">
   
   </route>
   <route url="projects" module="Project" action="index" type="ui">
-    <js_file value="Web/js/app/design/all.js"/>
-    <js_file value="Web/js/app/design/ddaccordion.js"/>
+    <js_file use="head" value="Web/js/addons/modernizr.js"/>
+    <js_file use="head" value="Web/js/app/design/all.js"/>
+    <js_file use="head" value="Web/js/app/design/tinydropdown.js"/>
+    <js_file use="head" value="Web/js/app/design/ddaccordion.js"/>
+    <js_file use="head" value="Web/js/app/design/drop_down.js"/>
+    <js_file use="head" value="Web/js/app/design/headScript.js"/>
+    <css_file value="Web/css/app/nav.css"/>
+    <css_file value="Web/css/app/app-style.css"/>
+    <css_file value="Web/css/app/theme.css"/>
+    <css_file value="Web/css/app/media-queries.css"/>
   </route>
   
   <!-- WebService routes -->

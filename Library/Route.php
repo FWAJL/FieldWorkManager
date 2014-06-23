@@ -11,8 +11,9 @@ class Route {
   protected $varsNames;
   protected $vars = array();
   protected $type;
-  protected $jsScriptsToAdd = "";
-  protected $cssFilesToAdd = "";
+  protected $headJsScripts = "";
+  protected $htmlJsScripts = "";
+  protected $cssFiles = "";
 
   public function __construct($config) {
     $this->setUrl($config['route_xml']->getAttribute('url'));
@@ -22,8 +23,9 @@ class Route {
 
     $this->setVarsNames($config['vars']);
     
-    $this->setJsScriptsToAdd($config['javascript']);
-    $this->setCssFilesToAdd($config['css']);
+    $this->setJsScripts($config['js_head'], TRUE);
+    $this->setJsScripts($config['js_html'], FALSE);
+    $this->setCssFiles($config['css']);
   }
 
   public function hasVars() {
@@ -70,12 +72,16 @@ class Route {
     }
   }
   
-  public function setJsScriptsToAdd($js_scripts) {
-    return $this->jsScriptsToAdd = $js_scripts;
+  public function setJsScripts($js_scripts, $forHead) {
+    if ($forHead) {
+     return $this->headJsScripts = $js_scripts; 
+    } else {
+     return $this->htmlJsScripts = $js_scripts; 
+    }
   }
 
-  public function setCssFilesToAdd($css_files) {
-    return $this->cssFilesToAdd = $css_files;
+  public function setCssFiles($css_files) {
+    return $this->cssFiles = $css_files;
   }
 
   public function action() {
@@ -97,11 +103,14 @@ class Route {
   public function type() {
     return $this->type;
   }
-  public function jsScriptsToAdd() {
-    return $this->jsScriptsToAdd;
+  public function headJsScripts() {
+    return $this->headJsScripts;
   }
-  public function cssFilesToAdd() {
-    return $this->cssFilesToAdd;
+  public function htmlJsScripts() {
+    return $this->htmlJsScripts;
+  }
+  public function cssFiles() {
+    return $this->cssFiles;
   }
 
 }

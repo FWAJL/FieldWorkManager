@@ -31,9 +31,9 @@ abstract class FileNameConst {
   const HeaderTemplate = "/Templates/header.php";
   const ContenTemplate = "/Templates/content.php";
   const FooterTemplate = "/Templates/footer.php";
-  const SideMenuTemplate = "/Templates/genericHeaderApp.php";
+  const MenuTopTemplate = "/Templates/menus/top.php";
+  const MenuLeftTemplate = "/Templates/menus/left.php";
   const HeaderAppTemplate = "/Templates/genericSideMenu.php";
-  const TopMenuTemplate = "/Templates/menu/genericTopMenu.php";
 }
 
 ?>

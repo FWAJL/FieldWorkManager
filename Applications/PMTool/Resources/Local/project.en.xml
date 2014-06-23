@@ -3,4 +3,5 @@
   <resource key="page_title">Your projects - Field Work Assistant</resource>
   <resource key="h3_title">Your projects</resource>
   <resource key="logout_link_text">Logout</resource>
+  <resource key="p_user_name_label">User Name: </resource>
 </resources>
