@@ -1,5 +1,8 @@
 .login-box p label{
-  width: 75px;
+  width: 100px;
+}
+.login-box p input{
+  line-height: 20px;
 }
 .login-box .login-btn{
   position: relative;
