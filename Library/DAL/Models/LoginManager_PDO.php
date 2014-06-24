@@ -22,7 +22,7 @@ class LoginManager_PDO extends \Library\DAL\BaseManager {
       return NULL;
     }
     $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Library\BO\ProjectManager');
+    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Library\BO\Projec_manager');
 
     $pm_out = $query->fetchAll();
     $query->closeCursor();
