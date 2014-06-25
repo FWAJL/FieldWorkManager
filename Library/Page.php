@@ -22,6 +22,8 @@ class Page extends ApplicationComponent {
       throw new \RuntimeException('The view ' . $this->contentFile . ' doesn\'t exist.');
     }
     $user = $this->app->user();
+    
+    $this->addVar("resx_menu_left", $this->app->i8n->getCommonResourceArray("menu_left"));
 
     $int = extract($this->vars);
 

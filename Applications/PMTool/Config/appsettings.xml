@@ -11,6 +11,6 @@
   <define key="Myslq_host" value="localhost" />
   <define key="Mysql_user" value="test_fwa" />
   <define key="Mysql_pwd" value="fwa1_6231One@" />
-  <define key="Mysql_db_name" value="fwa_2" />
+  <define key="Mysql_db_name" value="fwa_2" /> 
   
 </definitions>
