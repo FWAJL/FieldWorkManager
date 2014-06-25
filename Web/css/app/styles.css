@@ -393,6 +393,7 @@ arrowlistmenu ul{ /*CSS for UL of each sub menu*/
 .arrowlistmenu ul li{
   padding-bottom: 2px; /*bottom spacing between menu items*/
   *padding-bottom: 0px; /*bottom spacing between menu items*/
+  list-style-image: none;
 }
 
 .arrowlistmenu ul li a{
