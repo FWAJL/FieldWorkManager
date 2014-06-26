@@ -1,101 +1,106 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
-<section class="right-aside"><h2>Add new project</h2>
+<section class="right-aside">
+  <h2></h2>
 
-  <p>&nbsp;</p>
-  <table border="0" align="center" cellpadding="0" cellspacing="0" class="add-new-p">
-    <tr>
-      <td align="left" valign="top" style="padding:3px">
-        <p><span>Project Name:</span></p></td>
-      <td width="59%" align="left" valign="top"><input type="text" size="15"></td>
-    </tr>
-    <tr>
-      <td align="left" valign="top" style="padding:3px"><p><span>Project Description:</span></p></td>
-      <td align="left" valign="top"><input name="" type="text" size="15"></td>
-    </tr>
-
-    <tr>
-      <td align="left" valign="top">&nbsp;</td>
-      <td align="left" valign="top">&nbsp;</td>
-    </tr>
-    <tr>
-      <td colspan="2" align="left" valign="top"><p><span><strong>Company and Faciility Information below.</strong></span></p></td>
-    </tr>
-    <tr>
-      <td align="left" valign="top">&nbsp;</td>
-      <td align="left" valign="top">&nbsp;</td>
-    </tr>
-    <tr>
-      <td align="left" valign="top" style="padding:3px"><p><span>Facility Name:</span></p></td>
-      <td align="left" valign="top"><input name="" type="text" size="15"></td>
-    </tr>
-    <tr>
-      <td align="left" valign="top" style="padding:3px"><p><span>Facility Address:</span></p></td>
-      <td align="left" valign="top"><input name="" type="text" size="15"></td>
-    </tr>
-    <tr>
-      <td align="left" valign="top" style="padding:3px"><p><span>Facility Latitude:</span></p></td>
-      <td align="left" valign="top"><input name="" type="text" size="15"></td>
-    </tr>
-    <tr>
-      <td align="left" valign="top" style="padding:3px"><p><span>Facility Longitude:</span></p></td>
-      <td align="left" valign="top"><input name="" type="text" size="15"></td>
-    </tr>
-    <tr>
-      <td align="left" valign="top" style="padding:3px"><p><span>Facility - Contact Name:</span></p></td>
-      <td align="left" valign="top"><input name="" type="text" size="15"></td>
-    </tr>
-    <tr>
-      <td align="left" valign="top" style="padding:3px"><p><span>Facility - Phone (Mobile):</span></p></td>
-      <td align="left" valign="top"><input name="" type="text" size="15"></td>
-    </tr>
-    <tr>
-      <td align="left" valign="top" style="padding:3px"><p><span>Facility Email:</span></p></td>
-      <td align="left" valign="top"><input name="" type="text" size="15"></td>
-    </tr>
-    <tr>
-      <td align="left" valign="top" style="padding:3px"><p><span>Facility ID Number:</span></p></td>
-      <td align="left" valign="top"><input name="" type="text" size="15"></td>
-    </tr>
-    <tr>
-      <td align="left" valign="top" style="padding:3px"><p><span>Facility - Sector:</span></p></td>
-      <td align="left" valign="top"><input name="" type="text" size="15"></td>
-    </tr>
-    <tr>
-      <td align="left" valign="top" style="padding:3px"><p><span>Facility - SIC Code:</span></p></td>
-      <td align="left" valign="top"><input name="" type="text" size="15"></td>
-    </tr>
-    <tr>
-      <td align="left" valign="top" style="padding:3px"><p><span>Company Name:</span></p></td>
-      <td align="left" valign="top"><input name="" type="text" size="15"></td>
-    </tr>
-    <tr>
-      <td align="left" valign="top" style="padding:3px"><p><span>Company - Contanct Name:</span></p></td>
-      <td align="left" valign="top"><input name="" type="text" size="15"></td>
-    </tr>
-    <tr>
-      <td align="left" valign="top" style="padding:3px"><p><span>Company - Phone (Mobile):</span></p></td>
-      <td align="left" valign="top"><input name="" type="text" size="15"></td>
-    </tr>
-    <tr>
-      <td align="left" valign="top" style="padding:3px"><p><span>Company Email:</span></p></td>
-      <td align="left" valign="top"><input name="" type="text" size="15"></td>
-    </tr>
-    <tr>
-      <td align="left" valign="top" style="padding:3px"><p><span>Company Address:</span></p></td>
-      <td align="left" valign="top"><input name="" type="text" size="15"></td>
-    </tr>
-    <tr>
-      <td align="left" valign="top" style="padding:3px"><p><span>Company ID Number:</span></p></td>
-      <td align="left" valign="top"><input name="" type="text" size="15"></td>
-    </tr>
-    <tr>
-      <td align="left" valign="top">&nbsp;</td>
-      <td align="left" valign="top">&nbsp;</td>
-    </tr>
-
-
-    <td width="41%" align="left" valign="top">&nbsp;</td>
-    <td align="left" valign="top"><input type="submit" name="button" id="button" value="Add project"></td>
-    </tr>
-  </table>
+  <section class="form_sections">
+    <fieldset class="project_form">
+      <legend><?php echo $resx["project_legend"]; ?></legend>
+      <ol class="add-new-p">
+        <li>
+          <label><?php echo $resx["project_name"]; ?></label>
+          <input name="project_name" type="text" />
+        </li>
+        <li>
+          <label><?php echo $resx["project_num"]; ?></label>
+          <input name="project_num" type="text" />
+        </li>
+        <li>
+          <label><?php echo $resx["project_desc"]; ?></label>
+          <input name="project_desc" type="text" />
+        </li>
+        <li>
+          <label><?php echo $resx["project_active_flag"]; ?></label>
+          <input name="project_active_flag" type="checkbox" />
+        </li>
+        <li>
+          <label><?php echo $resx["project_visible_flag"]; ?></label>
+          <input name="project_active_flag" type="checkbox"/>
+        </li>
+      </ol>
+    </fieldset>
+    <fieldset class="facility_form">
+      <legend><?php echo $resx["facility_legend"]; ?></legend>
+      <ol class="add-new-p">
+        <li>
+          <label><?php echo $resx["facility_name"]; ?></label>
+          <input name="facility_name" type="text" />
+        </li>
+        <li>
+          <label><?php echo $resx["facility_address"]; ?></label>
+          <textarea name="facility_address" type="text"></textarea>
+        </li>
+        <li>
+          <label><?php echo $resx["facility_lat"]; ?></label>
+          <input name="facility_lat" type="text" />
+        </li>
+        <li>
+          <label><?php echo $resx["facility_long"]; ?></label>
+          <input name="facility_long" type="text" />
+        </li>
+        <li>
+          <label><?php echo $resx["facility_contact_name"]; ?></label>
+          <input name="facility_contact_name" type="text" />
+        </li>
+        <li>
+          <label><?php echo $resx["facility_contact_phone"]; ?></label>
+          <input name="facility_contact_phone" type="text" />
+        </li>
+        <li>
+          <label><?php echo $resx["facility_contact_email"]; ?></label>
+          <input name="facility_contact_email" type="text" />
+        </li>
+        <li>
+          <label><?php echo $resx["facility_id_number"]; ?></label>
+          <input name="facility_id_number" type="text" />
+        </li>
+        <li>
+          <label><?php echo $resx["facility_sector"]; ?></label>
+          <input name="facility_sector" type="text" />
+        </li>
+        <li>
+          <label><?php echo $resx["facility_sic_code"]; ?></label>
+          <input name="facility_sic_code" type="text" />
+        </li>
+        <li>
+          <label><?php echo $resx["facility_boundary"]; ?></label>
+          <input name="facility_boundary" type="text" />
+        </li>
+      </ol>
+    </fieldset>
+    <fieldset class="company_form">
+      <legend><?php echo $resx["company_legend"]; ?></legend>
+      <ol class="add-new-p">
+        <li>
+          <label><?php echo $resx["company_name"]; ?></label>
+          <input name="company_name" type="text" />
+        </li>
+        <li>
+          <label><?php echo $resx["company_contact_name"]; ?></label>
+          <input name="company_contact_name" type="text" />
+        </li>
+        <li>
+          <label><?php echo $resx["company_contact_phone"]; ?></label>
+          <input name="company_contact_phone" type="text" />
+        </li>
+        <li>
+          <label><?php echo $resx["company_contact_email"]; ?></label>
+          <input name="company_contact_email" type="text" />
+        </li>
+        <li>
+          <label><?php echo $resx["company_id_number"]; ?></label>
+          <input name="company_id_number" type="text" />
+        </li>
+      </ol>
+    </fieldset>
+  </section>
 </section>	

@@ -4,10 +4,10 @@
   <resource key="p_user_name_label">User Name: </resource>
   <resource key="header_projects">Projects</resource>
   <resource key="header_locations">Locations</resource>
-  <resource key="projects_add">Add new projects</resource>
+  <resource key="projects_add">Add new project</resource>
   <resource key="projects_manage">Show/Hide Projects</resource>
   <resource key="item_projectX">A project</resource>
-  <resource key="locations_add">Add New Location</resource>
+  <resource key="locations_add">Add new Location</resource>
   <resource key="locations_boundary_add">Add Boundary</resource>
   <resource key="locations_upload_list">Upload Location List</resource>
   <resource key="locations_manage">Show/Hide Locations</resource>
