@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
   <resource key="page_title">Your projects - Field Work Assistant</resource>
-  <resource key="h3_title">Your projects</resource>
-  <resource key="project_name">Project Name:</resource>
-  <resource key="project_desc">Project Description:</resource>
+  <resource key="project_legend">Add new project</resource>
+  <resource key="project_name">Project Name</resource>
+  <resource key="project_num">Project Number</resource>
+  <resource key="project_desc">Project Description</resource>
+  <resource key="project_active_flag">Active</resource>
+  <resource key="project_visible_flag">Visible</resource>
+  
+  <resource key="facility_legend">The facility</resource>
+  <resource key="facility_name">Facility Name</resource>
+  <resource key="facility_address">Facility Address</resource>
+  <resource key="facility_lat">Facility Latitude</resource>
+  <resource key="facility_long">Facility Longitude</resource>
+  <resource key="facility_contact_name">Facility - Contact Name</resource>
+  <resource key="facility_contact_phone">Facility - Contact Phone (Mobile)</resource>
+  <resource key="facility_contact_email">Facility - Contact Email</resource>
+  <resource key="facility_id_number">Facility ID Number</resource>
+  <resource key="facility_sector">Facility - Sector</resource>
+  <resource key="facility_sic_code">Facility - SIC Code</resource>
+  <resource key="facility_boundary">Facility - Boundary</resource>
+
+  <resource key="company_legend">The client company</resource>
+  <resource key="company_name">Company Name</resource>
+  <resource key="company_contact_name">Facility - Contact Name</resource>
+  <resource key="company_contact_phone">Facility - Contact Phone (Mobile)</resource>
+  <resource key="company_contact_email">Facility - Contact Email</resource>
+  <resource key="company_id_number">Facility ID Number</resource>
+
 </resources>
