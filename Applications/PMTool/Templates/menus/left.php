@@ -35,8 +35,8 @@
             <?php echo $resx_menu_left["header_locations"]; ?>
             <span class="accordsuffix"></span></p>
           <ul style="display: block;" contentindex="2c" class="categoryitems">
-            <li><a href="/locations"><?php echo $resx_menu_left["item_locX"]; ?></a></li> 
-            <li><a href="/locations" class="plus"><?php echo $resx_menu_left["locations_add"]; ?></a></li>
+            <li><a href="/locations/view/1"><?php echo $resx_menu_left["item_locX"]; ?></a></li> 
+            <li><a href="/locations/add" class="plus"><?php echo $resx_menu_left["locations_add"]; ?></a></li>
             <!--<li><a href="/locations" class="plus"><?php echo $resx_menu_left["locations_boundary_add"]; ?></a></li>-->
             <!--<li><a href="/locations" class="plus"><?php echo $resx_menu_left["locations_upload_list"]; ?></a></li>-->
             <!--<li><a href="/locations"><?php echo $resx_menu_left["locations_manage"]; ?></a></li>-->
