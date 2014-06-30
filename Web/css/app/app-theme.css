@@ -1,0 +1,30 @@
+/*  COMMON */
+.validator {
+  display: none;
+  color: #FC7F6F;
+}
+
+/* LOGIN */
+.login-box p label{
+  width: 100px;
+}
+.login-box p input{
+  line-height: 20px;
+}
+.login-box .login-btn{
+  position: relative;
+  top: 10px;
+  left: 125px;
+}
+
+/* ADD PROJECT */
+.form_sections, .project_form, .facility_form{
+  padding: 10px;
+  padding-bottom: 30px;
+}
+.form_sections li label{
+  width: 250px;
+}
+.form_sections li input, .form_sections li textarea{
+  width: 250px;
+}
