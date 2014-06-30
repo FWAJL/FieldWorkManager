@@ -64,13 +64,16 @@ class Router extends ApplicationComponent {
       // We store the page Url to be used globally in the app
       $this->pageUrls[$route->getAttribute('url') . "Url"] = $route->getAttribute('url');
 
+      // Get and calculate the relative path to add to add js and css to view properly
+      $path_to_add = $this->_GetRelativePath($route->getAttribute('url'));
       // On ajoute la route au routeur.
       $route_config = array(
           "route_xml" => $route,
           "vars" => $vars,
-          "js_head" => $this->_GetJsFiles($route, "head"),
-          "js_html" => $this->_GetJsFiles($route, "html"),
-          "css" => $this->_LoadCssFiles($route)
+          "js_head" => $this->_GetJsFiles($route, "head", $path_to_add),
+          "js_html" => $this->_GetJsFiles($route, "html", $path_to_add),
+          "css" => $this->_LoadCssFiles($route, $path_to_add),
+          "relative_path"=> $path_to_add
       );
       $this->addRoute(new Route($route_config));
     }
@@ -82,11 +85,11 @@ class Router extends ApplicationComponent {
    * @param type $route
    * @return string
    */
-  private function _GetJsFiles($route, $destination) {
+  private function _GetJsFiles($route, $destination, $path_to_add) {
     $scripts = "";
     foreach ($route->getElementsByTagName('js_file') as $script) {
       if ($script->getAttribute('use') === $destination) {
-        $scripts .= '<script type="application/javascript" src="' . $script->getAttribute('value') . '"></script>';
+        $scripts .= '<script type="application/javascript" src="' . $path_to_add . $script->getAttribute('value') . '"></script>';
       }
     }
     return $scripts;
@@ -96,12 +99,21 @@ class Router extends ApplicationComponent {
    * Store the css files urls to add to the loading view
    * @param type $route
    */
-  private function _LoadCssFiles($route) {
+  private function _LoadCssFiles($route, $path_to_add) {
     $css_files = "";
     foreach ($route->getElementsByTagName('css_file') as $css_file) {
-      $css_files .= '<link rel="stylesheet" type="text/css" href="' . $css_file->getAttribute('value') . '"/>';
+      $css_files .= '<link rel="stylesheet" type="text/css" href="' . $path_to_add . $css_file->getAttribute('value') . '"/>';
     }
     return $css_files;
   }
 
+  private function _GetRelativePath($route) {
+    $route = rtrim($route,'/');
+    $relative_path_count = explode("/", $route);
+    $relative_path = "";
+    for ($i = 1; $i < count($relative_path_count); $i++) {
+      $relative_path .= "../";
+    }
+    return $relative_path;
+  }
 }

@@ -5,7 +5,7 @@ namespace Library;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 abstract class Application {
 
-  public $httpRequest;
+  public $HttpRequest;
   protected $httpResponse;
   public $name;
   public $locale;
@@ -14,6 +14,7 @@ abstract class Application {
   public $pageUrls;
   public $logoImageUrl;
   public $globalResources;
+  public $relative_path;
 
   public $user;
   public $config;
@@ -21,7 +22,7 @@ abstract class Application {
   public $imageUtil;
 
   public function __construct() {
-    $this->httpRequest = new HttpRequest($this);
+    $this->HttpRequest = new HttpRequest($this);
     $this->httpResponse = new HttpResponse($this);
 
     $this->router = new Router($this);
@@ -30,7 +31,7 @@ abstract class Application {
     $this->context = new Context($this);
     $this->i8n = new Globalization($this);    
     $this->imageUtil = new ImageUtility($this);    
-    $this->locale = $this->httpRequest->initLanguage($this, "browser");
+    $this->locale = $this->HttpRequest->initLanguage($this, "browser");
     $this->name = '';
   }
   public function initConfig() {
@@ -40,6 +41,7 @@ abstract class Application {
   public function getController() {
     $this->router->LoadAvailableRoutes($this);
     $matchedRoute = $this->FindRouteMatch();
+    $this->relative_path = $matchedRoute->relative_path;
     $this->globalResources["js_files_head"] = $matchedRoute->headJsScripts();
     $this->globalResources["js_files_html"] = $matchedRoute->htmlJsScripts();
     $this->globalResources["css_files"] = $matchedRoute->cssFiles();
@@ -59,8 +61,8 @@ abstract class Application {
 
   abstract public function run();
 
-  public function httpRequest() {
-    return $this->httpRequest;
+  public function HttpRequest() {
+    return $this->HttpRequest;
   }
 
   public function httpResponse() {
@@ -98,7 +100,7 @@ abstract class Application {
   private function FindRouteMatch() {
     try {
       // On récupère la route correspondante à l'URL.
-      return $this->router->getRoute($this->httpRequest->requestURI());
+      return $this->router->getRoute($this->HttpRequest->requestURI());
     } catch (\RuntimeException $e) {
       if ($e->getCode() == \Library\Router::NO_ROUTE) {
         // Si aucune route ne correspond, c'est que la page demandée n'existe pas.

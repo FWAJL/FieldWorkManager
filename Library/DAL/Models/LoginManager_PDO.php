@@ -47,5 +47,10 @@ class LoginManager_PDO extends \Library\DAL\BaseManager {
       echo $exc->getTraceAsString();
     }
   }
+  
+  public function selectMany($item) {
+    return NULL;
+  }
 
+  public function countById($item) {}
 }

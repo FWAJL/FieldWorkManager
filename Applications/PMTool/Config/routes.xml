@@ -12,7 +12,19 @@
   <route url="logout" module="Authenticate" action="disconnect" type="ui">
   
   </route>
-  <route url="projects" module="Project" action="index" type="ui">
+  <route url="project" module="Project" action="index" type="ui">
+    <js_file use="head" value="Web/js/addons/modernizr.js"/>
+    <js_file use="head" value="Web/js/app/design/all.js"/>
+    <js_file use="head" value="Web/js/app/design/tinydropdown.js"/>
+    <js_file use="head" value="Web/js/app/design/ddaccordion.js"/>
+    <js_file use="head" value="Web/js/app/design/drop_down.js"/>
+    <js_file use="head" value="Web/js/app/design/headScript.js"/>
+    <css_file value="Web/css/app/nav.css"/>
+    <css_file value="Web/css/app/app-style.css"/>
+    <css_file value="Web/css/app/theme.css"/>
+    <css_file value="Web/css/app/media-queries.css"/>
+  </route>
+  <route url="project/add" module="Project" action="add" type="ui">
     <js_file use="head" value="Web/js/addons/modernizr.js"/>
     <js_file use="head" value="Web/js/app/design/all.js"/>
     <js_file use="head" value="Web/js/app/design/tinydropdown.js"/>
