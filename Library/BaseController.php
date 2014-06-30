@@ -28,7 +28,7 @@ abstract class BaseController extends ApplicationComponent {
             throw new \RuntimeException('L\'action "' . $this->action . '" n\'est pas définie sur ce module');
         }
 
-        $this->$method($this->app->httpRequest());
+        $this->$method($this->app->HttpRequest());
     } 
 
     public function page() {

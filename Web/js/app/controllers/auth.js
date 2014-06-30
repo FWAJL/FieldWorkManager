@@ -32,7 +32,7 @@ $(document).ready(function() {
    } else {//success
     toastr.success(reply.message);
     //Now redirect to project page
-    window.location.replace("projects");
+    window.location.replace("project");
    }
   });
  };

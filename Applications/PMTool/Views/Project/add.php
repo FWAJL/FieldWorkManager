@@ -5,7 +5,7 @@
   <section class="form_sections">
     <fieldset class="project_form">
       <legend><?php echo $resx["project_legend"]; ?></legend>
-      <ol class="view-p">
+      <ol class="add-new-p">
         <li>
           <label><?php echo $resx["project_name"]; ?></label>
           <input name="project_name" type="text" />
@@ -30,7 +30,7 @@
     </fieldset>
     <fieldset class="facility_form">
       <legend><?php echo $resx["facility_legend"]; ?></legend>
-      <ol class="view-p">
+      <ol class="add-new-p">
         <li>
           <label><?php echo $resx["facility_name"]; ?></label>
           <input name="facility_name" type="text" />
@@ -79,7 +79,7 @@
     </fieldset>
     <fieldset class="company_form">
       <legend><?php echo $resx["company_legend"]; ?></legend>
-      <ol class="view-p">
+      <ol class="add-new-p">
         <li>
           <label><?php echo $resx["company_name"]; ?></label>
           <input name="company_name" type="text" />
