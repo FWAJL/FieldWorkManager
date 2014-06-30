@@ -24,10 +24,12 @@
         </li>
         <li>
           <label><?php echo $resx["project_visible_flag"]; ?></label>
-          <input name="project_active_flag" type="checkbox"/>
+          <input name="project_visible_flag" type="checkbox"/>
         </li>
       </ol>
     </fieldset>
+    <input type="button" id="btn_add_project" value="<?php echo $resx["project_button_add"]; ?>" />
+    <input type="button" id="btn_edit_project" value="<?php echo $resx["project_button_edit"]; ?>" />
     <fieldset class="facility_form">
       <legend><?php echo $resx["facility_legend"]; ?></legend>
       <ol class="add-new-p">
