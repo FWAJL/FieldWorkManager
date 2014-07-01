@@ -40,15 +40,11 @@ class ProjectController extends \Library\BaseController {
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $this->page->addVar('pm', $pm[0]);
 
-    if (!$this->_CheckIfPmHasProjects($pm[0])) {//if no project active, redirect to add project page
-      header('Location: ' . __BASEURL__ . "project/add");
-    } else {
-      $resourceFileKey = "project";
+    $resourceFileKey = "project";
 
-      $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
-      $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
-      $this->page->addVar('logout_url', "logout");
-    }
+    $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
+    $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
+    $this->page->addVar('logout_url', "logout");
   }
 
   /**
@@ -59,13 +55,24 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq
    */
   public function executeAdd(\Library\HttpRequest $rq) {
-    $resourceFileKey = "project";
-    $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
-    $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
-    $this->page->addVar('logout_url', "logout");
-
+    // Init result
+    $result = $this->ManageResponseWS();
+    //Process data received from Post
+    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
+    //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->page->addVar('pm', $pm[0]);
+    $data_sent["pm_id"] = $pm[0]->pm_id();
+    $project = $this->PrepareUserObject($data_sent);
+    $result["data"] = $project;
+    /* Add to DB */
+    //Load interface to query the database
+    $manager = $this->managers->getManagerOf('Project');
+    $result_insert = $manager->add($project);
+    
+    //Process DB result and send result
+    $result = $this->ManageResponseWS(array("resx_file"=> "project", "resx_key"=> "_insert", "step"=>"success"));
+    //return the JSON data
+    echo \Library\HttpResponse::encodeJson($result);
   }
 
   /**
@@ -79,5 +86,21 @@ class ProjectController extends \Library\BaseController {
     $count = $manager->countById($pm->pm_id());
     return $count > 0 ? TRUE : FALSE;
   }
-
+  /**
+   * Prepare the Project Object before calling the DB.
+   * 
+   * @param array $data_sent from POST request
+   * @return \Library\BO\Project_manager
+   */
+  private function PrepareUserObject($data_sent) {
+    $project = new \Library\BO\Project();
+    $project->setPm_id($data_sent["pm_id"]);
+    $project->setProject_name($data_sent["project_name"]);
+    $project->setProject_number($data_sent["project_num"]);
+    $project->setProject_desc($data_sent["project_desc"]);
+    $project->setActive($data_sent["project_active_flag"]);
+    $project->setVisible($data_sent["project_visible_flag"]);
+    
+    return $project;
+  }
 }

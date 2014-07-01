@@ -47,5 +47,22 @@ class ProjectManager_PDO extends \Library\DAL\BaseManager {
 
     return intval($num_rows[0]);
   }
-
+  public function add($project) {
+    $columns = "";
+    $values = "";
+    foreach ($project as $key => $value) {
+      $columns .= "`" .$key . "`,";
+      $values .= "'" . $value . "',";
+    }
+    $columns = rtrim($columns,", ");
+    $values = rtrim($values,", ");
+    $sql = "INSERT INTO `project` (" . $columns . ") VALUES (" . $values . ");";
+    $query = $this->dao->query($sql);
+    $result = $query->execute();
+    if (!$result) {
+      $result = $query->errorCode();
+    }
+    $query->closeCursor();
+    return $result;
+  }
 }

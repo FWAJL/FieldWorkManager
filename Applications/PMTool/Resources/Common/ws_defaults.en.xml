@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <resource key="message_error">Default error message from WS call.</resource>
+  <resource key="message_success">Default success message from WS call</resource>
+</resources>
