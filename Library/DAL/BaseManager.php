@@ -31,11 +31,16 @@ abstract class BaseManager extends \Library\Manager {
   /**
    * Select method to get a count by id
    * 
-   * @param iint $id
+   * @param int $id
    */
   abstract public function countById($id);
 
-
-//  abstract public function add($identifier);
+  /**
+   * Add method to add a item to DB
+   * 
+   * @param object $item
+   */
+  abstract public function add($item);
+  
 //  abstract public function delete($identifier);
 }

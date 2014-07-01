@@ -93,7 +93,13 @@ class AuthenticateController extends \Library\BaseController {
     $this->app->user->unsetAttribute(\Library\Enums\SessionKeys::UserConnected);
     if ($redirect) header('Location: ' . __BASEURL__ . "login");
   }
-
+  
+  /**
+   * Prepare the User Object before calling the DB.
+   * 
+   * @param array $data_sent from POST request
+   * @return \Library\BO\Project_manager
+   */
   private function PrepareUserObject($data_sent) {
     $protect = new \Library\BL\Core\Encryption();
 
@@ -139,7 +145,7 @@ class AuthenticateController extends \Library\BaseController {
    * @param string $step
    * @return array
    */
-  private function ManageResponseWS($step = "init", $user = NULL) {
+  public function ManageResponseWS($step = "init", $user = NULL) {
     $resourceFileKey = "login";
     if ($step === "success") {
       $this->LoginUser($user);

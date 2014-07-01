@@ -20,20 +20,8 @@
     <js_file use="head" value="Web/js/app/design/ddaccordion.js"/>
     <js_file use="head" value="Web/js/app/design/drop_down.js"/>
     <js_file use="head" value="Web/js/app/design/headScript.js"/>
-    <css_file value="Web/css/app/nav.css"/>
-    <css_file value="Web/css/app/app-style.css"/>
-    <css_file value="Web/css/app/app-theme.css"/>
-    <css_file value="Web/css/app/theme.css"/>
-    <css_file value="Web/css/app/media-queries.css"/>
-  </route>
-  <route url="project/add" module="Project" action="add" type="ui">
-    <js_file use="head" value="Web/js/addons/modernizr.js"/>
-    <js_file use="head" value="Web/js/app/design/all.js"/>
-    <js_file use="head" value="Web/js/app/design/tinydropdown.js"/>
-    <js_file use="head" value="Web/js/app/design/ddaccordion.js"/>
-    <js_file use="head" value="Web/js/app/design/drop_down.js"/>
-    <js_file use="head" value="Web/js/app/design/headScript.js"/>
-    <js_file use="html" value="Web/js/app/controllers/project_add.js"/>
+    <js_file use="html" value="Web/js/app/services/dataservice.js"/>
+    <js_file use="head" value="Web/js/app/controllers/project_add.js"/>
     <css_file value="Web/css/app/nav.css"/>
     <css_file value="Web/css/app/app-style.css"/>
     <css_file value="Web/css/app/app-theme.css"/>
@@ -43,5 +31,6 @@
   
   <!-- WebService routes -->
   <route url="auth" module="Authenticate" action="authenticate" type="ws" />
+  <route url="project/add" module="Project" action="add" type="ws" />
 
 </routes>
