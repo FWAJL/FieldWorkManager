@@ -59,18 +59,19 @@ class ProjectController extends \Library\BaseController {
     $result = $this->ManageResponseWS();
     //Process data received from Post
     $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
+
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $data_sent["pm_id"] = $pm[0]->pm_id();
+    $data_sent["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
     $project = $this->PrepareUserObject($data_sent);
     $result["data"] = $project;
     /* Add to DB */
     //Load interface to query the database
     $manager = $this->managers->getManagerOf('Project');
     $result_insert = $manager->add($project);
-    
+
     //Process DB result and send result
-    $result = $this->ManageResponseWS(array("resx_file"=> "project", "resx_key"=> "_insert", "step"=>"success"));
+    if ($result_insert) $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_insert", "step" => "success"));
     //return the JSON data
     echo \Library\HttpResponse::encodeJson($result);
   }
@@ -86,6 +87,7 @@ class ProjectController extends \Library\BaseController {
     $count = $manager->countById($pm->pm_id());
     return $count > 0 ? TRUE : FALSE;
   }
+
   /**
    * Prepare the Project Object before calling the DB.
    * 
@@ -95,12 +97,13 @@ class ProjectController extends \Library\BaseController {
   private function PrepareUserObject($data_sent) {
     $project = new \Library\BO\Project();
     $project->setPm_id($data_sent["pm_id"]);
-    $project->setProject_name($data_sent["project_name"]);
-    $project->setProject_number($data_sent["project_num"]);
-    $project->setProject_desc($data_sent["project_desc"]);
-    $project->setActive($data_sent["project_active_flag"]);
-    $project->setVisible($data_sent["project_visible_flag"]);
-    
+    $project->setProject_name(!array_key_exists('project_name', $data_sent) ? NULL : $data_sent["project_name"]);
+    $project->setProject_number(!array_key_exists('project_num', $data_sent) ? NULL : $data_sent["project_num"]);
+    $project->setProject_desc(!array_key_exists('project_desc', $data_sent) ? NULL : $data_sent["project_desc"]);
+    $project->setActive(!array_key_exists('project_active_flag', $data_sent) ? NULL : $data_sent["project_active_flag"]);
+    $project->setVisible(!array_key_exists('project_visible_flag', $data_sent) ? NULL : $data_sent["project_visible_flag"]);
+
     return $project;
   }
+
 }
