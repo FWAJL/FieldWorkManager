@@ -1,4 +1,4 @@
-<section class="left-aside">
+<div class="content-container"><section class="left-aside">
   <p class="aside-text"><?php echo $resx_menu_left["p_user_name_label"]; ?><?php echo $pm['username']; ?><br/>
     <a href="<?php echo $logout_url; ?>" role="button"><?php echo $resx_menu_left["logout_link_text"]; ?></a>
   </p> 
@@ -14,7 +14,7 @@
             <?php echo $resx_menu_left["header_projects"]; ?>
             <span class="accordsuffix"></span></p>
           <ul style="display: none;" contentindex="0c" class="categoryitems">
-            <li><a  name="not_implemented" href="#"><?php echo $resx_menu_left["item_projectX"]; ?></a></li> 
+            <li><a  data-name="not_implemented" href="#"><?php echo $resx_menu_left["item_projectX"]; ?></a></li> 
             <li><a href="/projects/add" class="active"><?php echo $resx_menu_left["projects_add"]; ?></a></li>
             <!--<li><a href="/projects/manage"><?php echo $resx_menu_left["projects_manage"]; ?></a></li>-->
           </ul>    
@@ -35,8 +35,8 @@
             <?php echo $resx_menu_left["header_locations"]; ?>
             <span class="accordsuffix"></span></p>
           <ul style="display: block;" contentindex="2c" class="categoryitems">
-            <li><a name="not_implemented" href="#"><?php echo $resx_menu_left["item_locX"]; ?></a></li> 
-            <li><a name="not_implemented" href="#" class="plus"><?php echo $resx_menu_left["locations_add"]; ?></a></li>
+            <li><a data-name="not_implemented" href="#"><?php echo $resx_menu_left["item_locX"]; ?></a></li> 
+            <li><a data-name="not_implemented" href="#" class="plus"><?php echo $resx_menu_left["locations_add"]; ?></a></li>
             <!--<li><a href="/locations" class="plus"><?php echo $resx_menu_left["locations_boundary_add"]; ?></a></li>-->
             <!--<li><a href="/locations" class="plus"><?php echo $resx_menu_left["locations_upload_list"]; ?></a></li>-->
             <!--<li><a href="/locations"><?php echo $resx_menu_left["locations_manage"]; ?></a></li>-->
