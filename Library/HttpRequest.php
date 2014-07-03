@@ -57,7 +57,7 @@ class HttpRequest {
    * @param	bool
    * @return	string
    */
-  public function retrievePostAjaxData($index = NULL, $xss_clean = FALSE) {
+  public function retrievePostAjaxData($index = NULL, $xss_clean = TRUE) {
     if (file_get_contents('php://input') != "") {
       // Create an array from the JSON object in the POST request
       $post_raw = get_object_vars(json_decode(file_get_contents('php://input')));
@@ -65,7 +65,7 @@ class HttpRequest {
       if ($index === NULL AND ! empty($post_raw)) {
         $post_cleaned = array();
         foreach (array_keys($post_raw) as $key) {
-          $post_cleaned[$key] = $this->_fetch_from_array($post_raw, $key, $xss_clean);
+          $post_cleaned[$key] = $this->_fetch_from_array($post_raw, $key, TRUE);
         }
         // Return all the post values
         return $post_cleaned;
@@ -95,8 +95,10 @@ class HttpRequest {
     }
 
     if ($xss_clean === TRUE) {
-      $security = new BL\Core\Security();
-      return $security->xss_clean($array[$index]);
+      $array[$index] = strip_tags($array[$index]);
+      $array[$index] = filter_var($array[$index]);
+//$security = new BL\Core\Security();
+      //return $security->xss_clean($array[$index]);
     }
 
     return $array[$index];

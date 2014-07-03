@@ -64,7 +64,7 @@ class ProjectController extends \Library\BaseController {
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $data_sent["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
     $project = $this->PrepareUserObject($data_sent);
-    $result["data"] = $project;
+    //$result["data"] = $project;
     /* Add to DB */
     //Load interface to query the database
     $manager = $this->managers->getManagerOf('Project');
