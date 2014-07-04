@@ -25,5 +25,3 @@
     </li>
   </ol>
 </fieldset>
-<input type="button" id="btn_add_project" value="<?php echo $resx["project_button_add"]; ?>" />
-<input type="button" id="btn_edit_project" value="<?php echo $resx["project_button_edit"]; ?>" />
