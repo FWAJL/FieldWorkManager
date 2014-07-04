@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <routes>
-  <!-- UI routes  -->
+  <!-- UI routes -->
   <route url="login" module="Authenticate" action="loadLoginView" type="ui">
     <js_files>
       <js_file use="html" value="Web/js/app/validator.js"/>

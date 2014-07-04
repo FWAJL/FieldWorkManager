@@ -12,10 +12,20 @@ class Router extends ApplicationComponent {
   public $routesXmlPath;
   protected $routes = array();
   protected $lastModified = 0;//of the routes xml file
+  protected $selectedRoute;
 
   const NO_ROUTE = 1;
 
   
+  // SET AND GET $selectedRoute
+  // @type \Library\ROute
+  public function setSelectedRoute($route) {
+    $this->selectedRoute = $route;
+  }
+  public function selectedRoute() {
+    return $this->selectedRoute;
+  }
+
   // SET AND GET $lastModified
   public function setLastModified($time_updated) {
     $this->lastModified = $time_updated;

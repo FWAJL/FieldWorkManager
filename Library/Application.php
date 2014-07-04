@@ -50,23 +50,23 @@ abstract class Application {
     } else {
       $this->router()->setRoutes($this->user->getAttribute(Enums\SessionKeys::SessionRoutes));
     }
-    $matchedRoute = $this->FindRouteMatch();
-    $this->relative_path = $matchedRoute->relative_path;
-    $this->globalResources["js_files_head"] = $matchedRoute->headJsScripts();
-    $this->globalResources["js_files_html"] = $matchedRoute->htmlJsScripts();
-    $this->globalResources["css_files"] = $matchedRoute->cssFiles();
+    $this->router()->setSelectedRoute($this->FindRouteMatch());
+    $this->relative_path = $this->router()->selectedRoute()->relative_path;
+    $this->globalResources["js_files_head"] = $this->router()->selectedRoute()->headJsScripts();
+    $this->globalResources["js_files_html"] = $this->router()->selectedRoute()->htmlJsScripts();
+    $this->globalResources["css_files"] = $this->router()->selectedRoute()->cssFiles();
 
-    if ($matchedRoute->type() === "ws") {
+    if ($this->router()->selectedRoute()->type() === "ws") {
       $this->router()->isWsCall = true;
     }
     // On ajoute les variables de l'URL au tableau $_GET.
-    $_GET = array_merge($_GET, $matchedRoute->vars());
+    $_GET = array_merge($_GET, $this->router()->selectedRoute()->vars());
 
-    $controllerClass = $this->BuildControllerClass($matchedRoute);
+    $controllerClass = $this->BuildControllerClass($this->router()->selectedRoute());
     if (!file_exists(__ROOT__ . str_replace('\\', '/', $controllerClass) . Enums\FileNameConst::ClassSuffix)) {
       $this->httpResponse->displayError(Enums\ErrorCodes::ControllerNotExist); //Controller doesn't exist
     }
-    return new $controllerClass($this, $matchedRoute->module(), $matchedRoute->action());
+    return new $controllerClass($this, $this->router()->selectedRoute()->module(), $this->router()->selectedRoute()->action());
   }
 
   abstract public function run();
