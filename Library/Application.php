@@ -2,7 +2,9 @@
 
 namespace Library;
 
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+  exit('No direct script access allowed');
+
 abstract class Application {
 
   public $HttpRequest;
@@ -15,7 +17,6 @@ abstract class Application {
   public $logoImageUrl;
   public $globalResources;
   public $relative_path;
-
   public $user;
   public $config;
   public $i8n;
@@ -29,23 +30,32 @@ abstract class Application {
     $this->user = new User($this);
     $this->config = new Config($this);
     $this->context = new Context($this);
-    $this->i8n = new Globalization($this);    
-    $this->imageUtil = new ImageUtility($this);    
+    $this->i8n = new Globalization($this);
+    $this->imageUtil = new ImageUtility($this);
     $this->locale = $this->HttpRequest->initLanguage($this, "browser");
     $this->name = '';
   }
+
   public function initConfig() {
     
   }
 
   public function getController() {
-    $this->router->LoadAvailableRoutes($this);
+    $this->router()->setRoutesXmlPath(__ROOT__ . 'Applications/' . $this->name . '/Config/routes.xml');
+
+    if ($this->router()->hasRoutesXmlChanged($this->user()) || !$this->user->keyExistInSession(Enums\SessionKeys::SessionRoutes)) {
+      $this->router->LoadAvailableRoutes($this);
+      //Store routes in session
+      $this->user->setAttribute(Enums\SessionKeys::SessionRoutes, $this->router()->routes());
+    } else {
+      $this->router()->setRoutes($this->user->getAttribute(Enums\SessionKeys::SessionRoutes));
+    }
     $matchedRoute = $this->FindRouteMatch();
     $this->relative_path = $matchedRoute->relative_path;
     $this->globalResources["js_files_head"] = $matchedRoute->headJsScripts();
     $this->globalResources["js_files_html"] = $matchedRoute->htmlJsScripts();
     $this->globalResources["css_files"] = $matchedRoute->cssFiles();
-    
+
     if ($matchedRoute->type() === "ws") {
       $this->router()->isWsCall = true;
     }
@@ -80,15 +90,15 @@ abstract class Application {
   public function context() {
     return $this->context;
   }
-  
+
   public function i8n() {
     return $this->i8n;
   }
-  
+
   public function pageUrls() {
     return array();
-  }  
-  
+  }
+
   public function router() {
     return $this->router;
   }

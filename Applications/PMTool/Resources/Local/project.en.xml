@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
   <resource key="page_title">Your projects - Field Work Assistant</resource>
+  
   <resource key="message_error_insert">Error inserting the project. Check logs.</resource>
   <resource key="message_success_insert">The project has been inserted.</resource>
+  <resource key="message_error_getlist">Error reading the projects. Check logs.</resource>
+  <resource key="message_success_getlist">The projects have been read.</resource>
 
-  
   <resource key="project_legend">Add new project</resource>
   <resource key="project_name">Project Name</resource>
   <resource key="project_num">Project Number</resource>
