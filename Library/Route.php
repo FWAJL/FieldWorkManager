@@ -15,6 +15,7 @@ class Route {
   protected $htmlJsScripts = "";
   protected $cssFiles = "";
   public $relative_path = "";
+  protected $phpModules;
 
   public function __construct($config) {
     $this->setUrl($config['route_xml']->getAttribute('url'));
@@ -28,6 +29,7 @@ class Route {
     $this->setJsScripts($config['js_html'], FALSE);
     $this->setCssFiles($config['css']);
     $this->setRelativePath($config["relative_path"]);
+    $this->setPhpModules($config["php_modules"]);
   }
 
   public function hasVars() {
@@ -89,6 +91,10 @@ class Route {
   public function setRelativePath($path) {
     return $this->relative_path = $path;
   }
+  
+  public function setPhpModules($php_modules) {
+    return $this->phpModules = $php_modules;
+  }
 
   public function action() {
     return $this->action;
@@ -121,4 +127,8 @@ class Route {
   public function relative_path() {
     return $this->relative_path;
   }
+  public function phpModules() {
+    return $this->phpModules;
+  }
+  
 }

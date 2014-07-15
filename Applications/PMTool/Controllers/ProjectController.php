@@ -45,6 +45,10 @@ class ProjectController extends \Library\BaseController {
     $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
     $this->page->addVar('logout_url', "logout");
+    
+    //Load Modules for view
+    $this->page->addVar('form_modules', $this->app()->router()->selectedRoute()->phpModules());
+    $this->page->addVar('project_list_modules', array());//$this->app()->router()->selectedRoute()->phpModules());
   }
 
   /**
@@ -64,7 +68,7 @@ class ProjectController extends \Library\BaseController {
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $data_sent["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
     $project = $this->PrepareUserObject($data_sent);
-    //$result["data"] = $project;
+    $result["data"] = $project;
     /* Add to DB */
     //Load interface to query the database
     $manager = $this->managers->getManagerOf('Project');

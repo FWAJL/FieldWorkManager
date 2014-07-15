@@ -50,4 +50,7 @@ class User extends ApplicationComponent {
     unset($_SESSION[$key]);
   }
 
+  public function keyExistInSession($key) {
+    return isset($_SESSION[$key]);
+  }
 }

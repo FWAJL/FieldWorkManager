@@ -58,9 +58,11 @@ class ProjectManager_PDO extends \Library\DAL\BaseManager {
     $values = rtrim($values,", ");
     $sql = "INSERT INTO `project` (" . $columns . ") VALUES (" . $values . ");";
     $query = $this->dao->query($sql);
-    $result = $query->execute();
-    if (!$result) {
+    $result;
+    if (!$query) {
       $result = $query->errorCode();
+    } else {
+      $result = TRUE;
     }
     $query->closeCursor();
     return $result;
