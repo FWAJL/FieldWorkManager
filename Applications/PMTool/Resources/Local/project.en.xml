@@ -16,6 +16,8 @@
   <resource key="project_button_add">Add this project</resource>
   <resource key="project_button_edit">Edit this project</resource>
   
+  <resource key="project_list_h1">All your projects</resource>
+
   <resource key="facility_legend">The facility</resource>
   <resource key="facility_name">Facility Name</resource>
   <resource key="facility_address">Facility Address</resource>
@@ -35,5 +37,5 @@
   <resource key="company_contact_phone">Facility - Contact Phone (Mobile)</resource>
   <resource key="company_contact_email">Facility - Contact Email</resource>
   <resource key="company_id_number">Facility ID Number</resource>
-
+  
 </resources>

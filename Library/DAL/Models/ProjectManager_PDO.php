@@ -35,8 +35,21 @@ class ProjectManager_PDO extends \Library\DAL\BaseManager {
     }
   }
 
-  public function selectMany($item) {
-    return NULL;
+  /**
+   * Returns list of projects for PM
+   * 
+   * @param \Library\BO\Project $project
+   * @return array of \Library\BO\Project
+   */
+  public function selectMany($project) {
+    $sql = 'SELECT * FROM project where `pm_id` = \'' . $project->pm_id() . '\' AND `active` = 1  AND `visible` = 1;';
+    $query = $this->dao->query($sql);
+    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Library\BO\Project');
+
+    $project_list = $query->fetchAll();
+    $query->closeCursor();
+
+    return $project_list;
   }
   
   public function countById($pm_id) {

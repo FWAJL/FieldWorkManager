@@ -1,5 +1,8 @@
-/* ADD PROJECT */
+/* PROJECT */
 #btn_edit_project{display: none;}
 .form_sections input[type="button"]{
   position: relative; left: 40%;
 }
+
+.show{display: block;}
+.hide{display: none;}
