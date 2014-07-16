@@ -49,14 +49,27 @@ class ProjectController extends \Library\BaseController {
     //Load Modules for view
     $this->page->addVar('form_modules', $this->app()->router()->selectedRoute()->phpModules());
     $this->page->addVar('project_list_modules', array());//$this->app()->router()->selectedRoute()->phpModules());
+    
+    //Show and hide the sections on page
+    //e.g. decide whether to see the "Add project" or the "View all projects"
+    if ($this->_CheckIfPmHasProjects($pm[0])) {
+      $this->page->addVar('display_project_list','show');
+      $this->page->addVar('display_add_project','hide');
+      $this->page->addVar('active_project_list','active');
+      $this->page->addVar('active_add_project','');
+    } else {
+      $this->page->addVar('display_project_list','hide');
+      $this->page->addVar('display_add_project','show');
+      $this->page->addVar('active_project_list','');
+      $this->page->addVar('active_add_project','active');
+    }
   }
 
   /**
-   * Method that loads the add view for controller.
-   * 
-   * It loads the page title, the logout_url and the resources to load in the placeholders for the three forms (project, facility, company)
+   * Method that adds a project and returns the result of operation
    * 
    * @param \Library\HttpRequest $rq
+   * @return JSON
    */
   public function executeAdd(\Library\HttpRequest $rq) {
     // Init result
@@ -80,6 +93,33 @@ class ProjectController extends \Library\BaseController {
     echo \Library\HttpResponse::encodeJson($result);
   }
 
+    /**
+   * Method that adds a project and returns the result of operation
+   * 
+   * @param \Library\HttpRequest $rq
+   * @return JSON
+   */
+  public function executeGetList(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->ManageResponseWS();
+
+    //Init PDO
+    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
+    $data_sent["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
+    $project = $this->PrepareUserObject($data_sent);
+    $result["data"] = $project;
+    /* Get list from DB */
+    //Load interface to query the database
+    $manager = $this->managers->getManagerOf('Project');
+    $project_list = $manager->selectMany($project);
+
+    //Process DB result and send result
+    $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getlist", "step" => "success"));
+    $result["projects"] = $project_list;
+    //return the JSON data
+    echo \Library\HttpResponse::encodeJson($result);
+  }
+
   /**
    * Check if the current pm has projects to decide where to send him: stay on the project list or asking him to add a project
    * 
@@ -87,6 +127,7 @@ class ProjectController extends \Library\BaseController {
    * @return boolean
    */
   private function _CheckIfPmHasProjects(\Library\BO\Project_manager $pm) {
+    //TODO: store in Session?
     $manager = $this->managers->getManagerOf('Project');
     $count = $manager->countById($pm->pm_id());
     return $count > 0 ? TRUE : FALSE;
