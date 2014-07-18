@@ -69,3 +69,7 @@ table th{
 .tg .tg-ifyx{background-color:#D2E4FC;text-align:right}
 .tg .tg-s6z2{text-align:center}
 .tg .tg-vn4c{background-color:#D2E4FC}
+.project_welcome > * {
+  padding-left: 10px;
+  color: #333;
+} 

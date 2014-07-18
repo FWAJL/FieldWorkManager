@@ -358,7 +358,7 @@ input.submit {
   font-family:"Verdana", Arial, Helvetica, sans-serif;
  font-size:13px;
  font-weight:bold;
-  color:#fff;
+  color:#000;
   line-height:17px;
   *line-height:px;
   padding:0px 0px 0px 33px;
@@ -367,11 +367,11 @@ input.submit {
 }
 
 #arrowlistmenu #menuheader:hover {
-  color:#FFFFFF;
+  color:#00F;
 }
 .arrowlistmenu .menuheader:hover {
  background: url(../../images/arrow.gif) 18px 13px no-repeat ;
-  color:#FFFFFF;
+  color:#00F;
 }
 
 .arrowlistmenu .openheader{ /*CSS class to apply to expandable header when it's expanded*/
@@ -397,7 +397,7 @@ arrowlistmenu ul{ /*CSS for UL of each sub menu*/
 }
 
 .arrowlistmenu ul li a{
- color: #fff;
+ color: #000;
   /*background: url(../../images/left_cub_arrow.png) no-repeat 16px 6px; custom bullet list image*/
   /**background: url(../../images/left_cub_arrow.png) no-repeat 3px 3px; custom bullet list image*/
   display: block;
@@ -422,14 +422,14 @@ arrowlistmenu ul{ /*CSS for UL of each sub menu*/
   *background:url(../../images/plus.gif) no-repeat 2px 2px ;*/
 }
 .arrowlistmenu ul li a:visited{
-  color: #fff;
+  color: #000;
 }
 .arrowlistmenu ul li a:hover, .arrowlistmenu ul li a.active{ /*hover state CSS*/
- color: #fbc32b;
+ color: #00F;
 }
 
 .arrowlistmenu ul li a:hover, .arrowlistmenu ul li a.active{ /*hover state CSS*/
-  color: #fbc32b;
+  color: #00F;
 }
 
 .arrowlistmenu .arrow { 
