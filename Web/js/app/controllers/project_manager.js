@@ -43,13 +43,17 @@ $(document).ready(function() {
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        //Now redirect to project page
+        //Build the table
+        project_manager.buildTableList(reply.projects);
+        //Now show the table
         $(".form_sections").fadeOut('2000').removeClass("active").removeClass("show");
         $(".project_list_section").fadeIn('2000').addClass("active").removeClass("hide");
         $("#project_list").addClass("active");
         $("#project_add").removeClass("active");
       }
     });
+  }
+  project_manager.buildTableList = function(projects) {
   }
   project_manager.checkLiElement = function(element) {
     return element.val() !== "" ? true : false;

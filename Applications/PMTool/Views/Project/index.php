@@ -2,10 +2,10 @@
 <section class="right-aside">
   <h2></h2>
   <section class="form_sections <?php echo $display_add_project; ?>">
-    <?php 
-      foreach ($form_modules as $key => $module_path) {
-        require $module_path;
-      }
+    <?php
+    foreach ($form_modules as $key => $module_path) {
+      require $module_path;
+    }
     ?>
   </section>
   <section class="project_list_section <?php echo $display_project_list; ?>">

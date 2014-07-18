@@ -26,7 +26,8 @@
       <js_file use="head" value="Web/js/app/design/drop_down.js"/>
       <js_file use="head" value="Web/js/app/design/headScript.js"/>
       <js_file use="html" value="Web/js/app/services/dataservice.js"/>
-      <js_file use="head" value="Web/js/app/controllers/project_add.js"/>
+      <js_file use="head" value="Web/js/app/helpers/html_table_helper.js"/>
+      <js_file use="head" value="Web/js/app/controllers/project_manager.js"/>
       <js_file use="head" value="Web/js/app/controllers/left_menu_clicks.js"/>
     </js_files>
     <css_files>
