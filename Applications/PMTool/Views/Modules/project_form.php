@@ -15,14 +15,14 @@
       <label><?php echo $resx["project_desc"]; ?></label>
       <input name="project_desc" type="text" />
     </li>
-    <li>
+<!--    <li>
       <label><?php echo $resx["project_active_flag"]; ?></label>
       <input name="project_active_flag" type="checkbox" />
     </li>
     <li>
       <label><?php echo $resx["project_visible_flag"]; ?></label>
       <input name="project_visible_flag" type="checkbox"/>
-    </li>
+    </li>-->
   </ol>
 </fieldset>
 <input type="button" id="btn_add_project" value="<?php echo $resx["project_button_add"]; ?>" />

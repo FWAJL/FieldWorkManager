@@ -53,16 +53,22 @@ class ProjectController extends \Library\BaseController {
     //Show and hide the sections on page
     //e.g. decide whether to see the "Add project" or the "View all projects"
     if ($this->_CheckIfPmHasProjects($pm[0])) {
-      $this->page->addVar('display_project_list','show');
+      $this->page->addVar('display_project_welcome','show');
       $this->page->addVar('display_add_project','hide');
       $this->page->addVar('active_project_list','active');
       $this->page->addVar('active_add_project','');
     } else {
-      $this->page->addVar('display_project_list','hide');
+      $this->page->addVar('display_project_welcome','hide');
       $this->page->addVar('display_add_project','show');
       $this->page->addVar('active_project_list','');
       $this->page->addVar('active_add_project','active');
     }
+    
+    //Get list of projects and store in session
+    if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects)) {
+      $this->app()->user->setAttribute(\Library\Enums\SessionKeys::UserProjects, $this->executeGetList($rq, TRUE));
+    }
+    
   }
 
   /**
@@ -86,6 +92,9 @@ class ProjectController extends \Library\BaseController {
     //Load interface to query the database
     $manager = $this->managers->getManagerOf('Project');
     $result_insert = $manager->add($project);
+    
+    //Clear the project list from session for the connect PM
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
 
     //Process DB result and send result
     if ($result_insert) $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_insert", "step" => "success"));
@@ -99,7 +108,7 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq
    * @return JSON
    */
-  public function executeGetList(\Library\HttpRequest $rq) {
+  public function executeGetList(\Library\HttpRequest $rq, $isNotWs = FALSE) {
     // Init result
     $result = $this->ManageResponseWS();
 
@@ -117,7 +126,11 @@ class ProjectController extends \Library\BaseController {
     $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getlist", "step" => "success"));
     $result["projects"] = $project_list;
     //return the JSON data
-    echo \Library\HttpResponse::encodeJson($result);
+    if ($isNotWs) {
+      return $project_list;
+    } else {
+      echo \Library\HttpResponse::encodeJson($result);
+    }
   }
 
   /**
@@ -143,10 +156,10 @@ class ProjectController extends \Library\BaseController {
     $project = new \Library\BO\Project();
     $project->setPm_id($data_sent["pm_id"]);
     $project->setProject_name(!array_key_exists('project_name', $data_sent) ? NULL : $data_sent["project_name"]);
-    $project->setProject_number(!array_key_exists('project_num', $data_sent) ? NULL : $data_sent["project_num"]);
-    $project->setProject_desc(!array_key_exists('project_desc', $data_sent) ? NULL : $data_sent["project_desc"]);
-    $project->setActive(!array_key_exists('project_active_flag', $data_sent) ? NULL : $data_sent["project_active_flag"]);
-    $project->setVisible(!array_key_exists('project_visible_flag', $data_sent) ? NULL : $data_sent["project_visible_flag"]);
+    $project->setProject_number(!array_key_exists('project_num', $data_sent) ? "" : $data_sent["project_num"]);
+    $project->setProject_desc(!array_key_exists('project_desc', $data_sent) ? "" : $data_sent["project_desc"]);
+    $project->setActive(!array_key_exists('project_active_flag', $data_sent) ? 0 : $data_sent["project_active_flag"]);
+    $project->setVisible(!array_key_exists('project_visible_flag', $data_sent) ? 0 : $data_sent["project_visible_flag"]);
 
     return $project;
   }
