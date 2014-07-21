@@ -49,7 +49,7 @@ $(document).ready(function() {
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        project_manager.getList();
+        document.location.replace("project");
       }
     });
   };
