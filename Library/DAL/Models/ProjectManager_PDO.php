@@ -42,7 +42,7 @@ class ProjectManager_PDO extends \Library\DAL\BaseManager {
    * @return array of \Library\BO\Project
    */
   public function selectMany($project) {
-    $sql = 'SELECT * FROM project where `pm_id` = \'' . $project->pm_id() . '\' AND `active` = 1  AND `visible` = 1;';
+    $sql = 'SELECT * FROM project where `pm_id` = \'' . $project->pm_id() . '\';'; //AND `active` = 1  AND `visible` = 1;';
     $query = $this->dao->query($sql);
     $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Library\BO\Project');
 
@@ -53,7 +53,7 @@ class ProjectManager_PDO extends \Library\DAL\BaseManager {
   }
   
   public function countById($pm_id) {
-    $sql = 'SELECT COUNT(*) FROM project where `pm_id` = \'' . $pm_id . '\' AND `active` = 1  AND `visible` = 1;';
+    $sql = 'SELECT COUNT(*) FROM project where `pm_id` = \'' . $pm_id . '\';';// AND `active` = 1  AND `visible` = 1;';
     $query = $this->dao->query($sql);
     $num_rows = $query->fetch(\PDO::FETCH_NUM);
     $query->closeCursor();

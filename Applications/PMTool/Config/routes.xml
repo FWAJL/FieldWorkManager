@@ -26,7 +26,8 @@
       <js_file use="head" value="Web/js/app/design/drop_down.js"/>
       <js_file use="head" value="Web/js/app/design/headScript.js"/>
       <js_file use="html" value="Web/js/app/services/dataservice.js"/>
-      <js_file use="head" value="Web/js/app/controllers/project_add.js"/>
+      <js_file use="head" value="Web/js/app/helpers/html_table_helper.js"/>
+      <js_file use="head" value="Web/js/app/controllers/project_manager.js"/>
       <js_file use="head" value="Web/js/app/controllers/left_menu_clicks.js"/>
     </js_files>
     <css_files>
@@ -41,7 +42,7 @@
       <!-- The "shared" attribute specifies where to get the module, either the current view Modules folder or the main Modules folder in Views -->
       <php_module key="project_form" file_name="project_form.php" shared="true"/>
       <php_module key="facility_form" file_name="facility_form.php" shared="true"/>
-      <php_module key="company_form" file_name="company_form.php" shared="true"/>
+      <!--<php_module key="company_form" file_name="company_form.php" shared="true"/>-->
     </php_modules>
   </route>
   
@@ -49,5 +50,6 @@
   <route url="auth" module="Authenticate" action="authenticate" type="ws" />
   <route url="project/add" module="Project" action="add" type="ws" />
   <route url="project/getlist" module="Project" action="getList" type="ws" />
+  <route url="project/getItem" module="Project" action="getItem" type="ws" />
 
 </routes>

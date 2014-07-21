@@ -30,7 +30,9 @@ abstract class SessionKeys {
   const UserAuthenticated = "user_auth";
   const UserFlash = 'user_flash';
   const UserConnected = "user_connected";
-  
+  const UserProjects= "user_projects";
+
+
   const SessionRoutes = "app_routes";
   const SessionRoutesXmlLastModified = "app_routes_last_modified";
 }

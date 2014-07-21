@@ -2,7 +2,6 @@
     <p class="aside-text"><?php echo $resx_menu_left["p_user_name_label"]; ?><?php echo $pm['username']; ?><br/>
       <a href="<?php echo $logout_url; ?>" role="button"><?php echo $resx_menu_left["logout_link_text"]; ?></a>
     </p> 
-    <figure class="aside-bg"></figure>
     <section class="left-asidebg">
       <div class="content_left">
         <!-- CONTENT -->
@@ -14,9 +13,12 @@
               <?php echo $resx_menu_left["header_projects"]; ?>
               <span class="accordsuffix"></span></p>
             <ul style="display: none;" contentindex="0c" class="categoryitems">
-              <li><a id="project_list" class="<?php echo $active_project_list; ?>"><?php echo $resx_menu_left["project_list"]; ?></a></li> 
-              <li><a id="project_add" class="<?php echo $active_add_project; ?>"><?php echo $resx_menu_left["project_add"]; ?></a></li>
-              <!--<li><a href="/projects/manage"><?php echo $resx_menu_left["project_manage"]; ?></a></li>-->
+              <?php
+                foreach ($this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects) as $key => $value) {
+                  echo "<li><a data-project-id=" . $value->project_id . "\" class=\"select_project\">" . $value->project_name . "</a></li>";
+                }
+              ?>
+              <li><a id="project_add_left_menu" class="<?php echo $active_add_project; ?>"><?php echo $resx_menu_left["project_add"]; ?></a></li>
             </ul>    
             <!------------------------------------------End -Project--------------------------------------------------------->
             <div class="line">&nbsp;</div>     
