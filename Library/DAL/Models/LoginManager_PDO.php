@@ -59,5 +59,9 @@ class LoginManager_PDO extends \Library\DAL\BaseManager {
   public function add($item) {
     
   }
-
+  
+  public function edit($item){
+  }
+  public function delete($identifier){
+  }
 }

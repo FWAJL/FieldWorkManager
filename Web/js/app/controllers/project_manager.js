@@ -2,9 +2,19 @@ $(document).ready(function() {
 //  validator.requiredInput();//validate the inputs
   $("#btn_add_project").click(function() {
     var post_data = project_manager.retrieveInputs();
-    toastr.success("name: " + post_data.project_name + "; number: " + post_data.project_num + "; desc: " + post_data.project_desc + "; active: " + post_data.project_active_flag + " ; visible: " + post_data.project_visible_flag);
+    //toastr.success("name: " + post_data.project_name + "; number: " + post_data.project_num + "; desc: " + post_data.project_desc + "; active: " + post_data.project_active_flag + " ; visible: " + post_data.project_visible_flag);
     if (post_data.project_name !== undefined) {
-      project_manager.send(post_data);
+      project_manager.send(post_data,"project/add");
+      project_manager.clearForm();
+    }
+  });
+  $("#btn_delete_project").click(function() {
+    project_manager.delete($(this));
+  });
+  $("#btn_edit_project").click(function() {
+    var post_data = project_manager.retrieveInputs();
+    if (post_data.project_name !== undefined) {
+      project_manager.send(post_data,"project/edit");
       project_manager.clearForm();
     }
   });
@@ -20,7 +30,6 @@ $(document).ready(function() {
     $(".project_add").show();
     $(".project_edit").hide();
   });
-
 });
 /***********
  * project_manager namespace 
@@ -43,8 +52,8 @@ $(document).ready(function() {
     });
     return user_inputs;
   };
-  project_manager.send = function(project) {
-    datacx.post("project/add", project).then(function(reply) {//call AJAX method to call Project/Add WebService
+  project_manager.send = function(project,ws_url) {
+    datacx.post(ws_url, project).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
@@ -90,8 +99,10 @@ $(document).ready(function() {
     });
   };
   project_manager.loadEditForm = function(project) {
+    project_manager.clearForm();
+    $(".project_form input[name=\"project_id\"]").val(parseInt(project.project_id));
     $(".project_form .add-new-p input[name=\"project_name\"]").val(project.project_name);
-    $(".project_form .add-new-p input[name=\"project_number\"]").val(project.project_number);
+    $(".project_form .add-new-p input[name=\"project_num\"]").val(project.project_number);
     $(".project_form .add-new-p input[name=\"project_desc\"]").val(project.project_desc);
     $(".form_sections").fadeIn('2000').addClass("show").removeClass("hide");
     $(".project_welcome").fadeOut('2000').removeClass("show").addClass("hide");
