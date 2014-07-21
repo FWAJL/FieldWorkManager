@@ -5,7 +5,11 @@
     <span class="project_add"><?php echo $resx["project_legend_add"]; ?></span>
     <span class="project_edit"><?php echo $resx["project_legend_edit"]; ?></span>
   </legend>
-  <ol class="add-new-p">
+  <input name="project_id" type="number" style="display: none"/>
+  <ol class="add-new-p" data-project-id="">
+    <li style="display: none;">
+      <input name="project_id" type="text" />
+    </li>
     <li>
       <label><?php echo $resx["project_name"]; ?></label>
       <input name="project_name" type="text" />
@@ -30,3 +34,4 @@
 </fieldset>
 <input type="button" id="btn_add_project" class="project_add" value="<?php echo $resx["project_button_add"]; ?>" />
 <input type="button" id="btn_edit_project" class="project_edit" value="<?php echo $resx["project_button_edit"]; ?>" />
+<input type="button" id="btn_delete_project" class="project_edit" value="<?php echo $resx["project_button_delete"]; ?>" />

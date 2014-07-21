@@ -49,6 +49,8 @@
   <!-- WebService routes -->
   <route url="auth" module="Authenticate" action="authenticate" type="ws" />
   <route url="project/add" module="Project" action="add" type="ws" />
+  <route url="project/edit" module="Project" action="edit" type="ws" />
+  <route url="project/delete" module="Project" action="delete" type="ws" />
   <route url="project/getlist" module="Project" action="getList" type="ws" />
   <route url="project/getItem" module="Project" action="getItem" type="ws" />
 

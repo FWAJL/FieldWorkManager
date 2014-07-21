@@ -107,6 +107,38 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq
    * @return JSON
    */
+  public function executeEdit(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->ManageResponseWS();
+    //Process data received from Post
+    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
+
+    //Init PDO
+    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
+    $data_sent["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
+    $project = $this->PrepareUserObject($data_sent);
+    $result["data"] = $project;
+    /* Add to DB */
+    //Load interface to query the database
+    $manager = $this->managers->getManagerOf('Project');
+    $result_insert = $manager->edit($project);
+
+    //Clear the project list from session for the connect PM
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
+
+    //Process DB result and send result
+    if ($result_insert)
+      $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_edit", "step" => "success"));
+    //return the JSON data
+    echo \Library\HttpResponse::encodeJson($result);
+  }
+
+  /**
+   * Method that adds a project and returns the result of operation
+   * 
+   * @param \Library\HttpRequest $rq
+   * @return JSON
+   */
   public function executeGetList(\Library\HttpRequest $rq, $isNotWs = FALSE) {
     // Init result
     $result = $this->ManageResponseWS();
@@ -184,6 +216,7 @@ class ProjectController extends \Library\BaseController {
   private function PrepareUserObject($data_sent) {
     $project = new \Library\BO\Project();
     $project->setPm_id($data_sent["pm_id"]);
+    $project->setProject_id(!array_key_exists('project_id', $data_sent) ? NULL : $data_sent["project_id"]);
     $project->setProject_name(!array_key_exists('project_name', $data_sent) ? NULL : $data_sent["project_name"]);
     $project->setProject_number(!array_key_exists('project_num', $data_sent) ? "" : $data_sent["project_num"]);
     $project->setProject_desc(!array_key_exists('project_desc', $data_sent) ? "" : $data_sent["project_desc"]);

@@ -8,6 +8,10 @@
   <resource key="message_success_getlist">The projects have been read.</resource>
   <resource key="message_error_getItem">Error reading the project. Check logs.</resource>
   <resource key="message_success_getItem">The project has been read.</resource>
+  <resource key="message_error_edit">Error editing the project. Check logs.</resource>
+  <resource key="message_success_edit">The project has been edited.</resource>
+  <resource key="message_error_delete">Error deleting the project. Check logs.</resource>
+  <resource key="message_success_delete">The project has been deleted.</resource>
 
   <resource key="project_legend_add">Add new project</resource>
   <resource key="project_legend_edit">Edit this project</resource>
@@ -18,6 +22,7 @@
   <resource key="project_visible_flag">Visible</resource>
   <resource key="project_button_add">Add this project</resource>
   <resource key="project_button_edit">Edit this project</resource>
+  <resource key="project_button_delete">Delete this project</resource>
   
   <resource key="project_h1">Welcome to Field Work Assistant, for Project managers</resource>
   <resource key="project_welcome_message">Please, select an option on the left menu.</resource>

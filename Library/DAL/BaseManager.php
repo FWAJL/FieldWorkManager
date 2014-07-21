@@ -42,5 +42,17 @@ abstract class BaseManager extends \Library\Manager {
    */
   abstract public function add($item);
   
-//  abstract public function delete($identifier);
+  /**
+   * Edit method to update a item into DB
+   * 
+   * @param object $item
+   */
+  abstract public function edit($item);
+  
+  /**
+   * Add method to delete a item to DB
+   * 
+   * @param int $identifier
+   */  
+  abstract public function delete($identifier);
 }
