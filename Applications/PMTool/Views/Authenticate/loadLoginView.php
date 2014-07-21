@@ -5,15 +5,15 @@
     <section class="login-box-small">
       <p style="display: none;">
         <label><?php echo $resx["email_label"]; ?></label>
-        <input name="email" type="text" class="field" placeholder="<?php echo $resx["email_ph_text"]; ?>">
+        <input autocomplete="on" name="email" type="text" class="field" placeholder="<?php echo $resx["email_ph_text"]; ?>">
       </p>
       <p>
         <label><?php echo $resx["username_label"]; ?></label>
-        <input name="username" type="text" class="field" placeholder="<?php echo $resx["username_ph_text"]; ?>">
+        <input autocomplete="on" name="username" type="text" class="field" placeholder="<?php echo $resx["username_ph_text"]; ?>">
       </p>
       <p>
         <label><?php echo $resx["pwd_label"]; ?></label>
-        <input name="password" type="password" class="field" placeholder="<?php echo $resx["pwd_ph_text"]; ?>">
+        <input autocomplete="on" name="password" type="password" class="field" placeholder="<?php echo $resx["pwd_ph_text"]; ?>">
       </p>
       <p>
         <input name="remember_me" type="checkbox" value="" />

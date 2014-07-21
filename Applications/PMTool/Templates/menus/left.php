@@ -15,10 +15,10 @@
             <ul style="display: none;" contentindex="0c" class="categoryitems">
               <?php
                 foreach ($this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects) as $key => $value) {
-                  echo "<li><a id=\"project_view_" . $value->project_id . "\">" . $value->project_name . "</a></li>";
+                  echo "<li><a data-project-id=" . $value->project_id . "\" class=\"select_project\">" . $value->project_name . "</a></li>";
                 }
               ?>
-              <li><a id="project_add" class="<?php echo $active_add_project; ?>"><?php echo $resx_menu_left["project_add"]; ?></a></li>
+              <li><a id="project_add_left_menu" class="<?php echo $active_add_project; ?>"><?php echo $resx_menu_left["project_add"]; ?></a></li>
             </ul>    
             <!------------------------------------------End -Project--------------------------------------------------------->
             <div class="line">&nbsp;</div>     

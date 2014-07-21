@@ -97,7 +97,7 @@ p a:hover{ color:#000; text-decoration:underline ;font-weight:normal }
   border-radius: 10px; 
   -moz-border-radius:10px; 
   -webkit-border-radius: 10px; 
-  border: 2px solid #999;}
+  border: 1px solid #999;}
 
 .right-aside-inner-left{width:665px; height:auto; padding:0; margin:20px 0 0 0; border:0px solid #F00}
 

@@ -45,30 +45,28 @@ class ProjectController extends \Library\BaseController {
     $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
     $this->page->addVar('logout_url', "logout");
-    
+
     //Load Modules for view
     $this->page->addVar('form_modules', $this->app()->router()->selectedRoute()->phpModules());
-    $this->page->addVar('project_list_modules', array());//$this->app()->router()->selectedRoute()->phpModules());
-    
+    $this->page->addVar('project_list_modules', array()); //$this->app()->router()->selectedRoute()->phpModules());
     //Show and hide the sections on page
     //e.g. decide whether to see the "Add project" or the "View all projects"
     if ($this->_CheckIfPmHasProjects($pm[0])) {
-      $this->page->addVar('display_project_welcome','show');
-      $this->page->addVar('display_add_project','hide');
-      $this->page->addVar('active_project_list','active');
-      $this->page->addVar('active_add_project','');
+      $this->page->addVar('display_project_welcome', 'show');
+      $this->page->addVar('display_add_project', 'hide');
+      $this->page->addVar('active_project_list', 'active');
+      $this->page->addVar('active_add_project', '');
     } else {
-      $this->page->addVar('display_project_welcome','hide');
-      $this->page->addVar('display_add_project','show');
-      $this->page->addVar('active_project_list','');
-      $this->page->addVar('active_add_project','active');
+      $this->page->addVar('display_project_welcome', 'hide');
+      $this->page->addVar('display_add_project', 'show');
+      $this->page->addVar('active_project_list', '');
+      $this->page->addVar('active_add_project', 'active');
     }
-    
+
     //Get list of projects and store in session
     if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects)) {
       $this->app()->user->setAttribute(\Library\Enums\SessionKeys::UserProjects, $this->executeGetList($rq, TRUE));
     }
-    
   }
 
   /**
@@ -92,17 +90,18 @@ class ProjectController extends \Library\BaseController {
     //Load interface to query the database
     $manager = $this->managers->getManagerOf('Project');
     $result_insert = $manager->add($project);
-    
+
     //Clear the project list from session for the connect PM
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
 
     //Process DB result and send result
-    if ($result_insert) $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_insert", "step" => "success"));
+    if ($result_insert)
+      $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_insert", "step" => "success"));
     //return the JSON data
     echo \Library\HttpResponse::encodeJson($result);
   }
 
-    /**
+  /**
    * Method that adds a project and returns the result of operation
    * 
    * @param \Library\HttpRequest $rq
@@ -131,6 +130,36 @@ class ProjectController extends \Library\BaseController {
     } else {
       echo \Library\HttpResponse::encodeJson($result);
     }
+  }
+
+  /**
+   * Method that adds a project and returns the result of operation
+   * 
+   * @param \Library\HttpRequest $rq
+   * @return JSON
+   */
+  public function executeGetItem(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->ManageResponseWS();
+
+    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
+
+    $projects = array();
+    $project_selected = NULL;
+    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects)) {
+      $projects = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
+    }
+
+    foreach ($projects as $project) {
+      if ($project->project_id() === $data_sent["project_id"]) {
+        $project_selected = $project;
+      }
+    }
+
+    $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getItem", "step" => "success"));
+    $result["project"] = $project_selected;
+    //return the JSON data
+    echo \Library\HttpResponse::encodeJson($result);
   }
 
   /**

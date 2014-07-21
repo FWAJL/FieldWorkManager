@@ -426,10 +426,12 @@ arrowlistmenu ul{ /*CSS for UL of each sub menu*/
 }
 .arrowlistmenu ul li a:hover, .arrowlistmenu ul li a.active{ /*hover state CSS*/
  color: #00F;
+ cursor: pointer;
 }
 
 .arrowlistmenu ul li a:hover, .arrowlistmenu ul li a.active{ /*hover state CSS*/
   color: #00F;
+  cursor: pointer;
 }
 
 .arrowlistmenu .arrow { 
