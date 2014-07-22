@@ -106,7 +106,16 @@ class ProjectManager_PDO extends \Library\DAL\BaseManager {
   }
 
   public function delete($identifier) {
-    
+    $sql = "DELETE from `project` WHERE project_id = " . $identifier . ";";
+    $query = $this->dao->query($sql);
+    $result;
+    if (!$query) {
+      $result = $query->errorCode();
+    } else {
+      $result = TRUE;
+    }
+    $query->closeCursor();
+    return $result;
   }
 
 }
