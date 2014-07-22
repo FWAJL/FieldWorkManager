@@ -102,7 +102,7 @@ class ProjectController extends \Library\BaseController {
   }
 
   /**
-   * Method that adds a project and returns the result of operation
+   * Method that edits a project and returns the result of operation
    * 
    * @param \Library\HttpRequest $rq
    * @return JSON
@@ -132,7 +132,29 @@ class ProjectController extends \Library\BaseController {
     //return the JSON data
     echo \Library\HttpResponse::encodeJson($result);
   }
+  /**
+   * Method that delete a project and returns the result of operation
+   * 
+   * @param \Library\HttpRequest $rq
+   * @return JSON
+   */
+  public function executeDelete(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->ManageResponseWS();
 
+    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
+
+     //Load interface to query the database
+    $manager = $this->managers->getManagerOf('Project');
+    $result_insert = $manager->delete($data_sent["project_id"]);
+
+    //Clear the project list from session for the connect PM
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
+
+    $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_delete", "step" => "success"));
+    //return the JSON data
+    echo \Library\HttpResponse::encodeJson($result);
+  }
   /**
    * Method that adds a project and returns the result of operation
    * 

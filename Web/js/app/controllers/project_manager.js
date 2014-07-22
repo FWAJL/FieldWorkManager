@@ -107,8 +107,20 @@ $(document).ready(function() {
     $(".form_sections").fadeIn('2000').addClass("show").removeClass("hide");
     $(".project_welcome").fadeOut('2000').removeClass("show").addClass("hide");
     $(".project_add").hide();
-    $(".project_edit").show();
+    $(".project_edit").show().removeClass("hide");
 
+  };
+  project_manager.delete = function() {
+    //get project object from cache (PHP WS)
+    datacx.post("project/delete", {"project_id": parseInt($(".project_form input[name=\"project_id\"]").val())}).then(function(reply) {
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+        return undefined;
+      } else {//success
+        toastr.success(reply.message);
+        document.location.replace("project");
+      }
+    });
   };
   project_manager.clearForm = function() {
     $(".project_form input").each(function(i, data) {
