@@ -16,7 +16,7 @@ class Facility extends \Library\Entity{
     $facility_contact_email,
     $facility_id_num,
     $facility_sector,
-    $faciliy_sic,
+    $facility_sic,
     $boundary;
 
   const 
@@ -31,7 +31,7 @@ class Facility extends \Library\Entity{
     FACILITY_CONTACT_EMAIL_ERR = 8,
     FACILITY_ID_NUM_ERR = 9,
     FACILITY_SECTOR_ERR = 10,
-    FACILIY_SIC_ERR = 11,
+    FACILITY_SIC_ERR = 11,
     BOUNDARY_ERR = 12;
 
   // SETTERS //
@@ -123,11 +123,11 @@ class Facility extends \Library\Entity{
     }
   }
 
-  public function setFaciliy_sic($faciliy_sic) {
-    if (empty($faciliy_sic)) {
-      $this->erreurs[] = self::FACILIY_SIC_ERR;
+  public function setFacility_sic($facility_sic) {
+    if (empty($facility_sic)) {
+      $this->erreurs[] = self::FACILITY_SIC_ERR;
     } else {
-      $this->faciliy_sic = $faciliy_sic;
+      $this->facility_sic = $facility_sic;
     }
   }
 
@@ -184,8 +184,8 @@ class Facility extends \Library\Entity{
     return $this->facility_sector;
   }
 
-  public function faciliy_sic() {
-    return $this->faciliy_sic;
+  public function facility_sic() {
+    return $this->facility_sic;
   }
 
   public function boundary() {

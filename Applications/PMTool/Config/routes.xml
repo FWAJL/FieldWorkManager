@@ -28,6 +28,7 @@
       <js_file use="html" value="Web/js/app/services/dataservice.js"/>
       <js_file use="head" value="Web/js/app/helpers/html_table_helper.js"/>
       <js_file use="head" value="Web/js/app/controllers/project_manager.js"/>
+      <js_file use="head" value="Web/js/app/controllers/facility_manager.js"/>
       <js_file use="head" value="Web/js/app/controllers/left_menu_clicks.js"/>
     </js_files>
     <css_files>
@@ -53,5 +54,10 @@
   <route url="project/delete" module="Project" action="delete" type="ws" />
   <route url="project/getlist" module="Project" action="getList" type="ws" />
   <route url="project/getItem" module="Project" action="getItem" type="ws" />
+  <route url="facility/add" module="Facility" action="add" type="ws" />
+  <route url="facility/edit" module="Facility" action="edit" type="ws" />
+  <route url="facility/delete" module="Facility" action="delete" type="ws" />
+  <route url="facility/getlist" module="Facility" action="getList" type="ws" />
+  <route url="facility/getItem" module="Facility" action="getItem" type="ws" />
 
 </routes>

@@ -35,10 +35,13 @@
   <resource key="facility_contact_name">Facility - Contact Name</resource>
   <resource key="facility_contact_phone">Facility - Contact Phone (Mobile)</resource>
   <resource key="facility_contact_email">Facility - Contact Email</resource>
-  <resource key="facility_id_number">Facility ID Number</resource>
+  <resource key="facility_id_num">Facility ID Number</resource>
   <resource key="facility_sector">Facility - Sector</resource>
-  <resource key="facility_sic_code">Facility - SIC Code</resource>
-  <resource key="facility_boundary">Facility - Boundary</resource>
+  <resource key="facility_sic">Facility - SIC Code</resource>
+  <resource key="boundary">Facility - Boundary</resource>
+  <resource key="facility_button_add">Add this facility</resource>
+  <resource key="facility_button_edit">Edit this facility</resource>
+  <resource key="facility_button_delete">Delete this facility</resource>
 
   <resource key="company_legend">The client company</resource>
   <resource key="company_name">Company Name</resource>
