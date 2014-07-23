@@ -20,6 +20,7 @@ $(document).ready(function() {
   });
 
   $(".select_project").click(function() {
+    project_manager.clearForm();
     project_manager.retrieveProject($(this));
   });
   $("#project_add_left_menu").click(function() {
@@ -108,6 +109,8 @@ $(document).ready(function() {
     $(".project_welcome").fadeOut('2000').removeClass("show").addClass("hide");
     $(".project_add").hide();
     $(".project_edit").show().removeClass("hide");
+    
+    $(".facility_form input[name=\"facility_name\"]").val(project.project_name + " facility");
 
   };
   project_manager.delete = function() {
@@ -123,7 +126,7 @@ $(document).ready(function() {
     });
   };
   project_manager.clearForm = function() {
-    $(".project_form input").each(function(i, data) {
+    $(":checked, :text").each(function(i, data) {
       $(this).val("");
     });
   };

@@ -3,6 +3,9 @@
 <fieldset class="facility_form">
   <legend><?php echo $resx["facility_legend"]; ?></legend>
   <ol class="add-new-p">
+    <li style="display: none;">
+      <input name="facility_id" type="text" />
+    </li>
     <li>
       <label><?php echo $resx["facility_name"]; ?></label>
       <input name="facility_name" type="text" />
@@ -32,20 +35,23 @@
       <input name="facility_contact_email" type="text" />
     </li>
     <li>
-      <label><?php echo $resx["facility_id_number"]; ?></label>
-      <input name="facility_id_number" type="text" />
+      <label><?php echo $resx["facility_id_num"]; ?></label>
+      <input name="facility_id_num" type="text" />
     </li>
     <li>
       <label><?php echo $resx["facility_sector"]; ?></label>
       <input name="facility_sector" type="text" />
     </li>
     <li>
-      <label><?php echo $resx["facility_sic_code"]; ?></label>
-      <input name="facility_sic_code" type="text" />
+      <label><?php echo $resx["facility_sic"]; ?></label>
+      <input name="facility_sic" type="text" />
     </li>
     <li>
-      <label><?php echo $resx["facility_boundary"]; ?></label>
-      <input name="facility_boundary" type="text" />
+      <label><?php echo $resx["boundary"]; ?></label>
+      <input name="boundary" type="text" />
     </li>
   </ol>
 </fieldset>
+<input type="button" id="btn_add_facility" class="facility_add" value="<?php echo $resx["facility_button_add"]; ?>" />
+<input type="button" id="btn_edit_facility" class="facility_edit hide" value="<?php echo $resx["facility_button_edit"]; ?>" />
+<input type="button" id="btn_delete_facility" class="facility_edit hide" value="<?php echo $resx["facility_button_delete"]; ?>" />
