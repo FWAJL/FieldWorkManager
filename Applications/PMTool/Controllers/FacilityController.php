@@ -86,7 +86,7 @@ class FacilityController extends \Library\BaseController {
 
     //Process DB result and send result
     if ($result_insert)
-      $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_edit", "step" => "success"));
+      $result = $this->ManageResponseWS(array("resx_file" => "facility", "resx_key" => "_edit", "step" => "success"));
     //return the JSON data
     echo \Library\HttpResponse::encodeJson($result);
   }
@@ -104,12 +104,9 @@ class FacilityController extends \Library\BaseController {
 
      //Load interface to query the database
     $manager = $this->managers->getManagerOf('Facility');
-    $result_insert = $manager->delete($data_sent["project_id"]);
+    $result_insert = $manager->delete($data_sent["facility_id"]);
 
-    //Clear the project list from session for the connect PM
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
-
-    $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_delete", "step" => "success"));
+    $result = $this->ManageResponseWS(array("resx_file" => "facility", "resx_key" => "_delete", "step" => "success"));
     //return the JSON data
     echo \Library\HttpResponse::encodeJson($result);
   }
@@ -134,7 +131,7 @@ class FacilityController extends \Library\BaseController {
     $project_list = $manager->selectMany($project);
 
     //Process DB result and send result
-    $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getlist", "step" => "success"));
+    $result = $this->ManageResponseWS(array("resx_file" => "facility", "resx_key" => "_getlist", "step" => "success"));
     $result["projects"] = $project_list;
     //return the JSON data
     if ($isNotWs) {

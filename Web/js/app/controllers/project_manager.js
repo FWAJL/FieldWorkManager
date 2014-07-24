@@ -20,6 +20,8 @@ $(document).ready(function() {
   });
 
   $(".select_project").click(function() {
+    $(".select_project,#project_add_left_menu").removeClass("active");
+    $(this).addClass("active");
     project_manager.clearForm();
     project_manager.retrieveProject($(this));
   });

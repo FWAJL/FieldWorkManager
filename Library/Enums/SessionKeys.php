@@ -31,6 +31,7 @@ abstract class SessionKeys {
   const UserFlash = 'user_flash';
   const UserConnected = "user_connected";
   const UserProjects= "user_projects";
+  const UserProjectFacilityList= "user_project_facility_list";
 
 
   const SessionRoutes = "app_routes";
