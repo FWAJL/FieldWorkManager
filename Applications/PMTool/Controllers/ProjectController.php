@@ -65,7 +65,9 @@ class ProjectController extends \Library\BaseController {
 
     //Get list of projects and store in session
     if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects)) {
-      $this->app()->user->setAttribute(\Library\Enums\SessionKeys::UserProjects, $this->executeGetList($rq, TRUE));
+      $lists = $this->executeGetList($rq, TRUE);
+      $this->app()->user->setAttribute(\Library\Enums\SessionKeys::UserProjects, $lists["projects"]);
+      $this->app()->user->setAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList, $lists["facilities"]);
     }
   }
 
@@ -91,8 +93,9 @@ class ProjectController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf('Project');
     $result_insert = $manager->add($project);
 
-    //Clear the project list from session for the connect PM
+    //Clear the project and facility list from session for the connect PM
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
 
     //Process DB result and send result
     if ($result_insert)
@@ -123,8 +126,9 @@ class ProjectController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf('Project');
     $result_insert = $manager->edit($project);
 
-    //Clear the project list from session for the connect PM
+    //Clear the project and facility list from session for the connect PM
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
 
     //Process DB result and send result
     if ($result_insert)
@@ -148,8 +152,9 @@ class ProjectController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf('Project');
     $result_insert = $manager->delete($data_sent["project_id"]);
 
-    //Clear the project list from session for the connect PM
+    //Clear the project and facility list from session for the connect PM
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
 
     $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_delete", "step" => "success"));
     //return the JSON data
@@ -171,16 +176,20 @@ class ProjectController extends \Library\BaseController {
     $project = $this->PrepareUserObject($data_sent);
     $result["data"] = $project;
     /* Get list from DB */
-    //Load interface to query the database
+    //Load interface to query the database for projects
     $manager = $this->managers->getManagerOf('Project');
-    $project_list = $manager->selectMany($project);
+    $list['projects'] = $manager->selectMany($project);
+
+    //Load interface to query the database for facilities
+    $manager = $this->managers->getManagerOf('Facility');
+    $list['facilities'] = $manager->selectMany($project);
 
     //Process DB result and send result
     $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getlist", "step" => "success"));
-    $result["projects"] = $project_list;
+    $result["lists"] = $list;
     //return the JSON data
     if ($isNotWs) {
-      return $project_list;
+      return $list;
     } else {
       echo \Library\HttpResponse::encodeJson($result);
     }
@@ -223,7 +232,10 @@ class ProjectController extends \Library\BaseController {
    * @return boolean
    */
   private function _CheckIfPmHasProjects(\Library\BO\Project_manager $pm) {
-    //TODO: store in Session?
+    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects)) {
+      $projects = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
+      return count($projects) > 0 ? TRUE : FALSE;
+    }
     $manager = $this->managers->getManagerOf('Project');
     $count = $manager->countById($pm->pm_id());
     return $count > 0 ? TRUE : FALSE;
