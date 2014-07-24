@@ -91,6 +91,7 @@ class AuthenticateController extends \Library\BaseController {
   public function executeDisconnect(\Library\HttpRequest $rq, $redirect = TRUE) {
     $this->app->user->setAuthenticated(FALSE);
     $this->app->user->unsetAttribute(\Library\Enums\SessionKeys::UserConnected);
+    session_destroy();
     if ($redirect) header('Location: ' . __BASEURL__ . "login");
   }
   
