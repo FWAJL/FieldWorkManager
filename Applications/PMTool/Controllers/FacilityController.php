@@ -49,8 +49,9 @@ class FacilityController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf('Facility');
     $result_insert = $manager->add($facility);
 
-    //Clear the project list from session for the connect PM
-    //$this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
+    //Clear the project and facility list from session for the connect PM
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
 
     //Process DB result and send result
     if ($result_insert)
@@ -81,8 +82,8 @@ class FacilityController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf('Facility');
     $result_insert = $manager->edit($facility);
 
-    //Clear the project list from session for the connect PM
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
+    //Clear the facility list from session for the connect PM
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
 
     //Process DB result and send result
     if ($result_insert)
@@ -105,6 +106,9 @@ class FacilityController extends \Library\BaseController {
      //Load interface to query the database
     $manager = $this->managers->getManagerOf('Facility');
     $result_insert = $manager->delete($data_sent["facility_id"]);
+
+        //Clear the facility list from session for the connect PM
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
 
     $result = $this->ManageResponseWS(array("resx_file" => "facility", "resx_key" => "_delete", "step" => "success"));
     //return the JSON data
@@ -172,20 +176,7 @@ class FacilityController extends \Library\BaseController {
   }
 
   /**
-   * Check if the current pm has projects to decide where to send him: stay on the project list or asking him to add a project
-   * 
-   * @param \Library\BO\Project_manager $pm
-   * @return boolean
-   */
-  private function _CheckIfPmHasProjects(\Library\BO\Project_manager $pm) {
-    //TODO: store in Session?
-    $manager = $this->managers->getManagerOf('Facility');
-    $count = $manager->countById($pm->pm_id());
-    return $count > 0 ? TRUE : FALSE;
-  }
-
-  /**
-   * Prepare the Project Object before calling the DB.
+   * Prepare the Facility Object before calling the DB.
    * 
    * @param array $data_sent from POST request
    * @return \Library\BO\Facility

@@ -64,7 +64,8 @@ class ProjectController extends \Library\BaseController {
     }
 
     //Get list of projects and store in session
-    if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects)) {
+    if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects) &&
+            !$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjectFacilityList)) {
       $lists = $this->executeGetList($rq, TRUE);
       $this->app()->user->setAttribute(\Library\Enums\SessionKeys::UserProjects, $lists["projects"]);
       $this->app()->user->setAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList, $lists["facilities"]);
@@ -207,22 +208,50 @@ class ProjectController extends \Library\BaseController {
 
     $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
 
+    $project_selected = $this->_GetProjectFromSession($data_sent);
+    
+    $facility = array();
+    $facility_selected = $this->_GetFacilityProjectFromSession($data_sent);
+
+    $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getItem", "step" => "success"));
+    $result["project"] = $project_selected;
+    $result["facility"] = $facility_selected;
+    //return the JSON data
+    echo \Library\HttpResponse::encodeJson($result);
+  }
+  
+  private function _GetProjectFromSession($data_sent) {
     $projects = array();
-    $project_selected = NULL;
     if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects)) {
       $projects = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
+    } else {
+      return NULL;
     }
 
     foreach ($projects as $project) {
       if ($project->project_id() === $data_sent["project_id"]) {
-        $project_selected = $project;
+        return $project;
+      } else {
+        return NULL;  
       }
     }
+  }
 
-    $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getItem", "step" => "success"));
-    $result["project"] = $project_selected;
-    //return the JSON data
-    echo \Library\HttpResponse::encodeJson($result);
+    private function _GetFacilityProjectFromSession($data_sent) {
+    $facilities = array();
+    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjectFacilityList)) {
+      $facilities = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
+    } else {
+      return NULL;  
+    }
+
+    foreach ($facilities as $facility) {
+      if ($facility->project_id() === $data_sent["project_id"]) {
+        return $facility;
+      } else {
+        return NULL;  
+      }
+    }
   }
 
   /**
