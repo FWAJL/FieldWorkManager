@@ -231,10 +231,9 @@ class ProjectController extends \Library\BaseController {
     foreach ($projects as $project) {
       if ($project->project_id() === $data_sent["project_id"]) {
         return $project;
-      } else {
-        return NULL;  
       }
     }
+    return NULL;  
   }
 
     private function _GetFacilityProjectFromSession($data_sent) {
@@ -248,10 +247,9 @@ class ProjectController extends \Library\BaseController {
     foreach ($facilities as $facility) {
       if ($facility->project_id() === $data_sent["project_id"]) {
         return $facility;
-      } else {
-        return NULL;  
       }
     }
+    return NULL;  
   }
 
   /**
