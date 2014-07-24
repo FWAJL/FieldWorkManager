@@ -2,7 +2,7 @@
 
 /**
  *
- * @package		Basic MVC framework
+ * @package		Basic MVC framework 
  * @author		FWA DEV Team
  * @copyright	Copyright (c) 2014
  * @license		
