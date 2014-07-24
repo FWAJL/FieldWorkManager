@@ -19,14 +19,17 @@ Helpers to push updates:
 
 ### Git helpers
 
+Before doing any work, make sure to do:
+- git pull
+
 To push updates, use the following in order:
 
 - git status
 - git add -A 
 - git status 
-- git commit -m "some comment" 
+- git commit -m "some comment" (be as explicit as possible)
 - git push (login required) 
-- git tag v[Major].[Minor].[Revision].[Build] 
+- git tag v[Major].[Minor].[MainTask].[SubTask] 
 - git push --tags (login required)
 
 ### Having issues, questions?
