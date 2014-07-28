@@ -1,11 +1,12 @@
 $(document).ready(function() {
 //  validator.requiredInput();//validate the inputs
   $("#btn_add_project").click(function() {
-    var post_data = project_manager.retrieveInputs();
+    var post_data = {};
+    post_data["project"] = project_manager.retrieveInputs();
     //toastr.success("name: " + post_data.project_name + "; number: " + post_data.project_num + "; desc: " + post_data.project_desc + "; active: " + post_data.project_active_flag + " ; visible: " + post_data.project_visible_flag);
-    if (post_data.project_name !== undefined) {
-      project_manager.add(post_data,"project/add");
-      project_manager.clearForm();
+    if (post_data["project"].project_name !== undefined) {
+      project_manager.send(post_data, "project/add");
+      //project_manager.clearForm();
     }
   });
   $("#btn_delete_project").click(function() {
@@ -14,7 +15,7 @@ $(document).ready(function() {
   $("#btn_edit_project").click(function() {
     var post_data = project_manager.retrieveInputs();
     if (post_data.project_name !== undefined) {
-      project_manager.send(post_data,"project/edit");
+      project_manager.send(post_data, "project/edit");
       project_manager.clearForm();
     }
   });
@@ -55,13 +56,17 @@ $(document).ready(function() {
     });
     return user_inputs;
   };
-  project_manager.add = function(project,ws_url) {
-    datacx.post(ws_url, project).then(function(reply) {//call AJAX method to call Project/Add WebService
-      if (reply === null || reply.result === 0) {//has an error
+  project_manager.send = function(dataIn, ws_url) {
+    datacx.post(ws_url, dataIn.project).then(function(reply) {//call AJAX method to call Project/Add WebService
+      if (reply === null || reply.dataOut === undefined || reply.dataOut === null || parseInt(reply.dataOut) === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        document.location.replace("project");
+        var post_data = facility_manager.retrieveInputs();
+        if (post_data.facility_name !== undefined && post_data.facility_address !== undefined) {
+          post_data['project_id'] = reply.dataOut;
+          facility_manager.send("facility/add", post_data);
+        }
       }
     });
   };
@@ -111,7 +116,7 @@ $(document).ready(function() {
     $(".project_welcome").fadeOut('2000').removeClass("show").addClass("hide");
     $(".project_add").hide();
     $(".project_edit").show().removeClass("hide");
-    
+
     $(".facility_form input[name=\"facility_name\"]").val(project.project_name + " facility");
 
   };

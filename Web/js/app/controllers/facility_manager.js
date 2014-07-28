@@ -3,7 +3,7 @@ $(document).ready(function() {
   $("#btn_add_facility").click(function() {
     var post_data = facility_manager.retrieveInputs();
     if (post_data.facility_name !== undefined && post_data.facility_address !== undefined) {
-      facility_manager.send(post_data,"facility/add");
+      facility_manager.send("facility/add",post_data);
       facility_manager.clearForm();
     }
   });
@@ -13,7 +13,7 @@ $(document).ready(function() {
   $("#btn_edit_facility").click(function() {
     var post_data = facility_manager.retrieveInputs();
     if (post_data.facility_name !== undefined) {
-      facility_manager.send(post_data,"facility/edit");
+      facility_manager.send("facility/edit",post_data);
       facility_manager.clearForm();
     }
   });
@@ -37,7 +37,7 @@ $(document).ready(function() {
 (function(facility_manager) {
   facility_manager.retrieveInputs = function() {
     var user_inputs = {};
-    user_inputs[$(".project_form input[name=\"project_id\"]").attr("name")] = $(".project_form input[name=\"project_id\"]").val();
+    //user_inputs[$(".project_form input[name=\"project_id\"]").attr("name")] = $(".project_form input[name=\"project_id\"]").val();
     $(".facility_form input, .facility_form textarea").each(function(i, data) {
       if (facility_manager.checkLiElement($(this))) {
         if ($(this).attr("type") === "text") {
@@ -52,7 +52,7 @@ $(document).ready(function() {
     });
     return user_inputs;
   };
-  facility_manager.send = function(facility,ws_url) {
+  facility_manager.send = function(ws_url,facility) {
     datacx.post(ws_url, facility).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
