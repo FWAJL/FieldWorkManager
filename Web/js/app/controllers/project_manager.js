@@ -2,11 +2,10 @@ $(document).ready(function() {
 //  validator.requiredInput();//validate the inputs
   $("#btn_add_project").click(function() {
     var post_data = {};
-    post_data["project"] = project_manager.retrieveInputs();
+    post_data = project_manager.retrieveInputs();
     //toastr.success("name: " + post_data.project_name + "; number: " + post_data.project_num + "; desc: " + post_data.project_desc + "; active: " + post_data.project_active_flag + " ; visible: " + post_data.project_visible_flag);
-    if (post_data["project"].project_name !== undefined) {
+    if (post_data.project_name !== undefined) {
       project_manager.send(post_data, "project/add");
-      //project_manager.clearForm();
     }
   });
   $("#btn_delete_project").click(function() {
@@ -102,23 +101,21 @@ $(document).ready(function() {
         return undefined;
       } else {//success
         toastr.success(reply.message);
-        project_manager.loadEditForm(reply.project);
+        project_manager.loadEditForm(reply);
       }
     });
   };
-  project_manager.loadEditForm = function(project) {
+  project_manager.loadEditForm = function(dataWs) {
     project_manager.clearForm();
-    $(".project_form input[name=\"project_id\"]").val(parseInt(project.project_id));
-    $(".project_form .add-new-p input[name=\"project_name\"]").val(project.project_name);
-    $(".project_form .add-new-p input[name=\"project_num\"]").val(project.project_number);
-    $(".project_form .add-new-p input[name=\"project_desc\"]").val(project.project_desc);
+    $(".project_form input[name=\"project_id\"]").val(parseInt(dataWs.project.project_id));
+    $(".project_form .add-new-p input[name=\"project_name\"]").val(dataWs.project.project_name);
+    $(".project_form .add-new-p input[name=\"project_num\"]").val(dataWs.project.project_number);
+    $(".project_form .add-new-p input[name=\"project_desc\"]").val(dataWs.project.project_desc);
+    facility_manager.loadEditForm(dataWs);
     $(".form_sections").fadeIn('2000').addClass("show").removeClass("hide");
     $(".project_welcome").fadeOut('2000').removeClass("show").addClass("hide");
     $(".project_add").hide();
     $(".project_edit").show().removeClass("hide");
-
-    $(".facility_form input[name=\"facility_name\"]").val(project.project_name + " facility");
-
   };
   project_manager.delete = function() {
     //get project object from cache (PHP WS)

@@ -81,17 +81,11 @@ $(document).ready(function() {
       }
     });
   };
-  facility_manager.loadEditForm = function(facility) {
+  facility_manager.loadEditForm = function(dataWs) {
     facility_manager.clearForm();
-    $(".facility_form input[name=\"facility_id\"]").val(parseInt(facility.facility_id));
-    $(".facility_form .add-new-p input[name=\"facility_name\"]").val(facility.facility_name);
-    $(".facility_form .add-new-p input[name=\"facility_num\"]").val(facility.facility_number);
-    $(".facility_form .add-new-p input[name=\"facility_desc\"]").val(facility.facility_desc);
-    $(".form_sections").fadeIn('2000').addClass("show").removeClass("hide");
-    $(".facility_welcome").fadeOut('2000').removeClass("show").addClass("hide");
-    $(".facility_add").hide();
-    $(".facility_edit").show().removeClass("hide");
-
+    $(".facility_form input[name=\"facility_id\"]").val(parseInt(dataWs.facility.facility_id));
+    $(".facility_form .add-new-p input[name=\"facility_name\"]").val(dataWs.facility.facility_name);
+    $(".facility_form .add-new-p textarea[name=\"facility_address\"]").val(dataWs.facility.facility_address);
   };
   facility_manager.delete = function() {
     //get facility object from cache (PHP WS)
