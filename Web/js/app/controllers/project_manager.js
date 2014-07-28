@@ -5,7 +5,7 @@ $(document).ready(function() {
     post_data = project_manager.retrieveInputs();
     //toastr.success("name: " + post_data.project_name + "; number: " + post_data.project_num + "; desc: " + post_data.project_desc + "; active: " + post_data.project_active_flag + " ; visible: " + post_data.project_visible_flag);
     if (post_data.project_name !== undefined) {
-      project_manager.send(post_data, "project/add");
+      project_manager.add(post_data, "project", "add");
     }
   });
   $("#btn_delete_project").click(function() {
@@ -14,8 +14,7 @@ $(document).ready(function() {
   $("#btn_edit_project").click(function() {
     var post_data = project_manager.retrieveInputs();
     if (post_data.project_name !== undefined) {
-      project_manager.send(post_data, "project/edit");
-      project_manager.clearForm();
+      project_manager.edit(post_data, "project", "edit");
     }
   });
 
@@ -55,8 +54,8 @@ $(document).ready(function() {
     });
     return user_inputs;
   };
-  project_manager.send = function(dataIn, ws_url) {
-    datacx.post(ws_url, dataIn.project).then(function(reply) {//call AJAX method to call Project/Add WebService
+    project_manager.add = function(project, controller, action) {
+    datacx.post(controller+"/"+action, project).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.dataOut === undefined || reply.dataOut === null || parseInt(reply.dataOut) === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
@@ -64,7 +63,20 @@ $(document).ready(function() {
         var post_data = facility_manager.retrieveInputs();
         if (post_data.facility_name !== undefined && post_data.facility_address !== undefined) {
           post_data['project_id'] = reply.dataOut;
-          facility_manager.send("facility/add", post_data);
+          facility_manager.send("facility/"+action, post_data);
+        }
+      }
+    });
+  };
+  project_manager.edit = function(project, controller, action) {
+    datacx.post(controller+"/"+action, project).then(function(reply) {//call AJAX method to call Project/Add WebService
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+      } else {//success
+        toastr.success(reply.message);
+        var post_data = facility_manager.retrieveInputs();
+        if (post_data.facility_name !== undefined && post_data.facility_address !== undefined) {
+          facility_manager.send("facility/"+action, post_data);
         }
       }
     });
@@ -130,7 +142,7 @@ $(document).ready(function() {
     });
   };
   project_manager.clearForm = function() {
-    $(":checked, :text").each(function(i, data) {
+    $(":checked, :text, textarea").each(function(i, data) {
       $(this).val("");
     });
   };

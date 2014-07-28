@@ -73,10 +73,7 @@ class FacilityController extends \Library\BaseController {
     $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
 
     //Init PDO
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $data_sent["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
     $facility = $this->PrepareUserObject($data_sent);
-    $result["data"] = $project;
     /* Add to DB */
     //Load interface to query the database
     $manager = $this->managers->getManagerOf('Facility');
