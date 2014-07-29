@@ -67,7 +67,7 @@ class FacilityManager_PDO extends \Library\DAL\BaseManager {
     $values = "";
     foreach ($facility as $key => $value) {
       $columns .= "`" . $key . "`,";
-      $values .= "'" . $value . "',";
+      $values .= "'" . addslashes($value) . "',";
     }
     $columns = rtrim($columns, ", ");
     $values = rtrim($values, ", ");
@@ -93,7 +93,7 @@ class FacilityManager_PDO extends \Library\DAL\BaseManager {
       elseif ($key === "facility_id") {
         $where_clause = "$key = $value";
       } else {
-        $set_clause .= "`" . $key . "` = '" . $value ."',"; 
+        $set_clause .= "`" . $key . "` = '" . addslashes($value) ."',"; 
       }
     }
     $set_clause = rtrim($set_clause, ",");
