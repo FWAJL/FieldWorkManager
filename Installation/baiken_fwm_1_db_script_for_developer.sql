@@ -7,7 +7,7 @@
 -- Server version: 5.5.38
 -- PHP Version: 5.4.4-14+deb7u12
 
-DROP SCHEMA `baiken_fwm_1`;
+DROP SCHEMA IF EXISTS `baiken_fwm_1`;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
