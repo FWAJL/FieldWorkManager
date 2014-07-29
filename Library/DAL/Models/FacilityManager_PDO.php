@@ -87,7 +87,10 @@ class FacilityManager_PDO extends \Library\DAL\BaseManager {
     $set_clause = "";
     $where_clause = "";
     foreach ($facility as $key => $value) {
-      if ($key === "facility_id") {
+      if ($key === "project_id") {
+        //skip
+      }
+      elseif ($key === "facility_id") {
         $where_clause = "$key = $value";
       } else {
         $set_clause .= "`" . $key . "` = '" . $value ."',"; 

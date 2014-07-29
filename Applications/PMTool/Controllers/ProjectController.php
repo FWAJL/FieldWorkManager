@@ -2,7 +2,7 @@
 
 /**
  *
- * @package		Basic MVC framework 
+ * @package		Basic MVC framework test
  * @author		FWA DEV Team
  * @copyright	Copyright (c) 2014
  * @license		
@@ -50,18 +50,7 @@ class ProjectController extends \Library\BaseController {
     $this->page->addVar('form_modules', $this->app()->router()->selectedRoute()->phpModules());
     $this->page->addVar('project_list_modules', array()); //$this->app()->router()->selectedRoute()->phpModules());
     //Show and hide the sections on page
-    //e.g. decide whether to see the "Add project" or the "View all projects"
-    if ($this->_CheckIfPmHasProjects($pm[0])) {
-      $this->page->addVar('display_project_welcome', 'show');
-      $this->page->addVar('display_add_project', 'hide');
-      $this->page->addVar('active_project_list', 'active');
-      $this->page->addVar('active_add_project', '');
-    } else {
-      $this->page->addVar('display_project_welcome', 'hide');
-      $this->page->addVar('display_add_project', 'show');
-      $this->page->addVar('active_project_list', '');
-      $this->page->addVar('active_add_project', 'active');
-    }
+    $this->_ShowOrHideSectionsOnPage($this,$pm);
 
     //Get list of projects and store in session
     if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects) &&
@@ -88,19 +77,20 @@ class ProjectController extends \Library\BaseController {
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $data_sent["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
     $project = $this->PrepareUserObject($data_sent);
-    $result["data"] = $project;
+    $result["dataIn"] = $project;
     /* Add to DB */
     //Load interface to query the database
     $manager = $this->managers->getManagerOf('Project');
-    $result_insert = $manager->add($project);
-
+    $result["dataOut"] = $manager->add($project);
+    
+    
     //Clear the project and facility list from session for the connect PM
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
 
     //Process DB result and send result
-    if ($result_insert)
-      $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_insert", "step" => "success"));
+    if (intval($result["dataOut"]) > 0)
+      $result = $this->UpdateResponseWS($result, array("resx_file" => "project", "resx_key" => "_insert", "step" => "success"));
     //return the JSON data
     echo \Library\HttpResponse::encodeJson($result);
   }
@@ -287,4 +277,18 @@ class ProjectController extends \Library\BaseController {
     return $project;
   }
 
+  private function _ShowOrHideSectionsOnPage($currentController, $pm) {
+        //e.g. decide whether to see the "Add project" or the "View all projects"
+    if ($this->_CheckIfPmHasProjects($pm[0])) {
+      $currentController->page->addVar('display_project_welcome', 'show');
+      $currentController->page->addVar('display_add_project', 'hide');
+      $currentController->page->addVar('active_project_list', 'active');
+      $currentController->page->addVar('active_add_project', '');
+    } else {
+      $currentController->page->addVar('display_project_welcome', 'hide');
+      $currentController->page->addVar('display_add_project', 'show');
+      $currentController->page->addVar('active_project_list', '');
+      $currentController->page->addVar('active_add_project', 'active');
+    }
+  }
 }

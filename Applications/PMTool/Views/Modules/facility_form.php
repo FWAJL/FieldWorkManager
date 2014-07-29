@@ -52,6 +52,11 @@
     </li>
   </ol>
 </fieldset>
-<input type="button" id="btn_add_facility" class="facility_add" value="<?php echo $resx["facility_button_add"]; ?>" />
+<input type="button" id="btn_add_project" class="project_add" value="<?php echo $resx["project_button_add"]; ?>" />
+<input type="button" id="btn_edit_project" class="project_edit hide" value="<?php echo $resx["project_button_edit"]; ?>" />
+<input type="button" id="btn_delete_project" class="project_edit hide" value="<?php echo $resx["project_button_delete"]; ?>" />
+
+<!--<input type="button" id="btn_add_facility" class="facility_add" value="<?php echo $resx["facility_button_add"]; ?>" />
 <input type="button" id="btn_edit_facility" class="facility_edit hide" value="<?php echo $resx["facility_button_edit"]; ?>" />
-<input type="button" id="btn_delete_facility" class="facility_edit hide" value="<?php echo $resx["facility_button_delete"]; ?>" />
+<input type="button" id="btn_delete_facility" class="facility_edit hide" value="<?php echo $resx["facility_button_delete"]; ?>" />-->
+
