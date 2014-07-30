@@ -1,4 +1,6 @@
+### ############################
 ### Welcome to FieldWorkManager.
+### ############################
 The project will use basic web forms to collect project information, interactive forms for field personnel to collect data, and mapping tools to identify and organize the work locations.
 
 There will be three levels of users:
@@ -11,7 +13,9 @@ There will be three levels of users:
 - Software developer:
  - Test Stage site to validate software updates or debug on real data (read only rights)
 
+### ############################
 ### Installation to local machine
+### ############################
 PREREQUISITES:
 - PHP 5.3+ server
 - MySQL 5+
@@ -23,10 +27,16 @@ Tools recommended:
 
 Then, follow the steps below:
 - Retrieve the repository doing "git clone https://github.com/FWAJL/FieldWorkAssistantMVC.git"
-- With MySQL Workbench, run the script https://github.com/FWAJL/FieldWorkAssistantMVC/blob/master/Installation/baiken_fwm_1_db_script_for_developer.sql
-- Add a user like shown on the images in "/Installation" folder. You will find the database details to use here: https://github.com/FWAJL/FieldWorkAssistantMVC/blob/master/Applications/PMTool/Config/appsettings.xml
+- With MySQL Workbench, run the script "Installation/baiken_fwm_1_db_script_for_developer.sql"
+- Add a user via SQL Workbench like shown on the images in "/Installation" folder. 
+- Setup your PHP Document Root so the URL to access the website is something: http://localhost/FieldWorkAssistant/login. 
 
+You will find the database details to use here: "/Applications/PMTool/Config/appsettings.xml". Following the three steps means nothing needs to be changed to run the website.
+On the login page, enter the credentials test / test to login.
+
+### ############################
 ### Pushing update to repository
+### ############################
 Always push the updates on the Development branch and notify me (j.litzler@fieldworkassistant.net) when you do.
 Provide the details of the updates and a detailed test plan.
 Helpers to push updates:
