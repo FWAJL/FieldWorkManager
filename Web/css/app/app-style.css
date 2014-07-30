@@ -6,3 +6,6 @@
 
 .show{display: block;}
 .hide{display: none;}
+
+/* FACILITY */
+textarea { resize: vertical;}

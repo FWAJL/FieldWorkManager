@@ -94,5 +94,27 @@ abstract class BaseController extends ApplicationComponent {
       );
     }
   }
+    /**
+   * Set the default response from WS
+   * 
+   * @param string $resxKey
+   * @param string $step
+   * @param \Library\BO\Project_manager $user
+   * @return aeeay
+   */
+  public function UpdateResponseWS($result, $params) {
+    if ($params["step"] === "success") {
+      $result["result"] = 1;
+      $result["message"] = $params["resx_file"] === "ws_defaults" ?
+                  $this->app->i8n->getCommonResource($params["resx_file"], "message_success" . $params["resx_key"]) :
+                  $this->app->i8n->getLocalResource($params["resx_file"], "message_success" . $params["resx_key"]);
+    } else {
+      $result["result"] = 0;
+      $result["message"] = $params["resx_file"] === "ws_defaults" ?
+                  $this->app->i8n->getCommonResource($params["resx_file"], "message_error" . $params["resx_key"]) :
+                  $this->app->i8n->getLocalResource($params["resx_file"], "message_error" . $params["resx_key"]);
+    }
+    return $result;
+  }
 
 }

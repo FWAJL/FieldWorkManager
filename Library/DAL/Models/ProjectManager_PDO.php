@@ -75,10 +75,11 @@ class ProjectManager_PDO extends \Library\DAL\BaseManager {
     $result;
     if (!$query) {
       $result = $query->errorCode();
+      $query->closeCursor();
     } else {
-      $result = TRUE;
+      $result = $this->dao->lastInsertId();
     }
-    $query->closeCursor();
+    
     return $result;
   }
 
