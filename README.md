@@ -1,6 +1,6 @@
-### ----------------------------
+--------------------------------
 ### Welcome to FieldWorkManager.
-### ----------------------------
+--------------------------------
 The project will use basic web forms to collect project information, interactive forms for field personnel to collect data, and mapping tools to identify and organize the work locations.
 
 There will be three levels of users:
@@ -13,9 +13,9 @@ There will be three levels of users:
 - Software developer:
  - Test Stage site to validate software updates or debug on real data (read only rights)
 
-### ----------------------------
+---------------------------------
 ### Installation to local machine
-### ----------------------------
+---------------------------------
 PREREQUISITES:
 - PHP 5.3+ server
 - MySQL 5+
@@ -34,9 +34,9 @@ Then, follow the steps below:
 You will find the database details to use here: "/Applications/PMTool/Config/appsettings.xml". Following the three steps means nothing needs to be changed to run the website.
 On the login page, enter the credentials test / test to login.
 
-### ----------------------------
+--------------------------------
 ### Pushing update to repository
-### ----------------------------
+--------------------------------
 Always push the updates on the Development branch and notify me (j.litzler@fieldworkassistant.net) when you do.
 Provide the details of the updates and a detailed test plan.
 Helpers to push updates:
