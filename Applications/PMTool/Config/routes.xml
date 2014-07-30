@@ -13,7 +13,7 @@
       <css_file use="html" value="Web/css/app/theme.css"/>
       <css_file use="html" value="Web/css/app/media-queries.css"/>
     </css_files>
-  </route>
+  </route><!-- login -->
   <route url="logout" module="Authenticate" action="disconnect" type="ui">
   
   </route>
@@ -44,7 +44,20 @@
       <php_module key="facility_form" file_name="facility_form.php" shared="true"/>
       <!--<php_module key="company_form" file_name="company_form.php" shared="true"/>-->
     </php_modules>
-  </route>
+  </route><!-- project/index -->
+  <route url="location" module="Location" action="index" type="ui">
+    <js_files>
+      
+    </js_files>
+    <css_files>
+      <css_file value="Web/css/app/nav.css"/>
+      <css_file value="Web/css/app/app-style.css"/>
+      <css_file value="Web/css/app/app-theme.css"/>
+      <css_file value="Web/css/app/theme.css"/>
+      <css_file value="Web/css/app/media-queries.css"/>
+
+    </css_files>
+  </route><!-- location/index -->
   
   <!-- WebService routes -->
   <route url="auth" module="Authenticate" action="authenticate" type="ws" />
