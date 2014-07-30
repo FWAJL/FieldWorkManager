@@ -2,9 +2,11 @@ $(document).ready(function() {
 //  validator.requiredInput();//validate the inputs
   $("#btn_add_project").click(function() {
     var post_data = {};
-    post_data = project_manager.retrieveInputs();
+    post_data["project"] = project_manager.retrieveInputs();
+    post_data["facility"] = facility_manager.retrieveInputs();
     //toastr.success("name: " + post_data.project_name + "; number: " + post_data.project_num + "; desc: " + post_data.project_desc + "; active: " + post_data.project_active_flag + " ; visible: " + post_data.project_visible_flag);
-    if (post_data.project_name !== undefined) {
+    if (post_data["project"].project_name !== undefined &&
+          post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
       project_manager.add(post_data, "project", "add");
     }
   });
@@ -54,17 +56,15 @@ $(document).ready(function() {
     });
     return user_inputs;
   };
-    project_manager.add = function(project, controller, action) {
-    datacx.post(controller+"/"+action, project).then(function(reply) {//call AJAX method to call Project/Add WebService
+    project_manager.add = function(data, controller, action) {
+    datacx.post(controller+"/"+action, data["project"]).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.dataOut === undefined || reply.dataOut === null || parseInt(reply.dataOut) === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
         var post_data = facility_manager.retrieveInputs();
-        if (post_data.facility_name !== undefined && post_data.facility_address !== undefined) {
-          post_data['project_id'] = reply.dataOut;
-          facility_manager.send("facility/"+action, post_data);
-        }
+          data["facility"]['project_id'] = reply.dataOut;
+          facility_manager.send("facility/"+action, data["facility"]);
       }
     });
   };
