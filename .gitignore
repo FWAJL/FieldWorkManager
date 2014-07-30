@@ -220,3 +220,4 @@ pip-log.txt
 .htaccess
 Applications/autoload.php
 Applications/PMTool/Config/appsettings.xml
+nbproject/private/

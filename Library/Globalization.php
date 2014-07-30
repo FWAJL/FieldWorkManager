@@ -113,18 +113,30 @@ class Globalization extends ApplicationComponent {
 
         return null;
     }
-
-    public function getLocalResource($local_source, $key) {
-        if (isset($this->res_local[$this->app->locale][$local_source][$key])) {
-            return $this->res_local[$this->app->locale][$local_source][$key];
+    
+    /**
+     * Return a resource based on the page name and the key given (/Resources/Local/Page.lang.xml)
+     * 
+     * @param string $local_source
+     * @param string $key
+     * @return string
+     */
+    public function getLocalResource($page_name, $key) {
+        if (isset($this->res_local[$this->app->locale][$page_name][$key])) {
+            return $this->res_local[$this->app->locale][$page_name][$key];
         } else {//always display placeholder for missing locale resource
-            return $this->res_local[$this->app->context->defaultLang][$local_source][$key];
-            //return 'Missing resource: {'.$this->app->locale.'}{'.$local_source.'}{'.$key.'}';
+            return $this->res_local[$this->app->context->defaultLang][$page_name][$key];
+            //return 'Missing resource: {'.$this->app->locale.'}{'.$page_name.'}{'.$key.'}';
         }
 
         return null;
     }
-
+    /**
+     * Return an array of resources based on the page name given (/Resources/Local/Page.lang.xml)
+     * 
+     * @param string $page_name
+     * @return array
+     */
     public function getLocalResourceArray($page_name) {
         if (isset($this->res_local[$this->app->locale][$page_name])) {
             return $this->res_local[$this->app->locale][$page_name];
@@ -132,5 +144,17 @@ class Globalization extends ApplicationComponent {
             return $this->res_local[$this->app->context->defaultLang][$page_name];
         }
     }
-
+    /**
+     * Return an array of resources based on the page name given (/Resources/Local/Page.lang.xml)
+     * 
+     * @param string $page_name
+     * @return array
+     */
+    public function getCommonResourceArray($page_name) {
+        if (isset($this->res_common[$this->app->locale][$page_name])) {
+            return $this->res_common[$this->app->locale][$page_name];
+        } else {//always display placeholder for missing locale resource
+            return $this->res_common[$this->app->context->defaultLang][$page_name];
+        }
+    }
 }

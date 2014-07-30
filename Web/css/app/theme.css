@@ -1,12 +1,13 @@
 /* BUTTONS */
 .btn-primary {
-  background-color: #A39764;
-  border-color: #70632A;
+  background-color: #FFF;
+  border-color: #999;
+  color: #333;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary{
-  background-color: #8C8247;
-  border-color: #70632A;
+  background-color: #000  ;
+  border-color: #999;
 }
 
 

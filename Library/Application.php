@@ -2,10 +2,12 @@
 
 namespace Library;
 
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+  exit('No direct script access allowed');
+
 abstract class Application {
 
-  public $httpRequest;
+  public $HttpRequest;
   protected $httpResponse;
   public $name;
   public $locale;
@@ -13,52 +15,64 @@ abstract class Application {
   public $pageTitle;
   public $pageUrls;
   public $logoImageUrl;
-
+  public $globalResources;
+  public $relative_path;
   public $user;
   public $config;
   public $i8n;
   public $imageUtil;
 
   public function __construct() {
-    $this->httpRequest = new HttpRequest($this);
+    $this->HttpRequest = new HttpRequest($this);
     $this->httpResponse = new HttpResponse($this);
 
     $this->router = new Router($this);
     $this->user = new User($this);
     $this->config = new Config($this);
     $this->context = new Context($this);
-    $this->i8n = new Globalization($this);    
-    $this->imageUtil = new ImageUtility($this);    
-    $this->locale = $this->httpRequest->initLanguage($this, "browser");
+    $this->i8n = new Globalization($this);
+    $this->imageUtil = new ImageUtility($this);
+    $this->locale = $this->HttpRequest->initLanguage($this, "browser");
     $this->name = '';
   }
+
   public function initConfig() {
     
   }
 
   public function getController() {
-//    //
-//    $router = new \Library\Router;
-//    $router->LoadAvailableRoutes($this);
-    $this->router->LoadAvailableRoutes($this);
-    $matchedRoute = $this->FindRouteMatch();
-    if ($matchedRoute->type() === "ws") {
+    $this->router()->setRoutesXmlPath(__ROOT__ . 'Applications/' . $this->name . '/Config/routes.xml');
+
+    if ($this->router()->hasRoutesXmlChanged($this->user()) || !$this->user->keyExistInSession(Enums\SessionKeys::SessionRoutes)) {
+      $this->router->LoadAvailableRoutes($this);
+      //Store routes in session
+      $this->user->setAttribute(Enums\SessionKeys::SessionRoutes, $this->router()->routes());
+    } else {
+      $this->router()->setRoutes($this->user->getAttribute(Enums\SessionKeys::SessionRoutes));
+    }
+    $this->router()->setSelectedRoute($this->FindRouteMatch());
+    $this->relative_path = $this->router()->selectedRoute()->relative_path;
+    $this->globalResources["js_files_head"] = $this->router()->selectedRoute()->headJsScripts();
+    $this->globalResources["js_files_html"] = $this->router()->selectedRoute()->htmlJsScripts();
+    $this->globalResources["css_files"] = $this->router()->selectedRoute()->cssFiles();
+
+    if ($this->router()->selectedRoute()->type() === "ws") {
       $this->router()->isWsCall = true;
     }
     // On ajoute les variables de l'URL au tableau $_GET.
-    $_GET = array_merge($_GET, $matchedRoute->vars());
+    $_GET = array_merge($_GET, $this->router()->selectedRoute()->vars());
 
-    $controllerClass = $this->BuildControllerClass($matchedRoute);
+    $controllerClass = $this->BuildControllerClass($this->router()->selectedRoute());
     if (!file_exists(__ROOT__ . str_replace('\\', '/', $controllerClass) . Enums\FileNameConst::ClassSuffix)) {
       $this->httpResponse->displayError(Enums\ErrorCodes::ControllerNotExist); //Controller doesn't exist
     }
-    return new $controllerClass($this, $matchedRoute->module(), $matchedRoute->action());
+    return new $controllerClass($this, $this->router()->selectedRoute()->module(), $this->router()->selectedRoute()->action());
   }
 
   abstract public function run();
 
-  public function httpRequest() {
-    return $this->httpRequest;
+  public function HttpRequest() {
+    return $this->HttpRequest;
   }
 
   public function httpResponse() {
@@ -76,15 +90,15 @@ abstract class Application {
   public function context() {
     return $this->context;
   }
-  
+
   public function i8n() {
     return $this->i8n;
   }
-  
+
   public function pageUrls() {
     return array();
-  }  
-  
+  }
+
   public function router() {
     return $this->router;
   }
@@ -96,7 +110,7 @@ abstract class Application {
   private function FindRouteMatch() {
     try {
       // On récupère la route correspondante à l'URL.
-      return $this->router->getRoute($this->httpRequest->requestURI());
+      return $this->router->getRoute($this->HttpRequest->requestURI());
     } catch (\RuntimeException $e) {
       if ($e->getCode() == \Library\Router::NO_ROUTE) {
         // Si aucune route ne correspond, c'est que la page demandée n'existe pas.

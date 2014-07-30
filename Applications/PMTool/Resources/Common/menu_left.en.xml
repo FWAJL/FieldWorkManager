@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <resource key="logout_link_text">Logout</resource>
+  <resource key="p_user_name_label">User Name: </resource>
+  <resource key="header_projects">Projects</resource>
+  <resource key="header_locations">Locations</resource>
+  <resource key="project_add">Add new project</resource>
+  <resource key="project_manage">Show/Hide Projects</resource>
+  <resource key="project_list">All Projects</resource>
+  <resource key="location_add">Add new Location</resource>
+  <resource key="location_boundary_add">Add Boundary</resource>
+  <resource key="location_upload_list">Upload Location List</resource>
+  <resource key="location_manage">Show/Hide Locations</resource>
+  <resource key="boundary_manage">Show/Hide Boundaries</resource>
+  <resource key="item_locX">A location</resource>
+</resources>

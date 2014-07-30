@@ -41,5 +41,16 @@ class User extends ApplicationComponent {
   public function setFlash($value) {
     $_SESSION[Enums\SessionKeys::UserFlash] = $value;
   }
+  /**
+   * Unset a session item of given key
+   * 
+   * @param string $key (Enums\SessionKeys)
+   */
+  public function unsetAttribute($key) {
+    unset($_SESSION[$key]);
+  }
 
+  public function keyExistInSession($key) {
+    return isset($_SESSION[$key]);
+  }
 }

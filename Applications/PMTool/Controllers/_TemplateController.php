@@ -5,7 +5,7 @@ if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script acces
 
 class ThisController extends \Library\BaseController {
 
-  public function executeIndex(\Library\HTTPRequest $request) {
+  public function executeIndex(\Library\HttpRequest $request) {
     //TODO: add js resource using a Resource manager
     //$file_path_to_include = "filename.js";
     $resourceFileKey = "_tmp";

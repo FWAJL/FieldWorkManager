@@ -1,11 +1,62 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <routes>
   <!-- UI routes -->
-  <route url="login" module="Authenticate" action="loadView" type="ui" />
-  <route url="logout" module="Authenticate" action="disconnect" type="ui" />
-  <route url="projects" module="Project" action="index" type="ui" />
+  <route url="login" module="Authenticate" action="loadLoginView" type="ui">
+    <js_files>
+      <js_file use="html" value="Web/js/app/validator.js"/>
+      <js_file use="html" value="Web/js/app/services/dataservice.js"/>
+      <js_file use="html" value="Web/js/app/controllers/auth.js"/>     
+    </js_files>
+    <css_files>
+      <css_file use="html" value="Web/css/app/app-style.css"/>
+      <css_file value="Web/css/app/app-theme.css"/>
+      <css_file use="html" value="Web/css/app/theme.css"/>
+      <css_file use="html" value="Web/css/app/media-queries.css"/>
+    </css_files>
+  </route>
+  <route url="logout" module="Authenticate" action="disconnect" type="ui">
+  
+  </route>
+  <route url="project" module="Project" action="index" type="ui">
+    <js_files>
+      <js_file use="head" value="Web/js/addons/modernizr.js"/>
+      <js_file use="head" value="Web/js/app/design/all.js"/>
+      <js_file use="head" value="Web/js/app/design/tinydropdown.js"/>
+      <js_file use="head" value="Web/js/app/design/ddaccordion.js"/>
+      <js_file use="head" value="Web/js/app/design/drop_down.js"/>
+      <js_file use="head" value="Web/js/app/design/headScript.js"/>
+      <js_file use="html" value="Web/js/app/services/dataservice.js"/>
+      <js_file use="head" value="Web/js/app/controllers/facility_manager.js"/>
+      <js_file use="head" value="Web/js/app/controllers/project_manager.js"/>
+      <js_file use="head" value="Web/js/app/controllers/left_menu_clicks.js"/>
+    </js_files>
+    <css_files>
+      <css_file value="Web/css/app/nav.css"/>
+      <css_file value="Web/css/app/app-style.css"/>
+      <css_file value="Web/css/app/app-theme.css"/>
+      <css_file value="Web/css/app/theme.css"/>
+      <css_file value="Web/css/app/media-queries.css"/>
+    </css_files>
+    <php_modules>
+      <!-- Add just the file name, the Router class will take of building the correct path -->
+      <!-- The "shared" attribute specifies where to get the module, either the current view Modules folder or the main Modules folder in Views -->
+      <php_module key="project_form" file_name="project_form.php" shared="true"/>
+      <php_module key="facility_form" file_name="facility_form.php" shared="true"/>
+      <!--<php_module key="company_form" file_name="company_form.php" shared="true"/>-->
+    </php_modules>
+  </route>
   
   <!-- WebService routes -->
   <route url="auth" module="Authenticate" action="authenticate" type="ws" />
+  <route url="project/add" module="Project" action="add" type="ws" />
+  <route url="project/edit" module="Project" action="edit" type="ws" />
+  <route url="project/delete" module="Project" action="delete" type="ws" />
+  <route url="project/getlist" module="Project" action="getList" type="ws" />
+  <route url="project/getItem" module="Project" action="getItem" type="ws" />
+  <route url="facility/add" module="Facility" action="add" type="ws" />
+  <route url="facility/edit" module="Facility" action="edit" type="ws" />
+  <route url="facility/delete" module="Facility" action="delete" type="ws" />
+  <route url="facility/getlist" module="Facility" action="getList" type="ws" />
+  <route url="facility/getItem" module="Facility" action="getItem" type="ws" />
 
 </routes>

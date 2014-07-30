@@ -15,14 +15,14 @@ class LoginManager_PDO extends \Library\DAL\BaseManager {
    */
   public function selectOne($pm_in) {
     if ($pm_in->username() !== "") {//Check if the user is giving his username and that there is a value
-      $sql = 'SELECT * FROM project_manager where `username` = \'' . $pm_in->username() . '\' LIMIT 0, 1;';
+      $sql = 'SELECT * FROM project_manager where `username` = \'' . $pm_in->username() . '\' AND `password` = \'' . $pm_in->password() . '\' LIMIT 0, 1;';
     } else if ($pm_in->pm_email() !== "") {//Check if the user is giving an email
-      $sql = 'SELECT * FROM project_manager where `email` = \'' . $pm_in->pm_email() . '\' LIMIT 0, 1;';
+      $sql = 'SELECT * FROM project_manager where `email` = \'' . $pm_in->pm_email() . '\' AND `password` = \'' . $pm_in->password() . '\' LIMIT 0, 1;';
     } else {
       return NULL;
     }
     $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Library\BO\ProjectManager');
+    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Library\BO\Project_manager');
 
     $pm_out = $query->fetchAll();
     $query->closeCursor();
@@ -40,7 +40,7 @@ class LoginManager_PDO extends \Library\DAL\BaseManager {
     $sql = $this->dao->prepare("UPDATE project_manager set `password` = :password WHERE `pm_id` = :pm_id;");
     $sql->bindValue(":pm_id", $pm->pm_id(), \PDO::PARAM_INT);
     $sql->bindValue(":password", $pm->password(), \PDO::PARAM_STR);
-    
+
     try {
       return $sql->execute();
     } catch (Exception $exc) {
@@ -48,4 +48,20 @@ class LoginManager_PDO extends \Library\DAL\BaseManager {
     }
   }
 
+  public function selectMany($item) {
+    return NULL;
+  }
+
+  public function countById($item) {
+    
+  }
+
+  public function add($item) {
+    
+  }
+  
+  public function edit($item){
+  }
+  public function delete($identifier){
+  }
 }

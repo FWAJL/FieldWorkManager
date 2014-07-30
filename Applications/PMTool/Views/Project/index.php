@@ -1,10 +1,16 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
-<div class="container theme-showcase" role="main">
-
-  <!-- Main jumbotron for a primary marketing message or call to action -->
-  <div class="jumbotron">
-    <h3><?php echo $resx["h3_title"]; ?></h3>
-    <p><a href="<?php echo $logout_url; ?>" class="btn btn-primary btn-lg" role="button"><?php echo $resx["logout_link_text"]; ?></a></p>
-
-  </div>
-</div> <!-- /container -->
+<section class="right-aside">
+  <h2></h2>
+  <section class="project_welcome <?php echo $display_project_welcome; ?>">
+    <h1 class="legend"><?php echo $resx["project_h1"]; ?></h1>
+    <p><?php echo $resx["project_welcome_message"]; ?></p>
+  </section>
+  <section class="form_sections <?php echo $display_add_project; ?>">
+    <?php
+    foreach ($form_modules as $key => $module_path) {
+      require $module_path;
+    }
+    ?>
+  </section>
+</section>	
+</div><!-- END CONTENT CONTAINER -->

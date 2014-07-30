@@ -1,7 +1,9 @@
 <?php
 
 namespace Library;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+  exit('No direct script access allowed');
 
 class Page extends ApplicationComponent {
 
@@ -20,6 +22,8 @@ class Page extends ApplicationComponent {
       throw new \RuntimeException('The view ' . $this->contentFile . ' doesn\'t exist.');
     }
     $user = $this->app->user();
+    
+    $this->addVar("resx_menu_left", $this->app->i8n->getCommonResourceArray("menu_left"));
 
     $int = extract($this->vars);
 
@@ -28,14 +32,38 @@ class Page extends ApplicationComponent {
     $content = ob_get_clean();
 
     ob_start();
-//        require __ROOT__.Enums\FolderName::AppsFolderName.$this->app->name().Enums\FileNameConst::LayoutTemplate;
-    if (!$this->app->router->isWsCall) {
-      require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::HeaderTemplate;
+
+    //Set page layout based on user status: authenticated or not
+    if ($this->app->user()->isAuthenticated()) {
+      /**
+       * FOR AUTHENTICATED USERS
+       */
+      if (!$this->app->router->isWsCall) {
+        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::HeaderTemplate;
+        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::MenuTopTemplate;
+        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::MenuLeftTemplate;
+      }
+
+      require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
+
+      if (!$this->app->router->isWsCall) {
+        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::FooterTemplate;
+      }
+    } else {
+      /**
+       * FOR NON AUTHENTICATED USERS
+       */
+      if (!$this->app->router->isWsCall) {
+        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::HeaderTemplate;
+      }
+
+      require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
+
+      if (!$this->app->router->isWsCall) {
+        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::FooterTemplate;
+      }
     }
-    require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
-    if (!$this->app->router->isWsCall) {
-      require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::FooterTemplate;
-    }
+
     return ob_get_clean();
   }
 
@@ -44,6 +72,41 @@ class Page extends ApplicationComponent {
       throw new \InvalidArgumentException('The view ' . $contentFile . ' doesn\'t exist.');
     }
     $this->contentFile = $contentFile;
+  }
+
+  /**
+   * Build the page for non Authenticated users with a header, footer, center content panel
+   * 
+   * @param \Library\Application $app
+   */
+  protected function setNonAuthenticatedPageLayout() {
+    if (!$this->app->router->isWsCall) {
+      require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::HeaderTemplate;
+    }
+
+    require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
+
+    if (!$this->app->router->isWsCall) {
+      require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::FooterTemplate;
+    }
+  }
+
+  /**
+   * Build the page for Authenticated users with a header, footer, top menu, left menu, center content panel
+   * 
+   * @param \Library\Application $app
+   */
+  protected function setAuthenticatedPageLayout() {
+    if (!$this->app->router->isWsCall) {
+      require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::HeaderTemplate;
+//      require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::HeaderTemplate;
+    }
+
+    require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
+
+    if (!$this->app->router->isWsCall) {
+      require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::FooterTemplate;
+    }
   }
 
 }

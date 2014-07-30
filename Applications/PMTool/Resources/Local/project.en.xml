@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
   <resource key="page_title">Your projects - Field Work Assistant</resource>
-  <resource key="h3_title">Your projects</resource>
-  <resource key="logout_link_text">Logout</resource>
+  
+  <resource key="message_error_insert">Error inserting the project. Check logs.</resource>
+  <resource key="message_success_insert">The project has been inserted.</resource>
+  <resource key="message_error_getlist">Error reading the projects. Check logs.</resource>
+  <resource key="message_success_getlist">The projects have been read.</resource>
+  <resource key="message_error_getItem">Error reading the project. Check logs.</resource>
+  <resource key="message_success_getItem">The project has been read.</resource>
+  <resource key="message_error_edit">Error editing the project. Check logs.</resource>
+  <resource key="message_success_edit">The project has been edited.</resource>
+  <resource key="message_error_delete">Error deleting the project. Check logs.</resource>
+  <resource key="message_success_delete">The project has been deleted.</resource>
+
+  <resource key="project_legend_add">Add new project</resource>
+  <resource key="project_legend_edit">Edit this project</resource>
+  <resource key="project_name">Project Name</resource>
+  <resource key="project_num">Project Number</resource>
+  <resource key="project_desc">Project Description</resource>
+  <resource key="project_active_flag">Active</resource>
+  <resource key="project_visible_flag">Visible</resource>
+  <resource key="project_button_add">Add this project</resource>
+  <resource key="project_button_edit">Edit this project</resource>
+  <resource key="project_button_delete">Delete this project</resource>
+  
+  <resource key="project_h1">Welcome to Field Work Assistant, for Project managers</resource>
+  <resource key="project_welcome_message">Please, select an option on the left menu.</resource>
+
+  <resource key="facility_legend">The facility</resource>
+  <resource key="facility_name">Facility Name</resource>
+  <resource key="facility_address">Facility Address</resource>
+  <resource key="facility_lat">Facility Latitude</resource>
+  <resource key="facility_long">Facility Longitude</resource>
+  <resource key="facility_contact_name">Facility - Contact Name</resource>
+  <resource key="facility_contact_phone">Facility - Contact Phone (Mobile)</resource>
+  <resource key="facility_contact_email">Facility - Contact Email</resource>
+  <resource key="facility_id_num">Facility ID Number</resource>
+  <resource key="facility_sector">Facility - Sector</resource>
+  <resource key="facility_sic">Facility - SIC Code</resource>
+  <resource key="boundary">Facility - Boundary</resource>
+  <resource key="facility_button_add">Add this facility</resource>
+  <resource key="facility_button_edit">Edit this facility</resource>
+  <resource key="facility_button_delete">Delete this facility</resource>
+
+  <resource key="company_legend">The client company</resource>
+  <resource key="company_name">Company Name</resource>
+  <resource key="company_contact_name">Facility - Contact Name</resource>
+  <resource key="company_contact_phone">Facility - Contact Phone (Mobile)</resource>
+  <resource key="company_contact_email">Facility - Contact Email</resource>
+  <resource key="company_id_number">Facility ID Number</resource>
+  
 </resources>
