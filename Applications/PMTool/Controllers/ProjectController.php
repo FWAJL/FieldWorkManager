@@ -48,7 +48,7 @@ class ProjectController extends \Library\BaseController {
 
     //Load Modules for view
     $this->page->addVar('form_modules', $this->app()->router()->selectedRoute()->phpModules());
-    $this->page->addVar('project_list_modules', array()); //$this->app()->router()->selectedRoute()->phpModules());
+
     //Show and hide the sections on page
     $this->_ShowOrHideSectionsOnPage($this, $pm);
 
