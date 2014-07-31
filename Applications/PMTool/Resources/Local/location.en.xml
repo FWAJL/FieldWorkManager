@@ -3,7 +3,7 @@
   <resource key="page_title">Your Locations - Field Work Assistant</resource>
   
   <resource key="location_h1">Welcome to Field Work Assistant, for Project managers</resource>
-  <resource key="location_welcome_message">Please, select an option on the left menu.</resource>
+  <resource key="location_welcome_message">Please, select a project or add one to add and edit locations.</resource>
   
   <resource key="message_error_insert">Error inserting the location. Check logs.</resource>
   <resource key="message_success_insert">The location has been inserted.</resource>
@@ -15,4 +15,6 @@
   <resource key="message_success_edit">The location has been edited.</resource>
   <resource key="message_error_delete">Error deleting the location. Check logs.</resource>
   <resource key="message_success_delete">The location has been deleted.</resource>
+  
+  
 </resources>

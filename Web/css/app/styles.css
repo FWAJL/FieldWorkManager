@@ -366,10 +366,14 @@ input.submit {
   cursor:pointer;
 }
 
-#arrowlistmenu #menuheader:hover {
+.arrowlistmenu .menuheader a {
+  text-decoration: none;
+  font-weight: bold;
+}
+#arrowlistmenu #menuheader:hover, .arrowlistmenu .menuheader a:hover {
   color:#00F;
 }
-.arrowlistmenu .menuheader:hover {
+.arrowlistmenu .menuheader:hover, .arrowlistmenu .menuheader a:hover {
  background: url(../../images/arrow.gif) 18px 13px no-repeat ;
   color:#00F;
 }
