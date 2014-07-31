@@ -10,7 +10,7 @@
             <!------------------------------------------start Project--------------------------------------------------------->
             <p headerindex="0h" class="menuheader expandable arrow ">
               <span class="accordprefix"></span>
-              <?php echo $resx_menu_left["header_projects"]; ?>
+              <a href="project"><?php echo $resx_menu_left["header_projects"]; ?></a>
               <span class="accordsuffix"></span></p>
             <ul style="display: none;" contentindex="0c" class="categoryitems">
               <?php
@@ -34,11 +34,11 @@
             <!------------------------------------------start Locationss--------------------------------------------------------->
             <p headerindex="2h" class="menuheader expandable arrow openheader">
               <span class="accordprefix"></span>
-              <?php echo $resx_menu_left["header_locations"]; ?>
+                <a href="location"><?php echo $resx_menu_left["header_locations"]; ?></a>
               <span class="accordsuffix"></span></p>
             <ul style="display: block;" contentindex="2c" class="categoryitems">
-              <li><a data-name="not_implemented" href="#"><?php echo $resx_menu_left["item_locX"]; ?></a></li> 
-              <li><a data-name="not_implemented" href="#" class="plus"><?php echo $resx_menu_left["location_add"]; ?></a></li>
+              <li><a href="location"><?php echo $resx_menu_left["item_locX"]; ?></a></li> 
+              <li><a id="loc_add_left_menu"><?php echo $resx_menu_left["location_add"]; ?></a></li>
               <!--<li><a href="/locations" class="plus"><?php echo $resx_menu_left["location_boundary_add"]; ?></a></li>-->
               <!--<li><a href="/locations" class="plus"><?php echo $resx_menu_left["location_upload_list"]; ?></a></li>-->
               <!--<li><a href="/locations"><?php echo $resx_menu_left["location_manage"]; ?></a></li>-->

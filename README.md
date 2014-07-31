@@ -42,9 +42,25 @@ Provide the details of the updates and a detailed test plan.
 Helpers to push updates:
 
 ### Git helpers
+To setup the application, you need to do:
+- git clone https://github.com/FWAJL/FieldWorkAssistantMVC.git
+- cd FieldWorkAssistantMVC
+- git checkout Development (select the Development branch to work on)
+- git branch
+
+On the last command, you should see:
+
+Development (with a * prefixing)
+master
+
+By the following command, you should see that you have the latest code:
+- git status
 
 Before doing any work, make sure to do:
 - git pull
+
+Sometimes, it'll ask to add a commet after merge and will open the VM Editor in Terminal. To exit it, just do:
+- :wq then Enter.
 
 To push updates, use the following in order:
 
@@ -55,6 +71,18 @@ To push updates, use the following in order:
 - git push (login required) 
 - git tag v[Major].[Minor].[MainTask].[SubTask] 
 - git push --tags (login required)
+
+Setting your branch to exactly match the remote branch can be done in two steps:
+
+- git fetch origin
+- git reset --hard origin/master
+
+If you want to save your current branch's state before doing this (just in case), you can do:
+
+- git commit -a -m "Saving my work, just in case"
+- git branch my-saved-work
+
+See here for more info: http://stackoverflow.com/questions/1628088/how-to-reset-my-local-repository-to-be-just-like-the-remote-repository-head
 
 ### Having issues, questions?
 Report here: https://github.com/FWAJL/FieldWorkAssistant/issues

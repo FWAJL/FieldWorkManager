@@ -28,7 +28,7 @@ $(document).ready(function() {
   });
   $("#project_add_left_menu").click(function() {
     project_manager.clearForm();
-    $(".project_welcome").fadeOut('2000').removeClass("active").removeClass("show");
+    $(".welcome").fadeOut('2000').removeClass("active").removeClass("show");
     $(".form_sections").fadeIn('2000').removeClass("hide");
     $("#project_add_left_menu").addClass("active");
     $(".project_add").show();
@@ -91,7 +91,7 @@ $(document).ready(function() {
         project_manager.buildTableList(reply.projects);
         //Now show the table
         $(".form_sections").fadeOut('2000').removeClass("active").removeClass("show");
-        $(".project_welcome").fadeIn('2000').addClass("active").removeClass("hide");
+        $(".welcome").fadeIn('2000').addClass("active").removeClass("hide");
         $("#project_add").removeClass("active");
       }
     });
@@ -125,7 +125,7 @@ $(document).ready(function() {
     $(".project_form .add-new-p input[name=\"project_desc\"]").val(dataWs.project.project_desc);
     facility_manager.loadEditForm(dataWs);
     $(".form_sections").fadeIn('2000').addClass("show").removeClass("hide");
-    $(".project_welcome").fadeOut('2000').removeClass("show").addClass("hide");
+    $(".welcome").fadeOut('2000').removeClass("show").addClass("hide");
     $(".project_add").hide();
     $(".project_edit").show().removeClass("hide");
   };

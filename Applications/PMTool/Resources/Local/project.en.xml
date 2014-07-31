@@ -2,6 +2,9 @@
 <resources>
   <resource key="page_title">Your projects - Field Work Assistant</resource>
   
+  <resource key="project_h1">Welcome to Field Work Assistant, for Project managers</resource>
+  <resource key="project_welcome_message">Please, select an option on the left menu.</resource>
+  
   <resource key="message_error_insert">Error inserting the project. Check logs.</resource>
   <resource key="message_success_insert">The project has been inserted.</resource>
   <resource key="message_error_getlist">Error reading the projects. Check logs.</resource>
@@ -23,9 +26,6 @@
   <resource key="project_button_add">Add this project</resource>
   <resource key="project_button_edit">Edit this project</resource>
   <resource key="project_button_delete">Delete this project</resource>
-  
-  <resource key="project_h1">Welcome to Field Work Assistant, for Project managers</resource>
-  <resource key="project_welcome_message">Please, select an option on the left menu.</resource>
 
   <resource key="facility_legend">The facility</resource>
   <resource key="facility_name">Facility Name</resource>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Your projects - Field Work Assistant</title>
+    <link rel="stylesheet" type="text/css" href="Web/css/app/reset.css" />
+    <link rel="stylesheet" type="text/css" href="Web/css/app/styles.css" />
+    <link rel="stylesheet" type="text/css" href="Web/css/core/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="Web/css/addons/toastr.css" />
+    <link rel="stylesheet" type="text/css" href="Web/css/app/core-app-style.css" />
+    <link rel="stylesheet" type="text/css" href="Web/css/app/nav.css"/><link rel="stylesheet" type="text/css" href="Web/css/app/app-style.css"/><link rel="stylesheet" type="text/css" href="Web/css/app/app-theme.css"/><link rel="stylesheet" type="text/css" href="Web/css/app/theme.css"/><link rel="stylesheet" type="text/css" href="Web/css/app/media-queries.css"/>    <script type="application/javascript" src="Web/js/addons/modernizr.js"></script><script type="application/javascript" src="Web/js/app/design/all.js"></script><script type="application/javascript" src="Web/js/app/design/tinydropdown.js"></script><script type="application/javascript" src="Web/js/app/design/ddaccordion.js"></script><script type="application/javascript" src="Web/js/app/design/drop_down.js"></script><script type="application/javascript" src="Web/js/app/design/headScript.js"></script><script type="application/javascript" src="Web/js/app/helpers/html_table_helper.js"></script><script type="application/javascript" src="Web/js/app/controllers/project_manager.js"></script><script type="application/javascript" src="Web/js/app/controllers/facility_manager.js"></script><script type="application/javascript" src="Web/js/app/controllers/left_menu_clicks.js"></script>
+    
+    <script src="../vendor/jquery-1.7.1.min.js" type="text/javascript"></script> 
+  <script src="../vendor/jquery.hashchange.min.js" type="text/javascript"></script>
+  <script src="../lib/jquery.easytabs.min.js" type="text/javascript"></script>
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <!--<link href='http://fonts.googleapis.com/css?family=Droid+Serif:700,400,400italic,700italic' rel='stylesheet' type='text/css'>-->
+
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+      <style>
+    /* Example Styles for Demo */
+    .etabs { margin: 0; padding: 0; }
+    .tab { display: inline-block; zoom:1; *display:inline; background: #eee; border: solid 1px #999; border-bottom: none; -moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; }
+    .tab a { font-size: 14px; line-height: 2em; display: block; padding: 0 10px; outline: none; }
+    .tab a:hover { text-decoration: underline; }
+    .tab.active { background: #fff; padding-top: 6px; position: relative; top: 1px; border-color: #666; }
+    .tab a.active { font-weight: bold; }
+    .tab-container .panel-container { background: #fff; border: solid #666 1px; padding: 10px; -moz-border-radius: 0 4px 4px 4px; -webkit-border-radius: 0 4px 4px 4px; }
+    .panel-container { margin-bottom: 10px; }
+  </style>
+  
+   <script type="text/javascript">
+    $(document).ready( function() {
+      $('#tab-container').easytabs();
+    });
+  </script>
+    
+  </head>
+
+  <body id="home">
+    <div id="wrapper">
+      <figure class="logo"><img src="Web/images/logo.jpg"></figure><nav id="nav" role="navigation">
+  <a href="#nav" title="Show navigation">Show navigation</a>
+  <a href="#" title="Hide navigation">Hide navigation</a>
+  <ul class="clearfix">
+    <li>
+      <a href="#" aria-haspopup="true"><span>Field Personnel</span></a>
+      <ul>
+        <li><a href="#">View/Assign Personnel</a></li>
+        <li><a href="#">Add Personnel</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" aria-haspopup="true">Map</a>
+    </li>
+    <li><a href="#"><span>Survey Forms</span></a>
+      <ul>
+        <li><a href="#">Create a New Survey</a></li>
+        <li><a href="#">View/Edit Existing Survey</a></li>
+      </ul>
+    </li>
+    <li><a href="#"><span>Documents</span></a>
+      <ul>
+        <li><a href="#">Project Documents</a></li>
+      </ul>
+    </li>
+    <li><a href="#"><span>Resources</span></a>
+      <ul>
+        <li><a href="#">Lab</a></li>
+        <li><a href="#">Equipment Rental</a></li>
+        <li><a href="#">Contractor</a></li>
+        <li><a href="#">Driller</a></li>
+        <li><a href="#">Add Resource</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav><div class="content-container"><section class="left-aside">
+    <p class="aside-text">User Name: test<br/>
+      <a href="logout" role="button">Logout</a>
+    </p> 
+    <section class="left-asidebg">
+      <div class="content_left">
+        <!-- CONTENT -->
+        <div class="project_managers">			
+          <div class="arrowlistmenu"> 
+            <!------------------------------------------start Project--------------------------------------------------------->
+            <p headerindex="0h" class="menuheader expandable arrow ">
+              <span class="accordprefix"></span>
+              Projects              <span class="accordsuffix"></span></p>
+            <ul style="display: none;" contentindex="0c" class="categoryitems">
+              <li><a data-project-id=1" class="select_project">Test 1</a></li>              <li><a id="project_add_left_menu" class="">Add new project</a></li>
+            </ul>    
+            <!------------------------------------------End -Project--------------------------------------------------------->
+            <div class="line">&nbsp;</div>     
+            <!--          ----------------------------------------start Tasks-------------------------------------------------------
+                      <p headerindex="1h" class="menuheader expandable arrow "><span class="accordprefix"></span>Tasks<span class="accordsuffix"></span></p>
+                      <ul style="display: none;" contentindex="1c" class="categoryitems">
+                        <li>
+                          <a href="add-new-tasks.html" class="plus">Add New Task</a></li>
+                        <li><a href="show-hide-tasks.html">Show/Hide Tasks</a></li>
+                      </ul>    
+                      ----------------------------------------end -Tasks-------------------------------------------------------						
+                      <div class="line">&nbsp;</div>                -->
+            <!------------------------------------------start Locationss--------------------------------------------------------->
+            <p headerindex="2h" class="menuheader expandable arrow openheader">
+              <span class="accordprefix"></span>
+              Locations              <span class="accordsuffix"></span></p>
+            <ul style="display: block;" contentindex="2c" class="categoryitems">
+              <li><a data-name="not_implemented" href="#">A location</a></li> 
+              <li><a data-name="not_implemented" href="#" class="plus">Add new Location</a></li>
+              <!--<li><a href="/locations" class="plus">Add Boundary</a></li>-->
+              <!--<li><a href="/locations" class="plus">Upload Location List</a></li>-->
+              <!--<li><a href="/locations">Show/Hide Locations</a></li>-->
+              <!--<li><a href="/locations">Show/Hide Boundaries</a></li>-->
+            </ul> 
+            <!--          ----------------------------------------start Groups-------------------------------------------------------				   		
+                      <p headerindex="3h" class="menuheader expandable arrow "><span class="accordprefix"></span>&nbsp;&nbsp;Location Groups<span class="accordsuffix"></span></p>
+                      <ul contentindex="3c" class="categoryitems">
+                      </ul>               
+                      <p headerindex="4h" class="menuheader expandable arrow "><span class="accordprefix"></span>&nbsp;&nbsp;Boundary Groups<span class="accordsuffix"></span></p>
+                      <ul contentindex="4c" class="categoryitems">
+                        <li><a href="group.html">group</a></li> 
+                        <li><a href="yu.html">yu</a></li> 
+                        <li><a href="f.html">f</a></li> 
+                        <li><a href="jkll.html">jkll</a></li> 
+                      </ul> 
+                      ----------------------------------------end -Locationss-------------------------------------------------------						
+                      <div class="line">&nbsp;</div>
+                      ----------------------------------------start Analytes-------------------------------------------------------
+                      <p headerindex="5h" class="menuheader expandable arrow "><span class="accordprefix"></span>Analytes<span class="accordsuffix"></span></p>
+                      <ul contentindex="5c" class="categoryitems">
+                        <li><a href="#"></a></li> 
+                        <li><a href="#"></a></li> 
+                        <li><a href="add-new-analytes.html" class="plus">Add New Analyte(s)</a></li>
+                        <li><a href="upload-analyte-list.html" class="plus">Upload Analyte List</a></li>
+                        <li><a href="show-hide-analyte.html">Show/Hide Analytes</a></li>
+                      </ul> 
+                      ----------------------------------------start Groups-------------------------------------------------------				   		
+                      <p headerindex="6h" class="menuheader expandable arrow "><span class="accordprefix"></span>&nbsp;&nbsp;Analyte Groups<span class="accordsuffix"></span></p>
+                      <ul contentindex="6c" class="categoryitems">
+                      </ul>               
+                      ----------------------------------------end -Analytes-------------------------------------------------------
+                      <div class="line">&nbsp;</div>						
+                      <p class="menuheader arrow"><span class="accordprefix"></span>Results</p>-->
+          </div>
+        </div>		
+      </div><br clear="all"/>
+    </section>
+  </section><section class="right-aside">
+  <h2></h2>
+  <section class="project_welcome show">
+    <h1 class="legend">Welcome to Field Work Assistant, for Project managers</h1>
+    <p>Please, select an option on the left menu.</p>
+  </section>
+  <section class="form_sections hide">
+      
+     
+      <div id="tab-container" class='tab-container'>
+ <ul class='etabs'>
+   <li class='tab'><a href="#tabs1-html">Project Info</a></li>
+   <li class='tab'><a href="#tabs1-js">Facility Info</a></li>
+   <li class='tab'><a href="#tabs1-css">Client Info</a></li>
+ </ul>
+ <div class='panel-container'>
+  <div id="tabs1-html">
+   <fieldset class="project_form">
+
+  <ol class="add-new-p">
+    <li style="display: none;">
+      <input name="project_id" type="text" />
+    </li>
+    <li>
+      <label>Project Name</label>
+      <input name="project_name" type="text" />
+    </li>
+    <li>
+      <label>Project Number</label>
+      <input name="project_num" type="text" />
+    </li>
+    <li>
+      <label>Project Description</label>
+      <input name="project_desc" type="text" />
+    </li>
+<!--    <li>
+      <label>Active</label>
+      <input name="project_active_flag" type="checkbox" />
+    </li>
+    <li>
+      <label>Visible</label>
+      <input name="project_visible_flag" type="checkbox"/>
+    </li>-->
+  </ol>
+</fieldset>
+  </div>
+   <div id="tabs1-js">
+  <fieldset class="facility_form">
+  <ol class="add-new-p">
+    <li style="display: none;">
+      <input name="facility_id" type="text" />
+    </li>
+    <li>
+      <label>Facility Name</label>
+      <input name="facility_name" type="text" />
+    </li>
+    <li>
+      <label>Facility Address</label>
+      <textarea name="facility_address" type="text"></textarea>
+    </li>
+    <li>
+      <label>Facility Latitude</label>
+      <input name="facility_lat" type="text" />
+    </li>
+    <li>
+      <label>Facility Longitude</label>
+      <input name="facility_long" type="text" />
+    </li>
+    <li>
+      <label>Facility - Contact Name</label>
+      <input name="facility_contact_name" type="text" />
+    </li>
+    <li>
+      <label>Facility - Contact Phone (Mobile)</label>
+      <input name="facility_contact_phone" type="text" />
+    </li>
+    <li>
+      <label>Facility - Contact Email</label>
+      <input name="facility_contact_email" type="text" />
+    </li>
+    <li>
+      <label>Facility ID Number</label>
+      <input name="facility_id_num" type="text" />
+    </li>
+    <li>
+      <label>Facility - Sector</label>
+      <input name="facility_sector" type="text" />
+    </li>
+    <li>
+      <label>Facility - SIC Code</label>
+      <input name="facility_sic" type="text" />
+    </li>
+    <li>
+      <label>Facility - Boundary</label>
+      <input name="boundary" type="text" />
+    </li>
+  </ol>
+</fieldset>
+  </div>
+  <div id="tabs1-css">
+   <fieldset class="facility_form">
+  <ol class="add-new-p">
+    <li style="display: none;">
+      <input name="facility_id" type="text" />
+    </li>
+    <li>
+      <label>Client Name</label>
+      <input name="facility_name" type="text" />
+    </li>
+    <li>
+      <label>Client  Address</label>
+      <textarea name="facility_address" type="text"></textarea>
+    </li>    
+    <li>
+      <label>Client - Contact Name</label>
+      <input name="facility_contact_name" type="text" />
+    </li>
+    <li>
+      <label>Client - Contact Phone (Mobile)</label>
+      <input name="facility_contact_phone" type="text" />
+    </li>
+    <li>
+      <label>Client - Contact Email</label>
+      <input name="facility_contact_email" type="text" />
+    </li>
+  </ol>
+</
+  </div>
+ </div>
+</div>
+  </section>
+    <input type="button" id="btn_add_project" class="project_add" value="Add this project" />
+<input type="button" id="btn_edit_project" class="project_edit hide" value="Edit this project" />
+<input type="button" id="btn_delete_project" class="project_edit hide" value="Delete this project" />
+  </section>
+
+</div><!-- END CONTENT CONTAINER -->    </div> <!-- END Wrapper -->
+
+    <script type="application/javascript" src="Web/js/core/jquery.js"></script>
+    <script type="application/javascript" src="Web/js/core/ko.js"></script>
+    <script type="application/javascript" src="Web/js/core/bootstrap.min.js"></script>  
+    <script type="application/javascript" src="Web/js/addons/toastr.js"></script>  
+    <script type="application/javascript" src="Web/js/app/debugger.js"></script>  
+    <script type="application/javascript" src="Web/js/app/services/dataservice.js"></script> 
+  <script src="Web/js/core/jquery.js" type="text/javascript"></script>
+<script src="Web/js/jspkg-archive/vendor/jquery.hashchange.min.js" type="text/javascript"></script>
+<script src="Web/js/jspkg-archive/lib/jquery.easytabs.js" type="text/javascript"></script>
+  </body>
+</html>
