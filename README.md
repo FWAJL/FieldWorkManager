@@ -50,7 +50,7 @@ To setup the application, you need to do:
 
 On the last command, you should see:
 
-'*' Development
+Development (with a * prefixing)
 master
 
 By the following command, you should see that you have the latest code:
