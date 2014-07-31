@@ -49,8 +49,9 @@ To setup the application, you need to do:
 - git branch
 
 On the last command, you should see:
-'* Development
-master'
+
+'*' Development
+master
 
 By the following command, you should see that you have the latest code:
 - git status
