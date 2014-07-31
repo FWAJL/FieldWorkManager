@@ -82,5 +82,7 @@ If you want to save your current branch's state before doing this (just in case)
 - git commit -a -m "Saving my work, just in case"
 - git branch my-saved-work
 
+See here for more info: http://stackoverflow.com/questions/1628088/how-to-reset-my-local-repository-to-be-just-like-the-remote-repository-head
+
 ### Having issues, questions?
 Report here: https://github.com/FWAJL/FieldWorkAssistant/issues
