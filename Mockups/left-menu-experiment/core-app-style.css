@@ -22,9 +22,9 @@ body 				{
   /*background: url(../../images/bg.jpg) repeat-x;*/ padding:0; margin:0; background-color:#fff
 }
 
-#wrapper{ /*background: #eac423 url(../../images/img.jpg) no-repeat;*/margin: 10px auto; max-width: 980px; width: 90%; padding: 10px 0; height: 100px }
+#wrapper{ height: 100px }
 
-.login-container{width:980px ;padding:0; margin:80px 0 0 0; border:0px solid #F00}
+.login-container{padding:0; margin:80px 0 0 0; border:0px solid #F00}
 
 
 .logo{ margin:0;max-width:500px; width:100%; padding:0; border:0px solid #F00 }
@@ -90,7 +90,7 @@ p a:hover{ color:#000; text-decoration:underline ;font-weight:normal }
 
 .right-aside{
   float: left;
-  width: 75%;
+  width: 85%;
   padding: 20px 0;
   margin: 0 0 0 1.5em;
   display: inline;
@@ -163,8 +163,7 @@ h6{ padding:0px; margin:0; font-family:Arial, Helvetica, sans-serif; font-size:1
 
 #nav
 {
-  width: 980px; /* 1000 */
-  margin:0.5% auto; border:0px solid #F00; font-family:Arial, Helvetica, sans-serif
+border:0px solid #F00; font-family:Arial, Helvetica, sans-serif
 
 
 }
@@ -223,7 +222,7 @@ h6{ padding:0px; margin:0; font-family:Arial, Helvetica, sans-serif; font-size:1
 {
   width: 20%;
   height: 100%;
-  float: left; list-style-type:none
+  float: right; list-style-type:none
 }
 
 #nav > ul > li > a
