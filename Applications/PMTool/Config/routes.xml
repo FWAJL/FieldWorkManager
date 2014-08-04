@@ -29,6 +29,9 @@
       <js_file use="head" value="Web/js/app/controllers/facility_manager.js"/>
       <js_file use="head" value="Web/js/app/controllers/project_manager.js"/>
       <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js"/>
+      <js_file use="head" value="Web/js/core/jquery.js"/>
+      <js_file use="head" value="Web/js/jspkg-archive/lib/jquery.easytabs.js"/>
+      <js_file use="head" value="Web/js/app/controllers/tabs.js"/>
     </js_files>
     <css_files>
       <css_file value="Web/css/app/nav.css"/>
@@ -36,13 +39,15 @@
       <css_file value="Web/css/app/app-theme.css"/>
       <css_file value="Web/css/app/theme.css"/>
       <css_file value="Web/css/app/media-queries.css"/>
+      <css_file value="Web/css/app/tabs.css"/>
     </css_files>
     <php_modules>
       <!-- Add just the file name, the Router class will take of building the correct path -->
       <!-- The "shared" attribute specifies where to get the module, either the current view Modules folder or the main Modules folder in Views -->
-      <php_module key="project_form" file_name="project_form.php" shared="true"/>
+      <!-- <php_module key="project_tabs" file_name="project_tabs.php" shared="true"/> -->
+        <php_module key="project_form" file_name="project_form.php" shared="true"/>
       <php_module key="facility_form" file_name="facility_form.php" shared="true"/>
-      <!--<php_module key="company_form" file_name="company_form.php" shared="true"/>-->
+      <php_module key="client_form" file_name="client_form.php" shared="true"/>
     </php_modules>
   </route><!-- project/index -->
   <route url="location" module="Location" action="index" type="ui">

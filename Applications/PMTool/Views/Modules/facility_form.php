@@ -1,7 +1,7 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
-
+  <div id="facility_info"> 
 <fieldset class="facility_form">
-  <legend><?php echo $resx["facility_legend"]; ?></legend>
+<!--  <legend><?php echo $resx["facility_legend"]; ?></legend>-->
   <ol class="add-new-p">
     <li style="display: none;">
       <input name="facility_id" type="text" />
@@ -52,11 +52,9 @@
     </li>
   </ol>
 </fieldset>
-<input type="button" id="btn_add_project" class="project_add" value="<?php echo $resx["project_button_add"]; ?>" />
-<input type="button" id="btn_edit_project" class="project_edit hide" value="<?php echo $resx["project_button_edit"]; ?>" />
-<input type="button" id="btn_delete_project" class="project_edit hide" value="<?php echo $resx["project_button_delete"]; ?>" />
+
 
 <!--<input type="button" id="btn_add_facility" class="facility_add" value="<?php echo $resx["facility_button_add"]; ?>" />
 <input type="button" id="btn_edit_facility" class="facility_edit hide" value="<?php echo $resx["facility_button_edit"]; ?>" />
 <input type="button" id="btn_delete_facility" class="facility_edit hide" value="<?php echo $resx["facility_button_delete"]; ?>" />-->
-
+ </div>

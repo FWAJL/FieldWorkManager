@@ -43,11 +43,11 @@
   <resource key="facility_button_edit">Edit this facility</resource>
   <resource key="facility_button_delete">Delete this facility</resource>
 
-  <resource key="company_legend">The client company</resource>
-  <resource key="company_name">Company Name</resource>
-  <resource key="company_contact_name">Facility - Contact Name</resource>
-  <resource key="company_contact_phone">Facility - Contact Phone (Mobile)</resource>
-  <resource key="company_contact_email">Facility - Contact Email</resource>
-  <resource key="company_id_number">Facility ID Number</resource>
+  <resource key="client_legend">The client company</resource>
+  <resource key="client_name">Client Name</resource>
+  <resource key="client_contact_name">Client - Contact Name</resource>
+  <resource key="client_contact_phone">Client - Contact Phone (Mobile)</resource>
+  <resource key="client_contact_email">Client - Contact Email</resource>
+ 
   
 </resources>
