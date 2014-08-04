@@ -28,7 +28,7 @@
       <js_file use="html" value="Web/js/app/services/dataservice.js"/>
       <js_file use="head" value="Web/js/app/controllers/facility_manager.js"/>
       <js_file use="head" value="Web/js/app/controllers/project_manager.js"/>
-      <js_file use="head" value="Web/js/app/controllers/left_menu_clicks.js"/>
+      <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js"/>
     </js_files>
     <css_files>
       <css_file value="Web/css/app/nav.css"/>
