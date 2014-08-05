@@ -9,7 +9,7 @@
     </js_files>
     <css_files>
       <css_file use="html" value="Web/css/app/app-style.css"/>
-      <css_file value="Web/css/app/app-theme.css"/>
+      <css_file use="html" value="Web/css/app/app-theme.css"/>
       <css_file use="html" value="Web/css/app/theme.css"/>
       <css_file use="html" value="Web/css/app/media-queries.css"/>
     </css_files>
@@ -44,10 +44,12 @@
     <php_modules>
       <!-- Add just the file name, the Router class will take of building the correct path -->
       <!-- The "shared" attribute specifies where to get the module, either the current view Modules folder or the main Modules folder in Views -->
-      <!-- <php_module key="project_tabs" file_name="project_tabs.php" shared="true"/> -->
-        <php_module key="project_form" file_name="project_form.php" shared="true"/>
+      <php_module key="project_tabs_open" file_name="project_tabs_open.php"/>
+      <php_module key="project_form" file_name="project_form.php" shared="true"/>
       <php_module key="facility_form" file_name="facility_form.php" shared="true"/>
       <php_module key="client_form" file_name="client_form.php" shared="true"/>
+      <php_module key="project_buttons" file_name="project_buttons.php"/>
+      <php_module key="project_tabs_close" file_name="project_tabs_close.php"/>
     </php_modules>
   </route><!-- project/index -->
   <route url="location" module="Location" action="index" type="ui">
