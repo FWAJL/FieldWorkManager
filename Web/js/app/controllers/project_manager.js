@@ -29,6 +29,7 @@ $(document).ready(function() {
   $("#project_add_left_menu").click(function() {
     project_manager.clearForm();
     $(".welcome").fadeOut('2000').removeClass("active").removeClass("show");
+    $(".select_project").removeClass("active");
     $(".form_sections").fadeIn('2000').removeClass("hide");
     $("#project_add_left_menu").addClass("active");
     $(".project_add").show();
