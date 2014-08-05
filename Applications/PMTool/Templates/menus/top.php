@@ -3,33 +3,65 @@
   <a href="#" title="Hide navigation">Hide navigation</a>
   <ul class="clearfix">
     <li>
-      <a href="#" aria-haspopup="true"><span>Field Personnel</span></a>
+      <a href="#" aria-haspopup="true"><span>Project</span></a>
       <ul>
-        <li><a href="#">View/Assign Personnel</a></li>
-        <li><a href="#">Add Personnel</a></li>
+        <li><a href="#">List All</a></li>
+        <li><a href="#">Add</a></li>
       </ul>
     </li>
-    <li>
-      <a href="#" aria-haspopup="true">Map</a>
-    </li>
-    <li><a href="#"><span>Survey Forms</span></a>
+       <li>
+      <a href="#" aria-haspopup="true"><span>Locations</span></a>
       <ul>
-        <li><a href="#">Create a New Survey</a></li>
-        <li><a href="#">View/Edit Existing Survey</a></li>
+        <li><a href="#">List All</a></li>
+        <li><a href="#">Add</a></li>
+        <li><a href="#">Upload List</a></li>
+      </ul>
+    </li>   <li>
+      <a href="#" aria-haspopup="true"><span>Map</span></a>
+      <ul>
+        <li><a href="#">All Facilities</a></li>
+        <li><a href="#">Selected Facility</a></li>
+        <li><a href="#">All (Facility) Locations</a></li>
+        <li><a href="#">Task Locations </a></li>
       </ul>
     </li>
-    <li><a href="#"><span>Documents</span></a>
+       <li>
+      <a href="#" aria-haspopup="true"><span>Tasks</span></a>
       <ul>
-        <li><a href="#">Project Documents</a></li>
+        <li><a href="#">List All</a></li>
+        <li><a href="#">Add</a></li>
+      </ul>
+    </li>
+    
+    <li><a href="#"><span>Technicians</span></a>
+      <ul>
+        <li><a href="#">List All</a></li>
+        <li><a href="#">Add</a></li>
+      </ul>
+    </li>
+     <li><a href="#"><span>Forms</span></a>
+      <ul>
+        <li><a href="#">List All</a></li>
+        <li><a href="#">Add</a></li>
       </ul>
     </li>
     <li><a href="#"><span>Resources</span></a>
       <ul>
-        <li><a href="#">Lab</a></li>
-        <li><a href="#">Equipment Rental</a></li>
-        <li><a href="#">Contractor</a></li>
-        <li><a href="#">Driller</a></li>
-        <li><a href="#">Add Resource</a></li>
+        <li><a href="#">List All</a></li>
+        <li><a href="#">Add</a></li>
+      </ul>
+    </li>
+        <li><a href="#"><span>Results</span></a>
+      <ul>
+        <li><a href="#">By Date</a></li>
+        <li><a href="#">By Task</a></li>
+        <li><a href="#">By Location</a></li>
+      </ul>
+    </li>
+        <li id="user"><a href="#"><span>user name</span></a>
+      <ul>
+        <li><a href="#">Edit Info</a></li>
+        <li><a href="#">Logout</a></li>
       </ul>
     </li>
   </ul>

@@ -168,7 +168,7 @@ class Router extends ApplicationComponent {
         $modules[$module->getAttribute('key')] =
                 __ROOT__ . \Library\Enums\FolderName::AppsFolderName
                 . $this->app->name()
-                . rtrim(\Library\Enums\FolderName::ViewsFolderName, '/') . $route->getAttibute('module') . \Library\Enums\FolderName::ModulesFolderName
+                . \Library\Enums\FolderName::ViewsFolderName . $route->getAttribute('module') . \Library\Enums\FolderName::ModulesFolderName
                 . $module->getAttribute('file_name');
       }
     }
