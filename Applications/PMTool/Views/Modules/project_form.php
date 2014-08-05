@@ -2,10 +2,6 @@
 
 <div id="project_info">
 <fieldset class="project_form">
-  <legend>
-<!--    <span class="project_add"><?php echo $resx["project_legend_add"]; ?></span>-->
-<!--    <span class="project_edit hide"><?php echo $resx["project_legend_edit"]; ?></span>-->
-  </legend>
   <ol class="add-new-p">
     <li style="display: none;">
       <input name="project_id" type="text" />

@@ -9,3 +9,8 @@
 
 /* FACILITY */
 textarea { resize: vertical;}
+
+/* CLIENT */
+.client_form{
+  padding: 10px;
+}
