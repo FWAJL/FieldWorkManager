@@ -1,3 +1,13 @@
+/* LOGIN */
+.login-container{margin:100px;}
+.login-container figure{
+ width: 400px;
+ margin: 0 auto;
+ padding: 5px;
+ border: solid 1px #999;
+}
+/* END LOGIN */
+
 /* TOP HEADER */
 #top_header{
   text-shadow: 0 1px 0 #fff;
@@ -12,21 +22,25 @@
   height: 40px;
 }
 #top_header #branding > * { float: left; }
-.brand{line-height: 40px;  padding-left: 10px; }
+.brand, #pm_name{line-height: 40px;  padding-left: 10px; }
 #top_header .logo img{ height: 40px; }
 
 #pm_info ul{ display: none; }
 #pm_info { float: right; }
 li #pm_name{
- padding: 0 5px;  
+ padding: 0 10px;  
 }
 #pm_name:hover {
   background-color: #eee;
-  padding: 0 5px; 
+  padding: 0 10px; 
 }
+#pm_info ul {margin-bottom: 0;}
 #pm_info li:hover ul{
   display: block;
+  background-color: #e5e5e5;
   position: fixed;
+  padding: 0 10px; 
+  margin-bottom: -10px;
   -webkit-transition: width 2s ease;
   -moz-transition: width 2s ease;
   -ms-transition: width 2s ease;
@@ -36,8 +50,27 @@ li #pm_name{
 /* END TOP HEADER */
 /* CONTENT_CONTAINER */
 .content-container {
-  max-width: 980px; height: auto;
+  max-width: 92%; height: auto;
   margin: 0 auto;
+}
+.left-aside
+{
+	clear: left;
+	float: left;
+	min-width: 200px;
+	padding: 5px 0;
+	margin: 0 3% 0 0;
+	display: inline;
+  border: solid 1px #999;
+}
+.right-aside
+{
+	float: left;
+	min-width: 600px;
+	padding: 5px 0;
+	margin: 0 0 0 4%;
+	display: inline;
+  border: solid 1px #999;
 }
 /* END CONTENT_CONTAINER */
 
