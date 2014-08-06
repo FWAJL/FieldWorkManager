@@ -8,9 +8,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/core/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/addons/toastr.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/app/core-app-style.css" />
-    
-    <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/jquery.js"></script>
-    
+        
     <?php echo $this->app->globalResources["css_files"]; ?>
     <?php echo $this->app->globalResources["js_files_head"]; ?>
 
