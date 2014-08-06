@@ -11,7 +11,6 @@
       <css_file use="html" value="Web/css/app/app-style.css"/>
       <css_file use="html" value="Web/css/app/app-theme.css"/>
       <css_file use="html" value="Web/css/app/theme.css"/>
-      <css_file use="html" value="Web/css/app/media-queries.css"/>
     </css_files>
   </route><!-- login -->
   <route url="logout" module="Authenticate" action="disconnect" type="ui">
@@ -37,7 +36,6 @@
       <css_file value="Web/css/app/app-style.css"/>
       <css_file value="Web/css/app/app-theme.css"/>
       <css_file value="Web/css/app/theme.css"/>
-      <css_file value="Web/css/app/media-queries.css"/>
       <css_file value="Web/css/app/tabs.css"/>
     </css_files>
     <php_modules>
@@ -60,7 +58,6 @@
       <css_file value="Web/css/app/app-style.css"/>
       <css_file value="Web/css/app/app-theme.css"/>
       <css_file value="Web/css/app/theme.css"/>
-      <css_file value="Web/css/app/media-queries.css"/>
 
     </css_files>
   </route><!-- location/index -->
