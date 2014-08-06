@@ -1,68 +1,19 @@
-<nav id="nav" role="navigation">
-  <a href="#nav" title="Show navigation">Show navigation</a>
-  <a href="#" title="Hide navigation">Hide navigation</a>
-  <ul class="clearfix">
+<section id="top_header">
+  <section id="branding">
+    <figure class="logo"><img src="<?php echo $this->app->relative_path . $this->app->logoImageUrl; ?>"></figure>
+    <p class="brand"><?php echo $resx_menu_left["brand"]; ?></p>
+  </section>
+  <ul id="pm_info">
     <li>
-      <a href="#" aria-haspopup="true"><span>Project</span></a>
+      <p id="pm_name">
+        <span class="glyphicon glyphicon-cog"></span>
+        <span><?php echo $pm['pm_name']; ?></span>
+      </p>
       <ul>
-        <li><a href="#">List All</a></li>
-        <li><a href="#">Add</a></li>
-      </ul>
-    </li>
-       <li>
-      <a href="#" aria-haspopup="true"><span>Locations</span></a>
-      <ul>
-        <li><a href="#">List All</a></li>
-        <li><a href="#">Add</a></li>
-        <li><a href="#">Upload List</a></li>
-      </ul>
-    </li>   <li>
-      <a href="#" aria-haspopup="true"><span>Map</span></a>
-      <ul>
-        <li><a href="#">All Facilities</a></li>
-        <li><a href="#">Selected Facility</a></li>
-        <li><a href="#">All (Facility) Locations</a></li>
-        <li><a href="#">Task Locations </a></li>
-      </ul>
-    </li>
-       <li>
-      <a href="#" aria-haspopup="true"><span>Tasks</span></a>
-      <ul>
-        <li><a href="#">List All</a></li>
-        <li><a href="#">Add</a></li>
-      </ul>
-    </li>
-    
-    <li><a href="#"><span>Technicians</span></a>
-      <ul>
-        <li><a href="#">List All</a></li>
-        <li><a href="#">Add</a></li>
-      </ul>
-    </li>
-     <li><a href="#"><span>Forms</span></a>
-      <ul>
-        <li><a href="#">List All</a></li>
-        <li><a href="#">Add</a></li>
-      </ul>
-    </li>
-    <li><a href="#"><span>Resources</span></a>
-      <ul>
-        <li><a href="#">List All</a></li>
-        <li><a href="#">Add</a></li>
-      </ul>
-    </li>
-        <li><a href="#"><span>Results</span></a>
-      <ul>
-        <li><a href="#">By Date</a></li>
-        <li><a href="#">By Task</a></li>
-        <li><a href="#">By Location</a></li>
-      </ul>
-    </li>
-        <li id="user"><a href="#"><span>user name</span></a>
-      <ul>
-        <li><a href="#">Edit Info</a></li>
-        <li><a href="#">Logout</a></li>
+        <li><?php echo $resx_menu_left["pm_info_edit"]; ?></li>
+        <li><a href="<?php echo $logout_url; ?>" role="button"><?php echo $resx_menu_left["logout_link_text"]; ?></a></li>
       </ul>
     </li>
   </ul>
-</nav>
+</section>
+<div class="clearfix"></div>

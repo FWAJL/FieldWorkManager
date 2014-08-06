@@ -196,13 +196,3 @@ h6{ padding:0px; margin:0; font-family:Arial, Helvetica, sans-serif; font-size:1
 .feild-inner3{ background:#d0d0d0;width: auto; height: auto; padding:10px; margin:0.5% 11% 0 0; float: none; border:0px solid #acacac; float:none; text-align:center  }
 
 }
-
-
-
-
-
-img {
-	max-width: 10%;
-	height: auto;
-	width: auto\9; /* ie8 */
-}
