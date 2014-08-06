@@ -1,3 +1,46 @@
+/* TOP HEADER */
+#top_header{
+  text-shadow: 0 1px 0 #fff;
+  border-bottom: 1px solid #e5e5e5;
+  min-width: 1000px;
+  background-color: #f3f3f3;
+  background-image: -moz-linear-gradient(#f9f9f9, #f3f3f3);
+  background-image: -webkit-linear-gradient(#f9f9f9, #f3f3f3);
+  background-image: linear-gradient(#f9f9f9, #f3f3f3);
+  background-repeat: repeat-x;
+  clear: both;
+  height: 40px;
+}
+#top_header #branding > * { float: left; }
+.brand{line-height: 40px;  padding-left: 10px; }
+#top_header .logo img{ height: 40px; }
+
+#pm_info ul{ display: none; }
+#pm_info { float: right; }
+li #pm_name{
+ padding: 0 5px;  
+}
+#pm_name:hover {
+  background-color: #eee;
+  padding: 0 5px; 
+}
+#pm_info li:hover ul{
+  display: block;
+  position: fixed;
+  -webkit-transition: width 2s ease;
+  -moz-transition: width 2s ease;
+  -ms-transition: width 2s ease;
+  -o-transition: width 2s ease;
+  transition: width 2s ease;
+}
+/* END TOP HEADER */
+/* CONTENT_CONTAINER */
+.content-container {
+  max-width: 980px; height: auto;
+  margin: 0 auto;
+}
+/* END CONTENT_CONTAINER */
+
 /* PROJECT */
 #btn_edit_project{display: none;}
 .form_sections input[type="button"]{

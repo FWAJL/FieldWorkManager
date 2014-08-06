@@ -30,7 +30,6 @@
       <js_file use="head" value="Web/js/app/controllers/project_manager.js"/>
       <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js"/>
       <js_file use="head" value="Web/js/core/jquery.js"/>
-      <js_file use="head" value="Web/js/jspkg-archive/lib/jquery.easytabs.js"/>
       <js_file use="head" value="Web/js/app/controllers/tabs.js"/>
     </js_files>
     <css_files>

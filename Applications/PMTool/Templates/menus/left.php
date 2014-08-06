@@ -1,7 +1,4 @@
 <div class="content-container"><section class="left-aside">
-    <p class="aside-text"><?php echo $resx_menu_left["p_user_name_label"]; ?><?php echo $pm['username']; ?><br/>
-      <a href="<?php echo $logout_url; ?>" role="button"><?php echo $resx_menu_left["logout_link_text"]; ?></a>
-    </p> 
     <section class="left-asidebg">
       <div class="content_left">
         <!-- CONTENT -->
@@ -14,9 +11,9 @@
               <span class="accordsuffix"></span></p>
             <ul style="display: none;" contentindex="0c" class="categoryitems">
               <?php
-                foreach ($this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects) as $key => $value) {
-                  echo "<li><a data-project-id=" . $value->project_id . "\" class=\"select_project\">" . $value->project_name . "</a></li>";
-                }
+              foreach ($this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects) as $key => $value) {
+                echo "<li><a data-project-id=" . $value->project_id . "\" class=\"select_project\">" . $value->project_name . "</a></li>";
+              }
               ?>
               <li><a id="project_add_left_menu" class="<?php echo $active_add_project; ?>"><?php echo $resx_menu_left["project_add"]; ?></a></li>
             </ul>    
@@ -34,7 +31,7 @@
             <!------------------------------------------start Locationss--------------------------------------------------------->
             <p headerindex="2h" class="menuheader expandable arrow openheader">
               <span class="accordprefix"></span>
-                <a href="location"><?php echo $resx_menu_left["header_locations"]; ?></a>
+              <a href="location"><?php echo $resx_menu_left["header_locations"]; ?></a>
               <span class="accordsuffix"></span></p>
             <ul style="display: block;" contentindex="2c" class="categoryitems">
               <li><a href="location"><?php echo $resx_menu_left["item_locX"]; ?></a></li> 
