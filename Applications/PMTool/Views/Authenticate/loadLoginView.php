@@ -28,9 +28,11 @@
           <?php echo $resx["forgot_pwd_label"]; ?>
         </a>-->
       </p>
-      <p class="login-btn">
-        <input id="btn_login" class="btn btn-primary btn-lg" role="button" type="button" value="<?php echo $resx["login_btn_text"]; ?>" />
-      </p>
+      <div class="login-btn">
+        <p>
+          <input id="btn_login" class="btn btn-primary btn-lg" role="button" type="button" value="<?php echo $resx["login_btn_text"]; ?>" />
+        </p>
+      </div> 
     </section>
   </figure>
 </section >

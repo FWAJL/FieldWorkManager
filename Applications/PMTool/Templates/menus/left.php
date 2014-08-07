@@ -1,4 +1,5 @@
-<div class="content-container"><section class="left-aside">
+<div class="content-container">
+  <section class="left-aside col-lg-2 col-md-2">
     <section class="left-asidebg">
       <div class="content_left">
         <!-- CONTENT -->
