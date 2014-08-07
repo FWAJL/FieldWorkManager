@@ -4,11 +4,13 @@
   <resource key="pm_info_edit">Edit Info</resource>
   <resource key="logout_link_text">Logout</resource>
   <resource key="p_user_name_label">User Name: </resource>
+
   <resource key="header_projects">Projects</resource>
-  <resource key="header_locations">Locations</resource>
-  <resource key="project_add">Add new project</resource>
+  <resource key="project_add">Add</resource>
   <resource key="project_manage">Show/Hide Projects</resource>
-  <resource key="project_list">All Projects</resource>
+  <resource key="project_list">List All</resource>
+
+  <resource key="header_locations">Locations</resource>
   <resource key="location_add">Add new Location</resource>
   <resource key="location_boundary_add">Add Boundary</resource>
   <resource key="location_upload_list">Upload Location List</resource>
