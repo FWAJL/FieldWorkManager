@@ -279,6 +279,7 @@ class ProjectController extends \Library\BaseController {
     if ($this->_CheckIfPmHasProjects($pm[0])) {
       $currentController->page->addVar('display_project_welcome', 'show');
       $currentController->page->addVar('display_add_project', 'hide');
+      $currentController->page->addVar('display_project_list', 'hide');
       $currentController->page->addVar('active_project_list', 'active');
       $currentController->page->addVar('active_add_project', '');
     } else {

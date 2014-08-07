@@ -4,11 +4,9 @@
     <meta charset="utf-8" />
     <title><?php echo $this->app->pageTitle; ?></title>
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/app/reset.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/app/styles.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/core/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/addons/toastr.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/app/core-app-style.css" />
-        
+
     <?php echo $this->app->globalResources["css_files"]; ?>
     <?php echo $this->app->globalResources["js_files_head"]; ?>
 
