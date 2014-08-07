@@ -52,23 +52,21 @@ li #pm_name{
 /* END TOP HEADER */
 /* CONTENT_CONTAINER */
 .content-container {
-  max-width: 92%; height: auto;
+  max-width: 100%; height: auto;
   margin: 0 auto;
 }
 .left-aside
 {
-  border: solid 1px #999;
+  border-right: solid 1px #999;
 }
 .right-aside
 {
-  border: solid 1px #999;
 }
 /* END CONTENT_CONTAINER */
 
 /* PROJECT */
 #btn_edit_project{display: none;}
 .form_sections input[type="button"]{
-  position: relative; left: 40%;
 }
 
 .show{display: block;}
