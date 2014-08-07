@@ -7,7 +7,7 @@
           <li>
             <a href="#"><span><?php echo $resx_menu_left["header_projects"] ?></span></a>
             <ul>
-              <li><a href="#"><?php echo $resx_menu_left["project_list"] ?></a></li>
+              <li><a id="project_list_all"><?php echo $resx_menu_left["project_list"] ?></a></li>
               <li><a id="project_add_left_menu"><?php echo $resx_menu_left["project_add"] ?></a></li>
             </ul>
           </li>

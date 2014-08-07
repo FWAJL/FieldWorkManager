@@ -1,5 +1,5 @@
 $(document).ready(function() {
-//  validator.requiredInput();//validate the inputs
+  //Add a project
   $("#btn_add_project").click(function() {
     var post_data = {};
     post_data["project"] = project_manager.retrieveInputs();
@@ -10,30 +10,36 @@ $(document).ready(function() {
       project_manager.add(post_data, "project", "add");
     }
   });
-  $("#btn_delete_project").click(function() {
-    project_manager.delete($(this));
-  });
+  //Edit a project
   $("#btn_edit_project").click(function() {
     var post_data = project_manager.retrieveInputs();
     if (post_data.project_name !== undefined) {
       project_manager.edit(post_data, "project", "edit");
     }
   });
-
+  //Delete a project
+  $("#btn_delete_project").click(function() {
+    project_manager.delete($(this));
+  });
+  //Select a project
   $(".select_project").click(function() {
-    $(".select_project,#project_add_left_menu").removeClass("active");
-    $(this).addClass("active");
     project_manager.clearForm();
     project_manager.retrieveProject($(this));
   });
+  //Show "add a project" panel
   $("#project_add_left_menu").click(function() {
     project_manager.clearForm();
-    $(".welcome").fadeOut('2000').removeClass("active").removeClass("show");
-    $(".select_project").removeClass("active");
+    $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
     $(".form_sections").fadeIn('2000').removeClass("hide");
     $("#project_add_left_menu").addClass("active");
     $(".project_add").show();
     $(".project_edit").hide();
+  });
+  //Show "List All" panel
+  $("#project_list_all").click(function() {
+    project_manager.clearForm();
+    $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
+    $(".project_list").fadeIn('2000').removeClass("hide");
   });
 });
 /***********
