@@ -1,9 +1,9 @@
-<div class="content-container">
-  <section class="left-aside col-lg-2 col-md-2">
+<div class="content-container container-fluid">
+  <section class="left-aside sidebar col-lg-2 col-md-2">
     <section class="left-asidebg">
       <nav>
         <!-- CONTENT -->
-        <ul class="content_left">
+        <ul class="content_left nav-sidebar">
           <li>
             <a href="#"><span><?php echo $resx_menu_left["header_projects"] ?></span></a>
             <ul>

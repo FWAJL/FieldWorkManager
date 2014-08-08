@@ -3,7 +3,7 @@
 /**
  *
  * @package		Basic MVC framework test
- * @author		FWA DEV Team
+ * @author		FWM DEV Team
  * @copyright	Copyright (c) 2014
  * @license		
  * @link		
@@ -18,7 +18,7 @@
  * @package		Application/PMTool
  * @subpackage	Controllers
  * @category	ProjectController
- * @author		FWA Dev Team
+ * @author		FWM DEV Team
  * @link		
  */
 
@@ -204,7 +204,7 @@ class ProjectController extends \Library\BaseController {
     $result["project"] = $project_selected;
     $result["facility"] = $facility_selected;
     //return the JSON data
-    echo \Library\HttpResponse::encodeJson($result);
+    return $result;
   }
 
   private function _GetProjectFromSession($data_sent) {

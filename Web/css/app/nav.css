@@ -18,7 +18,7 @@ a:hover {color: #000;}
 .content_left > li:hover ul{
   padding:10px;
 }
-.content_left li:hover ul{
+.content_left li:hover ul, .active_menu{
   display: block;
   -webkit-transition: width 2s ease;
   -moz-transition: width 2s ease;
@@ -30,7 +30,7 @@ a:hover {color: #000;}
 .content_left li:hover > ul{
   padding: 0;
 }
-.content_left li:hover, .content_left li:hover > ul li:hover{
+.content_left li:hover, .content_left li:hover > ul li:hover, .active_menu{
   border-right: solid 4px #f67f21; 
   background-color: #ffd;
 }

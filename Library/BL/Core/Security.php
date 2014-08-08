@@ -4,7 +4,7 @@
  * An open source application development framework for PHP 5.1.6 or newer
  *
  * @package		Basic MVC framework
- * @author		FWA DEV Team
+ * @author		FWM DEV Team
  * @copyright	Copyright (c) 2014
  * @license		
  * @link		
@@ -20,7 +20,7 @@
  * @package		
  * @subpackage	BL/Core
  * @category	Security
- * @author		FWA Dev Team
+ * @author		FWM DEV Team
  * @link		
  */
 namespace Library\BL\Core;

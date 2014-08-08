@@ -20,4 +20,3 @@
   </head>
 
   <body id="home">
-    <div id="wrapper">

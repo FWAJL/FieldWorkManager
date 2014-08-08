@@ -1,1 +1,1 @@
-<section id="breadcrumb"></section>
+<section class="breadcrumb"><?php echo $br; ?></section>
