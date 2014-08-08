@@ -2,6 +2,8 @@
 }
 a {color: #333;}
 a:hover {color: #000;}
+a, a:hover {text-decoration: none; cursor: pointer;}
+
 .content_left > li{
   display: block;
   padding: 5px;
@@ -11,7 +13,8 @@ a:hover {color: #000;}
   border-bottom: 0;
 }
 .content_left ul {
-  display: none;
+  /*display: none;*/
+  padding: 2px 0 2px 10px;
 }
 .content_left > li:hover{
 }
@@ -30,10 +33,13 @@ a:hover {color: #000;}
 .content_left li:hover > ul{
   padding: 0;
 }
-.content_left li:hover, .content_left li:hover > ul li:hover, .active_menu{
+.content_left li:hover, .active_menu{
   border-right: solid 4px #f67f21; 
   background-color: #ffd;
 }
-.content_left li a,.content_left li:hover > ul li:hover a{
- text-decoration: none;
+.content_left li:hover > ul li:hover
+{
+  border-bottom: solid 1px #f67f21; 
+  border-top: solid 1px #f67f21; 
+  border-left: solid 1px #f67f21; 
 }
