@@ -15,21 +15,24 @@
  * SessionKeys Class
  *
  * @package		Library
- * @subpackage	Enums
- * @category	PhpModuleKeys
+ * @subpackage	UC
+ * @category	Breadcrumb
  * @author		FWM DEV Team
  * @link		
  */
-namespace Library\Enums;
+namespace Library\UC;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-/**
- * Lists all the PhpModuleKeys used throughout the applications so that we don't use hard-coded strings.
- */
-abstract class PhpModuleKeys {
-  const Shared_ProjectForm = "shared_project_form";
-  const Shared_FacilityForm = "shared_facility_form";
-  const Shared_CompanyForm = "shared_company_form";
-}
+class Breadcrumb {
+  /**
+   * Returns if the string is valid or not
+   * 
+   * @param type string $data_to_clean
+   * @return type bool
+   */
+  static function Build() {
+    return "Home";
+  }
+  
 
-?>
+}

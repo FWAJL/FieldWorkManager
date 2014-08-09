@@ -16,6 +16,15 @@
   top: 5px;
   left: 85px;
 }
+/* BREADCRUMB */
+.breadcrumb{
+  line-height: 40px;
+  padding: 0;
+  margin: 0 20px;
+  text-indent: 10px;
+  
+  border: solid 1px #999;
+}
 
 /* ADD PROJECT */
 .form_sections, .project_form, .facility_form{
@@ -41,7 +50,7 @@
   line-height:inherit;
   color:#333;
   border:0;
-  border-bottom:1px solid #e5e5e5;
+  border-bottom:1px solid #999;
 }
 table  {border-collapse:collapse;border-spacing:0;border-color:#fff;}
 table td{
