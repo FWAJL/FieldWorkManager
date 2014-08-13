@@ -3,7 +3,7 @@
 /**
  *
  * @package		Basic MVC framework
- * @author		FWA DEV Team
+ * @author		FWM DEV Team
  * @copyright	Copyright (c) 2014
  * @license		
  * @link		
@@ -18,7 +18,7 @@
  * @package		Application/PMTool
  * @subpackage	Controllers
  * @category	FacilityController
- * @author		FWA Dev Team
+ * @author		FWM DEV Team
  * @link		
  */
 

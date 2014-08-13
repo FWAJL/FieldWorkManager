@@ -11,11 +11,14 @@
   <resource key="project_list">List All</resource>
 
   <resource key="header_locations">Locations</resource>
+  <resource key="location_list">List All</resource>
   <resource key="location_add">Add new Location</resource>
-  <resource key="location_boundary_add">Add Boundary</resource>
   <resource key="location_upload_list">Upload Location List</resource>
-  <resource key="location_manage">Show/Hide Locations</resource>
-  <resource key="boundary_manage">Show/Hide Boundaries</resource>
-  <resource key="item_locX">A location</resource>
+  
+  <resource key="header_map">Map</resource>
+  <resource key="map_project_all">All Projects</resource>
+  <resource key="map_project">Selected Project</resource>
+  <resource key="map_project_locations">All Project's Locations</resource>
+  <resource key="map_task_locations">Task Locations</resource>
   
 </resources>

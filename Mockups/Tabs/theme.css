@@ -1,0 +1,21 @@
+/* BUTTONS */
+.btn-primary {
+  background-color: #FFF;
+  border-color: #999;
+  color: #333;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary{
+  background-color: #000  ;
+  border-color: #999;
+}
+
+
+/* TEXTBOX */
+
+
+/* VALIDATION */
+.required {
+    border: 4px solid #f00;
+}
+  
