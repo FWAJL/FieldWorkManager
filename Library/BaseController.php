@@ -12,7 +12,7 @@ abstract class BaseController extends ApplicationComponent {
   protected $page = null;
   protected $view = '';
   protected $managers = null;
-
+  
   public function __construct(Application $app, $module, $action) {
     parent::__construct($app);
     $this->managers = new \Library\DAL\Managers('PDO', PDOFactory::getMysqlConnexion($app));
@@ -30,6 +30,11 @@ abstract class BaseController extends ApplicationComponent {
       throw new \RuntimeException('L\'action "' . $this->action . '" n\'est pas définie sur ce module');
     }
     $result = $this->$method($this->app->HttpRequest());
+    //Get resources for the left menu
+    //$this->addVar("resx_menu_left", $this->app->i8n->getCommonResourceArray("menu_left"));
+    $resx_left_menu = $this->app->i8n->getCommonResourceArray("menu_left");
+    $leftMenu = new UC\LeftMenu($this->app(), $resx_left_menu);
+    $this->page->addVar("leftMenu", $leftMenu->Build());
     if ($result !== NULL) {
       $result["br"] = UC\Breadcrumb::Build();
       echo \Library\HttpResponse::encodeJson($result);
@@ -40,6 +45,10 @@ abstract class BaseController extends ApplicationComponent {
 
   public function page() {
     return $this->page;
+  }
+  
+  public function leftMenu() {
+    return $this->leftMenu;
   }
 
   public function setModule($module) {

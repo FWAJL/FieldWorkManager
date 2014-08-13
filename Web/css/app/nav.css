@@ -43,3 +43,6 @@ a, a:hover {text-decoration: none; cursor: pointer;}
   border-top: solid 1px #f67f21; 
   border-left: solid 1px #f67f21; 
 }
+.content_left li:hover > ul li:hover a {
+ display: block;
+}

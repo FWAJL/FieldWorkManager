@@ -1,6 +1,6 @@
 $(document).ready(function() {
   $("li").click(function() {
-    $(this).parent("content_left").show();
+    $(this).parent().parent().show();
     $(this).css("display", "block");
   });
 });

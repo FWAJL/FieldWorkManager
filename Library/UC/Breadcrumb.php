@@ -12,7 +12,7 @@
 // ------------------------------------------------------------------------
 
 /**
- * SessionKeys Class
+ * Breadcrumb Class
  *
  * @package		Library
  * @subpackage	UC

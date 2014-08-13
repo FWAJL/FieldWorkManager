@@ -1,5 +1,5 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
-<div id="client_info">
+<div id="client_info"  class="data-form">
   <fieldset class="client_form">
     <ol class="add-new-p">
       <li>

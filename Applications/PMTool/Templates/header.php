@@ -1,3 +1,4 @@
+<?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->app->locale; ?>">
   <head>

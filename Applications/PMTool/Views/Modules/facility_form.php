@@ -1,5 +1,5 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
-  <div id="facility_info"> 
+  <div id="facility_info" class="data-form"> 
 <fieldset class="facility_form">
 <!--  <legend><?php echo $resx["facility_legend"]; ?></legend>-->
   <ol class="add-new-p">
