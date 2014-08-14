@@ -1,32 +1,27 @@
 $(document).ready(function() {
-  //Add a project
   $("#btn_add_project").click(function() {
     var post_data = {};
-    post_data["project"] = project_manager.retrieveInputs();
-    post_data["facility"] = facility_manager.retrieveInputs();
+    post_data["project"] = utils.retrieveInputs("project_form", ["project_name"]);
+    post_data["facility"] = utils.retrieveInputs("facility_form", ["facility_name","facility_address"]);
     //toastr.success("name: " + post_data.project_name + "; number: " + post_data.project_num + "; desc: " + post_data.project_desc + "; active: " + post_data.project_active_flag + " ; visible: " + post_data.project_visible_flag);
     if (post_data["project"].project_name !== undefined &&
-          post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
+            post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
       project_manager.add(post_data, "project", "add");
     }
-  });
-  //Edit a project
+  });//Add a project
   $("#btn_edit_project").click(function() {
-    var post_data = project_manager.retrieveInputs();
+    var post_data = utils.retrieveInputs("project_form", ["project_name"]);
     if (post_data.project_name !== undefined) {
       project_manager.edit(post_data, "project", "edit");
     }
-  });
-  //Delete a project
+  });//Edit a project
   $("#btn_delete_project").click(function() {
     project_manager.delete($(this));
-  });
-  //Select a project
+  });//Delete a project
   $(".select_project").click(function() {
     project_manager.clearForm();
     project_manager.retrieveProject($(this));
-  });
-  //Show "add a project" panel
+  });//Select a project
   $("#project_add_left_menu").click(function() {
     project_manager.clearForm();
     $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
@@ -34,56 +29,40 @@ $(document).ready(function() {
     $("#project_add_left_menu").addClass("active");
     $(".project_add").show();
     $(".project_edit").hide();
-  });
-  //Show "List All" panel
+  });//Show "add a project" panel
   $("#project_list_all").click(function() {
     project_manager.clearForm();
     $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
     $(".project_list").fadeIn('2000').removeClass("hide");
-  });
+    project_manager.getList();
+  });//Show "List All" panel
 });
 /***********
  * project_manager namespace 
- * Responsible to add a project.
+ * Responsible to manage projects.
  */
 (function(project_manager) {
-  project_manager.retrieveInputs = function() {
-    var user_inputs = {};
-    $(".project_form input").each(function(i, data) {
-      if (project_manager.checkLiElement($(this))) {
-        if ($(this).attr("type") === "text") {
-          user_inputs[$(this).attr("name")] = $(this).val();
-        } else {//checkbox
-          user_inputs[$(this).attr("name")] = $(this).is(":checked");
-        }
-      } else {
-        toastr.error("The field " + $(this).attr("name") + " is empty. Please fill out all fields.");
-        return null;
-      }
-    });
-    return user_inputs;
-  };
-    project_manager.add = function(data, controller, action) {
-    datacx.post(controller+"/"+action, data["project"]).then(function(reply) {//call AJAX method to call Project/Add WebService
+  project_manager.add = function(data, controller, action) {
+    datacx.post(controller + "/" + action, data["project"]).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.dataOut === undefined || reply.dataOut === null || parseInt(reply.dataOut) === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        var post_data = facility_manager.retrieveInputs();
-          data["facility"]['project_id'] = reply.dataOut;
-          facility_manager.send("facility/"+action, data["facility"]);
+        var post_data = utils.retrieveInputs("facility_form", ["facility_name","facility_address"]);
+        data["facility"]['project_id'] = reply.dataOut;
+        facility_manager.send("facility/" + action, data["facility"]);
       }
     });
   };
   project_manager.edit = function(project, controller, action) {
-    datacx.post(controller+"/"+action, project).then(function(reply) {//call AJAX method to call Project/Add WebService
+    datacx.post(controller + "/" + action, project).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        var post_data = facility_manager.retrieveInputs();
+        var post_data = utils.retrieveInputs("facility_form", ["facility_name","facility_address"]);
         if (post_data.facility_name !== undefined && post_data.facility_address !== undefined) {
-          facility_manager.send("facility/"+action, post_data);
+          facility_manager.send("facility/" + action, post_data);
         }
       }
     });
@@ -95,22 +74,28 @@ $(document).ready(function() {
       } else {//success
         toastr.success(reply.message);
         //Build the table
-        project_manager.buildTableList(reply.projects);
+        project_manager.buildOutputList(reply.lists.projects);
         //Now show the table
-        $(".form_sections").fadeOut('2000').removeClass("active").removeClass("show");
-        $(".welcome").fadeIn('2000').addClass("active").removeClass("hide");
-        $("#project_add").removeClass("active");
       }
     });
   };
-  project_manager.buildTableList = function(projects) {
-  };
-  project_manager.checkLiElement = function(element) {
-    if (element.attr("name") === "project_name") {
-      return element.val() !== "" ? true : false;
-    } else {
-      return true;
+  project_manager.buildOutputList = function(projects) {
+    var active_projects = "";
+    var inactive_projects = "";
+    for (i = 0; i < projects.length; i++) {
+      if (parseInt(projects[i].active) !== 0) {
+       active_projects += "<option value=\""+ projects[i].project_name +"\">" + projects[i].project_name + "</option>"; 
+      } else {
+       inactive_projects += "<option value=\""+ projects[i].project_name +"\">" + projects[i].project_name + "</option>"; 
+      }
     }
+    inactive_projects = utils.isNullOrEmpty(inactive_projects) ? 
+      "<option value=\"\">{empty}</option>" : inactive_projects;
+    active_projects = utils.isNullOrEmpty(active_projects) ? 
+      "<option value=\"\">{empty}</option>" : active_projects;
+    $("#project-data-active, #project-data-inactive").show();
+    $("#project-data-active").html(active_projects);
+    $("#project-data-inactive").html(inactive_projects);
   };
   project_manager.retrieveProject = function(element) {
     //get project object from cache (PHP WS)
