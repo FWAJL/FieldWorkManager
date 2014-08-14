@@ -7,8 +7,11 @@
   </section>
   
   <section class="project_list <?php echo $display_project_list ?>">
-    <h2 class="legend"><?php echo $resx["project_list_all_header"]; ?></h2>
-    
+    <h3><?php echo $resx["project_list_all_header"]; ?></h3>
+    <h4><?php echo $resx["h3_projects_active"]; ?></h4>
+    <select multiple id="project-data-active" class="form-control"></select>
+    <h4><?php echo $resx["h3_projects_inactive"]; ?></h4>
+    <select multiple id="project-data-inactive" class="form-control"></select>
   </section>
   <section class="form_sections <?php echo $display_add_project; ?>">
       <?php

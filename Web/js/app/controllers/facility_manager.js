@@ -35,23 +35,6 @@ $(document).ready(function() {
  * Responsible to add a facility.
  */
 (function(facility_manager) {
-  facility_manager.retrieveInputs = function() {
-    var user_inputs = {};
-    //user_inputs[$(".project_form input[name=\"project_id\"]").attr("name")] = $(".project_form input[name=\"project_id\"]").val();
-    $(".facility_form input, .facility_form textarea").each(function(i, data) {
-      if (facility_manager.checkLiElement($(this))) {
-        if ($(this).attr("type") === "text") {
-          user_inputs[$(this).attr("name")] = $(this).val();
-        } else {//checkbox
-          user_inputs[$(this).attr("name")] = $(this).is(":checked");
-        }
-      } else {
-        toastr.error("The field " + $(this).attr("name") + " is empty. Please fill out all fields.");
-        return null;
-      }
-    });
-    return user_inputs;
-  };
   facility_manager.send = function(ws_url,facility) {
     datacx.post(ws_url, facility).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.result === 0) {//has an error
@@ -61,13 +44,6 @@ $(document).ready(function() {
         document.location.replace("project");
       }
     });
-  };
-  facility_manager.checkLiElement = function(element) {
-    if (element.attr("name") === "facility_name" || element.attr("name") === "facility_address") {
-      return element.val() !== "" ? true : false;
-    } else {
-      return true;
-    }
   };
   facility_manager.retrieveProject = function(element) {
     //get facility object from cache (PHP WS)

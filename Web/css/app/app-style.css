@@ -27,20 +27,24 @@ body, html, .sidebar {height: 100%}
 #top_header .logo img{ height: 32px; margin: 4px }
 
 #pm_info ul{ display: none; }
-#pm_info { float: right; }
+#pm_info {
+  float: right;
+  width: 100px;
+  border-left: solid 1px #999;
+}
 li #pm_name{
  padding: 0 10px;  
 }
 #pm_name{margin: 0;}
 #pm_name:hover {
-  background-color: #eee;
+  background-color: #ddd;
   padding: 0 10px; 
 }
 #pm_info ul {margin-bottom: 0;}
 #pm_info li:hover ul{
   z-index: 9999;
   display: block;
-  background-color: #eee;
+  background-color: #add;
   position: fixed;
   padding: 0 10px; 
   margin-bottom: -10px;
@@ -49,6 +53,7 @@ li #pm_name{
   -ms-transition: width 2s ease;
   -o-transition: width 2s ease;
   transition: width 2s ease;
+  width:100%;
 }
 /* END TOP HEADER */
 /* CONTENT_CONTAINER */
