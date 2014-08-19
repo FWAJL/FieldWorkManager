@@ -9,19 +9,23 @@ $(document).ready(function() {
       project_manager.add(post_data, "project", "add");
     }
   });//Add a project
+  
   $("#btn_edit_project").click(function() {
     var post_data = utils.retrieveInputs("project_form", ["project_name"]);
     if (post_data.project_name !== undefined) {
       project_manager.edit(post_data, "project", "edit");
     }
   });//Edit a project
+  
   $("#btn_delete_project").click(function() {
     project_manager.delete($(this));
   });//Delete a project
+  
   $(".select_project").click(function() {
     project_manager.clearForm();
     project_manager.retrieveProject($(this));
   });//Select a project
+  
   $("#project_add_left_menu").click(function() {
     project_manager.clearForm();
     $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
@@ -30,12 +34,14 @@ $(document).ready(function() {
     $(".project_add").show();
     $(".project_edit").hide();
   });//Show "add a project" panel
+  
   $("#project_list_all").click(function() {
     project_manager.clearForm();
     $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
     $(".project_list").fadeIn('2000').removeClass("hide");
     project_manager.getList();
   });//Show "List All" panel
+  
 });
 /***********
  * project_manager namespace 

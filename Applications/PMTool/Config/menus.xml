@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <main_menus>
+  <version>1</version>
   <main_menu name="project" active="true">
     <links>
-      <header href="#" resourcekey="header_projects" />
-      <submenu id="project_list_all" resourcekey="project_list" active="true"/>
-      <submenu id="project_add_left_menu" resourcekey="project_add" active="true"/>
+      <header href="project" resourcekey="header_projects" />
+      <submenu href="#getList" id="project_list_all" resourcekey="project_list" active="true"/>
+      <submenu href="project/showAddForm" id="project_add_left_menu" resourcekey="project_add" active="true"/>
     </links>
   </main_menu><!-- project -->
-  <main_menu name="location" active="false">
+  <main_menu name="location" active="true">
     <links>
       <header href="#" resourcekey="header_locations" />
       <submenu id="location_list" resourcekey="location_list" active="true"/>

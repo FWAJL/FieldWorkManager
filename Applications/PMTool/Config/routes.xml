@@ -4,7 +4,6 @@
   <route url="login" module="Authenticate" action="loadLoginView" type="ui">
     <js_files>
       <js_file use="html" value="Web/js/app/validator.js"/>
-      <js_file use="html" value="Web/js/app/services/dataservice.js"/>
       <js_file use="html" value="Web/js/app/controllers/auth.js"/>     
     </js_files>
     <css_files>
@@ -18,18 +17,9 @@
   </route>
   <route url="project" module="Project" action="index" type="ui">
     <js_files>
-      <js_file use="head" value="Web/js/addons/modernizr.js"/>
-      <js_file use="head" value="Web/js/app/design/all.js"/>
-      <js_file use="head" value="Web/js/app/design/tinydropdown.js"/>
-      <js_file use="head" value="Web/js/app/design/ddaccordion.js"/>
-      <js_file use="head" value="Web/js/app/design/drop_down.js"/>
-      <js_file use="head" value="Web/js/app/design/headScript.js"/>
-      <js_file use="html" value="Web/js/app/services/dataservice.js"/>
       <js_file use="head" value="Web/js/app/controllers/facility_manager.js"/>
       <js_file use="head" value="Web/js/app/controllers/project_manager.js"/>
       <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js"/>
-      <js_file use="head" value="Web/js/core/jquery.js"/>
-      <!--<js_file use="head" value="Web/js/app/controllers/tabs.js"/>-->
     </js_files>
     <css_files>
       <css_file value="Web/css/app/nav.css"/>

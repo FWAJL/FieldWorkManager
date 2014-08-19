@@ -108,9 +108,10 @@ class LeftMenu {
 
   private function _AddLinkSubMenus($link) {
     return
-            "<li><a href=\"#\" id=\"" . $link->getAttribute("id") . "\">"
-            . $this->resx_left_menu[$link->getAttribute("resourcekey")] .
-            "</a></li>";
+            "<li><a href=\"" . $link->getAttribute("href") 
+            . "\" id=\"" . $link->getAttribute("id") . "\">"
+            . $this->resx_left_menu[$link->getAttribute("resourcekey")] 
+            . "</a></li>";
   }
 
 }
