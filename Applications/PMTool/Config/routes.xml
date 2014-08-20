@@ -47,6 +47,14 @@
       <php_module key="project_tabs_close" file_name="project_tabs_close.php"/>
     </php_modules>
   </route><!-- project/showAddForm -->
+    <route url="project/listAll" module="Project" action="listAll" type="ui">
+    <js_files>
+      <js_file use="project" />
+    </js_files>
+    <css_files>
+      <css_file use="project"/>
+    </css_files>
+  </route><!-- project/listAll -->
   <route url="location" module="Location" action="index" type="ui">
     <js_files>
       
