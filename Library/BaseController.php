@@ -12,7 +12,7 @@ abstract class BaseController extends ApplicationComponent {
   protected $page = null;
   protected $view = '';
   protected $managers = null;
-  
+
   public function __construct(Application $app, $module, $action) {
     parent::__construct($app);
     $this->managers = new \Library\DAL\Managers('PDO', PDOFactory::getMysqlConnexion($app));
@@ -29,24 +29,28 @@ abstract class BaseController extends ApplicationComponent {
     if (!is_callable(array($this, $method))) {
       throw new \RuntimeException('L\'action "' . $this->action . '" n\'est pas définie sur ce module');
     }
-    $result = $this->$method($this->app->HttpRequest());
     //Get resources for the left menu
-    //$this->addVar("resx_menu_left", $this->app->i8n->getCommonResourceArray("menu_left"));
     $resx_left_menu = $this->app->i8n->getCommonResourceArray("menu_left");
+    //Init left menu
     $leftMenu = new UC\LeftMenu($this->app(), $resx_left_menu);
+    //Add left menu to layout
     $this->page->addVar("leftMenu", $leftMenu->Build());
+
+    $br = new UC\Breadcrumb($this->app());
+    //Load controller method
+    $result = $this->$method($this->app->HttpRequest());
     if ($result !== NULL) {
-      $result["br"] = UC\Breadcrumb::Build();
+      $result["br"] = $br->Build();
       echo \Library\HttpResponse::encodeJson($result);
     } else {
-      $this->page->addVar("br", UC\Breadcrumb::Build()); 
+      $this->page->addVar("br", $br->Build());
     }
   }
 
   public function page() {
     return $this->page;
   }
-  
+
   public function leftMenu() {
     return $this->leftMenu;
   }
@@ -97,16 +101,14 @@ abstract class BaseController extends ApplicationComponent {
           "result" => 1,
           "message" => $params["resx_file"] === "ws_defaults" ?
                   $this->app->i8n->getCommonResource($params["resx_file"], "message_success" . $params["resx_key"]) :
-                  $this->app->i8n->getLocalResource($params["resx_file"], "message_success" . $params["resx_key"]),
-          "br" => UC\Breadcrumb::Build()
+                  $this->app->i8n->getLocalResource($params["resx_file"], "message_success" . $params["resx_key"])
       );
     } else {
       return array(
           "result" => 0,
           "message" => $params["resx_file"] === "ws_defaults" ?
                   $this->app->i8n->getCommonResource($params["resx_file"], "message_error" . $params["resx_key"]) :
-                  $this->app->i8n->getLocalResource($params["resx_file"], "message_error" . $params["resx_key"]),
-          "br" => UC\Breadcrumb::Build()
+                  $this->app->i8n->getLocalResource($params["resx_file"], "message_error" . $params["resx_key"])
       );
     }
   }

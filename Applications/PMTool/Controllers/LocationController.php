@@ -15,7 +15,7 @@ class LocationController extends \Library\BaseController {
 
     $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
-    $this->page->addVar('logout_url', "logout");
+    $this->page->addVar('logout_url', __BASEURL__ . "logout");
     //$this->page->addVar('tmp_url', $this->app->router->pageUrls[\Library\Enums\ResourceKeys\PublicPageUrls::TemplateUrl]);
   }
 

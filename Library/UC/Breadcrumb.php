@@ -24,15 +24,48 @@ namespace Library\UC;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
 class Breadcrumb {
-  /**
-   * Returns if the string is valid or not
-   * 
-   * @param type string $data_to_clean
-   * @return type bool
-   */
-  static function Build() {
-    return "Home";
-  }
   
+  protected $app = null;
+  protected $url = "";
+  protected $resx = array();
 
+  public function __construct($app) {
+    $this->app = $app;
+    $this->resx = $this->app->i8n->getCommonResourceArray("breadcrumb");
+    $this->url = str_replace($this->app->config->get("base_url"), "", $this->app->HttpRequest->requestURI());
+  }
+  /**
+   * Returns a string representing the left menu
+   * 
+   * @return type string
+   */
+  public function Build() {
+    $out = "";
+    $breadcrumbs = $this->_LoadXml();
+    foreach ($breadcrumbs as $breadcrumb) {
+      if ($breadcrumb->getAttribute("href") === $this->url) {
+        
+      }
+      $out = "My projects";
+    }
+    return $out;
+  }
+
+  /**
+   * Load the left menu from xml and returns the data to process
+   * The list of DOMElementNode is the list of main menus to display
+   * 
+   * @return type DOMELementNodeList
+   * @throws Exception when file is not found
+   */
+  public function _LoadXml() {
+    $xml = new \DOMDocument;
+    $filename = __ROOT__ . \Library\Enums\FolderName::AppsFolderName . $this->app->name() . '/Config/breadcrumbs.xml';
+    if (file_exists($filename)) {
+      $xml->load($filename);
+    } else {
+      throw new Exception("In " . __CLASS__ . " > Method: " . __METHOD__);
+    }
+    return $xml->getElementsByTagName("breadcrumb");
+  }
 }

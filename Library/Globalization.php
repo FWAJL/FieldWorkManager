@@ -75,7 +75,7 @@ class Globalization extends ApplicationComponent {
         $path_to_substr = explode("/", $path);
         $file_to_params = explode(".", $path_to_substr[count($path_to_substr) - 1], -1);
         if (count($file_to_params) <> 2) {
-            throw new Exception("File name is wrong!!! File path is <" . $path . ">", NULL, NULL);
+            throw new \Exception("File name is wrong! The locale is missing. File path given is <" . $path . ">", NULL, NULL);
         } else {
             return array("source" => $file_to_params[0], "locale" => $file_to_params[1]);
         }

@@ -13,13 +13,6 @@
     <h4><?php echo $resx["h3_projects_inactive"]; ?></h4>
     <select multiple id="project-data-inactive" class="form-control"></select>
   </section>
-  <section class="form_sections <?php echo $display_add_project; ?>">
-      <?php
-      foreach ($form_modules as $key => $module_path) {
-        require $module_path;
-      }
-      ?>
-  </section>
 
 </section>
 </div><!-- END ROW DIV -->

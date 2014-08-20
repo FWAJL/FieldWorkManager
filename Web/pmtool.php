@@ -15,5 +15,5 @@ try {
     header('Location: ' . __BASEURL__ . "login");
   }
 } catch (Exception $exc) {
-  echo '<!--' . $exc->getMessage() . '-->';
+  echo "<!--" . $exc->getMessage() . "\n\r" . $exc->getTraceAsString() . "-->";
 }

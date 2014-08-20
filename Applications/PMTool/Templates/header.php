@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/addons/toastr.css" />
 
     <?php echo $this->app->globalResources["css_files"]; ?>
+    <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/jquery.js"></script>
     <?php echo $this->app->globalResources["js_files_head"]; ?>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
