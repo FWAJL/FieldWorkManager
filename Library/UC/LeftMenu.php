@@ -30,11 +30,13 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class LeftMenu {
 
   protected $app = null;
+  protected $base_url = "";
   protected $resx_left_menu = array();
 
   public function __construct($app, $resx_left_menu) {
     $this->app = $app;
     $this->resx_left_menu = $resx_left_menu;
+    $this->base_url = $this->app->config->get("base_url");
   }
 
   /**
@@ -101,14 +103,14 @@ class LeftMenu {
 
   private function _AddLinkHeader($link) {
     return
-            "<a href=\"" . $link->getAttribute("href") . "\">"
+            "<a href=\"" . $this->base_url . $link->getAttribute("href") . "\">"
             . $this->resx_left_menu[$link->getAttribute("resourcekey")] .
             "</a>";
   }
 
   private function _AddLinkSubMenus($link) {
     return
-            "<li><a href=\"" . $link->getAttribute("href") 
+            "<li><a href=\"" . $this->base_url . $link->getAttribute("href") 
             . "\" id=\"" . $link->getAttribute("id") . "\">"
             . $this->resx_left_menu[$link->getAttribute("resourcekey")] 
             . "</a></li>";

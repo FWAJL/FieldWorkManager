@@ -7,9 +7,9 @@
       <js_file use="html" value="Web/js/app/controllers/auth.js"/>     
     </js_files>
     <css_files>
-      <css_file use="html" value="Web/css/app/app-style.css"/>
-      <css_file use="html" value="Web/css/app/app-theme.css"/>
-      <css_file use="html" value="Web/css/app/theme.css"/>
+      <css_file value="Web/css/app/app-style.css"/>
+      <css_file value="Web/css/app/app-theme.css"/>
+      <css_file value="Web/css/app/theme.css"/>
     </css_files>
   </route><!-- login -->
   <route url="logout" module="Authenticate" action="disconnect" type="ui">
@@ -28,6 +28,14 @@
       <css_file value="Web/css/app/theme.css"/>
       <css_file value="Web/css/app/tabs.css"/>
     </css_files>
+  </route><!-- project/index -->
+  <route url="project/showForm" module="Project" action="showForm" type="ui">
+    <js_files>
+      <js_file use="project" />
+    </js_files>
+    <css_files>
+      <css_file use="project"/>
+    </css_files>
     <php_modules>
       <!-- Add just the file name, the Router class will take of building the correct path -->
       <!-- The "shared" attribute specifies where to get the module, either the current view Modules folder or the main Modules folder in Views -->
@@ -38,7 +46,7 @@
       <php_module key="project_buttons" file_name="project_buttons.php"/>
       <php_module key="project_tabs_close" file_name="project_tabs_close.php"/>
     </php_modules>
-  </route><!-- project/index -->
+  </route><!-- project/showAddForm -->
   <route url="location" module="Location" action="index" type="ui">
     <js_files>
       

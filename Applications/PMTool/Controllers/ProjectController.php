@@ -44,7 +44,28 @@ class ProjectController extends \Library\BaseController {
 
     $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
-    $this->page->addVar('logout_url', "logout");
+    $this->page->addVar('logout_url', __BASEURL__ . "logout");
+
+    //Show and hide the sections on page
+    $this->_ShowOrHideSectionsOnPage($this, $pm);
+
+    //Get list of projects and store in session
+    $this->_GetAndStoreProjectsInSession($this, $rq);
+  }
+  /**
+   * Method that loads the add view for controller   * 
+   * 
+   * @param \Library\HttpRequest $rq: the request
+   */
+  public function executeShowForm(\Library\HttpRequest $rq) {
+    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
+    $this->page->addVar('pm', $pm[0]);
+
+    $resourceFileKey = "project";
+
+    $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
+    $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
+    $this->page->addVar('logout_url', __BASEURL__ . "logout");
 
     //Load Modules for view
     $this->page->addVar('form_modules', $this->app()->router()->selectedRoute()->phpModules());
