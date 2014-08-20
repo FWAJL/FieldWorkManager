@@ -4,7 +4,7 @@
   <main_menu name="project" active="true">
     <links>
       <header href="project" resourcekey="header_projects" />
-      <submenu href="#getList" id="project_list_all" resourcekey="project_list" active="true"/>
+      <submenu href="project/listAll" id="project_list_all" resourcekey="project_list" active="true"/>
       <submenu href="project/showForm" id="project_add_left_menu" resourcekey="project_add" active="true"/>
     </links>
   </main_menu><!-- project -->
