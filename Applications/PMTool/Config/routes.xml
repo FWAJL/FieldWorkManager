@@ -31,6 +31,7 @@
   </route><!-- project/index -->
   <route url="project/showForm" module="Project" action="showForm" type="ui">
     <js_files>
+      <!--<js_file use="head" value="Web/js/app/controllers/project/project_showForm.js"/>-->
       <js_file use="project" />
     </js_files>
     <css_files>
@@ -49,6 +50,7 @@
   </route><!-- project/showAddForm -->
     <route url="project/listAll" module="Project" action="listAll" type="ui">
     <js_files>
+      <!--<js_file use="head" value="Web/js/app/controllers/project/project_listAll.js"/>-->
       <js_file use="project" />
     </js_files>
     <css_files>

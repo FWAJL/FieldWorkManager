@@ -11,13 +11,13 @@ and open the template in the editor.
       <level resourcekey="project_header" />
     </levels>
   </breadcrumb>
-  <breadcrumb href="project#listAll">
+  <breadcrumb href="project/listAll">
     <levels>
       <level resourcekey="project_header" />
       <level resourcekey="project_listAll" />
     </levels>
   </breadcrumb>
-  <breadcrumb href="project#add">
+  <breadcrumb href="project/showForm">
     <levels>
       <level resourcekey="project_header" />
       <level resourcekey="project_add" />      

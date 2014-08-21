@@ -44,9 +44,8 @@ class Breadcrumb {
     $breadcrumbs = $this->_LoadXml();
     foreach ($breadcrumbs as $breadcrumb) {
       if ($breadcrumb->getAttribute("href") === $this->url) {
-        
+        $out = $this->_AddLevels($breadcrumb);
       }
-      $out = "My projects";
     }
     return $out;
   }
@@ -67,5 +66,20 @@ class Breadcrumb {
       throw new Exception("In " . __CLASS__ . " > Method: " . __METHOD__);
     }
     return $xml->getElementsByTagName("breadcrumb");
+  }
+  
+  private function _AddLevels($breadcrumb) {
+    $out = "<ul>";
+    $levels = $breadcrumb->getElementsByTagName("level");
+    $addSeperator = FALSE;
+    foreach ($levels as $level) {
+      if ($addSeperator) {
+        $out .= "<li class=\"br_seperator\"><span class=\"glyphicon glyphicon-chevron-right\"></span></li>";
+      }
+      $out .= "<li>" . $this->resx[$level->getAttribute("resourcekey")] . "</li>";
+      $addSeperator = TRUE;
+    }
+    $out .= "</ul>";
+    return $out;
   }
 }

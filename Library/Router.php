@@ -135,7 +135,7 @@ class Router extends ApplicationComponent {
       } else if($script->getAttribute('use') !== "head" && $script->getAttribute('use') !== "html") {
         //Select js files from parent route
         $parent_route = $this->getRoute(__BASEURL__ . $script->getAttribute('use'));
-        $scripts = $this->_GetFilesForSibbling($parent_route, $destination, $path_to_add);
+        $scripts .= $this->_GetFilesForSibbling($parent_route, $destination, $path_to_add);
       }
     }
     return $scripts;
@@ -179,7 +179,7 @@ class Router extends ApplicationComponent {
     foreach ($route->getElementsByTagName('css_file') as $css_file) {
       if ($css_file->getAttribute("use") !== "") {
         $parent_route = $this->getRoute(__BASEURL__ . $css_file->getAttribute('use'));
-        $css_files = $this->_GetFilesForSibbling($parent_route, "css", $path_to_add);
+        $css_files .= $this->_GetFilesForSibbling($parent_route, "css", $path_to_add);
       } else {
         $css_files .= '<link rel="stylesheet" type="text/css" href="' . $path_to_add . $css_file->getAttribute('value') . '"/>';
       }

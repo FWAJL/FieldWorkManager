@@ -46,9 +46,6 @@ class ProjectController extends \Library\BaseController {
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
     $this->page->addVar('logout_url', __BASEURL__ . "logout");
 
-    //Show and hide the sections on page
-    $this->_ShowOrHideSectionsOnPage($this, $pm);
-
     //Get list of projects and store in session
     $this->_GetAndStoreProjectsInSession($this, $rq);
   }
@@ -70,9 +67,6 @@ class ProjectController extends \Library\BaseController {
     //Load Modules for view
     $this->page->addVar('form_modules', $this->app()->router()->selectedRoute()->phpModules());
 
-    //Show and hide the sections on page
-    $this->_ShowOrHideSectionsOnPage($this, $pm);
-
     //Get list of projects and store in session
     $this->_GetAndStoreProjectsInSession($this, $rq);
   }
@@ -90,9 +84,6 @@ class ProjectController extends \Library\BaseController {
     $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
     $this->page->addVar('logout_url', __BASEURL__ . "logout");
-
-    //Show and hide the sections on page
-    $this->_ShowOrHideSectionsOnPage($this, $pm);
 
     //Get list of projects and store in session
     $this->_GetAndStoreProjectsInSession($this, $rq);
