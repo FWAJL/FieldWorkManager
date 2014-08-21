@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * @package		Basic MVC framework
@@ -20,11 +21,14 @@
  * @author		FWM DEV Team
  * @link		
  */
+
 namespace Library\UC;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+  exit('No direct script access allowed');
 
 class Breadcrumb {
-  
+
   protected $app = null;
   protected $url = "";
   protected $resx = array();
@@ -32,8 +36,11 @@ class Breadcrumb {
   public function __construct($app) {
     $this->app = $app;
     $this->resx = $this->app->i8n->getCommonResourceArray("breadcrumb");
-    $this->url = str_replace($this->app->config->get("base_url"), "", $this->app->HttpRequest->requestURI());
+    $this->url = $this->app->config->get("base_url") === "/" ?
+            substr($this->app->HttpRequest->requestURI(), 1) : //remove first / if base url is only a /
+            str_replace($this->app->config->get("base_url"), "", $this->app->HttpRequest->requestURI());
   }
+
   /**
    * Returns a string representing the left menu
    * 
@@ -67,7 +74,7 @@ class Breadcrumb {
     }
     return $xml->getElementsByTagName("breadcrumb");
   }
-  
+
   private function _AddLevels($breadcrumb) {
     $out = "<ul>";
     $levels = $breadcrumb->getElementsByTagName("level");
@@ -82,4 +89,5 @@ class Breadcrumb {
     $out .= "</ul>";
     return $out;
   }
+
 }
