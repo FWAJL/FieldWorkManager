@@ -1,4 +1,5 @@
 body, html, .sidebar {height: 100%}
+ol, ul {  margin-bottom: 0; }
 /* LOGIN */
 .login-container{margin:100px;}
 .login-container figure{
@@ -56,6 +57,15 @@ li #pm_name{
   width:100%;
 }
 /* END TOP HEADER */
+/* BREADCRUMB */
+.breadcrumb li {
+  /*float: left;*/
+  display: inline-block;
+}
+.br_seperator {
+  margin-left: -10px;
+}
+/* END BREADCRUMB */
 /* CONTENT_CONTAINER */
 .content-container {
   max-width: 100%; height: auto;
