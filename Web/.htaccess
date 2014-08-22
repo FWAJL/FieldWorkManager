@@ -1,6 +1,3 @@
-RewriteEngine On
-
-# Si le fichier auquel on tente d'accéder existe (si on veut accéder à une image par exemple).
-# Alors on ne réécrit pas l'URL.
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ /Main/Web/frontend.php [QSA,L]
+order deny,allow
+deny from all
+allow from 127.0.0.1
