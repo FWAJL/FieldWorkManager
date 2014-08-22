@@ -74,7 +74,13 @@ class Breadcrumb {
     }
     return $xml->getElementsByTagName("breadcrumb");
   }
-
+  
+  /**
+   * Add the levels based on selected breadcrumb.
+   * 
+   * @param DOMElement $breadcrumb
+   * @return string
+   */
   private function _AddLevels($breadcrumb) {
     $out = "<ul>";
     $levels = $breadcrumb->getElementsByTagName("level");

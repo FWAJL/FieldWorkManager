@@ -93,7 +93,7 @@ $(document).ready(function() {
         return undefined;
       } else {//success
         toastr.success(reply.message);
-        document.location.replace("project");
+        utils.redirect("project");
       }
     });
   };

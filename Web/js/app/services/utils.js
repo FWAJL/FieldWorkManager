@@ -45,8 +45,23 @@
     return result;
   };
   
+  /**
+   * Check if a string is null or empty
+   * 
+   * @param {String} value
+   * @returns {Boolean}
+   */
   utils.isNullOrEmpty = function(value) {
     return value !== null || value !== "" ? false : true; 
   };
-
+  
+  /**
+   * Redirect to a given page
+   * 
+   * @param {type} page
+   */
+  utils.redirect = function(page) {
+    document.location.replace(service_config.rootFolder + page);
+  };
+  
 }(window.utils = window.utils || {}));

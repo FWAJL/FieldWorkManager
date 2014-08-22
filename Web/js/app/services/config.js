@@ -7,8 +7,9 @@
    * Load the config 
    * @returns {array}
    */
+  service_config.rootFolder = "/FieldWorkAssistantMVC/";
   service_config.load = function() {
-    var xml = new JKL.ParseXML( "Web/js/settings.xml" );
+    var xml = new JKL.ParseXML( "../Web/js/settings.xml" );
     var defines = xml.parse().definitions.define;
     return defines;
   };

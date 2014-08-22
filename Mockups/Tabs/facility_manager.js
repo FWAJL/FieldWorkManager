@@ -58,7 +58,7 @@ $(document).ready(function() {
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        document.location.replace("project");
+        utils.redirect("project");
       }
     });
   };
@@ -95,7 +95,7 @@ $(document).ready(function() {
         return undefined;
       } else {//success
         toastr.success(reply.message);
-        document.location.replace("facility");
+        utils.redirect("facility");
       }
     });
   };
