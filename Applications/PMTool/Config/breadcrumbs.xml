@@ -27,7 +27,7 @@ and open the template in the editor.
     <levels>
       <level resourcekey="project_header" />
       <level resourcekey="project_listAll">
-        <link href="project#listAll" resourcekey="project_listAll"/>
+        <link href="project/listAll" resourcekey="project_listAll"/>
       </level>
       <level resourcekey="project_add" />
     </levels>
