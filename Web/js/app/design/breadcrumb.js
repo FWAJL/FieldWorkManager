@@ -9,7 +9,7 @@ $(document).ready(function() {
 (function(breadcrumb) {
   breadcrumb.init = function() {
     var xml = new JKL.ParseXML( "Applications/PMTool/Config/menus.xml" );
-    var menus = xml.parse();
+    var menus = xml.parse().definitions.define;
     if (menus !== undefined)
      return "Home 2";
     else
