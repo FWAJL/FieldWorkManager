@@ -1,7 +1,7 @@
 body, html, .sidebar {height: 100%}
 ol, ul {  margin-bottom: 0; }
 /* LOGIN */
-.login-container{margin:100px;}
+.login-container{margin:10px;}
 .login-container figure{
  width: 300px;
  margin: 0 auto;
@@ -14,7 +14,7 @@ ol, ul {  margin-bottom: 0; }
 #top_header{
   text-shadow: 0 1px 0 #fff;
   border-bottom: 1px solid #e5e5e5;
-  min-width: 1000px;
+  /*min-width: 1000px;*/
   background-color: #f3f3f3;
   background-image: -moz-linear-gradient(#f9f9f9, #f3f3f3);
   background-image: -webkit-linear-gradient(#f9f9f9, #f3f3f3);
