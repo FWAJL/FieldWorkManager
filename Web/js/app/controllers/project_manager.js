@@ -22,12 +22,12 @@ $(document).ready(function() {
   });//Delete a project
   
   $(".select_project").click(function() {
-    project_manager.clearForm();
+    utils.clearForm();
     project_manager.retrieveProject($(this));
   });//Select a project
   
   $("#project_add_left_menu").click(function() {
-    project_manager.clearForm();
+    utils.clearForm();
     $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
     $(".form_sections").fadeIn('2000').removeClass("hide");
     $("#project_add_left_menu").addClass("active");
@@ -36,7 +36,7 @@ $(document).ready(function() {
   });//Show "add a project" panel
   
   $("#project_list_all").click(function() {
-    project_manager.clearForm();
+    utils.clearForm();
     $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
     $(".project_list").fadeIn('2000').removeClass("hide");
     project_manager.getList();
@@ -105,18 +105,19 @@ $(document).ready(function() {
   };
   project_manager.retrieveProject = function(element) {
     //get project object from cache (PHP WS)
-    datacx.post("project/getItem", {"project_id": parseInt(element.attr("data-project-id"))}).then(function(reply) {
-      if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
-        return undefined;
-      } else {//success
-        toastr.success(reply.message);
-        project_manager.loadEditForm(reply);
-      }
-    });
+//    datacx.post("project/getItem", {"project_id": parseInt(element.attr("data-project-id"))}).then(function(reply) {
+//      if (reply === null || reply.result === 0) {//has an error
+//        toastr.error(reply.message);
+//        return undefined;
+//      } else {//success
+//        toastr.success(reply.message);
+//        project_manager.loadEditForm(reply);
+//      }
+//    });
+    utils.redirect("project/showForm?mode=edit&project_id="+parseInt(element.attr("data-project-id")));
   };
   project_manager.loadEditForm = function(dataWs) {
-    project_manager.clearForm();
+    utils.clearForm();
     $(".project_form input[name=\"project_id\"]").val(parseInt(dataWs.project.project_id));
     $(".project_form .add-new-p input[name=\"project_name\"]").val(dataWs.project.project_name);
     $(".project_form .add-new-p input[name=\"project_num\"]").val(dataWs.project.project_number);
@@ -135,13 +136,8 @@ $(document).ready(function() {
         return undefined;
       } else {//success
         toastr.success(reply.message);
-        utils.redirect("project");
+        utils.redirect("project/listAll");
       }
-    });
-  };
-  project_manager.clearForm = function() {
-    $(":checked, :text, textarea").each(function(i, data) {
-      $(this).val("");
     });
   };
 }(window.project_manager = window.project_manager || {}));

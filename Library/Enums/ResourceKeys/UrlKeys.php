@@ -22,7 +22,7 @@ class UrlKeys {
   /**
    * Absolute Urls
    */
-    const ResumeUrl = "ResumeUrl";
+    const Logout = "logout";
 }
 
 ?>

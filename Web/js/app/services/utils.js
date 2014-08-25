@@ -33,18 +33,19 @@
    * @returns {Boolean}
    */
   utils.checkLiElement = function(element, inputs_required) {
-   var result = false;
+    var result = false;
     for (var i = 0; i <= inputs_required.length; i++) {
       if (element.attr("name") === inputs_required[i]) {
         result = element.val() !== "" ? true : false;
-        if (!result) break;
+        if (!result)
+          break;
       } else {
         result = true;
       }
     }
     return result;
   };
-  
+
   /**
    * Check if a string is null or empty
    * 
@@ -52,9 +53,9 @@
    * @returns {Boolean}
    */
   utils.isNullOrEmpty = function(value) {
-    return value !== null || value !== "" ? false : true; 
+    return value !== null || value !== "" ? false : true;
   };
-  
+
   /**
    * Redirect to a given page
    * 
@@ -63,5 +64,14 @@
   utils.redirect = function(page) {
     document.location.replace(service_config.rootFolder + page);
   };
-  
+  /**
+   * Clear a form inputs (input text, input textarea, checkbox)
+   * 
+   */
+  utils.clearForm = function() {
+    $(":checked, :text, textarea").each(function(i, data) {
+      $(this).val("");
+    });
+  };
+
 }(window.utils = window.utils || {}));
