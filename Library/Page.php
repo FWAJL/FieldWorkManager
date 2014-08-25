@@ -44,11 +44,7 @@ class Page extends ApplicationComponent {
         require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::MenuTopTemplate;
         require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::BreadcrumbTemplate;
         require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::MenuLeftTemplate;
-      }
-
-      require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
-
-      if (!$this->app->router->isWsCall) {
+        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
         require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::FooterTemplate;
       }
     } else {
@@ -57,11 +53,7 @@ class Page extends ApplicationComponent {
        */
       if (!$this->app->router->isWsCall) {
         require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::HeaderTemplate;
-      }
-
-      require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
-
-      if (!$this->app->router->isWsCall) {
+        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
         require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::FooterTemplate;
       }
     }

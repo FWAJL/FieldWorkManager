@@ -66,9 +66,6 @@ class ProjectController extends \Library\BaseController {
 
     //Load Modules for view
     $this->page->addVar('form_modules', $this->app()->router()->selectedRoute()->phpModules());
-
-    //Get list of projects and store in session
-    $this->_GetAndStoreProjectsInSession($this, $rq);
   }
   /**
    * Method that loads the list all project view for controller
@@ -85,8 +82,14 @@ class ProjectController extends \Library\BaseController {
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
     $this->page->addVar('logout_url', __BASEURL__ . "logout");
 
-    //Get list of projects and store in session
-    $this->_GetAndStoreProjectsInSession($this, $rq);
+    //Get list of projects stored in session
+    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects)) {
+      $this->page->addVar('projects', $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects));
+    } else {
+      $lists = $ctrl->executeGetList($rq, TRUE);
+      $this->app()->user->setAttribute(\Library\Enums\SessionKeys::UserProjects, $lists["projects"]);
+      $this->page->addVar('projects', $lists["projects"]);
+    }
   }
 
   /**
