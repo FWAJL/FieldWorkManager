@@ -4,7 +4,7 @@ $(document).ready(function() {
     var post_data = facility_manager.retrieveInputs();
     if (post_data.facility_name !== undefined && post_data.facility_address !== undefined) {
       facility_manager.send("facility/add",post_data);
-      facility_manager.clearForm();
+      utils.clearForm.clearForm();
     }
   });
   $("#btn_delete_facility").click(function() {
@@ -14,7 +14,7 @@ $(document).ready(function() {
     var post_data = facility_manager.retrieveInputs();
     if (post_data.facility_name !== undefined) {
       facility_manager.send("facility/edit",post_data);
-      facility_manager.clearForm();
+      utils.clearForm.clearForm();
     }
   });
 
@@ -22,7 +22,7 @@ $(document).ready(function() {
     facility_manager.retrieveProject($(this));
   });
   $("#facility_add_left_menu").click(function() {
-    facility_manager.clearForm();
+    utils.clearForm.clearForm();
     $(".facility_welcome").fadeOut('2000').removeClass("active").removeClass("show");
     $(".form_sections").fadeIn('2000').removeClass("hide");
     $("#facility_add_left_menu").addClass("active");
@@ -58,7 +58,7 @@ $(document).ready(function() {
     });
   };
   facility_manager.loadEditForm = function(dataWs) {
-    facility_manager.clearForm();
+    utils.clearForm.clearForm();
     $(".facility_form input[name=\"facility_id\"]").val(parseInt(dataWs.facility.facility_id));
     $(".facility_form .add-new-p input[name=\"facility_name\"]").val(dataWs.facility.facility_name);
     $(".facility_form .add-new-p textarea[name=\"facility_address\"]").val(dataWs.facility.facility_address);
@@ -73,11 +73,6 @@ $(document).ready(function() {
         toastr.success(reply.message);
         utils.redirect("facility");
       }
-    });
-  };
-  facility_manager.clearForm = function() {
-    $(".facility_form input").each(function(i, data) {
-      $(this).val("");
     });
   };
 }(window.facility_manager = window.facility_manager || {}));
