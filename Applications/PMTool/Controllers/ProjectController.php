@@ -49,6 +49,7 @@ class ProjectController extends \Library\BaseController {
     //Get list of projects and store in session
     $this->_GetAndStoreProjectsInSession($this, $rq);
   }
+
   /**
    * Method that loads the add or edit view for controller
    * 
@@ -58,15 +59,18 @@ class ProjectController extends \Library\BaseController {
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $this->page->addVar('pm', $pm[0]);
 
+    $this->_FormModeSelection($rq);
+
     $resourceFileKey = "project";
 
     $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
-    $this->page->addVar('logout_url', __BASEURL__ . "logout");
+    $this->page->addVar('logout_url', __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::Logout);
 
     //Load Modules for view
     $this->page->addVar('form_modules', $this->app()->router()->selectedRoute()->phpModules());
   }
+
   /**
    * Method that loads the list all project view for controller
    * 
@@ -107,7 +111,7 @@ class ProjectController extends \Library\BaseController {
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $data_sent["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
-    $project = $this->PrepareUserObject($data_sent);
+    $project = $this->_PrepareUserObject($data_sent);
     $result["dataIn"] = $project;
     /* Add to DB */
     //Load interface to query the database
@@ -141,7 +145,7 @@ class ProjectController extends \Library\BaseController {
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $data_sent["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
-    $project = $this->PrepareUserObject($data_sent);
+    $project = $this->_PrepareUserObject($data_sent);
     $result["data"] = $project;
     /* Add to DB */
     //Load interface to query the database
@@ -197,7 +201,7 @@ class ProjectController extends \Library\BaseController {
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $data_sent["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
-    $project = $this->PrepareUserObject($data_sent);
+    $project = $this->_PrepareUserObject($data_sent);
     $result["data"] = $project;
     /* Get list from DB */
     //Load interface to query the database for projects
@@ -297,7 +301,7 @@ class ProjectController extends \Library\BaseController {
    * @param array $data_sent from POST request
    * @return \Library\BO\Project_manager
    */
-  private function PrepareUserObject($data_sent) {
+  private function _PrepareUserObject($data_sent) {
     $project = new \Library\BO\Project();
     $project->setPm_id($data_sent["pm_id"]);
     $project->setProject_id(!array_key_exists('project_id', $data_sent) ? NULL : $data_sent["project_id"]);
@@ -326,13 +330,62 @@ class ProjectController extends \Library\BaseController {
     }
   }
 
+  /**
+   * Checks if the user projects and facilities are not stored in Session.
+   * Stores the projects and facilities after call to WS to retrieve them
+   * Set the data into the session for later use.
+   * 
+   * @param /Applications/PMTool/Constroller/ProjectController $ctrl
+   * @param /Library/HttpRequest $rq
+   * @return array or NULL
+   */
   private function _GetAndStoreProjectsInSession($ctrl, $rq) {
     if (!$ctrl->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects) &&
             !$ctrl->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjectFacilityList)) {
       $lists = $ctrl->executeGetList($rq, TRUE);
       $ctrl->app()->user->setAttribute(\Library\Enums\SessionKeys::UserProjects, $lists["projects"]);
       $ctrl->app()->user->setAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList, $lists["facilities"]);
+      return;
+    } else {
+      $lists["projects"] = $ctrl->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
+      $lists["facilities"] = $ctrl->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
+      return $lists;
     }
+  }
+
+  private function _FormModeSelection(\Library\HttpRequest $rq) {
+    //Get the mode in GET
+    $mode = $rq->getExists(\Library\Enums\QueryStringKeys::EditionMode) ? $rq->getData("mode") : \Library\Enums\QueryStringKeys::EditionModeAdd;
+
+    //Logic for each mode
+    switch ($mode) {
+      case \Library\Enums\QueryStringKeys::EditionModeEdit:
+        $data["project"] = new \Library\BO\Project;
+        $data["facility"] = new \Library\BO\Facility;
+        //Get the project id
+        $project_id = $rq->getExists("project_id") ? intval($rq->getData("project_id")) : 0;
+        //Find the project in user's project
+        $lists = $this->_GetAndStoreProjectsInSession($this, $rq);
+        foreach ($lists["projects"] as $project) {
+          if ($project->project_id = $project_id) {
+            $data["project"] = $project;
+            break;
+          }
+        }
+        //Find the facility in user's facilities
+        foreach ($lists["facilities"] as $facility) {
+          if ($facility->project_id = $project_id) {
+            $data["facility"] = $facility;
+            break;
+          }
+        }
+        //Load data
+        $this->LoadDataIntoForms($data);
+        break;
+      default:
+        break;
+    }
+    $project_id = 0;
   }
 
 }

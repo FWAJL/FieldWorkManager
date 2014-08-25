@@ -136,4 +136,7 @@ abstract class BaseController extends ApplicationComponent {
     return $result;
   }
 
+  public function LoadDataIntoForms($data_found) {
+    $this->page->addVar("data_to_edit", $data_found);
+  }
 }

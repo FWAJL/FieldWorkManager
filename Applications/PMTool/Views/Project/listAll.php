@@ -12,7 +12,7 @@
             foreach ($projects as $project) {
               if ($project->active) {
                 echo "<option value=\"" . $project->project_name
-                . "\" data-project-id=\"" . $project->project_id . "\">"
+                . "\" data-project-id=\"" . $project->project_id . "\" class=\"select_project\">"
                 . $project->project_name . "</option>";
               }
             }
@@ -32,7 +32,7 @@
             foreach ($projects as $project) {
               if (!$project->active) {
                 echo "<option value=\"" . $project->project_name
-                . "\" data-project-id=\"" . $project->project_id . "\">"
+                . "\" data-project-id=\"" . $project->project_id . "\" class=\"select_project\">"
                 . $project->project_name . "</option>";
               }
             }
