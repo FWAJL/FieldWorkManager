@@ -21,6 +21,9 @@ $(document).ready(function() {
     project_manager.delete($(this));
   });//Delete a project
   
+  if(utils.getQueryVariable("mode") === "edit") {
+   project_manager.getItem(utils.getQueryVariable("project_id"));
+  }
   $(".select_project").click(function() {
     utils.clearForm();
     project_manager.retrieveProject($(this));
@@ -104,16 +107,6 @@ $(document).ready(function() {
     $("#project-data-inactive").html(inactive_projects);
   };
   project_manager.retrieveProject = function(element) {
-    //get project object from cache (PHP WS)
-//    datacx.post("project/getItem", {"project_id": parseInt(element.attr("data-project-id"))}).then(function(reply) {
-//      if (reply === null || reply.result === 0) {//has an error
-//        toastr.error(reply.message);
-//        return undefined;
-//      } else {//success
-//        toastr.success(reply.message);
-//        project_manager.loadEditForm(reply);
-//      }
-//    });
     utils.redirect("project/showForm?mode=edit&project_id="+parseInt(element.attr("data-project-id")));
   };
   project_manager.loadEditForm = function(dataWs) {
@@ -137,6 +130,19 @@ $(document).ready(function() {
       } else {//success
         toastr.success(reply.message);
         utils.redirect("project/listAll");
+      }
+    });
+  };
+  
+  project_manager.getItem = function(project_id) {
+    //get project object from cache (PHP WS)
+    datacx.post("project/getItem", {"project_id": project_id}).then(function(reply) {
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+        return undefined;
+      } else {//success
+        toastr.success(reply.message);
+        project_manager.loadEditForm(reply);
       }
     });
   };

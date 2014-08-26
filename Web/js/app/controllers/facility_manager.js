@@ -58,7 +58,6 @@ $(document).ready(function() {
     });
   };
   facility_manager.loadEditForm = function(dataWs) {
-    utils.clearForm();
     $(".facility_form input[name=\"facility_id\"]").val(parseInt(dataWs.facility.facility_id));
     $(".facility_form .add-new-p input[name=\"facility_name\"]").val(dataWs.facility.facility_name);
     $(".facility_form .add-new-p textarea[name=\"facility_address\"]").val(dataWs.facility.facility_address);
