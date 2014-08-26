@@ -4,6 +4,7 @@
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/ko.js"></script>
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/bootstrap.min.js"></script>  
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/addons/toastr.js"></script>  
+    <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/addons/jquery.parseParams.js"></script>  
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/app/services/config.js"></script>
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/app/services/dataservice.js"></script>
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/app/services/utils.js"></script>

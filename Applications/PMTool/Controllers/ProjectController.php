@@ -47,7 +47,7 @@ class ProjectController extends \Library\BaseController {
     $this->page->addVar('logout_url', __BASEURL__ . "logout");
 
     //Get list of projects and store in session
-    $this->_GetAndStoreProjectsInSession($this, $rq);
+    $this->_GetAndStoreProjectsInSession($rq);
   }
 
   /**
@@ -58,8 +58,6 @@ class ProjectController extends \Library\BaseController {
   public function executeShowForm(\Library\HttpRequest $rq) {
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $this->page->addVar('pm', $pm[0]);
-
-    $this->_FormModeSelection($rq);
 
     $resourceFileKey = "project";
 
@@ -87,13 +85,8 @@ class ProjectController extends \Library\BaseController {
     $this->page->addVar('logout_url', __BASEURL__ . "logout");
 
     //Get list of projects stored in session
-    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects)) {
-      $this->page->addVar('projects', $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects));
-    } else {
-      $lists = $ctrl->executeGetList($rq, TRUE);
-      $this->app()->user->setAttribute(\Library\Enums\SessionKeys::UserProjects, $lists["projects"]);
-      $this->page->addVar('projects', $lists["projects"]);
-    }
+    $this->_GetAndStoreProjectsInSession($rq);
+    $this->page->addVar('projects', $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects));
   }
 
   /**
@@ -206,11 +199,11 @@ class ProjectController extends \Library\BaseController {
     /* Get list from DB */
     //Load interface to query the database for projects
     $manager = $this->managers->getManagerOf('Project');
-    $list['projects'] = $manager->selectMany($project);
+    $list[\Library\Enums\SessionKeys::UserProjects] = $manager->selectMany($project);
 
     //Load interface to query the database for facilities
     $manager = $this->managers->getManagerOf('Facility');
-    $list['facilities'] = $manager->selectMany($project);
+    $list[\Library\Enums\SessionKeys::UserProjectFacilityList] = $manager->selectMany($project);
 
     //Process DB result and send result
     $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getlist", "step" => "success"));
@@ -237,10 +230,13 @@ class ProjectController extends \Library\BaseController {
 
     $project_selected = $this->_GetProjectFromSession($data_sent);
 
-    $facility = array();
     $facility_selected = $this->_GetFacilityProjectFromSession($data_sent);
 
-    $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getItem", "step" => "success"));
+    if ($project_selected !== NULL && $facility_selected !== NULL) {
+      $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getItem", "step" => "success")); 
+    } else {
+      $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getItem", "step" => "error"));
+    }
     $result["project"] = $project_selected;
     $result["facility"] = $facility_selected;
     //return the JSON data
@@ -256,7 +252,7 @@ class ProjectController extends \Library\BaseController {
     }
 
     foreach ($projects as $project) {
-      if ($project->project_id() === $data_sent["project_id"]) {
+      if (intval($project->project_id()) === intval($data_sent["project_id"])) {
         return $project;
       }
     }
@@ -272,7 +268,7 @@ class ProjectController extends \Library\BaseController {
     }
 
     foreach ($facilities as $facility) {
-      if ($facility->project_id() === $data_sent["project_id"]) {
+      if (intval($facility->project_id()) === intval($data_sent["project_id"])) {
         return $facility;
       }
     }
@@ -339,53 +335,23 @@ class ProjectController extends \Library\BaseController {
    * @param /Library/HttpRequest $rq
    * @return array or NULL
    */
-  private function _GetAndStoreProjectsInSession($ctrl, $rq) {
-    if (!$ctrl->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects) &&
-            !$ctrl->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjectFacilityList)) {
-      $lists = $ctrl->executeGetList($rq, TRUE);
-      $ctrl->app()->user->setAttribute(\Library\Enums\SessionKeys::UserProjects, $lists["projects"]);
-      $ctrl->app()->user->setAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList, $lists["facilities"]);
-      return;
+  private function _GetAndStoreProjectsInSession($rq) {
+    if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects) &&
+            !$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjectFacilityList)) {
+      $lists = $this->executeGetList($rq, TRUE);
+      $this->app()->user->setAttribute(
+          \Library\Enums\SessionKeys::UserProjects, $lists[\Library\Enums\SessionKeys::UserProjects]
+          );
+      $this->app()->user->setAttribute(
+          \Library\Enums\SessionKeys::UserProjectFacilityList, $lists[\Library\Enums\SessionKeys::UserProjectFacilityList]
+          );
+      return $lists;
     } else {
-      $lists["projects"] = $ctrl->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
-      $lists["facilities"] = $ctrl->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
+      $lists[\Library\Enums\SessionKeys::UserProjects] 
+          = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
+      $lists[\Library\Enums\SessionKeys::UserProjectFacilityList] 
+          = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
       return $lists;
     }
   }
-
-  private function _FormModeSelection(\Library\HttpRequest $rq) {
-    //Get the mode in GET
-    $mode = $rq->getExists(\Library\Enums\QueryStringKeys::EditionMode) ? $rq->getData("mode") : \Library\Enums\QueryStringKeys::EditionModeAdd;
-
-    //Logic for each mode
-    switch ($mode) {
-      case \Library\Enums\QueryStringKeys::EditionModeEdit:
-        $data["project"] = new \Library\BO\Project;
-        $data["facility"] = new \Library\BO\Facility;
-        //Get the project id
-        $project_id = $rq->getExists("project_id") ? intval($rq->getData("project_id")) : 0;
-        //Find the project in user's project
-        $lists = $this->_GetAndStoreProjectsInSession($this, $rq);
-        foreach ($lists["projects"] as $project) {
-          if ($project->project_id = $project_id) {
-            $data["project"] = $project;
-            break;
-          }
-        }
-        //Find the facility in user's facilities
-        foreach ($lists["facilities"] as $facility) {
-          if ($facility->project_id = $project_id) {
-            $data["facility"] = $facility;
-            break;
-          }
-        }
-        //Load data
-        $this->LoadDataIntoForms($data);
-        break;
-      default:
-        break;
-    }
-    $project_id = 0;
-  }
-
 }
