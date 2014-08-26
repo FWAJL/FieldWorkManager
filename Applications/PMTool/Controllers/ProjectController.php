@@ -278,10 +278,10 @@ class ProjectController extends \Library\BaseController {
   /**
    * Check if the current pm has projects to decide where to send him: stay on the project list or asking him to add a project
    * 
-   * @param \Library\BO\Project_manager $pm
+   * @param \Applications\PMTool\Models\Dao\Project_manager $pm
    * @return boolean
    */
-  private function _CheckIfPmHasProjects(\Library\BO\Project_manager $pm) {
+  private function _CheckIfPmHasProjects(\Applications\PMTool\Models\Dao\Project_manager $pm) {
     if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects)) {
       $projects = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
       return count($projects) > 0 ? TRUE : FALSE;
@@ -295,10 +295,10 @@ class ProjectController extends \Library\BaseController {
    * Prepare the Project Object before calling the DB.
    * 
    * @param array $data_sent from POST request
-   * @return \Library\BO\Project_manager
+   * @return \Applications\PMTool\Models\Dao\Project_manager
    */
   private function _PrepareUserObject($data_sent) {
-    $project = new \Library\BO\Project();
+    $project = new \Applications\PMTool\Models\Dao\Project();
     $project->setPm_id($data_sent["pm_id"]);
     $project->setProject_id(!array_key_exists('project_id', $data_sent) ? NULL : $data_sent["project_id"]);
     $project->setProject_name(!array_key_exists('project_name', $data_sent) ? NULL : $data_sent["project_name"]);

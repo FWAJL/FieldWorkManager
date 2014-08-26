@@ -3,6 +3,7 @@
   <define key="base_url" value="/FieldWorkAssistantMVC/" />
   <define key="DefaultLanguage" value="en" />
   <define key="RootImageFolderPath" value="Web/images/" />
+  <define key="DalFolderPath" value="\Applications\PMTool\Models\Dal\" />
   
   <!-- Security -->
   <define key="encryption_key" value="g496lJL683yFiDzju2K94f1751Lo7WSw" />

@@ -1,6 +1,6 @@
 <?php
 
-namespace Library\DAL\Models;
+namespace Applications\PMTool\Models\Dal;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
@@ -38,14 +38,14 @@ class FacilityManager_PDO extends \Library\DAL\BaseManager {
   /**
    * Returns list of facilitys for PM
    * 
-   * @param \Library\BO\Facility $facility
-   * @return array of \Library\BO\Facility
+   * @param \Applications\PMTool\Models\Dao\Facility $facility
+   * @return array of \Applications\PMTool\Models\Dao\Facility
    */
   public function selectMany($facility) {
     $sql = 'SELECT * FROM `facility` f inner join `project` p on f.project_id = p.project_id';
     $sql .= ' where p.`pm_id` = \'' . $facility->pm_id() . '\';'; //AND `active` = 1  AND `visible` = 1;';
     $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Library\BO\Facility');
+    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Facility');
 
     $facility_list = $query->fetchAll();
     $query->closeCursor();

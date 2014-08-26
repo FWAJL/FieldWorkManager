@@ -1,6 +1,6 @@
 <?php
 
-namespace Library\DAL\Models;
+namespace Applications\PMTool\Models\Dal;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
@@ -38,13 +38,13 @@ class ProjectManager_PDO extends \Library\DAL\BaseManager {
   /**
    * Returns list of projects for PM
    * 
-   * @param \Library\BO\Project $project
-   * @return array of \Library\BO\Project
+   * @param \Applications\PMTool\Models\Dao\Project $project
+   * @return array of \Applications\PMTool\Models\Dao\Project
    */
   public function selectMany($project) {
     $sql = 'SELECT * FROM project where `pm_id` = \'' . $project->pm_id() . '\';'; //AND `active` = 1  AND `visible` = 1;';
     $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Library\BO\Project');
+    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Project');
 
     $project_list = $query->fetchAll();
     $query->closeCursor();
