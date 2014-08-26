@@ -10,7 +10,7 @@
   </main_menu><!-- project -->
   <main_menu name="location" active="true">
     <links>
-      <header href="#" resourcekey="header_locations" />
+      <header href="location" resourcekey="header_locations" />
       <submenu id="location_list" resourcekey="location_list" active="true"/>
       <submenu id="location_add_button" resourcekey="location_add" active="true"/>
       <submenu id="location_upload_list_button" resourcekey="location_upload_list" active="true"/>

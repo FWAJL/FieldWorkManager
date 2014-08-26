@@ -3,7 +3,7 @@
 namespace Library\DAL;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-class PDOFactory extends \Library\BL\Core\ApplicationComponent {
+class PDOFactory extends \Library\ApplicationComponent {
 
   public static function getMysqlConnexion($currentApp) {
     $host = $currentApp->config()->get("Myslq_host");

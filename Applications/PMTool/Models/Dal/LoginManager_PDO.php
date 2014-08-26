@@ -1,6 +1,6 @@
 <?php
 
-namespace Library\DAL\Models;
+namespace Applications\PMTool\Models\Dal;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
@@ -22,7 +22,7 @@ class LoginManager_PDO extends \Library\DAL\BaseManager {
       return NULL;
     }
     $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Library\BO\Project_manager');
+    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Project_manager');
 
     $pm_out = $query->fetchAll();
     $query->closeCursor();

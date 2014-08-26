@@ -15,7 +15,7 @@ abstract class BaseController extends ApplicationComponent {
 
   public function __construct(Application $app, $module, $action) {
     parent::__construct($app);
-    $this->managers = new \Library\DAL\Managers('PDO', PDOFactory::getMysqlConnexion($app));
+    $this->managers = new \Library\DAL\Managers('PDO', $app);
     $this->page = new Page($app);
 
     $this->setModule($module);
@@ -92,7 +92,7 @@ abstract class BaseController extends ApplicationComponent {
    * 
    * @param string $resxKey
    * @param string $step
-   * @param \Library\BO\Project_manager $user
+   * @param \Applications\PMTool\Models\Dao\Project_manager $user
    * @return aeeay
    */
   public function ManageResponseWS($params = array("resx_file" => "ws_defaults", "resx_key" => "", "step" => "error")) {
@@ -118,7 +118,7 @@ abstract class BaseController extends ApplicationComponent {
    * 
    * @param string $resxKey
    * @param string $step
-   * @param \Library\BO\Project_manager $user
+   * @param \Applications\PMTool\Models\Dao\Project_manager $user
    * @return aeeay
    */
   public function UpdateResponseWS($result, $params) {

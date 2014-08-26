@@ -99,12 +99,12 @@ class AuthenticateController extends \Library\BaseController {
    * Prepare the User Object before calling the DB.
    * 
    * @param array $data_sent from POST request
-   * @return \Library\BO\Project_manager
+   * @return \Applications\PMTool\Models\Dao\Project_manager
    */
   private function PrepareUserObject($data_sent) {
     $protect = new \Library\BL\Core\Encryption();
 
-    $user = new \Library\BO\Project_manager();
+    $user = new \Applications\PMTool\Models\Dao\Project_manager();
     $user->setPm_email($data_sent["email"]);
     $user->setUsername($data_sent["username"]);
     if (!isset($data_sent["encrypt_pwd"])) {

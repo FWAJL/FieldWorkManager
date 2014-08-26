@@ -176,10 +176,10 @@ class FacilityController extends \Library\BaseController {
    * Prepare the Facility Object before calling the DB.
    * 
    * @param array $data_sent from POST request
-   * @return \Library\BO\Facility
+   * @return \Applications\PMTool\Models\Dao\Facility
    */
   private function PrepareUserObject($data_sent) {
-    $facility = new \Library\BO\Facility();
+    $facility = new \Applications\PMTool\Models\Dao\Facility();
     foreach ($data_sent as $key => $value) {
       $method = "set" .ucfirst($key);
       $facility->$method(!array_key_exists($key, $data_sent) ? NULL : $value);
