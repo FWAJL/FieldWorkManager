@@ -51,6 +51,7 @@ class Breadcrumb {
     $breadcrumbs = $this->_LoadXml();
     foreach ($breadcrumbs as $breadcrumb) {
       if ($breadcrumb->getAttribute("href") === $this->url) {
+        
         $out = $this->_AddLevels($breadcrumb);
       }
     }
