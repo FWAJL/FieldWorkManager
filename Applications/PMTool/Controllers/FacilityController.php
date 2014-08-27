@@ -117,7 +117,7 @@ class FacilityController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq
    * @return JSON
    */
-  public function executeGetList(\Library\HttpRequest $rq, $isNotWs = FALSE) {
+  public function executeGetList(\Library\HttpRequest $rq, $isNotAjaxCall = FALSE) {
     // Init result
     $result = $this->ManageResponseWS();
 
@@ -135,7 +135,7 @@ class FacilityController extends \Library\BaseController {
     $result = $this->ManageResponseWS(array("resx_file" => "facility", "resx_key" => "_getlist", "step" => "success"));
     $result["projects"] = $project_list;
     //return the JSON data
-    if ($isNotWs) {
+    if ($isNotAjaxCall) {
       return $project_list;
     } else {
       echo \Library\HttpResponse::encodeJson($result);

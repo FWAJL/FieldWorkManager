@@ -74,6 +74,12 @@
     });
   };
   
+  /**
+   * Retrieve the value associated to a query string key
+   * 
+   * @param {string} variable Query string key
+   * @returns {unresolved|Boolean}
+   */
   utils.getQueryVariable = function (variable)
   {
     var query = window.location.search.substring(1);//remove "?"
