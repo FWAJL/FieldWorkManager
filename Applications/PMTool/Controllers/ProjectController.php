@@ -187,7 +187,7 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq
    * @return JSON
    */
-  public function executeGetList(\Library\HttpRequest $rq, $isNotWs = FALSE) {
+  public function executeGetList(\Library\HttpRequest $rq, $isNotAjaxCall = FALSE) {
     // Init result
     $result = $this->ManageResponseWS();
 
@@ -209,7 +209,7 @@ class ProjectController extends \Library\BaseController {
     $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getlist", "step" => "success"));
     $result["lists"] = $list;
     //return the JSON data
-    if ($isNotWs) {
+    if ($isNotAjaxCall) {
       return $list;
     } else {
       echo \Library\HttpResponse::encodeJson($result);

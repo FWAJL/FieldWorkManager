@@ -4,7 +4,7 @@ Projects
   |->List All
   |->Add
   |->Edit
-        |
-        |->Locations
-              |
-              |->
+      |
+      |->Locations
+          |
+          |->

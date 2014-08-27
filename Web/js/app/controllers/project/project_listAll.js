@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $(".select_project").click(function() {
+  $(".select_item").click(function() {
     project_manager.clearForm();
     project_manager.retrieveProject($(this));
   });//Select a project
