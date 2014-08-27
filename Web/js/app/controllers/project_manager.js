@@ -22,6 +22,10 @@ $(document).ready(function() {
   });//Delete a project
   
   if(utils.getQueryVariable("mode") === "edit") {
+   $(".form_sections").fadeIn('2000').addClass("show").removeClass("hide");
+   $(".welcome").fadeOut('2000').removeClass("show").addClass("hide");
+   $(".project_add").hide();
+   $(".project_edit").show().removeClass("hide");
    project_manager.getItem(utils.getQueryVariable("project_id"));
   }
   $(".select_project").click(function() {
@@ -116,10 +120,6 @@ $(document).ready(function() {
     $(".project_form .add-new-p input[name=\"project_num\"]").val(dataWs.project.project_number);
     $(".project_form .add-new-p input[name=\"project_desc\"]").val(dataWs.project.project_desc);
     facility_manager.loadEditForm(dataWs);
-    $(".form_sections").fadeIn('2000').addClass("show").removeClass("hide");
-    $(".welcome").fadeOut('2000').removeClass("show").addClass("hide");
-    $(".project_add").hide();
-    $(".project_edit").show().removeClass("hide");
   };
   project_manager.delete = function() {
     //get project object from cache (PHP WS)

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
+  <!-- These resources are used for the AJAX calls to set the response message -->
   <resource key="message_error_insert">Error inserting the facility. Check logs.</resource>
   <resource key="message_success_insert">The facility has been inserted.</resource>
   <resource key="message_error_getlist">Error reading the facilities. Check logs.</resource>
@@ -9,19 +10,5 @@
   <resource key="message_error_edit">Error editing the facility. Check logs.</resource>
   <resource key="message_success_edit">The facility has been edited.</resource>
   <resource key="message_error_delete">Error deleting the facility. Check logs.</resource>
-  <resource key="message_success_delete">The facility has been deleted.</resource>
-
-  <resource key="facility_legend">The facility</resource>
-  <resource key="facility_name">Facility Name</resource>
-  <resource key="facility_address">Facility Address</resource>
-  <resource key="facility_lat">Facility Latitude</resource>
-  <resource key="facility_long">Facility Longitude</resource>
-  <resource key="facility_contact_name">Facility - Contact Name</resource>
-  <resource key="facility_contact_phone">Facility - Contact Phone (Mobile)</resource>
-  <resource key="facility_contact_email">Facility - Contact Email</resource>
-  <resource key="facility_id_number">Facility ID Number</resource>
-  <resource key="facility_sector">Facility - Sector</resource>
-  <resource key="facility_sic_code">Facility - SIC Code</resource>
-  <resource key="facility_boundary">Facility - Boundary</resource>
-  
+  <resource key="message_success_delete">The facility has been deleted.</resource>  
 </resources>
