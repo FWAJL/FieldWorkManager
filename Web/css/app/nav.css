@@ -34,14 +34,14 @@ a, a:hover {text-decoration: none; cursor: pointer;}
   padding: 0;
 }
 .content_left li:hover, .active_menu{
-  border-right: solid 4px #f67f21; 
+  border-right: solid 4px #F39814; 
   background-color: #ffd;
 }
 .content_left li:hover > ul li:hover
 {
-  border-bottom: solid 1px #f67f21; 
-  border-top: solid 1px #f67f21; 
-  border-left: solid 1px #f67f21; 
+  border-bottom: solid 1px #F39814; 
+  border-top: solid 1px #F39814; 
+  border-left: solid 1px #F39814; 
 }
 .content_left li:hover > ul li:hover a {
  display: block;

@@ -8,9 +8,11 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/core/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/addons/toastr.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/addons/jquery.contextMenu.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
 
     <?php echo $this->app->globalResources["css_files"]; ?>
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/jquery.js"></script>
+    <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
     <?php echo $this->app->globalResources["js_files_head"]; ?>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

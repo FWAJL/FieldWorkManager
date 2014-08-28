@@ -7,17 +7,19 @@
       <div class="row">
         <section class="col-lg-5 col-md-5">
           <h4><?php echo $resx["h3_projects_active"]; ?></h4>
-          <select multiple id="project-data-active" class="form-control">
+          <section class="list-panel">
+            <ul id="active-list" class="connectedSortable">
             <?php
             foreach ($projects as $project) {
               if ($project->active) {
-                echo "<option value=\"" . $project->project_name
-                . "\" data-project-id=\"" . $project->project_id . "\" class=\"select_item\">"
-                . $project->project_name . "</option>";
+                echo "<li data-projet-name=\"" . $project->project_name
+                . "\" data-project-id=\"" . $project->project_id . "\" class=\"select_item ui-widget-content\">"
+                . $project->project_name . "</li>";
               }
             }
-            ?>
-          </select>
+            ?>              
+            </ul>
+          </section>
         </section>
         <section class="col-lg-2 col-md-2">
           <!-- Button to move from active to inactive -->
@@ -27,17 +29,19 @@
         </section>
         <section class="col-lg-5 col-md-5">
           <h4><?php echo $resx["h3_projects_inactive"]; ?></h4>
-          <select multiple id="project-data-inactive" class="form-control">
+          <section class="list-panel">
+            <ul id="inactive-list" class="connectedSortable">
             <?php
             foreach ($projects as $project) {
               if (!$project->active) {
-                echo "<option value=\"" . $project->project_name
-                . "\" data-project-id=\"" . $project->project_id . "\" class=\"select_item\">"
-                . $project->project_name . "</option>";
+                echo "<li data-projet-name=\"" . $project->project_name
+                . "\" data-project-id=\"" . $project->project_id . "\" class=\"select_item ui-widget-content\">"
+                . $project->project_name . "</li>";
               }
             }
-            ?>
-          </select>
+            ?>              
+            </ul>
+          </section>
         </section>
       </div>
     </div>
