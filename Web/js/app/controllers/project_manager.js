@@ -3,20 +3,76 @@
  */
 $(document).ready(function() {
   $.contextMenu({
-        selector: '.select_item', 
-        callback: function(key, options) {
-            if (key === "edit") {
-              project_manager.retrieveProject(options.$trigger);
-            } else if (key === "delete") {
-              project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
-            }
-        },
-        items: {
-            "edit": {name: "Edit", icon: "edit"},
-            "delete": {name: "Delete", icon: "delete"}
-        }
-    });//Manages the context menu
- 
+    selector: '.select_item',
+    callback: function(key, options) {
+      if (key === "edit") {
+        project_manager.retrieveProject(options.$trigger);
+      } else if (key === "delete") {
+        project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
+      }
+    },
+    items: {
+      "edit": {name: "Edit", icon: "edit"},
+      "delete": {name: "Delete", icon: "delete"}
+    }
+  });//Manages the context menu
+
+  //************************************************//
+
+  var selectedClass = 'ui-state-highlight',
+          clickDelay = 600,
+          // click time (milliseconds)
+          lastClick, diffClick; // timestamps
+
+  $("#inactive-list li")
+          // Script to deferentiate a click from a mousedown for drag event
+          .bind('mousedown mouseup', function(e) {
+    if (e.type == "mousedown") {
+      lastClick = e.timeStamp; // get mousedown time
+    } else {
+      diffClick = e.timeStamp - lastClick;
+      if (diffClick < clickDelay) {
+        // add selected class to group draggable objects
+        $(this).toggleClass(selectedClass);
+      }
+    }
+  })
+          .draggable({
+    revertDuration: 10,
+    // grouped items animate separately, so leave this number low
+    containment: '.list-panel',
+    start: function(e, ui) {
+      ui.helper.addClass(selectedClass);
+    },
+    stop: function(e, ui) {
+      // reset group positions
+      $('.' + selectedClass).css({
+        top: 0,
+        left: 0
+      });
+    },
+    drag: function(e, ui) {
+      // set selected group position to main dragged object
+      // this works because the position is relative to the starting position
+      $('.' + selectedClass).css({
+        top: ui.position.top,
+        left: ui.position.left
+      });
+    }
+  });
+
+  $("#inactive-list, #active-list").sortable().droppable({
+    drop: function(e, ui) {
+      $('.' + selectedClass).appendTo($(this)).add(ui.draggable) // ui.draggable is appended by the script, so add it after
+              .removeClass(selectedClass).css({
+        top: 0,
+        left: 0
+      });
+    }
+  });
+  //************************************************//
+
+
   $("#btn_add_project").click(function() {
     var post_data = {};
     post_data["project"] = utils.retrieveInputs("project_form", ["project_name"]);
@@ -46,10 +102,15 @@ $(document).ready(function() {
     $(".project_edit").show().removeClass("hide");
     project_manager.getItem(utils.getQueryVariable("project_id"));
   }//Load project
-  
-  var alreadyHovered = false;  
+
+  if (utils.getQueryVariable("mode") === "add" && utils.getQueryVariable("test") === "true") {
+    project_manager.fillFormWithRandomData();
+  }
+
+  var alreadyHovered = false;
   $(".select_item").hover(function() {
-    if (!alreadyHovered) toastr.info("Right-click to edit!");
+    if (!alreadyHovered)
+      toastr.info("Right-click to edit!");
     alreadyHovered = true;
   });//Show a project tip
 
@@ -165,4 +226,15 @@ $(document).ready(function() {
       }
     });
   };
+
+  project_manager.fillFormWithRandomData = function() {
+    utils.clearForm();
+    var number = Math.floor((Math.random() * 100) + 1);
+    $(".project_form input[name=\"project_name\"]").val("Project " + number);
+    $(".project_form .add-new-p input[name=\"project_num\"]").val("n-" + number);
+    $(".project_form .add-new-p input[name=\"project_desc\"]").val("Description " + number);
+    $(".facility_form .add-new-p input[name=\"facility_name\"]").val("Facility " + number);
+    $(".facility_form .add-new-p textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
+  };
+
 }(window.project_manager = window.project_manager || {}));

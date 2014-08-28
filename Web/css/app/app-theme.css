@@ -19,7 +19,7 @@
   padding: 0;
   margin: 0 10px;
   text-indent: 10px;
-  
+
   border: solid 1px #999;
 }
 
@@ -52,10 +52,13 @@
 
 .select_item {
   padding: 5px;
+  margin-bottom: 1px;
+  border-bottom: 1px solid #999;
 }
 
 .select_item:hover,.select_item:focus {
-  background-color: aliceblue;
+  border-right: solid 4px #F39814; 
+  background-color: #ffd;
   padding: 5px;
 }
 
@@ -63,3 +66,6 @@
   padding-left: 10px;
   color: #333;
 } 
+
+#active-list .ui-selecting, #inactive-list .ui-selecting { background: #FECA40; }
+#active-list .ui-selected, #inactive-list .ui-selected { background: #F39814; color: white; }

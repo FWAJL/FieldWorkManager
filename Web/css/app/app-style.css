@@ -88,6 +88,13 @@ li #pm_name{
 .show{display: block;}
 .hide{display: none;}
 
+.list-panel{
+  min-height: 200px;
+  max-height: 250px;
+  border: 1px solid #999;
+  overflow-y: scroll;
+}
+
 /* FACILITY */
 textarea { resize: vertical;}
 
