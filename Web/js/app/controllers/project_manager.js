@@ -20,13 +20,14 @@ $(document).ready(function() {
 
   //************************************************//
   // Selection of projects
-  var project_ids = [];
+  var project_ids = "";
   $("#active-list, #inactive-list").selectable({
     stop: function() {
-      var tmpSelection = [];
+      var tmpSelection = "";
       $(".ui-selected", this).each(function() {
-        tmpSelection.push($(this).attr("data-project-id"));
+        tmpSelection += $(this).attr("data-project-id") + ",";
       });
+      tmpSelection = utils.removeLastChar(tmpSelection);
       toastr.info(tmpSelection);
       if (tmpSelection.length > 0) {
         //Show the button to appropriate button
@@ -39,10 +40,10 @@ $(document).ready(function() {
     }
   });
   $(".to-inactive-list").click(function() {
-    project_manager.updateProjects(project_ids);
+    project_manager.updateProjects("inactive",project_ids);
   });
   $(".to-active-list").click(function() {
-    project_manager.updateProjects(project_ids);
+    project_manager.updateProjects("active",project_ids);
   });
   //************************************************//
 
@@ -211,14 +212,14 @@ $(document).ready(function() {
     $(".facility_form .add-new-p textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
   };
   
-  project_manager.updateProjects = function(arrayId) {
-    datacx.post("project/updateItems", {"project_ids": arrayId}).then(function(reply) {
+  project_manager.updateProjects = function(action, arrayId) {
+    datacx.post("project/updateItems", {"action": action, "project_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
         return undefined;
       } else {//success
         toastr.success(reply.message);
-        //Remove projects from list
+        utils.redirect("project/listAll");
      }
     });
   };

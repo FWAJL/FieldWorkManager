@@ -136,7 +136,26 @@ abstract class BaseController extends ApplicationComponent {
     return $result;
   }
 
-  public function LoadDataIntoForms($data_found) {
-    $this->page->addVar("data_to_edit", $data_found);
+  /**
+   * Convert a csv string to array type
+   * 
+   * @param string $strInput
+   * @return array
+   */
+  public function FindObjectsFromIds($array_ids, $array_objects) {
+    //TODO: use LINQ helper to loop array more efficiently
+    $matchedElements = array();
+    foreach ($array_objects as $object) {
+      foreach ($array_ids as $id) {
+        if($object->project_id() === $id) {
+          array_push($matchedElements, $object);
+          break;
+        }
+      }
+    }
+    return $matchedElements;
   }
+  
+  
+  
 }
