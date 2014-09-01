@@ -2,6 +2,7 @@
  * jQuery listeners for the project actions
  */
 $(document).ready(function() {
+  $(".to-active-list, .to-inactive-list").hide();
   $.contextMenu({
     selector: '.select_item',
     callback: function(key, options) {
@@ -18,57 +19,30 @@ $(document).ready(function() {
   });//Manages the context menu
 
   //************************************************//
-
-  var selectedClass = 'ui-state-highlight',
-          clickDelay = 600,
-          // click time (milliseconds)
-          lastClick, diffClick; // timestamps
-
-  $("#inactive-list li")
-          // Script to deferentiate a click from a mousedown for drag event
-          .bind('mousedown mouseup', function(e) {
-    if (e.type == "mousedown") {
-      lastClick = e.timeStamp; // get mousedown time
-    } else {
-      diffClick = e.timeStamp - lastClick;
-      if (diffClick < clickDelay) {
-        // add selected class to group draggable objects
-        $(this).toggleClass(selectedClass);
+  // Selection of projects
+  var project_ids = [];
+  $("#active-list, #inactive-list").selectable({
+    stop: function() {
+      var tmpSelection = [];
+      $(".ui-selected", this).each(function() {
+        tmpSelection.push($(this).attr("data-project-id"));
+      });
+      toastr.info(tmpSelection);
+      if (tmpSelection.length > 0) {
+        //Show the button to appropriate button
+        project_ids = tmpSelection;
+        $(".to-"+$(this).attr("id")).show();
+      } else {
+        project_ids = [];
+        $(".to-"+$(this).attr("id")).hide();
       }
     }
-  })
-          .draggable({
-    revertDuration: 10,
-    // grouped items animate separately, so leave this number low
-    containment: '.list-panel',
-    start: function(e, ui) {
-      ui.helper.addClass(selectedClass);
-    },
-    stop: function(e, ui) {
-      // reset group positions
-      $('.' + selectedClass).css({
-        top: 0,
-        left: 0
-      });
-    },
-    drag: function(e, ui) {
-      // set selected group position to main dragged object
-      // this works because the position is relative to the starting position
-      $('.' + selectedClass).css({
-        top: ui.position.top,
-        left: ui.position.left
-      });
-    }
   });
-
-  $("#inactive-list, #active-list").sortable().droppable({
-    drop: function(e, ui) {
-      $('.' + selectedClass).appendTo($(this)).add(ui.draggable) // ui.draggable is appended by the script, so add it after
-              .removeClass(selectedClass).css({
-        top: 0,
-        left: 0
-      });
-    }
+  $(".to-inactive-list").click(function() {
+    project_manager.updateProjects(project_ids);
+  });
+  $(".to-active-list").click(function() {
+    project_manager.updateProjects(project_ids);
   });
   //************************************************//
 
@@ -235,6 +209,18 @@ $(document).ready(function() {
     $(".project_form .add-new-p input[name=\"project_desc\"]").val("Description " + number);
     $(".facility_form .add-new-p input[name=\"facility_name\"]").val("Facility " + number);
     $(".facility_form .add-new-p textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
+  };
+  
+  project_manager.updateProjects = function(arrayId) {
+    datacx.post("project/updateItems", {"project_ids": arrayId}).then(function(reply) {
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+        return undefined;
+      } else {//success
+        toastr.success(reply.message);
+        //Remove projects from list
+     }
+    });
   };
 
 }(window.project_manager = window.project_manager || {}));

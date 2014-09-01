@@ -77,6 +77,7 @@
   <route url="project/delete" module="Project" action="delete" type="ws" />
   <route url="project/getlist" module="Project" action="getList" type="ws" />
   <route url="project/getItem" module="Project" action="getItem" type="ws" />
+  <route url="project/updateItems" module="Project" action="updateItems" type="ws" />
   <route url="facility/add" module="Facility" action="add" type="ws" />
   <route url="facility/edit" module="Facility" action="edit" type="ws" />
   <route url="facility/delete" module="Facility" action="delete" type="ws" />
