@@ -80,8 +80,7 @@
    * @param {string} variable Query string key
    * @returns {unresolved|Boolean}
    */
-  utils.getQueryVariable = function (variable)
-  {
+  utils.getQueryVariable = function (variable) {
     var query = window.location.search.substring(1);//remove "?"
     var vars = query.split("&");
     for (var i=0;i<vars.length;i++) {
@@ -89,5 +88,14 @@
             if(pair[0] === variable){return pair[1];}
     }
     return(false);
+  };
+  /**
+   * Remove the last character in a string
+   * 
+   * @param {string} targetStr
+   * @returns {@exp;targetStr@call;substring}
+   */
+  utils.removeLastChar = function(targetStr) {
+    return targetStr.substring(0, targetStr.length - 1);
   };
 }(window.utils = window.utils || {}));

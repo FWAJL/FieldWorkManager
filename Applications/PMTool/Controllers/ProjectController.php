@@ -258,12 +258,22 @@ class ProjectController extends \Library\BaseController {
     $result = $this->ManageResponseWS();
 
     $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
-
-    //Get the project objects from ids received
-    //Update the project objects in DB and get result (number of rows affected)
+    
+    $activate  = $data_sent["action"] === "active" ? TRUE : FALSE;
+    $project_ids = str_getcsv($data_sent["project_ids"],',');
+    $projects = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
     $rows_affected = 0;
+    //Get the project objects from ids received
+    $matchedElements = $this->FindObjectsFromIds($project_ids, $projects);
+    
+    //Update the project objects in DB and get result (number of rows affected)
+    foreach ($matchedElements as $project) {
+      $project->setActive($activate);
+      $manager = $this->managers->getManagerOf('Project');
+      $rows_affected += $manager->edit($project) ? 1 : 0;
+    }
 
-    if ($rows_affected === count($data_sent["project_ids"])) {
+    if ($rows_affected === count($project_ids)) {
       $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getItem", "step" => "success"));
     } else {
       $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getItem", "step" => "error"));
