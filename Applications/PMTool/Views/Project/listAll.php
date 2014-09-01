@@ -5,44 +5,43 @@
     <h3><?php echo $resx["project_list_all_header"]; ?></h3>
     <div class="content-container container-fluid">
       <div class="row">
-        <section class="col-lg-5 col-md-5">
-          <h4><?php echo $resx["h3_projects_active"]; ?></h4>
-          <section class="list-panel">
-            <ul id="active-list" class="connectedSortable">
-            <?php
-            foreach ($projects as $project) {
-              if ($project->active) {
-                echo "<li data-projet-name=\"" . $project->project_name
-                . "\" data-project-id=\"" . $project->project_id . "\" class=\"select_item ui-widget-content\">"
-                . $project->project_name . "</li>";
-              }
+        <h4 class="col-lg-5 col-md-5"><?php echo $resx["h3_projects_active"]; ?></h4>
+        <span class="col-lg-2 col-md-2"></span>
+        <h4 class="col-lg-5 col-md-5"><?php echo $resx["h3_projects_inactive"]; ?></h4>
+      </div>
+      <div class="row">
+        <ol id="active-list" class="list-panel col-lg-5 col-md-5">
+          <?php
+          foreach ($projects as $project) {
+            if ($project->active) {
+              echo "<li data-project-id=\"" . $project->project_id . "\" class=\"select_item ui-widget-content\">"
+                  . $project->project_name 
+                  . "</li>";
             }
-            ?>              
-            </ul>
-          </section>
-        </section>
+          }
+          ?>              
+        </ol>
         <section class="col-lg-2 col-md-2">
           <!-- Button to move from active to inactive -->
-          <!--<button type="button" value=""/>-->
+          <input type="button" value="<?php echo $resx["btn_to_inactive_list"]; ?>" class="btn-primary to-active-list">
+
+          </input>
           <!-- Button to move from active to inactive -->
-          <!--<button type="button" value=""/>-->
+          <input type="button" value="<?php echo $resx["btn_to_active_list"]; ?>"  class="btn-primary to-inactive-list">
+
+          </input>
         </section>
-        <section class="col-lg-5 col-md-5">
-          <h4><?php echo $resx["h3_projects_inactive"]; ?></h4>
-          <section class="list-panel">
-            <ul id="inactive-list" class="connectedSortable">
-            <?php
-            foreach ($projects as $project) {
-              if (!$project->active) {
-                echo "<li data-projet-name=\"" . $project->project_name
-                . "\" data-project-id=\"" . $project->project_id . "\" class=\"select_item ui-widget-content\">"
-                . $project->project_name . "</li>";
-              }
+        <ol id="inactive-list" class="list-panel col-lg-5 col-md-5">
+          <?php
+          foreach ($projects as $project) {
+            if (!$project->active) {
+              echo "<li data-project-id=\"" . $project->project_id . "\" class=\"select_item ui-widget-content\">"
+                  . $project->project_name 
+                  . "</li>";
             }
-            ?>              
-            </ul>
-          </section>
-        </section>
+          }
+          ?>              
+        </ol>
       </div>
     </div>
   </section>

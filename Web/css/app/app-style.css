@@ -89,8 +89,7 @@ li #pm_name{
 .hide{display: none;}
 
 .list-panel{
-  min-height: 200px;
-  max-height: 250px;
+  height: 250px;
   border: 1px solid #999;
   overflow-y: scroll;
 }

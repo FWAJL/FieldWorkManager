@@ -153,7 +153,11 @@ class ProjectController extends \Library\BaseController {
     if ($result_insert)
       $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_edit", "step" => "success"));
     //return the JSON data
-    echo \Library\HttpResponse::encodeJson($result);
+    if ($isNotAjaxCall) {
+      return NULL;
+    } else {
+      echo \Library\HttpResponse::encodeJson($result);
+    }
   }
 
   /**
@@ -182,7 +186,7 @@ class ProjectController extends \Library\BaseController {
   }
 
   /**
-   * Method that adds a project and returns the result of operation
+   * Method that gets a list of projects and returns the result of operation with the list
    * 
    * @param \Library\HttpRequest $rq
    * @return JSON
@@ -217,7 +221,7 @@ class ProjectController extends \Library\BaseController {
   }
 
   /**
-   * Method that adds a project and returns the result of operation
+   * Method that get a project and returns the result of operation
    * 
    * @param \Library\HttpRequest $rq
    * @return JSON
@@ -233,12 +237,37 @@ class ProjectController extends \Library\BaseController {
     $facility_selected = $this->_GetFacilityProjectFromSession($data_sent);
 
     if ($project_selected !== NULL && $facility_selected !== NULL) {
-      $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getItem", "step" => "success")); 
+      $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getItem", "step" => "success"));
     } else {
       $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getItem", "step" => "error"));
     }
     $result["project"] = $project_selected;
     $result["facility"] = $facility_selected;
+    //return the JSON data
+    return $result;
+  }
+
+  /**
+   * Method that get a project and returns the result of operation
+   * 
+   * @param \Library\HttpRequest $rq
+   * @return JSON
+   */
+  public function executeUpdateItems(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->ManageResponseWS();
+
+    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
+
+    //Get the project objects from ids received
+    //Update the project objects in DB and get result (number of rows affected)
+    $rows_affected = 0;
+
+    if ($rows_affected === count($data_sent["project_ids"])) {
+      $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getItem", "step" => "success"));
+    } else {
+      $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getItem", "step" => "error"));
+    }
     //return the JSON data
     return $result;
   }
@@ -337,21 +366,20 @@ class ProjectController extends \Library\BaseController {
    */
   private function _GetAndStoreProjectsInSession($rq) {
     if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects) &&
-            !$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjectFacilityList)) {
+        !$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjectFacilityList)) {
       $lists = $this->executeGetList($rq, TRUE);
       $this->app()->user->setAttribute(
           \Library\Enums\SessionKeys::UserProjects, $lists[\Library\Enums\SessionKeys::UserProjects]
-          );
+      );
       $this->app()->user->setAttribute(
           \Library\Enums\SessionKeys::UserProjectFacilityList, $lists[\Library\Enums\SessionKeys::UserProjectFacilityList]
-          );
+      );
       return $lists;
     } else {
-      $lists[\Library\Enums\SessionKeys::UserProjects] 
-          = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
-      $lists[\Library\Enums\SessionKeys::UserProjectFacilityList] 
-          = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
+      $lists[\Library\Enums\SessionKeys::UserProjects] = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
+      $lists[\Library\Enums\SessionKeys::UserProjectFacilityList] = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
       return $lists;
     }
   }
+
 }
