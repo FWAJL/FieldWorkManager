@@ -2,7 +2,7 @@
  * jQuery listeners for the project actions
  */
 $(document).ready(function() {
-  $(".to-active-list, .to-inactive-list").hide();
+  $(".btn-primary").hide();
   $.contextMenu({
     selector: '.select_item',
     callback: function(key, options) {
@@ -30,20 +30,20 @@ $(document).ready(function() {
       tmpSelection = utils.removeLastChar(tmpSelection);
       toastr.info(tmpSelection);
       if (tmpSelection.length > 0) {
-        //Show the button to appropriate button
         project_ids = tmpSelection;
-        $(".to-"+$(this).attr("id")).show();
+        //Show the button to appropriate button
+        $(".from-"+$(this).attr("id")).show();
       } else {
         project_ids = [];
-        $(".to-"+$(this).attr("id")).hide();
+        $(".from-"+$(this).attr("id")).hide();
       }
     }
   });
-  $(".to-inactive-list").click(function() {
-    project_manager.updateProjects("inactive",project_ids);
-  });
-  $(".to-active-list").click(function() {
+  $(".from-inactive-list").click(function() {
     project_manager.updateProjects("active",project_ids);
+  });
+  $(".from-active-list").click(function() {
+    project_manager.updateProjects("inactive",project_ids);
   });
   //************************************************//
 

@@ -23,11 +23,11 @@
         </ol>
         <section class="col-lg-2 col-md-2">
           <!-- Button to move from active to inactive -->
-          <input type="button" value="<?php echo $resx["btn_to_inactive_list"]; ?>" class="btn-primary to-active-list">
+          <input type="button" value="<?php echo $resx["btn_to_inactive_list"]; ?>" class="btn-primary from-active-list">
 
           </input>
           <!-- Button to move from active to inactive -->
-          <input type="button" value="<?php echo $resx["btn_to_active_list"]; ?>"  class="btn-primary to-inactive-list">
+          <input type="button" value="<?php echo $resx["btn_to_active_list"]; ?>"  class="btn-primary from-inactive-list">
 
           </input>
         </section>
