@@ -2,7 +2,7 @@
  * jQuery listeners for the project actions
  */
 $(document).ready(function() {
-  $(".btn-primary").hide();
+  $(".btn-warning").hide();
   $.contextMenu({
     selector: '.select_item',
     callback: function(key, options) {
