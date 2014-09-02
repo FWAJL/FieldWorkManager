@@ -16,12 +16,16 @@ class PMToolApplication extends \Library\Application {
 
   public function run() {
     $this->i8n->loadResources();
+    
     $controller = $this->getController();
+
+    //Get add the Project Manager object to the page
+    //The variable PM will be available accross the application
+    $pm = $controller->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
+    $controller->page()->addVar('pm', $pm[0]);  
+    
     $controller->execute();
     
-    //Get add the Project Manager object to the page
-    $pm = $controller->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $controller->page()->addVar('pm', $pm[0]);
 
     $this->httpResponse->setPage($controller->page());
     $this->httpResponse->send();

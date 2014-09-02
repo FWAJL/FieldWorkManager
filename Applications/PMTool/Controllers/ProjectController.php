@@ -41,9 +41,6 @@ class ProjectController extends \Library\BaseController {
       "rq" => $rq,
       "resx_file" => \Library\Enums\ResourceKeys\ResxFileNameKeys::Project,
     );
-    //TODO: put in BaseController
-//    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-//    $this->page->addVar('pm', $pm[0]);
     
     //TODO: put in BaseController
     $resourceFileKey = "project";
@@ -65,9 +62,6 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeShowForm(\Library\HttpRequest $rq) {
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->page->addVar('pm', $pm[0]);
-
     $resourceFileKey = "project";
 
     $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
@@ -84,9 +78,6 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeListAll(\Library\HttpRequest $rq) {
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->page->addVar('pm', $pm[0]);
-
     $resourceFileKey = "project";
 
     $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
