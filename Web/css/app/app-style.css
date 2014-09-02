@@ -94,6 +94,9 @@ li #pm_name{
   overflow-y: scroll;
 }
 
+.buttons{
+  margin: 0 auto;
+}
 /* FACILITY */
 textarea { resize: vertical;}
 
