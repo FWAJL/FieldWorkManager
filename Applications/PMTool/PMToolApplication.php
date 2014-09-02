@@ -18,6 +18,10 @@ class PMToolApplication extends \Library\Application {
     $this->i8n->loadResources();
     $controller = $this->getController();
     $controller->execute();
+    
+    //Get add the Project Manager object to the page
+    $pm = $controller->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
+    $controller->page()->addVar('pm', $pm[0]);
 
     $this->httpResponse->setPage($controller->page());
     $this->httpResponse->send();

@@ -42,8 +42,8 @@ class ProjectController extends \Library\BaseController {
       "resx_file" => \Library\Enums\ResourceKeys\ResxFileNameKeys::Project,
     );
     //TODO: put in BaseController
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->page->addVar('pm', $pm[0]);
+//    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
+//    $this->page->addVar('pm', $pm[0]);
     
     //TODO: put in BaseController
     $resourceFileKey = "project";

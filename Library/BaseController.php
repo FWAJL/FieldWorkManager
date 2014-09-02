@@ -12,6 +12,7 @@ abstract class BaseController extends ApplicationComponent {
   protected $page = null;
   protected $view = '';
   protected $managers = null;
+  protected $variableArray = array();
   
   public function __construct(Application $app, $module, $action) {
     parent::__construct($app);
@@ -29,12 +30,7 @@ abstract class BaseController extends ApplicationComponent {
     if (!is_callable(array($this, $method))) {
       throw new \RuntimeException('L\'action "' . $this->action . '" n\'est pas définie sur ce module');
     }
-    //Get resources for the left menu
-    $resx_left_menu = $this->app->i8n->getCommonResourceArray(Enums\ResourceKeys\ResxFileNameKeys::MenuLeft);
-    //Init left menu
-    $leftMenu = new UC\LeftMenu($this->app(), $resx_left_menu);
-    //Add left menu to layout
-    $this->page->addVar("leftMenu", $leftMenu->Build());
+    $this->AddVarsToPage();
 
     $br = new UC\Breadcrumb($this->app());
     //Load controller method
@@ -53,6 +49,10 @@ abstract class BaseController extends ApplicationComponent {
 
   public function leftMenu() {
     return $this->leftMenu;
+  }
+  
+  public function variableArray() {
+    return $this->$variableArray;
   }
 
   public function setModule($module) {
@@ -161,6 +161,18 @@ abstract class BaseController extends ApplicationComponent {
     return $matchedElements;
   }
   
+  protected function AddVarsToPage() {
+    //Get resources for the left menu
+    $resx_left_menu = $this->app->i8n->getCommonResourceArray(Enums\ResourceKeys\ResxFileNameKeys::MenuLeft);
+    //Init left menu
+    $leftMenu = new UC\LeftMenu($this->app(), $resx_left_menu);
+    //Add left menu to layout
+    $this->page->addVar("leftMenu", $leftMenu->Build());
+
+    
+  }
+
+
   protected function executeIndex($params) {
     
   }
