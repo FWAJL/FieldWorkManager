@@ -12,7 +12,7 @@ abstract class BaseController extends ApplicationComponent {
   protected $page = null;
   protected $view = '';
   protected $managers = null;
-
+  
   public function __construct(Application $app, $module, $action) {
     parent::__construct($app);
     $this->managers = new \Library\DAL\Managers('PDO', $app);
@@ -30,7 +30,7 @@ abstract class BaseController extends ApplicationComponent {
       throw new \RuntimeException('L\'action "' . $this->action . '" n\'est pas définie sur ce module');
     }
     //Get resources for the left menu
-    $resx_left_menu = $this->app->i8n->getCommonResourceArray("menu_left");
+    $resx_left_menu = $this->app->i8n->getCommonResourceArray(Enums\ResourceKeys\ResxFileNameKeys::MenuLeft);
     //Init left menu
     $leftMenu = new UC\LeftMenu($this->app(), $resx_left_menu);
     //Add left menu to layout
@@ -137,17 +137,22 @@ abstract class BaseController extends ApplicationComponent {
   }
 
   /**
-   * Convert a csv string to array type
+   * Retrieve the objects from a list filtering them by a list of IDs
    * 
-   * @param string $strInput
-   * @return array
+   * @param type $params
+   *    array(
+   *      "filter" => "property_name_of_object_type",
+          "ids" => ids_to_filter_objects, 
+          "objects" => the_objects
+   *    )
+   * @return array of objects
    */
-  public function FindObjectsFromIds($array_ids, $array_objects) {
+  public function FindObjectsFromIds($params) {
     //TODO: use LINQ helper to loop array more efficiently
     $matchedElements = array();
-    foreach ($array_objects as $object) {
-      foreach ($array_ids as $id) {
-        if($object->project_id() === $id) {
+    foreach ($params["objects"] as $object) {
+      foreach ($params["ids"] as $id) {
+        if($object->$params["filter"]() === $id) {
           array_push($matchedElements, $object);
           break;
         }
@@ -156,6 +161,29 @@ abstract class BaseController extends ApplicationComponent {
     return $matchedElements;
   }
   
-  
+  protected function executeIndex($params) {
+    
+  }
+  protected function executeAdd($params) {
+    
+  }
+  protected function executeUpdate($params) {
+    
+  }
+  protected function executeDelete($params) {
+    
+  }
+  protected function executeGetItem($params) {
+    
+  }
+  protected function executeGetList($params) {
+    
+  }
+  protected function executeListAll($params) {
+    
+  }
+  protected function executeShowForm($params) {
+    
+  }
   
 }

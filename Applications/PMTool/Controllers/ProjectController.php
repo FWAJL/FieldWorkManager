@@ -37,13 +37,22 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeIndex(\Library\HttpRequest $rq) {
+    $params = array(
+      "rq" => $rq,
+      "resx_file" => \Library\Enums\ResourceKeys\ResxFileNameKeys::Project,
+    );
+    //TODO: put in BaseController
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $this->page->addVar('pm', $pm[0]);
-
+    
+    //TODO: put in BaseController
     $resourceFileKey = "project";
 
+    //TODO: put in BaseController
     $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
+    //TODO: put in BaseController
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
+    //TODO: put in BaseController
     $this->page->addVar('logout_url', __BASEURL__ . "logout");
 
     //Get list of projects and store in session
@@ -254,29 +263,32 @@ class ProjectController extends \Library\BaseController {
    * @return JSON
    */
   public function executeUpdateItems(\Library\HttpRequest $rq) {
-    // Init result
-    $result = $this->ManageResponseWS();
-
+    $result = $this->ManageResponseWS();// Init result
     $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
     
-    $activate  = $data_sent["action"] === "active" ? TRUE : FALSE;
-    $project_ids = str_getcsv($data_sent["project_ids"],',');
-    $projects = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
     $rows_affected = 0;
     //Get the project objects from ids received
-    $matchedElements = $this->FindObjectsFromIds($project_ids, $projects);
+    $project_ids = str_getcsv($data_sent["project_ids"],',');
+    $projects = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
+    $matchedElements = $this->FindObjectsFromIds(
+        array(
+          "filter" => "project_id",
+          "ids" => $project_ids, 
+          "objects" => $projects)
+        );
     
     //Update the project objects in DB and get result (number of rows affected)
+    //$this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
     foreach ($matchedElements as $project) {
-      $project->setActive($activate);
+      $project->setActive($data_sent["action"] === "active" ? TRUE : FALSE);
       $manager = $this->managers->getManagerOf('Project');
       $rows_affected += $manager->edit($project) ? 1 : 0;
     }
 
     if ($rows_affected === count($project_ids)) {
-      $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getItem", "step" => "success"));
+      $result = $this->UpdateResponseWS($result, array("resx_file" => "project", "resx_key" => "_getItem", "step" => "success"));
     } else {
-      $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getItem", "step" => "error"));
+      $result = $this->UpdateResponseWS($result, array("resx_file" => "project", "resx_key" => "_getItem", "step" => "error"));
     }
     //return the JSON data
     return $result;

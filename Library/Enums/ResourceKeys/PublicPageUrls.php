@@ -1,14 +1,24 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @package		Basic MVC framework
+ * @author		FWM DEV Team
+ * @copyright	Copyright (c) 2014
+ * @license		
+ * @link		
+ * @since		
+ * @filesource
  */
+// ------------------------------------------------------------------------
 
 /**
- * Description of UrlKeys
+ * PublicPageUrls Class
  *
- * @author jl
+ * @package		Library
+ * @subpackage	Enums/ResourceKeys
+ * @category	PublicPageUrls
+ * @author		FWM DEV Team
+ * @link		
  */
 
 namespace Library\Enums\ResourceKeys;
@@ -20,12 +30,14 @@ class PublicPageUrls {
   /**
    * Relative Urls
    */
+  
+  const LoginUrl = "login";
+  const LogoutUrl = "logout";
+  const AuthenticationUrl = "auth";
 
-  const LoginUrl = "loginUrl";
-  const LogoutUrl = "logoutUrl";
-  const ProjectsUrl = "projectsUrl";
-  const AuthenticationUrl = "authUrl";
-
+  const ProjectsRootUrl = "project";
+  const ProjectsListAll = "project/listAll";
+  const ProjectsShowForm = "project/showForm";
   /**
    * Absolute Urls
    */
