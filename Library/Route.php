@@ -16,6 +16,7 @@ class Route {
   protected $cssFiles = "";
   public $relative_path = "";
   protected $phpModules;
+  protected $resxfile = "";
 
   public function __construct($config) {
     $this->setUrl($config['route_xml']->getAttribute('url'));
@@ -30,6 +31,7 @@ class Route {
     $this->setCssFiles($config['css']);
     $this->setRelativePath($config["relative_path"]);
     $this->setPhpModules($config["php_modules"]);
+    $this->setResxFile($config["resxfile"]);
   }
 
   public function hasVars() {
@@ -96,6 +98,10 @@ class Route {
     return $this->phpModules = $php_modules;
   }
 
+  public function setResxFile($resxfile) {
+    return $this->resxfile = $resxfile;
+  }
+  
   public function action() {
     return $this->action;
   }
@@ -129,6 +135,9 @@ class Route {
   }
   public function phpModules() {
     return $this->phpModules;
+  }
+  public function resxfile() {
+    return $this->resxfile;
   }
   
 }

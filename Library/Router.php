@@ -115,7 +115,8 @@ class Router extends ApplicationComponent {
           "js_html" => $this->_GetJsFiles($route, "html", __BASEURL__),
           "css" => $this->_LoadCssFiles($route, __BASEURL__),
           "php_modules" => $this->_LoadPhpModules($route),
-          "relative_path" => $path_to_add
+          "relative_path" => $path_to_add,
+          "resxfile" => $route->getAttribute('resxfile')
       );
       $this->addRoute(new Route($route_config));
     }
