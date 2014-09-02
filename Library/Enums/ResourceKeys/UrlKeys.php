@@ -19,10 +19,21 @@ class UrlKeys {
    * Relative Urls
    */
   
+  const LoginUrl = "login";
+  const LogoutUrl = "logout";
+  const AuthenticationUrl = "auth";
+
+  const ProjectsRootUrl = "project";
+  const ProjectsListAll = "project/listAll";
+  const ProjectsShowForm = "project/showForm";
   /**
    * Absolute Urls
    */
-    const Logout = "logout";
+  /*
+   * Template
+   */
+  const TemplateUrl = "tmp";
+
 }
 
 ?>
