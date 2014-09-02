@@ -12,8 +12,9 @@ abstract class BaseController extends ApplicationComponent {
   protected $page = null;
   protected $view = '';
   protected $managers = null;
+  protected $resxfile = "";
   
-  public function __construct(Application $app, $module, $action) {
+  public function __construct(Application $app, $module, $action, $resxfile) {
     parent::__construct($app);
     $this->managers = new \Library\DAL\Managers('PDO', $app);
     $this->page = new Page($app);
@@ -21,20 +22,19 @@ abstract class BaseController extends ApplicationComponent {
     $this->setModule($module);
     $this->setAction($action);
     $this->setView($action);
+    $this->setResxFile($resxfile);
   }
 
   public function execute() {
     $method = 'execute' . ucfirst($this->action);
 
     if (!is_callable(array($this, $method))) {
-      throw new \RuntimeException('L\'action "' . $this->action . '" n\'est pas définie sur ce module');
+      throw new \RuntimeException('The action "' . $this->action . '" is not defined for this module');
     }
-    //Get resources for the left menu
-    $resx_left_menu = $this->app->i8n->getCommonResourceArray(Enums\ResourceKeys\ResxFileNameKeys::MenuLeft);
-    //Init left menu
-    $leftMenu = new UC\LeftMenu($this->app(), $resx_left_menu);
-    //Add left menu to layout
-    $this->page->addVar("leftMenu", $leftMenu->Build());
+    //
+    if ($this->resxfile !== NULL) {
+      $this->AddCommonVarsToPage();
+    }
 
     $br = new UC\Breadcrumb($this->app());
     //Load controller method
@@ -54,10 +54,14 @@ abstract class BaseController extends ApplicationComponent {
   public function leftMenu() {
     return $this->leftMenu;
   }
+  
+  public function variableArray() {
+    return $this->$variableArray;
+  }
 
   public function setModule($module) {
     if (!is_string($module) || empty($module)) {
-      throw new \InvalidArgumentException('Le module doit être une chaine de caractères valide');
+      throw new \InvalidArgumentException('the module value must be a string and not empty');
     }
 
     $this->module = $module;
@@ -65,7 +69,7 @@ abstract class BaseController extends ApplicationComponent {
 
   public function setAction($action) {
     if (!is_string($action) || empty($action)) {
-      throw new \InvalidArgumentException('L\'action doit être une chaine de caractères valide');
+      throw new \InvalidArgumentException('The action value must be a string and not empty');
     }
 
     $this->action = $action;
@@ -73,7 +77,7 @@ abstract class BaseController extends ApplicationComponent {
 
   public function setView($view) {
     if (!is_string($view) || empty($view)) {
-      throw new \InvalidArgumentException('La vue doit être une chaine de caractères valide');
+      throw new \InvalidArgumentException('The view value must be a string and not empty');
     }
 
     $this->view = $view;
@@ -85,6 +89,14 @@ abstract class BaseController extends ApplicationComponent {
             . $this->module
             . '/'
             . $this->view . '.php');
+  }
+  
+  public function setResxFile($resxfile) {
+    if (!is_string($resxfile) || empty($resxfile)) {
+      throw new \InvalidArgumentException('The resx file must be a string and not empty');
+    }
+
+    $this->resxfile = $resxfile;
   }
 
   /**
@@ -161,6 +173,19 @@ abstract class BaseController extends ApplicationComponent {
     return $matchedElements;
   }
   
+  protected function AddCommonVarsToPage() {
+    //Get resources for the left menu
+    $resx_left_menu = $this->app->i8n->getCommonResourceArray(Enums\ResourceKeys\ResxFileNameKeys::MenuLeft);
+    //Init left menu
+    $leftMenu = new UC\LeftMenu($this->app(), $resx_left_menu);
+    //Add left menu to layout
+    $this->page->addVar("leftMenu", $leftMenu->Build());
+    $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($this->resxfile));
+    $this->app->pageTitle = $this->app->i8n->getLocalResource($this->resxfile, "page_title");
+    $this->page->addVar("logout_url", __BASEURL__ . Enums\ResourceKeys\UrlKeys::LogoutUrl);
+  }
+
+
   protected function executeIndex($params) {
     
   }

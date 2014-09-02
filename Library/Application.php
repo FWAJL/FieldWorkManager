@@ -66,7 +66,7 @@ abstract class Application {
     if (!file_exists(__ROOT__ . str_replace('\\', '/', $controllerClass) . Enums\FileNameConst::ClassSuffix)) {
       $this->httpResponse->displayError(Enums\ErrorCodes::ControllerNotExist); //Controller doesn't exist
     }
-    return new $controllerClass($this, $this->router()->selectedRoute()->module(), $this->router()->selectedRoute()->action());
+    return new $controllerClass($this, $this->router()->selectedRoute()->module(), $this->router()->selectedRoute()->action(), $this->router()->selectedRoute()->resxfile());
   }
 
   abstract public function run();

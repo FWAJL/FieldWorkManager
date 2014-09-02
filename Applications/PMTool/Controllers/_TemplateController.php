@@ -15,7 +15,7 @@ class ThisController extends \Library\BaseController {
 
     $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
-    $this->page->addVar('tmp_url', $this->app->router->pageUrls[\Library\Enums\ResourceKeys\PublicPageUrls::TemplateUrl]);
+    $this->page->addVar('tmp_url', $this->app->router->pageUrls[\Library\Enums\ResourceKeys\UrlKeys::TemplateUrl]);
   }
 
 }

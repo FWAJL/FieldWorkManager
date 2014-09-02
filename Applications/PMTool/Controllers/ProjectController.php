@@ -37,24 +37,6 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeIndex(\Library\HttpRequest $rq) {
-    $params = array(
-      "rq" => $rq,
-      "resx_file" => \Library\Enums\ResourceKeys\ResxFileNameKeys::Project,
-    );
-    //TODO: put in BaseController
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->page->addVar('pm', $pm[0]);
-    
-    //TODO: put in BaseController
-    $resourceFileKey = "project";
-
-    //TODO: put in BaseController
-    $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
-    //TODO: put in BaseController
-    $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
-    //TODO: put in BaseController
-    $this->page->addVar('logout_url', __BASEURL__ . "logout");
-
     //Get list of projects and store in session
     $this->_GetAndStoreProjectsInSession($rq);
   }
@@ -65,15 +47,6 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeShowForm(\Library\HttpRequest $rq) {
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->page->addVar('pm', $pm[0]);
-
-    $resourceFileKey = "project";
-
-    $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
-    $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
-    $this->page->addVar('logout_url', __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::Logout);
-
     //Load Modules for view
     $this->page->addVar('form_modules', $this->app()->router()->selectedRoute()->phpModules());
   }
@@ -84,15 +57,6 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeListAll(\Library\HttpRequest $rq) {
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->page->addVar('pm', $pm[0]);
-
-    $resourceFileKey = "project";
-
-    $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
-    $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
-    $this->page->addVar('logout_url', __BASEURL__ . "logout");
-
     //Get list of projects stored in session
     $this->_GetAndStoreProjectsInSession($rq);
     $this->page->addVar('projects', $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects));
@@ -162,11 +126,7 @@ class ProjectController extends \Library\BaseController {
     if ($result_insert)
       $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_edit", "step" => "success"));
     //return the JSON data
-    if ($isNotAjaxCall) {
-      return NULL;
-    } else {
       echo \Library\HttpResponse::encodeJson($result);
-    }
   }
 
   /**

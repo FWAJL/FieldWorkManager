@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <routes>
   <!-- UI routes -->
-  <route url="login" module="Authenticate" action="loadLoginView" type="ui">
+  <route url="login" module="Authenticate" action="loadLoginView" resxfile="login" type="ui">
     <js_files>
       <js_file use="html" value="Web/js/app/validator.js"/>
       <js_file use="html" value="Web/js/app/controllers/auth.js"/>     
@@ -12,10 +12,10 @@
       <css_file value="Web/css/app/theme.css"/>
     </css_files>
   </route><!-- login -->
-  <route url="logout" module="Authenticate" action="disconnect" type="ui">
+  <route url="logout" module="Authenticate" action="disconnect" resxfile="login" type="ui">
   
   </route>
-  <route url="project" module="Project" action="index" type="ui">
+  <route url="project" module="Project" action="index" resxfile="project" type="ui">
     <js_files>
       <js_file use="head" value="Web/js/app/controllers/facility_manager.js"/>
       <js_file use="head" value="Web/js/app/controllers/project_manager.js"/>
@@ -29,7 +29,7 @@
       <css_file value="Web/css/app/tabs.css"/>
     </css_files>
   </route><!-- project/index -->
-  <route url="project/showForm" module="Project" action="showForm" type="ui">
+  <route url="project/showForm" module="Project" action="showForm" resxfile="project" type="ui">
     <js_files>
       <!--<js_file use="head" value="Web/js/app/controllers/project/project_showForm.js"/>-->
       <js_file use="project" />
@@ -48,7 +48,7 @@
       <php_module key="project_tabs_close" file_name="project_tabs_close.php"/>
     </php_modules>
   </route><!-- project/showAddForm -->
-    <route url="project/listAll" module="Project" action="listAll" type="ui">
+  <route url="project/listAll" module="Project" action="listAll" resxfile="project" type="ui">
     <js_files>
       <!--<js_file use="head" value="Web/js/app/controllers/project/project_listAll.js"/>-->
       <js_file use="project" />
@@ -57,7 +57,7 @@
       <css_file use="project"/>
     </css_files>
   </route><!-- project/listAll -->
-  <route url="location" module="Location" action="index" type="ui">
+  <route url="location" module="Location" action="index" resxfile="project" type="ui">
     <js_files>
       
     </js_files>
@@ -71,17 +71,17 @@
   </route><!-- location/index -->
   
   <!-- WebService routes -->
-  <route url="auth" module="Authenticate" action="authenticate" type="ws" />
-  <route url="project/add" module="Project" action="add" type="ws" />
-  <route url="project/edit" module="Project" action="edit" type="ws" />
-  <route url="project/delete" module="Project" action="delete" type="ws" />
-  <route url="project/getlist" module="Project" action="getList" type="ws" />
-  <route url="project/getItem" module="Project" action="getItem" type="ws" />
-  <route url="project/updateItems" module="Project" action="updateItems" type="ws" />
-  <route url="facility/add" module="Facility" action="add" type="ws" />
-  <route url="facility/edit" module="Facility" action="edit" type="ws" />
-  <route url="facility/delete" module="Facility" action="delete" type="ws" />
-  <route url="facility/getlist" module="Facility" action="getList" type="ws" />
-  <route url="facility/getItem" module="Facility" action="getItem" type="ws" />
+  <route url="auth" module="Authenticate" action="authenticate" resxfile="login" type="ws" />
+  <route url="project/add" module="Project" action="add" resxfile="project" type="ws" />
+  <route url="project/edit" module="Project" action="edit" resxfile="project" type="ws" />
+  <route url="project/delete" module="Project" action="delete" resxfile="project" type="ws" />
+  <route url="project/getlist" module="Project" action="getList" resxfile="project" type="ws" />
+  <route url="project/getItem" module="Project" action="getItem" resxfile="project" type="ws" />
+  <route url="project/updateItems" module="Project" action="updateItems" resxfile="project" type="ws" />
+  <route url="facility/add" module="Facility" action="add" resxfile="facility" type="ws" />
+  <route url="facility/edit" module="Facility" action="edit" resxfile="facility" type="ws" />
+  <route url="facility/delete" module="Facility" action="delete" resxfile="facility" type="ws" />
+  <route url="facility/getlist" module="Facility" action="getList" resxfile="facility" type="ws" />
+  <route url="facility/getItem" module="Facility" action="getItem" resxfile="facility" type="ws" />
 
 </routes>
