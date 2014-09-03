@@ -69,3 +69,5 @@
 
 #active-list .ui-selecting, #inactive-list .ui-selecting { background: #FECA40; }
 #active-list .ui-selected, #inactive-list .ui-selected { background: #F39814; color: white; }
+
+.context-menu-active {font-weight: bold; color: #F39814;}
