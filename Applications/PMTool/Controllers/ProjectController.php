@@ -315,8 +315,8 @@ class ProjectController extends \Library\BaseController {
     $project->setProject_name(!array_key_exists('project_name', $data_sent) ? NULL : $data_sent["project_name"]);
     $project->setProject_number(!array_key_exists('project_num', $data_sent) ? "" : $data_sent["project_num"]);
     $project->setProject_desc(!array_key_exists('project_desc', $data_sent) ? "" : $data_sent["project_desc"]);
-    $project->setActive(!array_key_exists('project_active_flag', $data_sent) ? 0 : $data_sent["project_active_flag"]);
-    $project->setVisible(!array_key_exists('project_visible_flag', $data_sent) ? 0 : $data_sent["project_visible_flag"]);
+    $project->setActive(!array_key_exists('active', $data_sent) ? 0 : ($data_sent["active"] === "1"));
+    $project->setVisible(!array_key_exists('visible', $data_sent) ? 0 : ($data_sent["visible"] === "1"));
 
     return $project;
   }

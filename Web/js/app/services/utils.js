@@ -15,7 +15,7 @@
         if ($(this).attr("type") === "text") {
           user_inputs[$(this).attr("name")] = $(this).val();
         } else {//checkbox
-          user_inputs[$(this).attr("name")] = $(this).is(":checked");
+          user_inputs[$(this).attr("name")] = ($(this).val() === "1");
         }
       } else {
         toastr.error("The field " + $(this).attr("name") + " is empty. Please fill out all fields.");
