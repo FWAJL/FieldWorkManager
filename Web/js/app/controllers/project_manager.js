@@ -28,7 +28,6 @@ $(document).ready(function() {
         tmpSelection += $(this).attr("data-project-id") + ",";
       });
       tmpSelection = utils.removeLastChar(tmpSelection);
-      toastr.info(tmpSelection);
       if (tmpSelection.length > 0) {
         project_ids = tmpSelection;
         //Show the button to appropriate button

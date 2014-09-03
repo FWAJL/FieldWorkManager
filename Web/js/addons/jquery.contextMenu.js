@@ -211,8 +211,8 @@ var // currently active contextMenu trigger
         // contextmenu show dispatcher
         contextmenu: function(e) {
             var $this = $(this);
-            
-            // disable actual context-menu
+
+          // disable actual context-menu
             e.preventDefault();
             e.stopImmediatePropagation();
             
