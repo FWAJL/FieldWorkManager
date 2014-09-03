@@ -18,14 +18,14 @@
       <label><?php echo $resx["project_desc"]; ?></label>
       <input name="project_desc" type="text" />
     </li>
-<!--    <li>
-      <label><?php echo $resx["project_active_flag"]; ?></label>
-      <input name="project_active_flag" type="checkbox" />
+    <li style="display: none">
+      <!--<label><?php // echo $resx["active"]; ?></label>-->
+      <input name="active" type="checkbox" />
     </li>
-    <li>
-      <label><?php echo $resx["project_visible_flag"]; ?></label>
-      <input name="project_visible_flag" type="checkbox"/>
-    </li>-->
+    <li style="display: none">
+      <label><?php // echo $resx["visible"]; ?></label>
+      <input name="visible" type="checkbox"/>
+    </li>
   </ol>
 </fieldset>
     
