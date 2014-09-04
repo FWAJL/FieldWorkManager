@@ -9,7 +9,7 @@
   <resource key="message_success_insert">The project has been inserted.</resource>
   <resource key="message_error_getlist">Error reading the projects. Check logs.</resource>
   <resource key="message_success_getlist">The projects have been read.</resource>
-  <resource key="message_error_getItem">Error reading the project. Check logs.</resource>
+  <resource key="message_error_getItem">This project doesn't exist or is not one of your project. You will be redirected to your list of projects in 3 seconds.</resource>
   <resource key="message_success_getItem">The project has been read.</resource>
   <resource key="message_error_edit">Error editing the project. Check logs.</resource>
   <resource key="message_success_edit">The project has been edited.</resource>

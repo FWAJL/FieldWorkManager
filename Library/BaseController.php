@@ -13,7 +13,9 @@ abstract class BaseController extends ApplicationComponent {
   protected $view = '';
   protected $managers = null;
   protected $resxfile = "";
-  
+  protected $dataPost = array();
+
+
   public function __construct(Application $app, $module, $action, $resxfile) {
     parent::__construct($app);
     $this->managers = new \Library\DAL\Managers('PDO', $app);
@@ -23,6 +25,7 @@ abstract class BaseController extends ApplicationComponent {
     $this->setAction($action);
     $this->setView($action);
     $this->setResxFile($resxfile);
+    $this->setDataPost($this->app->HttpRequest()->retrievePostAjaxData(NULL, FALSE));
   }
 
   public function execute() {
@@ -55,13 +58,18 @@ abstract class BaseController extends ApplicationComponent {
     return $this->leftMenu;
   }
   
+    public function dataPost() {
+    return $this->dataPost;
+  }
+
+  
   public function variableArray() {
     return $this->$variableArray;
   }
 
   public function setModule($module) {
     if (!is_string($module) || empty($module)) {
-      throw new \InvalidArgumentException('the module value must be a string and not empty');
+      throw new \InvalidArgumentException('the module value must be a string and not be empty');
     }
 
     $this->module = $module;
@@ -69,7 +77,7 @@ abstract class BaseController extends ApplicationComponent {
 
   public function setAction($action) {
     if (!is_string($action) || empty($action)) {
-      throw new \InvalidArgumentException('The action value must be a string and not empty');
+      throw new \InvalidArgumentException('The action value must be a string and not be empty');
     }
 
     $this->action = $action;
@@ -77,7 +85,7 @@ abstract class BaseController extends ApplicationComponent {
 
   public function setView($view) {
     if (!is_string($view) || empty($view)) {
-      throw new \InvalidArgumentException('The view value must be a string and not empty');
+      throw new \InvalidArgumentException('The view value must be a string and not be empty');
     }
 
     $this->view = $view;
@@ -93,12 +101,19 @@ abstract class BaseController extends ApplicationComponent {
   
   public function setResxFile($resxfile) {
     if (!is_string($resxfile) || empty($resxfile)) {
-      throw new \InvalidArgumentException('The resx file must be a string and not empty');
+      throw new \InvalidArgumentException('The resx file must be a string and not be empty');
     }
 
     $this->resxfile = $resxfile;
   }
+  
+  public function setDataPost($dataPost) {
+    if (!is_array($dataPost) || empty($dataPost)) {
+      $this->dataPost = array();
+    }
 
+    $this->dataPost = $dataPost;
+  }
   /**
    * Set the default response from WS
    * 

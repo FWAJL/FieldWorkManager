@@ -61,8 +61,11 @@
    * 
    * @param {type} page
    */
-  utils.redirect = function(page) {
-    document.location.replace(service_config.rootFolder + page);
+  utils.redirect = function(page, timeout) {
+    timeout = timeout || 0;
+    setTimeout(function() {
+      document.location.replace(service_config.rootFolder + page);
+    }, timeout);
   };
   /**
    * Clear a form inputs (input text, input textarea, checkbox)

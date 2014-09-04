@@ -48,7 +48,9 @@ class ProjectController extends \Library\BaseController {
    */
   public function executeShowForm(\Library\HttpRequest $rq) {
     //Load Modules for view
-    $this->page->addVar('form_modules', $this->app()->router()->selectedRoute()->phpModules());
+    $this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, 
+        $this->app()->router()->selectedRoute()->phpModules());
   }
 
   /**
@@ -59,7 +61,10 @@ class ProjectController extends \Library\BaseController {
   public function executeListAll(\Library\HttpRequest $rq) {
     //Get list of projects stored in session
     $this->_GetAndStoreProjectsInSession($rq);
-    $this->page->addVar('projects', $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects));
+    $this->page->addVar(
+    \Applications\PMTool\Resources\Enums\ViewVariablesKeys::projects, 
+            $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects)
+            );
   }
 
   /**
@@ -106,12 +111,12 @@ class ProjectController extends \Library\BaseController {
     // Init result
     $result = $this->ManageResponseWS();
     //Process data received from Post
-    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
+//    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
 
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $data_sent["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
-    $project = $this->_PrepareUserObject($data_sent);
+    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
+    $project = $this->_PrepareUserObject($this->dataPost());
     $result["data"] = $project;
     /* Add to DB */
     //Load interface to query the database
@@ -199,11 +204,9 @@ class ProjectController extends \Library\BaseController {
     // Init result
     $result = $this->ManageResponseWS();
 
-    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
+    $project_selected = $this->_GetProjectFromSession($this->dataPost());
 
-    $project_selected = $this->_GetProjectFromSession($data_sent);
-
-    $facility_selected = $this->_GetFacilityProjectFromSession($data_sent);
+    $facility_selected = $this->_GetFacilityProjectFromSession($this->dataPost());
 
     if ($project_selected !== NULL && $facility_selected !== NULL) {
       $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getItem", "step" => "success"));
