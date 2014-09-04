@@ -73,7 +73,6 @@ $(document).ready(function() {
     $(".form_sections").fadeIn('2000').addClass("show").removeClass("hide");
     $(".welcome").fadeOut('2000').removeClass("show").addClass("hide");
     $(".project_add").hide();
-    $(".project_edit").show().removeClass("hide");
     project_manager.getItem(utils.getQueryVariable("project_id"));
   }//Load project
 
@@ -195,8 +194,10 @@ $(document).ready(function() {
     datacx.post("project/getItem", {"project_id": project_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
-        return undefined;
+        $(".form_sections").hide();
+        utils.redirect("project/listAll", 3000)
       } else {//success
+        $(".project_edit").show().removeClass("hide");
         toastr.success(reply.message);
         project_manager.loadEditForm(reply);
       }
