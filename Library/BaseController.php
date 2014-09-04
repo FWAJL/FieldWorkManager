@@ -58,7 +58,15 @@ abstract class BaseController extends ApplicationComponent {
     return $this->leftMenu;
   }
   
-    public function dataPost() {
+  public function module() {
+    return $this->module;
+  }
+  
+  public function action() {
+    return $this->action;
+  }
+
+  public function dataPost() {
     return $this->dataPost;
   }
 

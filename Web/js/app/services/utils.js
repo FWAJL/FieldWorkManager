@@ -5,7 +5,7 @@
   /**
    * 
    * @param {string} form_class : Css Class of the form to scan
-   * @param {array} inputs_required 
+   * @param {array} inputs_required : list of string describing the attribute names of the inputs required
    * @returns {Object} user_inputs : object built with dynamic properties dependent of form scanned
    */
   utils.retrieveInputs = function(form_class, inputs_required) {
@@ -59,7 +59,8 @@
   /**
    * Redirect to a given page
    * 
-   * @param {type} page
+   * @param {string} page : the relative url to redirect to
+   * @param {integer} timeout : the time to wait before the redirection happens. By default, it is 0.
    */
   utils.redirect = function(page, timeout) {
     timeout = timeout || 0;
@@ -68,7 +69,7 @@
     }, timeout);
   };
   /**
-   * Clear a form inputs (input text, input textarea, checkbox)
+   * Clear a form inputs in the current dom (input text, input textarea, checkbox)
    * 
    */
   utils.clearForm = function() {
@@ -80,8 +81,8 @@
   /**
    * Retrieve the value associated to a query string key
    * 
-   * @param {string} variable Query string key
-   * @returns {unresolved|Boolean}
+   * @param {string} variable : query string key
+   * @returns {string|Boolean} : the query string value or FALSE if not found
    */
   utils.getQueryVariable = function (variable) {
     var query = window.location.search.substring(1);//remove "?"

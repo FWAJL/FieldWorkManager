@@ -143,18 +143,22 @@ class ProjectController extends \Library\BaseController {
   public function executeDelete(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->ManageResponseWS();
+    $db_result = FALSE;
 
-    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
-
+    //Check if the project to be deleted if the Project manager's
+    $project_selected = $this->_GetProjectFromSession($this->dataPost());
     //Load interface to query the database
-    $manager = $this->managers->getManagerOf('Project');
-    $result_insert = $manager->delete($data_sent["project_id"]);
-
+    if ($project_selected !== NULL) {
+      $manager = $this->managers->getManagerOf($this->module());
+      $db_result = $manager->delete($this->dataPost["project_id"]);
+    }
     //Clear the project and facility list from session for the connect PM
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
 
-    $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_delete", "step" => "success"));
+    $result = $db_result !== FALSE ?
+            $this->ManageResponseWS(array("resx_file" => \Library\Enums\ResourceKeys\ResxFileNameKeys::Project, "resx_key" => "_delete", "step" => "success")) :
+            $this->ManageResponseWS(array("resx_file" => \Library\Enums\ResourceKeys\ResxFileNameKeys::Project, "resx_key" => "_delete", "step" => "error"));
     //return the JSON data
     echo \Library\HttpResponse::encodeJson($result);
   }
