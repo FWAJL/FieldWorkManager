@@ -51,7 +51,8 @@ $(document).ready(function() {
     var post_data = {};
     post_data["project"] = utils.retrieveInputs("project_form", ["project_name"]);
     post_data["facility"] = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
-    //toastr.success("name: " + post_data.project_name + "; number: " + post_data.project_num + "; desc: " + post_data.project_desc + "; active: " + post_data.project_active_flag + " ; visible: " + post_data.project_visible_flag);
+    //TO BE IMPLEMENTED
+    //post_data["client"] = utils.retrieveInputs("client_form", []);
     if (post_data["project"].project_name !== undefined &&
             post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
       project_manager.add(post_data, "project", "add");

@@ -58,13 +58,16 @@ abstract class BaseController extends ApplicationComponent {
     return $this->leftMenu;
   }
   
-    public function dataPost() {
-    return $this->dataPost;
+  public function module() {
+    return $this->module;
+  }
+  
+  public function action() {
+    return $this->action;
   }
 
-  
-  public function variableArray() {
-    return $this->$variableArray;
+  public function dataPost() {
+    return $this->dataPost;
   }
 
   public function setModule($module) {
@@ -188,6 +191,15 @@ abstract class BaseController extends ApplicationComponent {
     return $matchedElements;
   }
   
+  /**
+   * Add to the page object the common variables to use in the views
+   * 
+   * Variables:
+   *    - left_menu
+   *    - resx
+   *    - logout_url
+   *    - pageTitle (not local variable but a variable in the application
+   */
   protected function AddCommonVarsToPage() {
     //Get resources for the left menu
     $resx_left_menu = $this->app->i8n->getCommonResourceArray(Enums\ResourceKeys\ResxFileNameKeys::MenuLeft);
@@ -201,29 +213,29 @@ abstract class BaseController extends ApplicationComponent {
   }
 
 
-  protected function executeIndex($params) {
-    
-  }
-  protected function executeAdd($params) {
-    
-  }
-  protected function executeUpdate($params) {
-    
-  }
-  protected function executeDelete($params) {
-    
-  }
-  protected function executeGetItem($params) {
-    
-  }
-  protected function executeGetList($params) {
-    
-  }
-  protected function executeListAll($params) {
-    
-  }
-  protected function executeShowForm($params) {
-    
-  }
+//  protected function executeIndex($params) {
+//    
+//  }
+//  protected function executeAdd($params) {
+//    
+//  }
+//  protected function executeUpdate($params) {
+//    
+//  }
+//  protected function executeDelete($params) {
+//    
+//  }
+//  protected function executeGetItem($params) {
+//    
+//  }
+//  protected function executeGetList($params) {
+//    
+//  }
+//  protected function executeListAll($params) {
+//    
+//  }
+//  protected function executeShowForm($params) {
+//    
+//  }
   
 }
