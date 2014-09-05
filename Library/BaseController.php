@@ -70,11 +70,6 @@ abstract class BaseController extends ApplicationComponent {
     return $this->dataPost;
   }
 
-  
-  public function variableArray() {
-    return $this->$variableArray;
-  }
-
   public function setModule($module) {
     if (!is_string($module) || empty($module)) {
       throw new \InvalidArgumentException('the module value must be a string and not be empty');
@@ -196,6 +191,15 @@ abstract class BaseController extends ApplicationComponent {
     return $matchedElements;
   }
   
+  /**
+   * Add to the page object the common variables to use in the views
+   * 
+   * Variables:
+   *    - left_menu
+   *    - resx
+   *    - logout_url
+   *    - pageTitle (not local variable but a variable in the application
+   */
   protected function AddCommonVarsToPage() {
     //Get resources for the left menu
     $resx_left_menu = $this->app->i8n->getCommonResourceArray(Enums\ResourceKeys\ResxFileNameKeys::MenuLeft);
@@ -209,29 +213,29 @@ abstract class BaseController extends ApplicationComponent {
   }
 
 
-  protected function executeIndex($params) {
-    
-  }
-  protected function executeAdd($params) {
-    
-  }
-  protected function executeUpdate($params) {
-    
-  }
-  protected function executeDelete($params) {
-    
-  }
-  protected function executeGetItem($params) {
-    
-  }
-  protected function executeGetList($params) {
-    
-  }
-  protected function executeListAll($params) {
-    
-  }
-  protected function executeShowForm($params) {
-    
-  }
+//  protected function executeIndex($params) {
+//    
+//  }
+//  protected function executeAdd($params) {
+//    
+//  }
+//  protected function executeUpdate($params) {
+//    
+//  }
+//  protected function executeDelete($params) {
+//    
+//  }
+//  protected function executeGetItem($params) {
+//    
+//  }
+//  protected function executeGetList($params) {
+//    
+//  }
+//  protected function executeListAll($params) {
+//    
+//  }
+//  protected function executeShowForm($params) {
+//    
+//  }
   
 }

@@ -57,7 +57,7 @@
       <css_file use="project"/>
     </css_files>
   </route><!-- project/listAll -->
-  <route url="location" module="Location" action="index" resxfile="project" type="ui">
+  <route url="location" module="Location" action="index" resxfile="location" type="ui">
     <js_files>
       
     </js_files>
