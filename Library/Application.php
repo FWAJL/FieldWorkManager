@@ -56,14 +56,14 @@ abstract class Application {
     $this->globalResources["js_files_html"] = $this->router()->selectedRoute()->htmlJsScripts();
     $this->globalResources["css_files"] = $this->router()->selectedRoute()->cssFiles();
 
-    if ($this->router()->selectedRoute()->type() === "ws") {
+    if (preg_match("`^ws.*$`",$this->router()->selectedRoute()->type())) {//is the route used for AJAX calls?
       $this->router()->isWsCall = true;
     }
     // On ajoute les variables de l'URL au tableau $_GET.
     $_GET = array_merge($_GET, $this->router()->selectedRoute()->vars());
 
     $controllerClass = $this->BuildControllerClass($this->router()->selectedRoute());
-    if (!file_exists(__ROOT__ . str_replace('\\', '/', $controllerClass) . Enums\FileNameConst::ClassSuffix)) {
+    if (!file_exists(__ROOT__ . str_replace('\\', '/', $controllerClass) . Enums\FileNameConst::Extension)) {
       $this->httpResponse->displayError(Enums\ErrorCodes::ControllerNotExist); //Controller doesn't exist
     }
     return new $controllerClass($this, $this->router()->selectedRoute()->module(), $this->router()->selectedRoute()->action(), $this->router()->selectedRoute()->resxfile());
@@ -118,13 +118,26 @@ abstract class Application {
       }
     }
   }
-
-  private function BuildControllerClass($route) {
-    return Enums\NameSpaceName::AppsFolderName
-            . $this->name
-            . Enums\NameSpaceName::ControllersFolderName
-            . $route->module()
-            . Enums\FileNameConst::ControllerSuffix;
+  
+  /**
+   * Build the string of the controller class to load for the current route
+   * 
+   * @param \Library\Route $route : the current route
+   * @return string : the controller class name w/ namespace
+   */
+  private function BuildControllerClass(\Library\Route $route) {
+    return preg_match("`^lib$`", $route->type()) 
+        ? //AJAX for the Framework
+        Enums\NameSpaceName::LibFolderName 
+        . Enums\NameSpaceName::LibControllersFolderName
+        . $route->module()
+        . Enums\FileNameConst::ControllerSuffix 
+        : //AJAX for the Application
+        Enums\NameSpaceName::AppsFolderName
+        . $this->name
+        . Enums\NameSpaceName::AppsControllersFolderName
+        . $route->module()
+        . Enums\FileNameConst::ControllerSuffix;
   }
 
 }
