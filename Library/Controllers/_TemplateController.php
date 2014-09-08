@@ -15,13 +15,13 @@
 /**
  * Template controller Class
  *
- * @package		Application/PMTool
+ * @package		Library
  * @subpackage	Controllers
  * @category	TemplateController
  * @author		FWM DEV Team
  * @link		
  */
-namespace Applications\PMTool\Controllers;
+namespace Libray\Controllers;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
 class TemplateController extends \Library\BaseController {

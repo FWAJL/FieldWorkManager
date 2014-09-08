@@ -55,7 +55,7 @@ class AuthenticateController extends \Library\BaseController {
    */
   public function executeAuthenticate(\Library\HttpRequest $rq) {
     //Initialize the response to error.
-    $result = $this->ManageResponseWS();
+    $result = $this->InitResponseWS();
 
     //Let's retrieve the inputs from AJAX POST request
     $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
@@ -77,7 +77,7 @@ class AuthenticateController extends \Library\BaseController {
         $this->EncryptUserPassword($manager, $user, $user_db);
       }
       //User is correct so log him in and set result to success
-      $result = $this->ManageResponseWS("success", $user_db);
+      $result = $this->InitResponseWS("success", $user_db);
     }
     //return the JSON data
     echo \Library\HttpResponse::encodeJson($result);
@@ -146,7 +146,7 @@ class AuthenticateController extends \Library\BaseController {
    * @param string $step
    * @return array
    */
-  public function ManageResponseWS($step = "init", $user = NULL) {
+  public function InitResponseWS($step = "init", $user = NULL) {
     $resourceFileKey = "login";
     if ($step === "success") {
       $this->LoginUser($user);

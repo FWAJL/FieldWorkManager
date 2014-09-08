@@ -17,13 +17,4 @@
       <level resourcekey="project_add" />      
     </levels>
   </breadcrumb>
-  <breadcrumb href="project/showForm?mode=edit">
-    <levels>
-      <level resourcekey="project_header" />
-      <level resourcekey="project_listAll">
-        <link href="project/listAll" resourcekey="project_listAll"/>
-      </level>
-      <level resourcekey="project_edit" />
-    </levels>
-  </breadcrumb>
 </root>

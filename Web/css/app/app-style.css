@@ -99,8 +99,10 @@ li #pm_name{
 }
 /* FACILITY */
 textarea { resize: vertical;}
+/*.facility_form {display: none;}*/
 
 /* CLIENT */
 .client_form{
   padding: 10px;
+  /*display: none;*/
 }

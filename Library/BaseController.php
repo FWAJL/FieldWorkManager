@@ -125,7 +125,7 @@ abstract class BaseController extends ApplicationComponent {
    * @param \Applications\PMTool\Models\Dao\Project_manager $user
    * @return aeeay
    */
-  public function ManageResponseWS($params = array("resx_file" => "ws_defaults", "resx_key" => "", "step" => "error")) {
+  public function InitResponseWS($params = array("resx_file" => "ws_defaults", "resx_key" => "", "step" => "error")) {
     if ($params["step"] === "success") {
       return array(
           "result" => 1,
@@ -151,19 +151,19 @@ abstract class BaseController extends ApplicationComponent {
    * @param \Applications\PMTool\Models\Dao\Project_manager $user
    * @return aeeay
    */
-  public function UpdateResponseWS($result, $params) {
+  public function SendResponseWS($result, $params) {
     if ($params["step"] === "success") {
       $result["result"] = 1;
       $result["message"] = $params["resx_file"] === "ws_defaults" ?
-              $this->app->i8n->getCommonResource($params["resx_file"], "message_success" . $params["resx_key"]) :
-              $this->app->i8n->getLocalResource($params["resx_file"], "message_success" . $params["resx_key"]);
+              $this->app->i8n->getCommonResource($params["resx_file"], "message_success_" . $params["resx_key"]) :
+              $this->app->i8n->getLocalResource($params["resx_file"], "message_success_" . $params["resx_key"]);
     } else {
       $result["result"] = 0;
       $result["message"] = $params["resx_file"] === "ws_defaults" ?
-              $this->app->i8n->getCommonResource($params["resx_file"], "message_error" . $params["resx_key"]) :
-              $this->app->i8n->getLocalResource($params["resx_file"], "message_error" . $params["resx_key"]);
+              $this->app->i8n->getCommonResource($params["resx_file"], "message_error_" . $params["resx_key"]) :
+              $this->app->i8n->getLocalResource($params["resx_file"], "message_error_" . $params["resx_key"]);
     }
-    return $result;
+    echo \Library\HttpResponse::encodeJson($result);
   }
 
   /**

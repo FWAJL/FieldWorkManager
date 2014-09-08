@@ -2,5 +2,5 @@
 <resources>
   <resource key="project_header">My projects</resource>
   <resource key="project_listAll">List All</resource>
-  <resource key="project_add">Add a project</resource>
+  <resource key="project_add">Project's edition</resource>
 </resources>
