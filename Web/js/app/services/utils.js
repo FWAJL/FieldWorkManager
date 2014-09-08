@@ -65,7 +65,7 @@
   utils.redirect = function(page, timeout) {
     timeout = timeout || 0;
     setTimeout(function() {
-      document.location.replace(service_config.rootFolder + page);
+      document.location.replace(utils.rootFolder + page);
     }, timeout);
   };
   /**
@@ -102,4 +102,11 @@
   utils.removeLastChar = function(targetStr) {
     return targetStr.substring(0, targetStr.length - 1);
   };
+  utils.rootFolder = "/FieldWorkAssistantMVC/";
+  utils.load = function(filpath) {
+    var xml = new JKL.ParseXML(filepath);
+    var nodes = xml.parse();
+    return nodes;
+  };
+
 }(window.utils = window.utils || {}));

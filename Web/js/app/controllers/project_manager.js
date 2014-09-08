@@ -10,11 +10,14 @@ $(document).ready(function() {
         project_manager.retrieveProject(options.$trigger);
       } else if (key === "delete") {
         project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
+      } else if (key === "showLocations") {
+        toastr.info("Being implemented...");
       }
     },
     items: {
-      "edit": {name: "Edit", icon: "edit"},
-      "delete": {name: "Delete", icon: "delete"}
+      "edit": {name: "Edit"},
+      "delete": {name: "Delete"},
+      "showLocations": {name: "Show Locations"}
     }
   });//Manages the context menu
 
@@ -87,15 +90,6 @@ $(document).ready(function() {
       toastr.info("Right-click to edit!");
     alreadyHovered = true;
   });//Show a project tip
-
-  $("#project_add_left_menu").click(function() {
-    utils.clearForm();
-    $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
-    $(".form_sections").fadeIn('2000').removeClass("hide");
-    $("#project_add_left_menu").addClass("active");
-    $(".project_add").show();
-    $(".project_edit").hide();
-  });//Show "add a project" panel
 
   $("#project_list_all").click(function() {
     utils.clearForm();

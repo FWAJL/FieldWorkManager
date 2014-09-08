@@ -3,10 +3,10 @@
   <resource key="page_title"></resource>
 
   <!-- These resources are used for the AJAX calls to set the response message -->
-  <resource key="message_error_insert">Error inserting the facility. Check logs.</resource>
-  <resource key="message_success_insert">The facility has been inserted.</resource>
-  <resource key="message_error_getlist">Error reading the facilities. Check logs.</resource>
-  <resource key="message_success_getlist">The facilities have been read.</resource>
+  <resource key="message_error_add">Error inserting the facility. Check logs.</resource>
+  <resource key="message_success_add">The facility has been inserted.</resource>
+  <resource key="message_error_getList">Error reading the facilities. Check logs.</resource>
+  <resource key="message_success_getList">The facilities have been read.</resource>
   <resource key="message_error_getItem">Error reading the facility. Check logs.</resource>
   <resource key="message_success_getItem">The facility has been read.</resource>
   <resource key="message_error_edit">Error editing the facility. Check logs.</resource>

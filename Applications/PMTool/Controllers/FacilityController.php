@@ -30,23 +30,18 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class FacilityController extends \Library\BaseController {
 
   /**
-   * Method that adds a project and returns the result of operation
+   * Method that adds a facility and returns the result of operation
    * 
    * @param \Library\HttpRequest $rq
    * @return JSON
    */
   public function executeAdd(\Library\HttpRequest $rq) {
-    // Init result
-    $result = $this->ManageResponseWS();
-    //Process data received from Post
-    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
+    $result = $this->InitResponseWS();
 
-    //Init PDO
-    $facility = $this->PrepareUserObject($data_sent);
+    $facility = $this->PrepareUserObject($this->dataPost());
     $result["data"] = $facility;
-    /* Add to DB */
     //Load interface to query the database
-    $manager = $this->managers->getManagerOf('Facility');
+    $manager = $this->managers->getManagerOf($this->module());
     $result_insert = $manager->add($facility);
 
     //Clear the project and facility list from session for the connect PM
@@ -55,71 +50,66 @@ class FacilityController extends \Library\BaseController {
 
     //Process DB result and send result
     if ($result_insert)
-      $result = $this->ManageResponseWS(array("resx_file" => "facility", "resx_key" => "_insert", "step" => "success"));
-    //return the JSON data
-    echo \Library\HttpResponse::encodeJson($result);
+      $result = $this->SendResponseWS(
+              $result,
+              array(
+                  "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Facility, 
+                  "resx_key" => $this->action(), "step" => $result_insert ? "success" : "error"));
   }
 
   /**
-   * Method that edits a project and returns the result of operation
+   * Method that edits a a facility and returns the result of operation
    * 
    * @param \Library\HttpRequest $rq
    * @return JSON
    */
   public function executeEdit(\Library\HttpRequest $rq) {
-    // Init result
-    $result = $this->ManageResponseWS();
-    //Process data received from Post
-    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
+    $result = $this->InitResponseWS();
 
-    //Init PDO
-    $facility = $this->PrepareUserObject($data_sent);
-    /* Add to DB */
     //Load interface to query the database
-    $manager = $this->managers->getManagerOf('Facility');
-    $result_insert = $manager->edit($facility);
+    $manager = $this->managers->getManagerOf($this->module());
+    $result_edit = $manager->edit($this->PrepareUserObject($this->dataPost()));
 
-    //Clear the facility list from session for the connect PM
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
-
-    //Process DB result and send result
-    if ($result_insert)
-      $result = $this->ManageResponseWS(array("resx_file" => "facility", "resx_key" => "_edit", "step" => "success"));
-    //return the JSON data
-    echo \Library\HttpResponse::encodeJson($result);
+    if ($result_edit) {
+      //Clear the facility list from session for the connected PM
+      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
+    }
+    $result = $this->SendResponseWS(
+            $result,
+            array(
+                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Facility, 
+                "resx_key" => $this->action(), "step" => $result_edit ? "success" : "error"));
   }
   /**
-   * Method that delete a project and returns the result of operation
+   * Method that delete a facility and returns the result of operation
    * 
    * @param \Library\HttpRequest $rq
    * @return JSON
    */
   public function executeDelete(\Library\HttpRequest $rq) {
     // Init result
-    $result = $this->ManageResponseWS();
+    $result = $this->InitResponseWS();
+    $manager = $this->managers->getManagerOf($this->module());
+    $result_db = $manager->delete($this->dataPost["facility_id"]);
 
-    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
-
-     //Load interface to query the database
-    $manager = $this->managers->getManagerOf('Facility');
-    $result_insert = $manager->delete($data_sent["facility_id"]);
-
-        //Clear the facility list from session for the connect PM
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
-
-    $result = $this->ManageResponseWS(array("resx_file" => "facility", "resx_key" => "_delete", "step" => "success"));
-    //return the JSON data
-    echo \Library\HttpResponse::encodeJson($result);
+    if ($result_db) {
+      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList); 
+    }
+    $result = $this->SendResponseWS(
+            $result,
+            array(
+                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Facility, 
+                "resx_key" => $this->action(), "step" => $result_db ? "success" : "error"));    
   }
   /**
-   * Method that adds a project and returns the result of operation
+   * Method that retrieves a list of facilities for a project
    * 
    * @param \Library\HttpRequest $rq
    * @return JSON
    */
   public function executeGetList(\Library\HttpRequest $rq, $isNotAjaxCall = FALSE) {
     // Init result
-    $result = $this->ManageResponseWS();
+    $result = $this->InitResponseWS();
 
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
@@ -128,17 +118,18 @@ class FacilityController extends \Library\BaseController {
     $result["data"] = $project;
     /* Get list from DB */
     //Load interface to query the database
-    $manager = $this->managers->getManagerOf('Facility');
-    $project_list = $manager->selectMany($project);
+    $manager = $this->managers->getManagerOf($this->module());
+    $result["facilities"] = $manager->selectMany($project);
 
-    //Process DB result and send result
-    $result = $this->ManageResponseWS(array("resx_file" => "facility", "resx_key" => "_getlist", "step" => "success"));
-    $result["projects"] = $project_list;
-    //return the JSON data
     if ($isNotAjaxCall) {
-      return $project_list;
+      return $result["facilities"];
     } else {
-      echo \Library\HttpResponse::encodeJson($result);
+      $result = $this->SendResponseWS(
+              $result,
+              array(
+                  "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Facility, 
+                  "resx_key" => $this->action(), "step" => $result["facilities"] !== NULL? "success" : "error"
+                   ));
     }
   }
 
@@ -150,9 +141,7 @@ class FacilityController extends \Library\BaseController {
    */
   public function executeGetItem(\Library\HttpRequest $rq) {
     // Init result
-    $result = $this->ManageResponseWS();
-
-    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
+    $result = $this->InitResponseWS();
 
     $projects = array();
     $project_selected = NULL;
@@ -161,15 +150,16 @@ class FacilityController extends \Library\BaseController {
     }
 
     foreach ($projects as $project) {
-      if ($project->project_id() === $data_sent["project_id"]) {
+      if ($project->project_id() === $this->dataPost["project_id"]) {
         $project_selected = $project;
       }
     }
-
-    $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getItem", "step" => "success"));
     $result["project"] = $project_selected;
-    //return the JSON data
-    echo \Library\HttpResponse::encodeJson($result);
+    $result = $this->SendResponseWS(
+            $result,
+            array(
+                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Facility, 
+                "resx_key" => $this->action(), "step" => $project_selected !== NULL ? "success" : "error"));
   }
 
   /**

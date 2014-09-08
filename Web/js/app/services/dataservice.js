@@ -13,7 +13,7 @@
    */
   datacx.post = function(url, data) {
     return $.ajax({
-      url: service_config.rootFolder + url,
+      url: utils.rootFolder + url,
       data: ko.toJSON(data), //using KnockOut library to encode data variable to JSON
       type: 'POST',
       contentType: 'application/json',

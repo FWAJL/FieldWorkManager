@@ -75,7 +75,7 @@ class ProjectController extends \Library\BaseController {
    */
   public function executeAdd(\Library\HttpRequest $rq) {
     // Init result
-    $result = $this->ManageResponseWS();
+    $result = $this->InitResponseWS();
 
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
@@ -91,19 +91,13 @@ class ProjectController extends \Library\BaseController {
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
 
-    //Process DB result and send result
-    $result = (intval($result["dataOut"])) > 0 ?
-      $this->UpdateResponseWS($result, //success 
-          array(
-            "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
-            "resx_key" => "_insert", "step" => "success")) :
-      $this->UpdateResponseWS($result, //error
-          array(
-            "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
-            "resx_key" => "_insert", "step" => "error"));
-    
-    //return the JSON data
-    echo \Library\HttpResponse::encodeJson($result);
+    $this->SendResponseWS(
+            $result,
+            array(
+                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
+                "resx_key" => $this->action(),
+                "step" => (intval($result["dataOut"])) > 0 ? "success" : "error"
+                ));
   }
 
   /**
@@ -114,7 +108,7 @@ class ProjectController extends \Library\BaseController {
    */
   public function executeEdit(\Library\HttpRequest $rq) {
     // Init result
-    $result = $this->ManageResponseWS();
+    $result = $this->InitResponseWS();
 
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
@@ -129,11 +123,13 @@ class ProjectController extends \Library\BaseController {
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
 
-    //Process DB result and send result
-    if ($result_insert)
-      $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_edit", "step" => "success"));
-    //return the JSON data
-    echo \Library\HttpResponse::encodeJson($result);
+    $this->SendResponseWS(
+            $result,
+            array(
+                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
+                "resx_key" => $this->action(),
+                "step" => $result_insert ? "success" : "error"
+                ));
   }
 
   /**
@@ -144,7 +140,7 @@ class ProjectController extends \Library\BaseController {
    */
   public function executeDelete(\Library\HttpRequest $rq) {
     // Init result
-    $result = $this->ManageResponseWS();
+    $result = $this->InitResponseWS();
     $db_result = FALSE;
     $project_id = intval($this->dataPost["project_id"]);
 
@@ -154,16 +150,18 @@ class ProjectController extends \Library\BaseController {
     if ($project_selected !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
       $db_result = $manager->delete($project_id);
+      //Clear the project and facility list from session for the connect PM
+      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
+      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
     }
-    //Clear the project and facility list from session for the connect PM
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
 
-    $result = $db_result !== FALSE ?
-        $this->ManageResponseWS(array("resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, "resx_key" => "_delete", "step" => "success")) :
-        $this->ManageResponseWS(array("resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, "resx_key" => "_delete", "step" => "error"));
-    //return the JSON data
-    echo \Library\HttpResponse::encodeJson($result);
+    $this->SendResponseWS(
+            $result,
+            array(
+                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
+                "resx_key" => $this->action(),
+                "step" => $db_result !== FALSE ? "success" : "error"
+                ));
   }
 
   /**
@@ -174,7 +172,7 @@ class ProjectController extends \Library\BaseController {
    */
   public function executeGetList(\Library\HttpRequest $rq, $isNotAjaxCall = FALSE) {
     // Init result
-    $result = $this->ManageResponseWS();
+    $result = $this->InitResponseWS();
 
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
@@ -190,18 +188,20 @@ class ProjectController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf('Facility');
     $list[\Library\Enums\SessionKeys::UserProjectFacilityList] = $manager->selectMany($project);
 
-    //Process DB result and send result
-    $result = $this->ManageResponseWS(
-        array(
-          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
-          "resx_key" => "_getlist", "step" => "success"));
-    
     $result["lists"] = $list;
-    //return the JSON data
     if ($isNotAjaxCall) {
       return $list;
     } else {
-      echo \Library\HttpResponse::encodeJson($result);
+      $step_result = 
+              $list[\Library\Enums\SessionKeys::UserProjects] !== NULL & $list[\Library\Enums\SessionKeys::UserProjectFacilityList] !== NULL ? 
+              "success" : "error";
+      $this->SendResponseWS(
+              $result,
+              array(
+                  "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
+                  "resx_key" => $this->action(),
+                  "step" => $step_result
+                  ));
     }
   }
 
@@ -213,26 +213,21 @@ class ProjectController extends \Library\BaseController {
    */
   public function executeGetItem(\Library\HttpRequest $rq) {
     // Init result
-    $result = $this->ManageResponseWS();
+    $result = $this->InitResponseWS();
     $project_id = intval($this->dataPost["project_id"]);
     
     $project_selected = $this->_GetProjectFromSession($project_id);
     $facility_selected = $this->_GetFacilityProjectFromSession($project_id);
-
-    $result = ($project_selected !== NULL && $facility_selected !== NULL) ?//condition
-      $this->ManageResponseWS(//true
-          array(
-            "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
-            "resx_key" => "_getItem", "step" => "success")) :
-      $this->ManageResponseWS(//false
-          array(
-            "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
-            "resx_key" => "_getItem", "step" => "error"));
     
     $result["project"] = $project_selected;
     $result["facility"] = $facility_selected;
-    //return the JSON data
-    return $result;
+    $this->SendResponseWS(
+            $result,
+            array(
+                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
+                "resx_key" => $this->action(),
+                "step" => ($project_selected !== NULL && $facility_selected !== NULL) ? "success" : "error"
+                ));
   }
 
   /**
@@ -242,7 +237,7 @@ class ProjectController extends \Library\BaseController {
    * @return JSON
    */
   public function executeUpdateItems(\Library\HttpRequest $rq) {
-    $result = $this->ManageResponseWS(); // Init result
+    $result = $this->InitResponseWS(); // Init result
 
     $rows_affected = 0;
     //Get the project objects from ids received
@@ -263,18 +258,13 @@ class ProjectController extends \Library\BaseController {
       $rows_affected += $manager->edit($project) ? 1 : 0;
     }
 
-    $result = ($rows_affected === count($project_ids)) ? //condition
-       $this->UpdateResponseWS($result, //true
-           array(
-             "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
-             "resx_key" => "_getItem", "step" => "success")) :
-       $this->UpdateResponseWS($result, //false
-           array(
-             "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
-             "resx_key" => "_getItem", "step" => "error"));
-    
-    //return the JSON data
-    return $result;
+    $this->SendResponseWS(
+            $result,
+            array(
+                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
+                "resx_key" => $this->action(),
+                "step" => ($rows_affected === count($project_ids)) ? "success" : "error"
+                ));
   }
 
   /**

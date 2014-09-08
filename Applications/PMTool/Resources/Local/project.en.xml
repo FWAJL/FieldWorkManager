@@ -5,8 +5,8 @@
   <resource key="project_h1">Welcome to Field Work Manager, for Project managers</resource>
   <resource key="project_welcome_message">Please, select an option on the left menu.</resource>
   
-  <resource key="message_error_insert">Error inserting the project. Check logs.</resource>
-  <resource key="message_success_insert">The project has been inserted.</resource>
+  <resource key="message_error_add">Error inserting the project. Check logs.</resource>
+  <resource key="message_success_add">The project has been inserted.</resource>
   <resource key="message_error_getlist">Error reading the projects. Check logs.</resource>
   <resource key="message_success_getlist">The projects have been read.</resource>
   <resource key="message_error_getItem">This project doesn't exist or is not one of your project. You will be redirected to your list of projects in 3 seconds.</resource>
@@ -15,6 +15,8 @@
   <resource key="message_success_edit">The project has been edited.</resource>
   <resource key="message_error_delete">Error deleting the project. Check logs.</resource>
   <resource key="message_success_delete">The project has been deleted.</resource>
+  <resource key="message_error_updateItems">Error editing the projects. Check logs.</resource>
+  <resource key="message_success_updateItems">The projects have been edited</resource>
 
   <resource key="project_legend_add">Add new project</resource>
   <resource key="project_legend_edit">Edit this project</resource>

@@ -13,20 +13,26 @@
 // ------------------------------------------------------------------------
 
 /**
- * Template controller Class
+ * ResourcesController controller Class
  *
- * @package		Application/PMTool
+ * @package		Library
  * @subpackage	Controllers
- * @category	TemplateController
+ * @category	ResourcesController
  * @author		FWM DEV Team
  * @link		
  */
-namespace Applications\PMTool\Controllers;
+namespace Libray\Controllers;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-class TemplateController extends \Library\BaseController {
+class ResourcesController extends \Library\BaseController {
 
-  public function executeIndex(\Library\HttpRequest $rq) {
+  public function executeGetResx(\Library\HttpRequest $rq) {
+    $response = GetResource();
+    echo \Library\HttpResponse::encodeJson($response);
+  }
+  
+  protected function GetResource() {
+//    $this->dataPost();
   }
 
 }
