@@ -126,18 +126,20 @@ abstract class Application {
    * @return string : the controller class name w/ namespace
    */
   private function BuildControllerClass(\Library\Route $route) {
-    return preg_match("`^lib$`", $route->type()) 
-        ? //AJAX for the Framework
-        Enums\NameSpaceName::LibFolderName 
+    if (preg_match("`^lib$`", $route->type())) {
+//AJAX request for the Framework
+      return Enums\NameSpaceName::LibFolderName 
         . Enums\NameSpaceName::LibControllersFolderName
         . $route->module()
-        . Enums\FileNameConst::ControllerSuffix 
-        : //AJAX for the Application
-        Enums\NameSpaceName::AppsFolderName
+        . Enums\FileNameConst::ControllerSuffix;
+    } else {
+//AJAX request for the Application
+      return Enums\NameSpaceName::AppsFolderName
         . $this->name
         . Enums\NameSpaceName::AppsControllersFolderName
         . $route->module()
         . Enums\FileNameConst::ControllerSuffix;
+    }
   }
 
 }
