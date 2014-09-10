@@ -38,7 +38,13 @@ class ProjectController extends \Library\BaseController {
    */
   public function executeIndex(\Library\HttpRequest $rq) {
     //Get list of projects and store in session
-    $this->_GetAndStoreProjectsInSession($rq);
+    $lists = $this->_GetAndStoreProjectsInSession($rq);
+    
+    if (count($lists[\Library\Enums\SessionKeys::UserProjects]) > 0) {
+      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
+    } else {
+      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ProjectsShowForm . "?mode=add&test=true");
+    }
   }
 
   /**
