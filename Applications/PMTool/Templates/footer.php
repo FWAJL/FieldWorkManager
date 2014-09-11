@@ -1,5 +1,6 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
-
+</div><!-- END ROW DIV -->
+</div><!-- END CONTENT CONTAINER -->
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/parsexml.js"></script>
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/ko.js"></script>
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/bootstrap.min.js"></script>  

@@ -1,11 +1,7 @@
--- phpMyAdmin SQL Dump
--- version 4.0.4
--- http://www.phpmyadmin.net
+-- FWM TEAM
 --
--- Host: 198.23.51.222:3306
--- Generation Time: Jul 29, 2014 at 05:10 AM
--- Server version: 5.5.38
--- PHP Version: 5.4.4-14+deb7u12
+-- History:
+-- 10-09-14: add location table
 
 DROP SCHEMA IF EXISTS `baiken_fwm_1`;
 
@@ -46,16 +42,7 @@ CREATE TABLE IF NOT EXISTS `facility` (
   `boundary` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`facility_id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
-
---
--- Dumping data for table `facility`
---
-
-INSERT INTO `facility` (`facility_id`, `project_id`, `facility_name`, `facility_address`, `facility_lat`, `facility_long`, `facility_contact_name`, `facility_contact_phone`, `facility_contact_email`, `facility_id_num`, `facility_sector`, `facility_sic`, `boundary`) VALUES
-(3, 14, 'Project FWA 240714 facility', 'address 240714', '', '', '', '', '', '', '', '', ''),
-(4, 15, 'The Fantastic Facility', 'Mesa Rd,\n85201 Tempe, AZ\n', '', '', '', '', '', '', '', '', ''),
-(5, 18, 'Facility of 290714', 'New address:\n1 Chemin d''Andéol\n26600 Tain l''Hermitage\nFrance', '', '', '', '', '', '', '', '', '');
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -73,16 +60,7 @@ CREATE TABLE IF NOT EXISTS `project` (
   `pm_id` int(11) NOT NULL,
   PRIMARY KEY (`project_id`),
   KEY `pm_id` (`pm_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=19 ;
-
---
--- Dumping data for table `project`
---
-
-INSERT INTO `project` (`project_id`, `project_name`, `project_number`, `project_desc`, `active`, `visible`, `pm_id`) VALUES
-(14, 'Project FWA 240714 edit', 'p24071455', 'desc 240714', 0, 0, 1),
-(15, 'Project FWA 2407-2', 'p2407-2', 'desc 2407-2', 0, 0, 1),
-(18, 'Project add 290714 (edited)', 'p290714', 'Description', 0, 0, 1);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -110,9 +88,36 @@ CREATE TABLE IF NOT EXISTS `project_manager` (
 INSERT INTO `project_manager` (`pm_id`, `username`, `password`, `hint`, `pm_comp_name`, `pm_name`, `pm_address`, `pm_phone`, `pm_email`) VALUES
 (1, 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683', 'hint', 'comp name', 'John', 'Doe', '1234567890', 'test@fwa.net');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `location`
+--
+
+CREATE TABLE `baiken_fwm_1`.`location` (
+  `loc_id` INT(11) COLLATE utf8_unicode_ci NOT NULL,
+  `loc_name` VARCHAR(50) COLLATE utf8_unicode_ci NULL,
+  `loc_desc` VARCHAR(250) COLLATE utf8_unicode_ci NULL,
+  `loc_document` VARCHAR(500) COLLATE utf8_unicode_ci NULL,
+  `loc_lat` FLOAT(10,6) COLLATE utf8_unicode_ci NULL,
+  `loc_long` FLOAT(10,6) COLLATE utf8_unicode_ci NULL,
+  `loc_active` SMALLINT(6) COLLATE utf8_unicode_ci NOT NULL DEFAULT 1,
+  `project_id` INT(11) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`loc_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `project`
+--
+ALTER TABLE `location`
+  ADD UNIQUE INDEX `idlocation_UNIQUE` (`loc_id` ASC);
+ALTER TABLE `location`
+  ADD INDEX `FK_LOC_PROJECT_idx` (`project_id` ASC);
+ALTER TABLE `location`
+  ADD CONSTRAINT `FK_LOC_PROJECT` FOREIGN KEY (`project_id`) REFERENCES `project` (`project_id`);
 
 --
 -- Constraints for table `facility`
@@ -125,6 +130,7 @@ ALTER TABLE `facility`
 --
 ALTER TABLE `project`
   ADD CONSTRAINT `project_ibfk_1` FOREIGN KEY (`pm_id`) REFERENCES `project_manager` (`pm_id`);
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

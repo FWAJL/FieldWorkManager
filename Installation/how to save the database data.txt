@@ -1,0 +1,5 @@
+You can save your data by:
+    - selecting all data rows in each table.
+    - then you export the data as CSV file (as show on the screenshots Installation/export-data-1.png and Installation/export-data-2.png).
+    - you run the database script.
+    - you import your data (via the button import that is besides the export button used above). 

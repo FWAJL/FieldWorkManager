@@ -6,5 +6,3 @@
     <p><?php echo $resx["project_welcome_message"]; ?></p>
   </section>
 </section>
-</div><!-- END ROW DIV -->
-</div><!-- END CONTENT CONTAINER -->
