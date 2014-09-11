@@ -39,7 +39,7 @@ class ProjectController extends \Library\BaseController {
   public function executeIndex(\Library\HttpRequest $rq) {
     //Get list of projects and store in session
     $lists = $this->_GetAndStoreProjectsInSession($rq);
-    
+
     if (count($lists[\Library\Enums\SessionKeys::UserProjects]) > 0) {
       header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
     } else {
@@ -55,8 +55,7 @@ class ProjectController extends \Library\BaseController {
   public function executeShowForm(\Library\HttpRequest $rq) {
     //Load Modules for view
     $this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, 
-        $this->app()->router()->selectedRoute()->phpModules());
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
   /**
@@ -67,10 +66,17 @@ class ProjectController extends \Library\BaseController {
   public function executeListAll(\Library\HttpRequest $rq) {
     //Get list of projects stored in session
     $this->_GetAndStoreProjectsInSession($rq);
-    $this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::projects, 
-        $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects)
+    $data = array(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects)
     );
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
+
+    $modules = $this->app()->router()->selectedRoute()->phpModules();
+    $this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
+    $this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
   }
 
   /**
@@ -98,12 +104,11 @@ class ProjectController extends \Library\BaseController {
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
 
     $this->SendResponseWS(
-            $result,
-            array(
-                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
-                "resx_key" => $this->action(),
-                "step" => (intval($result["dataOut"])) > 0 ? "success" : "error"
-                ));
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+        "resx_key" => $this->action(),
+        "step" => (intval($result["dataOut"])) > 0 ? "success" : "error"
+    ));
   }
 
   /**
@@ -130,12 +135,11 @@ class ProjectController extends \Library\BaseController {
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
 
     $this->SendResponseWS(
-            $result,
-            array(
-                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
-                "resx_key" => $this->action(),
-                "step" => $result_insert ? "success" : "error"
-                ));
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+        "resx_key" => $this->action(),
+        "step" => $result_insert ? "success" : "error"
+    ));
   }
 
   /**
@@ -162,12 +166,11 @@ class ProjectController extends \Library\BaseController {
     }
 
     $this->SendResponseWS(
-            $result,
-            array(
-                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
-                "resx_key" => $this->action(),
-                "step" => $db_result !== FALSE ? "success" : "error"
-                ));
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+        "resx_key" => $this->action(),
+        "step" => $db_result !== FALSE ? "success" : "error"
+    ));
   }
 
   /**
@@ -198,16 +201,15 @@ class ProjectController extends \Library\BaseController {
     if ($isNotAjaxCall) {
       return $list;
     } else {
-      $step_result = 
-              $list[\Library\Enums\SessionKeys::UserProjects] !== NULL & $list[\Library\Enums\SessionKeys::UserProjectFacilityList] !== NULL ? 
+      $step_result =
+              $list[\Library\Enums\SessionKeys::UserProjects] !== NULL & $list[\Library\Enums\SessionKeys::UserProjectFacilityList] !== NULL ?
               "success" : "error";
       $this->SendResponseWS(
-              $result,
-              array(
-                  "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
-                  "resx_key" => $this->action(),
-                  "step" => $step_result
-                  ));
+              $result, array(
+          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+          "resx_key" => $this->action(),
+          "step" => $step_result
+      ));
     }
   }
 
@@ -221,19 +223,18 @@ class ProjectController extends \Library\BaseController {
     // Init result
     $result = $this->InitResponseWS();
     $project_id = intval($this->dataPost["project_id"]);
-    
+
     $project_selected = $this->_GetProjectFromSession($project_id);
     $facility_selected = $this->_GetFacilityProjectFromSession($project_id);
-    
+
     $result["project"] = $project_selected;
     $result["facility"] = $facility_selected;
     $this->SendResponseWS(
-            $result,
-            array(
-                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
-                "resx_key" => $this->action(),
-                "step" => ($project_selected !== NULL && $facility_selected !== NULL) ? "success" : "error"
-                ));
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+        "resx_key" => $this->action(),
+        "step" => ($project_selected !== NULL && $facility_selected !== NULL) ? "success" : "error"
+    ));
   }
 
   /**
@@ -250,10 +251,10 @@ class ProjectController extends \Library\BaseController {
     $project_ids = str_getcsv($this->dataPost["project_ids"], ',');
     $projects = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
     $matchedElements = $this->FindObjectsFromIds(
-        array(
-          "filter" => "project_id",
-          "ids" => $project_ids,
-          "objects" => $projects)
+            array(
+                "filter" => "project_id",
+                "ids" => $project_ids,
+                "objects" => $projects)
     );
 
     //Update the project objects in DB and get result (number of rows affected)
@@ -265,12 +266,11 @@ class ProjectController extends \Library\BaseController {
     }
 
     $this->SendResponseWS(
-            $result,
-            array(
-                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project, 
-                "resx_key" => $this->action(),
-                "step" => ($rows_affected === count($project_ids)) ? "success" : "error"
-                ));
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+        "resx_key" => $this->action(),
+        "step" => ($rows_affected === count($project_ids)) ? "success" : "error"
+    ));
   }
 
   /**
@@ -293,7 +293,7 @@ class ProjectController extends \Library\BaseController {
     }
     return $projectMatch;
   }
-  
+
   /**
    * Find a facility from an  project id
    * 
@@ -322,7 +322,7 @@ class ProjectController extends \Library\BaseController {
    * @return boolean
    */
   private function _CheckIfPmHasProjects(\Applications\PMTool\Models\Dao\Project_manager $pm) {
-    
+
     if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects)) {
       $projects = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
       return count($projects) > 0 ? TRUE : FALSE;
@@ -362,16 +362,16 @@ class ProjectController extends \Library\BaseController {
   private function _GetAndStoreProjectsInSession($rq) {
     $lists = array();
     if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects) &&
-        !$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjectFacilityList)) {
-      
+            !$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjectFacilityList)) {
+
       $lists = $this->executeGetList($rq, TRUE);
-      
+
       $this->app()->user->setAttribute(
-          \Library\Enums\SessionKeys::UserProjects, $lists[\Library\Enums\SessionKeys::UserProjects]
+              \Library\Enums\SessionKeys::UserProjects, $lists[\Library\Enums\SessionKeys::UserProjects]
       );
-      
+
       $this->app()->user->setAttribute(
-          \Library\Enums\SessionKeys::UserProjectFacilityList, $lists[\Library\Enums\SessionKeys::UserProjectFacilityList]
+              \Library\Enums\SessionKeys::UserProjectFacilityList, $lists[\Library\Enums\SessionKeys::UserProjectFacilityList]
       );
     } else {
       $lists[\Library\Enums\SessionKeys::UserProjects] = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);

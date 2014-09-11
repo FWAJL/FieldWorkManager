@@ -56,6 +56,10 @@
     <css_files>
       <css_file use="project"/>
     </css_files>
+    <php_modules>
+      <php_module key="active_list_module" file_name="active_list.php" shared="true"/>
+      <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true"/>
+    </php_modules>
   </route><!-- project/listAll -->
   <route url="location" module="Location" action="index" resxfile="location" type="ui">
     <js_files>

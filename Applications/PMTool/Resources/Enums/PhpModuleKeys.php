@@ -12,11 +12,11 @@
 // ------------------------------------------------------------------------
 
 /**
- * ViewVariablesKeys Class
+ * PhpModuleKeys Class
  *
  * @package		Applications/PMTool
  * @subpackage	Resources/Enum
- * @category	ViewVariablesKeys
+ * @category	PhpModuleKeys
  * @author		FWM DEV Team
  * @link		
  */
@@ -25,11 +25,10 @@
 namespace Applications\PMTool\Resources\Enums;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-class ViewVariablesKeys {
-  //Project's views variables
-  const form_modules = "form_modules"; 
-  const projects = "projects"; 
-  //Location's views variables
+class PhpModuleKeys {
+  const active_list = "active_list_module"; 
+  const inactive_list = "inactive_list_module"; 
+  
 }
 
 ?>
