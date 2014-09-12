@@ -12,9 +12,7 @@
       <css_file value="Web/css/app/theme.css"/>
     </css_files>
   </route><!-- login -->
-  <route url="logout" module="Authenticate" action="disconnect" resxfile="login" type="ui">
-  
-  </route>
+  <route url="logout" module="Authenticate" action="disconnect" resxfile="login" type="ui" />
   <route url="project" module="Project" action="index" resxfile="project" type="ui">
     <js_files>
       <js_file use="head" value="Web/js/app/controllers/facility_manager.js"/>
@@ -31,15 +29,18 @@
   </route><!-- project/index -->
   <route url="project/showForm" module="Project" action="showForm" resxfile="project" type="ui">
     <js_files>
-      <!--<js_file use="head" value="Web/js/app/controllers/project/project_showForm.js"/>-->
+      <!-- This uses the same scripts as the project route, e.g. use attribute => route value -->
       <js_file use="project" />
     </js_files>
     <css_files>
+      <!-- This uses the same css as the project route, e.g. use attribute => route value -->
       <css_file use="project"/>
     </css_files>
     <php_modules>
       <!-- Add just the file name, the Router class will take of building the correct path -->
       <!-- The "shared" attribute specifies where to get the module, either the current view Modules folder or the main Modules folder in Views -->
+      <!-- Add the keys in Applications/PMTool/Resources/Enums/PhpModuleKeys -->
+      <!-- The order matters! -->
       <php_module key="project_tabs_open" file_name="project_tabs_open.php"/>
       <php_module key="project_form" file_name="project_form.php" shared="true"/>
       <php_module key="facility_form" file_name="facility_form.php" shared="true"/>
@@ -50,7 +51,6 @@
   </route><!-- project/showAddForm -->
   <route url="project/listAll" module="Project" action="listAll" resxfile="project" type="ui">
     <js_files>
-      <!--<js_file use="head" value="Web/js/app/controllers/project/project_listAll.js"/>-->
       <js_file use="project" />
     </js_files>
     <css_files>
