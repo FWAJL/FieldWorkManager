@@ -29,7 +29,7 @@ class ProjectManager_PDO extends \Library\DAL\BaseManager {
     $project_list = $query->fetchAll();
     $query->closeCursor();
 
-    return $project_list;
+    return count($project_list) > 0 ? $project_list : array();
   }
 
   public function countById($pm_id) {

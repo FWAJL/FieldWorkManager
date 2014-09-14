@@ -32,7 +32,7 @@ abstract class SessionKeys {
   const UserConnected = "user_connected";
   const UserProjects= "user_projects";
   const UserProjectFacilityList= "user_project_facility_list";
-
+  const UserLocations= "user_locations";
 
   const SessionRoutes = "app_routes";
   const SessionRoutesXmlLastModified = "app_routes_last_modified";

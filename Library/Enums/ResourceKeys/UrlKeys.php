@@ -26,6 +26,11 @@ class UrlKeys {
   const ProjectsRootUrl = "project";
   const ProjectsListAll = "project/listAll";
   const ProjectsShowForm = "project/showForm";
+  
+  const LocationRootUrl = "location";
+  const LocationListAll = "location/listAll";
+  const LocationShowForm = "location/showForm";
+
   /**
    * Absolute Urls
    */
