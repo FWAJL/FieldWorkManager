@@ -31,8 +31,8 @@ CREATE TABLE IF NOT EXISTS `facility` (
   `project_id` int(11) NOT NULL,
   `facility_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `facility_address` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
-  `facility_lat` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `facility_long` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `facility_lat` FLOAT(10,6) COLLATE utf8_unicode_ci NOT NULL,
+  `facility_long` FLOAT(10,6) COLLATE utf8_unicode_ci NOT NULL,
   `facility_contact_name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `facility_contact_phone` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
   `facility_contact_email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -95,15 +95,16 @@ INSERT INTO `project_manager` (`pm_id`, `username`, `password`, `hint`, `pm_comp
 --
 
 CREATE TABLE `baiken_fwm_1`.`location` (
-  `loc_id` INT(11) COLLATE utf8_unicode_ci NOT NULL,
-  `loc_name` VARCHAR(50) COLLATE utf8_unicode_ci NULL,
-  `loc_desc` VARCHAR(250) COLLATE utf8_unicode_ci NULL,
-  `loc_document` VARCHAR(500) COLLATE utf8_unicode_ci NULL,
-  `loc_lat` FLOAT(10,6) COLLATE utf8_unicode_ci NULL,
-  `loc_long` FLOAT(10,6) COLLATE utf8_unicode_ci NULL,
-  `loc_active` SMALLINT(6) COLLATE utf8_unicode_ci NOT NULL DEFAULT 1,
+  `location_id` INT(11) COLLATE utf8_unicode_ci NOT NULL,
+  `location_name` VARCHAR(50) COLLATE utf8_unicode_ci NULL,
+  `location_desc` VARCHAR(250) COLLATE utf8_unicode_ci NULL,
+  `location_document` VARCHAR(500) COLLATE utf8_unicode_ci NULL,
+  `location_lat` FLOAT(10,6) COLLATE utf8_unicode_ci NULL,
+  `location_long` FLOAT(10,6) COLLATE utf8_unicode_ci NULL,
+  `location_active` SMALLINT(6) COLLATE utf8_unicode_ci NOT NULL DEFAULT 1,
+  `location_visible` SMALLINT(6) COLLATE utf8_unicode_ci NOT NULL DEFAULT 1,
   `project_id` INT(11) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`loc_id`)
+  PRIMARY KEY (`location_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 --
 -- Constraints for dumped tables
@@ -113,7 +114,7 @@ CREATE TABLE `baiken_fwm_1`.`location` (
 -- Constraints for table `project`
 --
 ALTER TABLE `location`
-  ADD UNIQUE INDEX `idlocation_UNIQUE` (`loc_id` ASC);
+  ADD UNIQUE INDEX `idlocation_UNIQUE` (`location_id` ASC);
 ALTER TABLE `location`
   ADD INDEX `FK_LOC_PROJECT_idx` (`project_id` ASC);
 ALTER TABLE `location`
