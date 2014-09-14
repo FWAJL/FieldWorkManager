@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * @package		Basic MVC framework
@@ -21,14 +22,23 @@
  * @link		
  */
 
-
 namespace Applications\PMTool\Resources\Enums;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+  exit('No direct script access allowed');
 
 class PhpModuleKeys {
-  const active_list = "active_list_module"; 
-  const inactive_list = "inactive_list_module"; 
+
+  const active_list = "active_list_module";
+  const inactive_list = "inactive_list_module";
   
+  const project_tabs_open = "project_tabs_open";
+  const project_form = "project_form";
+  const facility_form = "facility_form";
+  const client_form = "client_form";
+  const project_buttons = "project_buttons";
+  const project_tabs_close = "project_tabs_close";
+
 }
 
 ?>
