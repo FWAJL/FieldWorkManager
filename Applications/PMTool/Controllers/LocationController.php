@@ -1,11 +1,16 @@
 <?php
 
 namespace Applications\PMTool\Controllers;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+  exit('No direct script access allowed');
 
 class LocationController extends \Library\BaseController {
 
-  public function executeIndex(\Library\HttpRequest $request) {
+  public function executeIndex(\Library\HttpRequest $rq) {
+    //Store the project_id in Session
+    $this->_GetAndStoreProjectInSession($rq);
+
     // All the rest is done in BaseController->execute method
     header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
   }
@@ -184,7 +189,18 @@ class LocationController extends \Library\BaseController {
         "step" => ($rows_affected === count($location_ids)) ? "success" : "error"
     ));
   }
-  
+
+  private function _GetAndStoreProjectInSession(\Library\HttpRequest $rq) {
+    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects)) {
+      foreach ($this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects) as $project) {
+        if (intval($project->project_id()) === intval($rq->getData("project_id"))) {
+          $this->app()->user->setAttribute(\Library\Enums\SessionKeys::CurrentProject, $project);
+          break;
+        }
+      }
+    }
+  }
+
   private function _GetAndStoreLocationsInSession($rq) {
     $lists = array();
     if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserLocations)) {
@@ -229,4 +245,5 @@ class LocationController extends \Library\BaseController {
     }
     return $locationMatch;
   }
+
 }

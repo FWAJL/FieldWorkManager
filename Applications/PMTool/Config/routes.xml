@@ -70,24 +70,20 @@
       <css_file value="Web/css/app/app-style.css"/>
       <css_file value="Web/css/app/app-theme.css"/>
       <css_file value="Web/css/app/theme.css"/>
-
     </css_files>
   </route><!-- location/index -->
     <route url="location/listAll" module="Location" action="listAll" resxfile="location" type="ui">
     <js_files>
-      
+      <js_file use="head" value="Web/js/app/controllers/location_manager.js"/>
     </js_files>
     <css_files>
-      <css_file value="Web/css/app/nav.css"/>
-      <css_file value="Web/css/app/app-style.css"/>
-      <css_file value="Web/css/app/app-theme.css"/>
-      <css_file value="Web/css/app/theme.css"/>
+      <css_file use="project" />
     </css_files>
     <php_modules>
       <php_module key="active_list_module" file_name="active_list.php" shared="true"/>
       <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true"/>
     </php_modules>
-  </route><!-- location/index -->
+  </route><!-- location/listAll -->
   <route url="location/showForm" module="Location" action="showForm" resxfile="location" type="ui">
     <js_files>
       
@@ -99,9 +95,9 @@
       <css_file value="Web/css/app/theme.css"/>
 
     </css_files>
-  </route><!-- location/index -->
+  </route><!-- location/showForm -->
 
-  <!-- WebService routes -->
+  <!-- WebService AJAX routes -->
   <route url="auth" module="Authenticate" action="authenticate" resxfile="login" type="ws" />
   
   <route url="project/add" module="Project" action="add" resxfile="project" type="ws" />

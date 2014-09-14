@@ -39,7 +39,7 @@ class LocationManager_PDO extends \Library\DAL\BaseManager {
     }
     $columns = rtrim($columns, ", ");
     $values = rtrim($values, ", ");
-    $sql = "INSERT INTO `object` (" . $columns . ") VALUES (" . $values . ");";
+    $sql = "INSERT INTO `location` (" . $columns . ") VALUES (" . $values . ");";
     $query = $this->dao->query($sql);
     $result;
     if (!$query) {
@@ -56,14 +56,14 @@ class LocationManager_PDO extends \Library\DAL\BaseManager {
     $set_clause = "";
     $where_clause = "";
     foreach ($object as $key => $value) {
-      if ($key === "object_id") {
+      if ($key === "location_id") {
         $where_clause = "$key = $value";
       } else {
         $set_clause .= "`" . $key . "` = '" . $value ."',"; 
       }
     }
     $set_clause = rtrim($set_clause, ",");
-    $sql = "UPDATE `object` SET $set_clause  WHERE $where_clause;";
+    $sql = "UPDATE `location` SET $set_clause  WHERE $where_clause;";
     $query = $this->dao->query($sql);
     $result;
     if (!$query) {
@@ -76,7 +76,7 @@ class LocationManager_PDO extends \Library\DAL\BaseManager {
   }
 
   public function delete($identifier) {
-    $sql = "DELETE from `object` WHERE object_id = " . $identifier . ";";
+    $sql = "DELETE from `location` WHERE location_id = " . $identifier . ";";
     $query = $this->dao->query($sql);
     $result;
     if (!$query) {

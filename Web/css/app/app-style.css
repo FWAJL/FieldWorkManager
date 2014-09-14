@@ -106,3 +106,10 @@ textarea { resize: vertical;}
   padding: 10px;
   /*display: none;*/
 }
+
+/* LOCATION */
+.add-new-locations textarea {
+  resize: vertical;
+  width: 100%;
+}
+.btn-add-location-names {display: inline-block;}

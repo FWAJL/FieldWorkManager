@@ -33,6 +33,9 @@ abstract class SessionKeys {
   const UserProjects= "user_projects";
   const UserProjectFacilityList= "user_project_facility_list";
   const UserLocations= "user_locations";
+  
+  //Current objects
+  const CurrentProject = "current_project";
 
   const SessionRoutes = "app_routes";
   const SessionRoutesXmlLastModified = "app_routes_last_modified";

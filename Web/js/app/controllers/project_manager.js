@@ -11,7 +11,7 @@ $(document).ready(function() {
       } else if (key === "delete") {
         project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
       } else if (key === "showLocations") {
-        toastr.info("Being implemented...");
+        utils.redirect("location?project_id=" + options.$trigger.attr("data-project-id"));
       }
     },
     items: {

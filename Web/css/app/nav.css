@@ -1,6 +1,6 @@
 .content_left{
 }
-a {color: #333;}
+a {color: #333; display: block;}
 a:hover {color: #000;}
 a, a:hover {text-decoration: none; cursor: pointer;}
 
