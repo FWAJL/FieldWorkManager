@@ -34,11 +34,14 @@ class ViewVariablesKeys {
   const active_list = "active_list_module";
   const inactive_list = "inactive_list_module";
   
+  const currentProject = "current_project";
+  
   //Project's views variables
   const form_modules = "form_modules"; 
   const projects = "projects"; 
   
   //Location's views variables
+  
 }
 
 ?>

@@ -48,8 +48,7 @@ $(document).ready(function() {
 
 
   $("#btn-add-location-names").click(function() {
-    var post_data = utils.makeArray();
-    toastr.info("Implement this.");
+    location_manager.add(utils.makeArray(), "location", "add");
   });//Add a location
 
   $("#btn_edit_location").click(function() {
@@ -95,7 +94,7 @@ $(document).ready(function() {
  */
 (function(location_manager) {
   location_manager.add = function(data, controller, action) {
-    datacx.post(controller + "/" + action, data["location"]).then(function(reply) {//call AJAX method to call Location/Add WebService
+    datacx.post(controller + "/" + action, {"data": data}).then(function(reply) {//call AJAX method to call Location/Add WebService
       if (reply === null || reply.dataOut === undefined || reply.dataOut === null || parseInt(reply.dataOut) === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
