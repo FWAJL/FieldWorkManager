@@ -7,16 +7,16 @@
         <div  class="col-lg-5 col-md-5">
           <h4><?php echo $resx["h3_location_names_form"]; ?></h4>
           <div class="add-new-locations">
-            <textarea></textarea>
-            <input type="button" value="<?php echo $resx["btn_add_location_names"] ?>" class="btn btn-primary btn-add-location-names" />
+            <div class="location-names"><textarea name="location_names" type="text"></textarea></div>
+            <input id="btn-add-location-names" type="button" value="<?php echo $resx["btn_add_location_names"] ?>" class="btn btn-primary" />
           </div>
         </div>
         <div  class="col-lg-2 col-md-2"></div>
         <div  class="col-lg-2 col-md-5">
           <h4><?php echo $resx["h3_location_add_buttons"]; ?></h4>
           <div class="location-add-buttons">
-            <input type="button" value="<?php echo $resx["btn_add_location_gmap"] ?>" class="btn btn-primary btn-add-location-gmap" />
-            <input type="button" value="<?php echo $resx["btn_add_location_manual"] ?>" class="btn btn-primary btn-add-location-manual" />
+            <input id="btn-add-location-gmap" type="button" value="<?php echo $resx["btn_add_location_gmap"] ?>" class="btn btn-primary" />
+            <input id="btn-add-location-manual" type="button" value="<?php echo $resx["btn_add_location_manual"] ?>" class="btn btn-primary" />
           </div>
         </div>
       </div>

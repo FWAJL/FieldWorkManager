@@ -34,6 +34,11 @@ abstract class SessionKeys {
   const UserProjectFacilityList= "user_project_facility_list";
   const UserLocations= "user_locations";
   
+  const UserSessionProjects = "user_session_projects";
+  const ProjectLocations = "project_locations";
+  const ProjectTasks = "project_tasks";
+  const ProjectTechnicians = "project_technicians";
+  
   //Current objects
   const CurrentProject = "current_project";
 

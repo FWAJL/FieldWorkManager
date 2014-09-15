@@ -47,16 +47,9 @@ $(document).ready(function() {
   //************************************************//
 
 
-  $("#btn_add_location").click(function() {
-    var post_data = {};
-    post_data["location"] = utils.retrieveInputs("location_form", ["location_name"]);
-    post_data["facility"] = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
-    //TO BE IMPLEMENTED
-    //post_data["client"] = utils.retrieveInputs("client_form", []);
-    if (post_data["location"].location_name !== undefined &&
-            post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
-      location_manager.add(post_data, "location", "add");
-    }
+  $("#btn-add-location-names").click(function() {
+    var post_data = utils.makeArray();
+    toastr.info("Implement this.");
   });//Add a location
 
   $("#btn_edit_location").click(function() {
