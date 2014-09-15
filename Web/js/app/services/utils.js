@@ -65,7 +65,7 @@
   utils.redirect = function(page, timeout) {
     timeout = timeout || 0;
     setTimeout(function() {
-      document.location.replace(utils.rootFolder + page);
+      document.location.replace(config.rootFolder + page);
     }, timeout);
   };
   /**
@@ -102,7 +102,6 @@
   utils.removeLastChar = function(targetStr) {
     return targetStr.substring(0, targetStr.length - 1);
   };
-  utils.rootFolder = "/FieldWorkAssistantMVC/";
   utils.load = function(filpath) {
     var xml = new JKL.ParseXML(filepath);
     var nodes = xml.parse();
