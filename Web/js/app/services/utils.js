@@ -13,7 +13,7 @@
     $("." + form_class + " input, ." + form_class + " textarea").each(function(i, data) {
       if (utils.checkLiElement($(this), inputs_required)) {
         if ($(this).attr("type") === "text") {
-          user_inputs[$(this).attr("name")] = $(this).val();
+          user_inputs[$(this).attr("name")] = $(this).val().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
         } else {//checkbox
           user_inputs[$(this).attr("name")] = ($(this).val() === "1") || ($(this).val() === "true") ;
         }
@@ -108,5 +108,17 @@
     var nodes = xml.parse();
     return nodes;
   };
-
+  
+  utils.makeArray = function() {
+    var inputs = utils.retrieveInputs('location-names', []);
+    inputs = inputs.location_names.split(",");
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i] = utils.trim(inputs[i]);
+    }
+    return inputs;
+  };
+  
+  utils.trim = function(str) {
+    return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+  }
 }(window.utils = window.utils || {}));

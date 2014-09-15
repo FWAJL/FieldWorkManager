@@ -29,7 +29,13 @@
   <resource key="location_list_all_header">Your Locations</resource>
   <resource key="h3_locations_active">Active locations</resource>
   <resource key="h3_locations_inactive">Inactive locations</resource> 
+  <resource key="h3_location_names_form">Add location names</resource> 
+  <resource key="h3_location_add_buttons">Add location:</resource> 
+  
   <resource key="btn_to_inactive_list">Desactivate</resource> 
   <resource key="btn_to_active_list">Activate</resource> 
+  <resource key="btn_add_location_names">Add the locations</resource> 
+  <resource key="btn_add_location_gmap">With Google Maps</resource> 
+  <resource key="btn_add_location_manual">With the standard form</resource> 
 
 </resources>
