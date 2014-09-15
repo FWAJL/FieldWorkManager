@@ -9,7 +9,8 @@ class LocationController extends \Library\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
     //Store the project_id in Session
-    \Applications\PMTool\Helpers\CommonHelper::GetAndStoreCurrentProject($this, $rq);
+    $this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, \Applications\PMTool\Helpers\CommonHelper::GetAndStoreCurrentProject($this, $rq));
 
     // All the rest is done in BaseController->execute method
     header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
@@ -23,6 +24,9 @@ class LocationController extends \Library\BaseController {
 
   public function executeListAll(\Library\HttpRequest $rq) {
     //Get list of location stored in session
+    $this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject));
+
     $this->_GetAndStoreLocationsInSession($rq);
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,

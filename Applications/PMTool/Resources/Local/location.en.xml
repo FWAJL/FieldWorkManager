@@ -26,7 +26,7 @@
   <resource key="location_button_add">Add this location</resource>
   <resource key="location_button_edit">Edit this location</resource>
   <resource key="location_button_delete">Delete this location</resource>
-  <resource key="location_list_all_header">Your Locations</resource>
+  <resource key="location_list_all_header">Locations for: </resource>
   <resource key="h3_locations_active">Active locations</resource>
   <resource key="h3_locations_inactive">Inactive locations</resource> 
   <resource key="h3_location_names_form">Add location names</resource> 
