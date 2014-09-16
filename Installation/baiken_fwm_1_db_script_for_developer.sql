@@ -95,7 +95,7 @@ INSERT INTO `project_manager` (`pm_id`, `username`, `password`, `hint`, `pm_comp
 --
 
 CREATE TABLE `baiken_fwm_1`.`location` (
-  `location_id` INT(11) COLLATE utf8_unicode_ci NOT NULL,
+  `location_id` INT(11) COLLATE utf8_unicode_ci NOT NULL AUTO_INCREMENT,
   `location_name` VARCHAR(50) COLLATE utf8_unicode_ci NULL,
   `location_desc` VARCHAR(250) COLLATE utf8_unicode_ci NULL,
   `location_document` VARCHAR(500) COLLATE utf8_unicode_ci NULL,
