@@ -9,8 +9,8 @@ class Project extends \Library\Entity{
     $project_name,
     $project_number,
     $project_desc,
-    $active,
-    $visible,
+    $project_active,
+    $project_visible,
     $pm_id;
 
   const 
@@ -18,8 +18,8 @@ class Project extends \Library\Entity{
     PROJECT_NAME_ERR = 1,
     PROJECT_NUMBER_ERR = 2,
     PROJECT_DESC_ERR = 3,
-    ACTIVE_ERR = 4,
-    VISIBLE_ERR = 5,
+    PROJECT_ACTIVE_ERR = 4,
+    PROJECT_VISIBLE_ERR = 5,
     PM_ID_ERR = 6;
 
   // SETTERS //
@@ -55,12 +55,20 @@ class Project extends \Library\Entity{
     }
   }
 
-  public function setActive($active) {
-    $this->active = $active;
+  public function setProject_active($project_active) {
+    if (empty($project_active)) {
+      $this->erreurs[] = self::PROJECT_ACTIVE_ERR;
+    } else {
+      $this->project_active = $project_active;
+    }
   }
 
-  public function setVisible($visible) {
-    $this->visible = $visible;
+  public function setProject_visible($project_visible) {
+    if (empty($project_visible)) {
+      $this->erreurs[] = self::PROJECT_VISIBLE_ERR;
+    } else {
+      $this->project_visible = $project_visible;
+    }
   }
 
   public function setPm_id($pm_id) {
@@ -88,12 +96,12 @@ class Project extends \Library\Entity{
     return $this->project_desc;
   }
 
-  public function active() {
-    return $this->active;
+  public function project_active() {
+    return $this->project_active;
   }
 
-  public function visible() {
-    return $this->visible;
+  public function project_visible() {
+    return $this->project_visible;
   }
 
   public function pm_id() {

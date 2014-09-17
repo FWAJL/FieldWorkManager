@@ -20,11 +20,11 @@
     </li>
     <li style="display: none">
       <!--<label><?php // echo $resx["active"]; ?></label>-->
-      <input name="active" type="checkbox" />
+      <input name="project_active" type="checkbox" />
     </li>
     <li style="display: none">
-      <label><?php // echo $resx["visible"]; ?></label>
-      <input name="visible" type="checkbox"/>
+      <label><?php // echo $resx["project_visible"]; ?></label>
+      <input name="project_visible" type="checkbox"/>
     </li>
   </ol>
 </fieldset>
