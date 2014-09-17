@@ -108,13 +108,14 @@
     return nodes;
   };
   
-  utils.makeArray = function() {
-    var inputs = utils.retrieveInputs('location-names', []);
-    inputs = inputs.location_names.split(",");
+  utils.makeArray = function(targetClass) {
+    var inputs = utils.retrieveInputs(targetClass, []);
+    var output = {};
+    inputs = inputs.location_names.split("\n");
     for (var i = 0; i < inputs.length; i++) {
-      inputs[i] = utils.trim(inputs[i]);
+      output["value"+i] = utils.trim(inputs[i]);
     }
-    return inputs;
+    return output;
   };
   
   utils.trim = function(str) {

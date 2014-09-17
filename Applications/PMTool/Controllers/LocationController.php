@@ -8,12 +8,10 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class LocationController extends \Library\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
-    //Store the project_id in Session
-    $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, \Applications\PMTool\Helpers\CommonHelper::GetAndStoreCurrentProject($this, $rq));
-
-    // All the rest is done in BaseController->execute method
-    header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
+    if (\Applications\PMTool\Helpers\CommonHelper::GetAndStoreCurrentProject($this, $rq)
+            || $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject) !== NULL) {
+      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
+    }
   }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
@@ -45,15 +43,22 @@ class LocationController extends \Library\BaseController {
     // Init result
     $result = $this->InitResponseWS();
 
-    //Init PDO
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
-    $location = $this->_PrepareUserObject($this->dataPost());
-    $result["dataIn"] = $location;
-
     //Load interface to query the database
     $manager = $this->managers->getManagerOf($this->module);
-    $result["dataOut"] = $manager->add($location);
+    $this->dataPost["project_id"] =
+            $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject)->project_id();
+    
+    if (array_key_exists("names", $this->dataPost())) {
+      $locations = $this->_PrepareManyLocationObjects();
+    } else {
+      array_push($locations, $this->_PrepareUserObject($this->dataPost()));
+    }
+    $result["dataIn"] = $locations;
+    
+    $result["dataOut"] = 0;
+    foreach ($locations as $location) {
+      $result["dataOut"] += $manager->add($location);      
+    }
 
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserLocations);
 
@@ -122,7 +127,9 @@ class LocationController extends \Library\BaseController {
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     //TODO: Get the project_id from session or query string?
-    $this->dataPost["project_id"] = 0;
+    if ($this->dataPost["project_id"] ===  NULL) {
+      $this->dataPost["project_id"] = $this->app->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject)->project_id();
+    }
     $location = $this->_PrepareUserObject($this->dataPost());
     $result["data"] = $location;
 
@@ -134,9 +141,7 @@ class LocationController extends \Library\BaseController {
     if ($isNotAjaxCall) {
       return $list;
     } else {
-      $step_result =
-              $list[\Library\Enums\SessionKeys::UserLocations] !== NULL & $list[\Library\Enums\SessionKeys::UserLocationFacilityList] !== NULL ?
-              "success" : "error";
+      $step_result = $list[\Library\Enums\SessionKeys::UserLocations] !== NULL ? "success" : "error";
       $this->SendResponseWS(
               $result, array(
           "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
@@ -222,6 +227,18 @@ class LocationController extends \Library\BaseController {
     $location->setLocation_visible(!array_key_exists('location_visible', $data_sent) ? 0 : ($data_sent["location_visible"] === "1"));
 
     return $location;
+  }
+
+  private function _PrepareManyLocationObjects() {
+    $locations = array();
+    $location_names = \Applications\PMTool\Helpers\CommonHelper::StringToArray("\n", $this->dataPost["names"]);
+    foreach ($location_names as $name) {
+      $location = new \Applications\PMTool\Models\Dao\Location();
+      $location->setProject_id($this->dataPost["project_id"]);
+      $location->setLocation_name($name);
+      array_push($locations, $location);
+    }
+    return $locations;
   }
 
   private function _GetLocationFromSession($location_id) {

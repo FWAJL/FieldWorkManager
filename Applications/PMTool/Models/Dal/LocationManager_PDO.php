@@ -22,8 +22,14 @@ class LocationManager_PDO extends \Library\DAL\BaseManager {
    * @return array of \Applications\PMTool\Models\Dao\Project
    */
   public function selectMany($object) {
-    $locations_list = array();
-    return $locations_list;
+    $sql = 'SELECT * FROM location where `project_id` = \'' . $object->project_id() . '\';'; //AND `active` = 1  AND `visible` = 1;';
+    $query = $this->dao->query($sql);
+    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Location');
+
+    $locations_list = $query->fetchAll();
+    $query->closeCursor();
+
+    return count($locations_list) > 0 ? $locations_list : array();
   }
 
   public function countById($pm_id) {
@@ -48,7 +54,7 @@ class LocationManager_PDO extends \Library\DAL\BaseManager {
     } else {
       $result = $this->dao->lastInsertId();
     }
-    
+
     return $result;
   }
 
@@ -59,7 +65,7 @@ class LocationManager_PDO extends \Library\DAL\BaseManager {
       if ($key === "location_id") {
         $where_clause = "$key = $value";
       } else {
-        $set_clause .= "`" . $key . "` = '" . $value ."',"; 
+        $set_clause .= "`" . $key . "` = '" . $value . "',";
       }
     }
     $set_clause = rtrim($set_clause, ",");
