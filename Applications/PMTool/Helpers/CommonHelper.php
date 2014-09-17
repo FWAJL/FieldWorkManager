@@ -36,10 +36,11 @@ class CommonHelper {
         if (intval($project->project_id()) === $project_id) {
           $caller->app()->user->setAttribute(\Library\Enums\SessionKeys::CurrentProject, $project);
           CommonHelper::ManageProjectsSession($caller->app()->user(), $project_id);
-          break;
+          return TRUE;
         }
       }
     }
+    return FALSE;
   }
 
   /**
@@ -93,5 +94,17 @@ class CommonHelper {
         )
     );
   }
+  
+  public static function StringToArray($delimiter, $string) {
+    $arrayRaw = explode($delimiter, $string);
+    $arrayCleaned = array();
+    foreach ($arrayRaw as $value) {
+      array_push($arrayCleaned, CommonHelper::CleanString($value));
+    }
+    return $arrayCleaned;
+  }
 
+  public static function CleanString($string) {
+    return trim($string);
+  }
 }

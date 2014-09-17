@@ -3,10 +3,10 @@
   <resource key="page_title">Your Locations - Field Work Manager</resource>
   
   <resource key="location_h1">Welcome to Field Work Manager, for Location managers</resource>
-  <resource key="location_welcome_message">Please, select a location or add one to add and edit locations.</resource>
+  <resource key="location_welcome_message">Please, select a project to view or add and edit its locations.</resource>
   
-  <resource key="message_error_insert">Error inserting the location. Check logs.</resource>
-  <resource key="message_success_insert">The location has been inserted.</resource>
+  <resource key="message_error_add">Error inserting the location. Check logs.</resource>
+  <resource key="message_success_add">The location has been inserted.</resource>
   <resource key="message_error_getlist">Error reading the locations. Check logs.</resource>
   <resource key="message_success_getlist">The locations have been read.</resource>
   <resource key="message_error_getItem">Error reading the location. Check logs.</resource>
@@ -37,5 +37,6 @@
   <resource key="btn_add_location_names">Add the locations</resource> 
   <resource key="btn_add_location_gmap">With Google Maps</resource> 
   <resource key="btn_add_location_manual">With the standard form</resource> 
+  <resource key="btn_location_select_project">See list of project</resource> 
 
 </resources>

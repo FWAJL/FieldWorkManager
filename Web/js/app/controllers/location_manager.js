@@ -48,7 +48,7 @@ $(document).ready(function() {
 
 
   $("#btn-add-location-names").click(function() {
-    location_manager.add(utils.makeArray(), "location", "add");
+    location_manager.add($("textarea[name=\"location_names\"]").val(), "location", "add");
   });//Add a location
 
   $("#btn_edit_location").click(function() {
@@ -94,14 +94,12 @@ $(document).ready(function() {
  */
 (function(location_manager) {
   location_manager.add = function(data, controller, action) {
-    datacx.post(controller + "/" + action, {"data": data}).then(function(reply) {//call AJAX method to call Location/Add WebService
+    datacx.post(controller + "/" + action, {"names":data}).then(function(reply) {//call AJAX method to call Location/Add WebService
       if (reply === null || reply.dataOut === undefined || reply.dataOut === null || parseInt(reply.dataOut) === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        var post_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
-        data["facility"]['location_id'] = reply.dataOut;
-        facility_manager.send("facility/" + action, data["facility"]);
+        utils.redirect("location/listAll", 1000);
       }
     });
   };

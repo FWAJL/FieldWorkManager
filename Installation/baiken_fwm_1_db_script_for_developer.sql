@@ -55,8 +55,8 @@ CREATE TABLE IF NOT EXISTS `project` (
   `project_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `project_number` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `project_desc` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `active` smallint(6) DEFAULT NULL,
-  `visible` smallint(6) DEFAULT NULL,
+  `project_active` smallint(6) DEFAULT NULL,
+  `project_visible` smallint(6) DEFAULT NULL,
   `pm_id` int(11) NOT NULL,
   PRIMARY KEY (`project_id`),
   KEY `pm_id` (`pm_id`)
@@ -95,7 +95,7 @@ INSERT INTO `project_manager` (`pm_id`, `username`, `password`, `hint`, `pm_comp
 --
 
 CREATE TABLE `baiken_fwm_1`.`location` (
-  `location_id` INT(11) COLLATE utf8_unicode_ci NOT NULL,
+  `location_id` INT(11) COLLATE utf8_unicode_ci NOT NULL AUTO_INCREMENT,
   `location_name` VARCHAR(50) COLLATE utf8_unicode_ci NULL,
   `location_desc` VARCHAR(250) COLLATE utf8_unicode_ci NULL,
   `location_document` VARCHAR(500) COLLATE utf8_unicode_ci NULL,
