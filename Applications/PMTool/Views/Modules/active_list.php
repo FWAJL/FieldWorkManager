@@ -3,13 +3,10 @@
 <ol id="active-list" class="list-panel">
   <?php
   foreach ($data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects] as $object) {
-    $dao_id_prop = $data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::module] . "_id";
-    $dao_name_prop = $data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::module] . "_name";
-    $dao_active_prop = $data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::module] . "_active";
-    if ($object->$dao_active_prop) {
+    if ($object->$data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties][\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active]) {
       echo
-      "<li data-project-id=\"" . $object->$dao_id_prop . "\" class=\"select_item ui-widget-content\">"
-      . $object->$dao_name_prop
+      "<li data-".$data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::module]."-id=\"" . $object->$data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties][\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id] . "\" class=\"select_item ui-widget-content\">"
+      . $object->$data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties][\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name]
       . "</li>";
     }
   }

@@ -8,65 +8,72 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class LocationController extends \Library\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
-    if (\Applications\PMTool\Helpers\CommonHelper::GetAndStoreCurrentProject($this, $rq)
-            || $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject) !== NULL) {
+    $project = \Applications\PMTool\Helpers\CommonHelper::GetAndStoreCurrentProject($this, intval($rq->getData("project_id")));
+    if ($project == !NULL) {
+      $sessionProject = \Applications\PMTool\Helpers\CommonHelper::GetUserSessionProject($this->app()->user(), $project);
       header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
     }
   }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
+    $this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject));
+
     //Which module?
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
   public function executeListAll(\Library\HttpRequest $rq) {
     //Get list of location stored in session
-    $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject));
+    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
-    $this->_GetAndStoreLocationsInSession($rq);
+    $this->_GetAndStoreLocationsInSession($sessionProject);
+    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
     $data = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserLocations)
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $locations,
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList($this->resxfile)
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 
     $modules = $this->app()->router()->selectedRoute()->phpModules();
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
+    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
 
     //Load interface to query the database
     $manager = $this->managers->getManagerOf($this->module);
-    $this->dataPost["project_id"] =
-            $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject)->project_id();
-    
+    $this->dataPost["project_id"] = $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id();
+
     if (array_key_exists("names", $this->dataPost())) {
       $locations = $this->_PrepareManyLocationObjects();
     } else {
       array_push($locations, $this->_PrepareUserObject($this->dataPost()));
     }
     $result["dataIn"] = $locations;
-    
+
     $result["dataOut"] = 0;
     foreach ($locations as $location) {
-      $result["dataOut"] += $manager->add($location);      
+      $result["dataOut"] += $manager->add($location);
     }
 
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserLocations);
 
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
-        "resx_key" => $this->action(),
-        "step" => (intval($result["dataOut"])) > 0 ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+      "resx_key" => $this->action(),
+      "step" => (intval($result["dataOut"])) > 0 ? "success" : "error"
     ));
   }
 
@@ -88,10 +95,10 @@ class LocationController extends \Library\BaseController {
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserLocationFacilityList);
 
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
-        "resx_key" => $this->action(),
-        "step" => $result_insert ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+      "resx_key" => $this->action(),
+      "step" => $result_insert ? "success" : "error"
     ));
   }
 
@@ -107,46 +114,36 @@ class LocationController extends \Library\BaseController {
     if ($location_selected !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
       $db_result = $manager->delete($location_id);
-      //Clear the location and facility list from session for the connect PM
-      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserLocations);
-      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserLocationFacilityList);
+      //TODO: Clear the location from the session data
     }
 
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
-        "resx_key" => $this->action(),
-        "step" => $db_result !== FALSE ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+      "resx_key" => $this->action(),
+      "step" => $db_result !== FALSE ? "success" : "error"
     ));
   }
 
-  public function executeGetList(\Library\HttpRequest $rq, $isNotAjaxCall = FALSE) {
+  public function executeGetList(\Library\HttpRequest $rq = NULL, $sessionProject = NULL, $isAjaxCall = FALSE) {
     // Init result
     $result = $this->InitResponseWS();
 
     //Init PDO
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    //TODO: Get the project_id from session or query string?
-    if ($this->dataPost["project_id"] ===  NULL) {
-      $this->dataPost["project_id"] = $this->app->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject)->project_id();
+    $list = array();
+    if ($sessionProject !== NULL) {
+      //Load interface to query the database for locations
+      $manager = $this->managers->getManagerOf($this->module);
+      $result["locations"] = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = $manager->selectMany($sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+      \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
     }
-    $location = $this->_PrepareUserObject($this->dataPost());
-    $result["data"] = $location;
-
-    //Load interface to query the database for locations
-    $manager = $this->managers->getManagerOf($this->module);
-    $list[\Library\Enums\SessionKeys::UserLocations] = $manager->selectMany($location);
-
-    $result["lists"] = $list;
-    if ($isNotAjaxCall) {
-      return $list;
-    } else {
-      $step_result = $list[\Library\Enums\SessionKeys::UserLocations] !== NULL ? "success" : "error";
+    if ($isAjaxCall) {
+      $step_result = $result["locations"] !== NULL ? "success" : "error";
       $this->SendResponseWS(
-              $result, array(
-          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
-          "resx_key" => $this->action(),
-          "step" => $step_result
+          $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_key" => $this->action(),
+        "step" => $step_result
       ));
     }
   }
@@ -162,10 +159,10 @@ class LocationController extends \Library\BaseController {
     $result["location"] = $location_selected;
     $result["facility"] = $facility_selected;
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
-        "resx_key" => $this->action(),
-        "step" => ($location_selected !== NULL && $facility_selected !== NULL) ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+      "resx_key" => $this->action(),
+      "step" => ($location_selected !== NULL && $facility_selected !== NULL) ? "success" : "error"
     ));
   }
 
@@ -177,10 +174,10 @@ class LocationController extends \Library\BaseController {
     $location_ids = str_getcsv($this->dataPost["location_ids"], ',');
     $locations = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserLocations);
     $matchedElements = $this->FindObjectsFromIds(
-            array(
-                "filter" => "location_id",
-                "ids" => $location_ids,
-                "objects" => $locations)
+        array(
+          "filter" => "location_id",
+          "ids" => $location_ids,
+          "objects" => $locations)
     );
 
     //Update the location objects in DB and get result (number of rows affected)
@@ -192,26 +189,20 @@ class LocationController extends \Library\BaseController {
     }
 
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
-        "resx_key" => $this->action(),
-        "step" => ($rows_affected === count($location_ids)) ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+      "resx_key" => $this->action(),
+      "step" => ($rows_affected === count($location_ids)) ? "success" : "error"
     ));
   }
 
-  private function _GetAndStoreLocationsInSession($rq) {
+  private function _GetAndStoreLocationsInSession($sessionProject) {
     $lists = array();
-    if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserLocations)) {
-
-      $lists = $this->executeGetList($rq, TRUE);
-
-      $this->app()->user->setAttribute(
-              \Library\Enums\SessionKeys::UserLocations, $lists[\Library\Enums\SessionKeys::UserLocations]
-      );
+    if (count($sessionProject[\Library\Enums\SessionKeys::ProjectLocations]) === 0) {
+      $this->executeGetList(NULL, $sessionProject, false);
     } else {
-      $lists[\Library\Enums\SessionKeys::UserLocations] = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserLocations);
+      
     }
-    return $lists;
   }
 
   private function _PrepareUserObject($data_sent) {
@@ -242,11 +233,9 @@ class LocationController extends \Library\BaseController {
   }
 
   private function _GetLocationFromSession($location_id) {
-    $locations = array();
     $locationMatch = NULL;
-    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserLocations)) {
-      $locations = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserLocations);
-    }
+    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
     foreach ($locations as $location) {
       if (intval($location->location_id()) === $location_id) {
         $locationMatch = $location;

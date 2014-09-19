@@ -68,7 +68,8 @@ class ProjectController extends \Library\BaseController {
     $this->_GetAndStoreProjectsInSession($rq);
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects)
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList($this->resxfile)
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 

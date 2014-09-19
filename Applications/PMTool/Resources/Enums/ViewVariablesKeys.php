@@ -30,7 +30,12 @@ class ViewVariablesKeys {
   const data = "data";
   const module = "module";
   const objects = "objects";
-  
+  const properties = "properties";
+  const property_id = "prop_id";
+  const property_name = "prop_name";
+  const property_active = "prop_active";
+
+
   const active_list = "active_list_module";
   const inactive_list = "inactive_list_module";
   
