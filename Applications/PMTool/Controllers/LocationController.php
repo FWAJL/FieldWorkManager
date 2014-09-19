@@ -64,16 +64,18 @@ class LocationController extends \Library\BaseController {
 
     $result["dataOut"] = 0;
     foreach ($locations as $location) {
-      $result["dataOut"] += $manager->add($location);
+      $result["dataOut"] = $manager->add($location);
+      array_push($sessionProject[\Library\Enums\SessionKeys::ProjectLocations], $location);
     }
-
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserLocations);
-
+    if ($result["dataOut"]) {
+      \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+    }
+    
     $this->SendResponseWS(
         $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
       "resx_key" => $this->action(),
-      "step" => (intval($result["dataOut"])) > 0 ? "success" : "error"
+      "step" => $result["dataOut"] ? "success" : "error"
     ));
   }
 
