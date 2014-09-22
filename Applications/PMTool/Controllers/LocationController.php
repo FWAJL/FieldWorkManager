@@ -107,6 +107,7 @@ class LocationController extends \Library\BaseController {
   public function executeDelete(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
+    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
     $db_result = FALSE;
     $location_id = intval($this->dataPost["location_id"]);
 
@@ -116,7 +117,10 @@ class LocationController extends \Library\BaseController {
     if ($location_selected !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
       $db_result = $manager->delete($location_id);
-      //TODO: Clear the location from the session data
+      if ($db_result) {
+        $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = array();
+        \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+      }
     }
 
     $this->SendResponseWS(
