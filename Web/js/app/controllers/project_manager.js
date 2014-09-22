@@ -168,8 +168,8 @@ $(document).ready(function() {
     $(".project_form .add-new-p input[name=\"project_name\"]").val(dataWs.project.project_name);
     $(".project_form .add-new-p input[name=\"project_num\"]").val(dataWs.project.project_number);
     $(".project_form .add-new-p input[name=\"project_desc\"]").val(dataWs.project.project_desc);
-    $(".project_form .add-new-p input[name=\"active\"]").val(dataWs.project.active);
-    $(".project_form .add-new-p input[name=\"visible\"]").val(dataWs.project.visible);
+    $(".project_form .add-new-p input[name=\"project_active\"]").val(dataWs.project.project_active);
+    $(".project_form .add-new-p input[name=\"project_visible\"]").val(dataWs.project.project_visible);
     facility_manager.loadEditForm(dataWs);
   };
   project_manager.delete = function(project_id) {
