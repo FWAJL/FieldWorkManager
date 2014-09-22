@@ -127,7 +127,7 @@ class CommonHelper {
     $arrayRaw = explode($delimiter, $string);
     $arrayCleaned = array();
     foreach ($arrayRaw as $value) {
-      array_push($arrayCleaned, CommonHelper::CleanString($value));
+      if(!empty($value)) array_push($arrayCleaned, CommonHelper::CleanString($value));
     }
     return $arrayCleaned;
   }
