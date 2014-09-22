@@ -23,8 +23,8 @@
   <resource key="project_name">Project Name</resource>
   <resource key="project_num">Project Number</resource>
   <resource key="project_desc">Project Description</resource>
-  <resource key="project_active_flag">Active</resource>
-  <resource key="project_visible_flag">Visible</resource>
+  <resource key="project_active">Active</resource>
+  <resource key="project_visible">Visible</resource>
   <resource key="project_button_add">Add this project</resource>
   <resource key="project_button_edit">Edit this project</resource>
   <resource key="project_button_delete">Delete this project</resource>
