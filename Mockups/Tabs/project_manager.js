@@ -120,9 +120,9 @@ $(document).ready(function() {
   project_manager.loadEditForm = function(dataWs) {
     project_manager.clearForm();
     $(".project_form input[name=\"project_id\"]").val(parseInt(dataWs.project.project_id));
-    $(".project_form .add-new-p input[name=\"project_name\"]").val(dataWs.project.project_name);
-    $(".project_form .add-new-p input[name=\"project_num\"]").val(dataWs.project.project_number);
-    $(".project_form .add-new-p input[name=\"project_desc\"]").val(dataWs.project.project_desc);
+    $(".project_form .add-new-item input[name=\"project_name\"]").val(dataWs.project.project_name);
+    $(".project_form .add-new-item input[name=\"project_num\"]").val(dataWs.project.project_number);
+    $(".project_form .add-new-item input[name=\"project_desc\"]").val(dataWs.project.project_desc);
     facility_manager.loadEditForm(dataWs);
     $(".form_sections").fadeIn('2000').addClass("show").removeClass("hide");
     $(".welcome").fadeOut('2000').removeClass("show").addClass("hide");

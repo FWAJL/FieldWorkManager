@@ -165,11 +165,11 @@ $(document).ready(function() {
   project_manager.loadEditForm = function(dataWs) {
     utils.clearForm();
     $(".project_form input[name=\"project_id\"]").val(parseInt(dataWs.project.project_id));
-    $(".project_form .add-new-p input[name=\"project_name\"]").val(dataWs.project.project_name);
-    $(".project_form .add-new-p input[name=\"project_num\"]").val(dataWs.project.project_number);
-    $(".project_form .add-new-p input[name=\"project_desc\"]").val(dataWs.project.project_desc);
-    $(".project_form .add-new-p input[name=\"project_active\"]").val(dataWs.project.project_active);
-    $(".project_form .add-new-p input[name=\"project_visible\"]").val(dataWs.project.project_visible);
+    $(".project_form .add-new-item input[name=\"project_name\"]").val(dataWs.project.project_name);
+    $(".project_form .add-new-item input[name=\"project_num\"]").val(dataWs.project.project_number);
+    $(".project_form .add-new-item input[name=\"project_desc\"]").val(dataWs.project.project_desc);
+    $(".project_form .add-new-item input[name=\"project_active\"]").val(dataWs.project.project_active);
+    $(".project_form .add-new-item input[name=\"project_visible\"]").val(dataWs.project.project_visible);
     facility_manager.loadEditForm(dataWs);
   };
   project_manager.delete = function(project_id) {
@@ -203,10 +203,10 @@ $(document).ready(function() {
     utils.clearForm();
     var number = Math.floor((Math.random() * 100) + 1);
     $(".project_form input[name=\"project_name\"]").val("Project " + number);
-    $(".project_form .add-new-p input[name=\"project_num\"]").val("n-" + number);
-    $(".project_form .add-new-p input[name=\"project_desc\"]").val("Description " + number);
-    $(".facility_form .add-new-p input[name=\"facility_name\"]").val("Facility " + number);
-    $(".facility_form .add-new-p textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
+    $(".project_form .add-new-item input[name=\"project_num\"]").val("n-" + number);
+    $(".project_form .add-new-item input[name=\"project_desc\"]").val("Description " + number);
+    $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
+    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
   };
   
   project_manager.updateProjects = function(action, arrayId) {
