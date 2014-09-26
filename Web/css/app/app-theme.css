@@ -24,7 +24,7 @@
 }
 
 /* ADD PROJECT */
-.form_sections, .project_form, .facility_form{
+.form_sections, .project_form, .facility_form, .form{
   padding: 10px;
   padding-bottom: 30px;
 }

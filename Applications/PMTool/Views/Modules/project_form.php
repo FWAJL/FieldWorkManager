@@ -2,7 +2,7 @@
 
 <div id="project_info"  class="data-form">
 <fieldset class="project_form">
-  <ol class="add-new-p">
+  <ol class="add-new-item">
     <li style="display: none;">
       <input name="project_id" type="text" />
     </li>

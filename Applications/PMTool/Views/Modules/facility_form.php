@@ -2,7 +2,7 @@
   <div id="facility_info" class="data-form"> 
 <fieldset class="facility_form">
 <!--  <legend><?php echo $resx["facility_legend"]; ?></legend>-->
-  <ol class="add-new-p">
+  <ol class="add-new-item">
     <li style="display: none;">
       <input name="facility_id" type="text" />
     </li>

@@ -13,6 +13,7 @@ abstract class BaseController extends ApplicationComponent {
   protected $view = '';
   protected $managers = null;
   protected $resxfile = "";
+  protected $resxData = array();
   protected $dataPost = array();
 
 
@@ -26,6 +27,7 @@ abstract class BaseController extends ApplicationComponent {
     $this->setView($action);
     $this->setResxFile($resxfile);
     $this->setDataPost($this->app->HttpRequest()->retrievePostAjaxData(NULL, FALSE));
+    $this->resxData = $this->app->i8n->getLocalResourceArray($this->resxfile);
   }
 
   public function execute() {

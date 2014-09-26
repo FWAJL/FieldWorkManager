@@ -109,10 +109,7 @@ $(document).ready(function() {
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        var post_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
-        if (post_data.facility_name !== undefined && post_data.facility_address !== undefined) {
-          facility_manager.send("facility/" + action, post_data);
-        }
+        utils.redirect("location/listAll", 1000);
       }
     });
   };
@@ -151,13 +148,15 @@ $(document).ready(function() {
   };
   location_manager.loadEditForm = function(dataWs) {
     utils.clearForm();
-    $(".location_form input[name=\"location_id\"]").val(parseInt(dataWs.location.location_id));
-    $(".location_form .add-new-p input[name=\"location_name\"]").val(dataWs.location.location_name);
-    $(".location_form .add-new-p input[name=\"location_num\"]").val(dataWs.location.location_number);
-    $(".location_form .add-new-p input[name=\"location_desc\"]").val(dataWs.location.location_desc);
-    $(".location_form .add-new-p input[name=\"active\"]").val(dataWs.location.active);
-    $(".location_form .add-new-p input[name=\"visible\"]").val(dataWs.location.visible);
-    facility_manager.loadEditForm(dataWs);
+    $("input[name=\"project_id\"]").val(parseInt(dataWs.location.project_id));
+    $("input[name=\"location_id\"]").val(parseInt(dataWs.location.location_id));
+    $("input[name=\"location_name\"]").val(dataWs.location.location_name);
+    $("input[name=\"location_document\"]").val(dataWs.location.location_document);
+    $("input[name=\"location_lat\"]").val(dataWs.location.location_lat);
+    $("input[name=\"location_long\"]").val(dataWs.location.location_long);
+    $("input[name=\"location_desc\"]").val(dataWs.location.location_desc);
+    $("input[name=\"location_active\"]").val(dataWs.location.location_active);
+    $("input[name=\"location_visible\"]").val(dataWs.location.location_visible);
   };
   location_manager.delete = function(location_id) {
     datacx.post("location/delete", {"location_id": location_id}).then(function(reply) {
@@ -190,10 +189,10 @@ $(document).ready(function() {
     utils.clearForm();
     var number = Math.floor((Math.random() * 100) + 1);
     $(".location_form input[name=\"location_name\"]").val("Location " + number);
-    $(".location_form .add-new-p input[name=\"location_num\"]").val("n-" + number);
-    $(".location_form .add-new-p input[name=\"location_desc\"]").val("Description " + number);
-    $(".facility_form .add-new-p input[name=\"facility_name\"]").val("Facility " + number);
-    $(".facility_form .add-new-p textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
+    $("input[name=\"location_num\"]").val("n-" + number);
+    $("input[name=\"location_desc\"]").val("Description " + number);
+    $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
+    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
   };
   
   location_manager.updateLocations = function(action, arrayId) {

@@ -15,7 +15,7 @@
         if ($(this).attr("type") === "text") {
           user_inputs[$(this).attr("name")] = $(this).val().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
         } else {//checkbox
-          user_inputs[$(this).attr("name")] = ($(this).val() === "1") || ($(this).val() === "true") ;
+          user_inputs[$(this).attr("name")] = ($(this).val() === "1") || ($(this).val() === "true");
         }
       } else {
         toastr.error("The field " + $(this).attr("name") + " is empty. Please fill out all fields.");
@@ -77,19 +77,37 @@
       $(this).val("");
     });
   };
-  
+
   /**
    * Retrieve the value associated to a query string key
    * 
    * @param {string} variable : query string key
    * @returns {string|Boolean} : the query string value or FALSE if not found
    */
-  utils.getQueryVariable = function (variable) {
+  utils.getQueryVariable = function(variable) {
     var query = window.location.search.substring(1);//remove "?"
     var vars = query.split("&");
-    for (var i=0;i<vars.length;i++) {
-            var pair = vars[i].split("=");
-            if(pair[0] === variable){return pair[1];}
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split("=");
+      if (pair[0] === variable) {
+        return pair[1];
+      }
+    }
+    return(false);
+  };
+  /**
+   * Retrieve the value associated to a url parth
+   * 
+   * @param {string} variable : path part key
+   * @returns {Boolean} : the result of lookup
+   */
+  utils.getPathPart = function(part) {
+    var path = window.location.pathname;
+    var parts = path.split("/");
+    for (var i = 0; i < parts.length; i++) {
+      if (parts[i] === part) {
+        return true;
+      }
     }
     return(false);
   };
@@ -107,17 +125,17 @@
     var nodes = xml.parse();
     return nodes;
   };
-  
+
   utils.makeArray = function(targetClass) {
     var inputs = utils.retrieveInputs(targetClass, []);
     var output = {};
     inputs = inputs.location_names.split("\n");
     for (var i = 0; i < inputs.length; i++) {
-      output["value"+i] = utils.trim(inputs[i]);
+      output["value" + i] = utils.trim(inputs[i]);
     }
     return output;
   };
-  
+
   utils.trim = function(str) {
     return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
   }

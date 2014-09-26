@@ -128,12 +128,13 @@ class ProjectController extends \Library\BaseController {
     $project = $this->_PrepareUserObject($this->dataPost());
     $result["data"] = $project;
 
-    $manager = $this->managers->getManagerOf('Project');
+    $manager = $this->managers->getManagerOf($this->module());
     $result_insert = $manager->edit($project);
 
     //Clear the project and facility list from session for the connect PM
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
+    \Applications\PMTool\Helpers\CommonHelper::UpdateUserSessionProject($this->app()->user(), $project);
 
     $this->SendResponseWS(
             $result, array(
@@ -164,6 +165,7 @@ class ProjectController extends \Library\BaseController {
       //Clear the project and facility list from session for the connect PM
       $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
       $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
+      \Applications\PMTool\Helpers\CommonHelper::UnsetUserSessionProject($this->app()->user(), $project_id);
     }
 
     $this->SendResponseWS(

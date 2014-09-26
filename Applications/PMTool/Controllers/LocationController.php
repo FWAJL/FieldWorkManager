@@ -9,19 +9,30 @@ class LocationController extends \Library\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
     $project = \Applications\PMTool\Helpers\CommonHelper::GetAndStoreCurrentProject($this, intval($rq->getData("project_id")));
+    $redirect = FALSE;
     if ($project == !NULL) {
       $sessionProject = \Applications\PMTool\Helpers\CommonHelper::GetUserSessionProject($this->app()->user(), $project);
+      $redirect = TRUE;
+    } else if ($this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject) !== NULL) {
+      $redirect = TRUE;
+    }
+    if ($redirect) {
       header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
     }
   }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
-    $this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject));
-
+    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+    if ($rq->getData("mode") === "edit") {
+      $this->page->addVar("location_editing_header", $this->resxData["location_legend_edit"]);
+    } else {
+      $this->page->addVar("location_editing_header", $this->resxData["location_legend_add"]);
+    }
     //Which module?
     $this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
   public function executeListAll(\Library\HttpRequest $rq) {
@@ -33,17 +44,17 @@ class LocationController extends \Library\BaseController {
     $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
     $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
     $data = array(
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $locations,
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList($this->resxfile)
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $locations,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList($this->resxfile)
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 
     $modules = $this->app()->router()->selectedRoute()->phpModules();
     $this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
     $this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {
@@ -70,18 +81,19 @@ class LocationController extends \Library\BaseController {
     if ($result["dataOut"]) {
       \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
     }
-    
+
     $this->SendResponseWS(
-        $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
-      "resx_key" => $this->action(),
-      "step" => $result["dataOut"] ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_key" => $this->action(),
+        "step" => $result["dataOut"] ? "success" : "error"
     ));
   }
 
   public function executeEdit(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
+    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
 
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
@@ -89,18 +101,20 @@ class LocationController extends \Library\BaseController {
     $location = $this->_PrepareUserObject($this->dataPost());
     $result["data"] = $location;
 
-    $manager = $this->managers->getManagerOf('Location');
-    $result_insert = $manager->edit($location);
+    $manager = $this->managers->getManagerOf($this->module());
+    $result_edit = $manager->edit($location);
 
     //Clear the location and facility list from session for the connect PM
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserLocations);
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserLocationFacilityList);
+    if ($result_edit) {
+      $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = array();
+      \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+    }
 
     $this->SendResponseWS(
-        $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
-      "resx_key" => $this->action(),
-      "step" => $result_insert ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_key" => $this->action(),
+        "step" => $result_edit ? "success" : "error"
     ));
   }
 
@@ -124,10 +138,10 @@ class LocationController extends \Library\BaseController {
     }
 
     $this->SendResponseWS(
-        $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
-      "resx_key" => $this->action(),
-      "step" => $db_result !== FALSE ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_key" => $this->action(),
+        "step" => $db_result !== FALSE ? "success" : "error"
     ));
   }
 
@@ -146,10 +160,10 @@ class LocationController extends \Library\BaseController {
     if ($isAjaxCall) {
       $step_result = $result["locations"] !== NULL ? "success" : "error";
       $this->SendResponseWS(
-          $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
-        "resx_key" => $this->action(),
-        "step" => $step_result
+              $result, array(
+          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+          "resx_key" => $this->action(),
+          "step" => $step_result
       ));
     }
   }
@@ -160,15 +174,13 @@ class LocationController extends \Library\BaseController {
     $location_id = intval($this->dataPost["location_id"]);
 
     $location_selected = $this->_GetLocationFromSession($location_id);
-    $facility_selected = $this->_GetFacilityLocationFromSession($location_id);
 
     $result["location"] = $location_selected;
-    $result["facility"] = $facility_selected;
     $this->SendResponseWS(
-        $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
-      "resx_key" => $this->action(),
-      "step" => ($location_selected !== NULL && $facility_selected !== NULL) ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_key" => $this->action(),
+        "step" => ($location_selected !== NULL) ? "success" : "error"
     ));
   }
 
@@ -180,10 +192,10 @@ class LocationController extends \Library\BaseController {
     $location_ids = str_getcsv($this->dataPost["location_ids"], ',');
     $locations = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserLocations);
     $matchedElements = $this->FindObjectsFromIds(
-        array(
-          "filter" => "location_id",
-          "ids" => $location_ids,
-          "objects" => $locations)
+            array(
+                "filter" => "location_id",
+                "ids" => $location_ids,
+                "objects" => $locations)
     );
 
     //Update the location objects in DB and get result (number of rows affected)
@@ -195,10 +207,10 @@ class LocationController extends \Library\BaseController {
     }
 
     $this->SendResponseWS(
-        $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
-      "resx_key" => $this->action(),
-      "step" => ($rows_affected === count($location_ids)) ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_key" => $this->action(),
+        "step" => ($rows_affected === count($location_ids)) ? "success" : "error"
     ));
   }
 

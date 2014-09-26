@@ -18,13 +18,16 @@
   <resource key="message_error_listAll">Error listing all locaitons. Check logs.</resource>
   <resource key="message_success_listAll">The locations have been read.</resource>
   
-  <resource key="location_legend_add">Add new location</resource>
-  <resource key="location_legend_edit">Edit this location</resource>
+  <resource key="location_legend_add">Add new location for: </resource>
+  <resource key="location_legend_edit">Edit this location for: </resource>
   <resource key="location_name">Location Name</resource>
   <resource key="location_num">Location Number</resource>
+  <resource key="location_document">Location Document</resource>
+  <resource key="location_lat">Location Lattitude</resource>
+  <resource key="location_long">Location Longiture</resource>
   <resource key="location_desc">Location Description</resource>
-  <resource key="location_active_flag">Active</resource>
-  <resource key="location_visible_flag">Visible</resource>
+  <resource key="location_active">Active</resource>
+  <resource key="location_visible">Visible</resource>
   <resource key="location_button_add">Add this location</resource>
   <resource key="location_button_edit">Edit this location</resource>
   <resource key="location_button_delete">Delete this location</resource>
@@ -32,7 +35,10 @@
   <resource key="h3_locations_active">Active locations</resource>
   <resource key="h3_locations_inactive">Inactive locations</resource> 
   <resource key="h3_location_names_form">Add location names</resource> 
-  <resource key="h3_location_add_buttons">Add location:</resource> 
+  <resource key="h3_location_add_buttons">Add location:</resource>
+  <resource key="location_info_tab">Location Info</resource>
+  <resource key="gmaps_info_tab">Google Maps</resource>
+  
   
   <resource key="btn_to_inactive_list">Desactivate</resource> 
   <resource key="btn_to_active_list">Activate</resource> 
