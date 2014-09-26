@@ -56,19 +56,11 @@ class Project extends \Library\Entity{
   }
 
   public function setProject_active($project_active) {
-    if (empty($project_active)) {
-      $this->erreurs[] = self::PROJECT_ACTIVE_ERR;
-    } else {
       $this->project_active = $project_active;
-    }
   }
 
   public function setProject_visible($project_visible) {
-    if (empty($project_visible)) {
-      $this->erreurs[] = self::PROJECT_VISIBLE_ERR;
-    } else {
       $this->project_visible = $project_visible;
-    }
   }
 
   public function setPm_id($pm_id) {

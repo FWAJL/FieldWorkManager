@@ -9,8 +9,14 @@ class LocationController extends \Library\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
     $project = \Applications\PMTool\Helpers\CommonHelper::GetAndStoreCurrentProject($this, intval($rq->getData("project_id")));
+    $redirect = FALSE;
     if ($project == !NULL) {
       $sessionProject = \Applications\PMTool\Helpers\CommonHelper::GetUserSessionProject($this->app()->user(), $project);
+      $redirect = TRUE;
+    } else if ($this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject) !== NULL) {
+      $redirect = TRUE;
+    }
+    if ($redirect) {
       header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
     }
   }
@@ -99,10 +105,10 @@ class LocationController extends \Library\BaseController {
     $result_edit = $manager->edit($location);
 
     //Clear the location and facility list from session for the connect PM
-      if ($result_edit) {
-        $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = array();
-        \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
-      }
+    if ($result_edit) {
+      $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = array();
+      \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+    }
 
     $this->SendResponseWS(
             $result, array(

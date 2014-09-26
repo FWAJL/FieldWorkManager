@@ -51,14 +51,14 @@ class CommonHelper {
     return NULL;
   }
 
-  public static function GetUserSessionProject($user, \Applications\PMTool\Models\Dao\Project $project) {
+  public static function GetUserSessionProject(\Library\User $user, \Applications\PMTool\Models\Dao\Project $project) {
     //retrieve the user session project from project_id
     $userSessionProjects = $user->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
     $key = \Library\Enums\SessionKeys::ProjectKey.$project->project_id();
     $user->setAttribute(\Library\Enums\SessionKeys::CurrentProject, $userSessionProjects[$key]);
   }
 
-  public static function SetUserSessionProject($user, $sessionProject) {
+  public static function SetUserSessionProject(\Library\User $user, $sessionProject) {
     $userSessionProjects = $user->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
     $project_id = $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id();
     if (array_key_exists(\Library\Enums\SessionKeys::ProjectKey.$project_id, $userSessionProjects)) {
@@ -67,7 +67,22 @@ class CommonHelper {
       self::GetUserSessionProject($user, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     }
   }
+  
+  public static function UnsetUserSessionProject($user, $project_id) {
+    $userSessionProjects = $user->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
+    unset($userSessionProjects[\Library\Enums\SessionKeys::ProjectKey.$project_id]);
+    $user->unsetAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $user->setAttribute(\Library\Enums\SessionKeys::UserSessionProjects, $userSessionProjects);
+  }
 
+  public static function UpdateUserSessionProject(\Library\User $user, \Applications\PMTool\Models\Dao\Project $project) {
+    $userSessionProjects = $user->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
+    $currentSessionProject = $user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $userSessionProjects[\Library\Enums\SessionKeys::ProjectKey.$project->project_id()][\Library\Enums\SessionKeys::ProjectObject] 
+            = $currentSessionProject[\Library\Enums\SessionKeys::ProjectObject]
+            = $project;
+    self::SetUserSessionProject($user, $currentSessionProject);
+  }
   //Add/Remove/Update locations, technicians or tasks to current project
 
   /**

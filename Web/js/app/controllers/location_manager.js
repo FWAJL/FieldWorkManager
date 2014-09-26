@@ -109,6 +109,7 @@ $(document).ready(function() {
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
+        utils.redirect("location/listAll", 1000);
       }
     });
   };
@@ -147,6 +148,7 @@ $(document).ready(function() {
   };
   location_manager.loadEditForm = function(dataWs) {
     utils.clearForm();
+    $("input[name=\"project_id\"]").val(parseInt(dataWs.location.project_id));
     $("input[name=\"location_id\"]").val(parseInt(dataWs.location.location_id));
     $("input[name=\"location_name\"]").val(dataWs.location.location_name);
     $("input[name=\"location_document\"]").val(dataWs.location.location_document);
