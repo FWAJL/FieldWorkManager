@@ -42,7 +42,7 @@ $(document).ready(function() {
     location_manager.updateLocations("active",location_ids);
   });
   $(".from-active-list").click(function() {
-    location_manager.updatelocations("inactive",location_ids);
+    location_manager.updateLocations("inactive",location_ids);
   });
   //************************************************//
 
