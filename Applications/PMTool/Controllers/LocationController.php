@@ -190,7 +190,8 @@ class LocationController extends \Library\BaseController {
     $rows_affected = 0;
     //Get the location objects from ids received
     $location_ids = str_getcsv($this->dataPost["location_ids"], ',');
-    $locations = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserLocations);
+    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
     $matchedElements = $this->FindObjectsFromIds(
             array(
                 "filter" => "location_id",
@@ -198,13 +199,12 @@ class LocationController extends \Library\BaseController {
                 "objects" => $locations)
     );
 
-    //Update the location objects in DB and get result (number of rows affected)
-    //$this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserLocations);
     foreach ($matchedElements as $location) {
-      $location->setActive($this->dataPost["action"] === "active" ? TRUE : FALSE);
+      $location->setLocation_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
       $manager = $this->managers->getManagerOf($this->module);
       $rows_affected += $manager->edit($location) ? 1 : 0;
     }
+    \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
 
     $this->SendResponseWS(
             $result, array(
