@@ -53,7 +53,7 @@ class LocationManager_PDO extends \Library\DAL\BaseManager {
       $query->closeCursor();
     } else {
       if (intval($this->dao->lastInsertId())) {
-        $result = TRUE;
+        $result = intval($this->dao->lastInsertId());
       } else {
         $result = FALSE;
       }

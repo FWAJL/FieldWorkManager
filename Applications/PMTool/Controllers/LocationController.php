@@ -66,16 +66,18 @@ class LocationController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf($this->module);
     $this->dataPost["project_id"] = $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id();
 
+    $locations = array();
     if (array_key_exists("names", $this->dataPost())) {
       $locations = $this->_PrepareManyLocationObjects();
     } else {
-      array_push($locations, $this->_PrepareUserObject($this->dataPost()));
+      array_push($locations, $this->_PrepareLocationObject($this->dataPost()));
     }
     $result["dataIn"] = $locations;
 
     $result["dataOut"] = 0;
     foreach ($locations as $location) {
       $result["dataOut"] = $manager->add($location);
+      $location->setLocation_id("$result[dataOut]"); 
       array_push($sessionProject[\Library\Enums\SessionKeys::ProjectLocations], $location);
     }
     if ($result["dataOut"]) {
@@ -86,7 +88,7 @@ class LocationController extends \Library\BaseController {
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
         "resx_key" => $this->action(),
-        "step" => $result["dataOut"] ? "success" : "error"
+        "step" => $result["dataOut"] > 0 ? "success" : "error"
     ));
   }
 
@@ -98,7 +100,7 @@ class LocationController extends \Library\BaseController {
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
-    $location = $this->_PrepareUserObject($this->dataPost());
+    $location = $this->_PrepareLocationObject($this->dataPost());
     $result["data"] = $location;
 
     $manager = $this->managers->getManagerOf($this->module());
@@ -223,7 +225,7 @@ class LocationController extends \Library\BaseController {
     }
   }
 
-  private function _PrepareUserObject($data_sent) {
+  private function _PrepareLocationObject($data_sent) {
     $location = new \Applications\PMTool\Models\Dao\Location();
     $location->setProject_id($data_sent["project_id"]);
     $location->setLocation_id(!array_key_exists('location_id', $data_sent) ? NULL : $data_sent["location_id"]);
