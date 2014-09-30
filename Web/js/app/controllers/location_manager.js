@@ -31,24 +31,36 @@ $(document).ready(function() {
       if (tmpSelection.length > 0) {
         location_ids = tmpSelection;
         //Show the button to appropriate button
-        $(".from-"+$(this).attr("id")).show();
+        $(".from-" + $(this).attr("id")).show();
       } else {
         location_ids = [];
-        $(".from-"+$(this).attr("id")).hide();
+        $(".from-" + $(this).attr("id")).hide();
       }
     }
   });
   $(".from-inactive-list").click(function() {
-    location_manager.updateLocations("active",location_ids);
+    location_manager.updateLocations("active", location_ids);
   });
   $(".from-active-list").click(function() {
-    location_manager.updateLocations("inactive",location_ids);
+    location_manager.updateLocations("inactive", location_ids);
   });
   //************************************************//
 
 
   $("#btn-add-location-names").click(function() {
-    location_manager.add($("textarea[name=\"location_names\"]").val(), "location", "add");
+    location_manager.add($("textarea[name=\"location_names\"]").val(), "location", "add", false);
+  });//Add many locations
+
+  $("#btn-add-location-manual").click(function() {
+    utils.redirect("location/showForm?mode=add&test=true");
+  });//Button click "add a location"
+
+  $("#btn_add_location").click(function() {
+    var post_data = {};
+    post_data = utils.retrieveInputs("location_form", ["location_name"]);
+    if (post_data.location_name !== undefined) {
+      location_manager.add(post_data, "location", "add", true);
+    }
   });//Add a location
 
   $("#btn_edit_location").click(function() {
@@ -93,8 +105,9 @@ $(document).ready(function() {
  * Responsible to manage locations.
  */
 (function(location_manager) {
-  location_manager.add = function(data, controller, action) {
-    datacx.post(controller + "/" + action, {"names":data}).then(function(reply) {//call AJAX method to call Location/Add WebService
+  location_manager.add = function(userData, controller, action, isSingle) {
+    var data = isSingle ? userData : {"names": userData};
+    datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Location/Add WebService
       if (reply === null || reply.dataOut === undefined || reply.dataOut === null || parseInt(reply.dataOut) === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
@@ -194,7 +207,7 @@ $(document).ready(function() {
     $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
     $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
   };
-  
+
   location_manager.updateLocations = function(action, arrayId) {
     datacx.post("location/updateItems", {"action": action, "location_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
@@ -203,7 +216,7 @@ $(document).ready(function() {
       } else {//success
         toastr.success(reply.message);
         utils.redirect("location/listAll");
-     }
+      }
     });
   };
 

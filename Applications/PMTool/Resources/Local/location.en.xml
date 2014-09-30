@@ -20,8 +20,8 @@
   <resource key="message_error_updateItems">Error editing the locations. Check logs.</resource>
   <resource key="message_success_updateItems">The locations have been edited</resource>
   
-  <resource key="location_legend_add">Add new location for: </resource>
-  <resource key="location_legend_edit">Edit this location for: </resource>
+  <resource key="location_legend_add">Add new location</resource>
+  <resource key="location_legend_edit">Edit this location</resource>
   <resource key="location_name">Location Name</resource>
   <resource key="location_num">Location Number</resource>
   <resource key="location_document">Location Document</resource>
@@ -33,7 +33,7 @@
   <resource key="location_button_add">Add this location</resource>
   <resource key="location_button_edit">Edit this location</resource>
   <resource key="location_button_delete">Delete this location</resource>
-  <resource key="location_list_all_header">Locations for: </resource>
+  <resource key="location_list_all_header">Locations</resource>
   <resource key="h3_locations_active">Active locations</resource>
   <resource key="h3_locations_inactive">Inactive locations</resource> 
   <resource key="h3_location_names_form">Add location names</resource> 
