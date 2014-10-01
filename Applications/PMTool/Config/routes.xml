@@ -106,6 +106,17 @@
   </route><!-- location/showForm -->
 
   <!-- WebService AJAX routes -->
+  <!-- INSTRUCTIONS
+  
+        The AJAX routes always require the same attributes:
+          - the url, which will need to match when you use in the JavaScript managers
+          - the module, which is the name of the Controller and is used for the dual list display
+              ex: for project, it will be ProjectController (always suffixed with "Controller")
+          - the action, which is the name of the Method in the controller class.
+              ex: for project, it will be executeAdd (always prefixed with "execute" and capitalizing the first letter of the action)
+          - the resxfile, which used to load the resx file in Applications/Your_App/Resources/Local
+          - the type, which used to differenciate a view route from a webservice ajax route
+  -->
   <route url="auth" module="Authenticate" action="authenticate" resxfile="login" type="ws" />
   
   <route url="project/add" module="Project" action="add" resxfile="project" type="ws" />

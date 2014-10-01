@@ -44,9 +44,9 @@ class LocationController extends \Library\BaseController {
     $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
     $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
     $data = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $locations,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList($this->resxfile)
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 

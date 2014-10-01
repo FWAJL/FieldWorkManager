@@ -12,7 +12,8 @@
 // ------------------------------------------------------------------------
 
 /**
- * ResxFileNameKeys Class
+ * ResxFileNameKeys Class.
+ * These are used for the framework level resources (found Application/Your_App/Resources/Common)
  *
  * @package		Library
  * @subpackage	Enums/ResourceKeys
