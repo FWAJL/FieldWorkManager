@@ -8,15 +8,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class LocationController extends \Library\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
-    $project = \Applications\PMTool\Helpers\CommonHelper::GetAndStoreCurrentProject($this, intval($rq->getData("project_id")));
-    $redirect = FALSE;
-    if ($project == !NULL) {
-      $sessionProject = \Applications\PMTool\Helpers\CommonHelper::GetUserSessionProject($this->app()->user(), $project);
-      $redirect = TRUE;
-    } else if ($this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject) !== NULL) {
-      $redirect = TRUE;
-    }
-    if ($redirect) {
+    if (\Applications\PMTool\Helpers\CommonHelper::RedirectAfterProjectSelection($this->app(), intval($rq->getData("project_id")))) {
       header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
     }
   }
@@ -99,7 +91,6 @@ class LocationController extends \Library\BaseController {
 
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
     $location = $this->_PrepareLocationObject($this->dataPost());
     $result["data"] = $location;
 
@@ -156,11 +147,11 @@ class LocationController extends \Library\BaseController {
     if ($sessionProject !== NULL) {
       //Load interface to query the database for locations
       $manager = $this->managers->getManagerOf($this->module);
-      $result["locations"] = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = $manager->selectMany($sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+      $result[\Library\Enums\SessionKeys::ProjectLocations] = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = $manager->selectMany($sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
       \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
     }
     if ($isAjaxCall) {
-      $step_result = $result["locations"] !== NULL ? "success" : "error";
+      $step_result = $result[\Library\Enums\SessionKeys::ProjectLocations] !== NULL ? "success" : "error";
       $this->SendResponseWS(
               $result, array(
           "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
@@ -221,7 +212,7 @@ class LocationController extends \Library\BaseController {
     if (count($sessionProject[\Library\Enums\SessionKeys::ProjectLocations]) === 0) {
       $this->executeGetList(NULL, $sessionProject, false);
     } else {
-      
+      //The locations are already in Session
     }
   }
 

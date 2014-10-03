@@ -29,12 +29,12 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class CommonHelper {
 
-  public static function GetAndStoreCurrentProject($caller, $project_id) {
+  public static function GetAndStoreCurrentProject(\Library\Application $app, $project_id) {
     //retrieve the projects for the user
-    $projects = $caller->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
+    $projects = $app->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
     $userSessionProjects = NULL;
-    if ($caller->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserSessionProjects)) {
-      $userSessionProjects = $caller->app()->user->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
+    if ($app->user->keyExistInSession(\Library\Enums\SessionKeys::UserSessionProjects)) {
+      $userSessionProjects = $app->user->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
     }
 
     //If there is no user session projects yet, create one with the project id given
@@ -42,7 +42,7 @@ class CommonHelper {
       foreach ($projects as $project) {
         if (intval($project->project_id()) === $project_id) {
           if ($userSessionProjects === NULL || !array_key_exists($project_id, $userSessionProjects)) {
-            CommonHelper::ManageProjectsSession($caller->app()->user(), $project);
+            CommonHelper::ManageProjectsSession($app->user(), $project);
           }
           return $project;
         }
@@ -54,23 +54,23 @@ class CommonHelper {
   public static function GetUserSessionProject(\Library\User $user, \Applications\PMTool\Models\Dao\Project $project) {
     //retrieve the user session project from project_id
     $userSessionProjects = $user->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
-    $key = \Library\Enums\SessionKeys::ProjectKey.$project->project_id();
+    $key = \Library\Enums\SessionKeys::ProjectKey . $project->project_id();
     $user->setAttribute(\Library\Enums\SessionKeys::CurrentProject, $userSessionProjects[$key]);
   }
 
   public static function SetUserSessionProject(\Library\User $user, $sessionProject) {
     $userSessionProjects = $user->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
     $project_id = $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id();
-    if (array_key_exists(\Library\Enums\SessionKeys::ProjectKey.$project_id, $userSessionProjects)) {
-      $userSessionProjects[\Library\Enums\SessionKeys::ProjectKey.$project_id] = $sessionProject;
+    if (array_key_exists(\Library\Enums\SessionKeys::ProjectKey . $project_id, $userSessionProjects)) {
+      $userSessionProjects[\Library\Enums\SessionKeys::ProjectKey . $project_id] = $sessionProject;
       $user->setAttribute(\Library\Enums\SessionKeys::UserSessionProjects, $userSessionProjects);
       self::GetUserSessionProject($user, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     }
   }
-  
+
   public static function UnsetUserSessionProject($user, $project_id) {
     $userSessionProjects = $user->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
-    unset($userSessionProjects[\Library\Enums\SessionKeys::ProjectKey.$project_id]);
+    unset($userSessionProjects[\Library\Enums\SessionKeys::ProjectKey . $project_id]);
     $user->unsetAttribute(\Library\Enums\SessionKeys::CurrentProject);
     $user->setAttribute(\Library\Enums\SessionKeys::UserSessionProjects, $userSessionProjects);
   }
@@ -78,11 +78,12 @@ class CommonHelper {
   public static function UpdateUserSessionProject(\Library\User $user, \Applications\PMTool\Models\Dao\Project $project) {
     $userSessionProjects = $user->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
     $currentSessionProject = $user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
-    $userSessionProjects[\Library\Enums\SessionKeys::ProjectKey.$project->project_id()][\Library\Enums\SessionKeys::ProjectObject] 
+    $userSessionProjects[\Library\Enums\SessionKeys::ProjectKey . $project->project_id()][\Library\Enums\SessionKeys::ProjectObject]
             = $currentSessionProject[\Library\Enums\SessionKeys::ProjectObject]
             = $project;
     self::SetUserSessionProject($user, $currentSessionProject);
   }
+
   //Add/Remove/Update locations, technicians or tasks to current project
 
   /**
@@ -114,14 +115,14 @@ class CommonHelper {
       $ExistingProjectsSession = $user->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
       //only add if not already in array
       if (!array_key_exists($project->project_id(), $ExistingProjectsSession)) {
-        $ExistingProjectsSession[\Library\Enums\SessionKeys::ProjectKey.$project->project_id()] = CommonHelper::MakeNewObject($project);
+        $ExistingProjectsSession[\Library\Enums\SessionKeys::ProjectKey . $project->project_id()] = CommonHelper::MakeNewObject($project);
       }
       $user->setAttribute(\Library\Enums\SessionKeys::UserSessionProjects, $ExistingProjectsSession);
       return $ExistingProjectsSession;
     } else {
       //If not, init a new array
       $NewProjectsSession = array();
-      $NewProjectsSession[\Library\Enums\SessionKeys::ProjectKey.$project->project_id()] = CommonHelper::MakeNewObject($project);
+      $NewProjectsSession[\Library\Enums\SessionKeys::ProjectKey . $project->project_id()] = CommonHelper::MakeNewObject($project);
       $user->setAttribute(\Library\Enums\SessionKeys::UserSessionProjects, $NewProjectsSession);
       return $NewProjectsSession;
     }
@@ -129,11 +130,11 @@ class CommonHelper {
 
   public static function MakeNewObject(\Applications\PMTool\Models\Dao\Project $project) {
     $arrayToReturn = array(
-      \Library\Enums\SessionKeys::ProjectObject => $project,
-      \Library\Enums\SessionKeys::ProjectLocations => array(),
-      \Library\Enums\SessionKeys::ProjectTasks => array(),
-      \Library\Enums\SessionKeys::ProjectTechnicians => array()
-        //Add a line for data linked to a project, e.g. results/reports?
+        \Library\Enums\SessionKeys::ProjectObject => $project,
+        \Library\Enums\SessionKeys::ProjectLocations => array(),
+        \Library\Enums\SessionKeys::ProjectTasks => array(),
+        \Library\Enums\SessionKeys::ProjectTechnicians => array()
+            //Add a line for data linked to a project, e.g. results/reports?
     );
     return $arrayToReturn;
   }
@@ -142,7 +143,8 @@ class CommonHelper {
     $arrayRaw = explode($delimiter, $string);
     $arrayCleaned = array();
     foreach ($arrayRaw as $value) {
-      if(!empty($value)) array_push($arrayCleaned, CommonHelper::CleanString($value));
+      if (!empty($value))
+        array_push($arrayCleaned, CommonHelper::CleanString($value));
     }
     return $arrayCleaned;
   }
@@ -153,10 +155,22 @@ class CommonHelper {
 
   public static function SetPropertyNamesForDualList($module) {
     return array(
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id => $module . "_id",
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name => $module . "_name",
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active => $module . "_active",
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id => $module . "_id",
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name => $module . "_name",
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active => $module . "_active",
     );
+  }
+
+  public static function RedirectAfterProjectSelection(\Library\Application $app, $project_id) {
+    $project = \Applications\PMTool\Helpers\CommonHelper::GetAndStoreCurrentProject($app, $project_id);
+    $redirect = FALSE;
+    if ($project == !NULL) {
+      $sessionProject = \Applications\PMTool\Helpers\CommonHelper::GetUserSessionProject($app->user(), $project);
+      $redirect = TRUE;
+    } else if ($app->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject) !== NULL) {
+      $redirect = TRUE;
+    }
+    return $redirect;
   }
 
 }

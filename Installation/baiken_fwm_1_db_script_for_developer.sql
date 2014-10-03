@@ -1,7 +1,8 @@
 -- FWM TEAM
 --
 -- History:
--- 10-09-14: add location table
+-- 10-09-14: added location table
+-- 03-10-14: added technician and client tables
 
 DROP SCHEMA IF EXISTS `baiken_fwm_1`;
 
@@ -19,6 +20,35 @@ SET time_zone = "+00:00";
 --
  CREATE DATABASE IF NOT EXISTS `baiken_fwm_1` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
  USE `baiken_fwm_1`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client`
+--
+CREATE TABLE `baiken_fwm_1`.`technician` (
+  `technician_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `technician_name` VARCHAR(50) NULL,
+  `technician_phone` VARCHAR(12) NULL,
+  `technician_email` VARCHAR(50) NULL,
+  `technician_active` smallint(6) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`technician_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client`
+--
+CREATE TABLE `baiken_fwm_1`.`client` (
+  `client_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `client_name` VARCHAR(100) NULL,
+  `client_address` VARCHAR(500) NULL,
+  `client_contact_name` VARCHAR(50) NULL,
+  `client_contact_phone` VARCHAR(12) NULL,
+  `client_contact_email` VARCHAR(50) NULL,
+  PRIMARY KEY (`client_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
