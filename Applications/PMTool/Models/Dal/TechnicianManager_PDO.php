@@ -5,52 +5,44 @@ namespace Applications\PMTool\Models\Dal;
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class ProjectManager_PDO extends \Library\DAL\BaseManager {
+/**
+ * Replace '_Template' by your custom name
+ */
+class TechnicianManager_PDO extends \Library\DAL\BaseManager {
 
-  public function selectOne($project) {
+  public function selectOne($object) {
     return NULL;
   }
 
-  public function update($project) {
+  public function update($object) {
     return NULL;
   }
 
-  /**
-   * Returns list of projects for PM
-   * 
-   * @param \Applications\PMTool\Models\Dao\Project $project
-   * @return array of \Applications\PMTool\Models\Dao\Project
-   */
-  public function selectMany($project) {
-    $sql = 'SELECT * FROM project where `pm_id` = \'' . $project->pm_id() . '\';'; //AND `project_active` = 1  AND `project_visible` = 1;';
+   public function selectMany($object) {
+    $sql = 'SELECT * FROM technician where `pm_id` = \'' . $object->pm_id() . '\';'; //AND `active` = 1  AND `visible` = 1;';
     $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Project');
+    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Technician');
 
-    $project_list = $query->fetchAll();
+    $technicians_list = $query->fetchAll();
     $query->closeCursor();
 
-    return count($project_list) > 0 ? $project_list : array();
+    return count($technicians_list) > 0 ? $technicians_list : array();
   }
 
   public function countById($pm_id) {
-    $sql = 'SELECT COUNT(*) FROM project where `pm_id` = \'' . $pm_id . '\';'; // AND `project_active` = 1  AND `visible` = 1;';
-    $query = $this->dao->query($sql);
-    $num_rows = $query->fetch(\PDO::FETCH_NUM);
-    $query->closeCursor();
-
-    return intval($num_rows[0]);
+    return NULL;
   }
 
-  public function add($project) {
+  public function add($object) {
     $columns = "";
     $values = "";
-    foreach ($project as $key => $value) {
+    foreach ($object as $key => $value) {
       $columns .= "`" . $key . "`,";
       $values .= "'" . $value . "',";
     }
     $columns = rtrim($columns, ", ");
     $values = rtrim($values, ", ");
-    $sql = "INSERT INTO `project` (" . $columns . ") VALUES (" . $values . ");";
+    $sql = "INSERT INTO `technician` (" . $columns . ") VALUES (" . $values . ");";
     $query = $this->dao->query($sql);
     $result;
     if (!$query) {
@@ -63,10 +55,10 @@ class ProjectManager_PDO extends \Library\DAL\BaseManager {
     return $result;
   }
 
-  public function edit($project) {
+  public function edit($object) {
     $set_clause = "";
     $where_clause = "";
-    foreach ($project as $key => $value) {
+    foreach ($object as $key => $value) {
       if ($key === "technician_id") {
         $where_clause = "$key = $value";
       } else {
@@ -87,9 +79,7 @@ class ProjectManager_PDO extends \Library\DAL\BaseManager {
   }
 
   public function delete($identifier) {
-    $sql = "DELETE from `location` WHERE project_id = " . $identifier . ";";
-    $sql .= "DELETE from `facility` WHERE project_id = " . $identifier . ";";
-    $sql .= "DELETE from `project` WHERE project_id = " . $identifier . ";";
+    $sql = "DELETE from `technician` WHERE technician_id = " . $identifier . ";";
     $query = $this->dao->query($sql);
     $result;
     if (!$query) {

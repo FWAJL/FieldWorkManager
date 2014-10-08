@@ -6,7 +6,10 @@ $(document).ready(function() {
     _default = "project_info";
   } else if (utils.getPathPart("location")) {
     _default = "location_info";
+  } else if (utils.getPathPart("technician")) {
+    _default = "technician_info";
   }
+  
   $(".data-form").hide();
   $("#" + _default).show();
   //manage click events

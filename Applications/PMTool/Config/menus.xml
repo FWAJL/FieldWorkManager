@@ -32,11 +32,11 @@
       <submenu id="task_add_left_menu" resourcekey="task_add" active="true"/>
     </links>
   </main_menu><!-- task -->
-  <main_menu name="technician" active="false">
+  <main_menu name="technician" active="true">
     <links>
-      <header href="#" resourcekey="header_technician" />
-      <submenu id="technician_all" resourcekey="technician_all" active="true"/>
-      <submenu id="technician_add_left_menu" resourcekey="technician_add" active="true"/>
+      <header href="technician" resourcekey="header_technician" />
+      <submenu href="technician/listAll" id="technician_list_all" resourcekey="technician_list" active="true"/>
+      <submenu href="technician/showForm?mode=add&amp;test=true" id="btn-add-technician-manual" resourcekey="technician_add" active="true"/>
     </links>
   </main_menu><!-- technician -->
   <main_menu name="form" active="false">

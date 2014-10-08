@@ -133,7 +133,7 @@ class CommonHelper {
         \Library\Enums\SessionKeys::ProjectObject => $project,
         \Library\Enums\SessionKeys::ProjectLocations => array(),
         \Library\Enums\SessionKeys::ProjectTasks => array(),
-        \Library\Enums\SessionKeys::ProjectTechnicians => array()
+        \Library\Enums\SessionKeys::UserTechnicians => array()
             //Add a line for data linked to a project, e.g. results/reports?
     );
     return $arrayToReturn;

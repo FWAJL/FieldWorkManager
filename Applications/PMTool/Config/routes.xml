@@ -61,6 +61,8 @@
       <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true"/>
     </php_modules>
   </route><!-- project/listAll -->
+  
+  <!-- locations -->
   <route url="location" module="Location" action="index" resxfile="location" type="ui">
     <js_files>
       
@@ -104,6 +106,52 @@
       <php_module key="location_tabs_close" file_name="location_tabs_close.php"/>
     </php_modules>
   </route><!-- location/showForm -->
+  
+  
+    <!-- technicians -->
+  <route url="technician" module="Technician" action="index" resxfile="technician" type="ui">
+    <js_files>
+      <js_file use="head" value="Web/js/app/controllers/technician_manager.js"/>
+      <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js"/>  
+    </js_files>
+    <css_files>
+      <css_file value="Web/css/app/nav.css"/>
+      <css_file value="Web/css/app/app-style.css"/>
+      <css_file value="Web/css/app/app-theme.css"/>
+      <css_file value="Web/css/app/theme.css"/>
+      <css_file value="Web/css/app/tabs.css"/>
+    </css_files>
+  </route><!-- technician/index -->
+    <route url="technician/listAll" module="Technician" action="listAll" resxfile="technician" type="ui">
+    <js_files>
+      <js_file use="head" value="Web/js/app/controllers/technician_manager.js"/>
+    </js_files>
+    <css_files>
+      <css_file use="project" />
+    </css_files>
+    <php_modules>
+      <php_module key="active_list_module" file_name="active_list.php" shared="true"/>
+      <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true"/>
+    </php_modules>
+  </route><!-- technician/listAll -->
+  <route url="technician/showForm" module="Technician" action="showForm" resxfile="technician" type="ui">
+    <js_files>
+      <js_file use="head" value="Web/js/app/controllers/technician_manager.js"/>
+    </js_files>
+    <css_files>
+      <css_file value="Web/css/app/nav.css"/>
+      <css_file value="Web/css/app/app-style.css"/>
+      <css_file value="Web/css/app/app-theme.css"/>
+      <css_file value="Web/css/app/theme.css"/>
+      <css_file value="Web/css/app/tabs.css"/>
+    </css_files>
+    <php_modules>
+     <!-- <php_module key="technician_tabs_open" file_name="technician_tabs_open.php"/>   -->
+      <php_module key="technician_form" file_name="technician_form.php" shared="true"/>
+      <php_module key="technician_buttons" file_name="technician_buttons.php"/>
+      <php_module key="technician_tabs_close" file_name="technician_tabs_close.php"/>
+    </php_modules>
+  </route><!-- technician/showForm -->
 
   <!-- WebService AJAX routes -->
   <!-- INSTRUCTIONS
@@ -138,5 +186,12 @@
   <route url="location/getlist" module="Location" action="getList" resxfile="location" type="ws" />
   <route url="location/getItem" module="Location" action="getItem" resxfile="location" type="ws" />
   <route url="location/updateItems" module="Location" action="updateItems" resxfile="location" type="ws" />
+  
+  <route url="technician/add" module="Technician" action="add" resxfile="technician" type="ws" />
+  <route url="technician/edit" module="Technician" action="edit" resxfile="technician" type="ws" />
+  <route url="technician/delete" module="Technician" action="delete" resxfile="technician" type="ws" />
+  <route url="technician/getlist" module="Technician" action="getList" resxfile="technician" type="ws" />
+  <route url="technician/getItem" module="Technician" action="getItem" resxfile="technician" type="ws" />
+  <route url="technician/updateItems" module="Technician" action="updateItems" resxfile="technician" type="ws" />
 
 </routes>

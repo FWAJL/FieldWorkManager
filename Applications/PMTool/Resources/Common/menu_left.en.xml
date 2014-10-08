@@ -15,6 +15,11 @@
   <resource key="location_add">Add new Location</resource>
   <resource key="location_upload_list">Upload Location List</resource>
   
+  <resource key="header_technician">Technicians</resource>
+  <resource key="technician_add">Add</resource>
+  <resource key="technician_manage">Show/Hide Technicians</resource>
+  <resource key="technician_list">List All</resource>
+  
   <resource key="header_map">Map</resource>
   <resource key="map_project_all">All Projects</resource>
   <resource key="map_project">Selected Project</resource>
