@@ -30,17 +30,29 @@ abstract class SessionKeys {
   const UserAuthenticated = "user_auth";
   const UserFlash = 'user_flash';
   const UserConnected = "user_connected";
+  
   const UserProjects= "user_projects";
   const UserProjectFacilityList= "user_project_facility_list";
-  const UserLocations= "user_locations";
-  const UserTechnicians = "user_technicians";
-  
-  const UserTechnicianList = "user_technician_list"; 
+  const UserProjectClientList= "user_project_client_list";
   const UserSessionProjects = "user_session_projects";
+  
+  const UserLocations= "user_locations";
+  const ProjectLocations = "project_locations";
+  
+  const UserTechnicians = "user_technicians";
+  const UserTechnicianList = "user_technician_list"; 
+ 
   const ProjectKey =  "project_";
   const ProjectObject = "project_obj";
-  const ProjectLocations = "project_locations";
+  
   const ProjectTasks = "project_tasks";
+  const UserProjectTaskList= "user_project_task_list";
+  
+  const UserResources = "user_resources";
+   const UserResourcesList = "user_resources_list";
+  
+  Const FieldForms = "field_forms";
+   const UserFieldFormsList = "user_field_forms_list";
 
   
   //Current objects

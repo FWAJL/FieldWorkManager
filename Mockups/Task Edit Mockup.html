@@ -2,244 +2,37 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Your projects - Field Work Assistant</title>
-        <link rel="stylesheet" type="text/css" href="Web/css/app/reset.css" />
-        <link rel="stylesheet" type="text/css" href="Web/css/core/bootstrap.css" />
-        <link rel="stylesheet" type="text/css" href="Web/css/addons/toastr.css" />
-        <link rel="stylesheet" type="text/css" href="Web/css/app/nav.css"/>
-        <link rel="stylesheet" type="text/css" href="Web/css/app/app-style.css"/>
-        <link rel="stylesheet" type="text/css" href="Web/css/app/app-theme.css"/>
-        <link rel="stylesheet" type="text/css" href="Web/css/app/theme.css"/>
-        <link rel="stylesheet" type="text/css" href="Web/css/app/tabs.css"/>    
-        <link href="Mockups/Tabs/bootstrap-duallistbox-3.0.2/dist/bootstrap-duallistbox.min.css" rel="stylesheet" type="text/css"/>
-        <link href="Mockups/Tabs/jDualListBox-master/example.css" rel="stylesheet" type="text/css"/>
+        <script src="../Web/js/core/jquery.js" type="text/javascript"></script>
+        <script src="../Web/js/jspkg-archive/lib/jquery.easytabs.min.js" type="text/javascript"></script>
+        <script src="../Web/js/jspkg-archive/vendor/jquery-1.7.1.min.js" type="text/javascript"></script>
+        <script src="../Web/js/jspkg-archive/vendor/jquery.hashchange.min.js" type="text/javascript"></script>
+  <style>
+    /* Example Styles for Demo */
+    .etabs { margin: 0; padding: 0; }
+    .tab { display: inline-block; zoom:1; *display:inline; background: #eee; border: solid 1px #999; border-bottom: none; -moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; }
+    .tab a { font-size: 14px; line-height: 2em; display: block; padding: 0 10px; outline: none; }
+    .tab a:hover { text-decoration: underline; }
+    .tab.active { background: #fff; padding-top: 6px; position: relative; top: 1px; border-color: #666; }
+    .tab a.active { font-weight: bold; }
+    .tab-container .panel-container { background: #fff; border: solid #666 1px; padding: 10px; -moz-border-radius: 0 4px 4px 4px; -webkit-border-radius: 0 4px 4px 4px; }
+    .panel-container { margin-bottom: 10px; }
+  </style>
 
-        <script type="application/javascript" src="Web/js/addons/modernizr.js"></script>
-        <script type="application/javascript" src="Web/js/app/design/all.js"></script>
-        <script type="application/javascript" src="Web/js/app/design/tinydropdown.js"></script>
-        <script type="application/javascript" src="Web/js/app/design/ddaccordion.js"></script>
-        <script type="application/javascript" src="Web/js/app/design/drop_down.js"></script>
-        <script type="application/javascript" src="Web/js/app/design/headScript.js"></script>
-        <script type="application/javascript" src="Web/js/app/controllers/facility_manager.js"></script>
-        <script type="application/javascript" src="Web/js/app/controllers/project_manager.js"></script>
-        <script type="application/javascript" src="Web/js/app/controllers/left_menu_behaviour.js"></script>
-        <script type="application/javascript" src="Web/js/core/jquery.js"></script>
-        <script type="application/javascript" src="Web/js/app/controllers/tabs.js"></script>
+    <script type="text/javascript">
+    $(document).ready( function() {
+      $('#tab-container').easytabs();
+    });
+  </script>
+  
+  <script>$(document).ready(function () {
+	
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-
-        <script>
-            $(document).ready(
-                    function() {
-                        $("#COC").hide();
-                        $("#analy").hide();
-                        $("#matrix").hide();
-                        $("#laboratory").hide();
-                        $("#lab_sample_box").click(function() {
-                            $("#COC").toggle();
-                            $("#analy").toggle();
-                            $("#matrix").toggle();
-                            $("#laboratory").toggle();
-                            
-                        });
-
-                    });
-
-        </script> 
-        <script>
-            $(document).ready(
-                    function() {
-                        $("#insp_form").hide();
-                        $("#insp_note_box").click(function() {
-                            $("#insp_form").toggle();
-                        });
-                    });
-
-        </script> 
-                <script>
-            $(document).ready(
-                    function() {
-                        $("#contractor").hide();
-                        $("#const_note_box").click(function() {
-                            $("#contractor").toggle();
-                        });
-                    });
-
-        </script> 
-        <script>
-            $(document).ready(
-                    function() {
-                        $("#freq_list").hide();
-                        $("#freq_list_box").click(function() {
-                            $("#freq_list").toggle();
-                        });
-                    });
-        </script> 
-        <script>
-            $(document).ready(
-                    function() {
-           $("#manual_note").hide();
-                        $("#manual_box").click(function() {
-                            $("#manual_note").toggle(); 
-                   });
-                    });
-        </script> 
-           <script>
-            $(document).ready(
-                    function() {
-           $("#external_note").hide();
-                        $("#external_box").click(function() {
-                            $("#external_note").toggle(); 
-                   });
-                    });
-        </script> 
-         <script>
-            $(document).ready(
-                    function() {
-           $("#insp_note").hide();
-                        $("#insp_note_box").click(function() {
-                            $("#insp_note").toggle(); 
-                   });
-                    });
-        </script> 
-        <script>
-            $(document).ready(
-                    function() {
-           $("#const_note").hide();
-                        $("#const_note_box").click(function() {
-                            $("#const_note").toggle(); 
-                   });
-                    });
-        </script> 
-        <script>            $(document).ready(
-                    function() {
-           $("#rental").hide();
-                        $("#rental_box").click(function() {
-                            $("#rental").toggle(); 
-                   });
-                    });
-        </script> 
-        <script>
-            $(document).ready(
-                    function() {
-           $("#field_data_note").hide();
-            $("#data_form").hide();
-            $("#field_kit").hide();
-                        $("#field_data_box").click(function() {
-                            $("#field_data_note").toggle(); 
-                            $("#data_form").toggle();
-                            $("#field_kit").toggle();
-                   });
-                    });
-        </script> 
-        <script>
-            $(document).ready(
-                    function() {
-           $("#sample_note").hide();
-                        $("#lab_sample_box").click(function() {
-                            $("#sample_note").toggle(); 
-                   });
-                    });
-        </script>
+</script> 
+            
     </head>
 
     <body id="home">
-        <div id="wrapper">
-            <section id="top_header">
-                <section id="branding">
-                    <figure class="logo"><img src="Web/images/logo.png"></figure>
-                    <p class="brand">Field Work Manager</p>
-                </section>
-                <ul id="pm_info">
-                    <li>
-                        <p id="pm_name">
-                            <span class="glyphicon glyphicon-cog"></span>
-                            <span>John</span>
-                        </p>
-                        <ul>
-                            <li>Edit Info</li>
-                            <li><a href="logout" role="button">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </section>
-            <div class="clearfix"></div>
-            <section id="breadcrumb"></section>
-            <div class="content-container">
-                <section class="left-aside col-lg-2 col-md-2">
-                    <section class="left-asidebg">
-                        <nav>
-                            <!-- CONTENT -->
-                            <ul class="content_left">
-                                <li>
-                                    <a href="#"><span>Borrowing for - Tasks</span></a>
-                                    <ul>
-                                        <li><a id="project_list_all">List All</a></li>
-                                        <li><a id="project_add_left_menu">Add</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#"><span>Locations</span></a>
-                                    <ul>
-                                        <li><a href="#">List All</a></li>
-                                        <li><a href="#">Add</a></li>
-                                        <li><a href="#">Upload List</a></li>
-                                    </ul>
-                                </li>   <li>
-                                    <a href="#"><span>Map</span></a>
-                                    <ul>
-                                        <li><a href="#">All Facilities</a></li>
-                                        <li><a href="#">Selected Facility</a></li>
-                                        <li><a href="#">All (Facility) Locations</a></li>
-                                        <li><a href="#">Task Locations </a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#"><span>Tasks</span></a>
-                                    <ul>
-                                        <li><a href="#">List All</a></li>
-                                        <li><a id="project_add_left_menu">Add</a></li>
-                                    </ul>
-                                </li>
 
-                                <li><a href="#"><span>Technicians</span></a>
-                                    <ul>
-                                        <li><a href="#">List All</a></li>
-                                        <li><a href="#">Add</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#"><span>Forms</span></a>
-                                    <ul>
-                                        <li><a href="#">List All</a></li>
-                                        <li><a href="#">Add</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#"><span>Resources</span></a>
-                                    <ul>
-                                        <li><a href="#">List All</a></li>
-                                        <li><a href="#">Add</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#"><span>Results</span></a>
-                                    <ul>
-                                        <li><a href="#">By Date</a></li>
-                                        <li><a href="#">By Task</a></li>
-                                        <li><a href="#">By Location</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </nav>
-                    </section>
-                </section><section class="right-aside col-lg-9 col-md-9">
-                    <section class="welcome show">
-                        <h1 class="legend">Welcome to Field Work Assistant, for Project managers</h1>
-                        <p>Please, select an option on the left menu.</p>
-                    </section>
-                    <section class="project_list hide">
-                        <h2 class="legend">Your Projects</h2>
-                    </section>
-                    <section class="form_sections hide">
 
                         <div id="tab-container" class="tab-container">
                             <ul class='etabs'>
@@ -739,64 +532,12 @@
                                 </fieldset>   
                             </div>
                             <br /> 
-                        </div>
-                        <input type="button" id="btn_add_project" class="project_add" value="Add this Task" />
-                        <input type="button" id="btn_edit_project" class="project_edit hide" value="Edit this project" /> 
-                        </div>
+
                         </div><!-- This div closes out the tab-container --> 
 
-                        </div><!-- END CONTENT CONTAINER -->
-                        </div> <!-- END Wrapper -->
 
-                        <script type="application/javascript" src="Web/js/core/jquery.js"></script>
-                        <script type="application/javascript" src="Web/js/core/ko.js"></script>
-                        <script type="application/javascript" src="Web/js/core/bootstrap.min.js"></script>  
-                        <script type="application/javascript" src="Web/js/addons/toastr.js"></script>  
-                        <script type="application/javascript" src="Web/js/jspkg-archive/lib/jquery.easytabs.js"></script>  
-                        <script type="application/javascript" src="Web/js/app/debugger.js"></script>  
-                        <script type="application/javascript" src="Web/js/app/services/dataservice.js"></script>  
-                        <script src="Mockups/Tabs/bootstrap-duallistbox-3.0.2/dist/jquery.bootstrap-duallistbox.min.js" type="text/javascript"></script>
-                        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-                        <script src="Mockups/Tabs/jDualListBox-master/jquery.duallistbox-1.0.js" type="text/javascript"></script>
 
-                        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css">
 
-                        <script>$(document).ready(function() {
-                $(function() {
-                    $("#datepicker").datepicker();
-                });
-            });
-
-                        </script>
-
-                        <script>
-                            $("#tech_list").bootstrapDualListbox({
-                                nonSelectedListLabel: 'Assigned',
-                                selectedListLabel: 'All Project Technicians',
-                            });
-
-                        </script>
-
-                        <script type="text/javascript">
-                            $(document).ready(function() {
-                                $("#example-1").dualListbox();
-                            });
-                        </script>
-                                                <script type="text/javascript">
-                            $(document).ready(function() {
-                                $("#example-2").dualListbox();
-                            });
-                        </script>
-                                                    <script type="text/javascript">
-                            $(document).ready(function() {
-                                $("#example-3").dualListbox();
-                            });
-                        </script>
-                                                                            <script type="text/javascript">
-                            $(document).ready(function() {
-                                $("#example-4").dualListbox();
-                            });
-                        </script>
 
                         </body>
                         </html>

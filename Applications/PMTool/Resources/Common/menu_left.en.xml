@@ -26,4 +26,26 @@
   <resource key="map_project_locations">All Project's Locations</resource>
   <resource key="map_task_locations">Task Locations</resource>
   
+  <resource key="header_project_task">Tasks</resource>
+  <resource key="project_task_add">Add</resource>
+  <resource key="project_task_manage">Show/Hide Tasks</resource>
+  <resource key="project_task_all">List All</resource>
+  
+  <resource key="header_field_forms">Field Forms</resource>
+  <resource key="field_form_add">Add</resource>
+  <resource key="field_form_manage">Show/Hide Field Forms</resource>
+  <resource key="field_form_all">List All</resource>
+  
+  <resource key="header_user_resources">Tasks</resource>
+  <resource key="user_resources_add">Add</resource>
+  <resource key="user_resources_manage">Show/Hide Tasks</resource>
+  <resource key="user_resources_all">List All</resource>
+  
+<!--  <resource key="header_results">Tasks</resource>
+  <resource key="#_add">Add</resource>
+  <resource key="#_manage">Show/Hide Tasks</resource>
+  <resource key="#_all">List All</resource>-->
+  
+  
+  
 </resources>
