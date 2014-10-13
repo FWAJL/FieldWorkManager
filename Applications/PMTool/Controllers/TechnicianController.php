@@ -80,6 +80,10 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     $manager = $this->managers->getManagerOf($this->module);
     $result_insert = $manager->edit($technician);
     
+    //Clear the technician from session for the connect PM
+      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicians);
+      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
+//      \Applications\PMTool\Helpers\CommonHelper::UnsetUserSessionTechnician($this->app()->user(), $technician_id);
 
     $this->SendResponseWS(
             $result, array(
