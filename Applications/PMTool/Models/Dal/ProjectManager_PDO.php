@@ -67,14 +67,14 @@ class ProjectManager_PDO extends \Library\DAL\BaseManager {
     $set_clause = "";
     $where_clause = "";
     foreach ($project as $key => $value) {
-      if ($key === "technician_id") {
+      if ($key === "project_id") {
         $where_clause = "$key = $value";
       } else {
         $set_clause .= "`" . $key . "` = '" . $value ."',"; 
       }
     }
     $set_clause = rtrim($set_clause, ",");
-    $sql = "UPDATE `technician` SET $set_clause  WHERE $where_clause;";
+    $sql = "UPDATE `project` SET $set_clause  WHERE $where_clause;";
     $query = $this->dao->query($sql);
     $result;
     if (!$query) {

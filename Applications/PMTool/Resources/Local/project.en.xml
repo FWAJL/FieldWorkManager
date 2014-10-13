@@ -31,7 +31,7 @@
   <resource key="project_list_all_header">Your Projects</resource>
   <resource key="h3_projects_active">Active projects</resource>
   <resource key="h3_projects_inactive">Inactive projects</resource> 
-  <resource key="btn_to_inactive_list">Desactivate</resource> 
+  <resource key="btn_to_inactive_list">De-activate</resource> 
   <resource key="btn_to_active_list">Activate</resource> 
   
 

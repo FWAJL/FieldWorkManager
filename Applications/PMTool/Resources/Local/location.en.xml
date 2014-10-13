@@ -42,7 +42,7 @@
   <resource key="gmaps_info_tab">Google Maps</resource>
   
   
-  <resource key="btn_to_inactive_list">Desactivate</resource> 
+  <resource key="btn_to_inactive_list">De-activate</resource> 
   <resource key="btn_to_active_list">Activate</resource> 
   <resource key="btn_add_location_names">Add the locations</resource> 
   <resource key="btn_add_location_gmap">With Google Maps</resource> 

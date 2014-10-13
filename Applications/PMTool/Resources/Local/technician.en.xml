@@ -15,7 +15,7 @@
   <resource key="message_success_edit">The technician data has been edited.</resource>
   <resource key="message_error_delete">Error deleting the technician. Check logs.</resource>
   <resource key="message_success_delete">The technician data has been deleted.</resource>
-  <resource key="message_error_updateItems">Error editing the technician data. Check logs.</resource>
+  <resource key="message_error_updateItems">Error editing the technician data - update items. Check logs.</resource>
   <resource key="message_success_updateItems">The technician data has been edited.</resource>
 
   <resource key="technician_legend_add">Add a new technician</resource>
