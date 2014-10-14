@@ -6,6 +6,9 @@
     <li style="display: none;">
       <input name="pm_id" type="text" />
     </li>
+    <li style="display: none;">
+      <input name="technician_id" type="text" />
+    </li>
     <li>
       <label><?php echo $resx["technician_name"]; ?></label>
       <input name="technician_name" type="text" />

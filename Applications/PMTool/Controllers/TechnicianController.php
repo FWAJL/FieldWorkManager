@@ -80,16 +80,15 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     $manager = $this->managers->getManagerOf($this->module);
     $result_insert = $manager->edit($technician);
     
-    //Clear the technician from session for the connect PM
-      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicians);
-      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
-//      \Applications\PMTool\Helpers\CommonHelper::UnsetUserSessionTechnician($this->app()->user(), $technician_id);
+    //Clear the technician list from session for the connect PM
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicians);
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
 
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
         "resx_key" => $this->action(),
-        "step" => $result_edit ? "success" : "error"
+        "step" => $result_insert ? "success" : "error"
     ));
   }
   
