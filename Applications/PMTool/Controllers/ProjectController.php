@@ -134,7 +134,7 @@ class ProjectController extends \Library\BaseController {
     //Clear the project and facility list from session for the connect PM
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
-    \Applications\PMTool\Helpers\CommonHelper::UpdateUserSessionProject($this->app()->user(), $project);
+//    \Applications\PMTool\Helpers\CommonHelper::UpdateUserSessionProject($this->app()->user(), $project);
 
     $this->SendResponseWS(
             $result, array(
