@@ -13,18 +13,18 @@
 // ------------------------------------------------------------------------
 
 /**
- * ResourcesController controller Class
+ * ResourceController controller Class
  *
  * @package		Library
  * @subpackage	Controllers
- * @category	ResourcesController
+ * @category	ResourceController
  * @author		FWM DEV Team
  * @link		
  */
 namespace Libray\Controllers;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-class ResourcesController extends \Library\BaseController {
+class ResourceController extends \Library\BaseController {
 
   public function executeGetResx(\Library\HttpRequest $rq) {
     $response = GetResource();

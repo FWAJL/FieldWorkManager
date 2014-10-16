@@ -217,10 +217,10 @@ public function executeGetItem(\Library\HttpRequest $rq) {
     /**
    * Check if the current pm has technicians to decide where to send him: stay on the technician list or asking him to add a technician
    * 
-   * @param \Applications\PMTool\Models\Dao\Technician_manager $pm
+   * @param \Applications\PMTool\Models\Dao\Technician $pm
    * @return boolean
    */
-  private function _CheckIfPmHasTechnicians(\Applications\PMTool\Models\Dao\Technician_manager $pm) {
+  private function _CheckIfPmHasTechnicians(\Applications\PMTool\Models\Dao\Technician $pm) {
 
     if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserTechnicians)) {
       $technicians = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserTechnicians);

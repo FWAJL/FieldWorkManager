@@ -33,9 +33,9 @@
   <resource key="field_form_add">Add</resource>
   <resource key="field_form_all">List All</resource>
   
-  <resource key="header_user_resources">Resources</resource>
-  <resource key="user_resources_add">Add</resource>
-  <resource key="user_resources_all">List All</resource>
+  <resource key="header_resource">Resources</resource>
+  <resource key="resource_add">Add</resource>
+  <resource key="resource_list">List All</resource>
   
   <resource key="header_user_tasks">Tasks</resource>
   <resource key="user_tasks_all">Add</resource>

@@ -153,6 +153,52 @@
     </php_modules>
   </route><!-- technician/showForm -->
 
+
+    <!-- resources -->
+  <route url="resource" module="Resource" action="index" resxfile="resource" type="ui">
+    <js_files>
+      <js_file use="head" value="Web/js/app/controllers/resource_manager.js"/>
+      <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js"/>  
+    </js_files>
+    <css_files>
+      <css_file value="Web/css/app/nav.css"/>
+      <css_file value="Web/css/app/app-style.css"/>
+      <css_file value="Web/css/app/app-theme.css"/>
+      <css_file value="Web/css/app/theme.css"/>
+      <css_file value="Web/css/app/tabs.css"/>
+    </css_files>
+  </route><!-- resource/index -->
+    <route url="resource/listAll" module="Resource" action="listAll" resxfile="resource" type="ui">
+    <js_files>
+      <js_file use="head" value="Web/js/app/controllers/resource_manager.js"/>
+    </js_files>
+    <css_files>
+      <css_file use="project" />
+    </css_files>
+    <php_modules>
+      <php_module key="active_list_module" file_name="active_list.php" shared="true"/>
+      <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true"/>
+    </php_modules>
+  </route><!-- resource/listAll -->
+  <route url="resource/showForm" module="Resource" action="showForm" resxfile="resource" type="ui">
+    <js_files>
+      <js_file use="head" value="Web/js/app/controllers/resource_manager.js"/>
+    </js_files>
+    <css_files>
+      <css_file value="Web/css/app/nav.css"/>
+      <css_file value="Web/css/app/app-style.css"/>
+      <css_file value="Web/css/app/app-theme.css"/>
+      <css_file value="Web/css/app/theme.css"/>
+      <css_file value="Web/css/app/tabs.css"/>
+    </css_files>
+    <php_modules>
+     <!-- <php_module key="resource_tabs_open" file_name="resource_tabs_open.php"/>   -->
+      <php_module key="resource_form" file_name="resource_form.php" shared="true"/>
+      <php_module key="resource_buttons" file_name="resource_buttons.php"/>
+      <php_module key="resource_tabs_close" file_name="resource_tabs_close.php"/>
+    </php_modules>
+  </route><!-- resource/showForm -->
+
   <!-- WebService AJAX routes -->
   <!-- INSTRUCTIONS
   
@@ -193,5 +239,12 @@
   <route url="technician/getlist" module="Technician" action="getList" resxfile="technician" type="ws" />
   <route url="technician/getItem" module="Technician" action="getItem" resxfile="technician" type="ws" />
   <route url="technician/updateItems" module="Technician" action="updateItems" resxfile="technician" type="ws" />
+  
+  <route url="resource/add" module="Resource" action="add" resxfile="resource" type="ws" />
+  <route url="resource/edit" module="Resource" action="edit" resxfile="resource" type="ws" />
+  <route url="resource/delete" module="Resource" action="delete" resxfile="resource" type="ws" />
+  <route url="resource/getlist" module="Resource" action="getList" resxfile="resource" type="ws" />
+  <route url="resource/getItem" module="Resource" action="getItem" resxfile="resource" type="ws" />
+  <route url="resource/updateItems" module="Resource" action="updateItems" resxfile="resource" type="ws" />
 
 </routes>

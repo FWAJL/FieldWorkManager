@@ -47,11 +47,11 @@
     </links>
   </main_menu><!-- form -->
   
-  <main_menu name="user_resource" active="true">
+  <main_menu name="resource" active="true">
     <links>
-      <header href="#" resourcekey="header_user_resources" />
-      <submenu id="user_resources_all" resourcekey="user_resources_all" active="true"/>
-      <submenu id="user_resources_add_left_menu" resourcekey="user_resources_add" active="true"/>
+      <header href="resource" resourcekey="header_resource" />
+      <submenu href="resource/listAll" id="resource_list_all" resourcekey="resource_list" active="true"/>
+      <submenu href="resource/showForm?mode=add&amp;test=true" id="btn-add-resource-manual" resourcekey="resource_add" active="true"/>
     </links>
   </main_menu><!-- resource -->
   

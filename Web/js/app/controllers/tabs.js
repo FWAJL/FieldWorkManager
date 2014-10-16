@@ -8,6 +8,8 @@ $(document).ready(function() {
     _default = "location_info";
   } else if (utils.getPathPart("technician")) {
     _default = "technician_info";
+  } else if (utils.getPathPart("resource")) {
+    _default = "resource_info";
   }
   
   $(".data-form").hide();
