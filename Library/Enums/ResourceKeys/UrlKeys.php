@@ -38,6 +38,10 @@ class UrlKeys {
   const ResourceRootUrl = "resource";
   const ResourceListAll = "resource/listAll";
   const ResourceShowForm = "resource/showForm";
+  
+  const PmRootUrl = "pm";
+  const PmListAll = "pm/listAll";
+  const PmShowForm = "pm/showForm";
 
   /**
    * Absolute Urls

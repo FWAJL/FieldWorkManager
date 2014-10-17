@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/core/jquery-ui.css" />
 
     <?php echo $this->app->globalResources["css_files"]; ?>
+    
+    <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/app/controllers/pm_manager.js"></script>
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/jquery.js"></script>
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/jquery-ui.js"></script>
     <?php echo $this->app->globalResources["js_files_head"]; ?>

@@ -10,7 +10,8 @@
         <span><?php echo $pm['pm_name']; ?></span>
       </p>
       <ul>
-        <li><?php echo $resx_menu_left["pm_info_edit"]; ?></li>
+          
+          <li><a href="<?php echo $logout_url; ?>" role="button"><?php echo $resx_menu_left["pm_info_edit"]; ?></a></li>
         <li><a href="<?php echo $logout_url; ?>" role="button"><?php echo $resx_menu_left["logout_link_text"]; ?></a></li>
       </ul>
     </li>
