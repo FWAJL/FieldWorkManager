@@ -51,8 +51,8 @@
   <resource key="facility_button_edit">Edit this facility</resource>
   <resource key="facility_button_delete">Delete this facility</resource>
 
-  <resource key="client_legend">The client company</resource>
-  <resource key="client_name">Client Name</resource>
+  <resource key="client_company_name">Client Company Name</resource>
+  <resource key="client_address">Client Address</resource>
   <resource key="client_contact_name">Client - Contact Name</resource>
   <resource key="client_contact_phone">Client - Contact Phone (Mobile)</resource>
   <resource key="client_contact_email">Client - Contact Email</resource>
