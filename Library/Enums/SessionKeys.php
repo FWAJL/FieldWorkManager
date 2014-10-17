@@ -27,6 +27,8 @@ if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script acces
  * Lists all the SessionKeys used throughout the applications so that we don't use hard-coded strings.
  */
 abstract class SessionKeys {
+  const AllUsers = "all_users";  
+    
   const UserAuthenticated = "user_auth";
   const UserFlash = 'user_flash';
   const UserConnected = "user_connected";
