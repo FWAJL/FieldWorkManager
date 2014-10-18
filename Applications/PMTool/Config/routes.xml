@@ -19,6 +19,7 @@
     <js_files>
       <js_file use="head" value="Web/js/app/controllers/facility_manager.js"/>
       <js_file use="head" value="Web/js/app/controllers/project_manager.js"/>
+      <js_file use="head" value="Web/js/app/controllers/client_manager.js"/>
       <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js"/>
     </js_files>
     <css_files>
@@ -278,6 +279,12 @@
   <route url="facility/delete" module="Facility" action="delete" resxfile="facility" type="ws" />
   <route url="facility/getlist" module="Facility" action="getList" resxfile="facility" type="ws" />
   <route url="facility/getItem" module="Facility" action="getItem" resxfile="facility" type="ws" />
+  
+  <route url="client/add" module="Client" action="add" resxfile="client" type="ws" />
+  <route url="client/edit" module="Client" action="edit" resxfile="client" type="ws" />
+  <route url="client/delete" module="Client" action="delete" resxfile="client" type="ws" />
+  <route url="client/getlist" module="Client" action="getList" resxfile="client" type="ws" />
+  <route url="client/getItem" module="Client" action="getItem" resxfile="client" type="ws" />
   
   <route url="location/add" module="Location" action="add" resxfile="location" type="ws" />
   <route url="location/edit" module="Location" action="edit" resxfile="location" type="ws" />

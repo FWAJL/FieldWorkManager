@@ -11,6 +11,7 @@
   utils.retrieveInputs = function(form_class, inputs_required) {
     var user_inputs = {};
     $("." + form_class + " input, ." + form_class + " textarea").each(function(i, data) {
+//            alert(form_class + " - " + inputs_required );
       if (utils.checkLiElement($(this), inputs_required)) {
         if ($(this).attr("type") === "text") {
           user_inputs[$(this).attr("name")] = $(this).val().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
@@ -22,6 +23,7 @@
       }
     });
     return user_inputs;
+
   };
   /**
    * check a LI element if:
@@ -34,6 +36,7 @@
    */
   utils.checkLiElement = function(element, inputs_required) {
     var result = false;
+    
     for (var i = 0; i <= inputs_required.length; i++) {
       if (element.attr("name") === inputs_required[i]) {
         result = element.val() !== "" ? true : false;

@@ -30,6 +30,7 @@ abstract class ResxFileNameKeys {
    */
   const Project = "project";
   const Facility = "facility";
+  const Client = "client";
   const Location = "location";
   const Technician = "technician";
   const Resource = "resource";

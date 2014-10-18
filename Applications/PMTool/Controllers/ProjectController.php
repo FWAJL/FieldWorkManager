@@ -103,7 +103,8 @@ class ProjectController extends \Library\BaseController {
     //Clear the project and facility list from session for the connect PM
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
-
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectClientList);
+    
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
@@ -134,6 +135,7 @@ class ProjectController extends \Library\BaseController {
     //Clear the project and facility list from session for the connect PM
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectClientList);
 //    \Applications\PMTool\Helpers\CommonHelper::UpdateUserSessionProject($this->app()->user(), $project);
 
     $this->SendResponseWS(
@@ -165,6 +167,7 @@ class ProjectController extends \Library\BaseController {
       //Clear the project and facility list from session for the connect PM
       $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
       $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
+      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectClientList);
       \Applications\PMTool\Helpers\CommonHelper::UnsetUserSessionProject($this->app()->user(), $project_id);
     }
 
@@ -199,13 +202,19 @@ class ProjectController extends \Library\BaseController {
     //Load interface to query the database for facilities
     $manager = $this->managers->getManagerOf('Facility');
     $list[\Library\Enums\SessionKeys::UserProjectFacilityList] = $manager->selectMany($project);
+    
+    //Load interface to query the database for clients
+    $manager = $this->managers->getManagerOf('Client');
+    $list[\Library\Enums\SessionKeys::UserProjectClientList] = $manager->selectMany($project);
 
     $result["lists"] = $list;
     if ($isNotAjaxCall) {
       return $list;
     } else {
       $step_result =
-              $list[\Library\Enums\SessionKeys::UserProjects] !== NULL & $list[\Library\Enums\SessionKeys::UserProjectFacilityList] !== NULL ?
+              $list[\Library\Enums\SessionKeys::UserProjects] !== NULL & 
+              $list[\Library\Enums\SessionKeys::UserProjectFacilityList] !== NULL & 
+              $list[\Library\Enums\SessionKeys::UserProjectClientList] !== NULL ?
               "success" : "error";
       $this->SendResponseWS(
               $result, array(
@@ -229,6 +238,7 @@ class ProjectController extends \Library\BaseController {
 
     $project_selected = $this->_GetProjectFromSession($project_id);
     $facility_selected = $this->_GetFacilityProjectFromSession($project_id);
+    $client_selected = $this->_GetClientProjectFromSession($project_id);
 
     $result["project"] = $project_selected;
     $result["facility"] = $facility_selected;
@@ -317,6 +327,27 @@ class ProjectController extends \Library\BaseController {
     }
     return $facilityMatch;
   }
+  
+    /**
+   * Find a client from an  project id
+   * 
+   * @param int $project_id : the id of the client to find
+   * @return \Applications\PMTool\Models\Dao\Client $clientMatch : the match
+   */
+  private function _GetClientProjectFromSession($project_id) {
+    $clients = array();
+    $clientMatch = NULL;
+    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjectClientList)) {
+      $clients = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjectClientList);
+    }
+    foreach ($clients as $client) {
+      if (intval($client->project_id()) === $project_id) {
+        $clientMatch = $client;
+        break;
+      }
+    }
+    return $clientMatch;
+  }
 
   /**
    * Check if the current pm has projects to decide where to send him: stay on the project list or asking him to add a project
@@ -365,7 +396,8 @@ class ProjectController extends \Library\BaseController {
   private function _GetAndStoreProjectsInSession($rq) {
     $lists = array();
     if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects) &&
-            !$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjectFacilityList)) {
+            !$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjectFacilityList) &&
+            !$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjectClientList)) {
 
       $lists = $this->executeGetList($rq, TRUE);
 
@@ -374,11 +406,14 @@ class ProjectController extends \Library\BaseController {
       );
 
       $this->app()->user->setAttribute(
-              \Library\Enums\SessionKeys::UserProjectFacilityList, $lists[\Library\Enums\SessionKeys::UserProjectFacilityList]
+              \Library\Enums\SessionKeys::UserProjectFacilityList, 
+              $lists[\Library\Enums\SessionKeys::UserProjectFacilityList], 
+              $lists[\Library\Enums\SessionKeys::UserProjectClientList]
       );
     } else {
       $lists[\Library\Enums\SessionKeys::UserProjects] = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
       $lists[\Library\Enums\SessionKeys::UserProjectFacilityList] = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
+      $lists[\Library\Enums\SessionKeys::UserProjectClientList] = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjectClientList);
     }
     return $lists;
   }

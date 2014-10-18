@@ -61,11 +61,12 @@ $(document).ready(function() {
   client_manager.loadEditForm = function(dataWs) {
     $(".client_form input[name=\"client_id\"]").val(parseInt(dataWs.client.client_id));
     $(".client_form input[name=\"project_id\"]").val(parseInt(dataWs.client.project_id));
+    $(".project_form .add-new-item input[name=\"project_name\"]").val(dataWs.project.project_name);
     $(".client_form input[name=\"client_company_name\"]").val(dataWs.client.client_company_name);
     $(".client_form .add-new-item textarea[name=\"client_address\"]").val(dataWs.client.client_address);
     $(".client_form input[name=\"client_contact_name\"]").val(dataWs.client.client_contact_name);
     $(".client_form input[name=\"client_contact_phone\"]").val(dataWs.client.client_contact_phone);
-    $(".client_form input[name=\"client_contact_email\"]").val(dataWs.client.client_contact_email);
+    $(".client_form input[name=\"client_contact_email\"]").val(dataWs.client.client_contact_email);   
     
   };
   client_manager.delete = function() {

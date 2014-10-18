@@ -34,7 +34,6 @@
   <resource key="btn_to_inactive_list">De-activate</resource> 
   <resource key="btn_to_active_list">Activate</resource> 
   
-
   <resource key="facility_legend">The facility</resource>
   <resource key="facility_name">Facility Name</resource>
   <resource key="facility_address">Facility Address</resource>
@@ -51,11 +50,15 @@
   <resource key="facility_button_edit">Edit this facility</resource>
   <resource key="facility_button_delete">Delete this facility</resource>
 
+  <resource key="client_legend">The Client</resource>
   <resource key="client_company_name">Client Company Name</resource>
   <resource key="client_address">Client Address</resource>
   <resource key="client_contact_name">Client - Contact Name</resource>
   <resource key="client_contact_phone">Client - Contact Phone (Mobile)</resource>
   <resource key="client_contact_email">Client - Contact Email</resource>
+  <resource key="client_button_add">Add this client</resource>
+  <resource key="client_button_edit">Edit this client</resource>
+  <resource key="client_button_delete">Delete this client</resource>
  
   
 </resources>

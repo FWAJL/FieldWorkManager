@@ -23,17 +23,17 @@ class ClientManager_PDO extends \Library\DAL\BaseManager {
    * @param ClientManager $pm
    * @return array the selected row in the db
    */
-//  public function update($client) {
-//    $sql = $this->dao->prepare("UPDATE client set `password` = :password WHERE `pm_id` = :pm_id;");
-//    $sql->bindValue(":pm_id", $pm->pm_id(), \PDO::PARAM_INT);
-//    $sql->bindValue(":password", $pm->password(), \PDO::PARAM_STR);
-//
-//    try {
-//      return $sql->execute();
-//    } catch (Exception $exc) {
-//      echo $exc->getTraceAsString();
-//    }
-//  }
+  public function update($client) {
+    $sql = $this->dao->prepare("UPDATE client set `password` = :password WHERE `pm_id` = :pm_id;");
+    $sql->bindValue(":pm_id", $pm->pm_id(), \PDO::PARAM_INT);
+    $sql->bindValue(":password", $pm->password(), \PDO::PARAM_STR);
+
+    try {
+      return $sql->execute();
+    } catch (Exception $exc) {
+      echo $exc->getTraceAsString();
+    }
+  }
 
   /**
    * Returns list of clients for PM

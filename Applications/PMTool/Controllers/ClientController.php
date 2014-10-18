@@ -17,7 +17,7 @@
  *
  * @package		Application/PMTool
  * @subpackage	Controllers
- * @category	FacilityController
+ * @category	ClientController
  * @author		FWM DEV Team
  * @link		
  */
@@ -27,10 +27,10 @@ namespace Applications\PMTool\Controllers;
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class FacilityController extends \Library\BaseController {
+class ClientController extends \Library\BaseController {
 
   /**
-   * Method that adds a facility and returns the result of operation
+   * Method that adds a client and returns the result of operation
    * 
    * @param \Library\HttpRequest $rq
    * @return JSON
@@ -38,27 +38,27 @@ class FacilityController extends \Library\BaseController {
   public function executeAdd(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS();
 
-    $facility = $this->PrepareUserObject($this->dataPost());
-    $result["data"] = $facility;
+    $client = $this->PrepareUserObject($this->dataPost());
+    $result["data"] = $client;
     //Load interface to query the database
     $manager = $this->managers->getManagerOf($this->module());
-    $result_insert = $manager->add($facility);
+    $result_insert = $manager->add($client);
 
-    //Clear the project and facility list from session for the connect PM
+    //Clear the project and client list from session for the connect PM
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectClientList);
 
     //Process DB result and send result
     if ($result_insert)
       $result = $this->SendResponseWS(
               $result,
               array(
-                  "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Facility, 
+                  "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Client, 
                   "resx_key" => $this->action(), "step" => $result_insert ? "success" : "error"));
   }
 
   /**
-   * Method that edits a a facility and returns the result of operation
+   * Method that edits a a client and returns the result of operation
    * 
    * @param \Library\HttpRequest $rq
    * @return JSON
@@ -71,17 +71,17 @@ class FacilityController extends \Library\BaseController {
     $result_edit = $manager->edit($this->PrepareUserObject($this->dataPost()));
 
     if ($result_edit) {
-      //Clear the facility list from session for the connected PM
-      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
+      //Clear the client list from session for the connected PM
+      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectClientList);
     }
     $result = $this->SendResponseWS(
             $result,
             array(
-                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Facility, 
+                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Client, 
                 "resx_key" => $this->action(), "step" => $result_edit ? "success" : "error"));
   }
   /**
-   * Method that delete a facility and returns the result of operation
+   * Method that delete a client and returns the result of operation
    * 
    * @param \Library\HttpRequest $rq
    * @return JSON
@@ -90,19 +90,19 @@ class FacilityController extends \Library\BaseController {
     // Init result
     $result = $this->InitResponseWS();
     $manager = $this->managers->getManagerOf($this->module());
-    $result_db = $manager->delete($this->dataPost["facility_id"]);
+    $result_db = $manager->delete($this->dataPost["client_id"]);
 
     if ($result_db) {
-      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList); 
+      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectClientList); 
     }
     $result = $this->SendResponseWS(
             $result,
             array(
-                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Facility, 
+                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Client, 
                 "resx_key" => $this->action(), "step" => $result_db ? "success" : "error"));    
   }
   /**
-   * Method that retrieves a list of facilities for a project
+   * Method that retrieves a list of clients for a project
    * 
    * @param \Library\HttpRequest $rq
    * @return JSON
@@ -119,16 +119,16 @@ class FacilityController extends \Library\BaseController {
     /* Get list from DB */
     //Load interface to query the database
     $manager = $this->managers->getManagerOf($this->module());
-    $result["facilities"] = $manager->selectMany($project);
+    $result["clients"] = $manager->selectMany($project);
 
     if ($isNotAjaxCall) {
-      return $result["facilities"];
+      return $result["clients"];
     } else {
       $result = $this->SendResponseWS(
               $result,
               array(
-                  "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Facility, 
-                  "resx_key" => $this->action(), "step" => $result["facilities"] !== NULL? "success" : "error"
+                  "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Client, 
+                  "resx_key" => $this->action(), "step" => $result["clients"] !== NULL? "success" : "error"
                    ));
     }
   }
@@ -158,23 +158,23 @@ class FacilityController extends \Library\BaseController {
     $result = $this->SendResponseWS(
             $result,
             array(
-                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Facility, 
+                "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Client, 
                 "resx_key" => $this->action(), "step" => $project_selected !== NULL ? "success" : "error"));
   }
 
   /**
-   * Prepare the Facility Object before calling the DB.
+   * Prepare the Client Object before calling the DB.
    * 
    * @param array $data_sent from POST request
-   * @return \Applications\PMTool\Models\Dao\Facility
+   * @return \Applications\PMTool\Models\Dao\Client
    */
   private function PrepareUserObject($data_sent) {
-    $facility = new \Applications\PMTool\Models\Dao\Facility();
+    $client = new \Applications\PMTool\Models\Dao\Client();
     foreach ($data_sent as $key => $value) {
       $method = "set" .ucfirst($key);
-      $facility->$method(!array_key_exists($key, $data_sent) ? NULL : $value);
+      $client->$method(!array_key_exists($key, $data_sent) ? NULL : $value);
     }
-    return $facility;
+    return $client;
   }
 
 }

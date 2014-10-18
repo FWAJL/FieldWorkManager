@@ -54,7 +54,7 @@ $(document).ready(function() {
     var post_data = {};
     post_data["project"] = utils.retrieveInputs("project_form", ["project_name"]);
     post_data["facility"] = utils.retrieveInputs("facility_form", ["facility_name"]);
-    post_data["client"] = utils.retrieveInputs("client_form", ["client_company_name"]);
+    post_data["client"] = utils.retrieveInputs();
     if (post_data["project"].project_name !== undefined &&
             post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
       project_manager.add(post_data, "project", "add");
@@ -109,9 +109,14 @@ $(document).ready(function() {
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
+        
         var post_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
         data["facility"]['project_id'] = reply.dataOut;
         facility_manager.send("facility/" + action, data["facility"]);
+        
+        var post_data = utils.retrieveInputs();
+        data["client"]['project_id'] = reply.dataOut;
+        client_manager.send("client/" + action, data["client"]);
       }
     });
   };
@@ -121,10 +126,13 @@ $(document).ready(function() {
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
+        
         var post_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
         if (post_data.facility_name !== undefined && post_data.facility_address !== undefined) {
           facility_manager.send("facility/" + action, post_data);
-        }
+        }  
+          client_manager.send("client/" + action, post_data);
+        
       }
     });
   };
@@ -170,6 +178,7 @@ $(document).ready(function() {
     $(".project_form .add-new-item input[name=\"project_active\"]").val(dataWs.project.project_active);
     $(".project_form .add-new-item input[name=\"project_visible\"]").val(dataWs.project.project_visible);
     facility_manager.loadEditForm(dataWs);
+    client_manager.loadEditForm(dataWs);
   };
   project_manager.delete = function(project_id) {
     datacx.post("project/delete", {"project_id": project_id}).then(function(reply) {
