@@ -166,7 +166,7 @@ $(document).ready(function() {
     $("input[name=\"technician_name\"]").val(dataWs.technician.technician_name);
     $("input[name=\"technician_phone\"]").val(dataWs.technician.technician_phone);
     $("input[name=\"technician_email\"]").val(dataWs.technician.technician_email);
-    $("input[name=\"technician_document\"]").val(dataWs.technician.technician_document);
+//    $("input[name=\"technician_document\"]").val(dataWs.technician.technician_document);
     $("input[name=\"technician_active\"]").val(dataWs.technician.technician_active);
   };
   technician_manager.delete = function(technician_id) {
