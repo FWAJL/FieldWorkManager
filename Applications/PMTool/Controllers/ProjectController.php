@@ -136,7 +136,7 @@ class ProjectController extends \Library\BaseController {
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectClientList);
-//    \Applications\PMTool\Helpers\CommonHelper::UpdateUserSessionProject($this->app()->user(), $project);
+    \Applications\PMTool\Helpers\CommonHelper::UpdateUserSessionProject($this->app()->user(), $project);
 
     $this->SendResponseWS(
             $result, array(
