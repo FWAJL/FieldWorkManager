@@ -14,7 +14,7 @@ class PmController extends \Library\BaseController {
     if (count($lists[\Library\Enums\SessionKeys::AllUsers]) > 0) {
       header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::PmListAll);
     } else {
-      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::PmShowForm . "?mode=add&test=true");
+      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::PmShowForm . "?mode=edit"+ $this->dataPost["mode"] +"&pm_id=" + $this->dataPost["pm_id"]);
     }
   }
     
@@ -232,7 +232,7 @@ public function executeGetItem(\Library\HttpRequest $rq) {
   }
   
   private function _PreparePmObject($data_sent) {
-    $pm = new \Applications\PMTool\Models\Dao\Pms();
+    $pm = new \Applications\PMTool\Models\Dao\Project_manager();
     $pm->setPm_id($data_sent["pm_id"]);
     $pm->setUsername(!array_key_exists('username', $data_sent) ? NULL : $data_sent["username"]);
     $pm->setPassword(!array_key_exists('password', $data_sent) ? NULL : $data_sent["password"]);
@@ -241,7 +241,7 @@ public function executeGetItem(\Library\HttpRequest $rq) {
     $pm->setPm_comp_name(!array_key_exists('pm_comp_name', $data_sent) ? "" : $data_sent["pm_comp_name"]);
     $pm->setPm_phone(!array_key_exists('pm_phone', $data_sent) ? "" : $data_sent["pm_phone"]);
     $pm->setPm_email(!array_key_exists('pm_email', $data_sent) ? "" : $data_sent["pm_email"]);
-    $pm->setPm_active(!array_key_exists('pm_active', $data_sent) ? 0 : ($data_sent["pm_active"] === "1"));
+//    $pm->setPm_active(!array_key_exists('pm_active', $data_sent) ? 0 : ($data_sent["pm_active"] === "1"));
 
     return $pm;
   }

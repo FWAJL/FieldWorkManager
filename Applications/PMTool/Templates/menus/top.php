@@ -10,7 +10,7 @@
         <span><?php echo $pm['pm_name']; ?></span>
       </p>
       <ul>
-          <li><a id="btn_edit_pm" class="pm_edit btn btn-default" role="button">Edit Info</a></li>
+          <li><a id="view_pm_info" class="btn btn-default" role="button" data-pm-id="<?php echo $pm['pm_id']; ?>">Edit Info</a></li>
         <li><a href="<?php echo $logout_url; ?>" role="button"><?php echo $resx_menu_left["logout_link_text"]; ?></a></li>
       </ul>
     </li>

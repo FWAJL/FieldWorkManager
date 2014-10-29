@@ -85,12 +85,10 @@ $(document).ready(function() {
 //    pm_manager.fillFormWithRandomData();
 //  }
 
-  var alreadyHovered = false;
-  $(".select_item").hover(function() {
-    if (!alreadyHovered)
-      toastr.info("Right-click to edit!");
-    alreadyHovered = true;
-  });//Show a pm tip
+  $("#view_pm_info").click(function() {
+    var pm_id = $(this).attr("data-pm-id");
+    utils.redirect("pm?mode=edit&pm_id="+pm_id);
+  });//Show pm info
 
   $("#pm_list_all").click(function() {
     utils.clearForm();
@@ -189,7 +187,7 @@ $(document).ready(function() {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
         $(".form_sections").hide();
-        utils.redirect("pm/listAll", 3000)
+        //utils.redirect("pm/listAll", 3000)
       } else {//success
         $(".pm_edit").show().removeClass("hide");
         toastr.success(reply.message);
