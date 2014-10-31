@@ -5,7 +5,7 @@ namespace Applications\PMTool\Models\Dal;
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class LoginManager_PDO extends \Library\DAL\BaseManager {
+class LoginDal extends \Library\DAL\BaseManager {
 
   /**
    * Select a PM from its username or password

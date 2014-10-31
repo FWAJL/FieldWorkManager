@@ -8,7 +8,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 /**
  * Replace '_Template' by your custom name
  */
-class _TemplateManager_PDO extends \Library\DAL\BaseManager {
+class ResourceDal extends \Library\DAL\BaseManager {
 
   public function selectOne($object) {
     return NULL;
@@ -18,14 +18,15 @@ class _TemplateManager_PDO extends \Library\DAL\BaseManager {
     return NULL;
   }
 
-  /**
-   * Returns list of objects for PM
-   * 
-   * @param \Applications\PMTool\Models\Dao\Project $object
-   * @return array of \Applications\PMTool\Models\Dao\Project
-   */
-  public function selectMany($object) {
-    return NULL;
+   public function selectMany($object) {
+    $sql = 'SELECT * FROM resources where `pm_id` = \'' . $object->pm_id() . '\';'; //AND `active` = 1  AND `visible` = 1;';
+    $query = $this->dao->query($sql);
+    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Resources');
+
+    $resources_list = $query->fetchAll();
+    $query->closeCursor();
+
+    return count($resources_list) > 0 ? $resources_list : array();
   }
 
   public function countById($pm_id) {
@@ -41,7 +42,7 @@ class _TemplateManager_PDO extends \Library\DAL\BaseManager {
     }
     $columns = rtrim($columns, ", ");
     $values = rtrim($values, ", ");
-    $sql = "INSERT INTO `object` (" . $columns . ") VALUES (" . $values . ");";
+    $sql = "INSERT INTO `resources` (" . $columns . ") VALUES (" . $values . ");";
     $query = $this->dao->query($sql);
     $result;
     if (!$query) {
@@ -58,14 +59,14 @@ class _TemplateManager_PDO extends \Library\DAL\BaseManager {
     $set_clause = "";
     $where_clause = "";
     foreach ($object as $key => $value) {
-      if ($key === "object_id") {
+      if ($key === "resource_id") {
         $where_clause = "$key = $value";
       } else {
         $set_clause .= "`" . $key . "` = '" . $value ."',"; 
       }
     }
     $set_clause = rtrim($set_clause, ",");
-    $sql = "UPDATE `object` SET $set_clause  WHERE $where_clause;";
+    $sql = "UPDATE `resources` SET $set_clause  WHERE $where_clause;";
     $query = $this->dao->query($sql);
     $result;
     if (!$query) {
@@ -78,7 +79,7 @@ class _TemplateManager_PDO extends \Library\DAL\BaseManager {
   }
 
   public function delete($identifier) {
-    $sql = "DELETE from `object` WHERE object_id = " . $identifier . ";";
+    $sql = "DELETE from `resources` WHERE resource_id = " . $identifier . ";";
     $query = $this->dao->query($sql);
     $result;
     if (!$query) {

@@ -5,7 +5,7 @@ namespace Applications\PMTool\Models\Dal;
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class ProjectManager_PDO extends \Library\DAL\BaseManager {
+class ProjectDal extends \Library\DAL\BaseManager {
 
   public function selectOne($project) {
     return NULL;

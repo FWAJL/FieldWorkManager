@@ -5,7 +5,7 @@ namespace Applications\PMTool\Models\Dal;
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class ClientManager_PDO extends \Library\DAL\BaseManager {
+class ClientDal extends \Library\DAL\BaseManager {
 
   /**
    * Select a Client from its id and pm_id

@@ -8,7 +8,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 /**
  * Replace '_Template' by your custom name
  */
-class TechnicianManager_PDO extends \Library\DAL\BaseManager {
+class TechnicianDal extends \Library\DAL\BaseManager {
 
   public function selectOne($object) {
     return NULL;
