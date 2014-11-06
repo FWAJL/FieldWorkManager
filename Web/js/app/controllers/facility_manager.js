@@ -41,7 +41,7 @@ $(document).ready(function() {
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        utils.redirect("project/listAll");
+        //utils.redirect("project/listAll");
       }
     });
   };

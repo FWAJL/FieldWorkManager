@@ -34,18 +34,18 @@ $(document).ready(function() {
       if (tmpSelection.length > 0) {
         project_ids = tmpSelection;
         //Show the button to appropriate button
-        $(".from-"+$(this).attr("id")).show();
+        $(".from-" + $(this).attr("id")).show();
       } else {
         project_ids = [];
-        $(".from-"+$(this).attr("id")).hide();
+        $(".from-" + $(this).attr("id")).hide();
       }
     }
   });
   $(".from-inactive-list").click(function() {
-    project_manager.updateProjects("active",project_ids);
+    project_manager.updateProjects("active", project_ids);
   });
   $(".from-active-list").click(function() {
-    project_manager.updateProjects("inactive",project_ids);
+    project_manager.updateProjects("inactive", project_ids);
   });
   //************************************************//
 
@@ -109,14 +109,13 @@ $(document).ready(function() {
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        
+
         var post_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
-        data["facility"]['project_id'] = reply.dataOut;
-        facility_manager.send("facility/" + action, data["facility"]);
-        
-        var post_data = utils.retrieveInputs();
-        data["client"]['project_id'] = reply.dataOut;
-        client_manager.send("client/" + action, data["client"]);
+        if (post_data.facility_name !== undefined && post_data.facility_address !== undefined) {
+          facility_manager.send("facility/" + action, post_data);
+        }
+        var client_data = utils.retrieveInputs("client_form", []);
+        client_manager.send("client/" + action, client_data);
       }
     });
   };
@@ -126,13 +125,13 @@ $(document).ready(function() {
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        
+
         var post_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
         if (post_data.facility_name !== undefined && post_data.facility_address !== undefined) {
           facility_manager.send("facility/" + action, post_data);
-        }  
-          client_manager.send("client/" + action, post_data);
-        
+        }
+        var client_data = utils.retrieveInputs("client_form", []);
+        client_manager.send("client/" + action, client_data);
       }
     });
   };
@@ -198,7 +197,7 @@ $(document).ready(function() {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
         $(".form_sections").hide();
-        utils.redirect("project/listAll", 3000)
+        //utils.redirect("project/listAll", 3000)
       } else {//success
         $(".project_edit").show().removeClass("hide");
         toastr.success(reply.message);
@@ -216,7 +215,7 @@ $(document).ready(function() {
     $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
     $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
   };
-  
+
   project_manager.updateProjects = function(action, arrayId) {
     datacx.post("project/updateItems", {"action": action, "project_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
@@ -225,7 +224,7 @@ $(document).ready(function() {
       } else {//success
         toastr.success(reply.message);
         utils.redirect("project/listAll");
-     }
+      }
     });
   };
 
