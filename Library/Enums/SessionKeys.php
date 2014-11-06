@@ -46,6 +46,8 @@ abstract class SessionKeys {
  
   const ProjectKey =  "project_";
   const ProjectObject = "project_obj";
+  const FacilityObject = "facility_obj";
+  const ClientObject = "client_obj";
   
   const ProjectTasks = "project_tasks";
   const UserProjectTaskList= "user_project_task_list";
@@ -53,7 +55,7 @@ abstract class SessionKeys {
   const UserResources = "user_resources";
   const UserResourceList = "user_resource_list";
   
-  Const FieldForms = "field_forms";
+  const FieldForms = "field_forms";
    const UserFieldFormsList = "user_field_forms_list";
 
   

@@ -9,7 +9,7 @@
   <resource key="message_success_add">The data has been inserted.</resource>
   <resource key="message_error_getlist">Error reading the data. Check logs.</resource>
   <resource key="message_success_getlist">The data have been read.</resource>
-  <resource key="message_error_getItem">The ser doesn't exist. You will be redirected to the login page in 3 seconds.</resource>
+  <resource key="message_error_getItem">The pm doesn't exist. You will be redirected to the login page in 3 seconds.</resource>
   <resource key="message_success_getItem">The data has been read.</resource>
   <resource key="message_error_edit">Error editing the data. Check logs.</resource>
   <resource key="message_success_edit">The data has been edited.</resource>

@@ -1,11 +1,10 @@
--- phpMyAdmin SQL Dump
--- version 4.0.4
--- http://www.phpmyadmin.net
+-- FWM TEAM
 --
--- Host: 10.123.0.99:3306
--- Generation Time: Oct 27, 2014 at 06:03 AM
--- Server version: 5.5.38
--- PHP Version: 5.4.4-14+deb7u14
+-- History:
+-- 10-09-14: added location table
+-- 03-10-14: added technician and client tables
+
+DROP SCHEMA IF EXISTS `baiken_fwm_1`;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,8 +18,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `baiken_fwm_1`
 --
--- CREATE DATABASE IF NOT EXISTS `baiken_fwm_1` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
--- USE `baiken_fwm_1`;
+ CREATE DATABASE IF NOT EXISTS `baiken_fwm_1` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ USE `baiken_fwm_1`;
 
 -- --------------------------------------------------------
 
