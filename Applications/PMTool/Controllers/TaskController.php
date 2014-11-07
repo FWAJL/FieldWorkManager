@@ -5,23 +5,22 @@ namespace Applications\PMTool\Controllers;
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class LocationController extends \Library\BaseController {
+class TaskController extends \Library\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
     if (\Applications\PMTool\Helpers\CommonHelper::RedirectAfterProjectSelection($this->app(), intval($rq->getData("project_id")))) {
-      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
+      header('Task: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
     }
   }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
     $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
-//  Why is this here twice?
-//  $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+//    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     if ($rq->getData("mode") === "edit") {
-      $this->page->addVar("location_editing_header", $this->resxData["location_legend_edit"]);
+      $this->page->addVar("task_editing_header", $this->resxData["task_legend_edit"]);
     } else {
-      $this->page->addVar("location_editing_header", $this->resxData["location_legend_add"]);
+      $this->page->addVar("task_editing_header", $this->resxData["task_legend_add"]);
     }
     //Which module?
     $this->page->addVar(
@@ -29,16 +28,16 @@ class LocationController extends \Library\BaseController {
   }
 
   public function executeListAll(\Library\HttpRequest $rq) {
-    //Get list of location stored in session
+    //Get list of task stored in session
     $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
-    $this->_GetAndStoreLocationsInSession($sessionProject);
+    $this->_GetAndStoreTasksInSession($sessionProject);
     $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
-    $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
+    $tasks = $sessionProject[\Library\Enums\SessionKeys::ProjectTasks];
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $locations,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $tasks,
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
@@ -59,19 +58,19 @@ class LocationController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf($this->module);
     $this->dataPost["project_id"] = $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id();
 
-    $locations = array();
+    $tasks = array();
     if (array_key_exists("names", $this->dataPost())) {
-      $locations = $this->_PrepareManyLocationObjects();
+      $tasks = $this->_PrepareManyTaskObjects();
     } else {
-      array_push($locations, $this->_PrepareLocationObject($this->dataPost()));
+      array_push($tasks, $this->_PrepareTaskObject($this->dataPost()));
     }
-    $result["dataIn"] = $locations;
+    $result["dataIn"] = $tasks;
 
     $result["dataOut"] = 0;
-    foreach ($locations as $location) {
-      $result["dataOut"] = $manager->add($location);
-      $location->setLocation_id("$result[dataOut]"); 
-      array_push($sessionProject[\Library\Enums\SessionKeys::ProjectLocations], $location);
+    foreach ($tasks as $task) {
+      $result["dataOut"] = $manager->add($task);
+      $task->setTask_id("$result[dataOut]"); 
+      array_push($sessionProject[\Library\Enums\SessionKeys::ProjectTasks], $task);
     }
     if ($result["dataOut"]) {
       \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
@@ -79,7 +78,7 @@ class LocationController extends \Library\BaseController {
 
     $this->SendResponseWS(
             $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
         "resx_key" => $this->action(),
         "step" => $result["dataOut"] > 0 ? "success" : "error"
     ));
@@ -92,21 +91,21 @@ class LocationController extends \Library\BaseController {
 
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $location = $this->_PrepareLocationObject($this->dataPost());
-    $result["data"] = $location;
+    $task = $this->_PrepareTaskObject($this->dataPost());
+    $result["data"] = $task;
 
     $manager = $this->managers->getManagerOf($this->module());
-    $result_edit = $manager->edit($location);
+    $result_edit = $manager->edit($task);
 
-    //Clear the location and facility list from session for the connect PM
+    //Clear the task and facility list from session for the connect PM
     if ($result_edit) {
-      $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = array();
+      $sessionProject[\Library\Enums\SessionKeys::ProjectTasks] = array();
       \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
     }
 
     $this->SendResponseWS(
             $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
         "resx_key" => $this->action(),
         "step" => $result_edit ? "success" : "error"
     ));
@@ -117,23 +116,23 @@ class LocationController extends \Library\BaseController {
     $result = $this->InitResponseWS();
     $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
     $db_result = FALSE;
-    $location_id = intval($this->dataPost["location_id"]);
+    $task_id = intval($this->dataPost["task_id"]);
 
-    //Check if the location to be deleted if the Location manager's
-    $location_selected = $this->_GetLocationFromSession($location_id);
+    //Check if the task to be deleted if the Task manager's
+    $task_selected = $this->_GetTaskFromSession($task_id);
     //Load interface to query the database
-    if ($location_selected !== NULL) {
+    if ($task_selected !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
-      $db_result = $manager->delete($location_id);
+      $db_result = $manager->delete($task_id);
       if ($db_result) {
-        $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = array();
+        $sessionProject[\Library\Enums\SessionKeys::ProjectTasks] = array();
         \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
       }
     }
 
     $this->SendResponseWS(
             $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
         "resx_key" => $this->action(),
         "step" => $db_result !== FALSE ? "success" : "error"
     ));
@@ -146,16 +145,16 @@ class LocationController extends \Library\BaseController {
     //Init PDO
     $list = array();
     if ($sessionProject !== NULL) {
-      //Load interface to query the database for locations
+      //Load interface to query the database for tasks
       $manager = $this->managers->getManagerOf($this->module);
-      $result[\Library\Enums\SessionKeys::ProjectLocations] = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = $manager->selectMany($sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+      $result[\Library\Enums\SessionKeys::ProjectTasks] = $sessionProject[\Library\Enums\SessionKeys::ProjectTasks] = $manager->selectMany($sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
       \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
     }
     if ($isAjaxCall) {
-      $step_result = $result[\Library\Enums\SessionKeys::ProjectLocations] !== NULL ? "success" : "error";
+      $step_result = $result[\Library\Enums\SessionKeys::ProjectTasks] !== NULL ? "success" : "error";
       $this->SendResponseWS(
               $result, array(
-          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
           "resx_key" => $this->action(),
           "step" => $step_result
       ));
@@ -165,16 +164,16 @@ class LocationController extends \Library\BaseController {
   public function executeGetItem(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
-    $location_id = intval($this->dataPost["location_id"]);
+    $task_id = intval($this->dataPost["task_id"]);
 
-    $location_selected = $this->_GetLocationFromSession($location_id);
+    $task_selected = $this->_GetTaskFromSession($task_id);
 
-    $result["location"] = $location_selected;
+    $result["task"] = $task_selected;
     $this->SendResponseWS(
             $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
         "resx_key" => $this->action(),
-        "step" => ($location_selected !== NULL) ? "success" : "error"
+        "step" => ($task_selected !== NULL) ? "success" : "error"
     ));
   }
 
@@ -182,79 +181,79 @@ class LocationController extends \Library\BaseController {
     $result = $this->InitResponseWS(); // Init result
 
     $rows_affected = 0;
-    //Get the location objects from ids received
-    $location_ids = str_getcsv($this->dataPost["location_ids"], ',');
+    //Get the task objects from ids received
+    $task_ids = str_getcsv($this->dataPost["task_ids"], ',');
     $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
-    $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
+    $tasks = $sessionProject[\Library\Enums\SessionKeys::ProjectTasks];
     $matchedElements = $this->FindObjectsFromIds(
             array(
-                "filter" => "location_id",
-                "ids" => $location_ids,
-                "objects" => $locations)
+                "filter" => "task_id",
+                "ids" => $task_ids,
+                "objects" => $tasks)
     );
 
-    foreach ($matchedElements as $location) {
-      $location->setLocation_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
+    foreach ($matchedElements as $task) {
+      $task->setTask_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
       $manager = $this->managers->getManagerOf($this->module);
-      $rows_affected += $manager->edit($location) ? 1 : 0;
+      $rows_affected += $manager->edit($task) ? 1 : 0;
     }
     \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
 
     $this->SendResponseWS(
             $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
         "resx_key" => $this->action(),
-        "step" => ($rows_affected === count($location_ids)) ? "success" : "error"
+        "step" => ($rows_affected === count($task_ids)) ? "success" : "error"
     ));
   }
 
-  private function _GetAndStoreLocationsInSession($sessionProject) {
+  private function _GetAndStoreTasksInSession($sessionProject) {
     $lists = array();
-    if (count($sessionProject[\Library\Enums\SessionKeys::ProjectLocations]) === 0) {
+    if (count($sessionProject[\Library\Enums\SessionKeys::ProjectTasks]) === 0) {
       $this->executeGetList(NULL, $sessionProject, false);
     } else {
-      //The locations are already in Session
+      //The tasks are already in Session
     }
   }
 
-  private function _PrepareLocationObject($data_sent) {
-    $location = new \Applications\PMTool\Models\Dao\Location();
-    $location->setProject_id($data_sent["project_id"]);
-    $location->setLocation_id(!array_key_exists('location_id', $data_sent) ? NULL : $data_sent["location_id"]);
-    $location->setLocation_name(!array_key_exists('location_name', $data_sent) ? NULL : $data_sent["location_name"]);
-    $location->setLocation_document(!array_key_exists('location_document', $data_sent) ? "" : $data_sent["location_document"]);
-    $location->setLocation_lat(!array_key_exists('location_lat', $data_sent) ? "" : $data_sent["location_lat"]);
-    $location->setLocation_long(!array_key_exists('location_long', $data_sent) ? "" : $data_sent["location_long"]);
-    $location->setLocation_desc(!array_key_exists('location_desc', $data_sent) ? "" : $data_sent["location_desc"]);
-    $location->setLocation_active(!array_key_exists('location_active', $data_sent) ? 0 : ($data_sent["location_active"] === "1"));
-    $location->setLocation_visible(!array_key_exists('location_visible', $data_sent) ? 0 : ($data_sent["location_visible"] === "1"));
+  private function _PrepareTaskObject($data_sent) {
+    $task = new \Applications\PMTool\Models\Dao\Task();
+    $task->setProject_id($data_sent["project_id"]);
+    $task->setTask_id(!array_key_exists('task_id', $data_sent) ? NULL : $data_sent["task_id"]);
+    $task->setTask_name(!array_key_exists('task_name', $data_sent) ? NULL : $data_sent["task_name"]);
+    $task->setTask_deadline(!array_key_exists('task_deadline', $data_sent) ? "" : $data_sent["task_deadline"]);
+    $task->setTask_instructions(!array_key_exists('task_instructions', $data_sent) ? "" : $data_sent["task_instructions"]);
+    $task->setTask_trigger_cal(!array_key_exists('task_trigger_cal', $data_sent) ? "" : $data_sent["task_trigger_cal"]);
+    $task->setTask_trigger_pm(!array_key_exists('task_trigger_pm', $data_sent) ? "" : $data_sent["task_trigger_pm"]);
+    $task->setTask_trigger_ext(!array_key_exists('task_trigger_ext', $data_sent) ? "" : $data_sent["task_trigger_ext"]);
+//    $task->setTask_active(!array_key_exists('task_active', $data_sent) ? 0 : ($data_sent["task_active"] === "1"));
 
-    return $location;
+    return $task;
   }
 
-  private function _PrepareManyLocationObjects() {
-    $locations = array();
-    $location_names = \Applications\PMTool\Helpers\CommonHelper::StringToArray("\n", $this->dataPost["names"]);
-    foreach ($location_names as $name) {
-      $location = new \Applications\PMTool\Models\Dao\Location();
-      $location->setProject_id($this->dataPost["project_id"]);
-      $location->setLocation_name($name);
-      array_push($locations, $location);
+  private function _PrepareManyTaskObjects() {
+    $tasks = array();
+    $task_names = \Applications\PMTool\Helpers\CommonHelper::StringToArray("\n", $this->dataPost["names"]);
+    foreach ($task_names as $name) {
+      $task = new \Applications\PMTool\Models\Dao\Task();
+      $task->setProject_id($this->dataPost["project_id"]);
+      $task->setTask_name($name);
+      array_push($tasks, $task);
     }
-    return $locations;
+    return $tasks;
   }
 
-  private function _GetLocationFromSession($location_id) {
-    $locationMatch = NULL;
+  private function _GetTaskFromSession($task_id) {
+    $taskMatch = NULL;
     $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
-    $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
-    foreach ($locations as $location) {
-      if (intval($location->location_id()) === $location_id) {
-        $locationMatch = $location;
+    $tasks = $sessionProject[\Library\Enums\SessionKeys::ProjectTasks];
+    foreach ($tasks as $task) {
+      if (intval($task->task_id()) === $task_id) {
+        $taskMatch = $task;
         break;
       }
     }
-    return $locationMatch;
+    return $taskMatch;
   }
 
 }

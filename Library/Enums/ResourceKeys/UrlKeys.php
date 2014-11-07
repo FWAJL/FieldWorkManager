@@ -6,7 +6,7 @@
  */
 
 /**
- * Description of UrlKeys
+ * Description of UrlKeys.
  *
  * @author jl
  */
@@ -42,6 +42,10 @@ class UrlKeys {
   const PmRootUrl = "pm";
   const PmListAll = "pm/listAll";
   const PmShowForm = "pm/showForm";
+  
+  const TaskRootUrl = "task";
+  const TaskListAll = "task/listAll";
+  const TaskShowForm = "task/showForm";
 
   /**
    * Absolute Urls

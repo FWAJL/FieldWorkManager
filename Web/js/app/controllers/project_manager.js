@@ -114,7 +114,7 @@ $(document).ready(function() {
         data["facility"]['project_id'] = reply.dataOut;
         facility_manager.send("facility/" + action, data["facility"]);
         
-        var post_data = utils.retrieveInputs();
+        var post_data = utils.retrieveInputs("client_form");
         data["client"]['project_id'] = reply.dataOut;
         client_manager.send("client/" + action, data["client"]);
       }
@@ -131,6 +131,7 @@ $(document).ready(function() {
         if (post_data.facility_name !== undefined && post_data.facility_address !== undefined) {
           facility_manager.send("facility/" + action, post_data);
         }  
+          var post_data = utils.retrieveInputs("client_form");
           client_manager.send("client/" + action, post_data);
         
       }

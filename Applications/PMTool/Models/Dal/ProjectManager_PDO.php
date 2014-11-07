@@ -91,6 +91,8 @@ class ProjectManager_PDO extends \Library\DAL\BaseManager {
     $sql .= "DELETE from `facility` WHERE project_id = " . $identifier . ";";
     $sql .= "DELETE from `client` WHERE project_id = " . $identifier . ";";
     $sql .= "DELETE from `project` WHERE project_id = " . $identifier . ";";
+    $sql .= "DELETE from `task` WHERE project_id = " . $identifier . ";";
+//We need to also delete all other task related tables
     $query = $this->dao->query($sql);
     $result;
     if (!$query) {

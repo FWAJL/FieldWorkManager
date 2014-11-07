@@ -8,13 +8,15 @@
       <submenu href="project/showForm?mode=add&amp;test=true" id="project_add_left_menu" resourcekey="project_add" active="true"/>
     </links>
   </main_menu><!-- project -->
+  
   <main_menu name="technician" active="true">
     <links>
       <header href="technician" resourcekey="header_technician" />
       <submenu href="technician/listAll" id="technician_list_all" resourcekey="technician_list" active="true"/>
       <submenu href="technician/showForm?mode=add&amp;test=true" id="btn-add-technician-manual" resourcekey="technician_add" active="true"/>
     </links>
-  </main_menu><!-- technician -->  
+  </main_menu><!-- technician --> 
+   
   <main_menu name="location" active="true">
     <links>
       <header href="location" resourcekey="header_locations" />
@@ -23,6 +25,7 @@
       <submenu href="location#" id="location_upload_list_button" resourcekey="location_upload_list" active="false"/>
     </links>
   </main_menu><!-- location -->
+  
   <main_menu name="map" active="true">
     <links>
       <header href="#" resourcekey="header_map" />
@@ -31,21 +34,23 @@
       <submenu id="map_project_locations" resourcekey="map_project_locations" active="true"/>
       <submenu id="map_task_locations" resourcekey="map_task_locations" active="true"/>
     </links>
-  </main_menu><!-- map -->  
-   <main_menu name="user_task" active="true">
+  </main_menu><!-- map -->
+    
+   <main_menu name="task" active="true">
     <links>
-      <header href="#" resourcekey="header_user_tasks" />
-      <submenu id="user_tasks_all" resourcekey="user_tasks_all" active="true"/>
-      <submenu id="user_tasks_add_left_menu" resourcekey="user_tasks_add" active="true"/>
+      <header href="task" resourcekey="header_task" />
+      <submenu href="task/listAll" id="task_list_all" resourcekey="task_list" active="true"/>
+      <submenu href="task/showForm?mode=add&amp;test=true" id="btn-add-task-manual" resourcekey="task_add" active="true"/>
     </links>
   </main_menu><!-- task -->
-  <main_menu name="field_form" active="true">
+  
+<!--  <main_menu name="field_form" active="false">
     <links>
-      <header href="#" resourcekey="header_field_forms" />
+      <header href="task" resourcekey="header_field_forms" />
       <submenu id="field_form_all" resourcekey="field_form_all" active="true"/>
       <submenu id="field_form_add_left_menu" resourcekey="field_form_add" active="true"/>
     </links>
-  </main_menu><!-- form -->
+  </main_menu> form -->
   
   <main_menu name="resource" active="true">
     <links>
@@ -60,4 +65,5 @@
       <header href="#" resourcekey="header_user_results" />
     </links>
   </main_menu><!-- result -->
+  
 </main_menus>

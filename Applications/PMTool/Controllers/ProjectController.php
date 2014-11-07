@@ -242,11 +242,16 @@ class ProjectController extends \Library\BaseController {
 
     $result["project"] = $project_selected;
     $result["facility"] = $facility_selected;
+    $result["client"] = $client_selected;
+    
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
         "resx_key" => $this->action(),
-        "step" => ($project_selected !== NULL && $facility_selected !== NULL) ? "success" : "error"
+        "step" => ($project_selected !== NULL && 
+                $facility_selected !== NULL
+//                && $client_selected !== NULL
+                ) ? "success" : "error"
     ));
   }
 

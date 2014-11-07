@@ -1,6 +1,6 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 
-<div id="technician_info"  class="data-form">
+<div id="technician_info"  class="data-form1">
 <fieldset class="technician_form">
   <ol class="add-new-item">
     <li style="display: none;">

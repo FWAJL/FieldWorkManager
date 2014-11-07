@@ -1,0 +1,223 @@
+/**
+ * jQuery listeners for the task actions
+ */
+$(document).ready(function() {
+  $(".btn-warning").hide();
+  $.contextMenu({
+    selector: '.select_item',
+    callback: function(key, options) {
+      if (key === "edit") {
+        task_manager.retrieveTask(options.$trigger);
+      } else if (key === "delete") {
+        task_manager.delete(parseInt(options.$trigger.attr("data-task-id")));
+      }
+    },
+    items: {
+      "edit": {name: "Edit"},
+      "delete": {name: "Delete"}
+    }
+  });//Manages the context menu
+
+  //************************************************//
+  // Selection of tasks
+  var task_ids = "";
+  $("#active-list, #inactive-list").selectable({
+    stop: function() {
+      var tmpSelection = "";
+      $(".ui-selected", this).each(function() {
+        tmpSelection += $(this).attr("data-task-id") + ",";
+      });
+      tmpSelection = utils.removeLastChar(tmpSelection);
+      if (tmpSelection.length > 0) {
+        task_ids = tmpSelection;
+        //Show the button to appropriate button
+        $(".from-" + $(this).attr("id")).show();
+      } else {
+        task_ids = [];
+        $(".from-" + $(this).attr("id")).hide();
+      }
+    }
+  });
+  $(".from-inactive-list").click(function() {
+    task_manager.updateTasks("active", task_ids);
+  });
+  $(".from-active-list").click(function() {
+    task_manager.updateTasks("inactive", task_ids);
+  });
+  //************************************************//
+
+
+  $("#btn-add-task-names").click(function() {
+    task_manager.add($("textarea[name=\"task_names\"]").val(), "task", "add", false);
+  });//Add many tasks
+
+  $("#btn-add-task-manual").click(function() {
+    utils.redirect("task/showForm?mode=add&test=true");
+  });//Button click "add a task"
+
+  $("#btn_add_task").click(function() {
+    var post_data = {};
+    post_data = utils.retrieveInputs("task_form", ["task_name"]);
+    if (post_data.task_name !== undefined) {
+      task_manager.add(post_data, "task", "add", true);
+    }
+  });//Add a task
+
+  $("#btn_edit_task").click(function() {
+    var post_data = utils.retrieveInputs("task_form", ["task_name"]);
+    if (post_data.task_name !== undefined) {
+      task_manager.edit(post_data, "task", "edit");
+    }
+  });//Edit a task
+
+  $("#btn_delete_task").click(function() {
+    task_manager.delete(parseInt(utils.getQueryVariable("task_id")));
+  });//Delete a task
+
+  if (utils.getQueryVariable("mode") === "edit") {
+    $(".form_sections").fadeIn('2000').addClass("show").removeClass("hide");
+    $(".welcome").fadeOut('2000').removeClass("show").addClass("hide");
+    $(".task_add").hide();
+    task_manager.getItem(utils.getQueryVariable("task_id"));
+  }//Load task
+
+  if (utils.getQueryVariable("mode") === "add" && utils.getQueryVariable("test") === "true") {
+    task_manager.fillFormWithRandomData();
+  }
+
+  var alreadyHovered = false;
+  $(".select_item").hover(function() {
+    if (!alreadyHovered)
+      toastr.info("Right-click to edit!");
+    alreadyHovered = true;
+  });//Show a task tip
+
+  $("#task_list_all").click(function() {
+    utils.clearForm();
+    $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
+    $(".task_list").fadeIn('2000').removeClass("hide");
+    task_manager.getList();
+  });//Show "List All" panel
+
+});
+/***********
+ * task_manager namespace 
+ * Responsible to manage tasks.
+ */
+(function(task_manager) {
+  task_manager.add = function(userData, controller, action, isSingle) {
+    var data = isSingle ? userData : {"names": userData};
+    datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Task/Add WebService
+      if (reply === null || reply.dataOut === undefined || reply.dataOut === null || parseInt(reply.dataOut) === 0) {//has an error
+        toastr.error(reply.message);
+      } else {//success
+        toastr.success(reply.message);
+        utils.redirect("task/listAll", 1000);
+      }
+    });
+  };
+  task_manager.edit = function(task, controller, action) {
+    datacx.post(controller + "/" + action, task).then(function(reply) {//call AJAX method to call Task/Add WebService
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+      } else {//success
+        toastr.success(reply.message);
+        utils.redirect("task/listAll", 1000);
+      }
+    });
+  };
+  task_manager.getList = function() {
+    datacx.post("task/getlist", null).then(function(reply) {//call AJAX method to call Task/GetList WebService
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+      } else {//success
+        toastr.success(reply.message);
+        //Build the table
+        task_manager.buildOutputList(reply.lists.tasks);
+        //Now show the table
+      }
+    });
+  };
+  task_manager.buildOutputList = function(tasks) {
+    var active_tasks = "";
+    var inactive_tasks = "";
+    for (i = 0; i < tasks.length; i++) {
+      if (parseInt(tasks[i].active) !== 0) {
+        active_tasks += "<option value=\"" + tasks[i].task_name + "\">" + tasks[i].task_name + "</option>";
+      } else {
+        inactive_tasks += "<option value=\"" + tasks[i].task_name + "\">" + tasks[i].task_name + "</option>";
+      }
+    }
+    inactive_tasks = utils.isNullOrEmpty(inactive_tasks) ?
+            "<option value=\"\">{empty}</option>" : inactive_tasks;
+    active_tasks = utils.isNullOrEmpty(active_tasks) ?
+            "<option value=\"\">{empty}</option>" : active_tasks;
+    $("#task-data-active, #task-data-inactive").show();
+    $("#task-data-active").html(active_tasks);
+    $("#task-data-inactive").html(inactive_tasks);
+  };
+  task_manager.retrieveTask = function(element) {
+    utils.redirect("task/showForm?mode=edit&task_id=" + parseInt(element.attr("data-task-id")));
+  };
+  task_manager.loadEditForm = function(dataWs) {
+    utils.clearForm();
+    $("input[name=\"project_id\"]").val(parseInt(dataWs.task.project_id));
+    $("input[name=\"task_id\"]").val(parseInt(dataWs.task.task_id));
+    $("input[name=\"task_name\"]").val(dataWs.task.task_name);
+    $("input[name=\"task_deadline\"]").val(dataWs.task.task_deadline);
+    $("input[name=\"task_instructions\"]").val(dataWs.task.task_instructions);
+    $("input[name=\"task_trigger_cal\"]").val(dataWs.task.task_trigger_cal);
+    $("input[name=\"task_trigger_pm\"]").val(dataWs.task.task_trigger_pm);
+    $("input[name=\"task_active\"]").val(dataWs.task.task_active);
+    $("input[name=\"task_trigger_ext\"]").val(dataWs.task.task_trigger_ext);
+  };
+  task_manager.delete = function(task_id) {
+    datacx.post("task/delete", {"task_id": task_id}).then(function(reply) {
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+        return undefined;
+      } else {//success
+        toastr.success(reply.message);
+        utils.redirect("task/listAll");
+      }
+    });
+  };
+
+  task_manager.getItem = function(task_id) {
+    //get task object from cache (PHP WS)
+    datacx.post("task/getItem", {"task_id": task_id}).then(function(reply) {
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+        $(".form_sections").hide();
+        utils.redirect("task/listAll", 3000)
+      } else {//success
+        $(".task_edit").show().removeClass("hide");
+        toastr.success(reply.message);
+        task_manager.loadEditForm(reply);
+      }
+    });
+  };
+
+//  task_manager.fillFormWithRandomData = function() {
+//    utils.clearForm();
+//    var number = Math.floor((Math.random() * 100) + 1);
+//    $(".task_form input[name=\"task_name\"]").val("Task " + number);
+//    $("input[name=\"task_num\"]").val("n-" + number);
+//    $("input[name=\"task_desc\"]").val("Description " + number);
+//    $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
+//    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
+//  };
+
+  task_manager.updateTasks = function(action, arrayId) {
+    datacx.post("task/updateItems", {"action": action, "task_ids": arrayId}).then(function(reply) {
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+        return undefined;
+      } else {//success
+        toastr.success(reply.message);
+        utils.redirect("task/listAll");
+      }
+    });
+  };
+
+}(window.task_manager = window.task_manager || {}));
