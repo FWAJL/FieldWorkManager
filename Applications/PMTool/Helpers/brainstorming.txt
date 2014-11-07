@@ -2,13 +2,19 @@ Store the lists of objects in session per project_id
 
 array (
   "projectId_X" => array(
-    "locations" => array( of Location objects),
-    "tasks" => array( of Task objects),
-    "technicians" => array( of Technician objects)
+    "project_obj" => Object( project ),
+    "facility_obj => Object( facility ),
+    "client_obj" => Object( client )
+    "locations" => array( of Location objects ),
+    "tasks" => array( of Task objects ),
+    "technicians" => array( of Technician objects )
   ),
   "projectId_Y" => array(
-    "locations" => array( of Location objects),
-    "tasks" => array( of Task objects),
-    "technicians" => array( of Technician objects)
+    "project" => Object( project ),
+    "facility => Object( facility ),
+    "client" => Object( client )
+    "locations" => array( of Location objects ),
+    "tasks" => array( of Task objects ),
+    "technicians" => array( of Technician objects )
   )
 )

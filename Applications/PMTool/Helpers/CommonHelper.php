@@ -94,19 +94,25 @@ class CommonHelper {
    * 
    * The structure is the following and you need to access the array using a key
    * 
-   *  array (
+   *   array (
    *     "projectId_X" => array(
-   *       "locations" => array( of Location objects),
-   *       "tasks" => array( of Task objects),
-   *       "technicians" => array( of Technician objects)
+   *       "project_obj" => Object( project ),
+   *       "facility_obj => Object( facility ),
+   *       "client_obj" => Object( client )
+   *       "locations" => array( of Location objects ),
+   *       "tasks" => array( of Task objects ),
+   *       "technicians" => array( of Technician objects )
    *     ),
    *     "projectId_Y" => array(
-   *       "locations" => array( of Location objects),
-   *      "tasks" => array( of Task objects),
-   *      "technicians" => array( of Technician objects)
-   *    )
-   *  )
-   * 
+   *       "project" => Object( project ),
+   *       "facility => Object( facility ),
+   *       "client" => Object( client )
+   *       "locations" => array( of Location objects ),
+   *       "tasks" => array( of Task objects ),
+   *       "technicians" => array( of Technician objects )
+   *     )
+   *   )
+   *  
    * @param \Library\User $user
    * @param \Library\HttpRequest $rq
    * @return array : the list of projects with dependent data, e.g. locations, tasks, technicians 

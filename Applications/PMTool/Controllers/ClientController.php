@@ -49,12 +49,13 @@ class ClientController extends \Library\BaseController {
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectClientList);
 
     //Process DB result and send result
-    if ($result_insert)
+    if ($result_insert) {
       $result = $this->SendResponseWS(
               $result,
               array(
                   "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Client, 
                   "resx_key" => $this->action(), "step" => $result_insert ? "success" : "error"));
+    }
   }
 
   /**

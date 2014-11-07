@@ -24,15 +24,7 @@ class FacilityDal extends \Library\DAL\BaseManager {
    * @return array the selected row in the db
    */
   public function update($facility) {
-    $sql = $this->dao->prepare("UPDATE facility set `password` = :password WHERE `pm_id` = :pm_id;");
-    $sql->bindValue(":pm_id", $pm->pm_id(), \PDO::PARAM_INT);
-    $sql->bindValue(":password", $pm->password(), \PDO::PARAM_STR);
-
-    try {
-      return $sql->execute();
-    } catch (Exception $exc) {
-      echo $exc->getTraceAsString();
-    }
+    return null;
   }
 
   /**

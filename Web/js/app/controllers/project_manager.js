@@ -110,12 +110,15 @@ $(document).ready(function() {
       } else {//success
         toastr.success(reply.message);
 
-        var post_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
-        if (post_data.facility_name !== undefined && post_data.facility_address !== undefined) {
-          facility_manager.send("facility/" + action, post_data);
+        var facility_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
+        if (facility_data.facility_name !== undefined && facility_data.facility_address !== undefined) {
+         facility_data["project_id"] = reply.dataOut;
+          facility_manager.send("facility/" + action, facility_data);
         }
         var client_data = utils.retrieveInputs("client_form", []);
+        client_data["project_id"] = reply.dataOut;
         client_manager.send("client/" + action, client_data);
+        utils.redirect("project/listAll");
       }
     });
   };
@@ -132,6 +135,7 @@ $(document).ready(function() {
         }
         var client_data = utils.retrieveInputs("client_form", []);
         client_manager.send("client/" + action, client_data);
+        utils.redirect("project/listAll");
       }
     });
   };
