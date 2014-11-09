@@ -25,8 +25,8 @@
   <resource key="task_button_add">Add this task</resource>
   <resource key="task_button_edit">Edit this task</resource>
   <resource key="task_button_delete">Delete this task</resource>  
-  <resource key="btn_to_inactive_list">Activate Task</resource> 
-  <resource key="btn_to_active_list">De-activate Task</resource> 
+  <resource key="btn_to_inactive_list">De-activate Task</resource> 
+  <resource key="btn_to_active_list">Activate Task</resource> 
   <resource key="btn_to_lead_list">Assign as a Lead Technician</resource>  
   
 <!-- Labels -->

@@ -16,7 +16,7 @@
     </li>
      <li>
       <label><?php echo $resx["task_deadline"]; ?></label>
-      <input type="text"  name="datepicker" id="datepicker" value=""/>
+      <input type="text"  name="task_deadline" id="datepicker"/>
     </li>
     <li>
       <label><?php echo $resx["task_instructions"]; ?></label>
@@ -40,7 +40,7 @@
                 </select>  
               </td>
             <tr>
-             <td class="checkbox"><input id="manual_box" type="checkbox"><?php echo $resx["task_trigger_pm"]; ?></td>
+             <td class="checkbox"><input name ="task_trigger_pm" id="manual_box" type="checkbox"><?php echo $resx["task_trigger_pm"]; ?></td>
              <td class="note"><div id="manual_note"><?php echo $resx["trigger_pm_note"]; ?></div></td>
             </tr>
             <tr>

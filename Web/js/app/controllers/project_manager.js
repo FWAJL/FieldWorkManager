@@ -104,6 +104,7 @@ $(document).ready(function() {
  */
 (function(project_manager) {
   project_manager.add = function(data, controller, action) {
+      alert(data["project"] + ", " + controller + ", " + action);
     datacx.post(controller + "/" + action, data["project"]).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.dataOut === undefined || reply.dataOut === null || parseInt(reply.dataOut) === 0) {//has an error
         toastr.error(reply.message);

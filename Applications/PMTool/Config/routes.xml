@@ -175,7 +175,8 @@
 <!--Tasks  -->
   <route url="tasks" module="Task" action="index" resxfile="task" type="ui">
     <js_files>
-<!--      <js_file use="head" value="Web/js/app/controllers/task_manager.js"/>-->
+      <js_file use="head" value="Web/js/app/controllers/task_manager.js"/>
+      
 <!--      <js_file use="head" value="Web/js/app/controllers/task_technicians_manager.js"/>
       etc.-->
       <js_file use="head" value="Web/js/jspkg-archive/vendor/jquery-1.7.1.min.js"/>
@@ -193,8 +194,7 @@
 
   <route url="task/listAll" module="Task" action="listAll" resxfile="task" type="ui">
     <js_files>
-<!--      <js_file use="head" value="Web/js/app/controllers/task_manager.js"/>-->
-<!--      Is this needed? it is not in project/ListAll-->
+      <js_file use="head" value="Web/js/app/controllers/task_manager.js"/>
     </js_files>
     <css_files>
       <css_file use="project"/>
@@ -208,8 +208,7 @@
  
     <route url="task/showForm" module="Task" action="showForm" resxfile="task" type="ui">
     <js_files>
-<!--      <js_file use="head" value="Web/js/app/controllers/task_manager.js"/>-->
-      <!--      Is this needed? it is not in project/ListAll-->
+      <js_file use="head" value="Web/js/app/controllers/task_manager.js"/>
     </js_files>
     <css_files>
 <css_file use="project" />
@@ -296,7 +295,9 @@
       <css_file value="Web/css/app/theme.css"/>
       <css_file value="Web/css/app/tabs.css"/>
     </css_files>
-  </route><!-- pm/index -->
+  </route>
+  <!-- pm/index -->
+  
     <route url="pm/listAll" module="Pm" action="listAll" resxfile="pm" type="ui">
     <js_files>
       <js_file use="head" value="Web/js/app/controllers/pm_manager.js"/>
@@ -308,7 +309,9 @@
       <php_module key="active_list_module" file_name="active_list.php" shared="true"/>
       <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true"/>
     </php_modules>
-  </route><!-- pm/listAll -->
+  </route>
+  <!-- pm/listAll -->
+  
   <route url="pm/showForm" module="Pm" action="showForm" resxfile="pm" type="ui">
     <js_files>
       <js_file use="head" value="Web/js/app/controllers/pm_manager.js"/>

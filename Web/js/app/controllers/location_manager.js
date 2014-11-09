@@ -82,7 +82,7 @@ $(document).ready(function() {
   }//Load location
 
   if (utils.getQueryVariable("mode") === "add" && utils.getQueryVariable("test") === "true") {
-    location_manager.fillFormWithRandomData();
+//    location_manager.fillFormWithRandomData();
   }
 
   var alreadyHovered = false;
@@ -169,7 +169,7 @@ $(document).ready(function() {
     $("input[name=\"location_long\"]").val(dataWs.location.location_long);
     $("input[name=\"location_desc\"]").val(dataWs.location.location_desc);
     $("input[name=\"location_active\"]").val(dataWs.location.location_active);
-    $("input[name=\"location_visible\"]").val(dataWs.location.location_visible);
+//    $("input[name=\"location_visible\"]").val(dataWs.location.location_visible);
   };
   location_manager.delete = function(location_id) {
     datacx.post("location/delete", {"location_id": location_id}).then(function(reply) {
@@ -198,15 +198,15 @@ $(document).ready(function() {
     });
   };
 
-  location_manager.fillFormWithRandomData = function() {
-    utils.clearForm();
-    var number = Math.floor((Math.random() * 100) + 1);
-    $(".location_form input[name=\"location_name\"]").val("Location " + number);
-    $("input[name=\"location_num\"]").val("n-" + number);
-    $("input[name=\"location_desc\"]").val("Description " + number);
-    $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
-    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
-  };
+//  location_manager.fillFormWithRandomData = function() {
+//    utils.clearForm();
+//    var number = Math.floor((Math.random() * 100) + 1);
+//    $(".location_form input[name=\"location_name\"]").val("Location " + number);
+//    $("input[name=\"location_num\"]").val("n-" + number);
+//    $("input[name=\"location_desc\"]").val("Description " + number);
+//    $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
+//    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
+//  };
 
   location_manager.updateLocations = function(action, arrayId) {
     datacx.post("location/updateItems", {"action": action, "location_ids": arrayId}).then(function(reply) {

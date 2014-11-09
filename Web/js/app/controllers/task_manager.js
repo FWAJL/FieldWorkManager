@@ -57,9 +57,9 @@ $(document).ready(function() {
 
   $("#btn_add_task").click(function() {
     var post_data = {};
-    post_data = utils.retrieveInputs("task_form", ["task_name"]);
-    if (post_data.task_name !== undefined) {
-      task_manager.add(post_data, "task", "add", true);
+    post_data["task"] = utils.retrieveInputs("task_form", ["task_name"]);
+    if (post_data["task"].task_name !== undefined) {
+      task_manager.add(post_data, "task", "add");
     }
   });//Add a task
 
@@ -75,14 +75,14 @@ $(document).ready(function() {
   });//Delete a task
 
   if (utils.getQueryVariable("mode") === "edit") {
-    $(".form_sections").fadeIn('2000').addClass("show").removeClass("hide");
+    $(".task_form_sections").fadeIn('2000').addClass("show").removeClass("hide");
     $(".welcome").fadeOut('2000').removeClass("show").addClass("hide");
     $(".task_add").hide();
     task_manager.getItem(utils.getQueryVariable("task_id"));
   }//Load task
 
   if (utils.getQueryVariable("mode") === "add" && utils.getQueryVariable("test") === "true") {
-    task_manager.fillFormWithRandomData();
+//    task_manager.fillFormWithRandomData();
   }
 
   var alreadyHovered = false;
@@ -105,9 +105,9 @@ $(document).ready(function() {
  * Responsible to manage tasks.
  */
 (function(task_manager) {
-  task_manager.add = function(userData, controller, action, isSingle) {
-    var data = isSingle ? userData : {"names": userData};
-    datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Task/Add WebService
+  task_manager.add = function(data, controller, action) {
+//      alert(data["task"] + ", " + controller + ", " + action);
+    datacx.post(controller + "/" + action, data["task"]).then(function(reply) {//call AJAX method to call Task/Add WebService
       if (reply === null || reply.dataOut === undefined || reply.dataOut === null || parseInt(reply.dataOut) === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
@@ -122,7 +122,12 @@ $(document).ready(function() {
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        utils.redirect("task/listAll", 1000);
+
+//        var post_data = utils.retrieveInputs("other forms", ["facility_name", "facility_address"]);
+//        if (post_data.facility_name !== undefined && post_data.facility_address !== undefined) {
+//          facility_manager.send("facility/" + action, post_data);
+//        }  
+
       }
     });
   };
@@ -165,11 +170,12 @@ $(document).ready(function() {
     $("input[name=\"task_id\"]").val(parseInt(dataWs.task.task_id));
     $("input[name=\"task_name\"]").val(dataWs.task.task_name);
     $("input[name=\"task_deadline\"]").val(dataWs.task.task_deadline);
-    $("input[name=\"task_instructions\"]").val(dataWs.task.task_instructions);
+    $("textarea[name=\"task_instructions\"]").val(dataWs.task.task_instructions);
     $("input[name=\"task_trigger_cal\"]").val(dataWs.task.task_trigger_cal);
     $("input[name=\"task_trigger_pm\"]").val(dataWs.task.task_trigger_pm);
     $("input[name=\"task_active\"]").val(dataWs.task.task_active);
     $("input[name=\"task_trigger_ext\"]").val(dataWs.task.task_trigger_ext);
+//    Other forms called here
   };
   task_manager.delete = function(task_id) {
     datacx.post("task/delete", {"task_id": task_id}).then(function(reply) {
@@ -188,7 +194,7 @@ $(document).ready(function() {
     datacx.post("task/getItem", {"task_id": task_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
-        $(".form_sections").hide();
+        $(".task_form_sections").hide();
         utils.redirect("task/listAll", 3000)
       } else {//success
         $(".task_edit").show().removeClass("hide");
