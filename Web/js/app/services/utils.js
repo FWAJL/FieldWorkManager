@@ -143,6 +143,8 @@
   utils.setCheckBoxValue = function(value) {
     if (value === "true" || value === true || value === "1") {
       return true;
+    } else {
+      return false;
     }
   }
 }(window.utils = window.utils || {}));
