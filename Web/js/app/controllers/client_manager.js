@@ -40,33 +40,19 @@ $(document).ready(function() {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
-        //utils.redirect("project/listAll");
+        toastr.success(reply.message.replace("client", "client (ID:" + reply.dataId + ")"));
+        //utils.redirect("project/listAll", 5000);
       }
     });
-  };
-  client_manager.retrieveClient = function(element) {
-    //get client object from cache (PHP WS)
-    datacx.post("client/getItem", {"client_id": parseInt(element.attr("data-client-id"))}).then(function(reply) {
-      if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
-        return undefined;
-      } else {//success
-        toastr.success(reply.message);
-        client_manager.loadEditForm(reply.client);
-      }
-    });
-  };
-  
+  };  
   client_manager.loadEditForm = function(dataWs) {
-    $(".client_form input[name=\"client_id\"]").val(parseInt(dataWs.client.client_id));
-    $(".client_form input[name=\"project_id\"]").val(parseInt(dataWs.client.project_id));
-    $(".project_form .add-new-item input[name=\"project_name\"]").val(dataWs.project.project_name);
-    $(".client_form input[name=\"client_company_name\"]").val(dataWs.client.client_company_name);
-    $(".client_form .add-new-item textarea[name=\"client_address\"]").val(dataWs.client.client_address);
-    $(".client_form input[name=\"client_contact_name\"]").val(dataWs.client.client_contact_name);
-    $(".client_form input[name=\"client_contact_phone\"]").val(dataWs.client.client_contact_phone);
-    $(".client_form input[name=\"client_contact_email\"]").val(dataWs.client.client_contact_email);   
+    $(".client_form input[name=\"client_id\"]").val(parseInt(dataWs.client_obj.client_id));
+    $(".client_form input[name=\"project_id\"]").val(parseInt(dataWs.client_obj.project_id));
+    $(".client_form input[name=\"client_company_name\"]").val(dataWs.client_obj.client_company_name);
+    $(".client_form .add-new-item textarea[name=\"client_address\"]").val(dataWs.client_obj.client_address);
+    $(".client_form input[name=\"client_contact_name\"]").val(dataWs.client_obj.client_contact_name);
+    $(".client_form input[name=\"client_contact_phone\"]").val(dataWs.client_obj.client_contact_phone);
+    $(".client_form input[name=\"client_contact_email\"]").val(dataWs.client_obj.client_contact_email);   
     
   };
   client_manager.delete = function() {

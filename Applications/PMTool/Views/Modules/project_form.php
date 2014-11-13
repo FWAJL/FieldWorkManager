@@ -11,15 +11,15 @@
       <input name="project_name" type="text" />
     </li>
     <li>
-      <label><?php echo $resx["project_num"]; ?></label>
-      <input name="project_num" type="text" />
+      <label><?php echo $resx["project_number"]; ?></label>
+      <input name="project_number" type="text" />
     </li>
     <li>
       <label><?php echo $resx["project_desc"]; ?></label>
       <input name="project_desc" type="text" />
     </li>
-    <li style="display: none">
-      <!--<label><?php // echo $resx["project_active"]; ?></label>-->
+    <li>
+      <label><?php echo $resx["project_active"]; ?></label>
       <input name="project_active" type="checkbox" />
     </li>
     <li style="display: none">

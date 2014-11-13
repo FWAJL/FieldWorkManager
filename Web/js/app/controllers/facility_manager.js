@@ -40,7 +40,7 @@ $(document).ready(function() {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        toastr.success(reply.message.replace("client", "client (ID:" + reply.dataId + ")"));
         //utils.redirect("project/listAll");
       }
     });
@@ -59,19 +59,18 @@ $(document).ready(function() {
   };
   
   facility_manager.loadEditForm = function(dataWs) {
-    $(".facility_form input[name=\"facility_id\"]").val(parseInt(dataWs.facility.facility_id));
-    $(".facility_form input[name=\"project_id\"]").val(parseInt(dataWs.facility.project_id));
-    $(".project_form .add-new-item input[name=\"project_name\"]").val(dataWs.project.project_name);
-    $(".facility_form input[name=\"facility_name\"]").val(dataWs.facility.facility_name);
-    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(dataWs.facility.facility_address);
-    $(".facility_form input[name=\"facility_lat\"]").val(dataWs.facility.facility_lat);
-    $(".facility_form input[name=\"facility_long\"]").val(dataWs.facility.facility_long);
-    $(".facility_form input[name=\"facility_contact_name\"]").val(dataWs.facility.facility_contact_name);
-    $(".facility_form input[name=\"facility_contact_phone\"]").val(dataWs.facility.facility_contact_phone);
-    $(".facility_form input[name=\"facility_contact_email\"]").val(dataWs.facility.facility_contact_email);
-    $(".facility_form input[name=\"facility_id_num\"]").val(dataWs.facility.facility_id_num);
-    $(".facility_form input[name=\"facility_sector\"]").val(dataWs.facility.facility_sector);
-    $(".facility_form input[name=\"facility_sic\"]").val(dataWs.facility.facility_sic);   
+    $(".facility_form input[name=\"facility_id\"]").val(parseInt(dataWs.facility_obj.facility_id));
+    $(".facility_form input[name=\"project_id\"]").val(parseInt(dataWs.facility_obj.project_id));
+    $(".facility_form input[name=\"facility_name\"]").val(dataWs.facility_obj.facility_name);
+    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(dataWs.facility_obj.facility_address);
+    $(".facility_form input[name=\"facility_lat\"]").val(dataWs.facility_obj.facility_lat);
+    $(".facility_form input[name=\"facility_long\"]").val(dataWs.facility_obj.facility_long);
+    $(".facility_form input[name=\"facility_contact_name\"]").val(dataWs.facility_obj.facility_contact_name);
+    $(".facility_form input[name=\"facility_contact_phone\"]").val(dataWs.facility_obj.facility_contact_phone);
+    $(".facility_form input[name=\"facility_contact_email\"]").val(dataWs.facility_obj.facility_contact_email);
+    $(".facility_form input[name=\"facility_id_num\"]").val(dataWs.facility_obj.facility_id_num);
+    $(".facility_form input[name=\"facility_sector\"]").val(dataWs.facility_obj.facility_sector);
+    $(".facility_form input[name=\"facility_sic\"]").val(dataWs.facility_obj.facility_sic);   
     
   };
   facility_manager.delete = function() {

@@ -18,35 +18,6 @@ $(document).ready(function() {
     }
   });//Manages the context menu
 
-  //************************************************//
-  // Selection of pms
-  var pm_ids = "";
-  $("#active-list, #inactive-list").selectable({
-    stop: function() {
-      var tmpSelection = "";
-      $(".ui-selected", this).each(function() {
-        tmpSelection += $(this).attr("data-pm-id") + ",";
-      });
-      tmpSelection = utils.removeLastChar(tmpSelection);
-      if (tmpSelection.length > 0) {
-        pm_ids = tmpSelection;
-        //Show the button to appropriate button
-        $(".from-" + $(this).attr("id")).show();
-      } else {
-        pm_ids = [];
-        $(".from-" + $(this).attr("id")).hide();
-      }
-    }
-  });
-  $(".from-inactive-list").click(function() {
-    pm_manager.updatePms("active", pm_ids);
-  });
-  $(".from-active-list").click(function() {
-    pm_manager.updatePms("inactive", pm_ids);
-  });
-  //************************************************//
-
-
 //  $("#btn-add-pm-names").click(function() {
 //    pm_manager.add($("textarea[name=\"pm_names\"]").val(), "pm", "add", false);
 //  });//Add many pms
@@ -106,7 +77,7 @@ $(document).ready(function() {
   pm_manager.add = function(userData, controller, action, isSingle) {
     var data = isSingle ? userData : {"names": userData};
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Pm/Add WebService
-      if (reply === null || reply.dataOut === undefined || reply.dataOut === null || parseInt(reply.dataOut) === 0) {//has an error
+      if (reply === null || reply.dataId === undefined || reply.dataId === null || parseInt(reply.dataId) === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);

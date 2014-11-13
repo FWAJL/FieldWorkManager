@@ -21,7 +21,7 @@
   <resource key="project_legend_add">Add new project</resource>
   <resource key="project_legend_edit">Edit this project</resource>
   <resource key="project_name">Project Name</resource>
-  <resource key="project_num">Project Number</resource>
+  <resource key="project_number">Project Number</resource>
   <resource key="project_desc">Project Description</resource>
   <resource key="project_active">Active</resource>
   <resource key="project_visible">Visible</resource>

@@ -53,7 +53,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
 
     //Load interface to query the database
     $manager = $this->managers->getManagerOf($this->module);
-    $result["dataOut"] = $manager->add($technician);
+    $result["dataId"] = $manager->add($technician);
 
     //Clear the technician list from session for the connect PM
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicians);
@@ -63,7 +63,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
         "resx_key" => $this->action(),
-        "step" => (intval($result["dataOut"])) > 0 ? "success" : "error"
+        "step" => (intval($result["dataId"])) > 0 ? "success" : "error"
     ));
   }
   

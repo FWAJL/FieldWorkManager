@@ -69,7 +69,7 @@ class FacilityDal extends \Library\DAL\BaseManager {
     if (!$query) {
       $result = $query->errorCode();
     } else {
-      $result = TRUE;
+      $result = $this->dao->lastInsertId();
     }
     $query->closeCursor();
     return $result;
