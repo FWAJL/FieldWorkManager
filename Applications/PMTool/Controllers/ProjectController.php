@@ -37,10 +37,7 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeIndex(\Library\HttpRequest $rq) {
-    //Get list of projects and store in session
-    $this->_GetAndStoreProjectsInSession($rq);
-
-    if (count(\Applications\PMTool\Helpers\CommonHelper::GetSessionProjects($this->app()->user())) > 0) {
+    if (count(\Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->app()->user())) > 0) {
       header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
     } else {
       header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ProjectsShowForm . "?mode=add&test=true");
@@ -63,8 +60,6 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeListAll(\Library\HttpRequest $rq) {
-    //Get list of projects stored in session
-    $this->_GetAndStoreProjectsInSession($rq);
     $data = array(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\CommonHelper::GetListObjectsInSessionByKey($this->app()->user(), \Library\Enums\SessionKeys::ProjectObject),
@@ -92,7 +87,7 @@ class ProjectController extends \Library\BaseController {
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
-    $project = $this->PrepareUserObject($this->dataPost());
+    $project = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Project());
     $result["dataIn"] = $project;
 
     //Load interface to query the database
@@ -100,7 +95,7 @@ class ProjectController extends \Library\BaseController {
     $result["dataId"] = $manager->add($project);
     $project->setProject_id($result["dataId"]);
     //Clear the project and facility list from session for the connect PM
-    \Applications\PMTool\Helpers\CommonHelper::AddSessionProject($this->app()->user(), $project);
+    \Applications\PMTool\Helpers\ProjectHelper::AddSessionProject($this->app()->user(), $project);
 
     $this->SendResponseWS(
         $result, array(
@@ -123,7 +118,7 @@ class ProjectController extends \Library\BaseController {
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
-    $project = $this->PrepareUserObject($this->dataPost());
+    $project = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Project());
     $result["data"] = $project;
     $result["dataId"] = $project->project_id();
 
@@ -131,7 +126,7 @@ class ProjectController extends \Library\BaseController {
     $result_insert = $manager->edit($project);
 
     $this->executeGetItem($rq, $project);
-    //\Applications\PMTool\Helpers\CommonHelper::UpdateUserSessionProject($this->app()->user(), $project);
+    //\Applications\PMTool\Helpers\ProjectHelper::UpdateUserSessionProject($this->app()->user(), $project);
 
     $this->SendResponseWS(
         $result, array(
@@ -154,12 +149,12 @@ class ProjectController extends \Library\BaseController {
     $project_id = intval($this->dataPost["project_id"]);
 
     //Check if the project to be deleted if the Project manager's
-    $project_selected = $this->_GetProjectFromSession($project_id);
+    $project_selected = \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->app(), $project_id);
     //Load interface to query the database
     if ($project_selected !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
       $db_result = $manager->delete($project_id);
-      \Applications\PMTool\Helpers\CommonHelper::UnsetUserSessionProject($this->app()->user(), $project_id);
+      \Applications\PMTool\Helpers\ProjectHelper::UnsetUserSessionProject($this->app()->user(), $project_id);
     }
 
     $this->SendResponseWS(
@@ -183,7 +178,7 @@ class ProjectController extends \Library\BaseController {
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
-    $project = $this->PrepareUserObject($this->dataPost());
+    $project = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Project());
     $result["data"] = $project;
 
     //Load interface to query the database for projects
@@ -198,7 +193,7 @@ class ProjectController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf('Client');
     $lists[\Library\Enums\SessionKeys::UserProjectClientList] = $manager->selectMany($project);
 
-    $ProjectsSession = \Applications\PMTool\Helpers\CommonHelper::StoreSessionProjects($this->app()->user(), $lists);
+    $ProjectsSession = \Applications\PMTool\Helpers\ProjectHelper::StoreSessionProjects($this->app()->user(), $lists);
 
     $result["lists"] = $lists;
     if (!$isNotAjaxCall) {
@@ -225,18 +220,18 @@ class ProjectController extends \Library\BaseController {
 
     $project_selected = NULL;
     if ($project !== NULL) {
-      $sessionProject = \Applications\PMTool\Helpers\CommonHelper::GetUserSessionProject($this->app()->user(), $project->project_id());
+      $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $project->project_id());
       $project_selected = $sessionProject[\Library\Enums\SessionKeys::ProjectObject] = $project;
     } else {
-      $project_selected = $this->_GetProjectFromSession($project_id);
-      $sessionProject = \Applications\PMTool\Helpers\CommonHelper::GetUserSessionProject($this->app()->user(), $project_selected->project_id());
+      $project_selected = \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->app(), $project_id);
+      $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $project_selected->project_id());
     }
 
     $facility_selected = $sessionProject[\Library\Enums\SessionKeys::FacilityObject];
     $client_selected = $sessionProject[\Library\Enums\SessionKeys::ClientObject];
 
     $result["sessionProject"] = $sessionProject;
-    \Applications\PMTool\Helpers\CommonHelper::UpdateUserSessionProject($this->app()->user(), $sessionProject);
+    \Applications\PMTool\Helpers\ProjectHelper::UpdateUserSessionProject($this->app()->user(), $sessionProject);
 
     if ($project == NULL) {
       $this->SendResponseWS(
@@ -285,106 +280,6 @@ class ProjectController extends \Library\BaseController {
       "resx_key" => $this->action(),
       "step" => ($rows_affected === count($project_ids)) ? "success" : "error"
     ));
-  }
-
-  /**
-   * Find a project from an id
-   * 
-   * @param int $project_id : the id of the project to find
-   * @return \Applications\PMTool\Models\Dao\Project $projectMatch : the match
-   */
-  private function _GetProjectFromSession($project_id) {
-    return \Applications\PMTool\Helpers\CommonHelper::GetAndStoreCurrentProject($this->app(), $project_id);
-  }
-
-  /**
-   * Find a facility from an  project id
-   * 
-   * @param int $project_id : the id of the project to find
-   * @return \Applications\PMTool\Models\Dao\Facility $facilityMatch : the match
-   */
-  private function _GetFacilityProjectFromSession($project_id) {
-    $facilities = array();
-    $facilityMatch = NULL;
-    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjectFacilityList)) {
-      $facilities = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
-    }
-    foreach ($facilities as $facility) {
-      if (intval($facility->project_id()) === $project_id) {
-        $facilityMatch = $facility;
-        break;
-      }
-    }
-    return $facilityMatch;
-  }
-
-  /**
-   * Find a client from an  project id
-   * 
-   * @param int $project_id : the id of the client to find
-   * @return \Applications\PMTool\Models\Dao\Client $clientMatch : the match
-   */
-  private function _GetClientProjectFromSession($project_id) {
-    $clients = array();
-    $clientMatch = NULL;
-    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjectClientList)) {
-      $clients = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjectClientList);
-    }
-    foreach ($clients as $client) {
-      if (intval($client->project_id()) === $project_id) {
-        $clientMatch = $client;
-        break;
-      }
-    }
-    return $clientMatch;
-  }
-
-  /**
-   * Check if the current pm has projects to decide where to send him: stay on the project list or asking him to add a project
-   * 
-   * @param \Applications\PMTool\Models\Dao\Project_manager $pm
-   * @return boolean
-   */
-  private function _CheckIfPmHasProjects(\Applications\PMTool\Models\Dao\Project_manager $pm) {
-
-    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserSessionProjects)) {
-      $projects = \Applications\PMTool\Helpers\CommonHelper::GetListObjectsInSessionByKey($this->app()->user(), \Library\Enums\SessionKeys::ProjectObject);
-      return count($projects) > 0 ? TRUE : FALSE;
-    }
-    $manager = $this->managers->getManagerOf($this->module);
-    $count = $manager->countById($pm->pm_id());
-    return $count > 0 ? TRUE : FALSE;
-  }
-
-  /**
-   * Prepare the Project Object before calling the DB.
-   * 
-   * @param array $data_sent from POST request
-   * @return \Applications\PMTool\Models\Dao\Project_manager
-   */
-  private function PrepareUserObject($data_sent) {
-    $project = new \Applications\PMTool\Models\Dao\Project();
-    foreach ($data_sent as $key => $value) {
-      $method = "set" . ucfirst($key);
-      $project->$method(!array_key_exists($key, $data_sent) ? NULL : $value);
-    }
-    return $project;
-  }
-
-  /**
-   * Checks if the user projects and facilities are not stored in Session.
-   * Stores the projects and facilities after call to WS to retrieve them
-   * Set the data into the session for later use.
-   * 
-   * @param /Library/HttpRequest $rq
-   * @return array $lists : the lists of objects if any 
-   */
-  private function _GetAndStoreProjectsInSession($rq) {
-    $lists = array();
-    if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserSessionProjects)) {
-      $this->executeGetList($rq, TRUE);
-    }
-    return $this->app()->user()->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
   }
 
 }

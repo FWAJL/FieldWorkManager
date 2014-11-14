@@ -38,16 +38,16 @@ class ClientController extends \Library\BaseController {
   public function executeAdd(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS();
 
-    $client = $this->PrepareUserObject($this->dataPost());
+    $client = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Client());
     $result["data"] = $client;
     //Load interface to query the database
     $manager = $this->managers->getManagerOf($this->module());
     $result["dataId"] = $manager->add($client);
 
     $client->setClient_id($result["dataId"]);
-    $sessionProject = \Applications\PMTool\Helpers\CommonHelper::GetUserSessionProject($this->app()->user(), $client->project_id());
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $client->project_id());
     $sessionProject[\Library\Enums\SessionKeys::FacilityObject] = $client;
-    \Applications\PMTool\Helpers\CommonHelper::UpdateUserSessionProject($this->app()->user(), $sessionProject);
+    \Applications\PMTool\Helpers\ProjectHelper::UpdateUserSessionProject($this->app()->user(), $sessionProject);
 
     //Process DB result and send result
     if ($result["dataId"] > 0) {
@@ -70,12 +70,13 @@ class ClientController extends \Library\BaseController {
 
     //Load interface to query the database
     $manager = $this->managers->getManagerOf($this->module());
-    $result_edit = $manager->edit($this->PrepareUserObject($this->dataPost()));
+    $result_edit = $manager->edit(\Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Client()));
     $result["dataId"] = $this->dataPost("client_id");
     if ($result_edit) {
-      $sessionProject = \Applications\PMTool\Helpers\CommonHelper::GetUserSessionProject($this->app()->user(), $this->dataPost["project_id"]);
-      $sessionProject[\Library\Enums\SessionKeys::ClientObject] = $this->PrepareUserObject($this->dataPost());
-      \Applications\PMTool\Helpers\CommonHelper::UpdateUserSessionProject($this->app()->user(), $sessionProject);
+      $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $this->dataPost["project_id"]);
+      $sessionProject[\Library\Enums\SessionKeys::ClientObject] = 
+              \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Client());
+      \Applications\PMTool\Helpers\ProjectHelper::UpdateUserSessionProject($this->app()->user(), $sessionProject);
     }
     $this->SendResponseWS(
             $result,
@@ -107,20 +108,4 @@ class ClientController extends \Library\BaseController {
    * @return JSON
    */
   public function executeGetItem(\Library\HttpRequest $rq) { /* No current use from the front end side */ }
-
-  /**
-   * Prepare the Client Object before calling the DB.
-   * 
-   * @param array $data_sent from POST request
-   * @return \Applications\PMTool\Models\Dao\Client
-   */
-  private function PrepareUserObject($data_sent) {
-    $client = new \Applications\PMTool\Models\Dao\Client();
-    foreach ($data_sent as $key => $value) {
-      $method = "set" .ucfirst($key);
-      $client->$method(!array_key_exists($key, $data_sent) ? NULL : $value);
-    }
-    return $client;
-  }
-
 }

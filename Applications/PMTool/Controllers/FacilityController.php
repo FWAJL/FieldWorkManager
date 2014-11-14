@@ -38,15 +38,15 @@ class FacilityController extends \Library\BaseController {
   public function executeAdd(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS();
 
-    $facility = $this->PrepareUserObject($this->dataPost());
+    $facility = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Facility());
     $result["data"] = $facility;
     //Load interface to query the database
     $manager = $this->managers->getManagerOf($this->module());
     $result["dataId"] = $manager->add($facility);
     $facility->setFacility_id($result["dataId"]);
-    $sessionProject = \Applications\PMTool\Helpers\CommonHelper::GetUserSessionProject($this->app()->user(), $facility->project_id());
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $facility->project_id());
     $sessionProject[\Library\Enums\SessionKeys::FacilityObject] = $facility;
-    \Applications\PMTool\Helpers\CommonHelper::UpdateUserSessionProject($this->app()->user(), $sessionProject);
+    \Applications\PMTool\Helpers\ProjectHelper::UpdateUserSessionProject($this->app()->user(), $sessionProject);
     
     //Process DB result and send result
     if ($result["dataId"] > 0)
@@ -70,13 +70,14 @@ class FacilityController extends \Library\BaseController {
 
     //Load interface to query the database
     $manager = $this->managers->getManagerOf($this->module());
-    $result_edit = $manager->edit($this->PrepareUserObject($this->dataPost()));
+    $result_edit = $manager->edit(\Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Facility()));
     $result["dataId"] = $this->dataPost("facility_id");
 
     if ($result_edit) {
-      $sessionProject = \Applications\PMTool\Helpers\CommonHelper::GetUserSessionProject($this->app()->user(), $this->dataPost["project_id"]);
-      $sessionProject[\Library\Enums\SessionKeys::FacilityObject] = $this->PrepareUserObject($this->dataPost());
-      \Applications\PMTool\Helpers\CommonHelper::UpdateUserSessionProject($this->app()->user(), $sessionProject);
+      $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $this->dataPost["project_id"]);
+      $sessionProject[\Library\Enums\SessionKeys::FacilityObject] = 
+              \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Facility());
+      \Applications\PMTool\Helpers\ProjectHelper::UpdateUserSessionProject($this->app()->user(), $sessionProject);
     }
     $result = $this->SendResponseWS(
             $result,
@@ -101,21 +102,6 @@ class FacilityController extends \Library\BaseController {
    */
   public function executeGetList(\Library\HttpRequest $rq, $isNotAjaxCall = FALSE) {
     //The logic is found in ProjectController->executeGetList
-  }
-
-  /**
-   * Prepare the Facility Object before calling the DB.
-   * 
-   * @param array $data_sent from POST request
-   * @return \Applications\PMTool\Models\Dao\Facility
-   */
-  private function PrepareUserObject($data_sent) {
-    $facility = new \Applications\PMTool\Models\Dao\Facility();
-    foreach ($data_sent as $key => $value) {
-      $method = "set" .ucfirst($key);
-      $facility->$method(!array_key_exists($key, $data_sent) ? NULL : $value);
-    }
-    return $facility;
   }
 
 }

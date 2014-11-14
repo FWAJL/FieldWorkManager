@@ -15,7 +15,7 @@
         if ($(this).attr("type") === "text") {
           user_inputs[$(this).attr("name")] = $(this).val().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
         } else {//checkbox
-          user_inputs[$(this).attr("name")] = ($(this).val() === "1") || ($(this).val() === "true");
+          user_inputs[$(this).attr("name")] = ($(this).val() === "1") || ($(this).val() === "true") || $(this).prop("checked");
         }
       } else {
         toastr.error("The field " + $(this).attr("name") + " is empty. Please fill out all fields.");
