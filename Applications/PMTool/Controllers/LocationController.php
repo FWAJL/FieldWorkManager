@@ -8,22 +8,13 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class LocationController extends \Library\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
-    $project = \Applications\PMTool\Helpers\CommonHelper::GetAndStoreCurrentProject($this, intval($rq->getData("project_id")));
-    $redirect = FALSE;
-    if ($project == !NULL) {
-      $sessionProject = \Applications\PMTool\Helpers\CommonHelper::GetUserSessionProject($this->app()->user(), $project);
-      $redirect = TRUE;
-    } else if ($this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject) !== NULL) {
-      $redirect = TRUE;
-    }
-    if ($redirect) {
+    if (\Applications\PMTool\Helpers\ProjectHelper::RedirectAfterProjectSelection($this->app(), intval($rq->getData("project_id")))) {
       header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
     }
   }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
-    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
-    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     if ($rq->getData("mode") === "edit") {
       $this->page->addVar("location_editing_header", $this->resxData["location_legend_edit"]);
@@ -37,16 +28,16 @@ class LocationController extends \Library\BaseController {
 
   public function executeListAll(\Library\HttpRequest $rq) {
     //Get list of location stored in session
-    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
     $this->_GetAndStoreLocationsInSession($sessionProject);
-    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
     $data = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $locations,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList($this->resxfile)
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 
@@ -60,7 +51,7 @@ class LocationController extends \Library\BaseController {
   public function executeAdd(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
-    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
 
     //Load interface to query the database
     $manager = $this->managers->getManagerOf($this->module);
@@ -74,32 +65,31 @@ class LocationController extends \Library\BaseController {
     }
     $result["dataIn"] = $locations;
 
-    $result["dataOut"] = 0;
+    $result["dataId"] = 0;
     foreach ($locations as $location) {
-      $result["dataOut"] = $manager->add($location);
-      $location->setLocation_id("$result[dataOut]"); 
+      $result["dataId"] = $manager->add($location);
+      $location->setLocation_id($result["dataId"]);
       array_push($sessionProject[\Library\Enums\SessionKeys::ProjectLocations], $location);
     }
-    if ($result["dataOut"]) {
-      \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+    if ($result["dataId"]) {
+      \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
     }
 
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
         "resx_key" => $this->action(),
-        "step" => $result["dataOut"] > 0 ? "success" : "error"
+        "step" => $result["dataId"] > 0 ? "success" : "error"
     ));
   }
 
   public function executeEdit(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
-    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
 
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
     $location = $this->_PrepareLocationObject($this->dataPost());
     $result["data"] = $location;
 
@@ -108,8 +98,9 @@ class LocationController extends \Library\BaseController {
 
     //Clear the location and facility list from session for the connect PM
     if ($result_edit) {
-      $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = array();
-      \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+      $locationMatch = $this->_GetLocationFromSession(intval($location->location_id()));
+      $sessionProject[\Library\Enums\SessionKeys::ProjectLocations][$locationMatch["key"]] = $location;
+      \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
     }
 
     $this->SendResponseWS(
@@ -123,19 +114,19 @@ class LocationController extends \Library\BaseController {
   public function executeDelete(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
-    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $db_result = FALSE;
     $location_id = intval($this->dataPost["location_id"]);
 
     //Check if the location to be deleted if the Location manager's
     $location_selected = $this->_GetLocationFromSession($location_id);
     //Load interface to query the database
-    if ($location_selected !== NULL) {
+    if ($location_selected["object"] !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
       $db_result = $manager->delete($location_id);
       if ($db_result) {
-        $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = array();
-        \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+        unset($sessionProject[\Library\Enums\SessionKeys::ProjectLocations][$location_selected["key"]]);
+        \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
       }
     }
 
@@ -156,11 +147,13 @@ class LocationController extends \Library\BaseController {
     if ($sessionProject !== NULL) {
       //Load interface to query the database for locations
       $manager = $this->managers->getManagerOf($this->module);
-      $result["locations"] = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = $manager->selectMany($sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-      \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+      $result[\Library\Enums\SessionKeys::ProjectLocations] = 
+              $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = 
+              $manager->selectMany($sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+      \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
     }
     if ($isAjaxCall) {
-      $step_result = $result["locations"] !== NULL ? "success" : "error";
+      $step_result = $result[\Library\Enums\SessionKeys::ProjectLocations] !== NULL ? "success" : "error";
       $this->SendResponseWS(
               $result, array(
           "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
@@ -177,7 +170,7 @@ class LocationController extends \Library\BaseController {
 
     $location_selected = $this->_GetLocationFromSession($location_id);
 
-    $result["location"] = $location_selected;
+    $result["location"] = $location_selected["object"];
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
@@ -192,7 +185,7 @@ class LocationController extends \Library\BaseController {
     $rows_affected = 0;
     //Get the location objects from ids received
     $location_ids = str_getcsv($this->dataPost["location_ids"], ',');
-    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
     $matchedElements = $this->FindObjectsFromIds(
             array(
@@ -206,7 +199,7 @@ class LocationController extends \Library\BaseController {
       $manager = $this->managers->getManagerOf($this->module);
       $rows_affected += $manager->edit($location) ? 1 : 0;
     }
-    \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+    \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
 
     $this->SendResponseWS(
             $result, array(
@@ -221,7 +214,7 @@ class LocationController extends \Library\BaseController {
     if (count($sessionProject[\Library\Enums\SessionKeys::ProjectLocations]) === 0) {
       $this->executeGetList(NULL, $sessionProject, false);
     } else {
-      
+      //The locations are already in Session
     }
   }
 
@@ -253,12 +246,13 @@ class LocationController extends \Library\BaseController {
   }
 
   private function _GetLocationFromSession($location_id) {
-    $locationMatch = NULL;
-    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $locationMatch = array();
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
-    foreach ($locations as $location) {
-      if (intval($location->location_id()) === $location_id) {
-        $locationMatch = $location;
+    foreach (array_keys($locations) as $index => $key) {
+      if (intval($locations[$key]->location_id()) === $location_id) {
+        $locationMatch["object"] = $locations[$key];
+        $locationMatch["key"] = $key;
         break;
       }
     }

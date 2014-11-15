@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <resource key="page_title">Resources</resource>
+  
+  <resource key="resource_h1">Welcome to Field Work Manager</resource>
+  <resource key="resource_welcome_message">Please, select an option on the left menu.</resource>
+  
+  <resource key="message_error_add">Error inserting the resource. Check logs.</resource>
+  <resource key="message_success_add">The resource has been added.</resource>
+  <resource key="message_error_getlist">Error reading resource data. Check logs.</resource>
+  <resource key="message_success_getlist">The resources have been read.</resource>
+  <resource key="message_error_getItem">This resource doesn't exist or is not one of your resources. You will be redirected to your list of resources in 3 seconds.</resource>
+  <resource key="message_success_getItem">The resource data has been read.</resource>
+  <resource key="message_error_edit">Error editing the resource data. Check logs.</resource>
+  <resource key="message_success_edit">The resource data has been edited.</resource>
+  <resource key="message_error_delete">Error deleting the resource. Check logs.</resource>
+  <resource key="message_success_delete">The resource data has been deleted.</resource>
+  <resource key="message_error_updateItems">Error editing the resource data - update items. Check logs.</resource>
+  <resource key="message_success_updateItems">The resource data has been edited.</resource>
+
+  <resource key="resource_legend_add">Add a new resource</resource>
+  <resource key="resource_legend_edit">Edit this resource</resource>
+  <resource key="resource_type">Category</resource>
+  <resource key="resource_name">Company Name</resource>
+  <resource key="resource_url">Website</resource>
+  <resource key="resource_address">Address</resource>
+  <resource key="resource_contact_name">Contact Name</resource>
+  <resource key="resource_contact_phone">Phone Number</resource>
+  <resource key="resource_contact_email">Email</resource>
+  <resource key="resource_active">Active</resource>
+  <resource key="resource_button_add">Add this resource</resource>
+  <resource key="resource_button_edit">Edit this resource</resource>
+  <resource key="resource_button_delete">Delete this resource</resource>
+  <resource key="resource_list_all_header">Your Resources</resource>
+  <resource key="h3_resources_active">Available resources</resource>
+  <resource key="h3_resources_inactive">Inactive or unavailable resources</resource> 
+  <resource key="btn_to_inactive_list">De-activate</resource> 
+  <resource key="btn_to_active_list">Activate</resource> 
+  
+</resources>

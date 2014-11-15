@@ -71,3 +71,16 @@
 #active-list .ui-selected, #inactive-list .ui-selected { background: #F39814; color: white; }
 
 .context-menu-active {font-weight: bold; color: #F39814;}
+
+/* ADD TASK */
+.task_form_sections .task_form .checkbox {
+padding: 0px 2px 0px 30px;
+}
+
+.task_form li label, .task_form li input, .task_form li textarea{
+  width: 250px;
+}
+
+.task_form .note {
+width: 500px;
+}
