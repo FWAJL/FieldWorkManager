@@ -6,6 +6,9 @@
     <li style="display: none;">
       <input name="facility_id" type="text" />
     </li>
+    <li style="display: none;">
+      <input name="project_id" type="text" />
+    </li>
     <li>
       <label><?php echo $resx["facility_name"]; ?></label>
       <input name="facility_name" type="text" />
@@ -46,7 +49,7 @@
       <label><?php echo $resx["facility_sic"]; ?></label>
       <input name="facility_sic" type="text" />
     </li>
-    <li>
+    <li style="display: none;">
       <label><?php echo $resx["boundary"]; ?></label>
       <input name="boundary" type="text" />
     </li>

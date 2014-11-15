@@ -12,13 +12,33 @@
 
   <resource key="header_locations">Locations</resource>
   <resource key="location_list">List All</resource>
-  <resource key="location_add">Add new Location</resource>
-  <resource key="location_upload_list">Upload Location List</resource>
+  <resource key="location_add">Add new Location(s)</resource>
+<!--  <resource key="location_upload_list">Upload Location List</resource>-->
+  
+  <resource key="header_technician">Technicians</resource>
+  <resource key="technician_add">Add</resource>
+  <resource key="technician_list">List All</resource>
   
   <resource key="header_map">Map</resource>
   <resource key="map_project_all">All Projects</resource>
   <resource key="map_project">Selected Project</resource>
   <resource key="map_project_locations">All Project's Locations</resource>
   <resource key="map_task_locations">Task Locations</resource>
+  
+  <resource key="header_task">Tasks</resource>
+  <resource key="task_add">Add</resource>
+  <resource key="task_list">List All</resource>
+  
+  <resource key="header_field_forms">Field Forms</resource>
+  <resource key="field_form_add">Add</resource>
+  <resource key="field_form_all">List All</resource>
+  
+  <resource key="header_resource">Resources</resource>
+  <resource key="resource_add">Add</resource>
+  <resource key="resource_list">List All</resource>
+  
+  <resource key="header_user_results">Results</resource>
+  
+  
   
 </resources>

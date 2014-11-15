@@ -30,6 +30,18 @@ class UrlKeys {
   const LocationRootUrl = "location";
   const LocationListAll = "location/listAll";
   const LocationShowForm = "location/showForm";
+  
+  const TechnicianRootUrl = "technician";
+  const TechnicianListAll = "technician/listAll";
+  const TechnicianShowForm = "technician/showForm";
+  
+  const ResourceRootUrl = "resource";
+  const ResourceListAll = "resource/listAll";
+  const ResourceShowForm = "resource/showForm";
+  
+  const PmRootUrl = "pm";
+  const PmListAll = "pm/listAll";
+  const PmShowForm = "pm/showForm";
 
   /**
    * Absolute Urls

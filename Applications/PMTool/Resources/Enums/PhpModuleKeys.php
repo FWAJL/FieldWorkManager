@@ -38,6 +38,11 @@ class PhpModuleKeys {
   const client_form = "client_form";
   const project_buttons = "project_buttons";
   const project_tabs_close = "project_tabs_close";
+  
+  const task_tabs_open = "task_tabs_open";
+  const task_form = "task_form";
+  const task_buttons = "task_buttons";
+  const task_tabs_close = "task_tabs_close";
 
 }
 

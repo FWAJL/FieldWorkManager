@@ -23,7 +23,7 @@ class Managers {
         }
 
         if (!isset($this->managers[$module])) {
-            $manager = $this->dal_folder_path . $module . 'Manager_' . $this->api;
+            $manager = $this->dal_folder_path . $module . 'Dal';// . $this->api;
             $this->managers[$module] = new $manager($this->dao);
         }
 

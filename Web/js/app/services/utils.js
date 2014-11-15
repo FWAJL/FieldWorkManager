@@ -15,7 +15,7 @@
         if ($(this).attr("type") === "text") {
           user_inputs[$(this).attr("name")] = $(this).val().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
         } else {//checkbox
-          user_inputs[$(this).attr("name")] = ($(this).val() === "1") || ($(this).val() === "true");
+          user_inputs[$(this).attr("name")] = ($(this).val() === "1") || ($(this).val() === "true") || $(this).prop("checked");
         }
       } else {
         toastr.error("The field " + $(this).attr("name") + " is empty. Please fill out all fields.");
@@ -138,5 +138,13 @@
 
   utils.trim = function(str) {
     return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+  }
+  
+  utils.setCheckBoxValue = function(value) {
+    if (value === "true" || value === true || value === "1") {
+      return true;
+    } else {
+      return false;
+    }
   }
 }(window.utils = window.utils || {}));

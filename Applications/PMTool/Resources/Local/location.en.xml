@@ -39,13 +39,13 @@
   <resource key="h3_location_names_form">Add location names</resource> 
   <resource key="h3_location_add_buttons">Add location:</resource>
   <resource key="location_info_tab">Location Info</resource>
-  <resource key="gmaps_info_tab">Google Maps</resource>
+  <resource key="gmaps_info_tab">Map</resource>
   
   
-  <resource key="btn_to_inactive_list">Desactivate</resource> 
+  <resource key="btn_to_inactive_list">De-activate</resource> 
   <resource key="btn_to_active_list">Activate</resource> 
   <resource key="btn_add_location_names">Add the locations</resource> 
-  <resource key="btn_add_location_gmap">With Google Maps</resource> 
+  <resource key="btn_add_location_gmap">Using the Map</resource> 
   <resource key="btn_add_location_manual">With the standard form</resource> 
   <resource key="btn_location_select_project">See list of project</resource> 
 

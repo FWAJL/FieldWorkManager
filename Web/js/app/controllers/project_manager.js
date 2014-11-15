@@ -53,9 +53,8 @@ $(document).ready(function() {
   $("#btn_add_project").click(function() {
     var post_data = {};
     post_data["project"] = utils.retrieveInputs("project_form", ["project_name"]);
-    post_data["facility"] = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
-    //TO BE IMPLEMENTED
-    //post_data["client"] = utils.retrieveInputs("client_form", []);
+    post_data["facility"] = utils.retrieveInputs("facility_form", ["facility_name"]);
+    post_data["client"] = utils.retrieveInputs();
     if (post_data["project"].project_name !== undefined &&
             post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
       project_manager.add(post_data, "project", "add");
@@ -106,13 +105,19 @@ $(document).ready(function() {
 (function(project_manager) {
   project_manager.add = function(data, controller, action) {
     datacx.post(controller + "/" + action, data["project"]).then(function(reply) {//call AJAX method to call Project/Add WebService
-      if (reply === null || reply.dataOut === undefined || reply.dataOut === null || parseInt(reply.dataOut) === 0) {//has an error
+      if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
-        var post_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
-        data["facility"]['project_id'] = reply.dataOut;
-        facility_manager.send("facility/" + action, data["facility"]);
+        toastr.success(reply.message.replace("client", "client (ID:" + reply.dataId + ")"));
+
+        var facility_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
+        if (facility_data.facility_name !== undefined && facility_data.facility_address !== undefined) {
+         facility_data["project_id"] = reply.dataId;
+          facility_manager.send("facility/" + action, facility_data);
+        }
+        var client_data = utils.retrieveInputs("client_form", []);
+        client_data["project_id"] = reply.dataId;
+        client_manager.send("client/" + action, client_data);
       }
     });
   };
@@ -121,11 +126,14 @@ $(document).ready(function() {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        toastr.success(reply.message.replace("client", "client (ID:" + reply.dataId + ")"));
+
         var post_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
         if (post_data.facility_name !== undefined && post_data.facility_address !== undefined) {
           facility_manager.send("facility/" + action, post_data);
         }
+        var client_data = utils.retrieveInputs("client_form", []);
+        client_manager.send("client/" + action, client_data);
       }
     });
   };
@@ -164,13 +172,14 @@ $(document).ready(function() {
   };
   project_manager.loadEditForm = function(dataWs) {
     utils.clearForm();
-    $(".project_form input[name=\"project_id\"]").val(parseInt(dataWs.project.project_id));
-    $(".project_form .add-new-item input[name=\"project_name\"]").val(dataWs.project.project_name);
-    $(".project_form .add-new-item input[name=\"project_num\"]").val(dataWs.project.project_number);
-    $(".project_form .add-new-item input[name=\"project_desc\"]").val(dataWs.project.project_desc);
-    $(".project_form .add-new-item input[name=\"project_active\"]").val(dataWs.project.project_active);
-    $(".project_form .add-new-item input[name=\"project_visible\"]").val(dataWs.project.project_visible);
+    $(".project_form input[name=\"project_id\"]").val(parseInt(dataWs.project_obj.project_id));
+    $(".project_form .add-new-item input[name=\"project_name\"]").val(dataWs.project_obj.project_name);
+    $(".project_form .add-new-item input[name=\"project_number\"]").val(dataWs.project_obj.project_number);
+    $(".project_form .add-new-item input[name=\"project_desc\"]").val(dataWs.project_obj.project_desc);
+    $(".project_form .add-new-item input[name=\"project_active\"]").prop('checked', utils.setCheckBoxValue(dataWs.project_obj.project_active));
+    $(".project_form .add-new-item input[name=\"project_visible\"]").val(dataWs.project_obj.project_visible);
     facility_manager.loadEditForm(dataWs);
+    client_manager.loadEditForm(dataWs);
   };
   project_manager.delete = function(project_id) {
     datacx.post("project/delete", {"project_id": project_id}).then(function(reply) {
@@ -190,11 +199,11 @@ $(document).ready(function() {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
         $(".form_sections").hide();
-        utils.redirect("project/listAll", 3000)
+        //utils.redirect("project/listAll", 3000)
       } else {//success
         $(".project_edit").show().removeClass("hide");
         toastr.success(reply.message);
-        project_manager.loadEditForm(reply);
+        project_manager.loadEditForm(reply.sessionProject);
       }
     });
   };
@@ -207,8 +216,11 @@ $(document).ready(function() {
     $(".project_form .add-new-item input[name=\"project_desc\"]").val("Description " + number);
     $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
     $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
+    $(".client_form .add-new-item input[name=\"client_company_name\"]").val("Client " + number);
+    $(".client_form .add-new-item textarea[name=\"client_address\"]").val(number + " Av of There\nCity\nCountry");
+    $(".client_form .add-new-item input[name=\"client_contact_phone\"]").val(Math.floor(Math.random() * 1000000000));
   };
-  
+
   project_manager.updateProjects = function(action, arrayId) {
     datacx.post("project/updateItems", {"action": action, "project_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
@@ -217,7 +229,7 @@ $(document).ready(function() {
       } else {//success
         toastr.success(reply.message);
         utils.redirect("project/listAll");
-     }
+      }
     });
   };
 
