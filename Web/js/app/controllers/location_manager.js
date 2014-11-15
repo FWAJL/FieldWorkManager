@@ -108,7 +108,7 @@ $(document).ready(function() {
   location_manager.add = function(userData, controller, action, isSingle) {
     var data = isSingle ? userData : {"names": userData};
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Location/Add WebService
-      if (reply === null || reply.dataOut === undefined || reply.dataOut === null || parseInt(reply.dataOut) === 0) {//has an error
+      if (reply === null || reply.dataId === undefined || reply.dataId === null || parseInt(reply.dataId) === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
@@ -169,7 +169,7 @@ $(document).ready(function() {
     $("input[name=\"location_long\"]").val(dataWs.location.location_long);
     $("input[name=\"location_desc\"]").val(dataWs.location.location_desc);
     $("input[name=\"location_active\"]").val(dataWs.location.location_active);
-    $("input[name=\"location_visible\"]").val(dataWs.location.location_visible);
+//    $("input[name=\"location_visible\"]").val(dataWs.location.location_visible);
   };
   location_manager.delete = function(location_id) {
     datacx.post("location/delete", {"location_id": location_id}).then(function(reply) {

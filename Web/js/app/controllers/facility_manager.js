@@ -40,12 +40,12 @@ $(document).ready(function() {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
-        utils.redirect("project/listAll");
+        toastr.success(reply.message.replace("client", "client (ID:" + reply.dataId + ")"));
+        //utils.redirect("project/listAll");
       }
     });
   };
-  facility_manager.retrieveProject = function(element) {
+  facility_manager.retrieveFacility = function(element) {
     //get facility object from cache (PHP WS)
     datacx.post("facility/getItem", {"facility_id": parseInt(element.attr("data-facility-id"))}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
@@ -57,10 +57,21 @@ $(document).ready(function() {
       }
     });
   };
+  
   facility_manager.loadEditForm = function(dataWs) {
-    $(".facility_form input[name=\"facility_id\"]").val(parseInt(dataWs.facility.facility_id));
-    $(".facility_form .add-new-item input[name=\"facility_name\"]").val(dataWs.facility.facility_name);
-    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(dataWs.facility.facility_address);
+    $(".facility_form input[name=\"facility_id\"]").val(parseInt(dataWs.facility_obj.facility_id));
+    $(".facility_form input[name=\"project_id\"]").val(parseInt(dataWs.facility_obj.project_id));
+    $(".facility_form input[name=\"facility_name\"]").val(dataWs.facility_obj.facility_name);
+    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(dataWs.facility_obj.facility_address);
+    $(".facility_form input[name=\"facility_lat\"]").val(dataWs.facility_obj.facility_lat);
+    $(".facility_form input[name=\"facility_long\"]").val(dataWs.facility_obj.facility_long);
+    $(".facility_form input[name=\"facility_contact_name\"]").val(dataWs.facility_obj.facility_contact_name);
+    $(".facility_form input[name=\"facility_contact_phone\"]").val(dataWs.facility_obj.facility_contact_phone);
+    $(".facility_form input[name=\"facility_contact_email\"]").val(dataWs.facility_obj.facility_contact_email);
+    $(".facility_form input[name=\"facility_id_num\"]").val(dataWs.facility_obj.facility_id_num);
+    $(".facility_form input[name=\"facility_sector\"]").val(dataWs.facility_obj.facility_sector);
+    $(".facility_form input[name=\"facility_sic\"]").val(dataWs.facility_obj.facility_sic);   
+    
   };
   facility_manager.delete = function() {
     //get facility object from cache (PHP WS)
