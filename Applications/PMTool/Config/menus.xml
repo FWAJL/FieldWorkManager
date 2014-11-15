@@ -32,20 +32,20 @@
       <submenu id="map_task_locations" resourcekey="map_task_locations" active="true"/>
     </links>
   </main_menu><!-- map -->  
-   <main_menu name="user_task" active="true">
+   <main_menu name="task" active="true">
     <links>
-      <header href="#" resourcekey="header_user_tasks" />
-      <submenu id="user_tasks_all" resourcekey="user_tasks_all" active="true"/>
-      <submenu id="user_tasks_add_left_menu" resourcekey="user_tasks_add" active="true"/>
+      <header href="task" resourcekey="header_task" />
+      <submenu href="task/listAll" id="task_list_all" resourcekey="task_list" active="true"/>
+      <submenu href="task/showForm?mode=add&amp;test=true" id="btn-add-task-manual" resourcekey="task_add" active="true"/>
     </links>
   </main_menu><!-- task -->
-  <main_menu name="field_form" active="true">
+<!--  <main_menu name="field_form" active="false">
     <links>
-      <header href="#" resourcekey="header_field_forms" />
+      <header href="task" resourcekey="header_field_forms" />
       <submenu id="field_form_all" resourcekey="field_form_all" active="true"/>
       <submenu id="field_form_add_left_menu" resourcekey="field_form_add" active="true"/>
     </links>
-  </main_menu><!-- form -->
+  </main_menu> form -->
   
   <main_menu name="resource" active="true">
     <links>

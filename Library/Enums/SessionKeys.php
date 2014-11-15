@@ -56,7 +56,7 @@ abstract class SessionKeys {
   const UserResourceList = "user_resource_list";
   
   const FieldForms = "field_forms";
-   const UserFieldFormsList = "user_field_forms_list";
+  const UserFieldFormsList = "user_field_forms_list";
 
   
   //Current objects

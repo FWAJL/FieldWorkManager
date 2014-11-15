@@ -34,8 +34,8 @@ abstract class ResxFileNameKeys {
   const Location = "location";
   const Technician = "technician";
   const Resource = "resource";
-  const ProjectTask = "project_task";
-  const FieldForm = "field_form";
+  const Task = "task";
+//  const FieldForm = "field_form";
   const Pm = "pm";
 }
 
