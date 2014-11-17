@@ -12,6 +12,7 @@
           <div class="buttons">
             <input type="button" value="<?php echo $resx["btn_to_inactive_list"]; ?>" class="btn btn-warning from-active-list" />
             <input type="button" value="<?php echo $resx["btn_to_active_list"]; ?>"  class="btn btn-warning from-inactive-list" />            
+            <input type="button" value="<?php echo $resx["btn_set_current_project"]; ?>"  class="btn btn-warning" />            
           </div>
         </div>
         <div  class="col-lg-5 col-md-5">
