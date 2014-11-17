@@ -290,13 +290,14 @@ class ProjectController extends \Library\BaseController {
   public function executeSetCurrentProject(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS(); // Init result
 
-    \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->app()->user(), $this->dataPost["project_id"]);
-
+    $project = \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->app()->user(), $this->dataPost["project_id"]);
+    $result["dataId"] = $project->project_id();
+    
     $this->SendResponseWS(
         $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
       "resx_key" => $this->action(),
-      "step" => (\Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user()) != NULL) ? "success" : "error"
+      "step" => ($project != NULL) ? "success" : "error"
     ));
   }
 

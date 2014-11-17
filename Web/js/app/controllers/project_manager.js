@@ -113,7 +113,7 @@ $(document).ready(function() {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message.replace("client", "client (ID:" + reply.dataId + ")"));
+        toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
 
         var facility_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
         if (facility_data.facility_name !== undefined && facility_data.facility_address !== undefined) {
@@ -131,7 +131,7 @@ $(document).ready(function() {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message.replace("client", "client (ID:" + reply.dataId + ")"));
+        toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
 
         var post_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
         if (post_data.facility_name !== undefined && post_data.facility_address !== undefined) {
@@ -243,8 +243,7 @@ $(document).ready(function() {
         toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
-        utils.redirect("project/listAll");
+        toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
       }
     });
   };

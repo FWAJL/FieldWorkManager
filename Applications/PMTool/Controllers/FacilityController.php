@@ -71,7 +71,7 @@ class FacilityController extends \Library\BaseController {
     //Load interface to query the database
     $manager = $this->managers->getManagerOf($this->module());
     $result_edit = $manager->edit(\Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Facility()));
-    $result["dataId"] = $this->dataPost("facility_id");
+    $result["dataId"] = $this->dataPost["facility_id"];
 
     if ($result_edit) {
       $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $this->dataPost["project_id"]);
