@@ -35,16 +35,16 @@ class ProjectHelper {
     self::SetSessionProjects($user, $sessionProjects);
   }
 
-  public static function GetAndStoreCurrentProject(\Library\Application $app, $project_id) {
+  public static function GetAndStoreCurrentProject(\Library\User $user, $project_id) {
     $userSessionProjects = NULL;
-    if ($app->user->keyExistInSession(\Library\Enums\SessionKeys::UserSessionProjects)) {
-      $userSessionProjects = $app->user->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
+    if ($user->keyExistInSession(\Library\Enums\SessionKeys::UserSessionProjects)) {
+      $userSessionProjects = $user->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
     }
 
     //If there is no user session projects yet, create one with the project id given
     if ($userSessionProjects !== NULL) {
       $key = \Library\Enums\SessionKeys::ProjectKey . $project_id;
-      $app->user()->setAttribute(\Library\Enums\SessionKeys::CurrentProject, $userSessionProjects[$key]);
+      $user->setAttribute(\Library\Enums\SessionKeys::CurrentProject, $userSessionProjects[$key]);
       return array_key_exists($key, $userSessionProjects) ?
               $userSessionProjects[$key][\Library\Enums\SessionKeys::ProjectObject] : NULL;
     }
@@ -101,7 +101,7 @@ class ProjectHelper {
   }
 
   public static function RedirectAfterProjectSelection(\Library\Application $app, $project_id) {
-    $project = \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($app, $project_id);
+    $project = \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($app->user(), $project_id);
     $redirect = FALSE;
     if ($project == !NULL) {
 //      \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($app->user(), $project);

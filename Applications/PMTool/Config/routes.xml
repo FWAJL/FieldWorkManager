@@ -330,6 +330,7 @@
   <route url="project/getlist" module="Project" action="getList" resxfile="project" type="ws" />
   <route url="project/getItem" module="Project" action="getItem" resxfile="project" type="ws" />
   <route url="project/updateItems" module="Project" action="updateItems" resxfile="project" type="ws" />
+  <route url="project/setCurrentProject" module="Project" action="setCurrentProject" resxfile="project" type="ws" />
   
   <route url="facility/add" module="Facility" action="add" resxfile="facility" type="ws" />
   <route url="facility/edit" module="Facility" action="edit" resxfile="facility" type="ws" />

@@ -149,7 +149,7 @@ class ProjectController extends \Library\BaseController {
     $project_id = intval($this->dataPost["project_id"]);
 
     //Check if the project to be deleted if the Project manager's
-    $project_selected = \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->app(), $project_id);
+    $project_selected = \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->app()->user(), $project_id);
     //Load interface to query the database
     if ($project_selected !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
@@ -223,7 +223,7 @@ class ProjectController extends \Library\BaseController {
       $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $project->project_id());
       $project_selected = $sessionProject[\Library\Enums\SessionKeys::ProjectObject] = $project;
     } else {
-      $project_selected = \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->app(), $project_id);
+      $project_selected = \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->app()->user(), $project_id);
       $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $project_selected->project_id());
     }
 
@@ -279,6 +279,24 @@ class ProjectController extends \Library\BaseController {
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
       "resx_key" => $this->action(),
       "step" => ($rows_affected === count($project_ids)) ? "success" : "error"
+    ));
+  }
+  /**
+   * Method that get a project and returns the result of operation
+   * 
+   * @param \Library\HttpRequest $rq
+   * @return JSON
+   */
+  public function executeSetCurrentProject(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS(); // Init result
+
+    \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->app()->user(), $this->dataPost["project_id"]);
+
+    $this->SendResponseWS(
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+      "resx_key" => $this->action(),
+      "step" => (\Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user()) != NULL) ? "success" : "error"
     ));
   }
 
