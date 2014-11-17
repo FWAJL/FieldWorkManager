@@ -1,11 +1,11 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 <div class="right-aside main col-lg-9 col-md-9 col-sm-9">
-  <div class="resource_list">
-    <h3><?php echo $resx["resource_list_all_header"]; ?></h3>
+  <div class="service_list">
+    <h3><?php echo $resx["service_list_all_header"]; ?></h3>
     <div class="content-container container-fluid">
       <div class="row">
         <div  class="col-lg-5 col-md-5">
-          <h4><?php echo $resx["h3_resources_active"]; ?></h4>
+          <h4><?php echo $resx["h3_services_active"]; ?></h4>
           <?php require $active_list_module; ?>              
         </div>
         <div class="col-lg-2 col-md-2">
@@ -15,7 +15,7 @@
           </div>
         </div>
         <div  class="col-lg-5 col-md-5">
-          <h4><?php echo $resx["h3_resources_inactive"]; ?></h4>
+          <h4><?php echo $resx["h3_services_inactive"]; ?></h4>
           <?php require $inactive_list_module; ?>              
         </div>
       </div>

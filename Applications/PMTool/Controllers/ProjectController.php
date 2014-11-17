@@ -37,10 +37,17 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeIndex(\Library\HttpRequest $rq) {
-    if (count(\Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->app()->user())) > 0) {
+    //Check session if pm has projects
+    $hasProjects = count(\Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->app()->user())) > 0;
+    if ($hasProjects) {
       header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
     } else {
-      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ProjectsShowForm . "?mode=add&test=true");
+      $this->executeGetList($rq, true); //Get and store projects to session (even if there is none)
+      if (count(\Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->app()->user())) > 0) {
+        header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
+      } else {
+        header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ProjectsShowForm . "?mode=add&test=true");
+      }
     }
   }
 
@@ -257,8 +264,7 @@ class ProjectController extends \Library\BaseController {
     $rows_affected = 0;
     //Get the project objects from ids received
     $project_ids = str_getcsv($this->dataPost["project_ids"], ',');
-    $projects = 
-        \Applications\PMTool\Helpers\CommonHelper::GetListObjectsInSessionByKey($this->app()->user(), \Library\Enums\SessionKeys::ProjectObject);
+    $projects = \Applications\PMTool\Helpers\CommonHelper::GetListObjectsInSessionByKey($this->app()->user(), \Library\Enums\SessionKeys::ProjectObject);
     $matchedElements = $this->FindObjectsFromIds(
         array(
           "filter" => "project_id",
@@ -281,6 +287,7 @@ class ProjectController extends \Library\BaseController {
       "step" => ($rows_affected === count($project_ids)) ? "success" : "error"
     ));
   }
+
   /**
    * Method that get a project and returns the result of operation
    * 
@@ -292,7 +299,7 @@ class ProjectController extends \Library\BaseController {
 
     $project = \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->app()->user(), $this->dataPost["project_id"]);
     $result["dataId"] = $project->project_id();
-    
+
     $this->SendResponseWS(
         $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,

@@ -33,11 +33,11 @@ $(document).ready(function() {
       tmpSelection = utils.removeLastChar(tmpSelection);
       if (tmpSelection.length > 0) {
         project_ids = tmpSelection;
-        project_manager.hideSetCurrentProject(project_ids.length < 2);
+        project_manager.hideSetCurrentProject(project_ids.length === 1);
         $(".from-" + $(this).attr("id")).show();
       } else {
         project_ids = [];
-        project_manager.hideSetCurrentProject(project_ids.length < 2);
+        project_manager.hideSetCurrentProject(project_ids.length === 1);
         $(".from-" + $(this).attr("id")).hide();
       }
     }

@@ -52,8 +52,8 @@ abstract class SessionKeys {
   const ProjectTasks = "project_tasks";
   const UserProjectTaskList= "user_project_task_list";
   
-  const UserResources = "user_resources";
-  const UserResourceList = "user_resource_list";
+  const UserServices = "user_services";
+  const UserServiceList = "user_service_list";
   
   const FieldForms = "field_forms";
   const UserFieldFormsList = "user_field_forms_list";

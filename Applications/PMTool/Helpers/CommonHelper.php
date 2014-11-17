@@ -16,7 +16,7 @@
  * CommonHelper Class
  *
  * @package		Application/PMTool
- * @subpackage	Controllers
+ * @subpackage	Helpers
  * @category	CommonHelper
  * @author		FWM DEV Team
  * @link		
@@ -54,6 +54,7 @@ class CommonHelper {
   public static function GetListObjectsInSessionByKey($user, $key) {
     $objects = array();
     $projects = $user->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
+    if ($projects === NULL) { $projects = array(); }
     foreach ($projects as $project) {
       array_push($objects, $project[$key]);
     }

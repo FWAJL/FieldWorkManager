@@ -16,7 +16,7 @@
  * CommonHelper Class
  *
  * @package		Application/PMTool
- * @subpackage	Controllers
+ * @subpackage	Helpers
  * @category	ProjectHelper
  * @author		FWM DEV Team
  * @link		
