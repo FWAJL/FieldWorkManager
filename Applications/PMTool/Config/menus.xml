@@ -18,9 +18,9 @@
   <main_menu name="location" active="true">
     <links>
       <header href="location" resourcekey="header_locations" />
-      <submenu href="location/listAll" id="location_list" resourcekey="location_list" active="true"/>
-      <submenu href="location/showForm" id="location_add_button" resourcekey="location_add" active="true"/>
-      <submenu href="location#" id="location_upload_list_button" resourcekey="location_upload_list" active="false"/>
+      <submenu href="location?target=listAll" id="location_list" resourcekey="location_list" active="true"/>
+      <submenu href="location?target=showForm" id="location_add_button" resourcekey="location_add" active="true"/>
+      <submenu href="location?target=uploadList" id="location_upload_list_button" resourcekey="location_upload_list" active="false"/>
     </links>
   </main_menu><!-- location -->
   <main_menu name="map" active="true">
