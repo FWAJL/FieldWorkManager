@@ -93,8 +93,6 @@ class ProjectHelper {
         \Library\Enums\SessionKeys::ClientObject => NULL,
         \Library\Enums\SessionKeys::ProjectLocations => array(),
         \Library\Enums\SessionKeys::ProjectTasks => array(),
-        \Library\Enums\SessionKeys::UserTechnicians => array(),
-        \Library\Enums\SessionKeys::UserResources => array()
             //Add a line for data linked to a project, e.g. results/reports?
     );
     return $arrayToReturn;
