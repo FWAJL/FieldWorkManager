@@ -7,9 +7,9 @@ $(document).ready(function() {
   } else if (utils.getPathPart("task")) {
     _default = "task_info";
   } 
-//  else if (utils.getPathPart("location")) {
-//    _default = "location_info";
-//  } else if (utils.getPathPart("technician")) {
+  else if (utils.getPathPart("location")) {
+    _default = "location_info";
+  }// else if (utils.getPathPart("technician")) {
 //    _default = "technician_info";
 //  } else if (utils.getPathPart("resource")) {
 //    _default = "resource_info";

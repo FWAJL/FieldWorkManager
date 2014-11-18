@@ -184,7 +184,7 @@ abstract class BaseController extends ApplicationComponent {
     $matchedElements = array();
     foreach ($params["objects"] as $object) {
       foreach ($params["ids"] as $id) {
-        if($object->$params["filter"]() === $id) {
+        if($object->$params["filter"]() === intval($id)) {
           array_push($matchedElements, $object);
           break;
         }
