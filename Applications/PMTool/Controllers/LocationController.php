@@ -9,7 +9,7 @@ class LocationController extends \Library\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
     if (\Applications\PMTool\Helpers\ProjectHelper::RedirectAfterProjectSelection($this->app(), intval($rq->getData("project_id")))) {
-      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
+      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LocationRootUrl . "/" . $rq->getData("target"));
     }
   }
 

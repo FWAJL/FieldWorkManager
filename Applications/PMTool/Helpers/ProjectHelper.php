@@ -64,7 +64,8 @@ class ProjectHelper {
   }
 
   public static function GetCurrentSessionProject($user) {
-    return $user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    return $user->keyExistInSession(\Library\Enums\SessionKeys::CurrentProject) ?
+            $user->getAttribute(\Library\Enums\SessionKeys::CurrentProject) : FALSE;
   }
 
   public static function ManageProjectsSession(\Library\User $user, \Applications\PMTool\Models\Dao\Project $project) {
@@ -99,15 +100,18 @@ class ProjectHelper {
   }
 
   public static function RedirectAfterProjectSelection(\Library\Application $app, $project_id) {
-    $project = \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($app->user(), $project_id);
     $redirect = FALSE;
-    if ($project == !NULL) {
-//      \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($app->user(), $project);
-      $redirect = TRUE;
-    } else if ($app->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject) !== NULL) {
-      $redirect = TRUE;
+    
+    if ($app->user()->keyExistInSession(\Library\Enums\SessionKeys::CurrentProject)) {
+      return TRUE;
     }
-    return $redirect;
+    
+    if ($project_id === 0) {
+      return FALSE;
+    } else {
+      $project = self::GetAndStoreCurrentProject($app->user(), $project_id);
+      if ($project == !NULL) { return TRUE; }
+    }
   }
 
   public static function SetSessionProjects($user, $projects) {
