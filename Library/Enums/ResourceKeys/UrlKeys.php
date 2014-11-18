@@ -35,9 +35,9 @@ class UrlKeys {
   const TechnicianListAll = "technician/listAll";
   const TechnicianShowForm = "technician/showForm";
   
-  const ResourceRootUrl = "resource";
-  const ResourceListAll = "resource/listAll";
-  const ResourceShowForm = "resource/showForm";
+  const ServiceRootUrl = "service";
+  const ServiceListAll = "service/listAll";
+  const ServiceShowForm = "service/showForm";
   
   const PmRootUrl = "pm";
   const PmListAll = "pm/listAll";

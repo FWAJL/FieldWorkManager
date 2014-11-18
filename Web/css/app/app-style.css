@@ -1,5 +1,9 @@
+/* GENERAL STYLES */
 body, html, .sidebar {height: 100%}
 ol, ul {  margin-bottom: 0; }
+.btn{margin-bottom: 5px;}
+/* END GENRAL */
+
 /* LOGIN */
 .login-container{margin:10px;}
 .login-container figure{
@@ -97,6 +101,11 @@ li #pm_name{
 .buttons{
   margin: 0 auto;
 }
+.btn_set_current_project{
+  max-width: 150px;
+  white-space: initial;
+}
+
 /* FACILITY */
 textarea { resize: vertical;}
 /*.facility_form {display: none;}*/

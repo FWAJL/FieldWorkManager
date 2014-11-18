@@ -7,17 +7,17 @@
   
   <!-- Errors -->
   
-  <resource key="message_error_add">Error inserting the task. Check logs.</resource>
+  <resource key="message_error_add">Error inserting the task.</resource>
   <resource key="message_success_add">The task has been inserted.</resource>
-  <resource key="message_error_getlist">Error reading the tasks. Check logs.</resource>
+  <resource key="message_error_getlist">Error reading the tasks.</resource>
   <resource key="message_success_getlist">The tasks have been read.</resource>
   <resource key="message_error_getItem">This task doesn't exist or is not one of your task. You will be redirected to your list of tasks in 3 seconds.</resource>
   <resource key="message_success_getItem">The task has been read.</resource>
-  <resource key="message_error_edit">Error editing the task. Check logs.</resource>
+  <resource key="message_error_edit">Error editing the task.</resource>
   <resource key="message_success_edit">The task has been edited.</resource>
-  <resource key="message_error_delete">Error deleting the task. Check logs.</resource>
+  <resource key="message_error_delete">Error deleting the task.</resource>
   <resource key="message_success_delete">The task has been deleted.</resource>
-  <resource key="message_error_updateItems">Error editing the tasks. Check logs.</resource>
+  <resource key="message_error_updateItems">Error editing the tasks.</resource>
   <resource key="message_success_updateItems">The tasks have been edited</resource>
 
 <!-- Buttons -->

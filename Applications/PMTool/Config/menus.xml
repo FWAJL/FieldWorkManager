@@ -47,11 +47,11 @@
     </links>
   </main_menu> form -->
   
-  <main_menu name="resource" active="true">
+  <main_menu name="service" active="true">
     <links>
-      <header href="resource" resourcekey="header_resource" />
-      <submenu href="resource/listAll" id="resource_list_all" resourcekey="resource_list" active="true"/>
-      <submenu href="resource/showForm?mode=add&amp;test=true" id="btn-add-resource-manual" resourcekey="resource_add" active="true"/>
+      <header href="service" resourcekey="header_service" />
+      <submenu href="service/listAll" id="service_list_all" resourcekey="service_list" active="true"/>
+      <submenu href="service/showForm?mode=add&amp;test=true" id="btn-add-service-manual" resourcekey="service_add" active="true"/>
     </links>
   </main_menu><!-- resource -->
   

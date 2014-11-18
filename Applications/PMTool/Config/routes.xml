@@ -218,9 +218,9 @@
    <!--  task/showAddForm -->
    
     <!-- resources -->
-  <route url="resource" module="Resource" action="index" resxfile="resource" type="ui">
+  <route url="service" module="Service" action="index" resxfile="service" type="ui">
     <js_files>
-      <js_file use="head" value="Web/js/app/controllers/resource_manager.js"/>
+      <js_file use="head" value="Web/js/app/controllers/service_manager.js"/>
       <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js"/>  
     </js_files>
     <css_files>
@@ -231,9 +231,9 @@
       <css_file value="Web/css/app/tabs.css"/>
     </css_files>
   </route><!-- resource/index -->
-    <route url="resource/listAll" module="Resource" action="listAll" resxfile="resource" type="ui">
+    <route url="service/listAll" module="Service" action="listAll" resxfile="service" type="ui">
     <js_files>
-      <js_file use="head" value="Web/js/app/controllers/resource_manager.js"/>
+      <js_file use="head" value="Web/js/app/controllers/service_manager.js"/>
     </js_files>
     <css_files>
       <css_file use="project" />
@@ -243,9 +243,9 @@
       <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true"/>
     </php_modules>
   </route><!-- resource/listAll -->
-  <route url="resource/showForm" module="Resource" action="showForm" resxfile="resource" type="ui">
+  <route url="service/showForm" module="Service" action="showForm" resxfile="service" type="ui">
     <js_files>
-      <js_file use="head" value="Web/js/app/controllers/resource_manager.js"/>
+      <js_file use="head" value="Web/js/app/controllers/service_manager.js"/>
     </js_files>
     <css_files>
         <css_file use="project" />
@@ -257,8 +257,8 @@
     </css_files>
     <php_modules>
 <!--      <php_module key="resource_tabs_open" file_name="resource_tabs_open.php"/>   -->
-      <php_module key="resource_form" file_name="resource_form.php" shared="true"/>
-      <php_module key="resource_buttons" file_name="resource_buttons.php"/>
+      <php_module key="service_form" file_name="service_form.php" shared="true"/>
+      <php_module key="service_buttons" file_name="service_buttons.php"/>
 <!--      <php_module key="resource_tabs_close" file_name="resource_tabs_close.php"/>-->
     </php_modules>
   </route>
@@ -330,6 +330,7 @@
   <route url="project/getlist" module="Project" action="getList" resxfile="project" type="ws" />
   <route url="project/getItem" module="Project" action="getItem" resxfile="project" type="ws" />
   <route url="project/updateItems" module="Project" action="updateItems" resxfile="project" type="ws" />
+  <route url="project/setCurrentProject" module="Project" action="setCurrentProject" resxfile="project" type="ws" />
   
   <route url="facility/add" module="Facility" action="add" resxfile="facility" type="ws" />
   <route url="facility/edit" module="Facility" action="edit" resxfile="facility" type="ws" />
@@ -364,12 +365,12 @@
   <route url="task/getItem" module="Task" action="getItem" resxfile="task" type="ws" />
   <route url="task/updateItems" module="Task" action="updateItems" resxfile="task" type="ws" />
   
-  <route url="resource/add" module="Resource" action="add" resxfile="resource" type="ws" />
-  <route url="resource/edit" module="Resource" action="edit" resxfile="resource" type="ws" />
-  <route url="resource/delete" module="Resource" action="delete" resxfile="resource" type="ws" />
-  <route url="resource/getlist" module="Resource" action="getList" resxfile="resource" type="ws" />
-  <route url="resource/getItem" module="Resource" action="getItem" resxfile="resource" type="ws" />
-  <route url="resource/updateItems" module="Resource" action="updateItems" resxfile="resource" type="ws" />
+  <route url="service/add" module="Service" action="add" resxfile="service" type="ws" />
+  <route url="service/edit" module="Service" action="edit" resxfile="service" type="ws" />
+  <route url="service/delete" module="Service" action="delete" resxfile="service" type="ws" />
+  <route url="service/getlist" module="Service" action="getList" resxfile="service" type="ws" />
+  <route url="service/getItem" module="Service" action="getItem" resxfile="service" type="ws" />
+  <route url="service/updateItems" module="Service" action="updateItems" resxfile="service" type="ws" />
   
   <route url="pm/add" module="Pm" action="add" resxfile="pm" type="ws" />
   <route url="pm/edit" module="Pm" action="edit" resxfile="pm" type="ws" />

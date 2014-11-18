@@ -23,7 +23,7 @@ $(document).ready(function() {
 
   //************************************************//
   // Selection of projects
-  var project_ids = "";
+  var project_ids = [];
   $("#active-list, #inactive-list").selectable({
     stop: function() {
       var tmpSelection = "";
@@ -33,21 +33,26 @@ $(document).ready(function() {
       tmpSelection = utils.removeLastChar(tmpSelection);
       if (tmpSelection.length > 0) {
         project_ids = tmpSelection;
-        //Show the button to appropriate button
-        $(".from-"+$(this).attr("id")).show();
+        project_manager.hideSetCurrentProject(project_ids.length === 1);
+        $(".from-" + $(this).attr("id")).show();
       } else {
         project_ids = [];
-        $(".from-"+$(this).attr("id")).hide();
+        project_manager.hideSetCurrentProject(project_ids.length === 1);
+        $(".from-" + $(this).attr("id")).hide();
       }
     }
   });
   $(".from-inactive-list").click(function() {
-    project_manager.updateProjects("active",project_ids);
+    project_manager.updateProjects("active", project_ids);
   });
   $(".from-active-list").click(function() {
-    project_manager.updateProjects("inactive",project_ids);
+    project_manager.updateProjects("inactive", project_ids);
   });
+
   //************************************************//
+  $(".btn_set_current_project").click(function() {
+    project_manager.setCurrentProject(project_ids[0]);
+  });
 
 
   $("#btn_add_project").click(function() {
@@ -108,11 +113,11 @@ $(document).ready(function() {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message.replace("client", "client (ID:" + reply.dataId + ")"));
+        toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
 
         var facility_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
         if (facility_data.facility_name !== undefined && facility_data.facility_address !== undefined) {
-         facility_data["project_id"] = reply.dataId;
+          facility_data["project_id"] = reply.dataId;
           facility_manager.send("facility/" + action, facility_data);
         }
         var client_data = utils.retrieveInputs("client_form", []);
@@ -126,7 +131,7 @@ $(document).ready(function() {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message.replace("client", "client (ID:" + reply.dataId + ")"));
+        toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
 
         var post_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
         if (post_data.facility_name !== undefined && post_data.facility_address !== undefined) {
@@ -232,5 +237,24 @@ $(document).ready(function() {
       }
     });
   };
+  project_manager.setCurrentProject = function(projectId) {
+    datacx.post("project/setCurrentProject", {"project_id": projectId}).then(function(reply) {
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+        return undefined;
+      } else {//success
+        toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
+      }
+    });
+  };
+  project_manager.hideSetCurrentProject = function(showButton) {
+    if (!showButton) {
+      $(".btn_set_current_project").hide();
+    } else {
+      $(".btn_set_current_project").show();
+    }
+
+  };
+
 
 }(window.project_manager = window.project_manager || {}));

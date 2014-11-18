@@ -5,19 +5,19 @@
   <resource key="location_h1">Welcome to Field Work Manager, for Location managers</resource>
   <resource key="location_welcome_message">Please, select a project to view or add and edit its locations.</resource>
   
-  <resource key="message_error_add">Error inserting the location. Check logs.</resource>
+  <resource key="message_error_add">Error inserting the location.</resource>
   <resource key="message_success_add">The location has been inserted.</resource>
-  <resource key="message_error_getlist">Error reading the locations. Check logs.</resource>
+  <resource key="message_error_getlist">Error reading the locations.</resource>
   <resource key="message_success_getlist">The locations have been read.</resource>
-  <resource key="message_error_getItem">Error reading the location. Check logs.</resource>
+  <resource key="message_error_getItem">Error reading the location.</resource>
   <resource key="message_success_getItem">The location has been read.</resource>
-  <resource key="message_error_edit">Error editing the location. Check logs.</resource>
+  <resource key="message_error_edit">Error editing the location.</resource>
   <resource key="message_success_edit">The location has been edited.</resource>
-  <resource key="message_error_delete">Error deleting the location. Check logs.</resource>
+  <resource key="message_error_delete">Error deleting the location.</resource>
   <resource key="message_success_delete">The location has been deleted.</resource>
-  <resource key="message_error_listAll">Error listing all locaitons. Check logs.</resource>
+  <resource key="message_error_listAll">Error listing all locaitons.</resource>
   <resource key="message_success_listAll">The locations have been read.</resource>
-  <resource key="message_error_updateItems">Error editing the locations. Check logs.</resource>
+  <resource key="message_error_updateItems">Error editing the locations.</resource>
   <resource key="message_success_updateItems">The locations have been edited</resource>
   
   <resource key="location_legend_add">Add new location</resource>

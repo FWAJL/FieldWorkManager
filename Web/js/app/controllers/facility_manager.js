@@ -40,7 +40,7 @@ $(document).ready(function() {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message.replace("client", "client (ID:" + reply.dataId + ")"));
+        toastr.success(reply.message.replace("facility", "facility (ID:" + reply.dataId + ")"));
         //utils.redirect("project/listAll");
       }
     });
