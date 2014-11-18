@@ -33,7 +33,7 @@ $(document).ready(function() {
       tmpSelection = utils.removeLastChar(tmpSelection);
       if (tmpSelection.length > 0) {
         project_ids = tmpSelection;
-        project_manager.hideSetCurrentProject(project_ids.length === 1);
+        project_manager.hideSetCurrentProject(project_ids.split(",").length === 1);
         $(".from-" + $(this).attr("id")).show();
       } else {
         project_ids = [];
@@ -51,7 +51,7 @@ $(document).ready(function() {
 
   //************************************************//
   $(".btn_set_current_project").click(function() {
-    project_manager.setCurrentProject(project_ids[0]);
+    project_manager.setCurrentProject(project_ids.split(",")[0]);
   });
 
 
