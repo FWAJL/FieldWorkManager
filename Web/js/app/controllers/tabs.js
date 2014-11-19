@@ -9,11 +9,11 @@ $(document).ready(function() {
   } 
   else if (utils.getPathPart("location")) {
     _default = "location_info";
-  }// else if (utils.getPathPart("technician")) {
-//    _default = "technician_info";
-//  } else if (utils.getPathPart("resource")) {
-//    _default = "resource_info";
-//  } 
+  } else if (utils.getPathPart("technician")) {
+    _default = "technician_info";
+  } else if (utils.getPathPart("resource")) {
+    _default = "resource_info";
+  } 
   
   $(".data-form").hide();
   $("#" + _default).show();
