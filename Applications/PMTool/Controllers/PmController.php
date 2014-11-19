@@ -162,37 +162,7 @@ public function executeGetItem(\Library\HttpRequest $rq) {
         "step" => ($pm_selected !== NULL) ? "success" : "error"
     ));
   }
-  
-    public function executeUpdateItems(\Library\HttpRequest $rq) {
-    $result = $this->InitResponseWS(); // Init result
-
-    $rows_affected = 0;
-    //Get the pm objects from ids received
-    $pm_ids = str_getcsv($this->dataPost["pm_ids"], ',');
-    $pms = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::AllUsers);
-    $matchedElements = $this->FindObjectsFromIds(
-            array(
-                "filter" => "pm_id",
-                "ids" => $pm_ids,
-                "objects" => $pms)
-    );
-
-    //Update the pm objects in DB and get result (number of rows affected)
-    //$this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::AllUsers);
-    foreach ($matchedElements as $pm) {
-      $pm->setPm_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
-      $manager = $this->managers->getManagerOf($this->module);
-      $rows_affected += $manager->edit($pm) ? 1 : 0;
-    }
-
-    $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Pm,
-        "resx_key" => $this->action(),
-        "step" => ($rows_affected === count($pm_ids)) ? "success" : "error"
-    ));
-  }
-  
+    
   /**
    * Find a pm from an id
    * 
