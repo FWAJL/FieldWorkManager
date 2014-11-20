@@ -57,10 +57,10 @@ $(document).ready(function() {
 
   $("#btn_add_project").click(function() {
     var post_data = {};
-    post_data["project"] = utils.retrieveInputs("project_form", ["project_name"]);
+    post_data["project"] = utils.retrieveInputs("project_form", ["project_name","project_number"]);
     post_data["facility"] = utils.retrieveInputs("facility_form", ["facility_name"]);
     post_data["client"] = utils.retrieveInputs();
-    if (post_data["project"].project_name !== undefined &&
+    if (post_data["project"].project_name !== undefined && post_data["project"].project_number !== undefined &&
             post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
       project_manager.add(post_data, "project", "add");
     }
@@ -123,6 +123,7 @@ $(document).ready(function() {
         var client_data = utils.retrieveInputs("client_form", []);
         client_data["project_id"] = reply.dataId;
         client_manager.send("client/" + action, client_data);
+        project_manager.fillFormWithRandomData();
       }
     });
   };
@@ -215,9 +216,9 @@ $(document).ready(function() {
 
   project_manager.fillFormWithRandomData = function() {
     utils.clearForm();
-    var number = Math.floor((Math.random() * 100) + 1);
+    var number = Math.floor((Math.random() * 1000) + 1);
     $(".project_form input[name=\"project_name\"]").val("Project " + number);
-    $(".project_form .add-new-item input[name=\"project_num\"]").val("n-" + number);
+    $(".project_form .add-new-item input[name=\"project_number\"]").val("n-" + number);
     $(".project_form .add-new-item input[name=\"project_desc\"]").val("Description " + number);
     $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
     $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");

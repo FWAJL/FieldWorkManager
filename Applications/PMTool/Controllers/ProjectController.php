@@ -272,8 +272,6 @@ class ProjectController extends \Library\BaseController {
           "objects" => $projects)
     );
 
-    //Update the project objects in DB and get result (number of rows affected)
-    //$this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
     foreach ($matchedElements as $project) {
       $project->setProject_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
       $manager = $this->managers->getManagerOf($this->module);
