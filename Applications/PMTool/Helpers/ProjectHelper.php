@@ -68,30 +68,11 @@ class ProjectHelper {
             $user->getAttribute(\Library\Enums\SessionKeys::CurrentProject) : FALSE;
   }
 
-  public static function ManageProjectsSession(\Library\User $user, \Applications\PMTool\Models\Dao\Project $project) {
-//Check if a session item exists and add to the existing
-    if ($user->keyExistInSession(\Library\Enums\SessionKeys::UserSessionProjects)) {
-      $ExistingProjectsSession = $user->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
-//only add if not already in array
-      if (!array_key_exists($project->project_id(), $ExistingProjectsSession)) {
-        $ExistingProjectsSession[\Library\Enums\SessionKeys::ProjectKey . $project->project_id()] = CommonHelper::MakeSessionProject($project);
-      }
-      $user->setAttribute(\Library\Enums\SessionKeys::UserSessionProjects, $ExistingProjectsSession);
-      return $ExistingProjectsSession;
-    } else {
-//If not, init a new array
-      $ProjectsSession = array();
-      $ProjectsSession[\Library\Enums\SessionKeys::ProjectKey . $project->project_id()] = CommonHelper::MakeSessionProject($project);
-      $user->setAttribute(\Library\Enums\SessionKeys::UserSessionProjects, $ProjectsSession);
-      return $ProjectsSession;
-    }
-  }
-
   public static function MakeSessionProject(\Applications\PMTool\Models\Dao\Project $project) {
     $arrayToReturn = array(
         \Library\Enums\SessionKeys::ProjectObject => $project,
-        \Library\Enums\SessionKeys::FacilityObject => NULL,
-        \Library\Enums\SessionKeys::ClientObject => NULL,
+        \Library\Enums\SessionKeys::FacilityObject => new \Applications\PMTool\Models\Dao\Facility(),
+        \Library\Enums\SessionKeys::ClientObject => new \Applications\PMTool\Models\Dao\Client(),
         \Library\Enums\SessionKeys::ProjectLocations => array(),
         \Library\Enums\SessionKeys::ProjectTasks => array(),
             //Add a line for data linked to a project, e.g. results/reports?
@@ -101,16 +82,18 @@ class ProjectHelper {
 
   public static function RedirectAfterProjectSelection(\Library\Application $app, $project_id) {
     $redirect = FALSE;
-    
+
     if ($app->user()->keyExistInSession(\Library\Enums\SessionKeys::CurrentProject)) {
       return TRUE;
     }
-    
+
     if ($project_id === 0) {
       return FALSE;
     } else {
       $project = self::GetAndStoreCurrentProject($app->user(), $project_id);
-      if ($project == !NULL) { return TRUE; }
+      if ($project == !NULL) {
+        return TRUE;
+      }
     }
   }
 
@@ -134,6 +117,15 @@ class ProjectHelper {
       $ProjectsSession[\Library\Enums\SessionKeys::ProjectKey . $project->project_id()] = self::MakeSessionProject($project);
     }
 
+    $ProjectsSession = self::StoreFacilities($ProjectsSession, $lists);
+    $ProjectsSession = self::StoreClients($ProjectsSession, $lists);
+    $ProjectsSession = self::StoreTasks($ProjectsSession, $lists);
+    
+    self::SetSessionProjects($user, $ProjectsSession);
+    return $ProjectsSession;
+  }
+
+  private static function StoreFacilities($ProjectsSession, $lists) {
     foreach ($lists[\Library\Enums\SessionKeys::UserProjectFacilityList] as $facility) {
       foreach ($ProjectsSession as $sessionProject) {
         $project_id = intval($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
@@ -143,7 +135,9 @@ class ProjectHelper {
         }
       }
     }
-
+    return $ProjectsSession;
+  }
+  private static function StoreClients($ProjectsSession, $lists) {
     foreach ($lists[\Library\Enums\SessionKeys::UserProjectClientList] as $client) {
       foreach ($ProjectsSession as $sessionProject) {
         $project_id = intval($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
@@ -153,7 +147,10 @@ class ProjectHelper {
         }
       }
     }
-    self::SetSessionProjects($user, $ProjectsSession);
+    return $ProjectsSession;
+  }
+  private static function StoreTasks($ProjectsSession, $lists) {
+    //TODO: Implement the Dal method is done
     return $ProjectsSession;
   }
 
