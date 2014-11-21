@@ -42,7 +42,7 @@ class ClientDal extends \Library\DAL\BaseManager {
    * @return array of \Applications\PMTool\Models\Dao\Client
    */
   public function selectMany($client) {
-    $sql = 'SELECT * FROM `client` c inner join `project` p on c.project_id = p.project_id';
+    $sql = 'SELECT c.* FROM `client` c inner join `project` p on c.project_id = p.project_id';
     $sql .= ' where p.`pm_id` = \'' . $client->pm_id() . '\';'; //AND `active` = 1  AND `visible` = 1;';
     $query = $this->dao->query($sql);
     $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Client');

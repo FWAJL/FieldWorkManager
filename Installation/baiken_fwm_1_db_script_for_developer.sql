@@ -45,8 +45,7 @@ CREATE TABLE IF NOT EXISTS `project` (
     `pm_id` int(11) NOT NULL COMMENT 'Foreign key => project_manager',
     PRIMARY KEY (`project_id`),
     CONSTRAINT `fk_project_pm` FOREIGN KEY (`pm_id`)
-        REFERENCES `project_manager` (`pm_id`),
-    UNIQUE INDEX `project_number_UNIQUE` (`project_number` ASC)
+        REFERENCES `project_manager` (`pm_id`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Table structure for table `technician`
@@ -212,15 +211,13 @@ CREATE TABLE `task_coc_info` (
     `lab_instructions` varchar(1000) COLLATE utf8_unicode_ci NOT NULL,
     `lab_sample_type` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
     `lab_sample_tat` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-    `project_number` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-    `results_to_name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
-    `results_to_company` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
-    `results_to_address` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-    `results_to_phone` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
-    `results_to_email` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
+    `project_number` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Is project.project_number by DEFAULT but deverges from it if the PM wants to change it',
+    `results_to_name` varchar(25) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Is pm.pm_name by DEFAULT but can changed',
+    `results_to_company` varchar(25) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Is pm.pm_comp_name by DEFAULT but can changed',
+    `results_to_address` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Is pm.pm_address by DEFAULT but can changed',
+    `results_to_phone` varchar(25) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Is pm.pm_phone by DEFAULT but can changed',
+    `results_to_email` varchar(35) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Is pm.pm_email by DEFAULT but can changed',
     PRIMARY KEY (`task_coc_id`),
-    CONSTRAINT `fk_tci_project` FOREIGN KEY (`project_number`)
-        REFERENCES `project` (`project_number`),
     CONSTRAINT `fk_tci_task` FOREIGN KEY (`task_id`)
         REFERENCES `task` (`task_id`),
     CONSTRAINT `fk_tci_service` FOREIGN KEY (`service_id`)
