@@ -115,20 +115,22 @@ class ProjectHelper {
     $ProjectsSession = array();
     foreach ($lists[\Library\Enums\SessionKeys::UserProjects] as $project) {
       $ProjectsSession[\Library\Enums\SessionKeys::ProjectKey . $project->project_id()] = self::MakeSessionProject($project);
+      UserHelper::AddAProjectIdToList($user, $project->project_id());
     }
+
 
     foreach ($ProjectsSession as $sessionProject) {
       $project_id = intval($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
-      
+
       $facility = CommonHelper::FindObject($project_id, "project_id", $lists[\Library\Enums\SessionKeys::UserProjectFacilityList]);
       $sessionProject[\Library\Enums\SessionKeys::FacilityObject] = $facility;
-      
+
       $client = CommonHelper::FindObject($project_id, "project_id", $lists[\Library\Enums\SessionKeys::UserProjectClientList]);
-      $sessionProject[\Library\Enums\SessionKeys::ClientObject] =  $client;
-      
+      $sessionProject[\Library\Enums\SessionKeys::ClientObject] = $client;
+
       $ProjectsSession[\Library\Enums\SessionKeys::ProjectKey . $project_id] = $sessionProject;
     }
-    
+
     self::SetSessionProjects($user, $ProjectsSession);
     return $ProjectsSession;
   }
