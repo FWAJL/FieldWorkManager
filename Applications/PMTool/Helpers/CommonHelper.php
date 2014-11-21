@@ -75,5 +75,16 @@ class CommonHelper {
     }
     return $object;
   }
+  
+  public static function FindObject($id, $prop_name, $list_of_obj) {
+    $match = FALSE;
+    foreach ($list_of_obj as $obj) {
+      if (intval($obj->$prop_name()) === $id) {
+        $match = $obj;
+        break;
+      }
+    }
+    return $match;
+  }
 }
 

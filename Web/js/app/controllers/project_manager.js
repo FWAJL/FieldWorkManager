@@ -57,10 +57,10 @@ $(document).ready(function() {
 
   $("#btn_add_project").click(function() {
     var post_data = {};
-    post_data["project"] = utils.retrieveInputs("project_form", ["project_name","project_number"]);
+    post_data["project"] = utils.retrieveInputs("project_form", ["project_name"]);
     post_data["facility"] = utils.retrieveInputs("facility_form", ["facility_name"]);
     post_data["client"] = utils.retrieveInputs();
-    if (post_data["project"].project_name !== undefined && post_data["project"].project_number !== undefined &&
+    if (post_data["project"].project_name !== undefined &&
             post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
       project_manager.add(post_data, "project", "add");
     }

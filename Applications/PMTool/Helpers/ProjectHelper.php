@@ -71,8 +71,8 @@ class ProjectHelper {
   public static function MakeSessionProject(\Applications\PMTool\Models\Dao\Project $project) {
     $arrayToReturn = array(
         \Library\Enums\SessionKeys::ProjectObject => $project,
-        \Library\Enums\SessionKeys::FacilityObject => new \Applications\PMTool\Models\Dao\Facility(),
-        \Library\Enums\SessionKeys::ClientObject => new \Applications\PMTool\Models\Dao\Client(),
+        \Library\Enums\SessionKeys::FacilityObject => NULL,
+        \Library\Enums\SessionKeys::ClientObject => NULL,
         \Library\Enums\SessionKeys::ProjectLocations => array(),
         \Library\Enums\SessionKeys::ProjectTasks => array(),
             //Add a line for data linked to a project, e.g. results/reports?
@@ -117,40 +117,19 @@ class ProjectHelper {
       $ProjectsSession[\Library\Enums\SessionKeys::ProjectKey . $project->project_id()] = self::MakeSessionProject($project);
     }
 
-    $ProjectsSession = self::StoreFacilities($ProjectsSession, $lists);
-    $ProjectsSession = self::StoreClients($ProjectsSession, $lists);
-    $ProjectsSession = self::StoreTasks($ProjectsSession, $lists);
+    foreach ($ProjectsSession as $sessionProject) {
+      $project_id = intval($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
+      
+      $facility = CommonHelper::FindObject($project_id, "project_id", $lists[\Library\Enums\SessionKeys::UserProjectFacilityList]);
+      $sessionProject[\Library\Enums\SessionKeys::FacilityObject] = $facility;
+      
+      $client = CommonHelper::FindObject($project_id, "project_id", $lists[\Library\Enums\SessionKeys::UserProjectClientList]);
+      $sessionProject[\Library\Enums\SessionKeys::ClientObject] =  $client;
+      
+      $ProjectsSession[\Library\Enums\SessionKeys::ProjectKey . $project_id] = $sessionProject;
+    }
     
     self::SetSessionProjects($user, $ProjectsSession);
-    return $ProjectsSession;
-  }
-
-  private static function StoreFacilities($ProjectsSession, $lists) {
-    foreach ($lists[\Library\Enums\SessionKeys::UserProjectFacilityList] as $facility) {
-      foreach ($ProjectsSession as $sessionProject) {
-        $project_id = intval($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
-        if (intval($facility->project_id()) === $project_id) {
-          $ProjectsSession[\Library\Enums\SessionKeys::ProjectKey . $project_id][\Library\Enums\SessionKeys::FacilityObject] = $facility;
-          break;
-        }
-      }
-    }
-    return $ProjectsSession;
-  }
-  private static function StoreClients($ProjectsSession, $lists) {
-    foreach ($lists[\Library\Enums\SessionKeys::UserProjectClientList] as $client) {
-      foreach ($ProjectsSession as $sessionProject) {
-        $project_id = intval($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
-        if (intval($client->project_id()) === $project_id) {
-          $ProjectsSession[\Library\Enums\SessionKeys::ProjectKey . $project_id][\Library\Enums\SessionKeys::ClientObject] = $client;
-          break;
-        }
-      }
-    }
-    return $ProjectsSession;
-  }
-  private static function StoreTasks($ProjectsSession, $lists) {
-    //TODO: Implement the Dal method is done
     return $ProjectsSession;
   }
 
