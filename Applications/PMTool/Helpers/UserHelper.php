@@ -117,17 +117,18 @@ class UserHelper {
     $sessionPms = $user->getAttribute(\Library\Enums\SessionKeys::SessionPms);
     $pm_id = $sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_id();
     if (array_key_exists(\Library\Enums\SessionKeys::PmKey . $pm_id, $sessionPms)) {
-      $userSessionPms[\Library\Enums\SessionKeys::PmKey . $pm_id] = $sessionPm;
+      $sessionPms[\Library\Enums\SessionKeys::PmKey . $pm_id] = $sessionPm;
       $user->setAttribute(\Library\Enums\SessionKeys::CurrentPm, $sessionPm);
       self::SetSessionPms($user, $sessionPms);
     }
   }
 
-  public static function StoreSessionPm($user, \Applications\PMTool\Models\Dao\Project_manager $pm) {
+  public static function StoreSessionPm($user, \Applications\PMTool\Models\Dao\Project_manager $pm, $setCurrentPm) {
     $PmsSession = array();
     $PmsSession[\Library\Enums\SessionKeys::PmKey . $pm->pm_id()] = self::MakeSessionPm($pm);
 
     self::SetSessionPms($user, $PmsSession);
+    if ($setCurrentPm) { self::GetAndStoreCurrentPm($user, $pm->pm_id()); }
     return $PmsSession;
   }
 
