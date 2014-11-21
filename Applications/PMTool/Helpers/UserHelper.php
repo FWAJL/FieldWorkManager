@@ -28,10 +28,17 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
 class UserHelper {
+
   public static function AddSessionPm($user, \Applications\PMTool\Models\Dao\Pm_manager $pm) {
     $sessionPms = $user->getAttribute(\Library\Enums\SessionKeys::SessionPms);
     $sessionPms[\Library\Enums\SessionKeys::PmKey . $pm->pm_id()] = self::MakeSessionPm($pm);
     self::SetSessionPms($user, $sessionPms);
+  }
+
+  public static function AddAProjectIdToList(\Library\User $user, $project_id) {
+    $pmSession = self::GetSessionPm($user, 0);
+    array_push($pmSession[\Library\Enums\SessionKeys::PmProjectIds], intval($project_id));
+    self::SetSessionPm($user, $pmSession);
   }
 
   public static function GetAndStoreCurrentPm(\Library\User $user, $pm_id) {
@@ -53,7 +60,13 @@ class UserHelper {
   public static function GetSessionPm(\Library\User $user, $pm_id) {
     //retrieve the user session pm from pm_id
     $userSessionPms = self::GetSessionPms($user);
-    $key = \Library\Enums\SessionKeys::PmKey . $pm_id;
+    $key = \Library\Enums\SessionKeys::PmKey;
+    if ($pm_id !== 0) {
+      $key .= $pm_id;
+    } else {
+      $pm = $user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
+      $key .= $pm[0]->pm_id();
+    }
     $user->setAttribute(\Library\Enums\SessionKeys::CurrentPm, $userSessionPms[$key]);
     return $userSessionPms[$key];
   }
@@ -67,10 +80,10 @@ class UserHelper {
             $user->getAttribute(\Library\Enums\SessionKeys::CurrentPm) : FALSE;
   }
 
-  public static function MakeSessionPm(\Applications\PMTool\Models\Dao\Pm_manager $pm) {
+  public static function MakeSessionPm(\Applications\PMTool\Models\Dao\Project_manager $pm) {
     $sessionPm = array(
         \Library\Enums\SessionKeys::PmObject => $pm,
-        \Library\Enums\SessionKeys::PmPmIds => array(),
+        \Library\Enums\SessionKeys::PmProjectIds => array(),
         \Library\Enums\SessionKeys::PmTechnicians => array(),
         \Library\Enums\SessionKeys::PmServices => array(),
         \Library\Enums\SessionKeys::PmFieldAnalytes => array(),
@@ -106,44 +119,15 @@ class UserHelper {
     if (array_key_exists(\Library\Enums\SessionKeys::PmKey . $pm_id, $sessionPms)) {
       $userSessionPms[\Library\Enums\SessionKeys::PmKey . $pm_id] = $sessionPm;
       $user->setAttribute(\Library\Enums\SessionKeys::CurrentPm, $sessionPm);
-      self::SetSessionPms($user,$sessionPms);
+      self::SetSessionPms($user, $sessionPms);
     }
   }
 
-  public static function StoreSessionPms($user, $lists) {
+  public static function StoreSessionPm($user, \Applications\PMTool\Models\Dao\Project_manager $pm) {
     $PmsSession = array();
-    foreach ($lists[\Library\Enums\SessionKeys::UserPms] as $pm) {
-      $PmsSession[\Library\Enums\SessionKeys::PmKey . $pm->pm_id()] = self::MakeSessionPm($pm);
-    }
+    $PmsSession[\Library\Enums\SessionKeys::PmKey . $pm->pm_id()] = self::MakeSessionPm($pm);
 
-    $PmsSession = self::StoreProjectIds($PmsSession, $lists);
-    $PmsSession = self::StoreTechnicians($PmsSession, $lists);
-    $PmsSession = self::StoreServiceProviders($PmsSession, $lists);
-    $PmsSession = self::StoreFieldAnalytes($PmsSession, $lists);
-    $PmsSession = self::StoreLabAnalytes($PmsSession, $lists);
-    
     self::SetSessionPms($user, $PmsSession);
-    return $PmsSession;
-  }
-
-  private static function StoreProjectIds($PmsSession, $lists) {
-
-    return $PmsSession;
-  }
-  private static function StoreTechnicians($PmsSession, $lists) {
-
-    return $PmsSession;
-  }
-  private static function StoreServiceProviders($PmsSession, $lists) {
-    //TODO: Implement the Dal method is done
-    return $PmsSession;
-  }
-  private static function StoreFieldAnalytes($PmsSession, $lists) {
-    //TODO: Implement the Dal method is done
-    return $PmsSession;
-  }
-  private static function StoreLabAnalytes($PmsSession, $lists) {
-    //TODO: Implement the Dal method is done
     return $PmsSession;
   }
 
