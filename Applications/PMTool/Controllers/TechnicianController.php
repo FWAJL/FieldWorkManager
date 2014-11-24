@@ -11,7 +11,7 @@ class TechnicianController extends \Library\BaseController {
     //Get list of technicians and store in session
     $lists = $this->_GetAndStoreTechniciansInSession($rq);
 
-    if (count($lists[\Library\Enums\SessionKeys::UserTechnicians]) > 0) {
+    if (count($lists[\Library\Enums\SessionKeys::UserTechnicianList]) > 0) {
       header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TechnicianListAll);
     } else {
       header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TechnicianShowForm . "?mode=add&test=true");
@@ -29,7 +29,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     $this->_GetAndStoreTechniciansInSession($rq);
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserTechnicians),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserTechnicianList),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
@@ -56,7 +56,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     $result["dataId"] = $manager->add($technician);
 
     //Clear the technician list from session for the connect PM
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicians);
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
 
     $this->SendResponseWS(
@@ -81,7 +81,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     $result_insert = $manager->edit($technician);
     
     //Clear the technician list from session for the connect PM
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicians);
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
 
     $this->SendResponseWS(
@@ -105,7 +105,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
       $manager = $this->managers->getManagerOf($this->module());
       $db_result = $manager->delete($technician_id);
       //Clear the technician from session for the connect PM
-      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicians);
+      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
       $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
 //      \Applications\PMTool\Helpers\CommonHelper::UnsetUserSessionTechnician($this->app()->user(), $technician_id);
     }
@@ -130,14 +130,14 @@ public function executeShowForm(\Library\HttpRequest $rq) {
 
     //Load interface to query the database for technicians
     $manager = $this->managers->getManagerOf($this->module);
-    $list[\Library\Enums\SessionKeys::UserTechnicians] = $manager->selectMany($technician);
+    $list[\Library\Enums\SessionKeys::UserTechnicianList] = $manager->selectMany($technician);
 
     $result["lists"] = $list;
     if ($isNotAjaxCall) {
       return $list;
     } else {
       $step_result =
-             $step_result = $result[\Library\Enums\SessionKeys::UserTechnicians] !== NULL ? "success" : "error";
+             $step_result = $result[\Library\Enums\SessionKeys::UserTechnicianList] !== NULL ? "success" : "error";
       $this->SendResponseWS(
               $result, array(
           "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
@@ -169,7 +169,7 @@ public function executeGetItem(\Library\HttpRequest $rq) {
     $rows_affected = 0;
     //Get the technician objects from ids received
     $technician_ids = str_getcsv($this->dataPost["technician_ids"], ',');
-    $technicians = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserTechnicians);
+    $technicians = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
     $matchedElements = $this->FindObjectsFromIds(
             array(
                 "filter" => "technician_id",
@@ -178,7 +178,7 @@ public function executeGetItem(\Library\HttpRequest $rq) {
     );
 
     //Update the technician objects in DB and get result (number of rows affected)
-    //$this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicians);
+    //$this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
     foreach ($matchedElements as $technician) {
       $technician->setTechnician_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
       $manager = $this->managers->getManagerOf($this->module);
@@ -202,8 +202,8 @@ public function executeGetItem(\Library\HttpRequest $rq) {
   private function _GetTechnicianFromSession($technician_id) {
     $technicians = array();
     $technicianMatch = NULL;
-    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserTechnicians)) {
-      $technicians = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserTechnicians);
+    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserTechnicianList)) {
+      $technicians = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
     }
     foreach ($technicians as $technician) {
       if (intval($technician->technician_id()) === $technician_id) {
@@ -222,8 +222,8 @@ public function executeGetItem(\Library\HttpRequest $rq) {
    */
   private function _CheckIfPmHasTechnicians(\Applications\PMTool\Models\Dao\Technician $pm) {
 
-    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserTechnicians)) {
-      $technicians = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserTechnicians);
+    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserTechnicianList)) {
+      $technicians = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
       return count($technicians) > 0 ? TRUE : FALSE;
     }
     $manager = $this->managers->getManagerOf($this->module);
@@ -254,15 +254,15 @@ public function executeGetItem(\Library\HttpRequest $rq) {
    */
   private function _GetAndStoreTechniciansInSession($rq) {
     $lists = array();
-    if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserTechnicians)) {
+    if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserTechnicianList)) {
 
       $lists = $this->executeGetList($rq, TRUE);
 
       $this->app()->user->setAttribute(
-              \Library\Enums\SessionKeys::UserTechnicians, $lists[\Library\Enums\SessionKeys::UserTechnicians]
+              \Library\Enums\SessionKeys::UserTechnicianList, $lists[\Library\Enums\SessionKeys::UserTechnicianList]
       );
     } else {
-      $lists[\Library\Enums\SessionKeys::UserTechnicians] = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserTechnicians);
+      $lists[\Library\Enums\SessionKeys::UserTechnicianList] = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
     }
     return $lists;
   }
