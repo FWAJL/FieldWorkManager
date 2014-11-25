@@ -35,8 +35,8 @@
    <main_menu name="task" active="true">
     <links>
       <header href="task" resourcekey="header_task" />
-      <submenu href="task/listAll" id="task_list_all" resourcekey="task_list" active="true"/>
-      <submenu href="task/showForm?mode=add&amp;test=true" id="btn-add-task-manual" resourcekey="task_add" active="true"/>
+      <submenu href="task?target=listAll" id="task_list_all" resourcekey="task_list" active="true"/>
+      <submenu href="task?target=showForm" id="btn-add-task-manual" resourcekey="task_add" active="true"/>
     </links>
   </main_menu><!-- task -->
 <!--  <main_menu name="field_form" active="false">
