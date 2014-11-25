@@ -8,10 +8,20 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class TechnicianController extends \Library\BaseController {
     
   public function executeIndex(\Library\HttpRequest $rq) {
-    //Get list of technicians and store in session
-    $lists = $this->_GetAndStoreTechniciansInSession($rq);
+    $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
+    $toList = FALSE;
+    if ($rq->getData("target") !== "listAll") {
+      //Continue
+    }
+    elseif (count($pm[\Library\Enums\SessionKeys::PmTechnicians]) > 0) {
+      $toList = TRUE;
+    } else {
+      $this->executeGetList($rq, FALSE, $pm);
+      $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
+      $toList = count($pm[\Library\Enums\SessionKeys::PmTechnicians]) > 0;
+    }
 
-    if (count($lists[\Library\Enums\SessionKeys::UserTechnicianList]) > 0) {
+    if ($toList && $rq->getData("target") === "listAll") {
       header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TechnicianListAll);
       } else {
       header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TechnicianShowForm . "?mode=add&test=true");
@@ -26,10 +36,10 @@ public function executeShowForm(\Library\HttpRequest $rq) {
   
   public function executeListAll(\Library\HttpRequest $rq) {
     //Get list of technicians stored in session
-    $this->_GetAndStoreTechniciansInSession($rq);
+    $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserTechnicianList),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $pm[\Library\Enums\SessionKeys::PmTechnicians],
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
@@ -46,18 +56,19 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS();
 
     //Init PDO
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
-    $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost());
+    $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
+    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
+    $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Technician());
     $result["dataIn"] = $technician;
 
     //Load interface to query the database
     $manager = $this->managers->getManagerOf($this->module);
     $result["dataId"] = $manager->add($technician);
-
-    //Clear the technician list from session for the connect PM
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
+    if ($pm !== NULL) {
+      $technician->setTechnician_id($result["dataId"]);
+      array_push($pm[\Library\Enums\SessionKeys::PmTechnicians], $technician);
+      \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
+    }
 
     $this->SendResponseWS(
             $result, array(
@@ -118,24 +129,24 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     ));
   }
   
-  public function executeGetList(\Library\HttpRequest $rq, $isNotAjaxCall = FALSE) {
+  public function executeGetList(\Library\HttpRequest $rq, $isNotAjaxCall = FALSE, $pm = NULL) {
     // Init result
     $result = $this->InitResponseWS();
 
     //Init PDO
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
-    $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost());
+    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
+    $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Technician());
     $result["data"] = $technician;
 
     //Load interface to query the database for technicians
     $manager = $this->managers->getManagerOf($this->module);
-    $list[\Library\Enums\SessionKeys::UserTechnicianList] = $manager->selectMany($technician);
-
-    $result["lists"] = $list;
-    if ($isNotAjaxCall) {
-      return $list;
-    } else {
+    $pm[\Library\Enums\SessionKeys::PmTechnicians] = $manager->selectMany($technician);
+    if ($pm !== NULL) {
+      \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
+    }
+    
+    $result["lists"] = $pm[\Library\Enums\SessionKeys::PmTechnicians];
+    if (!$isNotAjaxCall) {
       $step_result =
              $step_result = $result[\Library\Enums\SessionKeys::UserTechnicianList] !== NULL ? "success" : "error";
       $this->SendResponseWS(
