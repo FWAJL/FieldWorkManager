@@ -7,16 +7,16 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class TechnicianController extends \Library\BaseController {
     
-    public function executeIndex(\Library\HttpRequest $rq) {
+  public function executeIndex(\Library\HttpRequest $rq) {
     //Get list of technicians and store in session
     $lists = $this->_GetAndStoreTechniciansInSession($rq);
 
     if (count($lists[\Library\Enums\SessionKeys::UserTechnicianList]) > 0) {
       header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TechnicianListAll);
-    } else {
+      } else {
       header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TechnicianShowForm . "?mode=add&test=true");
+      }
     }
-  }
     
 public function executeShowForm(\Library\HttpRequest $rq) {
     //Load Modules for view
@@ -48,7 +48,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
-    $technician = $this->_PrepareTechnicianObject($this->dataPost());
+    $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost());
     $result["dataIn"] = $technician;
 
     //Load interface to query the database
@@ -74,7 +74,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
-    $technician = $this->_PrepareTechnicianObject($this->dataPost());
+    $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost());
     $result["data"] = $technician;
 
     $manager = $this->managers->getManagerOf($this->module);
@@ -125,7 +125,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
-    $technician = $this->_PrepareTechnicianObject($this->dataPost());
+    $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost());
     $result["data"] = $technician;
 
     //Load interface to query the database for technicians
@@ -192,79 +192,4 @@ public function executeGetItem(\Library\HttpRequest $rq) {
         "step" => ($rows_affected === count($technician_ids)) ? "success" : "error"
     ));
   }
-  
-  /**
-   * Find a technician from an id
-   * 
-   * @param int $technician_id : the id of the technician to find
-   * @return \Applications\PMTool\Models\Dao\Technician $technicianMatch : the match
-   */
-  private function _GetTechnicianFromSession($technician_id) {
-    $technicians = array();
-    $technicianMatch = NULL;
-    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserTechnicianList)) {
-      $technicians = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
-    }
-    foreach ($technicians as $technician) {
-      if (intval($technician->technician_id()) === $technician_id) {
-        $technicianMatch = $technician;
-        break;
-      }
-    }
-    return $technicianMatch;
-  }
-  
-    /**
-   * Check if the current pm has technicians to decide where to send him: stay on the technician list or asking him to add a technician
-   * 
-   * @param \Applications\PMTool\Models\Dao\Technician $pm
-   * @return boolean
-   */
-  private function _CheckIfPmHasTechnicians(\Applications\PMTool\Models\Dao\Technician $pm) {
-
-    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserTechnicianList)) {
-      $technicians = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
-      return count($technicians) > 0 ? TRUE : FALSE;
-    }
-    $manager = $this->managers->getManagerOf($this->module);
-    $count = $manager->countById($pm->pm_id());
-    return $count > 0 ? TRUE : FALSE;
-  }
-  
-  private function _PrepareTechnicianObject($data_sent) {
-    $technician = new \Applications\PMTool\Models\Dao\Technician();
-    $technician->setPm_id($data_sent["pm_id"]);
-    $technician->setTechnician_id(!array_key_exists('technician_id', $data_sent) ? NULL : $data_sent["technician_id"]);
-    $technician->setTechnician_name(!array_key_exists('technician_name', $data_sent) ? NULL : $data_sent["technician_name"]);
-    $technician->setTechnician_phone(!array_key_exists('technician_phone', $data_sent) ? "" : $data_sent["technician_phone"]);
-    $technician->setTechnician_email(!array_key_exists('technician_email', $data_sent) ? "" : $data_sent["technician_email"]);
-    $technician->setTechnician_document(!array_key_exists('technician_document', $data_sent) ? "" : $data_sent["technician_document"]);
-    $technician->setTechnician_active(!array_key_exists('technician_active', $data_sent) ? 0 : ($data_sent["technician_active"] === "1"));
-
-    return $technician;
-  }
-  
-  /**
-   * Checks if the user technicians  are not stored in Session.
-   * Stores the technicians and facilities after call to WS to retrieve them
-   * Set the data into the session for later use.
-   * 
-   * @param /Library/HttpRequest $rq
-   * @return array $lists : the lists of objects if any 
-   */
-  private function _GetAndStoreTechniciansInSession($rq) {
-    $lists = array();
-    if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserTechnicianList)) {
-
-      $lists = $this->executeGetList($rq, TRUE);
-
-      $this->app()->user->setAttribute(
-              \Library\Enums\SessionKeys::UserTechnicianList, $lists[\Library\Enums\SessionKeys::UserTechnicianList]
-      );
-    } else {
-      $lists[\Library\Enums\SessionKeys::UserTechnicianList] = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
-    }
-    return $lists;
-  }
-
 }

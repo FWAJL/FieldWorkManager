@@ -27,8 +27,6 @@ if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script acces
  * Lists all the SessionKeys used throughout the applications so that we don't use hard-coded strings.
  */
 abstract class SessionKeys {
-  const SessionPms = "session_pms";  
-    
   const UserAuthenticated = "user_auth";
   const UserFlash = 'user_flash';
   const UserConnected = "user_connected";
@@ -36,13 +34,13 @@ abstract class SessionKeys {
   const UserProjects= "user_projects";
   const UserProjectFacilityList= "user_project_facility_list";
   const UserProjectClientList= "user_project_client_list";
-  const UserSessionProjects = "user_session_projects";
-  
   const UserLocations= "user_locations";
-  
   const UserTechnicianList = "user_technician_list"; 
+  const UserTaskList = "user_task_list"; 
+  
  
   /* Project manager session array */
+  const SessionPms = "session_pms";  
   const PmKey =  "pm_";
   const PmObject = "pm_obj";
   const PmProjectIds = "pm_project_ids";
@@ -52,6 +50,7 @@ abstract class SessionKeys {
   const PmLabAnalytes = "pm_la";
 
   /* Project Session array */
+  const UserSessionProjects = "user_session_projects";
   const ProjectKey =  "project_";
   const ProjectObject = "project_obj";
   const FacilityObject = "facility_obj";
@@ -60,19 +59,19 @@ abstract class SessionKeys {
   const ProjectLocations = "project_locations";
   
   /* Task session array */
+  const SessionTasks = "session_tasks";
   const TaskKey =  "task_";
-  const TaskInfo = "task_info_obj";
-  const TaskCocInfo = "task_coc_info_obj";
-  const TaskLocationIds = "task_loc_ids";
-  const TaskTechnicianIds = "task_tech_ids";
-  const TaskServiceIds = "task_service_ids";
-  const TaskLeadTechIds = "task_lead_tech_ids";
-  const TaskFieldSampleMatrix = "task_fsm";
-  const TaskLabSampleMatrix = "task_lsm";
-  const TaskFieldAnalyteIds = "task_fa_ids";
-  const TaskLabAnalyteIds = "task_la_ids";
-  const TaskFieldLocationIds = "task_fdl_ids";
-  const TaskLabLocationIds = "task_ldl_ids";
+  const TaskObj = "task_info_obj";
+  const TaskCocInfoObj = "task_coc_info_obj";
+  const TaskLocations = "task_locations";
+  const TaskTechnicians = "task_technicians";
+  const TaskServices = "task_services";
+  const TaskFieldSampleMatrix = "task_field_sample_matrix";
+  const TaskLabSampleMatrix = "task_lab_sample_matrix";
+  const TaskFieldAnalytes = "task_field_analytes";
+  const TaskLabAnalytes = "task_lab_analytes";
+  const TaskFieldLocations = "task_field_locations";
+  const TaskLabLocations = "task_lab_locations";
 
 
 
@@ -87,6 +86,9 @@ abstract class SessionKeys {
   //Current objects
   const CurrentProject = "current_project";
   const CurrentPm = "current_pm";
+  const CurrentTask = "current_task";
+  
+  //Routing
   const SessionRoutes = "app_routes";
   const SessionRoutesXmlLastModified = "app_routes_last_modified";
 }

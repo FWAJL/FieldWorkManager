@@ -159,7 +159,7 @@
   </route>
   <!-- technician/showForm -->
 <!--Tasks  -->
-  <route url="tasks" module="Task" action="index" resxfile="task" type="ui">
+  <route url="task" module="Task" action="index" resxfile="task" type="ui">
     <js_files>
       <js_file use="head" value="Web/js/app/controllers/task_manager.js"/>
       

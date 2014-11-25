@@ -39,6 +39,11 @@ class UrlKeys {
   const ServiceListAll = "service/listAll";
   const ServiceShowForm = "service/showForm";
   
+  const TaskRootUrl = "task";
+  const TaskListAll = "task/listAll";
+  const TaskShowForm = "task/showForm";
+
+  
   const PmRootUrl = "pm";
   const PmListAll = "pm/listAll";
   const PmShowForm = "pm/showForm";

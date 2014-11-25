@@ -8,13 +8,21 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class TaskController extends \Library\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
-    if (\Applications\PMTool\Helpers\CommonHelper::RedirectAfterProjectSelection($this->app(), intval($rq->getData("project_id")))) {
-      header('Task: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
+    if (!\Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user())) {
+      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ProjectsRootUrl);
+    }
+    $this->executeGetList($rq, NULL, FALSE);
+    if (\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($this->app()->user(), 0)) {
+      if ($rq->getData("target") !== "") {
+        header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
+      } else {
+        header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskRootUrl . "/" . $rq->getData("target"));
+      }
     }
   }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
-    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
 //    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     if ($rq->getData("mode") === "edit") {
@@ -29,12 +37,10 @@ class TaskController extends \Library\BaseController {
 
   public function executeListAll(\Library\HttpRequest $rq) {
     //Get list of task stored in session
-    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
-    $this->_GetAndStoreTasksInSession($sessionProject);
-    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
-    $tasks = $sessionProject[\Library\Enums\SessionKeys::ProjectTasks];
+    $tasks = \Applications\PMTool\Helpers\TaskHelper::GetSessionTasks($this->app()->user());
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $tasks,
@@ -52,7 +58,7 @@ class TaskController extends \Library\BaseController {
   public function executeAdd(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
-    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
 
     //Load interface to query the database
     $manager = $this->managers->getManagerOf($this->module);
@@ -138,17 +144,17 @@ class TaskController extends \Library\BaseController {
     ));
   }
 
-  public function executeGetList(\Library\HttpRequest $rq = NULL, $sessionProject = NULL, $isAjaxCall = FALSE) {
+  public function executeGetList(\Library\HttpRequest $rq = NULL, $sessionTask = NULL, $isAjaxCall = FALSE) {
     // Init result
     $result = $this->InitResponseWS();
 
     //Init PDO
     $list = array();
-    if ($sessionProject !== NULL) {
+    if ($sessionTask === NULL) {
       //Load interface to query the database for tasks
+      $project = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
       $manager = $this->managers->getManagerOf($this->module);
-      $result[\Library\Enums\SessionKeys::ProjectTasks] = $sessionProject[\Library\Enums\SessionKeys::ProjectTasks] = $manager->selectMany($sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-      \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+      \Applications\PMTool\Helpers\TaskHelper::StoreSessionTask($this->app()->user(), $manager->selectMany($project[\Library\Enums\SessionKeys::ProjectObject]));
     }
     if ($isAjaxCall) {
       $step_result = $result[\Library\Enums\SessionKeys::ProjectTasks] !== NULL ? "success" : "error";
