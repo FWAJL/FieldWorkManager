@@ -29,7 +29,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class UserHelper {
 
-  public static function AddSessionPm($user, \Applications\PMTool\Models\Dao\Pm_manager $pm) {
+  public static function AddSessionPm($user, \Applications\PMTool\Models\Dao\ProjectManager $pm) {
     $sessionPms = $user->getAttribute(\Library\Enums\SessionKeys::SessionPms);
     $sessionPms[\Library\Enums\SessionKeys::PmKey . $pm->pm_id()] = self::MakeSessionPm($pm);
     self::SetSessionPms($user, $sessionPms);
@@ -42,24 +42,24 @@ class UserHelper {
   }
 
   public static function GetAndStoreCurrentPm(\Library\User $user, $pm_id) {
-    $userSessionPms = NULL;
+    $sessionPms = NULL;
     if ($user->keyExistInSession(\Library\Enums\SessionKeys::SessionPms)) {
-      $userSessionPms = $user->getAttribute(\Library\Enums\SessionKeys::SessionPms);
+      $sessionPms = $user->getAttribute(\Library\Enums\SessionKeys::SessionPms);
     }
 
     //If there is no user session pms yet, create one with the pm id given
-    if ($userSessionPms !== NULL) {
+    if ($sessionPms !== NULL) {
       $key = \Library\Enums\SessionKeys::PmKey . $pm_id;
-      $user->setAttribute(\Library\Enums\SessionKeys::CurrentPm, $userSessionPms[$key]);
-      return array_key_exists($key, $userSessionPms) ?
-              $userSessionPms[$key][\Library\Enums\SessionKeys::PmObject] : NULL;
+      $user->setAttribute(\Library\Enums\SessionKeys::CurrentPm, $sessionPms[$key]);
+      return array_key_exists($key, $sessionPms) ?
+              $sessionPms[$key][\Library\Enums\SessionKeys::PmObject] : NULL;
     }
     return NULL;
   }
 
   public static function GetSessionPm(\Library\User $user, $pm_id) {
     //retrieve the user session pm from pm_id
-    $userSessionPms = self::GetSessionPms($user);
+    $sessionPms = self::GetSessionPms($user);
     $key = \Library\Enums\SessionKeys::PmKey;
     if ($pm_id !== 0) {
       $key .= $pm_id;
@@ -67,8 +67,8 @@ class UserHelper {
       $pm = $user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
       $key .= $pm[0]->pm_id();
     }
-    $user->setAttribute(\Library\Enums\SessionKeys::CurrentPm, $userSessionPms[$key]);
-    return $userSessionPms[$key];
+    $user->setAttribute(\Library\Enums\SessionKeys::CurrentPm, $sessionPms[$key]);
+    return $sessionPms[$key];
   }
 
   public static function GetSessionPms($user) {
@@ -117,36 +117,39 @@ class UserHelper {
     $sessionPms = $user->getAttribute(\Library\Enums\SessionKeys::SessionPms);
     $pm_id = $sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_id();
     if (array_key_exists(\Library\Enums\SessionKeys::PmKey . $pm_id, $sessionPms)) {
-      $userSessionPms[\Library\Enums\SessionKeys::PmKey . $pm_id] = $sessionPm;
+      $sessionPms[\Library\Enums\SessionKeys::PmKey . $pm_id] = $sessionPm;
       $user->setAttribute(\Library\Enums\SessionKeys::CurrentPm, $sessionPm);
       self::SetSessionPms($user, $sessionPms);
     }
   }
 
-  public static function StoreSessionPm($user, \Applications\PMTool\Models\Dao\Project_manager $pm) {
+  public static function StoreSessionPm($user, \Applications\PMTool\Models\Dao\Project_manager $pm, $setCurrentPm) {
     $PmsSession = array();
     $PmsSession[\Library\Enums\SessionKeys::PmKey . $pm->pm_id()] = self::MakeSessionPm($pm);
 
     self::SetSessionPms($user, $PmsSession);
+    if ($setCurrentPm) {
+      self::GetAndStoreCurrentPm($user, $pm->pm_id());
+    }
     return $PmsSession;
   }
 
   public static function UnsetUserSessionPm($user, $pm_id) {
-    $userSessionPms = $user->getAttribute(\Library\Enums\SessionKeys::SessionPms);
-    unset($userSessionPms[\Library\Enums\SessionKeys::PmKey . $pm_id]);
+    $sessionPms = $user->getAttribute(\Library\Enums\SessionKeys::SessionPms);
+    unset($sessionPms[\Library\Enums\SessionKeys::PmKey . $pm_id]);
     $user->unsetAttribute(\Library\Enums\SessionKeys::CurrentPm);
-    $user->setAttribute(\Library\Enums\SessionKeys::SessionPms, $userSessionPms);
+    $user->setAttribute(\Library\Enums\SessionKeys::SessionPms, $sessionPms);
   }
 
   public static function UpdateUserSessionPm(\Library\User $user, $sessionPm) {
-    $userSessionPms = self::GetSessionPms($user);
-    if ($userSessionPms !== NULL) {
+    $sessionPms = self::GetSessionPms($user);
+    if ($sessionPms !== NULL) {
       $currentSessionPm = $user->getAttribute(\Library\Enums\SessionKeys::CurrentPm);
-      $userSessionPms[\Library\Enums\SessionKeys::PmKey . $sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_id()]
+      $sessionPms[\Library\Enums\SessionKeys::PmKey . $sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_id()]
               = $currentSessionPm
               = $sessionPm;
       self::SetUserSessionPm($user, $currentSessionPm);
-      self::SetSessionPms($user, $userSessionPms);
+      self::SetSessionPms($user, $sessionPms);
     }
   }
 

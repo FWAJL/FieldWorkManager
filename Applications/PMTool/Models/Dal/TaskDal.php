@@ -24,7 +24,7 @@ class TaskDal extends \Library\DAL\BaseManager {
   public function selectMany($object) {
     $sql = 'SELECT * FROM task where `project_id` = \'' . $object->project_id() . '\';'; //AND `active` = 1  AND `visible` = 1;';
     $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\task');
+    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Task');
 
     $tasks_list = $query->fetchAll();
     $query->closeCursor();
