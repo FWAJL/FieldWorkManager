@@ -6,36 +6,36 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
 class TechnicianController extends \Library\BaseController {
-    
+
   public function executeIndex(\Library\HttpRequest $rq) {
     $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
     $toList = FALSE;
     if ($rq->getData("target") !== "listAll") {
-      //Continue
-    }
-    elseif (count($pm[\Library\Enums\SessionKeys::PmTechnicians]) > 0) {
-      $toList = TRUE;
+      //Continue if user wants to add a new item
+    } elseif (count($pm[\Library\Enums\SessionKeys::PmTechnicians]) > 0) {
+      $toList = TRUE; //A list of technicians is found so let's display them
     } else {
+      //Otherwise, we get the list, add it to the PM Session array
       $this->executeGetList($rq, FALSE, $pm);
       $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
       $toList = count($pm[\Library\Enums\SessionKeys::PmTechnicians]) > 0;
     }
-
+    //Redirect logic
     if ($toList && $rq->getData("target") === "listAll") {
       header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TechnicianListAll);
-      } else {
+    } else {
       header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TechnicianShowForm . "?mode=add&test=true");
-      }
     }
-    
-public function executeShowForm(\Library\HttpRequest $rq) {
+  }
+
+  public function executeShowForm(\Library\HttpRequest $rq) {
     //Load Modules for view
     $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
-  } 
-  
+  }
+
   public function executeListAll(\Library\HttpRequest $rq) {
-    //Get list of technicians stored in session
+    //Get list of object stored in session
     $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
@@ -50,14 +50,16 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
   }
-  
-   public function executeAdd(\Library\HttpRequest $rq) {
-    // Init result
+
+  public function executeAdd(\Library\HttpRequest $rq) {
+    // Init result sent to client (e.g. browser)
     $result = $this->InitResponseWS();
 
-    //Init PDO
+    //Get the current PM Session
     $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
+    //Store the pm_id in the dataPost...
     $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
+    //.. and build the object to query the DB
     $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Technician());
     $result["dataIn"] = $technician;
 
@@ -65,11 +67,14 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     $manager = $this->managers->getManagerOf($this->module);
     $result["dataId"] = $manager->add($technician);
     if ($pm !== NULL) {
+      //Update the object with last inserted Id
       $technician->setTechnician_id($result["dataId"]);
+      //Update the PM Session
       array_push($pm[\Library\Enums\SessionKeys::PmTechnicians], $technician);
+      //And update the Sessiom
       \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
     }
-
+    //Send the response to browser
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
@@ -77,23 +82,27 @@ public function executeShowForm(\Library\HttpRequest $rq) {
         "step" => (intval($result["dataId"])) > 0 ? "success" : "error"
     ));
   }
-  
+
   public function executeEdit(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
 
     //Init PDO
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
-    $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost());
+    $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
+    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
+    $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Technician());
     $result["data"] = $technician;
 
     $manager = $this->managers->getManagerOf($this->module);
     $result_insert = $manager->edit($technician);
-    
-    //Clear the technician list from session for the connect PM
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
+
+    if ($result_insert) {
+      //Find what is the index of the current edited object in a list of object
+      $filter = 
+              \Applications\PMTool\Helpers\CommonHelper::FindIndexById($technician->technician_id(), "technician_id", $pm, \Library\Enums\SessionKeys::PmTechnicians);
+      $pm[\Library\Enums\SessionKeys::PmTechnicians][$filter["key"]] = $technician;
+      \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
+    }
 
     $this->SendResponseWS(
             $result, array(
@@ -102,23 +111,23 @@ public function executeShowForm(\Library\HttpRequest $rq) {
         "step" => $result_insert ? "success" : "error"
     ));
   }
-  
-    public function executeDelete(\Library\HttpRequest $rq) {
+
+  public function executeDelete(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
     $db_result = FALSE;
     $technician_id = intval($this->dataPost["technician_id"]);
-
+    $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
     //Check if the technician to be deleted is the Project manager's
-    $technician_selected = $this->_GetTechnicianFromSession($technician_id);
+    $filter = \Applications\PMTool\Helpers\CommonHelper::FindIndexById($technician_id, "technician_id", $pm, \Library\Enums\SessionKeys::PmTechnicians);
     //Load interface to query the database
-    if ($technician_selected !== NULL) {
+    if ($filter["object"] !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
       $db_result = $manager->delete($technician_id);
-      //Clear the technician from session for the connect PM
-      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
-      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
-//      \Applications\PMTool\Helpers\CommonHelper::UnsetUserSessionTechnician($this->app()->user(), $technician_id);
+      if ($db_result) {
+        unset($pm[\Library\Enums\SessionKeys::PmTechnicians][$filter["key"]]);
+        \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
+      }
     }
 
     $this->SendResponseWS(
@@ -128,7 +137,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
         "step" => $db_result !== FALSE ? "success" : "error"
     ));
   }
-  
+
   public function executeGetList(\Library\HttpRequest $rq, $isNotAjaxCall = FALSE, $pm = NULL) {
     // Init result
     $result = $this->InitResponseWS();
@@ -144,11 +153,11 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     if ($pm !== NULL) {
       \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
     }
-    
+
     $result["lists"] = $pm[\Library\Enums\SessionKeys::PmTechnicians];
     if (!$isNotAjaxCall) {
       $step_result =
-             $step_result = $result[\Library\Enums\SessionKeys::UserTechnicianList] !== NULL ? "success" : "error";
+              $step_result = $result[\Library\Enums\SessionKeys::UserTechnicianList] !== NULL ? "success" : "error";
       $this->SendResponseWS(
               $result, array(
           "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
@@ -157,13 +166,14 @@ public function executeShowForm(\Library\HttpRequest $rq) {
       ));
     }
   }
-   
-public function executeGetItem(\Library\HttpRequest $rq) {
+
+  public function executeGetItem(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
     $technician_id = intval($this->dataPost["technician_id"]);
 
-    $technician_selected = $this->_GetTechnicianFromSession($technician_id);
+    $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
+    $technician_selected = \Applications\PMTool\Helpers\CommonHelper::FindObject($technician_id, "technician_id", $pm[\Library\Enums\SessionKeys::PmTechnicians]);
 
     $result["technician"] = $technician_selected;
     $this->SendResponseWS(
@@ -173,14 +183,15 @@ public function executeGetItem(\Library\HttpRequest $rq) {
         "step" => ($technician_selected !== NULL) ? "success" : "error"
     ));
   }
-  
-    public function executeUpdateItems(\Library\HttpRequest $rq) {
+
+  public function executeUpdateItems(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS(); // Init result
 
     $rows_affected = 0;
+    $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
     //Get the technician objects from ids received
     $technician_ids = str_getcsv($this->dataPost["technician_ids"], ',');
-    $technicians = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
+    $technicians = 
     $matchedElements = $this->FindObjectsFromIds(
             array(
                 "filter" => "technician_id",
@@ -203,4 +214,5 @@ public function executeGetItem(\Library\HttpRequest $rq) {
         "step" => ($rows_affected === count($technician_ids)) ? "success" : "error"
     ));
   }
+
 }
