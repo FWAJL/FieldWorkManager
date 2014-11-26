@@ -86,5 +86,18 @@ class CommonHelper {
     }
     return $match;
   }
+  public static function FindIndexById($id, $prop_name, $sessionArray, $sessionKey) {
+    $match = array();
+    $list = $sessionArray[$sessionKey];
+    foreach (array_keys($list) as $index => $key) {
+      if (intval($list[$key]->$prop_name()) === intval($id)) {
+        $match["object"] = $list[$key];
+        $match["key"] = $key;
+        break;
+      }
+    }
+    return $match;
+  }
+
 }
 
