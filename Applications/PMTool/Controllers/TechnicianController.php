@@ -198,8 +198,6 @@ class TechnicianController extends \Library\BaseController {
                 "objects" => $pm[\Library\Enums\SessionKeys::PmTechnicians])
     );
 
-    //Update the technician objects in DB and get result (number of rows affected)
-    //$this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
     foreach ($matchedElements as $technician) {
       //With the line below, you will update the item $pm[\Library\Enums\SessionKeys::PmTechnicians]
       //Therefore, you just need to save the variable $pm at the end of the processing
