@@ -245,6 +245,7 @@ $(document).ready(function() {
         return undefined;
       } else {//success
         toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
+        utils.redirect("project/listAll");
       }
     });
   };

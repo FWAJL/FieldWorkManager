@@ -14,6 +14,10 @@
       <label><?php echo $resx["task_name"]; ?></label>
       <input name="task_name" type="text" />
     </li>
+        <li>
+      <label><?php echo $resx["task_active"]; ?></label>
+      <input name="task_active" type="checkbox" />
+    </li>
      <li>
       <label><?php echo $resx["task_deadline"]; ?></label>
       <input type="text"  name="task_deadline" id="datepicker"/>

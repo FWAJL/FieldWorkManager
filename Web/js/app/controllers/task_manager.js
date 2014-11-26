@@ -169,11 +169,11 @@ $(document).ready(function() {
     $("input[name=\"project_id\"]").val(parseInt(dataWs.task.project_id));
     $("input[name=\"task_id\"]").val(parseInt(dataWs.task.task_id));
     $("input[name=\"task_name\"]").val(dataWs.task.task_name);
+    $("input[name=\"task_active\"]").prop('checked', utils.setCheckBoxValue(dataWs.task.task_active));
     $("input[name=\"task_deadline\"]").val(dataWs.task.task_deadline);
     $("textarea[name=\"task_instructions\"]").val(dataWs.task.task_instructions);
     $("input[name=\"task_trigger_cal\"]").val(dataWs.task.task_trigger_cal);
     $("input[name=\"task_trigger_pm\"]").val(dataWs.task.task_trigger_pm);
-    $("input[name=\"task_active\"]").val(dataWs.task.task_active);
     $("input[name=\"task_trigger_ext\"]").val(dataWs.task.task_trigger_ext);
 //    Other forms called here
   };

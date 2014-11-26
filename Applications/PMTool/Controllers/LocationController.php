@@ -36,7 +36,7 @@ class LocationController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
     $this->_GetAndStoreLocationsInSession($sessionProject);
-    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    // $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
