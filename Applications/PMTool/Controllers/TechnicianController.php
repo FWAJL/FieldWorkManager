@@ -98,8 +98,7 @@ class TechnicianController extends \Library\BaseController {
 
     if ($result_insert) {
       //Find what is the index of the current edited object in a list of object
-      $filter = 
-              \Applications\PMTool\Helpers\CommonHelper::FindIndexById($technician->technician_id(), "technician_id", $pm, \Library\Enums\SessionKeys::PmTechnicians);
+      $filter = \Applications\PMTool\Helpers\CommonHelper::FindIndexById($technician->technician_id(), "technician_id", $pm, \Library\Enums\SessionKeys::PmTechnicians);
       $pm[\Library\Enums\SessionKeys::PmTechnicians][$filter["key"]] = $technician;
       \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
     }
@@ -144,7 +143,9 @@ class TechnicianController extends \Library\BaseController {
 
     //Init PDO
     $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
-    $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Technician());
+    $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject(
+        $this->dataPost(), new \Applications\PMTool\Models\Dao\Technician()
+    );
     $result["data"] = $technician;
 
     //Load interface to query the database for technicians
@@ -154,10 +155,9 @@ class TechnicianController extends \Library\BaseController {
       \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
     }
 
-    $result["lists"] = $pm[\Library\Enums\SessionKeys::PmTechnicians];
+    $result["technicians"] = $pm[\Library\Enums\SessionKeys::PmTechnicians];//Can be used for an AJAX call
     if (!$isNotAjaxCall) {
-      $step_result =
-              $step_result = $result[\Library\Enums\SessionKeys::UserTechnicianList] !== NULL ? "success" : "error";
+      $step_result = $step_result = $result[\Library\Enums\SessionKeys::UserTechnicianList] !== NULL ? "success" : "error";
       $this->SendResponseWS(
               $result, array(
           "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
@@ -191,22 +191,25 @@ class TechnicianController extends \Library\BaseController {
     $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
     //Get the technician objects from ids received
     $technician_ids = str_getcsv($this->dataPost["technician_ids"], ',');
-    $technicians = 
     $matchedElements = $this->FindObjectsFromIds(
             array(
                 "filter" => "technician_id",
                 "ids" => $technician_ids,
-                "objects" => $technicians)
+                "objects" => $pm[\Library\Enums\SessionKeys::PmTechnicians])
     );
 
     //Update the technician objects in DB and get result (number of rows affected)
     //$this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
     foreach ($matchedElements as $technician) {
+      //With the line below, you will update the item $pm[\Library\Enums\SessionKeys::PmTechnicians]
+      //Therefore, you just need to save the variable $pm at the end of the processing
       $technician->setTechnician_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
       $manager = $this->managers->getManagerOf($this->module);
       $rows_affected += $manager->edit($technician) ? 1 : 0;
     }
-
+    if ($rows_affected === count($technician_ids)) {
+      \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
+    }
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
