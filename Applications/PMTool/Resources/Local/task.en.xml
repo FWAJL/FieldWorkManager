@@ -3,7 +3,7 @@
   <resource key="page_title">Your tasks - Field Work Manager</resource>
   
   <resource key="task_h1">Welcome to Field Work Manager, for Project managers</resource>
-  <resource key="task_welcome_message">Please, select an option on the left menu.</resource>
+  <resource key="task_welcome_message">Please, select a project to view the task(s) details</resource>
   
   <!-- Errors -->
   
