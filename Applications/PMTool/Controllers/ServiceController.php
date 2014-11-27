@@ -12,9 +12,9 @@ class ServiceController extends \Library\BaseController {
     $lists = $this->_GetAndStoreServicesInSession($rq);
 
     if (count($lists[\Library\Enums\SessionKeys::UserServices]) > 0) {
-      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ServiceListAll);
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ServiceListAll);
     } else {
-      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ServiceShowForm . "?mode=add&test=true");
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ServiceShowForm . "?mode=add&test=true");
     }
   }
     

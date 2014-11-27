@@ -9,15 +9,13 @@ class TaskController extends \Library\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
     if (!\Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user())) {
-      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ProjectsRootUrl);
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsRootUrl);
     }
     $this->executeGetList($rq, NULL, FALSE);
-    if (\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($this->app()->user(), 0)) {
-      if ($rq->getData("target") !== "") {
-        header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
-      } else {
-        header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskRootUrl . "/" . $rq->getData("target"));
-      }
+    if (\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($this->app()->user(), 0) && $rq->getData("target") !== "") {
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
+    } else {
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=add&testing=true");
     }
   }
 
@@ -32,7 +30,7 @@ class TaskController extends \Library\BaseController {
     }
     //Which module?
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
   public function executeListAll(\Library\HttpRequest $rq) {
@@ -42,17 +40,17 @@ class TaskController extends \Library\BaseController {
 
     $tasks = \Applications\PMTool\Helpers\TaskHelper::GetSessionTasks($this->app()->user());
     $data = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $tasks,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $tasks,
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 
     $modules = $this->app()->router()->selectedRoute()->phpModules();
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {
@@ -64,18 +62,14 @@ class TaskController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf($this->module);
     $this->dataPost["project_id"] = $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id();
 
-    $tasks = array();
-    if (array_key_exists("names", $this->dataPost())) {
-      $tasks = $this->_PrepareManyTaskObjects();
-    } else {
-      array_push($tasks, $this->_PrepareTaskObject($this->dataPost()));
-    }
-    $result["dataIn"] = $tasks;
+    $task = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Task());
+    
+    $result["dataIn"] = $task;
 
     $result["dataOut"] = 0;
     foreach ($tasks as $task) {
       $result["dataOut"] = $manager->add($task);
-      $task->setTask_id("$result[dataOut]"); 
+      $task->setTask_id("$result[dataOut]");
       array_push($sessionProject[\Library\Enums\SessionKeys::ProjectTasks], $task);
     }
     if ($result["dataOut"]) {
@@ -83,10 +77,10 @@ class TaskController extends \Library\BaseController {
     }
 
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
-        "resx_key" => $this->action(),
-        "step" => $result["dataOut"] > 0 ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
+      "resx_key" => $this->action(),
+      "step" => $result["dataOut"] > 0 ? "success" : "error"
     ));
   }
 
@@ -110,10 +104,10 @@ class TaskController extends \Library\BaseController {
     }
 
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
-        "resx_key" => $this->action(),
-        "step" => $result_edit ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
+      "resx_key" => $this->action(),
+      "step" => $result_edit ? "success" : "error"
     ));
   }
 
@@ -137,10 +131,10 @@ class TaskController extends \Library\BaseController {
     }
 
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
-        "resx_key" => $this->action(),
-        "step" => $db_result !== FALSE ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
+      "resx_key" => $this->action(),
+      "step" => $db_result !== FALSE ? "success" : "error"
     ));
   }
 
@@ -159,10 +153,10 @@ class TaskController extends \Library\BaseController {
     if ($isAjaxCall) {
       $step_result = $result[\Library\Enums\SessionKeys::ProjectTasks] !== NULL ? "success" : "error";
       $this->SendResponseWS(
-              $result, array(
-          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
-          "resx_key" => $this->action(),
-          "step" => $step_result
+          $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
+        "resx_key" => $this->action(),
+        "step" => $step_result
       ));
     }
   }
@@ -176,10 +170,10 @@ class TaskController extends \Library\BaseController {
 
     $result["task"] = $task_selected;
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
-        "resx_key" => $this->action(),
-        "step" => ($task_selected !== NULL) ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
+      "resx_key" => $this->action(),
+      "step" => ($task_selected !== NULL) ? "success" : "error"
     ));
   }
 
@@ -192,10 +186,10 @@ class TaskController extends \Library\BaseController {
     $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
     $tasks = $sessionProject[\Library\Enums\SessionKeys::ProjectTasks];
     $matchedElements = $this->FindObjectsFromIds(
-            array(
-                "filter" => "task_id",
-                "ids" => $task_ids,
-                "objects" => $tasks)
+        array(
+          "filter" => "task_id",
+          "ids" => $task_ids,
+          "objects" => $tasks)
     );
 
     foreach ($matchedElements as $task) {
@@ -206,10 +200,10 @@ class TaskController extends \Library\BaseController {
     \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
 
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
-        "resx_key" => $this->action(),
-        "step" => ($rows_affected === count($task_ids)) ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
+      "resx_key" => $this->action(),
+      "step" => ($rows_affected === count($task_ids)) ? "success" : "error"
     ));
   }
 

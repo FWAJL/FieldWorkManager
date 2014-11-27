@@ -16,39 +16,39 @@ class TechnicianController extends \Library\BaseController {
       $toList = TRUE; //A list of technicians is found so let's display them
     } else {
       //Otherwise, we get the list, add it to the PM Session array
-      $this->executeGetList($rq, FALSE, $pm);
+      $this->executeGetList($rq, TRUE, $pm);
       $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
       $toList = count($pm[\Library\Enums\SessionKeys::PmTechnicians]) > 0;
     }
     //Redirect logic
     if ($toList && $rq->getData("target") === "listAll") {
-      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TechnicianListAll);
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TechnicianListAll);
     } else {
-      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TechnicianShowForm . "?mode=add&test=true");
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TechnicianShowForm . "?mode=add&test=true");
     }
   }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
     //Load Modules for view
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
   public function executeListAll(\Library\HttpRequest $rq) {
     //Get list of object stored in session
     $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
     $data = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $pm[\Library\Enums\SessionKeys::PmTechnicians],
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $pm[\Library\Enums\SessionKeys::PmTechnicians],
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 
     $modules = $this->app()->router()->selectedRoute()->phpModules();
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {
@@ -76,10 +76,10 @@ class TechnicianController extends \Library\BaseController {
     }
     //Send the response to browser
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
-        "resx_key" => $this->action(),
-        "step" => (intval($result["dataId"])) > 0 ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
+      "resx_key" => $this->action(),
+      "step" => (intval($result["dataId"])) > 0 ? "success" : "error"
     ));
   }
 
@@ -98,17 +98,16 @@ class TechnicianController extends \Library\BaseController {
 
     if ($result_insert) {
       //Find what is the index of the current edited object in a list of object
-      $filter = 
-              \Applications\PMTool\Helpers\CommonHelper::FindIndexById($technician->technician_id(), "technician_id", $pm, \Library\Enums\SessionKeys::PmTechnicians);
+      $filter = \Applications\PMTool\Helpers\CommonHelper::FindIndexById($technician->technician_id(), "technician_id", $pm, \Library\Enums\SessionKeys::PmTechnicians);
       $pm[\Library\Enums\SessionKeys::PmTechnicians][$filter["key"]] = $technician;
       \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
     }
 
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
-        "resx_key" => $this->action(),
-        "step" => $result_insert ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
+      "resx_key" => $this->action(),
+      "step" => $result_insert ? "success" : "error"
     ));
   }
 
@@ -129,12 +128,11 @@ class TechnicianController extends \Library\BaseController {
         \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
       }
     }
-
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
-        "resx_key" => $this->action(),
-        "step" => $db_result !== FALSE ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
+      "resx_key" => $this->action(),
+      "step" => $db_result !== FALSE ? "success" : "error"
     ));
   }
 
@@ -144,7 +142,9 @@ class TechnicianController extends \Library\BaseController {
 
     //Init PDO
     $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
-    $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Technician());
+    $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject(
+        $this->dataPost(), new \Applications\PMTool\Models\Dao\Technician()
+    );
     $result["data"] = $technician;
 
     //Load interface to query the database for technicians
@@ -154,15 +154,14 @@ class TechnicianController extends \Library\BaseController {
       \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
     }
 
-    $result["lists"] = $pm[\Library\Enums\SessionKeys::PmTechnicians];
+    $result["technicians"] = $pm[\Library\Enums\SessionKeys::PmTechnicians];//Can be used for an AJAX call
     if (!$isNotAjaxCall) {
-      $step_result =
-              $step_result = $result[\Library\Enums\SessionKeys::UserTechnicianList] !== NULL ? "success" : "error";
+      $step_result = $step_result = $result[\Library\Enums\SessionKeys::UserTechnicianList] !== NULL ? "success" : "error";
       $this->SendResponseWS(
-              $result, array(
-          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
-          "resx_key" => $this->action(),
-          "step" => $step_result
+          $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
+        "resx_key" => $this->action(),
+        "step" => $step_result
       ));
     }
   }
@@ -177,10 +176,10 @@ class TechnicianController extends \Library\BaseController {
 
     $result["technician"] = $technician_selected;
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
-        "resx_key" => $this->action(),
-        "step" => ($technician_selected !== NULL) ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
+      "resx_key" => $this->action(),
+      "step" => ($technician_selected !== NULL) ? "success" : "error"
     ));
   }
 
@@ -191,27 +190,28 @@ class TechnicianController extends \Library\BaseController {
     $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
     //Get the technician objects from ids received
     $technician_ids = str_getcsv($this->dataPost["technician_ids"], ',');
-    $technicians = 
     $matchedElements = $this->FindObjectsFromIds(
-            array(
-                "filter" => "technician_id",
-                "ids" => $technician_ids,
-                "objects" => $technicians)
+        array(
+          "filter" => "technician_id",
+          "ids" => $technician_ids,
+          "objects" => $pm[\Library\Enums\SessionKeys::PmTechnicians])
     );
 
-    //Update the technician objects in DB and get result (number of rows affected)
-    //$this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserTechnicianList);
     foreach ($matchedElements as $technician) {
+      //With the line below, you will update the item $pm[\Library\Enums\SessionKeys::PmTechnicians]
+      //Therefore, you just need to save the variable $pm at the end of the processing
       $technician->setTechnician_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
       $manager = $this->managers->getManagerOf($this->module);
       $rows_affected += $manager->edit($technician) ? 1 : 0;
     }
-
+    if ($rows_affected === count($technician_ids)) {
+      \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
+    }
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
-        "resx_key" => $this->action(),
-        "step" => ($rows_affected === count($technician_ids)) ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
+      "resx_key" => $this->action(),
+      "step" => ($rows_affected === count($technician_ids)) ? "success" : "error"
     ));
   }
 
