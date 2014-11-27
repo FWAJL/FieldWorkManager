@@ -9,21 +9,18 @@ class TaskController extends \Library\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
     if (!\Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user())) {
-      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ProjectsRootUrl);
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsRootUrl);
     }
     $this->executeGetList($rq, NULL, FALSE);
-    if (\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($this->app()->user(), 0)) {
-      if ($rq->getData("target") !== "") {
-        header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
-      } else {
-        header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskRootUrl . "/" . $rq->getData("target"));
-      }
+    if (\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($this->app()->user(), 0) && $rq->getData("target") !== "") {
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
+    } else {
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=add&testing=true");
     }
   }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-//    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     if ($rq->getData("mode") === "edit") {
       $this->page->addVar("task_editing_header", $this->resxData["task_legend_edit"]);
@@ -64,22 +61,16 @@ class TaskController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf($this->module);
     $this->dataPost["project_id"] = $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id();
 
-    $tasks = array();
-    if (array_key_exists("names", $this->dataPost())) {
-      $tasks = $this->_PrepareManyTaskObjects();
-    } else {
-      array_push($tasks, $this->_PrepareTaskObject($this->dataPost()));
-    }
-    $result["dataIn"] = $tasks;
+    $task = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Task());
 
-    $result["dataOut"] = 0;
-    foreach ($tasks as $task) {
-      $result["dataOut"] = $manager->add($task);
-      $task->setTask_id("$result[dataOut]"); 
-      array_push($sessionProject[\Library\Enums\SessionKeys::ProjectTasks], $task);
-    }
-    if ($result["dataOut"]) {
-      \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+    $result["dataIn"] = $task;
+
+    $result["dataOut"] = $manager->add($task);
+    $task->setTask_id($result["dataOut"]);
+    array_push($sessionProject[\Library\Enums\SessionKeys::ProjectTasks], $task);
+
+    if ($result["dataOut"] !== NULL) {
+      \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
     }
 
     $this->SendResponseWS(

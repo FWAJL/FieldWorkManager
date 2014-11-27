@@ -40,13 +40,13 @@ class ProjectController extends \Library\BaseController {
     //Check session if pm has projects
     $hasProjects = count(\Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->app()->user())) > 0;
     if ($hasProjects) {
-      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
     } else {
       $this->executeGetList($rq, true); //Get and store projects to session (even if there is none)
       if (count(\Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->app()->user())) > 0) {
-        header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
+        $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
       } else {
-        header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ProjectsShowForm . "?mode=add&test=true");
+        $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsShowForm . "?mode=add&test=true");
       }
     }
   }

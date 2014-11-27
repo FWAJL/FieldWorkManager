@@ -12,9 +12,9 @@ class PmController extends \Library\BaseController {
     $lists = $this->_GetAndStorePmsInSession($rq);
 
     if (count($lists[\Library\Enums\SessionKeys::AllUsers]) > 0) {
-      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::PmListAll);
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::PmListAll);
     } else {
-      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::PmShowForm . "?mode=edit"+ $this->dataPost["mode"] +"&pm_id=" + $this->dataPost["pm_id"]);
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::PmShowForm . "?mode=edit"+ $this->dataPost["mode"] +"&pm_id=" + $this->dataPost["pm_id"]);
     }
   }
     

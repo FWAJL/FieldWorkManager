@@ -213,6 +213,11 @@ abstract class BaseController extends ApplicationComponent {
     $this->app->pageTitle = $this->app->i8n->getLocalResource($this->resxfile, "page_title");
     $this->page->addVar("logout_url", __BASEURL__ . Enums\ResourceKeys\UrlKeys::LogoutUrl);
   }
+  protected function Redirect($urlPart) {
+    $url = __BASEURL__ . $urlPart;
+    header('Location: ' . $url);
+    exit();
+  }
 
 
 //  protected function executeIndex($params) {
