@@ -1,4 +1,11 @@
 /**
+ * jQuery listeners for the task actions
+ */
+$(document).ready(function() {
+  $("#datepicker").datepicker();
+  $("#datepicker").datepicker("option", "dateFormat", "yy-m-d");
+});
+/**
  * JavaScript Module to do JavaScript actions common to several views
  */
 (function(utils) {
@@ -138,13 +145,16 @@
 
   utils.trim = function(str) {
     return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-  }
-  
+  };
+
   utils.setCheckBoxValue = function(value) {
     if (value === "true" || value === true || value === "1") {
       return true;
     } else {
       return false;
     }
-  }
+  };
+  utils.toDate = function(value) {
+    return moment(value).isValid() ? moment(value, "YYYY-MM-DD")._d : moment(value).isValid();
+  };
 }(window.utils = window.utils || {}));

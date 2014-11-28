@@ -71,7 +71,7 @@ class AuthenticateController extends \Library\BaseController {
     //If user_db is null or not matching, set error message
     if (count($user_db) === 0) {
       //TODO: redirect after 3 sec
-      //header('Location: ' . __BASEURL__ . "login");
+      //$this->Redirect("login");
     } else {
       if (!isset($data_sent["encrypt_pwd"])) {
         $this->EncryptUserPassword($manager, $user, $user_db);
@@ -92,7 +92,7 @@ class AuthenticateController extends \Library\BaseController {
     $this->app->user->setAuthenticated(FALSE);
     $this->app->user->unsetAttribute(\Library\Enums\SessionKeys::UserConnected);
     session_destroy();
-    if ($redirect) header('Location: ' . __BASEURL__ . "login");
+    if ($redirect) $this->Redirect("login");
   }
   
   /**

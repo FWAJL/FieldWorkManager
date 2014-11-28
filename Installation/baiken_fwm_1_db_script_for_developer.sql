@@ -117,12 +117,12 @@ CREATE TABLE `task` (
     `task_id` int(11) NOT NULL AUTO_INCREMENT,
     `project_id` int(11) NOT NULL COMMENT 'Foreign key => project',
     `task_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-    `task_deadline` date NOT NULL,
+    `task_deadline` datetime NOT NULL,
     `task_instructions` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
     `task_trigger_cal` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
     `task_trigger_pm` tinyint(1) DEFAULT NULL,
     `task_trigger_ext` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-    `active` tinyint(1) NOT NULL DEFAULT '0',
+    `task_active` tinyint(1) NOT NULL DEFAULT '0',
     PRIMARY KEY (`task_id`),
     CONSTRAINT `fk_task_project` FOREIGN KEY (`project_id`)
         REFERENCES `project` (`project_id`)

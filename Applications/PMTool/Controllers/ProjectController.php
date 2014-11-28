@@ -40,13 +40,13 @@ class ProjectController extends \Library\BaseController {
     //Check session if pm has projects
     $hasProjects = count(\Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->app()->user())) > 0;
     if ($hasProjects) {
-      header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
     } else {
       $this->executeGetList($rq, true); //Get and store projects to session (even if there is none)
       if (count(\Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->app()->user())) > 0) {
-        header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
+        $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
       } else {
-        header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ProjectsShowForm . "?mode=add&test=true");
+        $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsShowForm . "?mode=add&test=true");
       }
     }
   }
@@ -67,7 +67,11 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeListAll(\Library\HttpRequest $rq) {
-    $data = array(
+    
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+      
+      $data = array(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\CommonHelper::GetListObjectsInSessionByKey($this->app()->user(), \Library\Enums\SessionKeys::ProjectObject),
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList($this->resxfile)

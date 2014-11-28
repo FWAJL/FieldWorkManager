@@ -25,9 +25,9 @@
       <label><?php echo $resx["technician_document"]; ?></label>
       <input type="button" name="technician_document" value="Click to upload photo" class="doc_upload" id="tech_photo_upload"/>
     </li>
-    <li style="display: none">
-      <!--<label><?php // echo $resx["technician_active"]; ?></label>-->
-      <input name="technician_active" type="checkbox" />
+    <li>
+      <label><?php echo $resx["technician_active"]; ?></label>
+      <input name="technician_active" type="checkbox" checked />
     </li>
   </ol>
 </fieldset>

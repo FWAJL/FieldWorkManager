@@ -30,6 +30,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class TaskHelper {
 
   public static function AddSessionTask($user, \Applications\PMTool\Models\Dao\Task $task) {
+    $sessionTasks = self::GetSessionTasks($user);
     $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $task->task_id()] = self::MakeSessionTask($task);
     self::SetSessionTasks($user, $sessionTasks);
   }
@@ -45,7 +46,7 @@ class TaskHelper {
       $key = \Library\Enums\SessionKeys::TaskKey . $task_id;
       $user->setAttribute(\Library\Enums\SessionKeys::CurrentTask, $sessionTasks[$key]);
       return array_key_exists($key, $sessionTasks) ?
-              $sessionTasks[$key][\Library\Enums\SessionKeys::TaskObject] : NULL;
+          $sessionTasks[$key][\Library\Enums\SessionKeys::TaskObject] : NULL;
     }
     return NULL;
   }
@@ -61,28 +62,44 @@ class TaskHelper {
     return $sessionTasks[$key];
   }
 
-  public static function GetSessionTasks($user) {
+  public static function GetFilteredTaskList(\Library\User $user) {
+    $filteredTaskList = array();
+    $sessionTasks = self::GetSessionTasks($user);
+    foreach (self::GetSessionProjectTasks($user) as $task_key) {
+      if (array_key_exists($task_key, $sessionTasks)) {
+        array_push($filteredTaskList, $sessionTasks[$task_key][\Library\Enums\SessionKeys::TaskObj]);
+      }
+    }
+    return $filteredTaskList;
+  }
+
+  public static function GetSessionTasks(\Library\User $user) {
     return $user->getAttribute(\Library\Enums\SessionKeys::SessionTasks);
+  }
+
+  public static function GetSessionProjectTasks(\Library\User $user) {
+    $currentProject = ProjectHelper::GetCurrentSessionProject($user);
+    return $currentProject[\Library\Enums\SessionKeys::ProjectTasks];
   }
 
   public static function GetCurrentSessionTask($user) {
     return $user->keyExistInSession(\Library\Enums\SessionKeys::CurrentTask) ?
-            $user->getAttribute(\Library\Enums\SessionKeys::CurrentTask) : FALSE;
+        $user->getAttribute(\Library\Enums\SessionKeys::CurrentTask) : FALSE;
   }
 
   public static function MakeSessionTask(\Applications\PMTool\Models\Dao\Task $task) {
     $sessionTask = array(
-        \Library\Enums\SessionKeys::TaskObj => $task,
-        \Library\Enums\SessionKeys::TaskCocInfoObj => NULL,
-        \Library\Enums\SessionKeys::TaskLocations => array(),
-        \Library\Enums\SessionKeys::TaskTechnicians => array()
+      \Library\Enums\SessionKeys::TaskObj => $task,
+      \Library\Enums\SessionKeys::TaskCocInfoObj => NULL,
+      \Library\Enums\SessionKeys::TaskLocations => array(),
+      \Library\Enums\SessionKeys::TaskTechnicians => array()
     );
     return $sessionTask;
   }
 
   public static function UserHasTasks(\Library\User $user, $task_id) {
-    $redirect = TRUE;
-    if (self::GetSessionTasks($user) != NULL) {
+    $redirect = FALSE;
+    if (self::GetSessionTasks($user) !== NULL) {
       $redirect = count(self::GetSessionTasks($user)) > 0;
     }
     return $redirect;
@@ -94,20 +111,20 @@ class TaskHelper {
 
   public static function SetSessionTask(\Library\User $user, $sessionTask) {
     $sessionTasks = $user->getAttribute(\Library\Enums\SessionKeys::SessionTasks);
-    $task_id = $sessionTask[\Library\Enums\SessionKeys::TaskObject]->task_id();
-    if (array_key_exists(\Library\Enums\SessionKeys::TaskKey . $task_id, $sessionTasks)) {
-      $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $task_id] = $sessionTask;
-      $user->setAttribute(\Library\Enums\SessionKeys::CurrentTask, $sessionTask);
-      self::SetSessionTasks($user, $sessionTasks);
-    }
+    $task_id = $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id();
+    $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $task_id] = $sessionTask;
+    $user->setAttribute(\Library\Enums\SessionKeys::CurrentTask, $sessionTask);
+    self::SetSessionTasks($user, $sessionTasks);
   }
 
   public static function StoreSessionTask($user, $list) {
     $SessionTasks = array();
+    $currentProject = ProjectHelper::GetCurrentSessionProject($user);
     foreach ($list as $task) {
-      $SessionTasks[\Library\Enums\SessionKeys::TaskKey . $task->task_id()] = self::MakeSessionProject($task);
+      $SessionTasks[\Library\Enums\SessionKeys::TaskKey . $task->task_id()] = self::MakeSessionTask($task);
+      array_push($currentProject[\Library\Enums\SessionKeys::ProjectTasks], \Library\Enums\SessionKeys::TaskKey . $task->task_id());
     }
-
+    ProjectHelper::SetUserSessionProject($user, $currentProject);
     self::SetSessionTasks($user, $SessionTasks);
     return $SessionTasks;
   }
@@ -123,9 +140,7 @@ class TaskHelper {
     $sessionTasks = self::GetSessionTasks($user);
     if ($sessionTasks !== NULL) {
       $currentSessionTask = $user->getAttribute(\Library\Enums\SessionKeys::CurrentTask);
-      $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $sessionTask[\Library\Enums\SessionKeys::TaskObject]->task_id()]
-              = $currentSessionTask
-              = $sessionTask;
+      $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $sessionTask[\Library\Enums\SessionKeys::TaskObject]->task_id()] = $currentSessionTask = $sessionTask;
       self::SetSessionTask($user, $currentSessionTask);
       self::SetSessionTasks($user, $sessionTasks);
     }

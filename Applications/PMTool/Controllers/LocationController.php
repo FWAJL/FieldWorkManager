@@ -10,9 +10,9 @@ class LocationController extends \Library\BaseController {
   public function executeIndex(\Library\HttpRequest $rq) {
     if (\Applications\PMTool\Helpers\ProjectHelper::RedirectAfterProjectSelection($this->app(), intval($rq->getData("project_id")))) {
       if ($rq->getData("target") !== "") {
-        header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
+        $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
       } else {
-        header('Location: ' . __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LocationRootUrl . "/" . $rq->getData("target"));
+        $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::LocationRootUrl . "/" . $rq->getData("target"));
       }
     }
   }
@@ -36,7 +36,7 @@ class LocationController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
     $this->_GetAndStoreLocationsInSession($sessionProject);
-    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    // $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),

@@ -29,9 +29,9 @@
       <label><?php echo $resx["location_desc"]; ?></label>
       <input name="location_desc" type="text" />
     </li>
-    <li style="display: none">
-      <!--<label><?php // echo $resx["location_active"]; ?></label>-->
-      <input name="location_active" type="checkbox" />
+    <li>
+      <label><?php echo $resx["location_active"]; ?></label>
+      <input name="location_active" type="checkbox" checked />
     </li>
     <li style="display: none">
       <label><?php // echo $resx["location_visible"]; ?></label>
