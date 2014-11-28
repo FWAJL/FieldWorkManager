@@ -86,13 +86,23 @@ class CommonHelper {
     }
     return $match;
   }
-  public static function FindIndexById($id, $prop_name, $sessionArray, $sessionKey) {
+  public static function FindIndexInObjectListById($id, $prop_name, $sessionArray, $sessionKey) {
     $match = array();
     $list = $sessionArray[$sessionKey];
     foreach (array_keys($list) as $index => $key) {
       if (intval($list[$key]->$prop_name()) === intval($id)) {
         $match["object"] = $list[$key];
         $match["key"] = $key;
+        break;
+      }
+    }
+    return $match;
+  }
+    public static function FindIndexInIdListById($valueToFind, $idList) {
+    $match = NULL;
+    foreach (array_keys($idList) as $index => $key) {
+      if ($idList[$key] === $valueToFind) {
+        $match = $index;
         break;
       }
     }

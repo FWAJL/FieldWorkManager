@@ -98,7 +98,7 @@ class TechnicianController extends \Library\BaseController {
 
     if ($result_insert) {
       //Find what is the index of the current edited object in a list of object
-      $filter = \Applications\PMTool\Helpers\CommonHelper::FindIndexById($technician->technician_id(), "technician_id", $pm, \Library\Enums\SessionKeys::PmTechnicians);
+      $filter = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($technician->technician_id(), "technician_id", $pm, \Library\Enums\SessionKeys::PmTechnicians);
       $pm[\Library\Enums\SessionKeys::PmTechnicians][$filter["key"]] = $technician;
       \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
     }
@@ -118,7 +118,7 @@ class TechnicianController extends \Library\BaseController {
     $technician_id = intval($this->dataPost["technician_id"]);
     $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
     //Check if the technician to be deleted is the Project manager's
-    $filter = \Applications\PMTool\Helpers\CommonHelper::FindIndexById($technician_id, "technician_id", $pm, \Library\Enums\SessionKeys::PmTechnicians);
+    $filter = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($technician_id, "technician_id", $pm, \Library\Enums\SessionKeys::PmTechnicians);
     //Load interface to query the database
     if ($filter["object"] !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
