@@ -3,7 +3,7 @@
  */
 $(document).ready(function() {
   $("#datepicker").datepicker();
-  $("#datepicker").datepicker("option", "dateFormat", "DD, d MM, yy");
+  $("#datepicker").datepicker("option", "dateFormat", "yy-m-d");
 });
 /**
  * JavaScript Module to do JavaScript actions common to several views
@@ -155,6 +155,6 @@ $(document).ready(function() {
     }
   };
   utils.toDate = function(value) {
-    return moment(value).isValid() ? moment(value, "DD-MM-YYYY") : moment(value).isValid();
+    return moment(value).isValid() ? moment(value, "YYYY-MM-DD")._d : moment(value).isValid();
   };
 }(window.utils = window.utils || {}));

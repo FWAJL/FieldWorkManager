@@ -11,11 +11,17 @@ class TaskController extends \Library\BaseController {
     if (!\Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user())) {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsRootUrl);
     }
-    $this->executeGetList($rq, NULL, FALSE);
+    $toList = FALSE;
     if (\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($this->app()->user(), 0) && $rq->getData("target") !== "") {
+      $toList = $rq->getData("target") === "listAll";
+    } else {
+      $this->executeGetList($rq, NULL, FALSE);
+      $toList = \Applications\PMTool\Helpers\TaskHelper::UserHasTasks($this->app()->user(), 0);
+    }
+    if ($toList && $rq->getData("target") === "listAll") {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
     } else {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=add&testing=true");
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=add&test=true");
     }
   }
 
@@ -37,10 +43,9 @@ class TaskController extends \Library\BaseController {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
-    $tasks = \Applications\PMTool\Helpers\TaskHelper::GetSessionTasks($this->app()->user());
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $tasks,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\TaskHelper::GetFilteredTaskList($this->app()->user()),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
@@ -67,9 +72,10 @@ class TaskController extends \Library\BaseController {
 
     $result["dataOut"] = $manager->add($task);
     $task->setTask_id($result["dataOut"]);
-    array_push($sessionProject[\Library\Enums\SessionKeys::ProjectTasks], $task);
+    array_push($sessionProject[\Library\Enums\SessionKeys::ProjectTasks], \Library\Enums\SessionKeys::TaskKey . $task->task_id());
 
     if ($result["dataOut"] !== NULL) {
+      \Applications\PMTool\Helpers\TaskHelper::AddSessionTask($this->app()->user(), $task);
       \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
     }
 
@@ -84,11 +90,9 @@ class TaskController extends \Library\BaseController {
   public function executeEdit(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
-    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
-
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetSessionTask($this->app()->user(), $this->dataPost["task_id"]);
     //Init PDO
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $task = $this->_PrepareTaskObject($this->dataPost());
+    $task = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Task());
     $result["data"] = $task;
 
     $manager = $this->managers->getManagerOf($this->module());
@@ -96,8 +100,8 @@ class TaskController extends \Library\BaseController {
 
     //Clear the task and facility list from session for the connect PM
     if ($result_edit) {
-      $sessionProject[\Library\Enums\SessionKeys::ProjectTasks] = array();
-      \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+      $sessionTask[\Library\Enums\SessionKeys::TaskObj] = $task;
+      \Applications\PMTool\Helpers\TaskHelper::SetSessionTask($this->app()->user(), $sessionTask);
     }
 
     $this->SendResponseWS(
@@ -111,18 +115,25 @@ class TaskController extends \Library\BaseController {
   public function executeDelete(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
-    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $db_result = FALSE;
     $task_id = intval($this->dataPost["task_id"]);
 
     //Check if the task to be deleted if the Task manager's
-    $task_selected = $this->_GetTaskFromSession($task_id);
+    $task_selected = \Applications\PMTool\Helpers\TaskHelper::GetSessionTask($this->app()->user(), $task_id);
     //Load interface to query the database
     if ($task_selected !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
-      $db_result = $manager->delete($task_id);
-      if ($db_result) {
-        $sessionProject[\Library\Enums\SessionKeys::ProjectTasks] = array();
+      if ($manager->delete($task_id)) {
+        $sessionTasks = \Applications\PMTool\Helpers\TaskHelper::GetSessionTasks($this->app()->user());
+        unset($sessionTasks[\Library\Enums\SessionKeys::TaskKey . $task_id]);
+        \Applications\PMTool\Helpers\TaskHelper::SetSessionTasks($this->app()->user(), $sessionTasks);
+        
+        $index = \Applications\PMTool\Helpers\CommonHelper::FindIndexInIdListById(
+                (\Library\Enums\SessionKeys::TaskKey . $task_id), 
+                $sessionProject[\Library\Enums\SessionKeys::ProjectTasks]);
+        $db_result = $index === NULL ? FALSE : TRUE;
+        unset($sessionProject[\Library\Enums\SessionKeys::ProjectTasks][$index]);
         \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
       }
     }
@@ -163,7 +174,7 @@ class TaskController extends \Library\BaseController {
     $result = $this->InitResponseWS();
     $task_id = intval($this->dataPost["task_id"]);
 
-    $task_selected = $this->_GetTaskFromSession($task_id);
+    $task_selected = \Applications\PMTool\Helpers\TaskHelper::GetSessionTask($this->app()->user(), $task_id);
 
     $result["task"] = $task_selected;
     $this->SendResponseWS(
@@ -202,55 +213,6 @@ class TaskController extends \Library\BaseController {
         "resx_key" => $this->action(),
         "step" => ($rows_affected === count($task_ids)) ? "success" : "error"
     ));
-  }
-
-  private function _GetAndStoreTasksInSession($sessionProject) {
-    $lists = array();
-    if (count($sessionProject[\Library\Enums\SessionKeys::ProjectTasks]) === 0) {
-      $this->executeGetList(NULL, $sessionProject, false);
-    } else {
-      //The tasks are already in Session
-    }
-  }
-
-  private function _PrepareTaskObject($data_sent) {
-    $task = new \Applications\PMTool\Models\Dao\Task();
-    $task->setProject_id($data_sent["project_id"]);
-    $task->setTask_id(!array_key_exists('task_id', $data_sent) ? NULL : $data_sent["task_id"]);
-    $task->setTask_name(!array_key_exists('task_name', $data_sent) ? NULL : $data_sent["task_name"]);
-    $task->setTask_deadline(!array_key_exists('task_deadline', $data_sent) ? "" : $data_sent["task_deadline"]);
-    $task->setTask_instructions(!array_key_exists('task_instructions', $data_sent) ? "" : $data_sent["task_instructions"]);
-    $task->setTask_trigger_cal(!array_key_exists('task_trigger_cal', $data_sent) ? "" : $data_sent["task_trigger_cal"]);
-    $task->setTask_trigger_pm(!array_key_exists('task_trigger_pm', $data_sent) ? "" : $data_sent["task_trigger_pm"]);
-    $task->setTask_trigger_ext(!array_key_exists('task_trigger_ext', $data_sent) ? "" : $data_sent["task_trigger_ext"]);
-//    $task->setTask_active(!array_key_exists('task_active', $data_sent) ? 0 : ($data_sent["task_active"] === "1"));
-
-    return $task;
-  }
-
-  private function _PrepareManyTaskObjects() {
-    $tasks = array();
-    $task_names = \Applications\PMTool\Helpers\CommonHelper::StringToArray("\n", $this->dataPost["names"]);
-    foreach ($task_names as $name) {
-      $task = new \Applications\PMTool\Models\Dao\Task();
-      $task->setProject_id($this->dataPost["project_id"]);
-      $task->setTask_name($name);
-      array_push($tasks, $task);
-    }
-    return $tasks;
-  }
-
-  private function _GetTaskFromSession($task_id) {
-    $taskMatch = NULL;
-    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
-    $tasks = $sessionProject[\Library\Enums\SessionKeys::ProjectTasks];
-    foreach ($tasks as $task) {
-      if (intval($task->task_id()) === $task_id) {
-        $taskMatch = $task;
-        break;
-      }
-    }
-    return $taskMatch;
   }
 
 }

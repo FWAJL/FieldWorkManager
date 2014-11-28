@@ -1,12 +1,12 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 
 <div id="task_info"  class="data-form">
-  <fieldset class="task_form">
-    <ol class="add-new-item">
-      <li style="display: none;">
-        <input name="task_id" type="text" />
-      </li>
-      <li style="display: none;">
+<fieldset class="task_form">
+  <ol class="add-new-item">
+    <li style="display: none;">
+      <input name="task_id" type="text" />
+    </li>
+        <li style="display: none;">
         <input name="project_id" type="text" value="<?php echo $current_project->project_id() ?>" />
       </li>
       <br />
