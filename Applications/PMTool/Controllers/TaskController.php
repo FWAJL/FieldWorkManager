@@ -134,7 +134,7 @@ class TaskController extends \Library\BaseController {
                 $sessionProject[\Library\Enums\SessionKeys::ProjectTasks]);
         $db_result = $index === NULL ? FALSE : TRUE;
         unset($sessionProject[\Library\Enums\SessionKeys::ProjectTasks][$index]);
-        \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+        \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
       }
     }
 
