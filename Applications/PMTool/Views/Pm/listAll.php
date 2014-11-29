@@ -1,5 +1,5 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
-<div class="right-aside main col-lg-9 col-md-9 col-sm-9">
+<div class="right-aside main col-lg-10 col-md-10 col-sm-10">
   <div class="pm_list">
     <h3><?php echo $resx["pm_list_all_header"]; ?></h3>
     <div class="content-container container-fluid">
