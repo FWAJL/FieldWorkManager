@@ -62,7 +62,7 @@ class TaskHelper {
     return $sessionTasks[$key];
   }
 
-  public static function GetFilteredTaskList(\Library\User $user) {
+  public static function GetFilteredTaskObjectsList(\Library\User $user) {
     $filteredTaskList = array();
     $sessionTasks = self::GetSessionTasks($user);
     foreach (self::GetSessionProjectTasks($user) as $task_key) {
