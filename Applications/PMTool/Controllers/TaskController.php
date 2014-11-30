@@ -45,7 +45,7 @@ class TaskController extends \Library\BaseController {
 
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\TaskHelper::GetFilteredTaskList($this->app()->user()),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\TaskHelper::GetFilteredTaskObjectsList($this->app()->user()),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
@@ -191,21 +191,15 @@ class TaskController extends \Library\BaseController {
     $rows_affected = 0;
     //Get the task objects from ids received
     $task_ids = str_getcsv($this->dataPost["task_ids"], ',');
-    $sessionProject = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
-    $tasks = $sessionProject[\Library\Enums\SessionKeys::ProjectTasks];
-    $matchedElements = $this->FindObjectsFromIds(
-            array(
-                "filter" => "task_id",
-                "ids" => $task_ids,
-                "objects" => $tasks)
-    );
+    $sessionTasks = \Applications\PMTool\Helpers\TaskHelper::GetSessionTasks($this->app()->user());
 
-    foreach ($matchedElements as $task) {
+    foreach ($task_ids as $id) {
+      $task = $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $id][\Library\Enums\SessionKeys::TaskObj];
       $task->setTask_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
       $manager = $this->managers->getManagerOf($this->module);
       $rows_affected += $manager->edit($task) ? 1 : 0;
     }
-    \Applications\PMTool\Helpers\CommonHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+    \Applications\PMTool\Helpers\TaskHelper::SetSessionTasks($this->app()->user(), $sessionTasks);
 
     $this->SendResponseWS(
             $result, array(
