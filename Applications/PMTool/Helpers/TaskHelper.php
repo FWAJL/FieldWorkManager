@@ -98,11 +98,7 @@ class TaskHelper {
   }
 
   public static function UserHasTasks(\Library\User $user, $task_id) {
-    $redirect = FALSE;
-    if (self::GetSessionTasks($user) !== NULL) {
-      $redirect = count(self::GetSessionTasks($user)) > 0;
-    }
-    return $redirect;
+    return count(self::GetFilteredTaskObjectsList($user)) > 0;
   }
 
   public static function SetSessionTasks($user, $tasks) {
