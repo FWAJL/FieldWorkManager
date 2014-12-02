@@ -198,14 +198,6 @@
         <php_modules>
             <php_module key="task_tabs_open" file_name="task_tabs_open.php" />
             <php_module key="task_form" file_name="task_form.php" />
-            <php_module key="task_technicians_form" file_name="task_technicians_form.php" />
-            <php_module key="task_locations_form" file_name="task_locations_form.php" />
-            <php_module key="task_insp_forms" file_name="task_insp_forms.php" />
-            <php_module key="task_field_analytes_form" file_name="task_field_analytes_form.php" />
-            <php_module key="field_sample_matrix_form" file_name="field_sample_matrix_form.php" />
-            <php_module key="task_coc_info_form" file_name="task_coc_info_form.php" />
-            <php_module key="task_lab_analytes_form" file_name="task_lab_analytes_form.php" />
-            <php_module key="lab_sample_matrix_form" file_name="lab_sample_matrix_form.php" />
             <php_module key="task_buttons" file_name="task_buttons.php" />
             <php_module key="task_tabs_close" file_name="task_tabs_close.php" />
         </php_modules>
@@ -219,7 +211,8 @@
         </css_files>
         <php_modules>
             <php_module key="task_tabs_open" file_name="task_tabs_open.php" />
-            <php_module key="task_locations_form" file_name="task_locations_form.php" />
+            <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
+            <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
             <php_module key="task_tabs_close" file_name="task_tabs_close.php" />
         </php_modules>
     </route><!--  task/locations -->

@@ -30,7 +30,11 @@ class ViewVariablesKeys {
   const data = "data";
   const module = "module";
   const objects = "objects";
+  const objects_left = "objects_left";
+  const objects_right = "objects_right";
   const properties = "properties";
+  const properties_right = "properties_right";
+  const properties_left = "properties_left";
   const property_id = "prop_id";
   const property_name = "prop_name";
   const property_active = "prop_active";
@@ -41,6 +45,7 @@ class ViewVariablesKeys {
   const inactive_list = "inactive_list_module";
   
   const currentProject = "current_project";
+  const currentTask = "current_task";
   
   //Project's views variables
   const form_modules = "form_modules"; 
