@@ -13,6 +13,8 @@ $(document).ready(function() {
     _default = "technician_info";
   } else if (utils.getPathPart("resource")) {
     _default = "resource_info";
+  } else if (utils.getPathPart("task/locations")) {
+    _default = "task_locations";
   } 
   
   $(".data-form").hide();
@@ -25,6 +27,7 @@ $(document).ready(function() {
     $(this).siblings().removeClass("active");
     $(this).css("display", "").addClass("active");
   });
+  $()
 });
 
 $(document).ready(function () {
