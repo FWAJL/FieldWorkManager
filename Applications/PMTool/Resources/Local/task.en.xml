@@ -20,7 +20,7 @@
   <resource key="message_error_updateItems">Error editing the tasks.</resource>
   <resource key="message_success_updateItems">The tasks have been edited</resource>
 
-<!-- Buttons -->
+  <!-- Buttons -->
 
   <resource key="task_button_add">Add this task</resource>
   <resource key="task_button_edit">Edit this task</resource>
@@ -29,7 +29,7 @@
   <resource key="btn_to_active_list">Activate Task</resource> 
   <resource key="btn_to_lead_list">Assign as a Lead Technician</resource>  
   
-<!-- Labels -->
+  <!-- Labels -->
 
   <resource key="task_legend_add">Add new task</resource>
   <resource key="task_legend_edit">Edit this task</resource>
@@ -38,7 +38,7 @@
   <resource key="h3_tasks_inactive">Inactive tasks</resource> 
   <resource key="task_active">Active</resource>  
     
-<!--  Task Info Form-->
+  <!--  Task Info Form-->
   
   <resource key="task_name">Task Name</resource>
   <resource key="task_instructions">Instructions</resource>
@@ -51,29 +51,29 @@
   <resource key="task_trigger_ext">External</resource>
   <resource key="resource_needs">Choose Resource Needs</resource>
   
- <!--  Task Technicians Form--> 
+  <!--  Task Technicians Form--> 
 
   <resource key="selected_task_technicians">Technicians assigned to Task</resource>
   <resource key="not_selected_task_technicians">All available technicians</resource>
 
- <!--  Task Locations Form--> 
-
+  <!--  Task Locations Form--> 
+  <resource key="task_locations_header">Task's locations</resource>
   <resource key="selected_task_locations">Locations for this Task</resource>
   <resource key="not_selected_task_locations">All available locations</resource>
 
- <!--  Task Inspections Form--> 
+  <!--  Task Inspections Form--> 
 
-<!--  <resource key="">TBD</resource>-->
+  <!--  <resource key="">TBD</resource>-->
 
- <!--  Field Analytes Form--> 
+  <!--  Field Analytes Form--> 
 
-<!--  <resource key="">TBD</resource>-->
+  <!--  <resource key="">TBD</resource>-->
 
-<!--  Field Sample Matrix Form--> 
+  <!--  Field Sample Matrix Form--> 
 
-<!--  <resource key="">TBD</resource>-->
+  <!--  <resource key="">TBD</resource>-->
 
-<!--  Chain of Custody Form--> 
+  <!--  Chain of Custody Form--> 
 
   <resource key="po_number">Purchase Order Number</resource>
   <resource key="lab_instructions">Instructions</resource>

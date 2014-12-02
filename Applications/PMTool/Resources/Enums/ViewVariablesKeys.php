@@ -35,6 +35,7 @@ class ViewVariablesKeys {
   const property_name = "prop_name";
   const property_active = "prop_active";
 
+  const tabStatus = "tab";
 
   const active_list = "active_list_module";
   const inactive_list = "inactive_list_module";

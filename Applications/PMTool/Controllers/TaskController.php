@@ -8,15 +8,17 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class TaskController extends \Library\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
-    if (!\Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user())) {
+    $user = $this->app()->user();
+    \Applications\PMTool\Helpers\TaskHelper::AddTabsStatus($user);
+    if (!\Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($user)) {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsRootUrl);
     }
     $toList = FALSE;
-    if (\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($this->app()->user(), 0) && $rq->getData("target") !== "") {
+    if (\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($user, 0) && $rq->getData("target") !== "") {
       $toList = $rq->getData("target") === "listAll";
     } else {
       $this->executeGetList($rq, NULL, FALSE);
-      $toList = \Applications\PMTool\Helpers\TaskHelper::UserHasTasks($this->app()->user(), 0);
+      $toList = \Applications\PMTool\Helpers\TaskHelper::UserHasTasks($user, 0);
     }
     if ($toList && $rq->getData("target") === "listAll") {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
@@ -35,7 +37,9 @@ class TaskController extends \Library\BaseController {
     }
     //Which module?
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::tabStatus, \Applications\PMTool\Helpers\TaskHelper::GetTabsStatus($this->app()->user()));
+    $this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
   public function executeListAll(\Library\HttpRequest $rq) {
@@ -44,17 +48,17 @@ class TaskController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
     $data = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\TaskHelper::GetFilteredTaskObjectsList($this->app()->user()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\TaskHelper::GetFilteredTaskObjectsList($this->app()->user()),
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 
     $modules = $this->app()->router()->selectedRoute()->phpModules();
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {
@@ -80,10 +84,10 @@ class TaskController extends \Library\BaseController {
     }
 
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
-        "resx_key" => $this->action(),
-        "step" => $result["dataOut"] > 0 ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
+      "resx_key" => $this->action(),
+      "step" => $result["dataOut"] > 0 ? "success" : "error"
     ));
   }
 
@@ -105,10 +109,10 @@ class TaskController extends \Library\BaseController {
     }
 
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
-        "resx_key" => $this->action(),
-        "step" => $result_edit ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
+      "resx_key" => $this->action(),
+      "step" => $result_edit ? "success" : "error"
     ));
   }
 
@@ -128,10 +132,9 @@ class TaskController extends \Library\BaseController {
         $sessionTasks = \Applications\PMTool\Helpers\TaskHelper::GetSessionTasks($this->app()->user());
         unset($sessionTasks[\Library\Enums\SessionKeys::TaskKey . $task_id]);
         \Applications\PMTool\Helpers\TaskHelper::SetSessionTasks($this->app()->user(), $sessionTasks);
-        
+
         $index = \Applications\PMTool\Helpers\CommonHelper::FindIndexInIdListById(
-                (\Library\Enums\SessionKeys::TaskKey . $task_id), 
-                $sessionProject[\Library\Enums\SessionKeys::ProjectTasks]);
+                (\Library\Enums\SessionKeys::TaskKey . $task_id), $sessionProject[\Library\Enums\SessionKeys::ProjectTasks]);
         $db_result = $index === NULL ? FALSE : TRUE;
         unset($sessionProject[\Library\Enums\SessionKeys::ProjectTasks][$index]);
         \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
@@ -139,10 +142,10 @@ class TaskController extends \Library\BaseController {
     }
 
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
-        "resx_key" => $this->action(),
-        "step" => $db_result !== FALSE ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
+      "resx_key" => $this->action(),
+      "step" => $db_result !== FALSE ? "success" : "error"
     ));
   }
 
@@ -161,10 +164,10 @@ class TaskController extends \Library\BaseController {
     if ($isAjaxCall) {
       $step_result = $result[\Library\Enums\SessionKeys::ProjectTasks] !== NULL ? "success" : "error";
       $this->SendResponseWS(
-              $result, array(
-          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
-          "resx_key" => $this->action(),
-          "step" => $step_result
+          $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
+        "resx_key" => $this->action(),
+        "step" => $step_result
       ));
     }
   }
@@ -175,13 +178,14 @@ class TaskController extends \Library\BaseController {
     $task_id = intval($this->dataPost["task_id"]);
 
     $task_selected = \Applications\PMTool\Helpers\TaskHelper::GetSessionTask($this->app()->user(), $task_id);
-
+    \Applications\PMTool\Helpers\TaskHelper::SetSessionTask($this->user(), $task_selected);
+    
     $result["task"] = $task_selected;
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
-        "resx_key" => $this->action(),
-        "step" => ($task_selected !== NULL) ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
+      "resx_key" => $this->action(),
+      "step" => ($task_selected !== NULL) ? "success" : "error"
     ));
   }
 
@@ -202,11 +206,28 @@ class TaskController extends \Library\BaseController {
     \Applications\PMTool\Helpers\TaskHelper::SetSessionTasks($this->app()->user(), $sessionTasks);
 
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
-        "resx_key" => $this->action(),
-        "step" => ($rows_affected === count($task_ids)) ? "success" : "error"
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
+      "resx_key" => $this->action(),
+      "step" => ($rows_affected === count($task_ids)) ? "success" : "error"
     ));
+  }
+
+  public function executeManageLocations(\Library\HttpRequest $rq) {
+    \Applications\PMTool\Helpers\TaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\TaskTabKeys::LocationsTab);
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+    if ($rq->getData("mode") === "edit") {
+      $this->page->addVar("task_editing_header", $this->resxData["task_legend_edit"]);
+    } else {
+      $this->page->addVar("task_editing_header", $this->resxData["task_legend_add"]);
+    }
+    $this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::tabStatus, \Applications\PMTool\Helpers\TaskHelper::GetTabsStatus($this->user()));
+
+    //Which module?
+    $this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
 }

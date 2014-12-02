@@ -108,7 +108,7 @@ $(document).ready(function() {
    * @param {string} variable : path part key
    * @returns {Boolean} : the result of lookup
    */
-  utils.getPathPart = function(part) {
+  utils.getPathPart = function(part, depth) {
     var path = window.location.pathname;
     var parts = path.split("/");
     for (var i = 0; i < parts.length; i++) {

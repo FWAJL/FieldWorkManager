@@ -141,6 +141,31 @@ class TaskHelper {
       self::SetSessionTasks($user, $sessionTasks);
     }
   }
+  public static function AddTabsStatus(\Library\User $user) {
+    $tabs = array(
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::InfoTab => "active",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::TechniciansTab => "",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::LocationsTab => "",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::InspFormsTab => "",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::FieldAnalytesTab => "",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::FieldSampleMatrixTab => "",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::CocTab => "",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::LabAnalytesTab => "",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::LabSampleMatrixTab => ""
+    );
+    $user->setAttribute(\Library\Enums\SessionKeys::TabsStatus, $tabs);
+  }
+  public static function GetTabsStatus(\Library\User $user) {
+    return $user->getAttribute(\Library\Enums\SessionKeys::TabsStatus);
+  }
 
+  public static function SetActiveTab(\Library\User $user, $tab_name) {
+    $tabs = $user->getAttribute(\Library\Enums\SessionKeys::TabsStatus);
+    foreach ($tabs as $key => $value) {
+      $tabs[$key] = "";
+    }
+    $tabs[$tab_name] = "active";
+    $user->setAttribute(\Library\Enums\SessionKeys::TabsStatus, $tabs);
+  }
 }
 
