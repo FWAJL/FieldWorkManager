@@ -8,15 +8,17 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class TaskController extends \Library\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
-    if (!\Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user())) {
+    $user = $this->app()->user();
+    \Applications\PMTool\Helpers\TaskHelper::AddTabsStatus($user);
+    if (!\Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($user)) {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsRootUrl);
     }
     $toList = FALSE;
-    if (\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($this->app()->user(), 0) && $rq->getData("target") !== "") {
+    if (\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($user, 0) && $rq->getData("target") !== "") {
       $toList = $rq->getData("target") === "listAll";
     } else {
       $this->executeGetList($rq, NULL, FALSE);
-      $toList = \Applications\PMTool\Helpers\TaskHelper::UserHasTasks($this->app()->user(), 0);
+      $toList = \Applications\PMTool\Helpers\TaskHelper::UserHasTasks($user, 0);
     }
     if ($toList && $rq->getData("target") === "listAll") {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
@@ -34,6 +36,8 @@ class TaskController extends \Library\BaseController {
       $this->page->addVar("task_editing_header", $this->resxData["task_legend_add"]);
     }
     //Which module?
+    $this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::tabStatus, \Applications\PMTool\Helpers\TaskHelper::GetTabsStatus($this->app()->user()));
     $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
@@ -128,10 +132,9 @@ class TaskController extends \Library\BaseController {
         $sessionTasks = \Applications\PMTool\Helpers\TaskHelper::GetSessionTasks($this->app()->user());
         unset($sessionTasks[\Library\Enums\SessionKeys::TaskKey . $task_id]);
         \Applications\PMTool\Helpers\TaskHelper::SetSessionTasks($this->app()->user(), $sessionTasks);
-        
+
         $index = \Applications\PMTool\Helpers\CommonHelper::FindIndexInIdListById(
-                (\Library\Enums\SessionKeys::TaskKey . $task_id), 
-                $sessionProject[\Library\Enums\SessionKeys::ProjectTasks]);
+                        (\Library\Enums\SessionKeys::TaskKey . $task_id), $sessionProject[\Library\Enums\SessionKeys::ProjectTasks]);
         $db_result = $index === NULL ? FALSE : TRUE;
         unset($sessionProject[\Library\Enums\SessionKeys::ProjectTasks][$index]);
         \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
@@ -175,6 +178,7 @@ class TaskController extends \Library\BaseController {
     $task_id = intval($this->dataPost["task_id"]);
 
     $task_selected = \Applications\PMTool\Helpers\TaskHelper::GetSessionTask($this->app()->user(), $task_id);
+    \Applications\PMTool\Helpers\TaskHelper::SetSessionTask($this->user(), $task_selected);
 
     $result["task"] = $task_selected;
     $this->SendResponseWS(
@@ -207,6 +211,32 @@ class TaskController extends \Library\BaseController {
         "resx_key" => $this->action(),
         "step" => ($rows_affected === count($task_ids)) ? "success" : "error"
     ));
+  }
+
+  public function executeManageLocations(\Library\HttpRequest $rq) {
+    \Applications\PMTool\Helpers\TaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\TaskTabKeys::LocationsTab);
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
+
+    $data = array(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_right => $sessionProject[\Library\Enums\SessionKeys::ProjectLocations],
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_left => array(),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("location")),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
+    );
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
+
+
+    $this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::tabStatus, \Applications\PMTool\Helpers\TaskHelper::GetTabsStatus($this->user()));
+
+    //Which module?
+    $this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
 }

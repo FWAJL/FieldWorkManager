@@ -15,13 +15,15 @@ abstract class BaseController extends ApplicationComponent {
   protected $resxfile = "";
   protected $resxData = array();
   protected $dataPost = array();
+  //shortcut from $app->user() also used as $this->app()->user() in controllers
+  protected $user = null;
 
 
   public function __construct(Application $app, $module, $action, $resxfile) {
     parent::__construct($app);
     $this->managers = new \Library\DAL\Managers('PDO', $app);
     $this->page = new Page($app);
-
+    $this->user = $app->user();
     $this->setModule($module);
     $this->setAction($action);
     $this->setView($action);
@@ -72,6 +74,10 @@ abstract class BaseController extends ApplicationComponent {
     return $this->dataPost;
   }
 
+  public function user() {
+    return $this->user;
+  }
+  
   public function setModule($module) {
     if (!is_string($module) || empty($module)) {
       throw new \InvalidArgumentException('the module value must be a string and not be empty');
