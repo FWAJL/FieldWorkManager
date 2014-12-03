@@ -2,8 +2,9 @@
 <div class="right-aside main col-lg-10 col-md-10 col-sm-10">
   <h3>
     <?php echo $current_project->project_name(); ?>
+    <?php if ($current_task !== NULL) { ?>
     <span class="glyphicon glyphicon-chevron-right"></span>    
-    <?php if ($current_task !== NULL) { echo $current_task->task_name(); } ?>
+    <?php echo $current_task->task_name(); } ?>
     <span class="glyphicon glyphicon-chevron-right"></span>    
     <?php echo $task_editing_header ?></h3>  
   <div class="task_form_sections">

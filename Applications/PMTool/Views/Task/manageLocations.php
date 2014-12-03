@@ -23,6 +23,5 @@
       <?php require $form_modules["group_list_right"]; ?>              
     </div>
     <?php require $form_modules["task_tabs_close"]; ?>              
-  </div>
-
+  </div
 </div>
