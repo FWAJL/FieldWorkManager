@@ -131,8 +131,13 @@ class TaskHelper {
     $user->setAttribute(\Library\Enums\SessionKeys::TabsStatus, $tabs);
   }
 
-  public static function SetCurrentSessionTask(\Library\User $user, $sessionTask) {
+  public static function SetCurrentSessionTask(\Library\User $user, $sessionTask = NULL, $task_id = 0) {
+    if ($task_id > 0 && $sessionTask === NULL) {
+      $sessionTasks = self::GetSessionTasks($user);
+      $sessionTask = $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $task_id];
+    }
     $user->setAttribute(\Library\Enums\SessionKeys::CurrentTask, $sessionTask);
+    return $sessionTask;
   }
   public static function SetSessionTasks($user, $tasks) {
     $user->setAttribute(\Library\Enums\SessionKeys::SessionTasks, $tasks);
