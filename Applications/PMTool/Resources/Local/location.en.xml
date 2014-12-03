@@ -29,6 +29,7 @@
   <resource key="location_long">Location Longiture</resource>
   <resource key="location_desc">Location Description</resource>
   <resource key="location_active">Active</resource>
+  <resource key="location_active_many">Set list of locations as Active</resource>
   <resource key="location_visible">Visible</resource>
   <resource key="location_button_add">Add this location</resource>
   <resource key="location_button_edit">Edit this location</resource>
