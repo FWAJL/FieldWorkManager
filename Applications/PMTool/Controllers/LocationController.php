@@ -244,6 +244,7 @@ class LocationController extends \Library\BaseController {
       $location = new \Applications\PMTool\Models\Dao\Location();
       $location->setProject_id($this->dataPost["project_id"]);
       $location->setLocation_name($name);
+      $location->setLocation_active($this->dataPost["active"]);
       array_push($locations, $location);
     }
     return $locations;
