@@ -308,6 +308,9 @@ CREATE TABLE `task_technicians` (
 -- Dumping data for table `project_manager`
 INSERT INTO `project_manager` (`pm_id`, `username`, `password`, `hint`, `pm_comp_name`, `pm_name`, `pm_address`, `pm_phone`, `pm_email`) VALUES
 (1, 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683', 'hint', 'comp name', 'John', 'Doe', '1234567890', 'test@fwa.net');
+INSERT INTO `project_manager` (`pm_id`,`username`,`password`,`hint`,`pm_comp_name`,`pm_name`,`pm_address`,`pm_phone`,`pm_email`) VALUES 
+(3,'demo','89e495e7941cf9e40e6980d14a16bf023ccd4c91g496lJL683','','','Demo User','','','');
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
