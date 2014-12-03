@@ -35,6 +35,18 @@ class ProjectHelper {
     self::SetSessionProjects($user, $sessionProjects);
   }
 
+  public static function DoesProjectHasActiveLocations(\Library\User $user) {
+    $itDoes = FALSE;
+    $currentProject = self::GetCurrentSessionProject($user);
+    foreach ($currentProject[\Library\Enums\SessionKeys::ProjectLocations] as $location) {
+      if ($location->location_active()) { 
+        $itDoes = TRUE;
+        break;
+      }
+    }
+    return $itDoes;
+  }
+
   public static function GetAndStoreCurrentProject(\Library\User $user, $project_id) {
     $userSessionProjects = NULL;
     if ($user->keyExistInSession(\Library\Enums\SessionKeys::UserSessionProjects)) {
