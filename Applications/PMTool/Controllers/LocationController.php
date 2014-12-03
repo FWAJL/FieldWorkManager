@@ -36,7 +36,7 @@ class LocationController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
     $this->_GetAndStoreLocationsInSession($sessionProject);
-    // $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
@@ -244,6 +244,7 @@ class LocationController extends \Library\BaseController {
       $location = new \Applications\PMTool\Models\Dao\Location();
       $location->setProject_id($this->dataPost["project_id"]);
       $location->setLocation_name($name);
+      $location->setLocation_active($this->dataPost["active"]);
       array_push($locations, $location);
     }
     return $locations;

@@ -99,7 +99,7 @@ $(document).ready(function() {
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        //utils.redirect("task/listAll", 1000);
+        utils.redirect("task/showForm?mode=edit&task_id=" + reply.dataOut, 1000);
       }
     });
   };

@@ -9,6 +9,7 @@ class TaskController extends \Library\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
     $user = $this->app()->user();
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
     \Applications\PMTool\Helpers\TaskHelper::AddTabsStatus($user);
     if (!\Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($user)) {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsRootUrl);
@@ -16,20 +17,25 @@ class TaskController extends \Library\BaseController {
     $toList = FALSE;
     if (\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($user, 0) && $rq->getData("target") !== "") {
       $toList = $rq->getData("target") === "listAll";
+      $toEdit = $sessionTask[\Library\Enums\SessionKeys::TaskObj] !== NULL;
     } else {
       $this->executeGetList($rq, NULL, FALSE);
       $toList = \Applications\PMTool\Helpers\TaskHelper::UserHasTasks($user, 0);
     }
     if ($toList && $rq->getData("target") === "listAll") {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
+    } elseif ($toEdit) {
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=edit&task_id=". $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
     } else {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=add&test=true");
     }
   }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
-    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::SetCurrentSessionTask($this->user(), NULL, $rq->getData("task_id"));
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
     if ($rq->getData("mode") === "edit") {
       $this->page->addVar("task_editing_header", $this->resxData["task_legend_edit"]);
     } else {
@@ -214,13 +220,15 @@ class TaskController extends \Library\BaseController {
   }
 
   public function executeManageLocations(\Library\HttpRequest $rq) {
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+    if ($sessionTask[\Library\Enums\SessionKeys::TaskObj] === NULL) { $this->Redirect (\Library\Enums\ResourceKeys\UrlKeys::TaskRootUrl); }
+        
     \Applications\PMTool\Helpers\TaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\TaskTabKeys::LocationsTab);
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
-    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
-
+    
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
-
+    $this->page->addVar("ProjectHasActiveLocation", \Applications\PMTool\Helpers\ProjectHelper::DoesProjectHasActiveLocations($this->user()));
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_right => $sessionProject[\Library\Enums\SessionKeys::ProjectLocations],

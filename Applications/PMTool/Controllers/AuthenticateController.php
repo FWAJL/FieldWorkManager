@@ -92,9 +92,31 @@ class AuthenticateController extends \Library\BaseController {
     $this->app->user->setAuthenticated(FALSE);
     $this->app->user->unsetAttribute(\Library\Enums\SessionKeys::UserConnected);
     session_destroy();
-    if ($redirect) $this->Redirect("login");
+    if ($redirect) { $this->Redirect("login"); }
   }
   
+    /**
+   * Method that logout a user from the session and then redirect him to Login page.
+   *
+   * @param \Library\HttpRequest $rq
+   */
+  public function executeCreate(\Library\HttpRequest $rq) {
+    $protect = new \Library\BL\Core\Encryption();
+    $data = array(
+      "username" => $rq->getData("login"),
+      "password" => $rq->getData("pwd"),
+      "pm_name" => "Demo User"
+    );
+    $pm = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Project_manager());
+    $pm->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $pm->password()));
+
+    $loginDal = $this->managers->getManagerOf("Login");
+    $id = $loginDal->add($pm);
+    $redirect = intval($id) > 0 ? TRUE : FALSE;
+    
+    if ($redirect) { $this->Redirect("login"); }
+  }
+
   /**
    * Prepare the User Object before calling the DB.
    * 

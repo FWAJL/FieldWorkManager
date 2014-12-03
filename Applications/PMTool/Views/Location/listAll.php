@@ -4,7 +4,7 @@
     <h3>
       <?php echo $current_project->project_name(); ?>
       <span class="glyphicon glyphicon-chevron-right"></span>
-      <?php echo $resx["location_list_all_header"]?>
+      <?php echo $resx["location_list_all_header"] ?>
     </h3>
     <div class="content-container container-fluid">
       <div class="row">
@@ -12,6 +12,10 @@
           <h4><?php echo $resx["h3_location_names_form"]; ?></h4>
           <div class="add-new-locations">
             <div class="location-names"><textarea name="location_names" type="text"></textarea></div>
+            <div class="location-active">
+              <label><?php echo $resx["location_active_many"]; ?></label>
+              <input name="location_active" type="checkbox" checked />
+            </div>
             <input id="btn-add-location-names" type="button" value="<?php echo $resx["btn_add_location_names"] ?>" class="btn btn-primary" />
           </div>
         </div>

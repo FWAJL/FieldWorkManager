@@ -48,7 +48,11 @@ $(document).ready(function() {
 
 
   $("#btn-add-location-names").click(function() {
-    location_manager.add($("textarea[name=\"location_names\"]").val(), "location", "add", false);
+    var data = {
+      "names": $("textarea[name=\"location_names\"]").val(), 
+      "active": $("input[name=\"location_active\"]").prop("checked")
+    };
+    location_manager.add(data, "location", "add");
   });//Add many locations
 
   $("#btn-add-location-manual").click(function() {
@@ -105,8 +109,8 @@ $(document).ready(function() {
  * Responsible to manage locations.
  */
 (function(location_manager) {
-  location_manager.add = function(userData, controller, action, isSingle) {
-    var data = isSingle ? userData : {"names": userData};
+  location_manager.add = function(data, controller, action, isSingle) {
+//    var data = isSingle ? userData : {"names": userData};
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Location/Add WebService
       if (reply === null || reply.dataId === undefined || reply.dataId === null || parseInt(reply.dataId) === 0) {//has an error
         toastr.error(reply.message);

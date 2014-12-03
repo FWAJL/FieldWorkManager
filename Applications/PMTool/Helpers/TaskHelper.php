@@ -31,8 +31,25 @@ class TaskHelper {
 
   public static function AddSessionTask($user, \Applications\PMTool\Models\Dao\Task $task) {
     $sessionTasks = self::GetSessionTasks($user);
-    $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $task->task_id()] = self::MakeSessionTask($task);
+    $sessionTask = self::MakeSessionTask($task);
+    $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $task->task_id()] = $sessionTask;
+    self::SetCurrentSessionTask($user, $sessionTask);
     self::SetSessionTasks($user, $sessionTasks);
+  }
+
+    public static function AddTabsStatus(\Library\User $user) {
+    $tabs = array(
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::InfoTab => "active",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::TechniciansTab => "",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::LocationsTab => "",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::InspFormsTab => "",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::FieldAnalytesTab => "",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::FieldSampleMatrixTab => "",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::CocTab => "",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::LabAnalytesTab => "",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::LabSampleMatrixTab => ""
+    );
+    $user->setAttribute(\Library\Enums\SessionKeys::TabsStatus, $tabs);
   }
 
   public static function GetAndStoreCurrentTask(\Library\User $user, $task_id) {
@@ -81,7 +98,11 @@ class TaskHelper {
     $currentProject = ProjectHelper::GetCurrentSessionProject($user);
     return $currentProject[\Library\Enums\SessionKeys::ProjectTasks];
   }
-
+  
+  public static function GetTabsStatus(\Library\User $user) {
+    return $user->getAttribute(\Library\Enums\SessionKeys::TabsStatus);
+  }
+  
   public static function GetCurrentSessionTask($user) {
     return $user->keyExistInSession(\Library\Enums\SessionKeys::CurrentTask) ?
         $user->getAttribute(\Library\Enums\SessionKeys::CurrentTask) : FALSE;
@@ -101,6 +122,23 @@ class TaskHelper {
     return count(self::GetFilteredTaskObjectsList($user)) > 0;
   }
 
+  public static function SetActiveTab(\Library\User $user, $tab_name) {
+    $tabs = $user->getAttribute(\Library\Enums\SessionKeys::TabsStatus);
+    foreach ($tabs as $key => $value) {
+      $tabs[$key] = "";
+    }
+    $tabs[$tab_name] = "active";
+    $user->setAttribute(\Library\Enums\SessionKeys::TabsStatus, $tabs);
+  }
+
+  public static function SetCurrentSessionTask(\Library\User $user, $sessionTask = NULL, $task_id = 0) {
+    if ($task_id > 0 && $sessionTask === NULL) {
+      $sessionTasks = self::GetSessionTasks($user);
+      $sessionTask = $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $task_id];
+    }
+    $user->setAttribute(\Library\Enums\SessionKeys::CurrentTask, $sessionTask);
+    return $sessionTask;
+  }
   public static function SetSessionTasks($user, $tasks) {
     $user->setAttribute(\Library\Enums\SessionKeys::SessionTasks, $tasks);
   }
@@ -125,11 +163,15 @@ class TaskHelper {
     return $SessionTasks;
   }
 
-  public static function UnsetUserSessionTask($user, $task_id) {
+  public static function UnsetUserSessionTask(\Library\User $user, $task_id) {
     $sessionTasks = $user->getAttribute(\Library\Enums\SessionKeys::SessionTasks);
     unset($sessionTasks[\Library\Enums\SessionKeys::TaskKey . $task_id]);
-    $user->unsetAttribute(\Library\Enums\SessionKeys::CurrentTask);
+    self::UnsetCurrentSessionTask($user);
     $user->setAttribute(\Library\Enums\SessionKeys::SessionTasks, $sessionTasks);
+  }
+
+  public static function UnsetCurrentSessionTask(\Library\User $user) {
+    $user->unsetAttribute(\Library\Enums\SessionKeys::CurrentTask);
   }
 
   public static function UpdateSessionTask(\Library\User $user, $sessionTask) {
@@ -141,31 +183,4 @@ class TaskHelper {
       self::SetSessionTasks($user, $sessionTasks);
     }
   }
-  public static function AddTabsStatus(\Library\User $user) {
-    $tabs = array(
-      \Applications\PMTool\Resources\Enums\TaskTabKeys::InfoTab => "active",
-      \Applications\PMTool\Resources\Enums\TaskTabKeys::TechniciansTab => "",
-      \Applications\PMTool\Resources\Enums\TaskTabKeys::LocationsTab => "",
-      \Applications\PMTool\Resources\Enums\TaskTabKeys::InspFormsTab => "",
-      \Applications\PMTool\Resources\Enums\TaskTabKeys::FieldAnalytesTab => "",
-      \Applications\PMTool\Resources\Enums\TaskTabKeys::FieldSampleMatrixTab => "",
-      \Applications\PMTool\Resources\Enums\TaskTabKeys::CocTab => "",
-      \Applications\PMTool\Resources\Enums\TaskTabKeys::LabAnalytesTab => "",
-      \Applications\PMTool\Resources\Enums\TaskTabKeys::LabSampleMatrixTab => ""
-    );
-    $user->setAttribute(\Library\Enums\SessionKeys::TabsStatus, $tabs);
-  }
-  public static function GetTabsStatus(\Library\User $user) {
-    return $user->getAttribute(\Library\Enums\SessionKeys::TabsStatus);
-  }
-
-  public static function SetActiveTab(\Library\User $user, $tab_name) {
-    $tabs = $user->getAttribute(\Library\Enums\SessionKeys::TabsStatus);
-    foreach ($tabs as $key => $value) {
-      $tabs[$key] = "";
-    }
-    $tabs[$tab_name] = "active";
-    $user->setAttribute(\Library\Enums\SessionKeys::TabsStatus, $tabs);
-  }
 }
-

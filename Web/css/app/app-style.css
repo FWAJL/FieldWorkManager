@@ -34,7 +34,7 @@ ol, ul {  margin-bottom: 0; }
 #pm_info ul{ display: none; }
 #pm_info {
   float: right;
-  width: 100px;
+  width: 125px;
   border-left: solid 1px #999;
 }
 li #pm_name{

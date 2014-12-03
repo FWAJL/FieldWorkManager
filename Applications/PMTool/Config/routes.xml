@@ -325,6 +325,7 @@
           - the type, which used to differenciate a view route from a webservice ajax route
   -->
   <route url="auth" module="Authenticate" action="authenticate" resxfile="login" type="ws" />
+  <route url="user/create" module="Authenticate" action="create" resxfile="login" type="ws" />
   <route url="project/add" module="Project" action="add" resxfile="project" type="ws" />
   <route url="project/edit" module="Project" action="edit" resxfile="project" type="ws" />
   <route url="project/delete" module="Project" action="delete" resxfile="project" type="ws" />
