@@ -9,6 +9,7 @@ class TaskController extends \Library\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
     $user = $this->app()->user();
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
     \Applications\PMTool\Helpers\TaskHelper::AddTabsStatus($user);
     if (!\Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($user)) {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsRootUrl);
@@ -16,12 +17,15 @@ class TaskController extends \Library\BaseController {
     $toList = FALSE;
     if (\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($user, 0) && $rq->getData("target") !== "") {
       $toList = $rq->getData("target") === "listAll";
+      $toEdit = $sessionTask[\Library\Enums\SessionKeys::TaskObj] !== NULL;
     } else {
       $this->executeGetList($rq, NULL, FALSE);
       $toList = \Applications\PMTool\Helpers\TaskHelper::UserHasTasks($user, 0);
     }
     if ($toList && $rq->getData("target") === "listAll") {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
+    } elseif ($toEdit) {
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=edit&task_id=". $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
     } else {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=add&test=true");
     }
