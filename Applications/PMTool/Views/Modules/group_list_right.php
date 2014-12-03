@@ -15,5 +15,5 @@
     ?>              
   </ol>   
 <?php } else { ?>
-  <p><?php $resx["no_active_project_location"]; ?></p>
+  <p><?php echo $resx["no_active_project_location"]; ?></p>
 <?php } ?>
