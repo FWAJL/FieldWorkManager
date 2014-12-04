@@ -4,6 +4,7 @@
   
   <resource key="task_h1">Welcome to Field Work Manager, for Project managers</resource>
   <resource key="task_welcome_message">Please, select a project to view the task(s) details</resource>
+  <resource key="btn_location_select_project">Select one now</resource>
   
   <!-- Errors -->
   

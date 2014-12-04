@@ -11,23 +11,26 @@ class TaskController extends \Library\BaseController {
     $user = $this->app()->user();
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
     \Applications\PMTool\Helpers\TaskHelper::AddTabsStatus($user);
-    if (!\Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($user)) {
+    if (!\Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($user)) {//No current project, redirect!
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsRootUrl);
     }
     $toList = FALSE;
+    $toEdit = FALSE;
+    $toAdd = $rq->getData("target") === "showForm";
     if (\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($user, 0) && $rq->getData("target") !== "") {
       $toList = $rq->getData("target") === "listAll";
       $toEdit = $sessionTask[\Library\Enums\SessionKeys::TaskObj] !== NULL;
+      $toAdd != $toEdit;
     } else {
       $this->executeGetList($rq, NULL, FALSE);
       $toList = \Applications\PMTool\Helpers\TaskHelper::UserHasTasks($user, 0);
     }
-    if ($toList && $rq->getData("target") === "listAll") {
+    if ($toAdd || !$toEdit && !$toList) {
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=add&test=true");
+    } elseif ($toList && $rq->getData("target") === "listAll") {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
     } elseif ($toEdit) {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=edit&task_id=". $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
-    } else {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=add&test=true");
     }
   }
 
