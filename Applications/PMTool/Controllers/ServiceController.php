@@ -11,7 +11,7 @@ class ServiceController extends \Library\BaseController {
     //Get list of services and store in session
     $lists = $this->_GetAndStoreServicesInSession($rq);
 
-    if (count($lists[\Library\Enums\SessionKeys::UserServices]) > 0) {
+    if (count($lists[\Library\Enums\SessionKeys::PmServices]) > 0) {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ServiceListAll);
     } else {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ServiceShowForm . "?mode=add&test=true");
@@ -26,10 +26,15 @@ public function executeShowForm(\Library\HttpRequest $rq) {
   
   public function executeListAll(\Library\HttpRequest $rq) {
     //Get list of services stored in session
+    
+    // Set $current_project
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+      
     $this->_GetAndStoreServicesInSession($rq);
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserServices),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $this->app()->user->getAttribute(\Library\Enums\SessionKeys::PmServices),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
@@ -56,7 +61,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     $result["dataOut"] = $manager->add($service);
 
     //Clear the service list from session for the connect PM
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserServices);
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::PmServices);
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserServiceList);
 
     $this->SendResponseWS(
@@ -81,7 +86,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     $result_insert = $manager->edit($service);
     
     //Clear the service list from session for the connect PM
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserServices);
+    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::PmServices);
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserServiceList);
 
     $this->SendResponseWS(
@@ -105,7 +110,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
       $manager = $this->managers->getManagerOf($this->module());
       $db_result = $manager->delete($service_id);
       //Clear the service from session for the connect PM
-      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserServices);
+      $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::PmServices);
       $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserServiceList);
 //      \Applications\PMTool\Helpers\CommonHelper::UnsetUserSessionService($this->app()->user(), $service_id);
     }
@@ -130,14 +135,14 @@ public function executeShowForm(\Library\HttpRequest $rq) {
 
     //Load interface to query the database for services
     $manager = $this->managers->getManagerOf($this->module);
-    $list[\Library\Enums\SessionKeys::UserServices] = $manager->selectMany($service);
+    $list[\Library\Enums\SessionKeys::PmServices] = $manager->selectMany($service);
 
     $result["lists"] = $list;
     if ($isNotAjaxCall) {
       return $list;
     } else {
       $step_result =
-             $step_result = $result[\Library\Enums\SessionKeys::UserServices] !== NULL ? "success" : "error";
+             $step_result = $result[\Library\Enums\SessionKeys::PmServices] !== NULL ? "success" : "error";
       $this->SendResponseWS(
               $result, array(
           "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Service,
@@ -169,7 +174,7 @@ public function executeGetItem(\Library\HttpRequest $rq) {
     $rows_affected = 0;
     //Get the service objects from ids received
     $service_ids = str_getcsv($this->dataPost["service_ids"], ',');
-    $services = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserServices);
+    $services = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::PmServices);
     $matchedElements = $this->FindObjectsFromIds(
             array(
                 "filter" => "service_id",
@@ -178,7 +183,7 @@ public function executeGetItem(\Library\HttpRequest $rq) {
     );
 
     //Update the service objects in DB and get result (number of rows affected)
-    //$this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserServices);
+    //$this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::PmServices);
     foreach ($matchedElements as $service) {
       $service->setService_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
       $manager = $this->managers->getManagerOf($this->module);
@@ -202,8 +207,8 @@ public function executeGetItem(\Library\HttpRequest $rq) {
   private function _GetServiceFromSession($service_id) {
     $services = array();
     $serviceMatch = NULL;
-    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserServices)) {
-      $services = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserServices);
+    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::PmServices)) {
+      $services = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::PmServices);
     }
     foreach ($services as $service) {
       if (intval($service->service_id()) === $service_id) {
@@ -222,8 +227,8 @@ public function executeGetItem(\Library\HttpRequest $rq) {
    */
   private function _CheckIfPmHasServices(\Applications\PMTool\Models\Dao\Service $pm) {
 
-    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserServices)) {
-      $services = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserServices);
+    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::PmServices)) {
+      $services = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::PmServices);
       return count($services) > 0 ? TRUE : FALSE;
     }
     $manager = $this->managers->getManagerOf($this->module);
@@ -257,15 +262,15 @@ public function executeGetItem(\Library\HttpRequest $rq) {
    */
   private function _GetAndStoreServicesInSession($rq) {
     $lists = array();
-    if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserServices)) {
+    if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::PmServices)) {
 
       $lists = $this->executeGetList($rq, TRUE);
 
       $this->app()->user->setAttribute(
-              \Library\Enums\SessionKeys::UserServices, $lists[\Library\Enums\SessionKeys::UserServices]
+              \Library\Enums\SessionKeys::PmServices, $lists[\Library\Enums\SessionKeys::PmServices]
       );
     } else {
-      $lists[\Library\Enums\SessionKeys::UserServices] = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserServices);
+      $lists[\Library\Enums\SessionKeys::PmServices] = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::PmServices);
     }
     return $lists;
   }

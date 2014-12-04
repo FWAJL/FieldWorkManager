@@ -20,30 +20,30 @@ $(document).ready(function() {
 
   //************************************************//
   // Selection of services
-  var service_ids = "";
-  $("#active-list, #inactive-list").selectable({
-    stop: function() {
-      var tmpSelection = "";
-      $(".ui-selected", this).each(function() {
-        tmpSelection += $(this).attr("data-service-id") + ",";
-      });
-      tmpSelection = utils.removeLastChar(tmpSelection);
-      if (tmpSelection.length > 0) {
-        service_ids = tmpSelection;
-        //Show the button to appropriate button
-        $(".from-" + $(this).attr("id")).show();
-      } else {
-        service_ids = [];
-        $(".from-" + $(this).attr("id")).hide();
-      }
-    }
-  });
-  $(".from-inactive-list").click(function() {
-    service_manager.updateResources("active", service_ids);
-  });
-  $(".from-active-list").click(function() {
-    service_manager.updateResources("inactive", service_ids);
-  });
+//  var service_ids = "";
+//  $("#active-list, #inactive-list").selectable({
+//    stop: function() {
+//      var tmpSelection = "";
+//      $(".ui-selected", this).each(function() {
+//        tmpSelection += $(this).attr("data-service-id") + ",";
+//      });
+//      tmpSelection = utils.removeLastChar(tmpSelection);
+//      if (tmpSelection.length > 0) {
+//        service_ids = tmpSelection;
+//        //Show the button to appropriate button
+//        $(".from-" + $(this).attr("id")).show();
+//      } else {
+//        service_ids = [];
+//        $(".from-" + $(this).attr("id")).hide();
+//      }
+//    }
+//  });
+//  $(".from-inactive-project-list").click(function() {
+//    service_manager.updateResources("active", service_ids);
+//  });
+//  $(".from-active-project-list").click(function() {
+//    service_manager.updateResources("inactive", service_ids);
+//  });
   //************************************************//
 
 
