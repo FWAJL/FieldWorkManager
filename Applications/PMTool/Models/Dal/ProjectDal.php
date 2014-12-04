@@ -87,10 +87,7 @@ class ProjectDal extends \Library\DAL\BaseManager {
   }
 
   public function delete($identifier) {
-    $sql = "DELETE from `location` WHERE project_id = " . $identifier . ";";
-    $sql .= "DELETE from `facility` WHERE project_id = " . $identifier . ";";
-    $sql .= "DELETE from `client` WHERE project_id = " . $identifier . ";";
-    $sql .= "DELETE from `project` WHERE project_id = " . $identifier . ";";
+    $sql = "DELETE from `project` WHERE project_id = " . $identifier . ";";
     $query = $this->dao->query($sql);
     $result;
     if (!$query) {
