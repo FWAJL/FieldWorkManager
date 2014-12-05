@@ -228,6 +228,7 @@ class TaskController extends \Library\BaseController {
         
     \Applications\PMTool\Helpers\TaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\TaskTabKeys::LocationsTab);
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
+    $task_locations = \Applications\PMTool\Helpers\TaskHelper::GetAndStoreTaskLocations($this, $sessionTask);
     
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
@@ -235,7 +236,7 @@ class TaskController extends \Library\BaseController {
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_right => $sessionProject[\Library\Enums\SessionKeys::ProjectLocations],
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_left => array(),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left => $task_locations,
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("location")),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );

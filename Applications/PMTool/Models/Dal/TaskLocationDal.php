@@ -5,7 +5,7 @@ namespace Applications\PMTool\Models\Dal;
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class TaskDal extends \Library\DAL\BaseManager {
+class TaskLocationDal extends \Library\DAL\BaseManager {
 
   public function selectOne($object) {
     return NULL;
@@ -16,20 +16,20 @@ class TaskDal extends \Library\DAL\BaseManager {
   }
 
   /**
-   * Returns list of objects for PM
+   * Returns list of Task_location for Task
    * 
-   * @param \Applications\PMTool\Models\Dao\Project $object
-   * @return array of \Applications\PMTool\Models\Dao\Project
+   * @param \Applications\PMTool\Models\Dao\Task_location $object
+   * @return array of \Applications\PMTool\Models\Dao\Task_location
    */
   public function selectMany($object) {
-    $sql = 'SELECT * FROM task where `project_id` = \'' . $object->project_id() . '\';'; //AND `active` = 1  AND `visible` = 1;';
+    $sql = 'SELECT task_id, location_id FROM task_location where `task_id` = \'' . $object->task_id() . '\';';
     $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Task');
+    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Task_location');
 
-    $tasks_list = $query->fetchAll();
+    $task_location_list = $query->fetchAll();
     $query->closeCursor();
 
-    return count($tasks_list) > 0 ? $tasks_list : array();
+    return count($task_location_list) > 0 ? $task_location_list : array();
   }
 
   public function countById($pm_id) {
@@ -45,7 +45,7 @@ class TaskDal extends \Library\DAL\BaseManager {
     }
     $columns = rtrim($columns, ", ");
     $values = rtrim($values, ", ");
-    $sql = "INSERT INTO `task` (" . $columns . ") VALUES (" . $values . ");";
+    $sql = "INSERT INTO `" . strtolower(get_class($object)) . "` (" . $columns . ") VALUES (" . $values . ");";
     $query = $this->dao->query($sql);
     $result;
     if (!$query) {
