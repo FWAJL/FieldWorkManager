@@ -4,16 +4,22 @@
           <h3>
       Current Project
       <span class="glyphicon glyphicon-chevron-right"></span>
-      <?php echo $current_project->project_name(); ?>
-      
-
+            <?php 
+          if (isset($current_project)) {
+      echo $current_project->project_name();
+    } else {
+      echo $resx["h3_no_project"];
+    }
+   ?>
     </h3>
 
     <div class="content-container container-fluid">
       <div class="row">
         <div  class="col-lg-5 col-md-5">
           <h4><?php echo $resx["h3_project_services"]; ?></h4>
-          
+          Active List as placeholder
+          <br />
+              <?php require $active_list_module; ?> 
 <!--          Insert Project Services module here-->
           
           

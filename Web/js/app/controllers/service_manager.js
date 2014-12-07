@@ -105,10 +105,10 @@ $(document).ready(function() {
  * Responsible to manage services.
  */
 (function(service_manager) {
-  service_manager.add = function(userData, controller, action, isSingle) {
-    var data = isSingle ? userData : {"names": userData};
+  service_manager.add = function(data, controller, action) {
+ 
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Resource/Add WebService
-      if (reply === null || reply.dataId === undefined || reply.dataId === null || parseInt(reply.dataId) === 0) {//has an error
+      if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
