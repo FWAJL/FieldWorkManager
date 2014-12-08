@@ -67,16 +67,16 @@ class TaskHelper {
     }
     return NULL;
   }
-
-  public static function GetSessionTask(\Library\User $user, $task_id) {
-    //retrieve the session task from $task_id
-    $sessionTasks = self::GetSessionTasks($user);
-    $key = \Library\Enums\SessionKeys::TaskKey;
-    if ($task_id !== 0) {
-      $key .= $task_id;
-    }
-    $user->setAttribute(\Library\Enums\SessionKeys::CurrentTask, $sessionTasks[$key]);
-    return $sessionTasks[$key];
+  
+  public static function GetAndStoreTaskLocations($caller, $sessionTask) {
+    $sessionTasks = $caller->user()->getAttribute(\Library\Enums\SessionKeys::SessionTasks);
+//    if (!(count($sessionTask[\Library\Enums\SessionKeys::TaskLocations]) > 0)) {
+      $dal = $caller->managers()->getManagerOf("TaskLocation");
+      $sessionTask[\Library\Enums\SessionKeys::TaskLocations] = $dal->selectMany($sessionTask[\Library\Enums\SessionKeys::TaskObj]);  
+//    }
+    self::SetSessionTask($caller->user(), $sessionTask);
+    self::SetCurrentSessionTask($caller->user(), $sessionTask);
+    return self::GetLocationsFromTaskLocations($caller->user(), $sessionTask);
   }
 
   public static function GetFilteredTaskObjectsList(\Library\User $user) {
@@ -88,6 +88,31 @@ class TaskHelper {
       }
     }
     return $filteredTaskList;
+  }
+  
+  public static function GetLocationsFromTaskLocations(\Library\User $user, $sessionTask) {
+    $matches = array();
+    $sessionProject = ProjectHelper::GetCurrentSessionProject($user);
+    foreach ($sessionTask[\Library\Enums\SessionKeys::TaskLocations] as $task_location) {
+      foreach ($sessionProject[\Library\Enums\SessionKeys::ProjectLocations] as $location) {
+        if (intval($location->location_id()) === intval($task_location->location_id())) {
+          array_push($matches, $location);
+          break;
+        }
+      }
+    }
+    return $matches;
+  }
+
+  public static function GetSessionTask(\Library\User $user, $task_id) {
+    //retrieve the session task from $task_id
+    $sessionTasks = self::GetSessionTasks($user);
+    $key = \Library\Enums\SessionKeys::TaskKey;
+    if ($task_id !== 0) {
+      $key .= $task_id;
+    }
+    $user->setAttribute(\Library\Enums\SessionKeys::CurrentTask, $sessionTasks[$key]);
+    return $sessionTasks[$key];
   }
 
   public static function GetSessionTasks(\Library\User $user) {

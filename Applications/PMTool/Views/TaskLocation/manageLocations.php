@@ -14,8 +14,8 @@
     </div>
     <div class="col-lg-2 col-md-2">
       <div class="buttons">
-        <p><input type="button" value="<?php echo $resx["btn_add_to_task"]; ?>" class="btn btn-warning from-active-list" /></p>
-        <p><input type="button" value="<?php echo $resx["btn_remove_from_task"]; ?>"  class="btn btn-warning from-inactive-list" /></p>
+        <p><input type="button" value="<?php echo $resx["btn_add_to_task"]; ?>" class="btn btn-warning from-group-list-right" /></p>
+        <p><input type="button" value="<?php echo $resx["btn_remove_from_task"]; ?>"  class="btn btn-warning from-group-list-left" /></p>
       </div>
     </div>
     <div  class="col-lg-5 col-md-5">

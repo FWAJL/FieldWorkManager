@@ -62,6 +62,10 @@ abstract class BaseController extends ApplicationComponent {
     return $this->leftMenu;
   }
   
+  public function managers() {
+    return $this->managers;
+  }
+  
   public function module() {
     return $this->module;
   }

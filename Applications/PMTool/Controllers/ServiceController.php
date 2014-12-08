@@ -26,6 +26,11 @@ public function executeShowForm(\Library\HttpRequest $rq) {
   
   public function executeListAll(\Library\HttpRequest $rq) {
     //Get list of services stored in session
+    
+    // Set $current_project
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+      
     $this->_GetAndStoreServicesInSession($rq);
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),

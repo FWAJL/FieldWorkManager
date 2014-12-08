@@ -18,7 +18,7 @@ class TaskController extends \Library\BaseController {
     $toEdit = FALSE;
     $toAdd = $rq->getData("target") === "showForm";
     if (\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($user, 0) && $rq->getData("target") !== "") {
-      $toList = $rq->getData("target") === "listAll";
+      $toList = TRUE;
       $toEdit = $sessionTask[\Library\Enums\SessionKeys::TaskObj] !== NULL;
       $toAdd != $toEdit;
     } else {
@@ -27,7 +27,7 @@ class TaskController extends \Library\BaseController {
     }
     if ($toAdd || !$toEdit && !$toList) {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=add&test=true");
-    } elseif ($toList && $rq->getData("target") === "listAll") {
+    } elseif ($toList) {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
     } elseif ($toEdit) {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=edit&task_id=". $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
@@ -221,33 +221,4 @@ class TaskController extends \Library\BaseController {
         "step" => ($rows_affected === count($task_ids)) ? "success" : "error"
     ));
   }
-
-  public function executeManageLocations(\Library\HttpRequest $rq) {
-    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
-    if ($sessionTask[\Library\Enums\SessionKeys::TaskObj] === NULL) { $this->Redirect (\Library\Enums\ResourceKeys\UrlKeys::TaskRootUrl); }
-        
-    \Applications\PMTool\Helpers\TaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\TaskTabKeys::LocationsTab);
-    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
-    
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
-    $this->page->addVar("ProjectHasActiveLocation", \Applications\PMTool\Helpers\ProjectHelper::DoesProjectHasActiveLocations($this->user()));
-    $data = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_right => $sessionProject[\Library\Enums\SessionKeys::ProjectLocations],
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_left => array(),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("location")),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
-    );
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
-
-
-    $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::tabStatus, \Applications\PMTool\Helpers\TaskHelper::GetTabsStatus($this->user()));
-
-    //Which module?
-    $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
-  }
-
 }

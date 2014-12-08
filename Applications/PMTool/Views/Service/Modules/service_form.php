@@ -37,8 +37,8 @@
       <label><?php echo $resx["service_contact_email"]; ?></label>
       <input name="service_contact_email" type="text" />
     </li>
-        <li>
-      <label><?php echo $resx["service_active"]; ?></label>
+        <li style="display: none;">
+<!--      <label><?php // echo $resx["service_active"]; ?></label>-->
       <input name="service_active" type="checkbox" checked />
     </li>
   </ol>

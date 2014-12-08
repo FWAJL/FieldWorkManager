@@ -118,7 +118,7 @@ CREATE TABLE `task` (
     `task_id` int(11) NOT NULL AUTO_INCREMENT,
     `project_id` int(11) NOT NULL COMMENT 'Foreign key => project',
     `task_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-    `task_deadline` datetime NOT NULL,
+    `task_deadline` varchar(50) NOT NULL,
     `task_instructions` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
     `task_trigger_cal` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
     `task_trigger_pm` tinyint(1) DEFAULT NULL,
@@ -225,8 +225,8 @@ CREATE TABLE `task_coc_info` (
         REFERENCES `service` (`service_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
--- Table structure for table `task_field_analytes`
-CREATE TABLE `task_field_analytes` (
+-- Table structure for table `task_field_analyte
+CREATE TABLE `task_field_analyte` (
     `task_id` int(11) NOT NULL,
     `field_analyte_id` int(11) NOT NULL,
     CONSTRAINT `fk_tfa_task` FOREIGN KEY (`task_id`)
@@ -235,8 +235,8 @@ CREATE TABLE `task_field_analytes` (
         REFERENCES `field_analyte` (`field_analyte_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
--- Table structure for table `task_field_data_locations`
-CREATE TABLE `task_field_data_locations` (
+-- Table structure for table `task_field_data_location
+CREATE TABLE `task_field_data_location` (
     `task_id` int(11) NOT NULL,
     `location_id` int(11) NOT NULL,
     CONSTRAINT `fk_tfdl_task` FOREIGN KEY (`task_id`)
@@ -255,8 +255,8 @@ CREATE TABLE `task_insp_form` (
         REFERENCES `inspection_question` (`inspection_question_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
--- Table structure for table `task_lab_analytes`
-CREATE TABLE `task_lab_analytes` (
+-- Table structure for table `task_lab_analyte`
+CREATE TABLE `task_lab_analyte` (
     `task_id` int(11) NOT NULL,
     `lab_analyte_id` int(11) NOT NULL,
     CONSTRAINT `fk_tla_task` FOREIGN KEY (`task_id`)
@@ -265,8 +265,8 @@ CREATE TABLE `task_lab_analytes` (
         REFERENCES `lab_analyte` (`lab_analyte_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
--- Table structure for table `task_lab_data_locations`
-CREATE TABLE `task_lab_data_locations` (
+-- Table structure for table `task_lab_data_location`
+CREATE TABLE `task_lab_data_location` (
     `task_id` int(11) NOT NULL,
     `location_id` int(11) NOT NULL,
     CONSTRAINT `fk_tldl_task` FOREIGN KEY (`task_id`)
@@ -275,35 +275,38 @@ CREATE TABLE `task_lab_data_locations` (
         REFERENCES `location` (`location_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
--- Table structure for table `task_locations`
-CREATE TABLE `task_locations` (
+-- Table structure for table `task_location
+CREATE TABLE `task_location` (
     `task_id` int(11) NOT NULL,
     `location_id` int(11) NOT NULL,
     CONSTRAINT `fk_tl_task` FOREIGN KEY (`task_id`)
         REFERENCES `task` (`task_id`) ON DELETE CASCADE,
     CONSTRAINT `fk_tl_location` FOREIGN KEY (`location_id`)
-        REFERENCES `location` (`location_id`) ON DELETE CASCADE
+        REFERENCES `location` (`location_id`) ON DELETE CASCADE,
+	UNIQUE INDEX `un_t_l` (`task_id` ASC, `location_id` ASC)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
--- Table structure for table `task_services`
-CREATE TABLE `task_services` (
+-- Table structure for table `task_service`
+CREATE TABLE `task_service` (
     `task_id` int(11) NOT NULL,
     `service_id` int(11) NOT NULL,
     CONSTRAINT `fk_ts_task` FOREIGN KEY (`task_id`)
         REFERENCES `task` (`task_id`) ON DELETE CASCADE,
     CONSTRAINT `fk_ts_service` FOREIGN KEY (`service_id`)
-        REFERENCES `service` (`service_id`) ON DELETE CASCADE
+        REFERENCES `service` (`service_id`) ON DELETE CASCADE,
+	UNIQUE INDEX `un_t_s` (`task_id` ASC, `service_id` ASC)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
--- Table structure for table `task_technicians`
-CREATE TABLE `task_technicians` (
+-- Table structure for table `task_technician
+CREATE TABLE `task_technician` (
     `task_id` int(11) NOT NULL,
     `technician_id` int(11) NOT NULL,
     `is_lead_tech` tinyint(1) DEFAULT 0,
     CONSTRAINT `fk_tt_task` FOREIGN KEY (`task_id`)
         REFERENCES `task` (`task_id`) ON DELETE CASCADE,
     CONSTRAINT `fk_tt_technician` FOREIGN KEY (`technician_id`)
-        REFERENCES `technician` (`technician_id`) ON DELETE CASCADE
+        REFERENCES `technician` (`technician_id`) ON DELETE CASCADE,
+	UNIQUE INDEX `un_t_r` (`task_id` ASC, `technician_id` ASC)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Dumping data for table `project_manager`
