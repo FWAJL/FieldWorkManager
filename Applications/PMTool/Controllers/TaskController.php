@@ -11,23 +11,26 @@ class TaskController extends \Library\BaseController {
     $user = $this->app()->user();
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
     \Applications\PMTool\Helpers\TaskHelper::AddTabsStatus($user);
-    if (!\Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($user)) {
+    if (!\Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($user)) {//No current project, redirect!
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsRootUrl);
     }
     $toList = FALSE;
+    $toEdit = FALSE;
+    $toAdd = $rq->getData("target") === "showForm";
     if (\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($user, 0) && $rq->getData("target") !== "") {
       $toList = $rq->getData("target") === "listAll";
       $toEdit = $sessionTask[\Library\Enums\SessionKeys::TaskObj] !== NULL;
+      $toAdd != $toEdit;
     } else {
       $this->executeGetList($rq, NULL, FALSE);
       $toList = \Applications\PMTool\Helpers\TaskHelper::UserHasTasks($user, 0);
     }
-    if ($toList && $rq->getData("target") === "listAll") {
+    if ($toAdd || !$toEdit && !$toList) {
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=add&test=true");
+    } elseif ($toList && $rq->getData("target") === "listAll") {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
     } elseif ($toEdit) {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=edit&task_id=". $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
-    } else {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=add&test=true");
     }
   }
 
@@ -225,6 +228,7 @@ class TaskController extends \Library\BaseController {
         
     \Applications\PMTool\Helpers\TaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\TaskTabKeys::LocationsTab);
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
+    $task_locations = \Applications\PMTool\Helpers\TaskHelper::GetAndStoreTaskLocations($this, $sessionTask);
     
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
@@ -232,7 +236,7 @@ class TaskController extends \Library\BaseController {
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_right => $sessionProject[\Library\Enums\SessionKeys::ProjectLocations],
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_left => array(),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left => $task_locations,
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("location")),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );

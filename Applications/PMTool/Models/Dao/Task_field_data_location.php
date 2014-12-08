@@ -1,6 +1,6 @@
 <?php
 namespace Applications\PMTool\Models\Dao;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
-class Task_locations extends \Library\Entity{  public     $task_id,    $location_id;
+class Task_field_data_location extends \Library\Entity{  public     $task_id,    $location_id;
   const     TASK_ID_ERR = 0,    LOCATION_ID_ERR = 1;
   // SETTERS //  public function setTask_id($task_id) {      $this->task_id = $task_id;  }
   public function setLocation_id($location_id) {      $this->location_id = $location_id;  }

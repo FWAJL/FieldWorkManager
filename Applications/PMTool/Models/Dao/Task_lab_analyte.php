@@ -1,6 +1,6 @@
 <?php
 namespace Applications\PMTool\Models\Dao;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
-class Task_lab_analytes extends \Library\Entity{  public     $task_id,    $lab_analyte_id;
+class Task_lab_analyte extends \Library\Entity{  public     $task_id,    $lab_analyte_id;
   const     TASK_ID_ERR = 0,    LAB_ANALYTE_ID_ERR = 1;
   // SETTERS //  public function setTask_id($task_id) {      $this->task_id = $task_id;  }
   public function setLab_analyte_id($lab_analyte_id) {      $this->lab_analyte_id = $lab_analyte_id;  }

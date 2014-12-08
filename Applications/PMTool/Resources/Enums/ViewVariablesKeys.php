@@ -30,7 +30,7 @@ class ViewVariablesKeys {
   const data = "data";
   const module = "module";
   const objects = "objects";
-  const objects_left = "objects_left";
+  const objects_list_left = "objects_list_left";
   const objects_right = "objects_right";
   const properties = "properties";
   const properties_right = "properties_right";
