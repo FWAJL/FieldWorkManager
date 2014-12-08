@@ -70,8 +70,10 @@ class TaskHelper {
   
   public static function GetAndStoreTaskLocations($caller, $sessionTask) {
     $sessionTasks = $caller->user()->getAttribute(\Library\Enums\SessionKeys::SessionTasks);
-    $dal = $caller->managers()->getManagerOf("TaskLocation");
-    $sessionTask[\Library\Enums\SessionKeys::TaskLocations] = $dal->selectMany($sessionTask[\Library\Enums\SessionKeys::TaskObj]);
+//    if (!(count($sessionTask[\Library\Enums\SessionKeys::TaskLocations]) > 0)) {
+      $dal = $caller->managers()->getManagerOf("TaskLocation");
+      $sessionTask[\Library\Enums\SessionKeys::TaskLocations] = $dal->selectMany($sessionTask[\Library\Enums\SessionKeys::TaskObj]);  
+//    }
     self::SetSessionTask($caller->user(), $sessionTask);
     self::SetCurrentSessionTask($caller->user(), $sessionTask);
     return self::GetLocationsFromTaskLocations($caller->user(), $sessionTask);
@@ -93,7 +95,7 @@ class TaskHelper {
     $sessionProject = ProjectHelper::GetCurrentSessionProject($user);
     foreach ($sessionTask[\Library\Enums\SessionKeys::TaskLocations] as $task_location) {
       foreach ($sessionProject[\Library\Enums\SessionKeys::ProjectLocations] as $location) {
-        if ($location->location_id() === $task_location->location_id()) {
+        if (intval($location->location_id()) === intval($task_location->location_id())) {
           array_push($matches, $location);
           break;
         }

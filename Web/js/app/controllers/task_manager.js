@@ -49,11 +49,7 @@ $(document).ready(function() {
   $("#btn_add_task").click(function() {
     var post_data = {};
     post_data["task"] = utils.retrieveInputs("task_form", ["task_name"]);
-    post_data["task"].task_deadline = utils.toDate(post_data["task"].task_deadline);
-    if (!post_data["task"].task_deadline) {
-      toastr.error("Problem with the date given");
-    }
-    else if (post_data["task"].task_name !== undefined) {
+    if (post_data["task"].task_name !== undefined) {
       task_manager.add(post_data, "task", "add");
     }
   });//Add a task

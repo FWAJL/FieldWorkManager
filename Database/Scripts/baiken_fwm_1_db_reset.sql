@@ -282,7 +282,8 @@ CREATE TABLE `task_location` (
     CONSTRAINT `fk_tl_task` FOREIGN KEY (`task_id`)
         REFERENCES `task` (`task_id`) ON DELETE CASCADE,
     CONSTRAINT `fk_tl_location` FOREIGN KEY (`location_id`)
-        REFERENCES `location` (`location_id`) ON DELETE CASCADE
+        REFERENCES `location` (`location_id`) ON DELETE CASCADE,
+	UNIQUE INDEX `un_t_l` (`task_id` ASC, `location_id` ASC)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Table structure for table `task_service`
@@ -292,7 +293,8 @@ CREATE TABLE `task_service` (
     CONSTRAINT `fk_ts_task` FOREIGN KEY (`task_id`)
         REFERENCES `task` (`task_id`) ON DELETE CASCADE,
     CONSTRAINT `fk_ts_service` FOREIGN KEY (`service_id`)
-        REFERENCES `service` (`service_id`) ON DELETE CASCADE
+        REFERENCES `service` (`service_id`) ON DELETE CASCADE,
+	UNIQUE INDEX `un_t_s` (`task_id` ASC, `service_id` ASC)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Table structure for table `task_technician
@@ -303,7 +305,8 @@ CREATE TABLE `task_technician` (
     CONSTRAINT `fk_tt_task` FOREIGN KEY (`task_id`)
         REFERENCES `task` (`task_id`) ON DELETE CASCADE,
     CONSTRAINT `fk_tt_technician` FOREIGN KEY (`technician_id`)
-        REFERENCES `technician` (`technician_id`) ON DELETE CASCADE
+        REFERENCES `technician` (`technician_id`) ON DELETE CASCADE,
+	UNIQUE INDEX `un_t_r` (`task_id` ASC, `technician_id` ASC)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Dumping data for table `project_manager`

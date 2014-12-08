@@ -205,7 +205,7 @@
     
     <route url="task/locations" module="TaskLocation" action="manageLocations" resxfile="task_location" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
+            <js_file use="head" value="Web/js/app/controllers/task_location.js" />
         </js_files>
         <css_files>
             <css_file use="project" />

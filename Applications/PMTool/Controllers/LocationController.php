@@ -53,32 +53,7 @@ class LocationController extends \Library\BaseController {
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {
-    // Init result
-    $result = $this->InitResponseWS();
-    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-
-    //Load interface to query the database
-    $manager = $this->managers->getManagerOf($this->module);
-    $this->dataPost["project_id"] = $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id();
-
-    $locations = array();
-    if (array_key_exists("names", $this->dataPost())) {
-      $locations = $this->_PrepareManyLocationObjects();
-    } else {
-      array_push($locations, $this->_PrepareLocationObject($this->dataPost()));
-    }
-    $result["dataIn"] = $locations;
-
-    $result["dataId"] = 0;
-    foreach ($locations as $location) {
-      $result["dataId"] = $manager->add($location);
-      $location->setLocation_id($result["dataId"]);
-      array_push($sessionProject[\Library\Enums\SessionKeys::ProjectLocations], $location);
-    }
-    if ($result["dataId"]) {
-      \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
-    }
-
+    $result = \Applications\PMTool\Helpers\LocationHelper::AddProjectLocation($this, $this->InitResponseWS());    
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
@@ -144,18 +119,7 @@ class LocationController extends \Library\BaseController {
 
   public function executeGetList(\Library\HttpRequest $rq = NULL, $sessionProject = NULL, $isAjaxCall = FALSE) {
     // Init result
-    $result = $this->InitResponseWS();
-
-    //Init PDO
-    $list = array();
-    if ($sessionProject !== NULL) {
-      //Load interface to query the database for locations
-      $manager = $this->managers->getManagerOf($this->module);
-      $result[\Library\Enums\SessionKeys::ProjectLocations] = 
-              $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = 
-              $manager->selectMany($sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-      \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
-    }
+    $result = \Applications\PMTool\Helpers\LocationHelper::GetLocationList($this, $sessionProject);
     if ($isAjaxCall) {
       $step_result = $result[\Library\Enums\SessionKeys::ProjectLocations] !== NULL ? "success" : "error";
       $this->SendResponseWS(
@@ -220,34 +184,6 @@ class LocationController extends \Library\BaseController {
     } else {
       //The locations are already in Session
     }
-  }
-
-  private function _PrepareLocationObject($data_sent) {
-    $location = new \Applications\PMTool\Models\Dao\Location();
-    $location->setProject_id($data_sent["project_id"]);
-    $location->setLocation_id(!array_key_exists('location_id', $data_sent) ? NULL : $data_sent["location_id"]);
-    $location->setLocation_name(!array_key_exists('location_name', $data_sent) ? NULL : $data_sent["location_name"]);
-    $location->setLocation_document(!array_key_exists('location_document', $data_sent) ? "" : $data_sent["location_document"]);
-    $location->setLocation_lat(!array_key_exists('location_lat', $data_sent) ? "" : $data_sent["location_lat"]);
-    $location->setLocation_long(!array_key_exists('location_long', $data_sent) ? "" : $data_sent["location_long"]);
-    $location->setLocation_desc(!array_key_exists('location_desc', $data_sent) ? "" : $data_sent["location_desc"]);
-    $location->setLocation_active(!array_key_exists('location_active', $data_sent) ? 0 : ($data_sent["location_active"] === "1"));
-    $location->setLocation_visible(!array_key_exists('location_visible', $data_sent) ? 0 : ($data_sent["location_visible"] === "1"));
-
-    return $location;
-  }
-
-  private function _PrepareManyLocationObjects() {
-    $locations = array();
-    $location_names = \Applications\PMTool\Helpers\CommonHelper::StringToArray("\n", $this->dataPost["names"]);
-    foreach ($location_names as $name) {
-      $location = new \Applications\PMTool\Models\Dao\Location();
-      $location->setProject_id($this->dataPost["project_id"]);
-      $location->setLocation_name($name);
-      $location->setLocation_active($this->dataPost["active"]);
-      array_push($locations, $location);
-    }
-    return $locations;
   }
 
   private function _GetLocationFromSession($location_id) {
