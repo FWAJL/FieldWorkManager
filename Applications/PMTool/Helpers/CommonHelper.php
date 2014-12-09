@@ -51,6 +51,12 @@ class CommonHelper {
     );
   }
 
+  public static function GetClassName($object) {
+    $full_class_name = get_class($object);
+    $class_name = substr($full_class_name, strrpos($full_class_name, '/'));
+    return $class_name;
+  }
+
   public static function GetListObjectsInSessionByKey($user, $key) {
     $objects = array();
     $projects = $user->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);

@@ -148,32 +148,13 @@ class LocationController extends \Library\BaseController {
   }
 
   public function executeUpdateItems(\Library\HttpRequest $rq) {
-    $result = $this->InitResponseWS(); // Init result
-
-    $rows_affected = 0;
-    //Get the location objects from ids received
-    $location_ids = str_getcsv($this->dataPost["location_ids"], ',');
-    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-    $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
-    $matchedElements = $this->FindObjectsFromIds(
-            array(
-                "filter" => "location_id",
-                "ids" => $location_ids,
-                "objects" => $locations)
-    );
-
-    foreach ($matchedElements as $location) {
-      $location->setLocation_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
-      $manager = $this->managers->getManagerOf($this->module);
-      $rows_affected += $manager->edit($location) ? 1 : 0;
-    }
-    \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+    $result = \Applications\PMTool\Helpers\LocationHelper::UpdateLocations($this);
 
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
         "resx_key" => $this->action(),
-        "step" => ($rows_affected === count($location_ids)) ? "success" : "error"
+        "step" => ($result["rows_affected"] === count($result["location_ids"])) ? "success" : "error"
     ));
   }
 
