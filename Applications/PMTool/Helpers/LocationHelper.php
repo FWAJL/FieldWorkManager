@@ -184,4 +184,28 @@ class LocationHelper {
     \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($caller->user(), $sessionProject);
     return $result;
   }
+  
+  public static function UpdateTaskLocations($caller) {
+    $result = $caller->InitResponseWS(); // Init result
+    $dataPost = $caller->dataPost();
+    $result["rows_affected"] = 0;
+    $result["location_ids"] = str_getcsv($dataPost["location_ids"], ',');
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($caller->user());
+    $task_locations = array();
+    foreach ($result["location_ids"] as $id) {
+      $task_location = new \Applications\PMTool\Models\Dao\Task_location();
+      $task_location->setLocation_id($id);
+      $task_location->setTask_id($sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+      $dal = $caller->managers()->getManagerOf($caller->module());
+      if ($dataPost["action"] === "add") {
+        $result["rows_affected"] += $dal->add($task_location) ? 1 : 0;
+      } else {
+        $result["rows_affected"] += $dal->delete($task_location) ? 1 : 0;
+      }
+      array_push($task_locations, $task_location);
+    }
+    $sessionTask[\Library\Enums\SessionKeys::TaskLocations] = $task_locations;
+    \Applications\PMTool\Helpers\TaskHelper::SetSessionTask($caller->user(), $sessionTask);
+    return $result;
+  }
 }
