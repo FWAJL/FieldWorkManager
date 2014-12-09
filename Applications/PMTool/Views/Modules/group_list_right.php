@@ -1,6 +1,6 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 
-<?php if ($ProjectHasActiveLocation) { ?>
+<?php if ($HasItemsToDisplay) { ?>
   <ol id="group-list-right" class="list-panel">
     <?php
     $noActiveOject = FALSE;
@@ -15,5 +15,5 @@
     ?>              
   </ol>   
 <?php } else { ?>
-  <p><?php echo $resx["no_active_project_location"]; ?></p>
+  <p><?php echo $resx["no_items_to_display_message"]; ?></p>
 <?php } ?>

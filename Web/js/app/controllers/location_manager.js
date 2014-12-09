@@ -182,7 +182,7 @@ $(document).ready(function() {
         return undefined;
       } else {//success
         toastr.success(reply.message);
-        utils.redirect("location/listAll");
+        $("li[data-location-id="+ location_id +"]").remove();
       }
     });
   };

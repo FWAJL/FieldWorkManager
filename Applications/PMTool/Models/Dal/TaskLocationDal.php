@@ -45,18 +45,14 @@ class TaskLocationDal extends \Library\DAL\BaseManager {
     }
     $columns = rtrim($columns, ", ");
     $values = rtrim($values, ", ");
-    $sql = "INSERT INTO `" . strtolower(get_class($object)) . "` (" . $columns . ") VALUES (" . $values . ");";
+    $sql = "INSERT INTO `task_location` (" . $columns . ") VALUES (" . $values . ");";
     $query = $this->dao->query($sql);
     $result;
     if (!$query) {
       $result = $query->errorCode();
       $query->closeCursor();
     } else {
-      if (intval($this->dao->lastInsertId())) {
-        $result = intval($this->dao->lastInsertId());
-      } else {
-        $result = FALSE;
-      }
+      $result = TRUE;
     }
 
     return $result;
@@ -73,7 +69,7 @@ class TaskLocationDal extends \Library\DAL\BaseManager {
       }
     }
     $set_clause = rtrim($set_clause, ",");
-    $sql = "UPDATE `task` SET $set_clause  WHERE $where_clause;";
+    $sql = "UPDATE `task_location` SET $set_clause  WHERE $where_clause;";
     $query = $this->dao->query($sql);
     $result;
     if (!$query) {
@@ -85,8 +81,8 @@ class TaskLocationDal extends \Library\DAL\BaseManager {
     return $result;
   }
 
-  public function delete($identifier) {
-    $sql = "DELETE from `task` WHERE task_id = " . $identifier . ";";
+  public function delete($object) {
+    $sql = "DELETE from `task_location` WHERE location_id = " . $object->location_id() . ";";
     $query = $this->dao->query($sql);
     $result;
     if (!$query) {
