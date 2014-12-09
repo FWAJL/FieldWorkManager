@@ -56,14 +56,21 @@ class LocationHelper {
     return $result;
   }
   
+  public static function DeactivateLocation($caller, $params) {
+    
+  }
+
+  public static function DeleteLocation($caller, $dal_name, $obj) {
+    $manager = $caller->managers()->getManagerOf($dal_name);
+    return $manager->delete($obj);
+  }
+
   public static function FilterLocationsToExcludeTaskLocations($locations, $task_locations) {
     $filtered_locations = array();
     foreach ($locations as $location) {
-      $to_add = FALSE;
+      $to_add = TRUE;
       foreach ($task_locations as $task_location) {
-        if(intval($location->location_id()) !== intval($task_location->location_id())) {
-          $to_add = TRUE;
-        } else {
+        if (intval($location->location_id()) === intval($task_location->location_id())) {
           $to_add = FALSE;
           break;
         }
@@ -73,33 +80,58 @@ class LocationHelper {
     return $filtered_locations;
   }
 
-    public static function GetLocationList($caller, $sessionProject) {
+  public static function GetAndStoreTaskLocations($caller, $sessionTask) {
+    $sessionTasks = $caller->user()->getAttribute(\Library\Enums\SessionKeys::SessionTasks);
+//    if (!(count($sessionTask[\Library\Enums\SessionKeys::TaskLocations]) > 0)) {
+    $dal = $caller->managers()->getManagerOf("TaskLocation");
+    $sessionTask[\Library\Enums\SessionKeys::TaskLocations] = $dal->selectMany($sessionTask[\Library\Enums\SessionKeys::TaskObj]);
+//    }
+    TaskHelper::SetSessionTask($caller->user(), $sessionTask);
+    TaskHelper::SetCurrentSessionTask($caller->user(), $sessionTask);
+    return self::GetLocationsFromTaskLocations($caller->user(), $sessionTask);
+  }
+
+  public static function GetLocationsFromTaskLocations(\Library\User $user, $sessionTask) {
+    $matches = array();
+    $sessionProject = ProjectHelper::GetCurrentSessionProject($user);
+    foreach ($sessionTask[\Library\Enums\SessionKeys::TaskLocations] as $task_location) {
+      foreach ($sessionProject[\Library\Enums\SessionKeys::ProjectLocations] as $location) {
+        if (intval($location->location_id()) === intval($task_location->location_id())) {
+          array_push($matches, $location);
+          break;
+        }
+      }
+    }
+    return $matches;
+  }
+
+  public static function GetLocationList($caller, $sessionProject) {
     $result = $caller->InitResponseWS();
     if ($sessionProject !== NULL) {
       //Load interface to query the database for locations
       $manager = $caller->managers()->getManagerOf("Location");
-      $result[\Library\Enums\SessionKeys::ProjectLocations] = 
-              $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = 
+      $result[\Library\Enums\SessionKeys::ProjectLocations] =
+              $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] =
               $manager->selectMany($sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
       \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($caller->user(), $sessionProject);
     }
     return $result;
   }
+
   public static function GetProjectLocations($caller, $sessionProject = NULL, $task_locations = NULL) {
     $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
-    
-    if (count($locations) === 0)
-    {
+
+    if (count($locations) === 0) {
       $dataOut = self::GetLocationList($caller, $sessionProject);
       $locations = $dataOut[\Library\Enums\SessionKeys::ProjectLocations];
     }
     if ($task_locations !== NULL) {
       self::FilterLocationsToExcludeTaskLocations($locations, $task_locations);
     }
-    
+
     return $locations;
   }
-  
+
   private static function _PrepareLocationObject($data_sent) {
     $location = new \Applications\PMTool\Models\Dao\Location();
     $location->setProject_id($data_sent["project_id"]);
@@ -127,5 +159,29 @@ class LocationHelper {
     }
     return $locations;
   }
-
+  
+  public static function UpdateLocations($caller) {
+    $result = $caller->InitResponseWS(); // Init result
+    $dataPost = $caller->dataPost();
+    $rows_affected = 0;
+    //Get the location objects from ids received
+    $result["location_ids"] = str_getcsv($dataPost["location_ids"], ',');
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($caller->user());
+    $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
+    $matchedElements = $caller->FindObjectsFromIds(
+            array(
+                "filter" => "location_id",
+                "ids" => $result["location_ids"],
+                "objects" => $locations)
+    );
+    $result["rows_affected"] = 0;
+    foreach ($matchedElements as $location) {
+      $location->setLocation_active($dataPost["action"] === "active" ? TRUE : FALSE);
+      $manager = $caller->managers()->getManagerOf($caller->module());
+      $result["rows_affected"] += $manager->edit($location) ? 1 : 0;
+      self::DeleteLocation($caller, "TaskLocation", $location);
+      }
+    \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($caller->user(), $sessionProject);
+    return $result;
+  }
 }
