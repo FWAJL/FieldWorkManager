@@ -69,7 +69,7 @@ class LocationController extends \Library\BaseController {
 
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $location = $this->_PrepareLocationObject($this->dataPost());
+    $location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Location());
     $result["data"] = $location;
 
     $manager = $this->managers->getManagerOf($this->module());

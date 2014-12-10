@@ -40,7 +40,7 @@ class LocationHelper {
     if (array_key_exists("names", $caller->dataPost())) {
       $locations = self::_PrepareManyLocationObjects($data_sent);
     } else {
-      array_push($locations, self::_PrepareLocationObject($data_sent));
+      array_push($locations, CommonHelper::PrepareUserObject($data_sent, new \Applications\PMTool\Models\Dao\Location()));
     }
     $result["dataIn"] = $locations;
 
@@ -130,21 +130,6 @@ class LocationHelper {
     }
 
     return $locations;
-  }
-
-  private static function _PrepareLocationObject($data_sent) {
-    $location = new \Applications\PMTool\Models\Dao\Location();
-    $location->setProject_id($data_sent["project_id"]);
-    $location->setLocation_id(!array_key_exists('location_id', $data_sent) ? NULL : $data_sent["location_id"]);
-    $location->setLocation_name(!array_key_exists('location_name', $data_sent) ? NULL : $data_sent["location_name"]);
-    $location->setLocation_document(!array_key_exists('location_document', $data_sent) ? "" : $data_sent["location_document"]);
-    $location->setLocation_lat(!array_key_exists('location_lat', $data_sent) ? "" : $data_sent["location_lat"]);
-    $location->setLocation_long(!array_key_exists('location_long', $data_sent) ? "" : $data_sent["location_long"]);
-    $location->setLocation_desc(!array_key_exists('location_desc', $data_sent) ? "" : $data_sent["location_desc"]);
-    $location->setLocation_active(!array_key_exists('location_active', $data_sent) ? 0 : ($data_sent["location_active"] === "1"));
-    $location->setLocation_visible(!array_key_exists('location_visible', $data_sent) ? 0 : ($data_sent["location_visible"] === "1"));
-
-    return $location;
   }
 
   private static function _PrepareManyLocationObjects($dataPost) {
