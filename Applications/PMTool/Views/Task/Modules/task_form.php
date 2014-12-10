@@ -48,8 +48,8 @@
           <td id="external_note"><?php //echo $resx["trigger_ext_note"]; ?></td>
         </tr>
       </table>
-
-      <li>
+--> 
+     <li>
         <label>Data Collection</label>
         <table>
           <tr>
@@ -66,11 +66,16 @@
             <td class="checkbox"><input id='lab_sample_box' type="checkbox" />Collect Sample for Lab Analysis</td>
             <td></td>
           </tr>
+          
+            <tr>
+            <td class="checkbox"><input id='service_providers_box' type="checkbox" />Check here if you need outside Service Providers </td>
+            <td></td>
+          </tr>
         </table> 
       </li>
 
 
-      <li>
+<!--      <li>
         <label><?php //echo $resx["resource_needs"]; ?></label>
                                                   This table is an example - must be generated dynamically.
         <table>                                  
