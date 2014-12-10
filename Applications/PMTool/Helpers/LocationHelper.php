@@ -40,7 +40,7 @@ class LocationHelper {
     if (array_key_exists("names", $caller->dataPost())) {
       $locations = self::_PrepareManyLocationObjects($data_sent);
     } else {
-      array_push($locations, self::_PrepareLocationObject($data_sent));
+      array_push($locations, CommonHelper::PrepareUserObject($data_sent, new \Applications\PMTool\Models\Dao\Location()));
     }
     $result["dataIn"] = $locations;
 
@@ -132,21 +132,6 @@ class LocationHelper {
     return $locations;
   }
 
-  private static function _PrepareLocationObject($data_sent) {
-    $location = new \Applications\PMTool\Models\Dao\Location();
-    $location->setProject_id($data_sent["project_id"]);
-    $location->setLocation_id(!array_key_exists('location_id', $data_sent) ? NULL : $data_sent["location_id"]);
-    $location->setLocation_name(!array_key_exists('location_name', $data_sent) ? NULL : $data_sent["location_name"]);
-    $location->setLocation_document(!array_key_exists('location_document', $data_sent) ? "" : $data_sent["location_document"]);
-    $location->setLocation_lat(!array_key_exists('location_lat', $data_sent) ? "" : $data_sent["location_lat"]);
-    $location->setLocation_long(!array_key_exists('location_long', $data_sent) ? "" : $data_sent["location_long"]);
-    $location->setLocation_desc(!array_key_exists('location_desc', $data_sent) ? "" : $data_sent["location_desc"]);
-    $location->setLocation_active(!array_key_exists('location_active', $data_sent) ? 0 : ($data_sent["location_active"] === "1"));
-    $location->setLocation_visible(!array_key_exists('location_visible', $data_sent) ? 0 : ($data_sent["location_visible"] === "1"));
-
-    return $location;
-  }
-
   private static function _PrepareManyLocationObjects($dataPost) {
     $locations = array();
     $location_names = \Applications\PMTool\Helpers\CommonHelper::StringToArray("\n", $dataPost["names"]);
@@ -182,6 +167,30 @@ class LocationHelper {
       self::DeleteLocation($caller, "TaskLocation", $location);
       }
     \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($caller->user(), $sessionProject);
+    return $result;
+  }
+  
+  public static function UpdateTaskLocations($caller) {
+    $result = $caller->InitResponseWS(); // Init result
+    $dataPost = $caller->dataPost();
+    $result["rows_affected"] = 0;
+    $result["location_ids"] = str_getcsv($dataPost["location_ids"], ',');
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($caller->user());
+    $task_locations = array();
+    foreach ($result["location_ids"] as $id) {
+      $task_location = new \Applications\PMTool\Models\Dao\Task_location();
+      $task_location->setLocation_id($id);
+      $task_location->setTask_id($sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+      $dal = $caller->managers()->getManagerOf($caller->module());
+      if ($dataPost["action"] === "add") {
+        $result["rows_affected"] += $dal->add($task_location) ? 1 : 0;
+      } else {
+        $result["rows_affected"] += $dal->delete($task_location) ? 1 : 0;
+      }
+      array_push($task_locations, $task_location);
+    }
+    $sessionTask[\Library\Enums\SessionKeys::TaskLocations] = $task_locations;
+    \Applications\PMTool\Helpers\TaskHelper::SetSessionTask($caller->user(), $sessionTask);
     return $result;
   }
 }

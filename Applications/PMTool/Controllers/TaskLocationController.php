@@ -8,33 +8,12 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class TaskLocationController extends \Library\BaseController {
 
   public function executeUpdateItems(\Library\HttpRequest $rq) {
-    $result = $this->InitResponseWS(); // Init result
-
-    $rows_affected = 0;
-    //Get the task objects from ids received
-    $location_ids = str_getcsv($this->dataPost["location_ids"], ',');
-    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
-    $task_locations = array();
-    foreach ($location_ids as $id) {
-      $task_location = new \Applications\PMTool\Models\Dao\Task_location();
-      $task_location->setLocation_id($id);
-      $task_location->setTask_id($sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
-      $manager = $this->managers->getManagerOf($this->module);
-      if ($this->dataPost["action"] === "add") {
-        $rows_affected += $manager->add($task_location) ? 1 : 0;
-      } else {
-        $rows_affected += $manager->delete($task_location) ? 1 : 0;
-      }
-      array_push($task_locations, $task_location);
-    }
-    $sessionTask[\Library\Enums\SessionKeys::TaskLocations] = $task_locations;
-    \Applications\PMTool\Helpers\TaskHelper::SetSessionTask($this->user(), $sessionTask);
-
+    $result = \Applications\PMTool\Helpers\LocationHelper::UpdateTaskLocations($this);
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
         "resx_key" => $this->action(),
-        "step" => ($rows_affected === count($location_ids)) ? "success" : "error"
+        "step" => ($result["rows_affected"] === count($result["location_ids"] )) ? "success" : "error"
     ));
   }
 
@@ -49,7 +28,7 @@ class TaskLocationController extends \Library\BaseController {
     $project_locations = \Applications\PMTool\Helpers\LocationHelper::GetProjectLocations($this, $sessionProject);
     $task_locations = \Applications\PMTool\Helpers\LocationHelper::GetAndStoreTaskLocations($this, $sessionTask);
     //filter the project locations after we retrieve the task locations
-    $project_locations = \Applications\PMTool\Helpers\LocationHelper::FilterLocationsToExcludeTaskLocations($project_locations, $task_locations);
+    //$project_locations = \Applications\PMTool\Helpers\LocationHelper::FilterLocationsToExcludeTaskLocations($project_locations, $task_locations);
 
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
