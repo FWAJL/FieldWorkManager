@@ -13,11 +13,11 @@
 // ------------------------------------------------------------------------
 
 /**
- * UserHelper Class
+ * _TemplateHelper Class
  *
  * @package		Application/PMTool
  * @subpackage	Helpers
- * @category	UserHelper
+ * @category	_TemplateHelper
  * @author		FWM DEV Team
  * @link		
  */
@@ -27,5 +27,5 @@ namespace Applications\PMTool\Helpers;
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class UserHelper {
+class _TemplateHelper {
 }

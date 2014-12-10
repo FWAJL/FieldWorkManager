@@ -148,7 +148,7 @@ class AuthenticateController extends \Library\BaseController {
     //store user in session
     $this->app->user->setAttribute(\Library\Enums\SessionKeys::UserConnected, $pm_user);
     //Brian
-    \Applications\PMTool\Helpers\UserHelper::StoreSessionPm($this->app()->user(), $pm_user[0], true);
+    \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this->app()->user(), $pm_user[0], true);
     //Test
   }
 
