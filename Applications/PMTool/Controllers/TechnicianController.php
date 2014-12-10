@@ -8,7 +8,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class TechnicianController extends \Library\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
-    $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->app()->user());
     $toList = FALSE;
     if ($rq->getData("target") !== "listAll") {
       //Continue if user wants to add a new item
@@ -17,7 +17,7 @@ class TechnicianController extends \Library\BaseController {
     } else {
       //Otherwise, we get the list, add it to the PM Session array
       $this->executeGetList($rq, TRUE, $pm);
-      $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
+      $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->app()->user());
       $toList = count($pm[\Library\Enums\SessionKeys::PmTechnicians]) > 0;
     }
     //Redirect logic
@@ -36,7 +36,7 @@ class TechnicianController extends \Library\BaseController {
 
   public function executeListAll(\Library\HttpRequest $rq) {
     //Get list of object stored in session
-    $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->app()->user());
     $data = array(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $pm[\Library\Enums\SessionKeys::PmTechnicians],
@@ -56,7 +56,7 @@ class TechnicianController extends \Library\BaseController {
     $result = $this->InitResponseWS();
 
     //Get the current PM Session
-    $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->app()->user());
     //Store the pm_id in the dataPost...
     $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
     //.. and build the object to query the DB
@@ -72,7 +72,7 @@ class TechnicianController extends \Library\BaseController {
       //Update the PM Session
       array_push($pm[\Library\Enums\SessionKeys::PmTechnicians], $technician);
       //And update the Sessiom
-      \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
+      \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->app()->user(), $pm);
     }
     //Send the response to browser
     $this->SendResponseWS(
@@ -88,7 +88,7 @@ class TechnicianController extends \Library\BaseController {
     $result = $this->InitResponseWS();
 
     //Init PDO
-    $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->app()->user());
     $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
     $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Technician());
     $result["data"] = $technician;
@@ -100,7 +100,7 @@ class TechnicianController extends \Library\BaseController {
       //Find what is the index of the current edited object in a list of object
       $filter = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($technician->technician_id(), "technician_id", $pm, \Library\Enums\SessionKeys::PmTechnicians);
       $pm[\Library\Enums\SessionKeys::PmTechnicians][$filter["key"]] = $technician;
-      \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
+      \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->app()->user(), $pm);
     }
 
     $this->SendResponseWS(
@@ -116,7 +116,7 @@ class TechnicianController extends \Library\BaseController {
     $result = $this->InitResponseWS();
     $db_result = FALSE;
     $technician_id = intval($this->dataPost["technician_id"]);
-    $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->app()->user());
     //Check if the technician to be deleted is the Project manager's
     $filter = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($technician_id, "technician_id", $pm, \Library\Enums\SessionKeys::PmTechnicians);
     //Load interface to query the database
@@ -125,7 +125,7 @@ class TechnicianController extends \Library\BaseController {
       $db_result = $manager->delete($technician_id);
       if ($db_result) {
         unset($pm[\Library\Enums\SessionKeys::PmTechnicians][$filter["key"]]);
-        \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
+        \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->app()->user(), $pm);
       }
     }
     $this->SendResponseWS(
@@ -151,7 +151,7 @@ class TechnicianController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf($this->module);
     $pm[\Library\Enums\SessionKeys::PmTechnicians] = $manager->selectMany($technician);
     if ($pm !== NULL) {
-      \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
+      \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->app()->user(), $pm);
     }
 
     $result["technicians"] = $pm[\Library\Enums\SessionKeys::PmTechnicians];//Can be used for an AJAX call
@@ -171,7 +171,7 @@ class TechnicianController extends \Library\BaseController {
     $result = $this->InitResponseWS();
     $technician_id = intval($this->dataPost["technician_id"]);
 
-    $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->app()->user());
     $technician_selected = \Applications\PMTool\Helpers\CommonHelper::FindObject($technician_id, "technician_id", $pm[\Library\Enums\SessionKeys::PmTechnicians]);
 
     $result["technician"] = $technician_selected;
@@ -187,7 +187,7 @@ class TechnicianController extends \Library\BaseController {
     $result = $this->InitResponseWS(); // Init result
 
     $rows_affected = 0;
-    $pm = \Applications\PMTool\Helpers\UserHelper::GetCurrentSessionPm($this->app()->user());
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->app()->user());
     //Get the technician objects from ids received
     $technician_ids = str_getcsv($this->dataPost["technician_ids"], ',');
     $matchedElements = $this->FindObjectsFromIds(
@@ -205,7 +205,7 @@ class TechnicianController extends \Library\BaseController {
       $rows_affected += $manager->edit($technician) ? 1 : 0;
     }
     if ($rows_affected === count($technician_ids)) {
-      \Applications\PMTool\Helpers\UserHelper::SetSessionPm($this->app()->user(), $pm);
+      \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->app()->user(), $pm);
     }
     $this->SendResponseWS(
         $result, array(

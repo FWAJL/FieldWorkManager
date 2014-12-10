@@ -185,7 +185,7 @@ class LocationHelper {
       if ($dataPost["action"] === "add") {
         $result["rows_affected"] += $dal->add($task_location) ? 1 : 0;
       } else {
-        $result["rows_affected"] += $dal->delete($task_location) ? 1 : 0;
+        $result["rows_affected"] += $dal->delete($task_location, "location_id") ? 1 : 0;
       }
       array_push($task_locations, $task_location);
     }
