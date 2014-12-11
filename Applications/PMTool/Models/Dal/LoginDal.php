@@ -56,34 +56,10 @@ class LoginDal extends \Library\DAL\BaseManager {
     
   }
 
-  public function add($item) {
-    $columns = "";
-    $values = "";
-    foreach ($item as $key => $value) {
-      $columns .= "`" . $key . "`,";
-      $values .= "'" . $value . "',";
-    }
-    $columns = rtrim($columns, ", ");
-    $values = rtrim($values, ", ");
-    $sql = "INSERT INTO `project_manager` (" . $columns . ") VALUES (" . $values . ");";
-    $query = $this->dao->query($sql);
-    $result;
-    if (!$query) {
-      $result = $query->errorCode();
-      $query->closeCursor();
-    } else {
-      $result = $this->dao->lastInsertId();
-    }
+//  public function add($item) {  }
 
-    return $result;
-  }
+//  public function edit($object, $where_filter_id) {  }
 
-  public function edit($item) {
-    
-  }
-
-  public function delete($identifier) {
-    
-  }
+//  public function delete($object, $where_filter_id) {  }
 
 }

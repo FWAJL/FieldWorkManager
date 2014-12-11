@@ -83,7 +83,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     $result["data"] = $service;
 
     $manager = $this->managers->getManagerOf($this->module);
-    $result_insert = $manager->edit($service);
+    $result_insert = $manager->edit($service, "service_id");
     
     //Clear the service list from session for the connect PM
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::PmServices);
@@ -108,7 +108,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     //Load interface to query the database
     if ($service_selected !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
-      $db_result = $manager->delete($service_id);
+      $db_result = $manager->delete($service_selected, "service_id");
       //Clear the service from session for the connect PM
       $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::PmServices);
       $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserServiceList);
@@ -187,7 +187,7 @@ public function executeGetItem(\Library\HttpRequest $rq) {
     foreach ($matchedElements as $service) {
       $service->setService_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
       $manager = $this->managers->getManagerOf($this->module);
-      $rows_affected += $manager->edit($service) ? 1 : 0;
+      $rows_affected += $manager->edit($service, "service_id") ? 1 : 0;
     }
 
     $this->SendResponseWS(

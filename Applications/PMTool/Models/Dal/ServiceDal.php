@@ -33,62 +33,10 @@ class ServiceDal extends \Library\DAL\BaseManager {
     return NULL;
   }
 
-  public function add($object) {
-    $columns = "";
-    $values = "";
-    foreach ($object as $key => $value) {
-      $columns .= "`" . $key . "`,";
-      $values .= "'" . $value . "',";
-    }
-    $columns = rtrim($columns, ", ");
-    $values = rtrim($values, ", ");
-    $sql = "INSERT INTO `service` (" . $columns . ") VALUES (" . $values . ");";
-    $query = $this->dao->query($sql);
-    $result;
-    if (!$query) {
-      $result = $query->errorCode();
-      $query->closeCursor();
-    } else {
-      $result = $this->dao->lastInsertId();
-    }
-    
-    return $result;
-  }
+//  public function add($object) {  }
 
-  public function edit($object) {
-    $set_clause = "";
-    $where_clause = "";
-    foreach ($object as $key => $value) {
-      if ($key === "service_id") {
-        $where_clause = "$key = $value";
-      } else {
-        $set_clause .= "`" . $key . "` = '" . $value ."',"; 
-      }
-    }
-    $set_clause = rtrim($set_clause, ",");
-    $sql = "UPDATE `service` SET $set_clause  WHERE $where_clause;";
-    $query = $this->dao->query($sql);
-    $result;
-    if (!$query) {
-      $result = $query->errorCode();
-    } else {
-      $result = TRUE;
-    }
-    $query->closeCursor();
-    return $result;
-  }
+//  public function edit($object) {  }
 
-  public function delete($identifier) {
-    $sql = "DELETE from `service` WHERE service_id = " . $identifier . ";";
-    $query = $this->dao->query($sql);
-    $result;
-    if (!$query) {
-      $result = $query->errorCode();
-    } else {
-      $result = TRUE;
-    }
-    $query->closeCursor();
-    return $result;
-  }
+//  public function delete($identifier) {  }
 
 }

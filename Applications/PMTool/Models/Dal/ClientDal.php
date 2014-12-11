@@ -62,64 +62,10 @@ class ClientDal extends \Library\DAL\BaseManager {
     return intval($num_rows[0]);
   }
 
-  public function add($client) {
-    $columns = "";
-    $values = "";
-    foreach ($client as $key => $value) {
-      $columns .= "`" . $key . "`,";
-      $values .= "'" . addslashes($value) . "',";
-    }
-    $columns = rtrim($columns, ", ");
-    $values = rtrim($values, ", ");
-    $sql = "INSERT INTO `client` (" . $columns . ") VALUES (" . $values . ");";
-    $query = $this->dao->query($sql);
-    $result;
-    if (!$query) {
-      $result = $query->errorCode();
-    } else {
-      $result = $this->dao->lastInsertId();
-    }
-    $query->closeCursor();
-    return $result;
-  }
+//  public function add($client) {  }
 
-  public function edit($client) {
-    $set_clause = "";
-    $where_clause = "";
-    foreach ($client as $key => $value) {
-      if ($key === "project_id") {
-        //skip
-      }
-      elseif ($key === "client_id") {
-        $where_clause = "$key = $value";
-      } else {
-        $set_clause .= "`" . $key . "` = '" . addslashes($value) ."',"; 
-      }
-    }
-    $set_clause = rtrim($set_clause, ",");
-    $sql = "UPDATE `client` SET $set_clause  WHERE $where_clause;";
-    $query = $this->dao->query($sql);
-    $result;
-    if (!$query) {
-      $result = $query->errorCode();
-    } else {
-      $result = TRUE;
-    }
-    $query->closeCursor();
-    return $result;
-  }
+//  public function edit($client) {  }
 
-  public function delete($identifier) {
-    $sql = "DELETE from `client` WHERE client_id = " . $identifier . ";";
-    $query = $this->dao->query($sql);
-    $result;
-    if (!$query) {
-      $result = $query->errorCode();
-    } else {
-      $result = TRUE;
-    }
-    $query->closeCursor();
-    return $result;
-  }
+//  public function delete($identifier) {  }
 
 }

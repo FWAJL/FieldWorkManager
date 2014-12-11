@@ -94,7 +94,7 @@ class TechnicianController extends \Library\BaseController {
     $result["data"] = $technician;
 
     $manager = $this->managers->getManagerOf($this->module);
-    $result_insert = $manager->edit($technician);
+    $result_insert = $manager->edit($technician, "technician_id");
 
     if ($result_insert) {
       //Find what is the index of the current edited object in a list of object
@@ -122,7 +122,7 @@ class TechnicianController extends \Library\BaseController {
     //Load interface to query the database
     if ($filter["object"] !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
-      $db_result = $manager->delete($technician_id);
+      $db_result = $manager->delete($filter["object"], "technician_id");
       if ($db_result) {
         unset($pm[\Library\Enums\SessionKeys::PmTechnicians][$filter["key"]]);
         \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->app()->user(), $pm);

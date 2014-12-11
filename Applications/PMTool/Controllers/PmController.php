@@ -78,7 +78,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     $result["data"] = $pm;
 
     $manager = $this->managers->getManagerOf($this->module);
-    $result_insert = $manager->edit($pm);
+    $result_insert = $manager->edit($pm, "pm_id");
     
     //Clear the pm list from session for the connect PM
     $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::AllUsers);
@@ -103,7 +103,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     //Load interface to query the database
     if ($pm_selected !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
-      $db_result = $manager->delete($pm_id);
+      $db_result = $manager->delete($pm_selected, "pm_id");
       //Clear the pm from session for the connect PM
       $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::AllUsers);
       $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserPmList);
