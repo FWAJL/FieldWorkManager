@@ -217,6 +217,20 @@
             <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true" />
         </php_modules>
     </route><!--  task/locations -->
+    <route url="task/technicians" module="TaskTechnician" action="manageTechnicians" resxfile="task_technician" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/task_location.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
+            <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
+            <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
+            <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true" />
+        </php_modules>
+    </route><!--  task/locations -->
 
     <!-- service providers -->
     <route url="service" module="Service" action="index" resxfile="service" type="ui">

@@ -27,10 +27,10 @@ class TaskController extends \Library\BaseController {
     }
     if ($toAdd || !$toEdit && !$toList) {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=add&test=true");
-    } elseif ($toList) {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
     } elseif ($toEdit) {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=edit&task_id=". $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+    } elseif ($toList) {
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
     }
   }
 
