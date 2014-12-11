@@ -36,66 +36,10 @@ class TaskDal extends \Library\DAL\BaseManager {
     return NULL;
   }
 
-  public function add($object) {
-    $columns = "";
-    $values = "";
-    foreach ($object as $key => $value) {
-      $columns .= "`" . $key . "`,";
-      $values .= "'" . $value . "',";
-    }
-    $columns = rtrim($columns, ", ");
-    $values = rtrim($values, ", ");
-    $sql = "INSERT INTO `task` (" . $columns . ") VALUES (" . $values . ");";
-    $query = $this->dao->query($sql);
-    $result;
-    if (!$query) {
-      $result = $query->errorCode();
-      $query->closeCursor();
-    } else {
-      if (intval($this->dao->lastInsertId())) {
-        $result = intval($this->dao->lastInsertId());
-      } else {
-        $result = FALSE;
-      }
-    }
+//  public function add($object) {    }
 
-    return $result;
-  }
+//  public function edit($object) {  }
 
-  public function edit($object) {
-    $set_clause = "";
-    $where_clause = "";
-    foreach ($object as $key => $value) {
-      if ($key === "task_id") {
-        $where_clause = "$key = $value";
-      } else {
-        $set_clause .= "`" . $key . "` = '" . $value . "',";
-      }
-    }
-    $set_clause = rtrim($set_clause, ",");
-    $sql = "UPDATE `task` SET $set_clause  WHERE $where_clause;";
-    $query = $this->dao->query($sql);
-    $result;
-    if (!$query) {
-      $result = $query->errorCode();
-    } else {
-      $result = TRUE;
-    }
-    $query->closeCursor();
-    return $result;
-  }
-
-  public function delete($identifier) {
-    $sql = "DELETE from `task` WHERE task_id = " . $identifier . ";";
-    $query = $this->dao->query($sql);
-    $result;
-    if (!$query) {
-      $result = $query->errorCode();
-    } else {
-      $result = TRUE;
-    }
-    $query->closeCursor();
-    return $result;
-  }
+//  public function delete($identifier) {  }
 
 }
