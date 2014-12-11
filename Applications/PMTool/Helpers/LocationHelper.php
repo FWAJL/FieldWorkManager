@@ -163,8 +163,8 @@ class LocationHelper {
     foreach ($matchedElements as $location) {
       $location->setLocation_active($dataPost["action"] === "active" ? TRUE : FALSE);
       $manager = $caller->managers()->getManagerOf($caller->module());
-      $result["rows_affected"] += $manager->edit($location) ? 1 : 0;
-      self::DeleteLocation($caller, "TaskLocation", $location);
+      $result["rows_affected"] += $manager->edit($location, "location_id") ? 1 : 0;
+      self::DeleteLocation($caller, "TaskLocation", $location, "location_id");
       }
     \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($caller->user(), $sessionProject);
     return $result;
@@ -183,7 +183,7 @@ class LocationHelper {
       $task_location->setTask_id($sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
       $dal = $caller->managers()->getManagerOf($caller->module());
       if ($dataPost["action"] === "add") {
-        $result["rows_affected"] += $dal->add($task_location) ? 1 : 0;
+        $result["rows_affected"] += $dal->add($task_location) >= 0 ? 1 : 0;
       } else {
         $result["rows_affected"] += $dal->delete($task_location, "location_id") ? 1 : 0;
       }
