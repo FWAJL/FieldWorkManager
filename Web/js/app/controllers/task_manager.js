@@ -105,6 +105,7 @@ $(document).ready(function() {
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
+        utils.redirect("task", 1000);
       }
     });
   };
