@@ -39,9 +39,18 @@ class UrlKeys {
   const ServiceListAll = "service/listAll";
   const ServiceShowForm = "service/showForm";
   
+  const FieldAnalytes = "field/analytes";
+  const FieldSampleMatrix = "field/sampleMatrix";
+  const LabAnalytes = "lab/analytes";
+  const LabSampleMatrix = "lab/sampleMatrix";
+
   const TaskRootUrl = "task";
   const TaskListAll = "task/listAll";
   const TaskShowForm = "task/showForm";
+  const TaskTechnicians = "task/technicians";
+  const TaskLocations = "task/locations";
+  const TaskInspForms = "task/inspForms";
+  const TaskCOC = "task/coc";
 
   
   const PmRootUrl = "pm";

@@ -47,7 +47,7 @@
           <td class="checkbox"><input id="external_box" type="checkbox"><?php //echo $resx["task_trigger_ext"]; ?></td>
           <td id="external_note"><?php //echo $resx["trigger_ext_note"]; ?></td>
         </tr>
-      </table>
+      </table>-->
 
       <li>
         <label>Data Collection</label>
@@ -68,7 +68,7 @@
           </tr>
         </table> 
       </li>
-
+<!--
 
       <li>
         <label><?php //echo $resx["resource_needs"]; ?></label>
