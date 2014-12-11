@@ -58,7 +58,7 @@ class BaseManager extends \Library\Manager {
     }
     $columns = rtrim($columns, ", ");
     $values = rtrim($values, ", ");
-    return $this->ExecuteQuery("INSERT INTO `" . $this->GetTableName($object) . "` ($columns) VALUES ($values);");
+    return $this->ExecuteQuery("INSERT INTO `" . $this->GetTableName($object) . "` ($columns) VALUES ($values);", TRUE);
   }
 
   /**
@@ -88,21 +88,21 @@ class BaseManager extends \Library\Manager {
    */
   public function delete($object, $where_filter_id) {
     return $this->ExecuteQuery(
-            "DELETE from `" . $this->GetTableName($object) . "` WHERE $where_filter_id = " . $object->location_id() . ";");
+            "DELETE from `" . $this->GetTableName($object) . "` WHERE $where_filter_id = " . $object->$where_filter_id() . ";");
   }
 
   private function GetTableName($object) {
     return \Applications\PMTool\Helpers\CommonHelper::GetClassName($object);
   }
 
-  private function ExecuteQuery($sql_query) {
+  private function ExecuteQuery($sql_query, $is_insert = FALSE) {
     try {
       $query = $this->dao->query($sql_query);
       $result;
       if (!$query) {
         $result = $query->errorCode();
       } else {
-        $result = TRUE;
+        $result = $is_insert ? $this->dao->lastInsertId() : TRUE;
       }
       $query->closeCursor();
     } catch (\PDOException $pdo_ex) {
