@@ -109,7 +109,7 @@ class TaskController extends \Library\BaseController {
     $result["data"] = $task;
 
     $manager = $this->managers->getManagerOf($this->module());
-    $result_edit = $manager->edit($task);
+    $result_edit = $manager->edit($task, "task_id");
 
     //Clear the task and facility list from session for the connect PM
     if ($result_edit) {
@@ -137,7 +137,7 @@ class TaskController extends \Library\BaseController {
     //Load interface to query the database
     if ($task_selected !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
-      if ($manager->delete($task_id)) {
+      if ($manager->delete($task_selected, "task_id")) {
         $sessionTasks = \Applications\PMTool\Helpers\TaskHelper::GetSessionTasks($this->app()->user());
         unset($sessionTasks[\Library\Enums\SessionKeys::TaskKey . $task_id]);
         \Applications\PMTool\Helpers\TaskHelper::SetSessionTasks($this->app()->user(), $sessionTasks);
@@ -210,7 +210,7 @@ class TaskController extends \Library\BaseController {
       $task = $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $id][\Library\Enums\SessionKeys::TaskObj];
       $task->setTask_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
       $manager = $this->managers->getManagerOf($this->module);
-      $rows_affected += $manager->edit($task) ? 1 : 0;
+      $rows_affected += $manager->edit($task, "task_id") ? 1 : 0;
     }
     \Applications\PMTool\Helpers\TaskHelper::SetSessionTasks($this->app()->user(), $sessionTasks);
 
