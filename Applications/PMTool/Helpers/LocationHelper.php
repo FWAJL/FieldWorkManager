@@ -60,9 +60,9 @@ class LocationHelper {
     
   }
 
-  public static function DeleteLocation($caller, $dal_name, $obj) {
+  public static function DeleteLocation($caller, $dal_name, $obj, $where_filter_id) {
     $manager = $caller->managers()->getManagerOf($dal_name);
-    return $manager->delete($obj);
+    return $manager->delete($obj, $where_filter_id);
   }
 
   public static function FilterLocationsToExcludeTaskLocations($locations, $task_locations) {
