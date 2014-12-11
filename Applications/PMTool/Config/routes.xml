@@ -230,7 +230,20 @@
             <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
             <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true" />
         </php_modules>
-    </route><!--  task/locations -->
+    </route><!--  task/technicians -->
+
+    <route url="field/analytes" module="FieldAnalyte" action="listAll" resxfile="field_analyte" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/field_analyte.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="active_list_module" file_name="active_list.php" shared="true" />
+            <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
+        </php_modules>
+    </route><!--  field/analytes -->
 
     <!-- service providers -->
     <route url="service" module="Service" action="index" resxfile="service" type="ui">
