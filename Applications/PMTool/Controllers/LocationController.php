@@ -102,7 +102,7 @@ class LocationController extends \Library\BaseController {
     //Load interface to query the database
     if ($location_selected["object"] !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
-      $db_result = $manager->delete($location_id);
+      $db_result = $manager->delete($location_selected["object"], "location_id");
       if ($db_result) {
         unset($sessionProject[\Library\Enums\SessionKeys::ProjectLocations][$location_selected["key"]]);
         \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
