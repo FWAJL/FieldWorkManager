@@ -73,7 +73,7 @@ class LocationController extends \Library\BaseController {
     $result["data"] = $location;
 
     $manager = $this->managers->getManagerOf($this->module());
-    $result_edit = $manager->edit($location);
+    $result_edit = $manager->edit($location, "location_id");
 
     //Clear the location and facility list from session for the connect PM
     if ($result_edit) {
