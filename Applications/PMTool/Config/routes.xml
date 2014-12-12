@@ -411,4 +411,6 @@
   <route url="pm/getlist" module="Pm" action="getList" resxfile="pm" type="ws" />
   <route url="pm/getItem" module="Pm" action="getItem" resxfile="pm" type="ws" />
   <route url="pm/updateItems" module="Pm" action="updateItems" resxfile="pm" type="ws" />
+
+  <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="ws" />
 </routes>

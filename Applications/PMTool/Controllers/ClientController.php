@@ -46,7 +46,7 @@ class ClientController extends \Library\BaseController {
 
     $client->setClient_id($result["dataId"]);
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $client->project_id());
-    $sessionProject[\Library\Enums\SessionKeys::FacilityObject] = $client;
+    $sessionProject[\Library\Enums\SessionKeys::ClientObject] = $client;
     \Applications\PMTool\Helpers\ProjectHelper::UpdateUserSessionProject($this->app()->user(), $sessionProject);
 
     //Process DB result and send result
