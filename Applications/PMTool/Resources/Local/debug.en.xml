@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <resource key="page_title">Your TMP - Field Work Manager</resource>
+  
+  <resource key="tmp_h1">Welcome to Field Work Manager, for Template managers</resource>
+  <resource key="tmp_welcome_message">Please, select an option on the left menu.</resource>
+  
+  <resource key="message_error_add">Error inserting the template.</resource>
+  <resource key="message_success_add">The template has been inserted.</resource>
+  <resource key="message_error_getlist">Error reading the templates.</resource>
+  <resource key="message_success_getlist">The templates have been read.</resource>
+  <resource key="message_error_getItem">Error reading the template.</resource>
+  <resource key="message_success_getItem">The template has been read.</resource>
+  <resource key="message_error_edit">Error editing the template.</resource>
+  <resource key="message_success_edit">The template has been edited.</resource>
+  <resource key="message_error_delete">Error deleting the template.</resource>
+  <resource key="message_success_delete">The template has been deleted.</resource>
+  <resource key="message_error_updateItems">Error editing the templates.</resource>
+  <resource key="message_success_updateItems">The templates have been edited</resource>
+
+</resources>
