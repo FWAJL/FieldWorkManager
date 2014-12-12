@@ -72,7 +72,6 @@
           </tr>
         </table> 
       </li>-->
-<!--
 
 <!--      <li>
         <label><?php //echo $resx["resource_needs"]; ?></label>
