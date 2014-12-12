@@ -48,7 +48,7 @@
           <td id="external_note"><?php //echo $resx["trigger_ext_note"]; ?></td>
         </tr>
       </table>-->
-     <!--<li>
+     <li>
         <label>Data Collection</label>
         <table>
           <tr>
@@ -71,7 +71,7 @@
             <td></td>
           </tr>
         </table> 
-      </li>-->
+      </li>
 <!--
 
 <!--      <li>
