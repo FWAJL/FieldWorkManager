@@ -41,7 +41,7 @@ $(document).ready(function() {
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message.replace("client", "client (ID:" + reply.dataId + ")"));
-        //utils.redirect("project/listAll", 5000);
+        utils.redirect("project/listAll", 3000);
       }
     });
   };  
