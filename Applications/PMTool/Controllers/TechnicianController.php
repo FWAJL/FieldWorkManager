@@ -202,7 +202,7 @@ class TechnicianController extends \Library\BaseController {
       //Therefore, you just need to save the variable $pm at the end of the processing
       $technician->setTechnician_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
       $manager = $this->managers->getManagerOf($this->module);
-      $rows_affected += $manager->edit($technician) ? 1 : 0;
+      $rows_affected += $manager->edit($technician, "technician_id") ? 1 : 0;
     }
     if ($rows_affected === count($technician_ids)) {
       \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->app()->user(), $pm);
