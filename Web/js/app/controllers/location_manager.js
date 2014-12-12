@@ -182,7 +182,8 @@ $(document).ready(function() {
         return undefined;
       } else {//success
         toastr.success(reply.message);
-        $("li[data-location-id="+ location_id +"]").remove();
+        //$("li[data-location-id="+ location_id +"]").remove();
+        utils.redirect("location/listAll");
       }
     });
   };

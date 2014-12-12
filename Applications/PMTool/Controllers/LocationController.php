@@ -73,7 +73,7 @@ class LocationController extends \Library\BaseController {
     $result["data"] = $location;
 
     $manager = $this->managers->getManagerOf($this->module());
-    $result_edit = $manager->edit($location);
+    $result_edit = $manager->edit($location, "location_id");
 
     //Clear the location and facility list from session for the connect PM
     if ($result_edit) {
@@ -102,7 +102,7 @@ class LocationController extends \Library\BaseController {
     //Load interface to query the database
     if ($location_selected["object"] !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
-      $db_result = $manager->delete($location_id);
+      $db_result = $manager->delete($location_selected["object"], "location_id");
       if ($db_result) {
         unset($sessionProject[\Library\Enums\SessionKeys::ProjectLocations][$location_selected["key"]]);
         \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);

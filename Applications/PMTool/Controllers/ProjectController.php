@@ -134,7 +134,7 @@ class ProjectController extends \Library\BaseController {
     $result["dataId"] = $project->project_id();
 
     $manager = $this->managers->getManagerOf($this->module());
-    $result_insert = $manager->edit($project);
+    $result_insert = $manager->edit($project, "project_id");
 
     $this->executeGetItem($rq, $project);
     //\Applications\PMTool\Helpers\ProjectHelper::UpdateUserSessionProject($this->app()->user(), $project);
@@ -164,7 +164,7 @@ class ProjectController extends \Library\BaseController {
     //Load interface to query the database
     if ($project_selected !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
-      $db_result = $manager->delete($project_id);
+      $db_result = $manager->delete($project_selected, "project_id");
       \Applications\PMTool\Helpers\ProjectHelper::UnsetUserSessionProject($this->app()->user(), $project_id);
     }
 
@@ -279,7 +279,7 @@ class ProjectController extends \Library\BaseController {
     foreach ($matchedElements as $project) {
       $project->setProject_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
       $manager = $this->managers->getManagerOf($this->module);
-      $rows_affected += $manager->edit($project) ? 1 : 0;
+      $rows_affected += $manager->edit($project, "project_id") ? 1 : 0;
     }
 
     $this->SendResponseWS(

@@ -63,40 +63,10 @@ class ProjectDal extends \Library\DAL\BaseManager {
     return $result;
   }
 
-  public function edit($project) {
-    $set_clause = "";
-    $where_clause = "";
-    foreach ($project as $key => $value) {
-      if ($key === "project_id") {
-        $where_clause = "$key = $value";
-      } else {
-        $set_clause .= "`" . $key . "` = '" . $value ."',"; 
-      }
-    }
-    $set_clause = rtrim($set_clause, ",");
-    $sql = "UPDATE `project` SET $set_clause  WHERE $where_clause;";
-    $query = $this->dao->query($sql);
-    $result;
-    if (!$query) {
-      $result = $query->errorCode();
-    } else {
-      $result = TRUE;
-    }
-    $query->closeCursor();
-    return $result;
-  }
+//  public function edit($project) {
+//  }
 
-  public function delete($identifier) {
-    $sql = "DELETE from `project` WHERE project_id = " . $identifier . ";";
-    $query = $this->dao->query($sql);
-    $result;
-    if (!$query) {
-      $result = $query->errorCode();
-    } else {
-      $result = TRUE;
-    }
-    $query->closeCursor();
-    return $result;
-  }
+//  public function delete($identifier) {
+//  }
 
 }

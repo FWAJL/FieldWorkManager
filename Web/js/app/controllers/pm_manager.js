@@ -4,7 +4,7 @@
 $(document).ready(function() {
   $(".btn-warning").hide();
   $.contextMenu({
-    selector: '.select_item',
+    selector: '.select_pm',
     callback: function(key, options) {
       if (key === "edit") {
         pm_manager.retrievePm(options.$trigger);

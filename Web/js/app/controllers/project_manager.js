@@ -194,7 +194,8 @@ $(document).ready(function() {
         return undefined;
       } else {//success
         toastr.success(reply.message);
-        $("li[data-project-id="+ project_id +"]").remove();
+        //$("li[data-project-id="+ project_id +"]").remove();
+        utils.redirect("project/listAll");
       }
     });
   };

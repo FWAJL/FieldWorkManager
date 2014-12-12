@@ -53,8 +53,8 @@ class CommonHelper {
 
   public static function GetClassName($object) {
     $full_class_name = get_class($object);
-    $class_name = substr($full_class_name, strrpos($full_class_name, '/'));
-    return $class_name;
+    $class_name = substr($full_class_name, strrpos($full_class_name, '\\') + 1);
+    return strtolower($class_name);
   }
 
   public static function GetListObjectsInSessionByKey($user, $key) {
