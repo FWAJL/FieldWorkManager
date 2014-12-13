@@ -158,6 +158,7 @@
         </php_modules>
     </route>
     <!-- technician/showForm -->
+    
     <!--Tasks  -->
     <route url="task" module="Task" action="index" resxfile="task" type="ui">
         <js_files>
@@ -176,6 +177,7 @@
         </css_files>
     </route>
     <!--   task/index  -->
+    
     <route url="task/listAll" module="Task" action="listAll" resxfile="task" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
@@ -188,6 +190,7 @@
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
         </php_modules>
     </route><!--   task/listAll -->
+    
     <route url="task/showForm" module="Task" action="showForm" resxfile="task" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
@@ -216,10 +219,11 @@
             <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
             <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true" />
         </php_modules>
-    </route><!--  task/locations -->
+    </route><!--  task/locations --> 
+    
     <route url="task/technicians" module="TaskTechnician" action="manageTechnicians" resxfile="task_technician" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/task_location.js" />
+            <js_file use="head" value="Web/js/app/controllers/task_technician.js" />
         </js_files>
         <css_files>
             <css_file use="project" />
@@ -397,7 +401,8 @@
   <route url="task/updateItems" module="Task" action="updateItems" resxfile="task" type="ws" />
   
   <route url="task/location/updateItems" module="TaskLocation" action="updateItems" resxfile="task_location" type="ws" />
-  
+  <route url="task/technician/updateItems" module="TaskTechnician" action="updateItems" resxfile="task_technician" type="ws" />
+
   <route url="service/add" module="Service" action="add" resxfile="service" type="ws" />
   <route url="service/edit" module="Service" action="edit" resxfile="service" type="ws" />
   <route url="service/delete" module="Service" action="delete" resxfile="service" type="ws" />
