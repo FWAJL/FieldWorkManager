@@ -43,9 +43,9 @@ $(document).ready(function() {
         return undefined;
       } else {//success
         toastr.success(reply.message);
-        utils.redirect("service/ListAll");
+        utils.redirect("service/listAll");
       }
     });
   };
 
-}(window.service_manager = window.service_manager || {}));
+}(window.project_service = window.project_service || {}));
