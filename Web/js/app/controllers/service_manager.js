@@ -209,7 +209,7 @@ $(document).ready(function() {
     $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
   };
 */
-  service_manager.updateResources = function(action, arrayId) {
+  service_manager.updateServices = function(action, arrayId) {
     datacx.post("service/updateItems", {"action": action, "service_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
