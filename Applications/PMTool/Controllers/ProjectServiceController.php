@@ -8,35 +8,41 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class ProjectServiceController extends \Library\BaseController {
 
   public function executeUpdateItems(\Library\HttpRequest $rq) {
-  
+    $result = \Applications\PMTool\Helpers\ServiceHelper::UpdateProjectServices($this);
+    $this->SendResponseWS(
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+        "resx_key" => $this->action(),
+        "step" => ($result["rows_affected"] === count($result["service_ids"] )) ? "success" : "error"
+    ));
   }
 
-  public function executeManageTechnicians(\Library\HttpRequest $rq) {
-       // Set $current_project
+  public function executeManageServices(\Library\HttpRequest $rq) {
+       // Set $current_project for breadcrumb
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
       
-      $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
-    if ($sessionTask[\Library\Enums\SessionKeys::TaskObj] === NULL) {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskRootUrl);
+      $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
+    if ($sessionProject[\Library\Enums\SessionKeys::ProjectObject] === NULL) {
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectRootUrl);
     }
 
-    \Applications\PMTool\Helpers\TaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\TaskTabKeys::TechniciansTab);
+    // \Applications\PMTool\Helpers\ProjectHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\ProjectTabKeys::ServicesTab);
     $sessionPm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
-    $pm_technicians = \Applications\PMTool\Helpers\TechnicianHelper::GetPmTechnicians($this, $sessionPm);
-    $task_technicians = \Applications\PMTool\Helpers\TechnicianHelper::GetAndStoreTaskTechnicians($this, $sessionTask);
-    // filter the pm technicians after we retrieve the task technicians
-    $pm_technicians = \Applications\PMTool\Helpers\TechnicianHelper::FilterTechniciansToExcludeTaskTechnicians($pm_technicians, $task_technicians);
+    $pm_services = \Applications\PMTool\Helpers\ServiceHelper::GetPmServices($this, $sessionPm);
+    $project_services = \Applications\PMTool\Helpers\ServiceHelper::GetAndStoreProjectServices($this, $sessionProject);
+    // filter the pm services after we retrieve the project services
+    $pm_services = \Applications\PMTool\Helpers\ServiceHelper::FilterServicesToExcludeProjectServices($pm_services, $project_services);
 
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentPm, $sessionPm[\Library\Enums\SessionKeys::PmObject]);
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
-    $this->page->addVar("HasItemsToDisplay", \Applications\PMTool\Helpers\PmHelper::DoesPmHaveActiveTechnicians($this->user()));
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+    // $this->page->addVar("HasItemsToDisplay", \Applications\PMTool\Helpers\PmHelper::DoesPmHaveActiveServices($this->user()));
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_right => $pm_technicians,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left => $task_technicians,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("technician")),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("technician"))
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_right => $pm_services,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left => $project_services,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("service")),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("service"))  
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 

@@ -5,7 +5,7 @@ if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script acces
 
 abstract class Entity implements \ArrayAccess {
 
-    protected $erreurs = array(),
+    protected $errors = array(),
             $id;
 
     public function __construct(array $donnees = array()) {
@@ -18,8 +18,8 @@ abstract class Entity implements \ArrayAccess {
         return empty($this->id);
     }
 
-    public function erreurs() {
-        return $this->erreurs;
+    public function errors() {
+        return $this->errors;
     }
 
     public function id() {

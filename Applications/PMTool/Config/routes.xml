@@ -66,6 +66,7 @@
         </php_modules>
     </route>
     <!-- project/listAll -->
+    
     <!-- locations -->
     <route url="location" module="Location" action="index" resxfile="location" type="ui">
         <js_files></js_files>
@@ -78,6 +79,7 @@
         </css_files>
     </route>
     <!-- location/index -->
+    
     <route url="location/listAll" module="Location" action="listAll" resxfile="location" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/location_manager.js" />
@@ -91,6 +93,7 @@
         </php_modules>
     </route>
     <!-- location/listAll -->
+    
     <route url="location/showForm" module="Location" action="showForm" resxfile="location" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/location_manager.js" />
@@ -111,6 +114,7 @@
         </php_modules>
     </route>
     <!-- location/showForm -->
+    
     <!-- technicians -->
     <route url="technician" module="Technician" action="index" resxfile="technician" type="ui">
         <js_files>
@@ -126,6 +130,7 @@
         </css_files>
     </route>
     <!-- technician/index -->
+    
     <route url="technician/listAll" module="Technician" action="listAll" resxfile="technician" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/technician_manager.js" />
@@ -139,6 +144,7 @@
         </php_modules>
     </route>
     <!-- technician/listAll -->
+    
     <route url="technician/showForm" module="Technician" action="showForm" resxfile="technician" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/technician_manager.js" />
@@ -264,19 +270,21 @@
         </css_files>
     </route>
     <!-- service provider/index -->
-    <route url="service/listAll" module="Service" action="listAll" resxfile="service" type="ui">
+    
+    <route url="service/listAll" module="ProjectService" action="manageServices" resxfile="service" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/service_manager.js" />
+        <js_file use="head" value="Web/js/app/controllers/project_service.js" /> 
         </js_files>
         <css_files>
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="active_list_module" file_name="active_list.php" shared="true" />
-            <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
+            <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
+            <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
         </php_modules>
     </route>
     <!-- service provider/listAll -->
+    
     <route url="service/showForm" module="Service" action="showForm" resxfile="service" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/service_manager.js" />
@@ -297,6 +305,7 @@
         </php_modules>
     </route>
     <!-- service provider/showForm -->
+    
     <!-- pms -->
     <route url="pm" module="Pm" action="index" resxfile="pm" type="ui">
         <js_files>
@@ -312,6 +321,7 @@
         </css_files>
     </route>
     <!-- pm/index -->
+    
     <route url="pm/listAll" module="Pm" action="listAll" resxfile="pm" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/pm_manager.js" />
@@ -325,6 +335,7 @@
         </php_modules>
     </route>
     <!-- pm/listAll -->
+    
     <route url="pm/showForm" module="Pm" action="showForm" resxfile="pm" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/pm_manager.js" />
@@ -344,6 +355,8 @@
         </php_modules>
     </route>
     <!-- pm/showForm -->
+    
+    
     <!-- WebService AJAX routes -->
     <!-- INSTRUCTIONS
   
@@ -402,13 +415,14 @@
   
   <route url="task/location/updateItems" module="TaskLocation" action="updateItems" resxfile="task_location" type="ws" />
   <route url="task/technician/updateItems" module="TaskTechnician" action="updateItems" resxfile="task_technician" type="ws" />
-
+  <route url="service/updateItems" module="ProjectService" action="updateItems" resxfile="service" type="ws" />
+ 
   <route url="service/add" module="Service" action="add" resxfile="service" type="ws" />
   <route url="service/edit" module="Service" action="edit" resxfile="service" type="ws" />
   <route url="service/delete" module="Service" action="delete" resxfile="service" type="ws" />
   <route url="service/getlist" module="Service" action="getList" resxfile="service" type="ws" />
   <route url="service/getItem" module="Service" action="getItem" resxfile="service" type="ws" />
-  <route url="service/updateItems" module="Service" action="updateItems" resxfile="service" type="ws" />
+<!--  <route url="service/updateItems" module="Service" action="updateItems" resxfile="service" type="ws" />-->
   
   <route url="pm/add" module="Pm" action="add" resxfile="pm" type="ws" />
   <route url="pm/edit" module="Pm" action="edit" resxfile="pm" type="ws" />
