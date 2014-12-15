@@ -297,7 +297,7 @@ CREATE TABLE `task_service` (
 	UNIQUE INDEX `un_t_s` (`task_id` ASC, `service_id` ASC)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
--- Table structure for table `task_technician
+-- Table structure for table `task_technician`
 CREATE TABLE `task_technician` (
     `task_id` int(11) NOT NULL,
     `technician_id` int(11) NOT NULL,
@@ -308,6 +308,17 @@ CREATE TABLE `task_technician` (
         REFERENCES `technician` (`technician_id`) ON DELETE CASCADE,
 	UNIQUE INDEX `un_t_r` (`task_id` ASC, `technician_id` ASC)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
+
+-- Table structure for table `project_service`
+CREATE TABLE `project_service` (
+  `project_id` int(11) NOT NULL,
+  `service_id` int(11) NOT NULL,
+    CONSTRAINT `fk_ps_p` FOREIGN KEY (`project_id`)
+        REFERENCES `project` (`project_id`) ON DELETE CASCADE,
+    CONSTRAINT `fk_ps_s` FOREIGN KEY (`service_id`)
+        REFERENCES `service` (`service_id`) ON DELETE CASCADE,
+    UNIQUE INDEX `un_p_s` (`project_id` ASC, `service_id` ASC)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Dumping data for table `project_manager`
 INSERT INTO `project_manager` (`pm_id`, `username`, `password`, `hint`, `pm_comp_name`, `pm_name`, `pm_address`, `pm_phone`, `pm_email`) VALUES
