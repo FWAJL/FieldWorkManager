@@ -60,6 +60,7 @@
   border-right: solid 4px #F39814; 
   background-color: #ffd;
   padding: 5px;
+  color: #F39814;
 }
 
 .welcome > * {
@@ -67,8 +68,8 @@
   color: #333;
 } 
 
-#active-list .ui-selecting, #inactive-list .ui-selecting { background: #FECA40; }
-#active-list .ui-selected, #inactive-list .ui-selected { background: #F39814; color: white; }
+.ui-selecting, .ui-selecting { background: #FECA40; }
+.ui-selected, .ui-selected { background: #F39814; color: white; }
 
 #group-list-right .ui-selecting, #group-list-left .ui-selecting { background: #FECA40; }
 #group-list-right .ui-selected, #group-list-left .ui-selected { background: #F39814; color: white; }

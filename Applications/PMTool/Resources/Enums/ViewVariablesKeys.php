@@ -44,6 +44,7 @@ class ViewVariablesKeys {
   const active_list = "active_list_module";
   const inactive_list = "inactive_list_module";
   
+  const currentPm = "current_pm";
   const currentProject = "current_project";
   const currentTask = "current_task";
   

@@ -5,20 +5,14 @@ namespace Applications\PMTool\Controllers;
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class TaskTechnicianController extends \Library\BaseController {
+class ProjectServiceController extends \Library\BaseController {
 
   public function executeUpdateItems(\Library\HttpRequest $rq) {
-    $result = \Applications\PMTool\Helpers\TechnicianHelper::UpdateTaskTechnicians($this);
-    $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
-        "resx_key" => $this->action(),
-        "step" => ($result["rows_affected"] === count($result["technician_ids"] )) ? "success" : "error"
-    ));
+  
   }
 
   public function executeManageTechnicians(\Library\HttpRequest $rq) {
-       // Set $current_project for breadcrumb
+       // Set $current_project
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
       
