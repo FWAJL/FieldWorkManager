@@ -5,11 +5,11 @@
     <span class="glyphicon glyphicon-chevron-right"></span>    
     <?php echo $current_task->task_name(); ?>
     <span class="glyphicon glyphicon-chevron-right"></span>    
-    <?php echo $resx["task_locations_header"] ?></h3>  
+    <?php echo $resx["task_technicians_header"] ?></h3>  
   <div class="task_form_sections">
     <?php require $form_modules["task_tabs_open"]; ?>              
     <div  class="col-lg-5 col-md-5">
-      <h4><?php echo $resx["h4_task_locations"]; ?></h4>
+      <h4><?php echo $resx["h4_task_technicians"]; ?></h4>
       <?php require $form_modules["group_list_left"]; ?>              
     </div>
     <div class="col-lg-2 col-md-2">
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div  class="col-lg-5 col-md-5">
-      <h4><?php echo $resx["h4_project_locations"]; ?></h4>
+      <h4><?php echo $resx["h4_project_technicians"]; ?></h4>
       <?php require $form_modules["group_list_right"]; ?>              
     </div>
     <?php require $form_modules["task_tabs_close"]; ?>              

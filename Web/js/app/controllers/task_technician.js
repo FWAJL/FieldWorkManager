@@ -4,30 +4,30 @@
 $(document).ready(function() {
   $(".btn-warning").hide();
   //************************************************//
-  // Selection of task locations
-  var task_location_ids = "";
+  // Selection of task technicians
+  var task_technician_ids = "";
   $("#group-list-left, #group-list-right").selectable({
     stop: function() {
       var tmpSelection = "";
       $(".ui-selected", this).each(function() {
-        tmpSelection += $(this).attr("data-tasklocation-id") + ",";
+        tmpSelection += $(this).attr("data-tasktechnician-id") + ",";
       });
       tmpSelection = utils.removeLastChar(tmpSelection);
       if (tmpSelection.length > 0) {
-        task_location_ids = tmpSelection;
+        task_technician_ids = tmpSelection;
         //Show the button to appropriate button
         $(".from-" + $(this).attr("id")).show();
       } else {
-        task_location_ids = [];
+        task_technician_ids = [];
         $(".from-" + $(this).attr("id")).hide();
       }
     }
   });
   $(".from-group-list-right").click(function() {
-    task_manager.updateTaskLocations("add", task_location_ids);
+    task_manager.updateTaskTechnicians("add", task_technician_ids);
   });
   $(".from-group-list-left").click(function() {
-    task_manager.updateTaskLocations("remove", task_location_ids);
+    task_manager.updateTaskTechnicians("remove", task_technician_ids);
   });
   //************************************************//
 });
@@ -36,14 +36,14 @@ $(document).ready(function() {
  * Responsible to manage tasks.
  */
 (function(task_manager) {
-  task_manager.updateTaskLocations = function(action, arrayId) {
-    datacx.post("task/location/updateItems", {"action": action, "location_ids": arrayId}).then(function(reply) {
+  task_manager.updateTaskTechnicians = function(action, arrayId) {
+    datacx.post("task/technician/updateItems", {"action": action, "technician_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
         return undefined;
       } else {//success
         toastr.success(reply.message);
-        utils.redirect("task/locations");
+        utils.redirect("task/technicians");
       }
     });
   };
