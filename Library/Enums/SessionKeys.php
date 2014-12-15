@@ -56,6 +56,7 @@ abstract class SessionKeys {
   const FacilityObject = "facility_obj";
   const ClientObject = "client_obj";
   const ProjectTasks = "project_tasks";
+  const ProjectServices = "project_services";
   const ProjectLocations = "project_locations";
   
   /* Task session array */

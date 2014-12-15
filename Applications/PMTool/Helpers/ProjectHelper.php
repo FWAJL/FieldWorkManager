@@ -122,6 +122,15 @@ class ProjectHelper {
       $user->setAttribute(\Library\Enums\SessionKeys::UserSessionProjects, $userSessionProjects);
     }
   }
+  
+    public static function SetCurrentSessionProject(\Library\User $user, $sessionProject = NULL, $project_id = 0) {
+    if ($project_id > 0 && $sessionProject === NULL) {
+      $sessionProjects = self::GetUserSessionProjects($user);
+      $sessionTask = $sessionProjects[\Library\Enums\SessionKeys::ProjectKey . $project_id];
+    }
+    $user->setAttribute(\Library\Enums\SessionKeys::CurrentProject, $sessionProject);
+    return $sessionProject;
+  }
 
   public static function StoreSessionProjects($user, $lists) {
     $ProjectsSession = array();

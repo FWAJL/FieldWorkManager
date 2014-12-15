@@ -11,8 +11,8 @@ $(document).ready(function() {
     _default = "location_info";
   } else if (utils.getPathPart("technician")) {
     _default = "technician_info";
-  } else if (utils.getPathPart("resource")) {
-    _default = "resource_info";
+  } else if (utils.getPathPart("service")) {
+    _default = "service_info";
   } else if (utils.getPathPart("task/locations")) {
     _default = "task_locations";
   } else if (utils.getPathPart("task/technicians")) {

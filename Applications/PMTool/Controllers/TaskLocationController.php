@@ -13,18 +13,20 @@ class TaskLocationController extends \Library\BaseController {
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
         "resx_key" => $this->action(),
-        "step" => ($result["rows_affected"] === count($result["location_ids"] )) ? "success" : "error"
+        "step" => ($result["rows_affected"] === count($result["location_ids"])) ? "success" : "error"
     ));
   }
 
   public function executeManageLocations(\Library\HttpRequest $rq) {
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
     if ($sessionTask[\Library\Enums\SessionKeys::TaskObj] === NULL) {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskRootUrl);
+    } elseif ($sessionProject[\Library\Enums\SessionKeys::ProjectObject] === NULL) {
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
     }
 
     \Applications\PMTool\Helpers\TaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\TaskTabKeys::LocationsTab);
-    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
     $project_locations = \Applications\PMTool\Helpers\LocationHelper::GetProjectLocations($this, $sessionProject);
     $task_locations = \Applications\PMTool\Helpers\LocationHelper::GetAndStoreTaskLocations($this, $sessionTask);
     //filter the project locations after we retrieve the task locations
