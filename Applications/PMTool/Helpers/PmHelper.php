@@ -29,10 +29,22 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class PmHelper {
 
-  public static function AddSessionPm($user, \Applications\PMTool\Models\Dao\ProjectManager $pm) {
+  public static function AddSessionPm($user, \Applications\PMTool\Models\Dao\Project_manager $pm) {
     $sessionPms = $user->getAttribute(\Library\Enums\SessionKeys::SessionPms);
     $sessionPms[\Library\Enums\SessionKeys::PmKey . $pm->pm_id()] = self::MakeSessionPm($pm);
     self::SetSessionPms($user, $sessionPms);
+  }
+  
+    public static function DoesPmHaveActiveTechnicians(\Library\User $user) {
+    $itDoes = FALSE;
+    $currentPm = self::GetCurrentSessionPm($user);
+    foreach ($currentPm[\Library\Enums\SessionKeys::PmTechnicians] as $technician) {
+      if ($technician->technician_active()) { 
+        $itDoes = TRUE;
+        break;
+      }
+    }
+    return $itDoes;
   }
 
   public static function AddAProjectIdToList(\Library\User $user, $project_id) {
@@ -134,21 +146,21 @@ class PmHelper {
     return $PmsSession;
   }
 
-  public static function UnsetUserSessionPm($user, $pm_id) {
+  public static function UnsetSessionPm($user, $pm_id) {
     $sessionPms = $user->getAttribute(\Library\Enums\SessionKeys::SessionPms);
     unset($sessionPms[\Library\Enums\SessionKeys::PmKey . $pm_id]);
     $user->unsetAttribute(\Library\Enums\SessionKeys::CurrentPm);
     $user->setAttribute(\Library\Enums\SessionKeys::SessionPms, $sessionPms);
   }
 
-  public static function UpdateUserSessionPm(\Library\User $user, $sessionPm) {
+  public static function UpdateSessionPm(\Library\User $user, $sessionPm) {
     $sessionPms = self::GetSessionPms($user);
     if ($sessionPms !== NULL) {
       $currentSessionPm = $user->getAttribute(\Library\Enums\SessionKeys::CurrentPm);
       $sessionPms[\Library\Enums\SessionKeys::PmKey . $sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_id()]
               = $currentSessionPm
               = $sessionPm;
-      self::SetUserSessionPm($user, $currentSessionPm);
+      self::SetSessionPm($user, $currentSessionPm);
       self::SetSessionPms($user, $sessionPms);
     }
   }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
-  <resource key="page_title">Your task locations - Field Work Manager</resource>
+  <resource key="page_title">Your task technicians - Field Work Manager</resource>
   
   <resource key="message_error_updateItems">Error editing the tasks.</resource>
   <resource key="message_success_updateItems">The tasks have been edited</resource>
@@ -13,14 +13,14 @@
   <resource key="btn_to_active_list">Activate Task</resource> 
   <resource key="btn_to_lead_list">Assign as a Lead Technician</resource>  
   
-  <!--  Task Locations Form--> 
-  <resource key="task_locations_header">Locations</resource>
-  <resource key="h4_task_locations">Task locations</resource>
-  <resource key="h4_project_locations">Project locations</resource>
-  <resource key="selected_task_locations">Locations for this Task</resource>
-  <resource key="not_selected_task_locations">All available locations</resource>
-  <resource key="btn_add_to_task">Add location(s)</resource>
-  <resource key="btn_remove_from_task">Remove location(s)</resource>
-  <resource key="no_items_to_display_message">There is no active locations. Go to Locations > List all to activate some</resource>
+  <!--  Task Technicians Form--> 
+  <resource key="task_technicians_header">Technicians</resource>
+  <resource key="h4_task_technicians">Technicians for this Task</resource>
+  <resource key="h4_project_technicians">Available Technicians</resource>
+  <resource key="selected_task_technicians">Technicians for this Task</resource>
+  <resource key="not_selected_task_technicians">All available technicians</resource>
+  <resource key="btn_add_to_task">Add technician(s)</resource>
+  <resource key="btn_remove_from_task">Remove technician(s)</resource>
+  <resource key="no_items_to_display_message">There is no active technicians. Go to Technicians > List all to activate some</resource>
   
 </resources>

@@ -15,7 +15,10 @@ $(document).ready(function() {
     _default = "resource_info";
   } else if (utils.getPathPart("task/locations")) {
     _default = "task_locations";
+  } else if (utils.getPathPart("task/technicians")) {
+    _default = "task_technicians";
   } 
+  
   
   $(".data-form").hide();
   $("#" + _default).show();
