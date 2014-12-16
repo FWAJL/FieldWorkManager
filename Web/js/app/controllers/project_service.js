@@ -24,19 +24,19 @@ $(document).ready(function() {
     }
   });
   $(".from-group-list-right").click(function() {
-    service_manager.updateProjectServices("add", project_service_ids);
+    project_service.updateProjectServices("add", project_service_ids);
   });
   $(".from-group-list-left").click(function() {
-    service_manager.updateProjectServices("remove", project_service_ids);
+    project_service.updateProjectServices("remove", project_service_ids);
   });
   //************************************************//
 });
 /***********
- * service_manager namespace 
+ * project_service namespace 
  * Responsible to manage tasks.
  */
-(function(service_manager) {
-  service_manager.updateProjectServices = function(action, arrayId) {
+(function(project_service) {
+  project_service.updateProjectServices = function(action, arrayId) {
     datacx.post("service/updateItems", {"action": action, "service_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
