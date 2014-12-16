@@ -31,8 +31,16 @@ class BaseManager extends \Library\Manager {
    *
    * @param array $item array containing the data to use to build the SQL statement
    */
-  public function selectMany($item) {
-    
+  public function selectMany($object, $where_filter_id = NULL) {
+    $params = array("type" => "SELECT", "dao_class" => \Applications\PMTool\Helpers\CommonHelper::GetFullClassName($object));
+    $select_clause = "SELECT ";
+    $where_clause = " WHERE ";
+    foreach ($object as $key => $value) {
+      $select_clause .= $key . ", ";
+    }
+    $select_clause = rtrim($select_clause, ", ");
+    $where_clause .= $where_filter_id . " = " . $object->$where_filter_id();
+    $this->ExecuteQuery($select_clause . " FROM " . $this->GetTableName($object) . $where_clause, $params);
   }
 
   /**
@@ -50,6 +58,7 @@ class BaseManager extends \Library\Manager {
    * @param object $item
    */
   public function add($object) {
+    $params = array("type" => "INSERT");
     $columns = "";
     $values = "";
     foreach ($object as $key => $value) {
@@ -58,7 +67,7 @@ class BaseManager extends \Library\Manager {
     }
     $columns = rtrim($columns, ", ");
     $values = rtrim($values, ", ");
-    return $this->ExecuteQuery("INSERT INTO `" . $this->GetTableName($object) . "` ($columns) VALUES ($values);", TRUE);
+    return $this->ExecuteQuery("INSERT INTO `" . $this->GetTableName($object) . "` ($columns) VALUES ($values);", $params);
   }
 
   /**
@@ -67,6 +76,7 @@ class BaseManager extends \Library\Manager {
    * @param object $item
    */
   public function edit($object, $where_filter_id) {
+    $params = array("type" => "UPDATE");
     $set_clause = "";
     $where_clause = "";
     foreach ($object as $key => $value) {
@@ -78,7 +88,7 @@ class BaseManager extends \Library\Manager {
     }
     $set_clause = rtrim($set_clause, ",");
     return $this->ExecuteQuery(
-            "UPDATE `" . $this->GetTableName($object) . "` SET $set_clause  WHERE $where_clause;");
+                    "UPDATE `" . $this->GetTableName($object) . "` SET $set_clause  WHERE $where_clause;", $params);
   }
 
   /**
@@ -87,22 +97,40 @@ class BaseManager extends \Library\Manager {
    * @param int $identifier
    */
   public function delete($object, $where_filter_id) {
+    $params = array("type" => "DELETE");
     return $this->ExecuteQuery(
-            "DELETE from `" . $this->GetTableName($object) . "` WHERE $where_filter_id = " . $object->$where_filter_id() . ";");
+                    "DELETE from `" . $this->GetTableName($object) . "` WHERE $where_filter_id = " . $object->$where_filter_id() . ";", $params);
   }
 
   private function GetTableName($object) {
-    return \Applications\PMTool\Helpers\CommonHelper::GetClassName($object);
+    return \Applications\PMTool\Helpers\CommonHelper::GetShortClassName($object);
   }
 
-  private function ExecuteQuery($sql_query, $is_insert = FALSE) {
+  private function ExecuteQuery($sql_query, $params) {
     try {
       $query = $this->dao->query($sql_query);
       $result;
       if (!$query) {
         $result = $query->errorCode();
       } else {
-        $result = $is_insert ? $this->dao->lastInsertId() : TRUE;
+        switch ($params["type"]) {
+          case "SELECT":
+            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $params["dao_class"]);
+            $list = $query->fetchAll();
+            $query->closeCursor();
+            return count($list) > 0 ? $list : array();
+            break;
+          case "UPDATE":
+          case "DELETE":
+            $result = TRUE;
+            break;
+          case "INSERT":
+            $result = $this->dao->lastInsertId();
+            break;
+          default:
+            break;
+        }
+        
       }
       $query->closeCursor();
     } catch (\PDOException $pdo_ex) {
