@@ -40,7 +40,7 @@ class BaseManager extends \Library\Manager {
     }
     $select_clause = rtrim($select_clause, ", ");
     $where_clause .= $where_filter_id . " = " . $object->$where_filter_id();
-    $this->ExecuteQuery($select_clause . " FROM " . $this->GetTableName($object) . $where_clause, $params);
+    return $this->ExecuteQuery($select_clause . " FROM " . $this->GetTableName($object) . $where_clause, $params);
   }
 
   /**

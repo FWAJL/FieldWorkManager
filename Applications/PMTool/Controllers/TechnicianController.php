@@ -149,7 +149,7 @@ class TechnicianController extends \Library\BaseController {
 
     //Load interface to query the database for technicians
     $manager = $this->managers->getManagerOf($this->module);
-    $pm[\Library\Enums\SessionKeys::PmTechnicians] = $manager->selectMany($technician);
+    $pm[\Library\Enums\SessionKeys::PmTechnicians] = $manager->selectMany($technician, "pm_id");
     if ($pm !== NULL) {
       \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->app()->user(), $pm);
     }

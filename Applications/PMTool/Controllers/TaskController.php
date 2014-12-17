@@ -28,7 +28,7 @@ class TaskController extends \Library\BaseController {
     if ($toAdd || !$toEdit && !$toList) {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=add&test=true");
     } elseif ($toEdit) {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=edit&task_id=". $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=edit&task_id=" . $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
     } elseif ($toList) {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
     }
@@ -164,11 +164,14 @@ class TaskController extends \Library\BaseController {
 
     //Init PDO
     $list = array();
+    $project = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     if ($sessionTask === NULL) {
       //Load interface to query the database for tasks
-      $project = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+      $task = new \Applications\PMTool\Models\Dao\Task();
+      $task->setProject_id($project[\Library\Enums\SessionKeys::ProjectObject]->project_id());
       $manager = $this->managers->getManagerOf($this->module);
-      \Applications\PMTool\Helpers\TaskHelper::StoreSessionTask($this->app()->user(), $manager->selectMany($project[\Library\Enums\SessionKeys::ProjectObject]));
+      \Applications\PMTool\Helpers\TaskHelper::StoreSessionTask(
+              $this->app()->user(), $manager->selectMany($task, "project_id"));
     }
     if ($isAjaxCall) {
       $step_result = $result[\Library\Enums\SessionKeys::ProjectTasks] !== NULL ? "success" : "error";
@@ -221,4 +224,5 @@ class TaskController extends \Library\BaseController {
         "step" => ($rows_affected === count($task_ids)) ? "success" : "error"
     ));
   }
+
 }

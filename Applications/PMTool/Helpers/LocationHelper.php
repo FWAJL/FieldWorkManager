@@ -82,9 +82,11 @@ class LocationHelper {
 
   public static function GetAndStoreTaskLocations($caller, $sessionTask) {
     $sessionTasks = $caller->user()->getAttribute(\Library\Enums\SessionKeys::SessionTasks);
+    $taskLocation = new \Applications\PMTool\Models\Dao\Task_location();
+    $taskLocation->setTask_id($sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
 //    if (!(count($sessionTask[\Library\Enums\SessionKeys::TaskLocations]) > 0)) {
     $dal = $caller->managers()->getManagerOf("TaskLocation");
-    $sessionTask[\Library\Enums\SessionKeys::TaskLocations] = $dal->selectMany($sessionTask[\Library\Enums\SessionKeys::TaskObj]);
+    $sessionTask[\Library\Enums\SessionKeys::TaskLocations] = $dal->selectMany($taskLocation, "task_id");
 //    }
     TaskHelper::SetSessionTask($caller->user(), $sessionTask);
     TaskHelper::SetCurrentSessionTask($caller->user(), $sessionTask);
@@ -109,10 +111,12 @@ class LocationHelper {
     $result = $caller->InitResponseWS();
     if ($sessionProject !== NULL) {
       //Load interface to query the database for locations
+      $location = new \Applications\PMTool\Models\Dao\Location();
+      $location->setProject_id($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
       $manager = $caller->managers()->getManagerOf("Location");
       $result[\Library\Enums\SessionKeys::ProjectLocations] =
               $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] =
-              $manager->selectMany($sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+              $manager->selectMany($location, "project_id");
       \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($caller->user(), $sessionProject);
     }
     return $result;

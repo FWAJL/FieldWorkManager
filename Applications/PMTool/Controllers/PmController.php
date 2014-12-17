@@ -130,7 +130,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
 
     //Load interface to query the database for pms
     $manager = $this->managers->getManagerOf($this->module);
-    $list[\Library\Enums\SessionKeys::AllUsers] = $manager->selectMany($pm);
+    $list[\Library\Enums\SessionKeys::AllUsers] = $manager->selectMany($pm, "");
 
     $result["lists"] = $list;
     if ($isNotAjaxCall) {

@@ -82,9 +82,11 @@ class ServiceHelper {
 
   public static function GetAndStoreProjectServices($caller, $sessionProject) {
     $sessionProjects = $caller->user()->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
+    $projectService = new \Applications\PMTool\Models\Dao\Project_service();
+    $projectService->setProject_id($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
 //    if (!(count($sessionProject[\Library\Enums\SessionKeys::ProjectServices]) > 0)) {
     $dal = $caller->managers()->getManagerOf("ProjectService");
-    $sessionProject[\Library\Enums\SessionKeys::ProjectServices] = $dal->selectMany($sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+    $sessionProject[\Library\Enums\SessionKeys::ProjectServices] = $dal->selectMany($projectService, "project_id");
 //    }
     ProjectHelper::SetUserSessionProject($caller->user(), $sessionProject);
     ProjectHelper::SetCurrentSessionProject($caller->user(), $sessionProject);
@@ -108,11 +110,12 @@ class ServiceHelper {
   public static function GetServiceList($caller, $sessionPm) {
     $result = $caller->InitResponseWS();
     if ($sessionPm !== NULL) {
-      //Load interface to query the database for services
+      $service = new \Applications\PMTool\Models\Dao\Service();
+      $service->setPm_id($sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_id());
       $manager = $caller->managers()->getManagerOf("Service");
       $result[\Library\Enums\SessionKeys::PmServices] =
               $sessionPm[\Library\Enums\SessionKeys::PmServices] =
-              $manager->selectMany($sessionPm[\Library\Enums\SessionKeys::PmObject]);
+              $manager->selectMany($service, "pm_id");
       \Applications\PMTool\Helpers\PmHelper::SetSessionPm($caller->user(), $sessionPm);
     }
     return $result;
@@ -180,7 +183,7 @@ class ServiceHelper {
     foreach ($result["service_ids"] as $id) {
       $project_service = new \Applications\PMTool\Models\Dao\Project_service();
       $project_service->setService_id($id);
-      $project_service->setProject_id($sessionProject[\Library\Enums\SessionKeys::ProjectObj]->project_id());
+      $project_service->setProject_id($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
       $dal = $caller->managers()->getManagerOf($caller->module());
       if ($dataPost["action"] === "add") {
         $result["rows_affected"] += $dal->add($project_service) >= 0 ? 1 : 0;
@@ -190,7 +193,7 @@ class ServiceHelper {
       array_push($project_services, $project_service);
     }
     $sessionProject[\Library\Enums\SessionKeys::ProjectServices] = $project_services;
-    \Applications\PMTool\Helpers\ProjectHelper::SetSessionProject($caller->user(), $sessionProject);
+    \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($caller->user(), $sessionProject);
     return $result;
   }
 }

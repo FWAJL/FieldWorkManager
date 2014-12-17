@@ -18,25 +18,7 @@ class ServiceDal extends \Library\DAL\BaseManager {
     return NULL;
   }
 
-   public function selectMany($object) {
-    $sql = 'SELECT * FROM service where `pm_id` = \'' . $object->pm_id() . '\';'; //AND `active` = 1  AND `visible` = 1;';
-    $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Service');
-
-    $services_list = $query->fetchAll();
-    $query->closeCursor();
-
-    return count($services_list) > 0 ? $services_list : array();
-  }
-
   public function countById($pm_id) {
     return NULL;
   }
-
-//  public function add($object) {  }
-
-//  public function edit($object) {  }
-
-//  public function delete($identifier) {  }
-
 }
