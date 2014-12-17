@@ -254,6 +254,24 @@
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
         </php_modules>
     </route><!--  field/analytes -->
+    
+    <route url="field/showForm" module="FieldAnalyte" action="showForm" resxfile="field_analyte" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/field_analyte.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="field_analyte_tabs_open" file_name="field_analyte_tabs_open.php" />
+            <php_module key="field_analyte_form" file_name="field_analyte_form.php" />
+            <php_module key="field_analyte_buttons" file_name="field_analyte_buttons.php" />
+            <php_module key="field_analyte_tabs_close" file_name="field_analyte_tabs_close.php" />
+        </php_modules>
+    </route>
+    <!-- location/showForm -->
+
+
 
     <!-- service providers -->
     <route url="service" module="Service" action="index" resxfile="service" type="ui">

@@ -1,9 +1,7 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 
-
   <ol id="group-list-right" class="list-panel">
     <?php
-    // $noActiveOject = FALSE;
     foreach ($data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_right] as $object) {
       if ($object->$data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right][\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active]) {
         echo
@@ -14,4 +12,3 @@
     }
     ?>              
   </ol>   
-

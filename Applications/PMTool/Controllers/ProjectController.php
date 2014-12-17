@@ -194,15 +194,15 @@ class ProjectController extends \Library\BaseController {
 
     //Load interface to query the database for projects
     $manager = $this->managers->getManagerOf($this->module);
-    $lists[\Library\Enums\SessionKeys::UserProjects] = $manager->selectMany($project);
+    $lists[\Library\Enums\SessionKeys::UserProjects] = $manager->selectMany($project, "pm_id");
 
     //Load interface to query the database for facilities
     $manager = $this->managers->getManagerOf('Facility');
-    $lists[\Library\Enums\SessionKeys::UserProjectFacilityList] = $manager->selectMany($project);
+    $lists[\Library\Enums\SessionKeys::UserProjectFacilityList] = $manager->selectMany($project, "pm_id");
 
     //Load interface to query the database for clients
     $manager = $this->managers->getManagerOf('Client');
-    $lists[\Library\Enums\SessionKeys::UserProjectClientList] = $manager->selectMany($project);
+    $lists[\Library\Enums\SessionKeys::UserProjectClientList] = $manager->selectMany($project, "pm_id");
 
     $ProjectsSession = \Applications\PMTool\Helpers\ProjectHelper::StoreSessionProjects($this->app()->user(), $lists);
 

@@ -135,7 +135,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
 
     //Load interface to query the database for services
     $manager = $this->managers->getManagerOf($this->module);
-    $list[\Library\Enums\SessionKeys::PmServices] = $manager->selectMany($service);
+    $list[\Library\Enums\SessionKeys::PmServices] = $manager->selectMany($service, "pm_id");
 
     $result["lists"] = $list;
     if ($isNotAjaxCall) {

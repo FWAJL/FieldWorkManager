@@ -18,21 +18,6 @@ class TechnicianDal extends \Library\DAL\BaseManager {
     return NULL;
   }
 
-   public function selectMany($object) {
-    $sql = 'SELECT * FROM technician where `pm_id` = \'' . $object->pm_id() . '\';'; //AND `active` = 1  AND `visible` = 1;';
-    $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Technician');
-
-    $technicians_list = $query->fetchAll();
-    $query->closeCursor();
-
-    return count($technicians_list) > 0 ? $technicians_list : array();
-  }
-
-  public function countById($pm_id) {
-    return NULL;
-  }
-
 //  public function add($object) {  }
 
 //  public function edit($object) {  }

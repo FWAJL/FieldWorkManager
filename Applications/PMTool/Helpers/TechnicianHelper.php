@@ -82,9 +82,11 @@ class TechnicianHelper {
 
   public static function GetAndStoreTaskTechnicians($caller, $sessionTask) {
     $sessionTasks = $caller->user()->getAttribute(\Library\Enums\SessionKeys::SessionTasks);
+    $taskTech = new \Applications\PMTool\Models\Dao\Task_technician();
+    $taskTech->setTask_id($sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
 //    if (!(count($sessionTask[\Library\Enums\SessionKeys::TaskTechnicians]) > 0)) {
     $dal = $caller->managers()->getManagerOf("TaskTechnician");
-    $sessionTask[\Library\Enums\SessionKeys::TaskTechnicians] = $dal->selectMany($sessionTask[\Library\Enums\SessionKeys::TaskObj]);
+    $sessionTask[\Library\Enums\SessionKeys::TaskTechnicians] = $dal->selectMany($taskTech, "task_id");
 //    }
     TaskHelper::SetSessionTask($caller->user(), $sessionTask);
     TaskHelper::SetCurrentSessionTask($caller->user(), $sessionTask);
@@ -109,10 +111,12 @@ class TechnicianHelper {
     $result = $caller->InitResponseWS();
     if ($sessionPm !== NULL) {
       //Load interface to query the database for technicians
+      $technician = new \Applications\PMTool\Models\Dao\Technician();
+      $technician->setPm_id($sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_id());
       $manager = $caller->managers()->getManagerOf("Technician");
       $result[\Library\Enums\SessionKeys::PmTechnicians] =
               $sessionPm[\Library\Enums\SessionKeys::PmTechnicians] =
-              $manager->selectMany($sessionPm[\Library\Enums\SessionKeys::PmObject]);
+              $manager->selectMany($technician, "pm_id");
       \Applications\PMTool\Helpers\PmHelper::SetSessionPm($caller->user(), $sessionPm);
     }
     return $result;

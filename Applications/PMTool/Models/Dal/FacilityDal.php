@@ -33,9 +33,9 @@ class FacilityDal extends \Library\DAL\BaseManager {
    * @param \Applications\PMTool\Models\Dao\Facility $facility
    * @return array of \Applications\PMTool\Models\Dao\Facility
    */
-  public function selectMany($facility) {
+  public function selectMany($facility, $where_filter_id) {
     $sql = 'SELECT f.* FROM `facility` f inner join `project` p on f.project_id = p.project_id';
-    $sql .= ' where p.`pm_id` = \'' . $facility->pm_id() . '\';'; //AND `active` = 1  AND `visible` = 1;';
+    $sql .= ' where p.`'. $where_filter_id.'` = \'' . $facility->$where_filter_id() . '\';'; //AND `active` = 1  AND `visible` = 1;';
     $query = $this->dao->query($sql);
     $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Facility');
 

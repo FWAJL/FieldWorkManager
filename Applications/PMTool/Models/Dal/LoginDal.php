@@ -48,10 +48,6 @@ class LoginDal extends \Library\DAL\BaseManager {
     }
   }
 
-  public function selectMany($item) {
-    return NULL;
-  }
-
   public function countById($item) {
     
   }
