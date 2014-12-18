@@ -24,17 +24,18 @@ class FieldAnalyteController extends \Library\BaseController {
     $sessionPm = \Applications\PMTool\Helpers\AnalyteHelper::GetListData($this);
     $field_analytes = $sessionPm[\Library\Enums\SessionKeys::PmFieldAnalytes];
     $data = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $field_analytes,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => 
+          strtolower($this->module()),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left => 
+          $field_analytes,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => 
+          \Applications\PMTool\Helpers\CommonHelper::SetDynamicPropertyNamesForDualList("field_analyte", \Applications\PMTool\Helpers\AnalyteHelper::GetListProperties())
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 
     $modules = $this->app()->router()->selectedRoute()->phpModules();
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
-    $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::group_list_left]);
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
   }

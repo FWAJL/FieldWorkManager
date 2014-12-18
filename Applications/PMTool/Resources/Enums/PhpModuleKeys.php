@@ -31,6 +31,8 @@ class PhpModuleKeys {
 
   const active_list = "active_list_module";
   const inactive_list = "inactive_list_module";
+  const group_list_left = "group_list_left";
+  const group_list_right = "group_list_right";
   
   const project_tabs_open = "project_tabs_open";
   const project_form = "project_form";

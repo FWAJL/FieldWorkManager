@@ -29,17 +29,34 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class AnalyteHelper {
 
-  public static function GetListData($caller) {
+  public static function GetListData($caller, $isFieldType = TRUE) {
     $sessionPm = PmHelper::GetCurrentSessionPm($caller->user());
-    if (!count($sessionPm[\Library\Enums\SessionKeys::PmFieldAnalytes]) > 0) {
+    $analytes = array();
+    $doDbQuery = FALSE;
+    if ($isFieldType && !count($sessionPm[\Library\Enums\SessionKeys::PmFieldAnalytes]) === 0) {
       $analyte = new \Applications\PMTool\Models\Dao\Field_analyte();
+      $doDbQuery = TRUE;
+    } else if (!count($sessionPm[\Library\Enums\SessionKeys::PmLabAnalytes]) === 0) {
+      $analyte = new \Applications\PMTool\Models\Dao\Lab_analyte();
+      $doDbQuery = TRUE;
+    }
+    if ($doDbQuery) {
       $analyte->setPm_id($sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_id());
       $dal = $caller->managers()->getManagerOf($caller->module());
       $analytes = $dal->selectMany($analyte, "pm_id");
+      if ($isFieldType) {
+        $sessionPm[\Library\Enums\SessionKeys::PmFieldAnalytes] = $analytes;
+      } else {
+        $sessionPm[\Library\Enums\SessionKeys::PmLabAnalytes] = $analytes;
+      }
     }
+    PmHelper::SetSessionPm($caller->user(), $sessionPm);
     return $sessionPm;
   }
 
+  public static function GetListProperties() {
+    return array("name" => "name_unit","id" => "id");
+  }
   public static function AddAnalyte($caller, $result) {
     $pm = PmHelper::GetCurrentSessionPm($caller->user());
 
@@ -67,7 +84,7 @@ class AnalyteHelper {
       }
       array_push($pm[\Library\Enums\SessionKeys::PmFieldAnalytes], $analyte);
     }
-    if ($result["dataId"]) {
+    if ($result["dataId"] > 0) {
       PmHelper::SetSessionPm($caller->user(), $pm);
     }
     return $result;

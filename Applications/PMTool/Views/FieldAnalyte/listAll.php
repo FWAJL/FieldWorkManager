@@ -31,17 +31,11 @@
       <div class="row">
         <div  class="col-lg-5 col-md-5">
           <h4><?php echo $resx["h3_field_analytes_active"]; ?></h4>
-          <?php require $active_list_module; ?>              
+          <?php require $objects_list_left; ?>              
         </div>
         <div class="col-lg-2 col-md-2">
-          <div class="buttons">
-            <input type="button" value="<?php echo $resx["btn_to_inactive_list"]; ?>" class="btn btn-warning from-active-list" />
-            <input type="button" value="<?php echo $resx["btn_to_active_list"]; ?>"  class="btn btn-warning from-inactive-list" />            
-          </div>
         </div>
         <div  class="col-lg-5 col-md-5">
-          <h4><?php echo $resx["h3_field_analytes_inactive"]; ?></h4>
-          <?php require $inactive_list_module; ?>              
         </div>
       </div>
     </div>

@@ -35,6 +35,7 @@ class ViewVariablesKeys {
   const properties = "properties";
   const properties_right = "properties_right";
   const properties_left = "properties_left";
+  const property_key = "prop_";
   const property_id = "prop_id";
   const property_name = "prop_name";
   const property_active = "prop_active";
