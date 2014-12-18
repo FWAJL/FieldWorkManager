@@ -102,11 +102,12 @@ CREATE TABLE `baiken_fwm_1`.`location` (
     `location_id` INT(11) COLLATE utf8_unicode_ci NOT NULL AUTO_INCREMENT,
     `location_name` VARCHAR(50) COLLATE utf8_unicode_ci NULL,
     `location_desc` VARCHAR(250) COLLATE utf8_unicode_ci NULL,
-    `location_document` VARCHAR(500) COLLATE utf8_unicode_ci NULL,
+    `location_address` VARCHAR(500) COLLATE utf8_unicode_ci NULL,
     `location_lat` FLOAT(10 , 6 ) COLLATE utf8_unicode_ci NULL,
     `location_long` FLOAT(10 , 6 ) COLLATE utf8_unicode_ci NULL,
     `location_active` tinyint(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 1,
     `location_visible` tinyint(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 1,
+    `location_category` VARCHAR(50) COLLATE utf8_unicode_ci NULL,
     `project_id` INT(11) NOT NULL COMMENT 'Foreign key => project',
     PRIMARY KEY (`location_id`),
     CONSTRAINT `fk_loc_project` FOREIGN KEY (`project_id`)
@@ -309,15 +310,13 @@ CREATE TABLE `task_technician` (
 	UNIQUE INDEX `un_t_r` (`task_id` ASC, `technician_id` ASC)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
--- Table structure for table `project_service`
-CREATE TABLE `project_service` (
-  `project_id` int(11) NOT NULL,
-  `service_id` int(11) NOT NULL,
-    CONSTRAINT `fk_ps_p` FOREIGN KEY (`project_id`)
-        REFERENCES `project` (`project_id`) ON DELETE CASCADE,
-    CONSTRAINT `fk_ps_s` FOREIGN KEY (`service_id`)
-        REFERENCES `service` (`service_id`) ON DELETE CASCADE,
-    UNIQUE INDEX `un_p_s` (`project_id` ASC, `service_id` ASC)
+-- Table structure for table `location_document`
+CREATE TABLE `location_document` (
+  `location_id` int(11) NOT NULL,
+  `location_document_value` int(11) NOT NULL COMMENT 'A unique constraint prevent adding the same document as a given location',
+    CONSTRAINT `fk_ld_l` FOREIGN KEY (`location_id`)
+        REFERENCES `location` (`location_id`) ON DELETE CASCADE,
+    UNIQUE INDEX `un_ld_l` (`location_id` ASC, `location_document_value` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Dumping data for table `project_manager`

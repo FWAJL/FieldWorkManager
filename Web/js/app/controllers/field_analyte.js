@@ -1,5 +1,5 @@
 /**
- * jQuery listeners for the location actions
+ * jQuery listeners for the field_analyte actions
  */
 $(document).ready(function() {
   $(".btn-warning").hide();
@@ -7,9 +7,9 @@ $(document).ready(function() {
     selector: '.select_item',
     callback: function(key, options) {
       if (key === "edit") {
-        location_manager.retrieveLocation(options.$trigger);
+        field_analyte.retrieveFieldAnalyte(options.$trigger);
       } else if (key === "delete") {
-        location_manager.delete(parseInt(options.$trigger.attr("data-location-id")));
+        field_analyte.delete(parseInt(options.$trigger.attr("data-field_analyte-id")));
       }
     },
     items: {
@@ -19,74 +19,71 @@ $(document).ready(function() {
   });//Manages the context menu
 
   //************************************************//
-  // Selection of locations
-  var location_ids = "";
+  // Selection of field_analytes
+  var field_analyte_ids = "";
   $("#active-list, #inactive-list").selectable({
     stop: function() {
       var tmpSelection = "";
       $(".ui-selected", this).each(function() {
-        tmpSelection += $(this).attr("data-location-id") + ",";
+        tmpSelection += $(this).attr("data-field_analyte-id") + ",";
       });
       tmpSelection = utils.removeLastChar(tmpSelection);
       if (tmpSelection.length > 0) {
-        location_ids = tmpSelection;
+        field_analyte_ids = tmpSelection;
         //Show the button to appropriate button
         $(".from-" + $(this).attr("id")).show();
       } else {
-        location_ids = [];
+        field_analyte_ids = [];
         $(".from-" + $(this).attr("id")).hide();
       }
     }
   });
   $(".from-inactive-list").click(function() {
-    location_manager.updateLocations("active", location_ids);
+    field_analyte.updateFieldAnalytes("active", field_analyte_ids);
   });
   $(".from-active-list").click(function() {
-    location_manager.updateLocations("inactive", location_ids);
+    field_analyte.updateFieldAnalytes("inactive", field_analyte_ids);
   });
   //************************************************//
 
 
-  $("#btn-add-location-names").click(function() {
-    var data = {
-      "names": $("textarea[name=\"location_names\"]").val(), 
-      "active": $("input[name=\"location_active\"]").prop("checked")
-    };
-    location_manager.add(data, "location", "add");
-  });//Add many locations
+  $("#btn-add-field_analyte-names").click(function() {
+    var data = { "names": $("textarea[name=\"field_analyte_names\"]").val() };
+    field_analyte.add(data, "field_analyte", "add");
+  });//Add many field_analytes
 
-  $("#btn-add-location-manual").click(function() {
-    utils.redirect("location/showForm?mode=add&test=true");
-  });//Button click "add a location"
+  $("#btn-add-field_analyte-manual").click(function() {
+    utils.redirect("field_analyte/showForm?mode=add&test=true");
+  });//Button click "add a field_analyte"
 
-  $("#btn_add_location").click(function() {
+  $("#btn_add_field_analyte").click(function() {
     var post_data = {};
-    post_data = utils.retrieveInputs("location_form", ["location_name"]);
-    if (post_data.location_name !== undefined) {
-      location_manager.add(post_data, "location", "add", true);
+    post_data = utils.retrieveInputs("field_analyte_form", ["field_analyte_name"]);
+    if (post_data.field_analyte_name !== undefined) {
+      field_analyte.add(post_data, "field_analyte", "add", true);
     }
-  });//Add a location
+  });//Add a field_analyte
 
-  $("#btn_edit_location").click(function() {
-    var post_data = utils.retrieveInputs("location_form", ["location_name"]);
-    if (post_data.location_name !== undefined) {
-      location_manager.edit(post_data, "location", "edit");
+  $("#btn_edit_field_analyte").click(function() {
+    var post_data = utils.retrieveInputs("field_analyte_form", ["field_analyte_name"]);
+    if (post_data.field_analyte_name !== undefined) {
+      field_analyte.edit(post_data, "field_analyte", "edit");
     }
-  });//Edit a location
+  });//Edit a field_analyte
 
-  $("#btn_delete_location").click(function() {
-    location_manager.delete(parseInt(utils.getQueryVariable("location_id")));
-  });//Delete a location
+  $("#btn_delete_field_analyte").click(function() {
+    field_analyte.delete(parseInt(utils.getQueryVariable("field_analyte_id")));
+  });//Delete a field_analyte
 
   if (utils.getQueryVariable("mode") === "edit") {
     $(".form_sections").fadeIn('2000').addClass("show").removeClass("hide");
     $(".welcome").fadeOut('2000').removeClass("show").addClass("hide");
-    $(".location_add").hide();
-    location_manager.getItem(utils.getQueryVariable("location_id"));
-  }//Load location
+    $(".field_analyte_add").hide();
+    field_analyte.getItem(utils.getQueryVariable("field_analyte_id"));
+  }//Load field_analyte
 
   if (utils.getQueryVariable("mode") === "add" && utils.getQueryVariable("test") === "true") {
-    location_manager.fillFormWithRandomData();
+    field_analyte.fillFormWithRandomData();
   }
 
   var alreadyHovered = false;
@@ -94,135 +91,135 @@ $(document).ready(function() {
     if (!alreadyHovered)
       toastr.info("Right-click to edit!");
     alreadyHovered = true;
-  });//Show a location tip
+  });//Show a field_analyte tip
 
-  $("#location_list_all").click(function() {
+  $("#field_analyte_list_all").click(function() {
     utils.clearForm();
     $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
-    $(".location_list").fadeIn('2000').removeClass("hide");
-    location_manager.getList();
+    $(".field_analyte_list").fadeIn('2000').removeClass("hide");
+    field_analyte.getList();
   });//Show "List All" panel
 
 });
 /***********
- * location_manager namespace 
- * Responsible to manage locations.
+ * field_analyte namespace 
+ * Responsible to manage field_analytes.
  */
-(function(location_manager) {
-  location_manager.add = function(data, controller, action, isSingle) {
+(function(field_analyte) {
+  field_analyte.add = function(data, controller, action, isSingle) {
 //    var data = isSingle ? userData : {"names": userData};
-    datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Location/Add WebService
+    datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call FieldAnalyte/Add WebService
       if (reply === null || reply.dataId === undefined || reply.dataId === null || parseInt(reply.dataId) === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        utils.redirect("location/listAll", 1000);
+        utils.redirect("field_analyte/listAll", 1000);
       }
     });
   };
-  location_manager.edit = function(location, controller, action) {
-    datacx.post(controller + "/" + action, location).then(function(reply) {//call AJAX method to call Location/Add WebService
+  field_analyte.edit = function(field_analyte, controller, action) {
+    datacx.post(controller + "/" + action, field_analyte).then(function(reply) {//call AJAX method to call FieldAnalyte/Add WebService
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        utils.redirect("location/listAll", 1000);
+        utils.redirect("field_analyte/listAll", 1000);
       }
     });
   };
-  location_manager.getList = function() {
-    datacx.post("location/getlist", null).then(function(reply) {//call AJAX method to call Location/GetList WebService
+  field_analyte.getList = function() {
+    datacx.post("field_analyte/getlist", null).then(function(reply) {//call AJAX method to call FieldAnalyte/GetList WebService
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
         //Build the table
-        location_manager.buildOutputList(reply.lists.locations);
+        field_analyte.buildOutputList(reply.lists.field_analytes);
         //Now show the table
       }
     });
   };
-  location_manager.buildOutputList = function(locations) {
-    var active_locations = "";
-    var inactive_locations = "";
-    for (i = 0; i < locations.length; i++) {
-      if (parseInt(locations[i].active) !== 0) {
-        active_locations += "<option value=\"" + locations[i].location_name + "\">" + locations[i].location_name + "</option>";
+  field_analyte.buildOutputList = function(field_analytes) {
+    var active_field_analytes = "";
+    var inactive_field_analytes = "";
+    for (i = 0; i < field_analytes.length; i++) {
+      if (parseInt(field_analytes[i].active) !== 0) {
+        active_field_analytes += "<option value=\"" + field_analytes[i].field_analyte_name + "\">" + field_analytes[i].field_analyte_name + "</option>";
       } else {
-        inactive_locations += "<option value=\"" + locations[i].location_name + "\">" + locations[i].location_name + "</option>";
+        inactive_field_analytes += "<option value=\"" + field_analytes[i].field_analyte_name + "\">" + field_analytes[i].field_analyte_name + "</option>";
       }
     }
-    inactive_locations = utils.isNullOrEmpty(inactive_locations) ?
-            "<option value=\"\">{empty}</option>" : inactive_locations;
-    active_locations = utils.isNullOrEmpty(active_locations) ?
-            "<option value=\"\">{empty}</option>" : active_locations;
-    $("#location-data-active, #location-data-inactive").show();
-    $("#location-data-active").html(active_locations);
-    $("#location-data-inactive").html(inactive_locations);
+    inactive_field_analytes = utils.isNullOrEmpty(inactive_field_analytes) ?
+            "<option value=\"\">{empty}</option>" : inactive_field_analytes;
+    active_field_analytes = utils.isNullOrEmpty(active_field_analytes) ?
+            "<option value=\"\">{empty}</option>" : active_field_analytes;
+    $("#field_analyte-data-active, #field_analyte-data-inactive").show();
+    $("#field_analyte-data-active").html(active_field_analytes);
+    $("#field_analyte-data-inactive").html(inactive_field_analytes);
   };
-  location_manager.retrieveLocation = function(element) {
-    utils.redirect("location/showForm?mode=edit&location_id=" + parseInt(element.attr("data-location-id")));
+  field_analyte.retrieveFieldAnalyte = function(element) {
+    utils.redirect("field_analyte/showForm?mode=edit&field_analyte_id=" + parseInt(element.attr("data-field_analyte-id")));
   };
-  location_manager.loadEditForm = function(dataWs) {
+  field_analyte.loadEditForm = function(dataWs) {
     utils.clearForm();
-    $("input[name=\"project_id\"]").val(parseInt(dataWs.location.project_id));
-    $("input[name=\"location_id\"]").val(parseInt(dataWs.location.location_id));
-    $("input[name=\"location_name\"]").val(dataWs.location.location_name);
-    $("input[name=\"location_document\"]").val(dataWs.location.location_document);
-    $("input[name=\"location_lat\"]").val(dataWs.location.location_lat);
-    $("input[name=\"location_long\"]").val(dataWs.location.location_long);
-    $("input[name=\"location_desc\"]").val(dataWs.location.location_desc);
-    $("input[name=\"location_active\"]").prop('checked', utils.setCheckBoxValue(dataWs.location.location_active));
-//    $("input[name=\"location_visible\"]").val(dataWs.location.location_visible);
+    $("input[name=\"project_id\"]").val(parseInt(dataWs.field_analyte.project_id));
+    $("input[name=\"field_analyte_id\"]").val(parseInt(dataWs.field_analyte.field_analyte_id));
+    $("input[name=\"field_analyte_name\"]").val(dataWs.field_analyte.field_analyte_name);
+    $("input[name=\"field_analyte_document\"]").val(dataWs.field_analyte.field_analyte_document);
+    $("input[name=\"field_analyte_lat\"]").val(dataWs.field_analyte.field_analyte_lat);
+    $("input[name=\"field_analyte_long\"]").val(dataWs.field_analyte.field_analyte_long);
+    $("input[name=\"field_analyte_desc\"]").val(dataWs.field_analyte.field_analyte_desc);
+    $("input[name=\"field_analyte_active\"]").prop('checked', utils.setCheckBoxValue(dataWs.field_analyte.field_analyte_active));
+//    $("input[name=\"field_analyte_visible\"]").val(dataWs.field_analyte.field_analyte_visible);
   };
-  location_manager.delete = function(location_id) {
-    datacx.post("location/delete", {"location_id": location_id}).then(function(reply) {
+  field_analyte.delete = function(field_analyte_id) {
+    datacx.post("field_analyte/delete", {"field_analyte_id": field_analyte_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
         return undefined;
       } else {//success
         toastr.success(reply.message);
-        //$("li[data-location-id="+ location_id +"]").remove();
-        utils.redirect("location/listAll");
+        //$("li[data-field_analyte-id="+ field_analyte_id +"]").remove();
+        utils.redirect("field_analyte/listAll");
       }
     });
   };
 
-  location_manager.getItem = function(location_id) {
-    //get location object from cache (PHP WS)
-    datacx.post("location/getItem", {"location_id": location_id}).then(function(reply) {
+  field_analyte.getItem = function(field_analyte_id) {
+    //get field_analyte object from cache (PHP WS)
+    datacx.post("field_analyte/getItem", {"field_analyte_id": field_analyte_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
         $(".form_sections").hide();
-        utils.redirect("location/listAll", 3000)
+        utils.redirect("field_analyte/listAll", 3000)
       } else {//success
-        $(".location_edit").show().removeClass("hide");
+        $(".field_analyte_edit").show().removeClass("hide");
         toastr.success(reply.message);
-        location_manager.loadEditForm(reply);
+        field_analyte.loadEditForm(reply);
       }
     });
   };
 
-  location_manager.fillFormWithRandomData = function() {
+  field_analyte.fillFormWithRandomData = function() {
     utils.clearForm();
     var number = Math.floor((Math.random() * 100) + 1);
-    $(".location_form input[name=\"location_name\"]").val("Location " + number);
-    $("input[name=\"location_num\"]").val("n-" + number);
-    $("input[name=\"location_desc\"]").val("Description " + number);
+    $(".field_analyte_form input[name=\"field_analyte_name\"]").val("FieldAnalyte " + number);
+    $("input[name=\"field_analyte_num\"]").val("n-" + number);
+    $("input[name=\"field_analyte_desc\"]").val("Description " + number);
     $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
     $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
   };
 
-  location_manager.updateLocations = function(action, arrayId) {
-    datacx.post("location/updateItems", {"action": action, "location_ids": arrayId}).then(function(reply) {
+  field_analyte.updateFieldAnalytes = function(action, arrayId) {
+    datacx.post("field_analyte/updateItems", {"action": action, "field_analyte_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
         return undefined;
       } else {//success
         toastr.success(reply.message);
-        utils.redirect("location/listAll");
+        utils.redirect("field_analyte/listAll");
       }
     });
   };
 
-}(window.location_manager = window.location_manager || {}));
+}(window.field_analyte = window.field_analyte || {}));

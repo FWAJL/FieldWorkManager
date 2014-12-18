@@ -1,5 +1,26 @@
 <?php
-namespace Applications\PMTool\Models\Dao;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+/**
+*
+* @package    Basic MVC framework
+* @author     Jeremie Litzler
+* @copyright  Copyright (c) 2014
+* @license
+* @link
+* @since
+* @filesource
+*/
+// ------------------------------------------------------------------------
+/**
+*
+* Inspection_question Dao Class
+*
+* @package     Application/PMTool
+* @subpackage  Models/Dao
+* @category    Inspection_question
+* @author      FWM DEV Team
+* @link
+*/
+namespace Applications\PMTool\Models\Dao;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 class Inspection_question extends \Library\Entity{  public     $inspection_question_id,    $inspection_question_form_name,    $inspection_question_data,    $pm_id;
   const     INSPECTION_QUESTION_ID_ERR = 0,    INSPECTION_QUESTION_FORM_NAME_ERR = 1,    INSPECTION_QUESTION_DATA_ERR = 2,    PM_ID_ERR = 3;
   // SETTERS //  public function setInspection_question_id($inspection_question_id) {      $this->inspection_question_id = $inspection_question_id;  }

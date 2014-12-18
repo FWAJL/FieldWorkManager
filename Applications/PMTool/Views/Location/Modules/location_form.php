@@ -13,9 +13,13 @@
       <label><?php echo $resx["location_name"]; ?></label>
       <input name="location_name" type="text" />
     </li>
+<!--    <li>
+      <label><?php echo $resx["location_category"]; ?></label>
+      <input name="location_category" type="text" />
+    </li>-->
     <li>
-      <label><?php echo $resx["location_document"]; ?></label>
-      <input name="location_document" type="text" />
+      <label><?php echo $resx["location_address"]; ?></label>
+      <input name="location_address" type="text" />
     </li>
     <li>
       <label><?php echo $resx["location_lat"]; ?></label>

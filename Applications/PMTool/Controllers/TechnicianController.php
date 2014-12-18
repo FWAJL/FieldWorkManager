@@ -7,26 +7,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class TechnicianController extends \Library\BaseController {
 
-  public function executeIndex(\Library\HttpRequest $rq) {
-    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->app()->user());
-    $toList = FALSE;
-    if ($rq->getData("target") !== "listAll") {
-      //Continue if user wants to add a new item
-    } elseif (count($pm[\Library\Enums\SessionKeys::PmTechnicians]) > 0) {
-      $toList = TRUE; //A list of technicians is found so let's display them
-    } else {
-      //Otherwise, we get the list, add it to the PM Session array
-      $this->executeGetList($rq, TRUE, $pm);
-      $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->app()->user());
-      $toList = count($pm[\Library\Enums\SessionKeys::PmTechnicians]) > 0;
-    }
-    //Redirect logic
-    if ($toList && $rq->getData("target") === "listAll") {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TechnicianListAll);
-    } else {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TechnicianShowForm . "?mode=add&test=true");
-    }
-  }
+  public function executeIndex(\Library\HttpRequest $rq) {  }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
     //Load Modules for view

@@ -3,29 +3,29 @@
   <version>1</version>
   <main_menu name="project" active="true">
     <links>
-      <header href="project" resourcekey="header_projects" />
+      <header href="project" resourcekey="header_projects" enablelink="false" />
       <submenu href="project/listAll" id="project_list_all" resourcekey="project_list" active="true"/>
       <submenu href="project/showForm?mode=add&amp;test=true" id="project_add_left_menu" resourcekey="project_add" active="true"/>
     </links>
   </main_menu><!-- project -->
   <main_menu name="technician" active="true">
     <links>
-      <header href="technician" resourcekey="header_technician" />
-      <submenu href="technician?target=listAll" id="technician_list_all" resourcekey="technician_list" active="true"/>
-      <submenu href="technician?target=showForm" id="btn-add-technician-manual" resourcekey="technician_add" active="true"/>
+      <header href="technician" resourcekey="header_technician" enablelink="false" />
+      <submenu href="technician/listAll" id="technician_list_all" resourcekey="technician_list" active="true"/>
+      <submenu href="technician/showForm" id="btn-add-technician-manual" resourcekey="technician_add" active="true"/>
     </links>
   </main_menu><!-- technician -->  
   <main_menu name="location" active="true">
     <links>
-      <header href="location" resourcekey="header_locations" />
-      <submenu href="location?target=listAll" id="location_list" resourcekey="location_list" active="true"/>
-      <submenu href="location?target=showForm" id="location_add_button" resourcekey="location_add" active="true"/>
-      <submenu href="location?target=uploadList" id="location_upload_list_button" resourcekey="location_upload_list" active="false"/>
+      <header href="location" resourcekey="header_locations" enablelink="false" />
+      <submenu href="location/listAll" id="location_list" resourcekey="location_list" active="true"/>
+      <submenu href="location/showForm" id="location_add_button" resourcekey="location_add" active="true"/>
+      <submenu href="location/uploadList" id="location_upload_list_button" resourcekey="location_upload_list" active="false"/>
     </links>
   </main_menu><!-- location -->
   <main_menu name="map" active="true">
     <links>
-      <header href="#" resourcekey="header_map" />
+      <header href="#" resourcekey="header_map" enablelink="false" />
       <submenu id="map_project_all" resourcekey="map_project_all" active="true"/>
       <submenu id="map_project" resourcekey="map_project" active="true"/>
       <submenu id="map_project_locations" resourcekey="map_project_locations" active="true"/>
@@ -34,9 +34,9 @@
   </main_menu><!-- map -->  
    <main_menu name="task" active="true">
     <links>
-      <header href="task" resourcekey="header_task" />
-      <submenu href="task?target=listAll" id="task_list_all" resourcekey="task_list" active="true"/>
-      <submenu href="task?target=showForm" id="btn-add-task-manual" resourcekey="task_add" active="true"/>
+      <header href="task" resourcekey="header_task" enablelink="false" />
+      <submenu href="task/listAll" id="task_list_all" resourcekey="task_list" active="true"/>
+      <submenu href="task/showForm" id="btn-add-task-manual" resourcekey="task_add" active="true"/>
     </links>
   </main_menu><!-- task -->
 <!--  <main_menu name="field_form" active="false">
@@ -49,7 +49,7 @@
   
   <main_menu name="service" active="true">
     <links>
-      <header href="service" resourcekey="header_service" />
+      <header href="service" resourcekey="header_service" enablelink="false" />
       <submenu href="service/listAll" id="service_list_all" resourcekey="service_list" active="true"/>
       <submenu href="service/showForm?mode=add&amp;test=true" id="btn-add-service-manual" resourcekey="service_add" active="true"/>
     </links>
@@ -57,7 +57,7 @@
   
   <main_menu name="field_results" active="true">
     <links>
-      <header href="#" resourcekey="header_user_results" />
+      <header href="#" resourcekey="header_user_results" enablelink="false" />
     </links>
   </main_menu><!-- result -->
 </main_menus>

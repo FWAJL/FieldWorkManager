@@ -13,10 +13,11 @@
 // ------------------------------------------------------------------------
 
 /**
- * Authenticate controller Class
+*
+* Client Dao Class
  *
  * @package		Application/PMTool
- * @subpackage	Models\Dao
+* @subpackage  Models/Dao
  * @category	Client
  * @author		FWM DEV Team
  * @link

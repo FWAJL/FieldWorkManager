@@ -24,7 +24,8 @@
   <resource key="location_legend_edit">Edit this location</resource>
   <resource key="location_name">Location Name</resource>
   <resource key="location_num">Location Number</resource>
-  <resource key="location_document">Location Document</resource>
+  <resource key="location_address">Location Address</resource>
+  <resource key="location_category">Location Category</resource>
   <resource key="location_lat">Location Lattitude</resource>
   <resource key="location_long">Location Longiture</resource>
   <resource key="location_desc">Location Description</resource>
