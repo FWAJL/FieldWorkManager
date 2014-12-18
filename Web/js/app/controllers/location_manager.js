@@ -168,7 +168,8 @@ $(document).ready(function() {
     $("input[name=\"project_id\"]").val(parseInt(dataWs.location.project_id));
     $("input[name=\"location_id\"]").val(parseInt(dataWs.location.location_id));
     $("input[name=\"location_name\"]").val(dataWs.location.location_name);
-    $("input[name=\"location_document\"]").val(dataWs.location.location_document);
+    $("input[name=\"location_category\"]").val(dataWs.location.location_category);
+    $("input[name=\"location_address\"]").val(dataWs.location.location_address);
     $("input[name=\"location_lat\"]").val(dataWs.location.location_lat);
     $("input[name=\"location_long\"]").val(dataWs.location.location_long);
     $("input[name=\"location_desc\"]").val(dataWs.location.location_desc);

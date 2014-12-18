@@ -1,5 +1,26 @@
 <?php
 
+/**
+*
+* @package    Basic MVC framework
+* @author     Jeremie Litzler
+* @copyright  Copyright (c) 2014
+* @license
+* @link
+* @since
+* @filesource
+*/
+// ------------------------------------------------------------------------
+/**
+*
+* Project_service Dao Class
+*
+* @package     Application/PMTool
+* @subpackage  Models/Dao
+* @category    Project_service
+* @author      FWM DEV Team
+* @link
+*/
 namespace Applications\PMTool\Models\Dao;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 

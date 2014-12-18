@@ -1,5 +1,26 @@
 <?php
-namespace Applications\PMTool\Models\Dao;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+/**
+*
+* @package    Basic MVC framework
+* @author     Jeremie Litzler
+* @copyright  Copyright (c) 2014
+* @license
+* @link
+* @since
+* @filesource
+*/
+// ------------------------------------------------------------------------
+/**
+*
+* Task_coc_info Dao Class
+*
+* @package     Application/PMTool
+* @subpackage  Models/Dao
+* @category    Task_coc_info
+* @author      FWM DEV Team
+* @link
+*/
+namespace Applications\PMTool\Models\Dao;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 class Task_coc_info extends \Library\Entity{  public     $task_coc_id,    $task_id,    $service_id,    $po_number,    $lab_instructions,    $lab_sample_type,    $lab_sample_tat,    $project_number,    $results_to_name,    $results_to_company,    $results_to_address,    $results_to_phone,    $results_to_email;
   const     TASK_COC_ID_ERR = 0,    TASK_ID_ERR = 1,    SERVICE_ID_ERR = 2,    PO_NUMBER_ERR = 3,    LAB_INSTRUCTIONS_ERR = 4,    LAB_SAMPLE_TYPE_ERR = 5,    LAB_SAMPLE_TAT_ERR = 6,    PROJECT_NUMBER_ERR = 7,    RESULTS_TO_NAME_ERR = 8,    RESULTS_TO_COMPANY_ERR = 9,    RESULTS_TO_ADDRESS_ERR = 10,    RESULTS_TO_PHONE_ERR = 11,    RESULTS_TO_EMAIL_ERR = 12;
   // SETTERS //  public function setTask_coc_id($task_coc_id) {      $this->task_coc_id = $task_coc_id;  }

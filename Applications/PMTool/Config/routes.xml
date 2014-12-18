@@ -250,8 +250,7 @@
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="active_list_module" file_name="active_list.php" shared="true" />
-            <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
+            <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
         </php_modules>
     </route><!--  field/analytes -->
     
