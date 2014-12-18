@@ -13,8 +13,8 @@
           <div class="add-new-field_analytes">
             <div class="field_analyte-names"><textarea name="field_analyte_names" type="text"></textarea></div>
             <div class="field_analyte-active">
-              <label><?php echo $resx["field_analyte_active_many"]; ?></label>
-              <input name="field_analyte_active" type="checkbox" checked />
+              <!--<label><?php echo $resx["field_analyte_active_many"]; ?></label>-->
+              <!--<input name="field_analyte_active" type="checkbox" checked />-->
             </div>
             <input id="btn-add-field_analyte-names" type="button" value="<?php echo $resx["btn_add_field_analyte_names"] ?>" class="btn btn-primary" />
           </div>

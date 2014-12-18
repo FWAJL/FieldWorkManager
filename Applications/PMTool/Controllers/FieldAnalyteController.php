@@ -22,7 +22,7 @@ class FieldAnalyteController extends \Library\BaseController {
 
   public function executeListAll(\Library\HttpRequest $rq) {
     $sessionPm = \Applications\PMTool\Helpers\AnalyteHelper::GetListData($this);
-    $field_analytes = $sessionProject[\Library\Enums\SessionKeys::PmFieldAnalytes];
+    $field_analytes = $sessionPm[\Library\Enums\SessionKeys::PmFieldAnalytes];
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $field_analytes,
@@ -40,7 +40,7 @@ class FieldAnalyteController extends \Library\BaseController {
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {
-    $result = \Applications\PMTool\Helpers\LocationHelper::AddProjectLocation($this, $this->InitResponseWS());
+    $result = \Applications\PMTool\Helpers\AnalyteHelper::AddAnalyte($this, $this->InitResponseWS());
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
@@ -135,7 +135,7 @@ class FieldAnalyteController extends \Library\BaseController {
   }
 
   public function executeUpdateItems(\Library\HttpRequest $rq) {
-    $result = \Applications\PMTool\Helpers\LocationHelper::UpdateLocations($this);
+    $result = \Applications\PMTool\Helpers\AnalyteHelper::UpdateLocations($this);
 
     $this->SendResponseWS(
             $result, array(
