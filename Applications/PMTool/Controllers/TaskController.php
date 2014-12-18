@@ -7,34 +7,10 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class TaskController extends \Library\BaseController {
 
-  public function executeIndex(\Library\HttpRequest $rq) {
-    $user = $this->app()->user();
-    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
-    \Applications\PMTool\Helpers\TaskHelper::AddTabsStatus($user);
-    if (!\Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($user)) {//No current project, redirect!
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsRootUrl);
-    }
-    $toList = FALSE;
-    $toEdit = FALSE;
-    $toAdd = $rq->getData("target") === "showForm";
-    if (\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($user, 0) && $rq->getData("target") !== "") {
-      $toList = TRUE;
-      $toEdit = $sessionTask[\Library\Enums\SessionKeys::TaskObj] !== NULL;
-      $toAdd != $toEdit;
-    } else {
-      $this->executeGetList($rq, NULL, FALSE);
-      $toList = \Applications\PMTool\Helpers\TaskHelper::UserHasTasks($user, 0);
-    }
-    if ($toAdd || !$toEdit && !$toList) {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=add&test=true");
-    } elseif ($toEdit) {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=edit&task_id=" . $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
-    } elseif ($toList) {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
-    }
-  }
+  public function executeIndex(\Library\HttpRequest $rq) {  }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
+    \Applications\PMTool\Helpers\TaskHelper::AddTabsStatus($this->user());
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::SetCurrentSessionTask($this->user(), NULL, $rq->getData("task_id"));
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
@@ -52,10 +28,12 @@ class TaskController extends \Library\BaseController {
   }
 
   public function executeListAll(\Library\HttpRequest $rq) {
-    //Get list of task stored in session
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-
+    
+    if(!\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($this->user(), 0)) {
+      $this->executeGetList($rq, NULL, FALSE);
+    }
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\TaskHelper::GetFilteredTaskObjectsList($this->app()->user()),

@@ -7,16 +7,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class PmController extends \Library\BaseController {
     
-    public function executeIndex(\Library\HttpRequest $rq) {
-    //Get list of pms and store in session
-    $lists = $this->_GetAndStorePmsInSession($rq);
-
-    if (count($lists[\Library\Enums\SessionKeys::AllUsers]) > 0) {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::PmListAll);
-    } else {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::PmShowForm . "?mode=edit"+ $this->dataPost["mode"] +"&pm_id=" + $this->dataPost["pm_id"]);
-    }
-  }
+    public function executeIndex(\Library\HttpRequest $rq) {  }
     
 public function executeShowForm(\Library\HttpRequest $rq) {
     //Load Modules for view

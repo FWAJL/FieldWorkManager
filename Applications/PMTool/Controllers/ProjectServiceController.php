@@ -21,11 +21,6 @@ class ProjectServiceController extends \Library\BaseController {
        // Set $current_project for breadcrumb
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-      
-      $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
-    if ($sessionProject[\Library\Enums\SessionKeys::ProjectObject] === NULL) {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsRootUrl);
-    }
 
     // \Applications\PMTool\Helpers\ProjectHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\ProjectTabKeys::ServicesTab);
     $sessionPm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());

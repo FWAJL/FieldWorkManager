@@ -7,16 +7,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class ServiceController extends \Library\BaseController {
     
-    public function executeIndex(\Library\HttpRequest $rq) {
-    //Get list of services and store in session
-    $lists = $this->_GetAndStoreServicesInSession($rq);
-
-    if (count($lists[\Library\Enums\SessionKeys::PmServices]) > 0) {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ServiceListAll);
-    } else {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ServiceShowForm . "?mode=add&test=true");
-    }
-  }
+    public function executeIndex(\Library\HttpRequest $rq) {  }
     
 public function executeShowForm(\Library\HttpRequest $rq) {
     //Load Modules for view
