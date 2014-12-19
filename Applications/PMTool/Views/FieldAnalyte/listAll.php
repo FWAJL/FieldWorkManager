@@ -6,6 +6,7 @@
       <span class="glyphicon glyphicon-chevron-right"></span>
       <?php echo $resx["field_analyte_list_all_header"] ?>
     </h3>
+    <?php require $task_tab_open; ?>
     <div class="content-container container-fluid">
       <div class="row">
         <div  class="col-lg-5 col-md-5">
@@ -23,7 +24,6 @@
         <div  class="col-lg-2 col-md-5">
           <h4><?php echo $resx["h3_field_analyte_add_buttons"]; ?></h4>
           <div class="field_analyte-add-buttons">
-            <input id="btn-add-field_analyte-gmap" type="button" value="<?php echo $resx["btn_add_field_analyte_gmap"] ?>" class="btn btn-primary" />
             <input id="btn-add-field_analyte-manual" type="button" value="<?php echo $resx["btn_add_field_analyte_manual"] ?>" class="btn btn-primary" />
           </div>
         </div>
@@ -39,5 +39,6 @@
         </div>
       </div>
     </div>
+    <?php require $task_tab_close; ?>
   </div>
 </div><!-- END RIGHT ASIDE MAIN -->

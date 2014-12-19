@@ -250,7 +250,9 @@
             <css_file use="project" />
         </css_files>
         <php_modules>
+            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
             <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
+            <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true" />
         </php_modules>
     </route><!--  field/analytes -->
     
@@ -262,10 +264,10 @@
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="field_analyte_tabs_open" file_name="field_analyte_tabs_open.php" />
+            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
             <php_module key="field_analyte_form" file_name="field_analyte_form.php" />
             <php_module key="field_analyte_buttons" file_name="field_analyte_buttons.php" />
-            <php_module key="field_analyte_tabs_close" file_name="field_analyte_tabs_close.php" />
+            <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true" />
         </php_modules>
     </route>
     <!-- location/showForm -->
