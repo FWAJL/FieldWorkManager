@@ -457,5 +457,6 @@
   <route url="field_analyte/getItem" module="FieldAnalyte" action="getItem" resxfile="field_analyte" type="ws" />
   <route url="field_analyte/updateItems" module="FieldAnalyte" action="updateItems" resxfile="field_analyte" type="ws" />
 
-  <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="ws" />
+  <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
+  <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />
 </routes>

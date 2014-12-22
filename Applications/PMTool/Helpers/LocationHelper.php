@@ -117,6 +117,10 @@ class LocationHelper {
       $result[\Library\Enums\SessionKeys::ProjectLocations] =
               $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] =
               $manager->selectMany($location, "project_id");
+      if (!$result[\Library\Enums\SessionKeys::ProjectLocations]) { 
+        $result[\Library\Enums\SessionKeys::ProjectLocations] =
+                $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = array();
+      }
       \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($caller->user(), $sessionProject);
     }
     return $result;

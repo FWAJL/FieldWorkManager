@@ -32,6 +32,7 @@ abstract class ResxFileNameKeys {
   const Breadcrumb = "breadcrumb";
   const MenuLeft = "menu_left";
   const WsDefaults = "ws_defaults";
+  const Config = "config";
 }
 
 ?>

@@ -77,7 +77,7 @@
 .context-menu-active {font-weight: bold; color: #F39814;}
 
 /* ADD TASK */
-.task_form_sections .task_form .checkbox {
+.task_form_sections .task_form .checkbox, .task_form_data_collection {
 padding: 0px 2px 0px 30px;
 }
 

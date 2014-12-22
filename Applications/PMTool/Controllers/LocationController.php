@@ -152,7 +152,7 @@ class LocationController extends \Library\BaseController {
 
   private function _GetAndStoreLocationsInSession($sessionProject) {
     $lists = array();
-    if (count($sessionProject[\Library\Enums\SessionKeys::ProjectLocations]) === 0) {
+    if (count($sessionProject[\Library\Enums\SessionKeys::ProjectLocations]) === 0 || !$sessionProject[\Library\Enums\SessionKeys::ProjectLocations]) {
       $this->executeGetList(NULL, $sessionProject, false);
     } else {
       //The locations are already in Session

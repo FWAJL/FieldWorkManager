@@ -65,21 +65,23 @@ class FieldAnalyteController extends \Library\BaseController {
   public function executeEdit(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
-    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-
-    //Init PDO
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Location());
-    $result["data"] = $location;
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+    $analyte = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Field_analyte());
+    $result["data"] = $analyte;
 
     $manager = $this->managers->getManagerOf($this->module());
-    $result_edit = $manager->edit($location, "location_id");
+    $result_edit = $manager->edit($analyte, "field_analyte_id");
 
-    //Clear the location and facility list from session for the connect PM
     if ($result_edit) {
-      $locationMatch = $this->_GetLocationFromSession(intval($location->location_id()));
-      $sessionProject[\Library\Enums\SessionKeys::ProjectLocations][$locationMatch["key"]] = $location;
-      \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+      $analyteMatch = 
+          \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById(
+              $analyte->field_analyte_id(), 
+              "field_analyte_id", 
+              $pm, 
+              \Library\Enums\SessionKeys::PmFieldAnalytes);
+      
+      $pm[\Library\Enums\SessionKeys::PmFieldAnalytes][$analyteMatch["key"]] = $analyte;
+      \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->user(), $pm);
     }
 
     $this->SendResponseWS(
@@ -134,16 +136,23 @@ class FieldAnalyteController extends \Library\BaseController {
   public function executeGetItem(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
-    $location_id = intval($this->dataPost["location_id"]);
+    $field_analyte_id = intval($this->dataPost["field_analyte_id"]);
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+    if (count($pm[\Library\Enums\SessionKeys::PmFieldAnalytes]) > 0) {
+      $analyte_selected = 
+          \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById(
+              $field_analyte_id, 
+              "field_analyte_id", 
+              $pm, 
+              \Library\Enums\SessionKeys::PmFieldAnalytes);
+    }
 
-    $location_selected = $this->_GetLocationFromSession($location_id);
-
-    $result["location"] = $location_selected["object"];
+    $result["field_analyte"] = $analyte_selected["object"];
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
         "resx_key" => $this->action(),
-        "step" => ($location_selected !== NULL) ? "success" : "error"
+        "step" => ($analyte_selected !== NULL) ? "success" : "error"
     ));
   }
 
