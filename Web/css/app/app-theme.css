@@ -130,7 +130,9 @@ li.category-name {
   font-style: italic;
   color: #fff;
   background-color: #333;
+  padding: 4px;
+  text-decoration: underline;
 }
-li.category-name .li {
-  margin-left: 10px;
+.categorized li.ui-widget-content {
+  text-indent: 10px;
 }
