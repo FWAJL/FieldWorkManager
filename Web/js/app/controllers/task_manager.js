@@ -19,9 +19,9 @@ $(document).ready(function() {
   });//Manages the context menu
 
   //************************************************//
-  // Selection of tasks
+  // Selection of tasks for de-activation
   var task_ids = "";
-  $("#active-list, #inactive-list").selectable({
+  $("#active-list").selectable({
     stop: function() {
       var tmpSelection = "";
       $(".ui-selected", this).each(function() {
@@ -38,11 +38,37 @@ $(document).ready(function() {
       }
     }
   });
-  $(".from-inactive-list").click(function() {
-    task_manager.updateTasks("active", task_ids);
-  });
   $(".from-active-list").click(function() {
     task_manager.updateTasks("inactive", task_ids);
+  });
+  //************************************************//
+  
+//      $(".ui-selected:first", this).each(function() {
+//        $(this).siblings().removeClass("ui-selected");
+//          task_ids += $(this).attr("data-task-id");
+//      });
+    // Selection of single task for activation
+  var task_ids = "";
+  $("#inactive-list").selectable({
+    stop: function() {
+      var tmpSelection = "";
+      $(".ui-selected:first", this).each(function() {
+          $(this).siblings().removeClass("ui-selected");
+        tmpSelection += $(this).attr("data-task-id") + ",";
+      });
+      tmpSelection = utils.removeLastChar(tmpSelection);
+      if (tmpSelection.length > 0) {
+        task_ids = tmpSelection;
+        //Show the button to appropriate button
+        $(".from-" + $(this).attr("id")).show();
+      } else {
+        task_ids = [];
+        $(".from-" + $(this).attr("id")).hide();
+      }
+    }
+  });
+  $(".from-inactive-list").click(function() {
+    task_manager.updateTasks("active", task_ids);
   });
   //************************************************//
 
