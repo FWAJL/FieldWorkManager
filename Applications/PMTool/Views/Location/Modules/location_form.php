@@ -34,10 +34,10 @@
       <label><?php echo $resx["location_desc"]; ?></label>
       <input name="location_desc" type="text" />
     </li>
-     <li>
+<!--     <li>
       <label><?php echo $resx["location_document"]; ?></label>
       <input type="button" name="location_document" value="Click to upload photo" class="doc_upload" id="loc_photo_upload"/>
-    </li>
+    </li>-->
     <li>
       <label><?php echo $resx["location_active"]; ?></label>
       <input name="location_active" type="checkbox" checked />
