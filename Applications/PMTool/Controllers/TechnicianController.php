@@ -18,9 +18,10 @@ class TechnicianController extends \Library\BaseController {
   public function executeListAll(\Library\HttpRequest $rq) {
     //Get list of object stored in session
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->app()->user());
+    $technicians = \Applications\PMTool\Helpers\TechnicianHelper::GetPmTechnicians($this, $pm);
     $data = array(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $pm[\Library\Enums\SessionKeys::PmTechnicians],
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $technicians,
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
