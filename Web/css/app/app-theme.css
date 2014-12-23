@@ -124,3 +124,13 @@ float: right;
 width: 500px;
 float: left;
 }
+
+li.category-name {
+  font-size: larger;
+  font-style: italic;
+  color: #fff;
+  background-color: #333;
+}
+li.category-name .li {
+  margin-left: 10px;
+}

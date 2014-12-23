@@ -56,15 +56,22 @@ class ServiceHelper {
     return $result;
   }
 
-  public static function CategorizeTheList($listOfObject, $object_name) {
+  public static function CategorizeTheList($listOfObject, $prop_cat_name) {
     $categorizedArray = array();
 
     foreach ($listOfObject as $object) {
-      $prop_cat_name = $object_name . "_" . "category";
-      if (array_key_exists($object->$prop_cat_name(), $categorizedArray)) {
-        array_push($categorizedArray[$object->$prop_cat_name()], $object);
-      }  else {
-        $categorizedArray[$object->$prop_cat_name()] = array($object);
+      if ($object->$prop_cat_name() === "") {
+        if (array_key_exists("Uncategorized", $categorizedArray)) {
+          array_push($categorizedArray["Uncategorized"], $object);
+        } else {
+          $categorizedArray["Uncategorized"] = array($object);
+        }
+      } else {
+        if (array_key_exists($object->$prop_cat_name(), $categorizedArray)) {
+          array_push($categorizedArray[$object->$prop_cat_name()], $object);
+        } else {
+          $categorizedArray[$object->$prop_cat_name()] = array($object);
+        }
       }
     }
 
@@ -145,9 +152,6 @@ class ServiceHelper {
       $dataOut = self::GetServiceList($caller, $sessionPm);
       $services = $dataOut[\Library\Enums\SessionKeys::PmServices];
     }
-    if ($categorizeTheList) {
-      $services = self::CategorizeTheList($services, "service");
-    }
     if ($project_services !== NULL) {
       self::FilterServicesToExcludeProjectServices($services, $project_services);
     }
@@ -218,3 +222,4 @@ class ServiceHelper {
   }
 
 }
+
