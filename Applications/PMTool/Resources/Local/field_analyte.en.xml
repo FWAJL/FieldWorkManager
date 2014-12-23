@@ -17,15 +17,7 @@
 
   <resource key="field_analyte_legend_add">Add new field analyte</resource>
   <resource key="field_analyte_legend_edit">Edit this field analyte</resource>
-  <resource key="field_analyte_name">Field analyte Name</resource>
-  <resource key="field_analyte_num">Field analyte Number</resource>
-  <resource key="field_analyte_document">Field analyte Document</resource>
-  <resource key="field_analyte_lat">Field analyte Lattitude</resource>
-  <resource key="field_analyte_long">Field analyte Longiture</resource>
-  <resource key="field_analyte_desc">Field analyte Description</resource>
-  <resource key="field_analyte_active">Active</resource>
-  <resource key="field_analyte_active_many">Set list of field analytes as Active</resource>
-  <resource key="field_analyte_visible">Visible</resource>
+  <resource key="field_analyte_name_unit">Field analyte Name</resource>
   <resource key="field_analyte_button_add">Add this field analyte</resource>
   <resource key="field_analyte_button_edit">Edit this field analyte</resource>
   <resource key="field_analyte_button_delete">Delete this field analyte</resource>

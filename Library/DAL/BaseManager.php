@@ -135,7 +135,7 @@ class BaseManager extends \Library\Manager {
       $query->closeCursor();
     } catch (\PDOException $pdo_ex) {
       json_encode($pdo_ex);
-      //echo $pdo_ex->getTraceAsString();
+      echo "<!--" . $pdo_ex->getMessage() . "-->";
       $result = FALSE;
     }
     return $result;

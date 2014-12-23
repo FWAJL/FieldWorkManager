@@ -9,7 +9,7 @@ $(document).ready(function() {
       if (key === "edit") {
         field_analyte.retrieveFieldAnalyte(options.$trigger);
       } else if (key === "delete") {
-        field_analyte.delete(parseInt(options.$trigger.attr("data-field_analyte-id")));
+        field_analyte.delete(parseInt(options.$trigger.attr("data-fieldanalyte-id")));
       }
     },
     items: {
@@ -158,19 +158,12 @@ $(document).ready(function() {
     $("#field_analyte-data-inactive").html(inactive_field_analytes);
   };
   field_analyte.retrieveFieldAnalyte = function(element) {
-    utils.redirect("field_analyte/showForm?mode=edit&field_analyte_id=" + parseInt(element.attr("data-field_analyte-id")));
+    utils.redirect("field_analyte/showForm?mode=edit&field_analyte_id=" + parseInt(element.attr("data-fieldanalyte-id")));
   };
   field_analyte.loadEditForm = function(dataWs) {
     utils.clearForm();
-    $("input[name=\"project_id\"]").val(parseInt(dataWs.field_analyte.project_id));
     $("input[name=\"field_analyte_id\"]").val(parseInt(dataWs.field_analyte.field_analyte_id));
-    $("input[name=\"field_analyte_name\"]").val(dataWs.field_analyte.field_analyte_name);
-    $("input[name=\"field_analyte_document\"]").val(dataWs.field_analyte.field_analyte_document);
-    $("input[name=\"field_analyte_lat\"]").val(dataWs.field_analyte.field_analyte_lat);
-    $("input[name=\"field_analyte_long\"]").val(dataWs.field_analyte.field_analyte_long);
-    $("input[name=\"field_analyte_desc\"]").val(dataWs.field_analyte.field_analyte_desc);
-    $("input[name=\"field_analyte_active\"]").prop('checked', utils.setCheckBoxValue(dataWs.field_analyte.field_analyte_active));
-//    $("input[name=\"field_analyte_visible\"]").val(dataWs.field_analyte.field_analyte_visible);
+    $("input[name=\"field_analyte_name_unit\"]").val(dataWs.field_analyte.field_analyte_name_unit);
   };
   field_analyte.delete = function(field_analyte_id) {
     datacx.post("field_analyte/delete", {"field_analyte_id": field_analyte_id}).then(function(reply) {

@@ -51,8 +51,8 @@
           <td id="external_note"><?php //echo $resx["trigger_ext_note"];   ?></td>
         </tr>
       </table>-->
-<div id="task_info"  class="data-form-2">
-  <fieldset class="task_form">
+<div id="task_info_data_collection" class="data-form-2">
+  <fieldset class="task_form_data_collection">
     <ol class="add-new-item">
       <li>
         <label>Data Collection</label>

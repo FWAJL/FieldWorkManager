@@ -21,13 +21,13 @@
         </div>
         <div class="col-lg-2 col-md-2">
           <div class="buttons">
-            <input type="button" value="<?php echo $resx["btn_add_to_project_list"]; ?>" class="btn btn-warning from-group-list-right" />
+            <input type="button" value="<?php echo $resx["btn_add_to_project_list"]; ?>" class="btn btn-warning from-categorized-list" />
             <input type="button" value="<?php echo $resx["btn_remove_from_project_list"]; ?>"  class="btn btn-warning from-group-list-left" />            
           </div>
         </div>
         <div  class="col-lg-5 col-md-5">
           <h4><?php echo $resx["h3_services_active"]; ?></h4>
-          <?php require $form_modules["group_list_right"]; ?>              
+          <?php require $form_modules["categorized_list"]; ?>              
         </div>
       </div>
     </div>

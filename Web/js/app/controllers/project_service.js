@@ -6,7 +6,7 @@ $(document).ready(function() {
   //************************************************//
   // Selection of service technicians
   var project_service_ids = "";
-  $("#group-list-left, #group-list-right").selectable({
+  $("#group-list-left, #categorized-list").selectable({
     stop: function() {
       var tmpSelection = "";
       $(".ui-selected", this).each(function() {
@@ -23,7 +23,7 @@ $(document).ready(function() {
       }
     }
   });
-  $(".from-group-list-right").click(function() {
+  $(".from-categorized-list").click(function() {
     project_service.updateProjectServices("add", project_service_ids);
   });
   $(".from-group-list-left").click(function() {
