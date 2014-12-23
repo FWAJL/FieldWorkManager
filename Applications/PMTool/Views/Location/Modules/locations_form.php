@@ -3,7 +3,7 @@
 <div id="location_info" class="data-form">
 <fieldset class="location_form form">
   <div class="row">
-        <div  class="col-lg-5 col-md-5">
+
           <h4><?php echo $resx["h3_location_names_form"]; ?></h4>
           <div class="add-new-locations">
             <div class="location-names"><textarea name="location_names" type="text"></textarea></div>
@@ -13,8 +13,8 @@
             </div>
             <input id="btn-add-location-names" type="button" value="<?php echo $resx["btn_add_location_names"] ?>" class="btn btn-primary" />
           </div>
-        </div>
-        <div  class="col-lg-2 col-md-2"></div>
+
+
 <!--        <div  class="col-lg-2 col-md-5">
           <h4><?php // echo $resx["h3_location_add_buttons"]; ?></h4>
           <div class="location-add-buttons">
