@@ -115,6 +115,26 @@
     </route>
     <!-- location/showForm -->
     
+        <route url="location/uploadList" module="Location" action="showForm" resxfile="location" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/location_manager.js" />
+        </js_files>
+        <css_files>
+            <css_file value="Web/css/app/nav.css" />
+            <css_file value="Web/css/app/app-style.css" />
+            <css_file value="Web/css/app/app-theme.css" />
+            <css_file value="Web/css/app/theme.css" />
+            <css_file value="Web/css/app/tabs.css" />
+        </css_files>
+        <php_modules>
+            <php_module key="location_tabs_open" file_name="location_tabs_open.php" />
+            <php_module key="location_form" file_name="locations_form.php" />
+            <php_module key="gmaps_panel" file_name="gmaps_panel.php" />
+            <php_module key="location_tabs_close" file_name="location_tabs_close.php" />
+        </php_modules>
+    </route>
+    <!-- location/uploadList -->
+    
     <!-- technicians -->
     <route url="technician" module="Technician" action="index" resxfile="technician" type="ui">
         <js_files>

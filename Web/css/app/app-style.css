@@ -120,5 +120,6 @@ textarea { resize: vertical;}
 .add-new-locations textarea {
   resize: vertical;
   width: 100%;
+  height: 25em;
 }
 .btn-add-location-names {display: inline-block;}

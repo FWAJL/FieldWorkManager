@@ -8,6 +8,7 @@
       <submenu href="project/showForm?mode=add&amp;test=true" id="project_add_left_menu" resourcekey="project_add" active="true"/>
     </links>
   </main_menu><!-- project -->
+  
   <main_menu name="technician" active="true">
     <links>
       <header href="technician" resourcekey="header_technician" enablelink="false" />
@@ -15,14 +16,16 @@
       <submenu href="technician/showForm" id="btn-add-technician-manual" resourcekey="technician_add" active="true"/>
     </links>
   </main_menu><!-- technician -->  
+  
   <main_menu name="location" active="true">
     <links>
       <header href="location" resourcekey="header_locations" enablelink="false" />
       <submenu href="location/listAll" id="location_list" resourcekey="location_list" active="true"/>
       <submenu href="location/showForm" id="location_add_button" resourcekey="location_add" active="true"/>
-      <submenu href="location/uploadList" id="location_upload_list_button" resourcekey="location_upload_list" active="false"/>
+      <submenu href="location/uploadList" id="location_upload_list_button" resourcekey="location_upload_list" active="true"/>
     </links>
   </main_menu><!-- location -->
+  
   <main_menu name="map" active="true">
     <links>
       <header href="#" resourcekey="header_map" enablelink="false" />
@@ -32,6 +35,7 @@
       <submenu id="map_task_locations" resourcekey="map_task_locations" active="true"/>
     </links>
   </main_menu><!-- map -->  
+  
    <main_menu name="task" active="true">
     <links>
       <header href="task" resourcekey="header_task" enablelink="false" />
