@@ -1,5 +1,26 @@
 <?php
-namespace Applications\PMTool\Models\Dao;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+/**
+*
+* @package    Basic MVC framework
+* @author     Jeremie Litzler
+* @copyright  Copyright (c) 2014
+* @license
+* @link
+* @since
+* @filesource
+*/
+// ------------------------------------------------------------------------
+/**
+*
+* Project_manager Dao Class
+*
+* @package     Application/PMTool
+* @subpackage  Models/Dao
+* @category    Project_manager
+* @author      FWM DEV Team
+* @link
+*/
+namespace Applications\PMTool\Models\Dao;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 class Project_manager extends \Library\Entity{  public     $pm_id,    $username,    $password,    $hint,    $pm_comp_name,    $pm_name,    $pm_address,    $pm_phone,    $pm_email;
   const     PM_ID_ERR = 0,    USERNAME_ERR = 1,    PASSWORD_ERR = 2,    HINT_ERR = 3,    PM_COMP_NAME_ERR = 4,    PM_NAME_ERR = 5,    PM_ADDRESS_ERR = 6,    PM_PHONE_ERR = 7,    PM_EMAIL_ERR = 8;
   // SETTERS //  public function setPm_id($pm_id) {      $this->pm_id = $pm_id;  }

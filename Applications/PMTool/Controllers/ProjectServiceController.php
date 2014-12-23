@@ -18,33 +18,27 @@ class ProjectServiceController extends \Library\BaseController {
   }
 
   public function executeManageServices(\Library\HttpRequest $rq) {
-       // Set $current_project for breadcrumb
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-      
-      $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
-    if ($sessionProject[\Library\Enums\SessionKeys::ProjectObject] === NULL) {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsRootUrl);
-    }
 
-    // \Applications\PMTool\Helpers\ProjectHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\ProjectTabKeys::ServicesTab);
     $sessionPm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
-    $pm_services = \Applications\PMTool\Helpers\ServiceHelper::GetPmServices($this, $sessionPm);
+    $pm_services = \Applications\PMTool\Helpers\ServiceHelper::GetPmServices($this, $sessionPm, NULL, TRUE);
     $project_services = \Applications\PMTool\Helpers\ServiceHelper::GetAndStoreProjectServices($this, $sessionProject);
     // filter the pm services after we retrieve the project services
     $pm_services = \Applications\PMTool\Helpers\ServiceHelper::FilterServicesToExcludeProjectServices($pm_services, $project_services);
+    $pm_services = \Applications\PMTool\Helpers\ServiceHelper::CategorizeTheList($pm_services, "service_type");
 
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentPm, $sessionPm[\Library\Enums\SessionKeys::PmObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-    // $this->page->addVar("HasItemsToDisplay", \Applications\PMTool\Helpers\PmHelper::DoesPmHaveActiveServices($this->user()));
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_right => $pm_services,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list => $pm_services,
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left => $project_services,
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("service")),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("service"))  
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
+//    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list, $pm_services);
 
     //tab status
     $this->page->addVar(

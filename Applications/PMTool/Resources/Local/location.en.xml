@@ -22,12 +22,14 @@
   
   <resource key="location_legend_add">Add new location</resource>
   <resource key="location_legend_edit">Edit this location</resource>
-  <resource key="location_name">Location Name</resource>
-  <resource key="location_num">Location Number</resource>
-  <resource key="location_document">Location Document</resource>
-  <resource key="location_lat">Location Lattitude</resource>
-  <resource key="location_long">Location Longiture</resource>
-  <resource key="location_desc">Location Description</resource>
+  <resource key="location_name">Name</resource>
+  <resource key="location_num">Number</resource>
+  <resource key="location_address">Address</resource>
+  <resource key="location_document">Photo</resource>
+  <resource key="location_category">Category</resource>
+  <resource key="location_lat">Latitude</resource>
+  <resource key="location_long">Longitude</resource>
+  <resource key="location_desc">Description</resource>
   <resource key="location_active">Active</resource>
   <resource key="location_active_many">Set list of locations as Active</resource>
   <resource key="location_visible">Visible</resource>

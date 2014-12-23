@@ -12,8 +12,8 @@
 
   <resource key="header_locations">Locations</resource>
   <resource key="location_list">List All</resource>
-  <resource key="location_add">Add new Location(s)</resource>
-<!--  <resource key="location_upload_list">Upload Location List</resource>-->
+  <resource key="location_add">Add</resource>
+  <resource key="location_upload_list">Upload List</resource>
   
   <resource key="header_technician">Technicians</resource>
   <resource key="technician_add">Add</resource>

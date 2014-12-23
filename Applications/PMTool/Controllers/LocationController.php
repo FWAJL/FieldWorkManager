@@ -7,15 +7,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class LocationController extends \Library\BaseController {
 
-  public function executeIndex(\Library\HttpRequest $rq) {
-    if (\Applications\PMTool\Helpers\ProjectHelper::RedirectAfterProjectSelection($this->app(), intval($rq->getData("project_id")))) {
-      if ($rq->getData("target") !== "") {
-        $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
-      } else {
-        $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::LocationRootUrl . "/" . $rq->getData("target"));
-      }
-    }
-  }
+  public function executeIndex(\Library\HttpRequest $rq) {  }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
@@ -160,7 +152,7 @@ class LocationController extends \Library\BaseController {
 
   private function _GetAndStoreLocationsInSession($sessionProject) {
     $lists = array();
-    if (count($sessionProject[\Library\Enums\SessionKeys::ProjectLocations]) === 0) {
+    if (count($sessionProject[\Library\Enums\SessionKeys::ProjectLocations]) === 0 || !$sessionProject[\Library\Enums\SessionKeys::ProjectLocations]) {
       $this->executeGetList(NULL, $sessionProject, false);
     } else {
       //The locations are already in Session

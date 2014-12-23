@@ -55,7 +55,29 @@ class ServiceHelper {
     }
     return $result;
   }
-  
+
+  public static function CategorizeTheList($listOfObject, $prop_cat_name) {
+    $categorizedArray = array();
+
+    foreach ($listOfObject as $object) {
+      if ($object->$prop_cat_name() === "") {
+        if (array_key_exists("Uncategorized", $categorizedArray)) {
+          array_push($categorizedArray["Uncategorized"], $object);
+        } else {
+          $categorizedArray["Uncategorized"] = array($object);
+        }
+      } else {
+        if (array_key_exists($object->$prop_cat_name(), $categorizedArray)) {
+          array_push($categorizedArray[$object->$prop_cat_name()], $object);
+        } else {
+          $categorizedArray[$object->$prop_cat_name()] = array($object);
+        }
+      }
+    }
+
+    return $categorizedArray;
+  }
+
   public static function DeactivateService($caller, $params) {
     
   }
@@ -75,7 +97,9 @@ class ServiceHelper {
           break;
         }
       }
-      if ($to_add) { array_push($filtered_services, $service); }
+      if ($to_add) {
+        array_push($filtered_services, $service);
+      }
     }
     return $filtered_services;
   }
@@ -121,7 +145,7 @@ class ServiceHelper {
     return $result;
   }
 
-  public static function GetPmServices($caller, $sessionPm = NULL, $project_services = NULL) {
+  public static function GetPmServices($caller, $sessionPm = NULL, $project_services = NULL, $categorizeTheList = FALSE) {
     $services = $sessionPm[\Library\Enums\SessionKeys::PmServices];
 
     if (count($services) === 0) {
@@ -147,7 +171,7 @@ class ServiceHelper {
     }
     return $services;
   }
-  
+
   public static function UpdateServices($caller) {
     $result = $caller->InitResponseWS(); // Init result
     $dataPost = $caller->dataPost();
@@ -168,11 +192,11 @@ class ServiceHelper {
       $manager = $caller->managers()->getManagerOf($caller->module());
       $result["rows_affected"] += $manager->edit($service, "service_id") ? 1 : 0;
       self::DeleteService($caller, "ProjectService", $service, "service_id");
-      }
+    }
     \Applications\PMTool\Helpers\PmHelper::SetSessionPm($caller->user(), $sessionPm);
     return $result;
   }
-  
+
   public static function UpdateProjectServices($caller) {
     $result = $caller->InitResponseWS(); // Init result
     $dataPost = $caller->dataPost();
@@ -196,4 +220,6 @@ class ServiceHelper {
     \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($caller->user(), $sessionProject);
     return $result;
   }
+
 }
+

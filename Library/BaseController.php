@@ -228,31 +228,4 @@ abstract class BaseController extends ApplicationComponent {
     header('Location: ' . $url);
     exit();
   }
-
-
-//  protected function executeIndex($params) {
-//    
-//  }
-//  protected function executeAdd($params) {
-//    
-//  }
-//  protected function executeUpdate($params) {
-//    
-//  }
-//  protected function executeDelete($params) {
-//    
-//  }
-//  protected function executeGetItem($params) {
-//    
-//  }
-//  protected function executeGetList($params) {
-//    
-//  }
-//  protected function executeListAll($params) {
-//    
-//  }
-//  protected function executeShowForm($params) {
-//    
-//  }
-  
 }

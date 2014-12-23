@@ -106,14 +106,34 @@
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
         <php_modules>
-            <php_module key="location_tabs_open" file_name="location_tabs_open.php" />
+<!--            <php_module key="location_tabs_open" file_name="location_tabs_open.php" />-->
             <php_module key="location_form" file_name="location_form.php" />
-            <php_module key="gmaps_panel" file_name="gmaps_panel.php" />
+<!--            <php_module key="gmaps_panel" file_name="gmaps_panel.php" />-->
             <php_module key="location_buttons" file_name="location_buttons.php" />
-            <php_module key="location_tabs_close" file_name="location_tabs_close.php" />
+<!--            <php_module key="location_tabs_close" file_name="location_tabs_close.php" />-->
         </php_modules>
     </route>
     <!-- location/showForm -->
+    
+        <route url="location/uploadList" module="Location" action="showForm" resxfile="location" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/location_manager.js" />
+        </js_files>
+        <css_files>
+            <css_file value="Web/css/app/nav.css" />
+            <css_file value="Web/css/app/app-style.css" />
+            <css_file value="Web/css/app/app-theme.css" />
+            <css_file value="Web/css/app/theme.css" />
+            <css_file value="Web/css/app/tabs.css" />
+        </css_files>
+        <php_modules>
+<!--            <php_module key="location_tabs_open" file_name="location_tabs_open.php" />-->
+            <php_module key="location_form" file_name="locations_form.php" />
+<!--            <php_module key="gmaps_panel" file_name="gmaps_panel.php" />
+            <php_module key="location_tabs_close" file_name="location_tabs_close.php" />-->
+        </php_modules>
+    </route>
+    <!-- location/uploadList -->
     
     <!-- technicians -->
     <route url="technician" module="Technician" action="index" resxfile="technician" type="ui">
@@ -242,7 +262,7 @@
         </php_modules>
     </route><!--  task/technicians -->
 
-    <route url="field/analytes" module="FieldAnalyte" action="listAll" resxfile="field_analyte" type="ui">
+    <route url="field_analyte/listAll" module="FieldAnalyte" action="listAll" resxfile="field_analyte" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/field_analyte.js" />
         </js_files>
@@ -250,12 +270,13 @@
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="active_list_module" file_name="active_list.php" shared="true" />
-            <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
+            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
+            <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
+            <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true" />
         </php_modules>
     </route><!--  field/analytes -->
     
-    <route url="field/showForm" module="FieldAnalyte" action="showForm" resxfile="field_analyte" type="ui">
+    <route url="field_analyte/showForm" module="FieldAnalyte" action="showForm" resxfile="field_analyte" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/field_analyte.js" />
         </js_files>
@@ -263,10 +284,10 @@
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="field_analyte_tabs_open" file_name="field_analyte_tabs_open.php" />
+            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
             <php_module key="field_analyte_form" file_name="field_analyte_form.php" />
             <php_module key="field_analyte_buttons" file_name="field_analyte_buttons.php" />
-            <php_module key="field_analyte_tabs_close" file_name="field_analyte_tabs_close.php" />
+            <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true" />
         </php_modules>
     </route>
     <!-- location/showForm -->
@@ -298,7 +319,7 @@
         </css_files>
         <php_modules>
             <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
-            <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
+            <php_module key="categorized_list" file_name="categorized_list.php" shared="true" />
         </php_modules>
     </route>
     <!-- service provider/listAll -->
@@ -440,7 +461,7 @@
   <route url="service/delete" module="Service" action="delete" resxfile="service" type="ws" />
   <route url="service/getlist" module="Service" action="getList" resxfile="service" type="ws" />
   <route url="service/getItem" module="Service" action="getItem" resxfile="service" type="ws" />
-<!--  <route url="service/updateItems" module="Service" action="updateItems" resxfile="service" type="ws" />-->
+  <!--  <route url="service/updateItems" module="Service" action="updateItems" resxfile="service" type="ws" />-->
   
   <route url="pm/add" module="Pm" action="add" resxfile="pm" type="ws" />
   <route url="pm/edit" module="Pm" action="edit" resxfile="pm" type="ws" />
@@ -449,5 +470,13 @@
   <route url="pm/getItem" module="Pm" action="getItem" resxfile="pm" type="ws" />
   <route url="pm/updateItems" module="Pm" action="updateItems" resxfile="pm" type="ws" />
 
-  <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="ws" />
+  <route url="field_analyte/add" module="FieldAnalyte" action="add" resxfile="field_analyte" type="ws" />
+  <route url="field_analyte/edit" module="FieldAnalyte" action="edit" resxfile="field_analyte" type="ws" />
+  <route url="field_analyte/delete" module="FieldAnalyte" action="delete" resxfile="field_analyte" type="ws" />
+  <route url="field_analyte/getlist" module="FieldAnalyte" action="getList" resxfile="field_analyte" type="ws" />
+  <route url="field_analyte/getItem" module="FieldAnalyte" action="getItem" resxfile="field_analyte" type="ws" />
+  <route url="field_analyte/updateItems" module="FieldAnalyte" action="updateItems" resxfile="field_analyte" type="ws" />
+
+  <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
+  <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />
 </routes>

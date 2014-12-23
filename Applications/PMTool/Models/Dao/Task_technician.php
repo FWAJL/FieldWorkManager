@@ -1,5 +1,26 @@
 <?php
-namespace Applications\PMTool\Models\Dao;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+/**
+*
+* @package    Basic MVC framework
+* @author     Jeremie Litzler
+* @copyright  Copyright (c) 2014
+* @license
+* @link
+* @since
+* @filesource
+*/
+// ------------------------------------------------------------------------
+/**
+*
+* Task_technician Dao Class
+*
+* @package     Application/PMTool
+* @subpackage  Models/Dao
+* @category    Task_technician
+* @author      FWM DEV Team
+* @link
+*/
+namespace Applications\PMTool\Models\Dao;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 class Task_technician extends \Library\Entity{  public     $task_id,    $technician_id,    $is_lead_tech;
   const     TASK_ID_ERR = 0,    TECHNICIAN_ID_ERR = 1,    IS_LEAD_TECH_ERR = 2;
   // SETTERS //  public function setTask_id($task_id) {      $this->task_id = $task_id;  }

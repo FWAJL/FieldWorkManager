@@ -102,17 +102,22 @@ class LeftMenu {
   }
 
   private function _AddLinkHeader($link) {
-    return
-            "<a href=\"" . $this->base_url . $link->getAttribute("href") . "\">"
-            . $this->resx_left_menu[$link->getAttribute("resourcekey")] .
-            "</a>";
+    $html = "";
+    if ($link->getAttribute("enablelink") === "true") {
+      $html = "<a href=\"" . $this->base_url . $link->getAttribute("href") . "\">"
+              . $this->resx_left_menu[$link->getAttribute("resourcekey")] .
+              "</a>";
+    } else {
+      $html = $this->resx_left_menu[$link->getAttribute("resourcekey")];
+    }
+    return $html;
   }
 
   private function _AddLinkSubMenus($link) {
     return
-            "<li><a href=\"" . $this->base_url . $link->getAttribute("href") 
+            "<li><a href=\"" . $this->base_url . $link->getAttribute("href")
             . "\" id=\"" . $link->getAttribute("id") . "\">"
-            . $this->resx_left_menu[$link->getAttribute("resourcekey")] 
+            . $this->resx_left_menu[$link->getAttribute("resourcekey")]
             . "</a></li>";
   }
 

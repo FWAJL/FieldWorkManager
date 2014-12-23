@@ -7,16 +7,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class ServiceController extends \Library\BaseController {
     
-    public function executeIndex(\Library\HttpRequest $rq) {
-    //Get list of services and store in session
-    $lists = $this->_GetAndStoreServicesInSession($rq);
-
-    if (count($lists[\Library\Enums\SessionKeys::PmServices]) > 0) {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ServiceListAll);
-    } else {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ServiceShowForm . "?mode=add&test=true");
-    }
-  }
+public function executeIndex(\Library\HttpRequest $rq) {  }
     
 public function executeShowForm(\Library\HttpRequest $rq) {
     //Load Modules for view
@@ -25,16 +16,15 @@ public function executeShowForm(\Library\HttpRequest $rq) {
   } 
   
   public function executeListAll(\Library\HttpRequest $rq) {
-    //Get list of services stored in session
-    
-    // Set $current_project
+    $sessionPm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
       
-    $this->_GetAndStoreServicesInSession($rq);
+    $services = \Applications\PMTool\Helpers\ServiceHelper::GetServiceList($this, $sessionPm);
+    
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $this->app()->user->getAttribute(\Library\Enums\SessionKeys::PmServices),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $services,
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);

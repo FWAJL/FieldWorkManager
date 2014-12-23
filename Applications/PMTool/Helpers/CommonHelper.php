@@ -43,11 +43,20 @@ class CommonHelper {
     return trim($string);
   }
 
+  public static function SetDynamicPropertyNamesForDualList($module, $property_list) {
+    $dynamicPropertyNames = array();
+    foreach ($property_list as $key => $value) {
+      $dynamicPropertyNames[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_key . $key] 
+          = $module . "_" . $value;
+    }
+    return $dynamicPropertyNames;
+  }
+
   public static function SetPropertyNamesForDualList($module) {
     return array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id => $module . "_id",
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name => $module . "_name",
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active => $module . "_active",
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id => $module . "_id",
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name => $module . "_name",
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active => $module . "_active",
     );
   }
 
@@ -60,10 +69,13 @@ class CommonHelper {
   public static function GetFullClassName($object) {
     return get_class($object);
   }
+
   public static function GetListObjectsInSessionByKey($user, $key) {
     $objects = array();
     $projects = $user->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
-    if ($projects === NULL) { $projects = array(); }
+    if ($projects === NULL) {
+      $projects = array();
+    }
     foreach ($projects as $project) {
       array_push($objects, $project[$key]);
     }
@@ -84,7 +96,7 @@ class CommonHelper {
     }
     return $object;
   }
-  
+
   public static function FindObject($id, $prop_name, $list_of_obj) {
     $match = FALSE;
     foreach ($list_of_obj as $obj) {
@@ -95,6 +107,7 @@ class CommonHelper {
     }
     return $match;
   }
+
   public static function FindIndexInObjectListById($id, $prop_name, $sessionArray, $sessionKey) {
     $match = array();
     $list = $sessionArray[$sessionKey];
@@ -107,7 +120,8 @@ class CommonHelper {
     }
     return $match;
   }
-    public static function FindIndexInIdListById($valueToFind, $idList) {
+
+  public static function FindIndexInIdListById($valueToFind, $idList) {
     $match = NULL;
     foreach (array_keys($idList) as $index => $key) {
       if ($idList[$key] === $valueToFind) {
@@ -119,4 +133,3 @@ class CommonHelper {
   }
 
 }
-

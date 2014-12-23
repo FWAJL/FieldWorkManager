@@ -20,11 +20,6 @@ class TaskLocationController extends \Library\BaseController {
   public function executeManageLocations(\Library\HttpRequest $rq) {
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
-    if ($sessionTask[\Library\Enums\SessionKeys::TaskObj] === NULL) {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskRootUrl);
-    } elseif ($sessionProject[\Library\Enums\SessionKeys::ProjectObject] === NULL) {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
-    }
 
     \Applications\PMTool\Helpers\TaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\TaskTabKeys::LocationsTab);
     $project_locations = \Applications\PMTool\Helpers\LocationHelper::GetProjectLocations($this, $sessionProject);
