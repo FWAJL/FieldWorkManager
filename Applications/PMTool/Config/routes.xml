@@ -292,23 +292,6 @@
     </route>
     <!-- location/showForm -->
 
-
-
-    <!-- service providers -->
-    <route url="service" module="Service" action="index" resxfile="service" type="ui">
-        <js_files>
-            <js_file use="head" value="Web/js/app/controllers/service_manager.js" />
-            <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js" />
-        </js_files>
-        <css_files>
-            <css_file value="Web/css/app/nav.css" />
-            <css_file value="Web/css/app/app-style.css" />
-            <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
-            <css_file value="Web/css/app/tabs.css" />
-        </css_files>
-    </route>
-    <!-- service provider/index -->
     
     <route url="service/listAll" module="ProjectService" action="manageServices" resxfile="service" type="ui">
         <js_files>
@@ -330,17 +313,10 @@
         </js_files>
         <css_files>
             <css_file use="project" />
-            <!--      <css_file value="Web/css/app/nav.css"/>
-      <css_file value="Web/css/app/app-style.css"/>
-      <css_file value="Web/css/app/app-theme.css"/>
-      <css_file value="Web/css/app/theme.css"/>
-      <css_file value="Web/css/app/tabs.css"/>-->
         </css_files>
         <php_modules>
-            <!--      <php_module key="service provider_tabs_open" file_name="service provider_tabs_open.php"/>   -->
             <php_module key="service_form" file_name="service_form.php" />
             <php_module key="service_buttons" file_name="service_buttons.php" />
-            <!--      <php_module key="service provider_tabs_close" file_name="service provider_tabs_close.php"/>-->
         </php_modules>
     </route>
     <!-- service provider/showForm -->
