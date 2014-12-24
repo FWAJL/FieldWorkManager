@@ -6,7 +6,7 @@ $(document).ready(function() {
   //************************************************//
   // Selection of service technicians
   var project_service_ids = "";
-  $("#group-list-left, #categorized-list").selectable({
+  $("#categorized-list-left, #categorized-list-right").selectable({
     stop: function() {
       var tmpSelection = "";
       $(".ui-selected", this).each(function() {
@@ -23,10 +23,10 @@ $(document).ready(function() {
       }
     }
   });
-  $(".from-categorized-list").click(function() {
+  $(".from-categorized-list-right").click(function() {
     project_service.updateProjectServices("add", project_service_ids);
   });
-  $(".from-group-list-left").click(function() {
+  $(".from-categorized-list-left").click(function() {
     project_service.updateProjectServices("remove", project_service_ids);
   });
   //************************************************//

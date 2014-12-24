@@ -318,8 +318,8 @@
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
-            <php_module key="categorized_list" file_name="categorized_list.php" shared="true" />
+            <php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
+            <php_module key="categorized_list_right" file_name="categorized_list_right.php" shared="true" />
         </php_modules>
     </route>
     <!-- service provider/listAll -->
