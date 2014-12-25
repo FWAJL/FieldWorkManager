@@ -112,7 +112,7 @@
 <!--            <php_module key="location_tabs_open" file_name="location_tabs_open.php" />-->
             <php_module key="location_form" file_name="location_form.php" />
 <!--            <php_module key="gmaps_panel" file_name="gmaps_panel.php" />-->
-            <php_module key="location_buttons" file_name="location_buttons.php" />
+<!--            <php_module key="location_buttons" file_name="location_buttons.php" />-->
 <!--            <php_module key="location_tabs_close" file_name="location_tabs_close.php" />-->
         </php_modules>
     </route>
@@ -182,8 +182,8 @@
         <php_modules>
             <!-- <php_module key="technician_tabs_open" file_name="technician_tabs_open.php"/>   -->
             <php_module key="technician_form" file_name="technician_form.php" />
-            <php_module key="technician_buttons" file_name="technician_buttons.php" />
-            <php_module key="technician_tabs_close" file_name="technician_tabs_close.php" />
+<!--            <php_module key="technician_buttons" file_name="technician_buttons.php" />
+            <php_module key="technician_tabs_close" file_name="technician_tabs_close.php" />-->
         </php_modules>
     </route>
     <!-- technician/showForm -->

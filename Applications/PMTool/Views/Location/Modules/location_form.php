@@ -34,10 +34,10 @@
       <label><?php echo $resx["location_desc"]; ?></label>
       <input name="location_desc" type="text" />
     </li>
-<!--     <li>
+     <li>
       <label><?php echo $resx["location_document"]; ?></label>
       <input type="button" name="location_document" value="Click to upload photo" class="doc_upload" id="loc_photo_upload"/>
-    </li>-->
+    </li>
     <li>
       <label><?php echo $resx["location_active"]; ?></label>
       <input name="location_active" type="checkbox" checked />
@@ -48,7 +48,9 @@
     </li>
   </ol>
 </fieldset>
-        <input type="button" id="btn_add_location" class="location_add btn btn-default" value="<?php echo $resx["location_button_add"]; ?>" />
+<input type="button" id="btn_add_location" class="location_add btn btn-default" value="<?php echo $resx["location_button_add"]; ?>" />
+<input type="button" id="btn_edit_location" class="location_edit hide btn btn-default" value="<?php echo $resx["location_button_edit"]; ?>" />
+<input type="button" id="btn_delete_location" class="location_edit hide btn btn-default" value="<?php echo $resx["location_button_delete"]; ?>" />
  </div>
 <div id="photo_form">
         Put the Photo(s) in this space.
