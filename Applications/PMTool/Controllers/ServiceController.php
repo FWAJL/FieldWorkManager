@@ -20,11 +20,11 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
       
-    $services = \Applications\PMTool\Helpers\ServiceHelper::GetServiceList($this, $sessionPm);
+    $list = \Applications\PMTool\Helpers\ServiceHelper::GetServiceList($this, $sessionPm);
     
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $services,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $list[\Library\Enums\SessionKeys::PmServices],
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
@@ -41,18 +41,20 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS();
 
     //Init PDO
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+    $this->dataPost["pm_id"] = $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
     $service = $this->_PrepareServiceObject($this->dataPost());
     $result["dataIn"] = $service;
 
     //Load interface to query the database
     $manager = $this->managers->getManagerOf($this->module);
     $result["dataOut"] = $manager->add($service);
-
-    //Clear the service list from session for the connect PM
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::PmServices);
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserServiceList);
+    
+    if ($result["dataOut"] > 0) {
+     $service->setService_id($result["dataOut"]);
+     array_push($pm[\Library\Enums\SessionKeys::PmServices], $service);
+     \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->user(), $pm);
+    }    
 
     $this->SendResponseWS(
             $result, array(

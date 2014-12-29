@@ -7,7 +7,17 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class TaskController extends \Library\BaseController {
 
-  public function executeIndex(\Library\HttpRequest $rq) {  }
+  public function executeIndex(\Library\HttpRequest $rq) {
+    $currentTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+    if ($currentTask !== NULL) {
+      $this->Redirect(
+          \Library\Enums\ResourceKeys\UrlKeys::TaskShowForm 
+          . "?mode=edit&task_id="
+          . $currentTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+    } else {
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=add");
+    }
+  }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
     \Applications\PMTool\Helpers\TaskHelper::AddTabsStatus($this->user());
@@ -20,7 +30,6 @@ class TaskController extends \Library\BaseController {
     } else {
       $this->page->addVar("task_editing_header", $this->resxData["task_legend_add"]);
     }
-    //Which module?
     $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::tabStatus, \Applications\PMTool\Helpers\TaskHelper::GetTabsStatus($this->app()->user()));
     $this->page->addVar(

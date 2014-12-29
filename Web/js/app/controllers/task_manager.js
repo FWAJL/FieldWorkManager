@@ -13,7 +13,7 @@ $(document).ready(function() {
       }
     },
     items: {
-      "edit": {name: "Edit"},
+      "edit": {name: "View Info"},
       "delete": {name: "Delete"}
     }
   });//Manages the context menu
@@ -21,56 +21,18 @@ $(document).ready(function() {
   //************************************************//
   // Selection of tasks for de-activation
   var task_ids = "";
-  $("#active-list").selectable({
-    stop: function() {
-      var tmpSelection = "";
-      $(".ui-selected", this).each(function() {
-        tmpSelection += $(this).attr("data-task-id") + ",";
-      });
-      tmpSelection = utils.removeLastChar(tmpSelection);
-      if (tmpSelection.length > 0) {
-        task_ids = tmpSelection;
-        //Show the button to appropriate button
-        $(".from-" + $(this).attr("id")).show();
-      } else {
-        task_ids = [];
-        $(".from-" + $(this).attr("id")).hide();
-      }
-    }
+  $("#active-list .select_item, #inactive-list .select_item").click(function() {
+    $(this).siblings().removeClass("ui-selected");
+    $(this).addClass("ui-selected");
+    task_ids = $(this).attr("data-task-id");
+    $(".from-" + $(this).parent().attr("id")).show();
   });
   $(".from-active-list").click(function() {
     task_manager.updateTasks("inactive", task_ids);
   });
-  //************************************************//
-  
-//      $(".ui-selected:first", this).each(function() {
-//        $(this).siblings().removeClass("ui-selected");
-//          task_ids += $(this).attr("data-task-id");
-//      });
-    // Selection of single task for activation
-  var task_ids = "";
-  $("#inactive-list").selectable({
-    stop: function() {
-      var tmpSelection = "";
-      $(".ui-selected:first", this).each(function() {
-          $(this).siblings().removeClass("ui-selected");
-        tmpSelection += $(this).attr("data-task-id") + ",";
-      });
-      tmpSelection = utils.removeLastChar(tmpSelection);
-      if (tmpSelection.length > 0) {
-        task_ids = tmpSelection;
-        //Show the button to appropriate button
-        $(".from-" + $(this).attr("id")).show();
-      } else {
-        task_ids = [];
-        $(".from-" + $(this).attr("id")).hide();
-      }
-    }
-  });
   $(".from-inactive-list").click(function() {
     task_manager.updateTasks("active", task_ids);
   });
-  //************************************************//
 
   $("#btn_add_task").click(function() {
     var post_data = {};

@@ -1,7 +1,7 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 <div class="right-aside main col-lg-10 col-md-10 col-sm-10">
-    
-    <div id="location_info" class="data-form">
+
+  <div id="location_info" class="data-form">
     <fieldset class="location_form form">
   <ol class="add-new-item">
     <li style="display: none;">
@@ -34,10 +34,10 @@
       <label><?php echo $resx["location_desc"]; ?></label>
       <input name="location_desc" type="text" />
     </li>
-     <li>
+<!--     <li>
       <label><?php echo $resx["location_document"]; ?></label>
       <input type="button" name="location_document" value="Click to upload photo" class="doc_upload" id="loc_photo_upload"/>
-    </li>
+    </li>-->
     <li>
       <label><?php echo $resx["location_active"]; ?></label>
       <input name="location_active" type="checkbox" checked />
