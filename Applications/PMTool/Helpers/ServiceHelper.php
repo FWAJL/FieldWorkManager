@@ -130,6 +130,9 @@ class ServiceHelper {
     }
     return $matches;
   }
+  public static function GetListProperties() {
+    return array("name" => "name","id" => "id");
+  }
 
   public static function GetServiceList($caller, $sessionPm) {
     $result = $caller->InitResponseWS();
@@ -201,7 +204,7 @@ class ServiceHelper {
     $result = $caller->InitResponseWS(); // Init result
     $dataPost = $caller->dataPost();
     $result["rows_affected"] = 0;
-    $result["service_ids"] = str_getcsv($dataPost["service_ids"], ',');
+    $result["service_ids"] = str_getcsv($dataPost["arrayOfIds"], ',');
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($caller->user());
     $project_services = array();
     foreach ($result["service_ids"] as $id) {

@@ -157,4 +157,35 @@ $(document).ready(function() {
   utils.toDate = function(value) {
     return moment(value).isValid() ? moment(value, "YYYY-MM-DD")._d : moment(value).isValid();
   };
+  utils.dualListSelection = function(params) {
+    $("#" + params.listLeftId + ", #" + params.listRightId).selectable({
+      stop: function() {
+        var tmpSelection = "";
+        $(".ui-selected", this).each(function() {
+          if ($(this).attr(params.dataAttrLeft) !== undefined) {
+            tmpSelection += $(this).attr(params.dataAttrLeft) + ",";
+          } else {
+            tmpSelection += $(this).attr(params.dataAttrRight) + ",";
+          }
+        });
+        tmpSelection = utils.removeLastChar(tmpSelection);
+        if (tmpSelection.length > 0) {
+          $(".from-" + $(this).attr("id")).show();
+        } else {
+          $(".from-" + $(this).attr("id")).hide();
+        }
+      }
+    });
+  };
+
+  utils.getValuesFromList = function(sourceList, attrToRead) {
+    var values = "";
+    $("#" + sourceList + " .ui-selected").each(function(i, obj) {
+      if ($(this).attr(attrToRead) !== undefined) {
+       values += $(this).attr(attrToRead) + ","; 
+      }
+    });
+    values = utils.removeLastChar(values);
+    return values;
+  };
 }(window.utils = window.utils || {}));

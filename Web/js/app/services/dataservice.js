@@ -20,4 +20,16 @@
       dataType: 'json'
     });
   };
+  datacx.updateItems = function(params) {
+    datacx.post(params.ajaxUrl, {"action": params.action, "arrayOfIds" : params.arrayOfIds}).then(function(reply) {
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+        return undefined;
+      } else {//success
+        toastr.success(reply.message);
+        utils.redirect(params.redirectUrl);
+      }
+    });
+  };
+
 }(window.datacx = window.datacx || {}));
