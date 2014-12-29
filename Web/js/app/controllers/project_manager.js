@@ -10,14 +10,11 @@ $(document).ready(function() {
         project_manager.retrieveProject(options.$trigger);
       } else if (key === "delete") {
         project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
-//      } else if (key === "showLocations") {
-//        utils.redirect("location?project_id=" + options.$trigger.attr("data-project-id"));
       }
     },
     items: {
-      "edit": {name: "Edit"},
-      "delete": {name: "Delete"},
-//      "showLocations": {name: "Show Locations"}
+      "edit": {name: "View Info"},
+      "delete": {name: "Delete"}
     }
   });//Manages the context menu
 
