@@ -12,6 +12,7 @@
             <css_file value="Web/css/app/theme.css" />
         </css_files>
     </route>
+    
     <!-- login -->
     <route url="logout" module="Authenticate" action="disconnect" resxfile="login" type="ui" />
     <route url="project" module="Project" action="index" resxfile="project" type="ui">
@@ -29,6 +30,7 @@
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
     </route>
+    
     <!-- project/index -->
     <route url="project/showForm" module="Project" action="showForm" resxfile="project" type="ui">
         <js_files>
@@ -53,6 +55,7 @@
         </php_modules>
     </route>
     <!-- project/showAddForm -->
+    
     <route url="project/listAll" module="Project" action="listAll" resxfile="project" type="ui">
         <js_files>
             <js_file use="project" />
@@ -109,7 +112,7 @@
 <!--            <php_module key="location_tabs_open" file_name="location_tabs_open.php" />-->
             <php_module key="location_form" file_name="location_form.php" />
 <!--            <php_module key="gmaps_panel" file_name="gmaps_panel.php" />-->
-            <php_module key="location_buttons" file_name="location_buttons.php" />
+<!--            <php_module key="location_buttons" file_name="location_buttons.php" />-->
 <!--            <php_module key="location_tabs_close" file_name="location_tabs_close.php" />-->
         </php_modules>
     </route>
@@ -179,8 +182,8 @@
         <php_modules>
             <!-- <php_module key="technician_tabs_open" file_name="technician_tabs_open.php"/>   -->
             <php_module key="technician_form" file_name="technician_form.php" />
-            <php_module key="technician_buttons" file_name="technician_buttons.php" />
-            <php_module key="technician_tabs_close" file_name="technician_tabs_close.php" />
+<!--            <php_module key="technician_buttons" file_name="technician_buttons.php" />
+            <php_module key="technician_tabs_close" file_name="technician_tabs_close.php" />-->
         </php_modules>
     </route>
     <!-- technician/showForm -->
@@ -261,37 +264,42 @@
             <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true" />
         </php_modules>
     </route><!--  task/technicians -->
-
-    <route url="field_analyte/listAll" module="FieldAnalyte" action="listAll" resxfile="field_analyte" type="ui">
-        <js_files>
-            <js_file use="head" value="Web/js/app/controllers/field_analyte.js" />
-        </js_files>
-        <css_files>
-            <css_file use="project" />
-        </css_files>
-        <php_modules>
-            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
-            <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
-            <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true" />
-        </php_modules>
-    </route><!--  field/analytes -->
     
-    <route url="field_analyte/showForm" module="FieldAnalyte" action="showForm" resxfile="field_analyte" type="ui">
+    
+    <!-- analytes -->
+    <route url="analyte/listAll" module="Analyte" action="listAll" resxfile="analyte" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/field_analyte.js" />
+            <js_file use="head" value="Web/js/app/controllers/analyte_manager.js" />
         </js_files>
         <css_files>
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
-            <php_module key="field_analyte_form" file_name="field_analyte_form.php" />
-            <php_module key="field_analyte_buttons" file_name="field_analyte_buttons.php" />
-            <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true" />
+            <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php" shared="true" />
+            <php_module key="field_analyte_list" file_name="field_analyte_list.php" />
+            <php_module key="lab_analyte_list" file_name="lab_analyte_list.php" />
+            <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
+            <php_module key="analyte_tabs_close" file_name="analyte_tabs_close.php" shared="true" />
         </php_modules>
     </route>
-    <!-- location/showForm -->
-
+    <!--  analyte/ListAll -->
+    
+    <route url="analyte/uploadList" module="Analyte" action="showForm" resxfile="analyte" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/analyte_manager.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php" shared="true" />
+            <php_module key="field_analyte_form" file_name="field_analyte_form.php" />
+            <php_module key="lab_analyte_form" file_name="lab_analyte_form.php" />
+            <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
+            <php_module key="analyte_tabs_close" file_name="analyte_tabs_close.php" shared="true" />
+        </php_modules>
+    </route>
+    <!-- analytes/uploadList -->
     
     <route url="service/listAll" module="ProjectService" action="manageServices" resxfile="service" type="ui">
         <js_files>
@@ -452,6 +460,13 @@
   <route url="field_analyte/getlist" module="FieldAnalyte" action="getList" resxfile="field_analyte" type="ws" />
   <route url="field_analyte/getItem" module="FieldAnalyte" action="getItem" resxfile="field_analyte" type="ws" />
   <route url="field_analyte/updateItems" module="FieldAnalyte" action="updateItems" resxfile="field_analyte" type="ws" />
+  
+  <route url="lab_analyte/add" module="LabAnalyte" action="add" resxfile="lab_analyte" type="ws" />
+  <route url="lab_analyte/edit" module="LabAnalyte" action="edit" resxfile="lab_analyte" type="ws" />
+  <route url="lab_analyte/delete" module="LabAnalyte" action="delete" resxfile="lab_analyte" type="ws" />
+  <route url="lab_analyte/getlist" module="LabAnalyte" action="getList" resxfile="lab_analyte" type="ws" />
+  <route url="lab_analyte/getItem" module="LabAnalyte" action="getItem" resxfile="lab_analyte" type="ws" />
+  <route url="lab_analyte/updateItems" module="LabAnalyte" action="updateItems" resxfile="lab_analyte" type="ws" />
 
   <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
   <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />
