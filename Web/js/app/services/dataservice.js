@@ -31,5 +31,16 @@
       }
     });
   };
+  datacx.delete = function(params) {
+    datacx.post(params.ajaxUrl, {"itemId": params.itemId}).then(function(reply) {
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+        return undefined;
+      } else {//success
+        toastr.success(reply.message);
+        utils.redirect(params.redirectUrl);
+      }
+    });
+  };
 
 }(window.datacx = window.datacx || {}));

@@ -116,6 +116,16 @@ class ServiceHelper {
     ProjectHelper::SetCurrentSessionProject($caller->user(), $sessionProject);
     return self::GetServicesFromProjectServices($caller->user(), $sessionProject);
   }
+  
+  public static function GetAService(\Library\User $user, $service_id) {
+    $match = NULL;
+    $pm = PmHelper::GetCurrentSessionPm($user);
+    $services = $pm[\Library\Enums\SessionKeys::PmServices];
+    if ($services !== NULL) {
+      $match = CommonHelper::FindObject($service_id, "service_id", $services);
+    }
+    return $match;
+  }
 
   public static function GetServicesFromProjectServices(\Library\User $user, $sessionProject) {
     $matches = array();

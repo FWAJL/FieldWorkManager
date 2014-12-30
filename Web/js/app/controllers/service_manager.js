@@ -2,6 +2,14 @@
  * jQuery listeners for the service actions
  */
 $(document).ready(function() {
+    var ajaxParams = {
+    "ajaxUrl": "service/updateItems",
+    "redirectUrl": "service/listAll",
+    "action": "",
+    "arrayOfIds": "",
+    "itemId": ""
+  };
+
   $(".btn-warning").hide();
   $.contextMenu({
     selector: '.select_item',
@@ -71,8 +79,10 @@ $(document).ready(function() {
   });//Edit a service
 
   $("#btn_delete_service").click(function() {
-    service_manager.delete(parseInt(utils.getQueryVariable("service_id")));
-  });//Delete a service
+    ajaxParams.ajaxUrl = "service/delete";
+    ajaxParams.itemId = parseInt(parseInt(utils.getQueryVariable("service_id")));
+    datacx.delete(ajaxParams);
+  });
 
   if (utils.getQueryVariable("mode") === "edit") {
     $(".form_sections").fadeIn('2000').addClass("show").removeClass("hide");

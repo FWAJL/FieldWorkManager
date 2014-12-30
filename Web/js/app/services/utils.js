@@ -188,4 +188,8 @@ $(document).ready(function() {
     values = utils.removeLastChar(values);
     return values;
   };
+  
+  utils.loadItem = function(params) {
+    utils.redirect(params.targetUrl + parseInt(params.element.attr(params.attrName)));
+  };
 }(window.utils = window.utils || {}));
