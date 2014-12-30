@@ -13,7 +13,7 @@ $(document).ready(function() {
       }
     },
     items: {
-      "edit": {name: "Edit"},
+      "edit": {name: "View Info"},
       "delete": {name: "Delete"}
     }
   });//Manages the context menu

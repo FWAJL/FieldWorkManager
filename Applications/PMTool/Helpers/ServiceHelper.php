@@ -116,6 +116,16 @@ class ServiceHelper {
     ProjectHelper::SetCurrentSessionProject($caller->user(), $sessionProject);
     return self::GetServicesFromProjectServices($caller->user(), $sessionProject);
   }
+  
+  public static function GetAService(\Library\User $user, $service_id) {
+    $match = NULL;
+    $pm = PmHelper::GetCurrentSessionPm($user);
+    $services = $pm[\Library\Enums\SessionKeys::PmServices];
+    if ($services !== NULL) {
+      $match = CommonHelper::FindObject($service_id, "service_id", $services);
+    }
+    return $match;
+  }
 
   public static function GetServicesFromProjectServices(\Library\User $user, $sessionProject) {
     $matches = array();
@@ -129,6 +139,9 @@ class ServiceHelper {
       }
     }
     return $matches;
+  }
+  public static function GetListProperties() {
+    return array("name" => "name","id" => "id");
   }
 
   public static function GetServiceList($caller, $sessionPm) {
@@ -201,7 +214,7 @@ class ServiceHelper {
     $result = $caller->InitResponseWS(); // Init result
     $dataPost = $caller->dataPost();
     $result["rows_affected"] = 0;
-    $result["service_ids"] = str_getcsv($dataPost["service_ids"], ',');
+    $result["service_ids"] = str_getcsv($dataPost["arrayOfIds"], ',');
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($caller->user());
     $project_services = array();
     foreach ($result["service_ids"] as $id) {

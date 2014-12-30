@@ -1,8 +1,8 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 
-<ol id="categorized-list" class="list-panel categorized">
+<ol id="categorized-list-right" class="list-panel categorized">
   <?php
-  $arraysOfObjects = $data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list];
+  $arraysOfObjects = $data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_right];
   foreach ($arraysOfObjects as $key => $arrayOfObjects) {
     echo "<li class=\"category-name\">" . $key . "</li>";
     foreach ($arrayOfObjects as $object) {

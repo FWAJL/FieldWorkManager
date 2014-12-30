@@ -33,6 +33,8 @@ class ViewVariablesKeys {
   const objects_list_left = "objects_list_left";
   const objects_list_right = "objects_list_right";
   const categorized_list = "categorized_list";
+  const categorized_list_left = "categorized_list_left";
+  const categorized_list_right = "categorized_list_right";
   const properties = "properties";
   const properties_right = "properties_right";
   const properties_left = "properties_left";

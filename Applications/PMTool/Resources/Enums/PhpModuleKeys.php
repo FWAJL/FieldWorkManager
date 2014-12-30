@@ -45,6 +45,14 @@ class PhpModuleKeys {
   const task_form = "task_form";
   const task_buttons = "task_buttons";
   const task_tabs_close = "task_tabs_close";
+  
+  const analyte_tabs_open = "analyte_tabs_open";
+  const field_analyte_list = "field_analyte_list";
+  const lab_analyte_list = "lab_analyte_list";
+  const field_analyte_form = "field_analyte_form";
+  const lab_analyte_form = "lab_analyte_form";
+  const analyte_buttons = "analyte_buttons";
+  const analyte_tabs_close = "analyte_tabs_close";
 
 }
 
