@@ -41,7 +41,7 @@ $(document).ready(function() {
     "dataAttrLeft": "data-service-id",
     "dataAttrRight": "data-service-id"
   };
-  utils.dualListSelection(selectionParams)
+  utils.dualListSelection(selectionParams);
 
   $(".from-categorized-list-right").click(function() {
     ajaxParams.action = "add";

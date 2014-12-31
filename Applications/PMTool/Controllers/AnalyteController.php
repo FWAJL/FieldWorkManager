@@ -13,13 +13,14 @@ class AnalyteController extends \Library\BaseController {
   }
 
   public function executeListAll(\Library\HttpRequest $rq) {
+    \Applications\PMTool\Helpers\AnalyteHelper::StoreListsData($this);
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
 
     //variables for the field analyte module
     $field_object_properties = \Applications\PMTool\Helpers\CommonHelper::SetDynamicPropertyNamesForDualList(
             "field_analyte", 
             \Applications\PMTool\Helpers\AnalyteHelper::GetListPropertiesForFieldAnalyte());
-    $field_analytes = \Applications\PMTool\Helpers\AnalyteHelper::GetListData($this);
+    $field_analytes = $pm[\Library\Enums\SessionKeys::PmFieldAnalytes];
     $project_field_analytes = array();
     $data_field_analyte = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => "fieldanalyte",
@@ -32,7 +33,7 @@ class AnalyteController extends \Library\BaseController {
 
     //variable for the lab analyte module
     $lab_object_properties = \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList("lab_analyte");
-    $lab_analytes = \Applications\PMTool\Helpers\AnalyteHelper::GetListData($this, FALSE);
+    $lab_analytes = $pm[\Library\Enums\SessionKeys::PmLabAnalytes];
     $project_lab_analytes = array();
     $data_lab_analyte = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => "labanalyte",

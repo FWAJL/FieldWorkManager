@@ -8,10 +8,10 @@ ol, ul {  margin-bottom: 0; }
 /* LOGIN */
 .login-container{margin:10px;}
 .login-container figure{
- width: 300px;
- margin: 0 auto;
- padding: 5px;
- border: solid 1px #999;
+  width: 300px;
+  margin: 0 auto;
+  padding: 5px;
+  border: solid 1px #999;
 }
 /* END LOGIN */
 
@@ -29,37 +29,17 @@ ol, ul {  margin-bottom: 0; }
   height: 40px;
 }
 #top_header #branding > * { float: left; }
-.brand, #pm_name{line-height: 40px;  padding-left: 10px; }
+.brand{line-height: 40px;  padding-left: 10px; }
+#pm_name {padding: 0 12px;}
 #top_header .logo img{ height: 32px; margin: 4px }
 
 #pm_info ul{ display: none; }
-#pm_info {
-  float: right;
-  width: 125px;
-  border-left: solid 1px #999;
+#pm_info {float: right;}
+.top-right-option a {
+  padding: 12px;
 }
-li #pm_name{
- padding: 0 10px;  
-}
-#pm_name{margin: 0;}
-#pm_name:hover {
-  background-color: #ddd;
-  padding: 0 10px; 
-}
-#pm_info ul {margin-bottom: 0;}
-#pm_info li:hover ul{
-  z-index: 9999;
-  display: block;
-  background-color: #add;
-  position: fixed;
-  padding: 0 10px; 
-  margin-bottom: -10px;
-  -webkit-transition: width 2s ease;
-  -moz-transition: width 2s ease;
-  -ms-transition: width 2s ease;
-  -o-transition: width 2s ease;
-  transition: width 2s ease;
-  width:100%;
+.top-right-option a:hover {
+  background-color: #e5e5e5;
 }
 /* END TOP HEADER */
 /* BREADCRUMB */

@@ -112,7 +112,7 @@ class FieldAnalyteController extends \Library\BaseController {
   }
 
   public function executeUpdateItems(\Library\HttpRequest $rq) {
-    $result = \Applications\PMTool\Helpers\AnalyteHelper::UpdateLocations($this);
+    $result = \Applications\PMTool\Helpers\AnalyteHelper::UpdateProjectAnalytes($this);
 
     $this->SendResponseWS(
             $result, array(

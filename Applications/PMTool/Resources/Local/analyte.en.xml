@@ -39,7 +39,9 @@
  
   <resource key="btn_add_field_analyte_names">Add the field analytes</resource> 
   <resource key="btn_field_analyte_select_project">See list of project</resource> 
-
+  <resource key="btn_add_analyte_to_project">Add Analyte(s) to Project</resource>
+  <resource key="btn_remove_analyte_to_project">Remove Analyte(s) from Project</resource>
+  
   <resource key="h4_project_field_analytes">All Project's Field Analytes</resource>
   <resource key="h4_field_analytes">All Field Analytes</resource>
   <resource key="h4_project_lab_analytes">All Project's Lab Analytes</resource>

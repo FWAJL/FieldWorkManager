@@ -8,7 +8,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class LabAnalyteController extends \Library\BaseController {
 
   public function executeAdd(\Library\HttpRequest $rq) {
-    $result = \Applications\PMTool\Helpers\AnalyteHelper::AddAnalyte($this, $this->InitResponseWS());
+    $result = \Applications\PMTool\Helpers\AnalyteHelper::AddAnalyte($this, $this->InitResponseWS(), FALSE);
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,

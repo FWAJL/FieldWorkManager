@@ -17,6 +17,22 @@ $(document).ready(function() {
    "delete": {name: "Delete"}
   }
  });//Manages the context menu
+ // Selection in the dual lists
+ var selectionParamsFieldAnalytes = {
+  "listLeftId": "field-analyte-list",
+  "listRightId": "project-field-analyte-list",
+  "dataAttrLeft": "data-fieldanalyte-id",
+  "dataAttrRight": "data-fieldanalyte-id"
+ };
+ utils.dualListSelection(selectionParamsFieldAnalytes);
+ var selectionParamsLabAnalytes = {
+  "listLeftId": "lab-analyte-list",
+  "listRightId": "project-lab-analyte-list",
+  "dataAttrLeft": "data-labanalyte-id",
+  "dataAttrRight": "data-labanalyte-id"
+ };
+ utils.dualListSelection(selectionParamsLabAnalytes);
+ /* End dual selection */
 
  var ajaxParams = {
   "ajaxUrl": "",
@@ -24,6 +40,20 @@ $(document).ready(function() {
   "action": "",
   "arrayOfValues": []
  };
+
+ $(".from-field-analyte-list, .from-lab-analyte-list").click(function() {
+  var isFieldAnalyte = $(".active").attr("data-form-id") === "field_analyte_info";
+  ajaxParams.ajaxUrl = isFieldAnalyte ? "field_analyte/updateItems" : "lab_analyte/updateItems";
+  ajaxParams.action = "add";
+  ajaxParams.arrayOfIds = utils.getValuesFromList(selectionParams.listRightId, selectionParams.dataAttrRight);
+  datacx.updateItems(ajaxParams);
+ });
+ $(".from-project-field-analyte-list, .project-lab-analyte-list").click(function() {
+  ajaxParams.action = "remove";
+  ajaxParams.ajaxUrl = isFieldAnalyte ? "field_analyte/updateItems" : "lab_analyte/updateItems";
+  ajaxParams.arrayOfIds = utils.getValuesFromList(selectionParams.listLeftId, selectionParams.dataAttrLeft);
+  datacx.updateItems(ajaxParams);
+ });
 
  $("#btn_add_analyte").click(function() {
   var isFieldAnalyte = $(".active").attr("data-form-id") === "field_analyte_info";
