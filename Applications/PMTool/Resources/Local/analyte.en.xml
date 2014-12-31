@@ -20,7 +20,7 @@
  
 <!--  Added Reource Keys -->
   <resource key="field_analyte_name_unit">Analyte and Units</resource>
-  <resource key="lab_analyte_name_unit">Analyte</resource>
+  <resource key="lab_analyte_name">Analyte</resource>
   <resource key="field_analyte_info_tab">Field analytes</resource>
   <resource key="lab_analyte_info_tab">Lab analytes</resource>
   <resource key="analyte_button_add">Add analyte</resource>
@@ -31,19 +31,17 @@
   <resource key="h4_analytes">All Analytes</resource>
   <resource key="btn_add_to_project">Add to Project Analytes</resource> 
   <resource key="btn_remove_from_project">Remove from Project Analytes</resource> 
-  <resource key="lab_analytes_header">Lab analytes</resource>
-
-  
+  <resource key="lab_analytes_header">Lab analytes</resource>  
   
   <resource key="h3_field_analytes_inactive">Inactive field analytes</resource> 
   <resource key="h3_field_analyte_names_form">Add field analyte names</resource> 
   <resource key="h3_field_analyte_add_buttons">Add field analyte:</resource>
  
-  <resource key="btn_to_inactive_list">De-activate</resource> 
-  <resource key="btn_to_active_list">Activate</resource> 
   <resource key="btn_add_field_analyte_names">Add the field analytes</resource> 
-  <resource key="btn_add_field_analyte_gmap">Using the Map</resource> 
-  <resource key="btn_add_field_analyte_manual">With the standard form</resource> 
   <resource key="btn_field_analyte_select_project">See list of project</resource> 
 
+  <resource key="h4_project_field_analytes">All Project's Field Analytes</resource>
+  <resource key="h4_field_analytes">All Field Analytes</resource>
+  <resource key="h4_project_lab_analytes">All Project's Lab Analytes</resource>
+  <resource key="h4_lab_analytes">All Lab Analytes</resource>
 </resources>

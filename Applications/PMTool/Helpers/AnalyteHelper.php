@@ -33,10 +33,10 @@ class AnalyteHelper {
     $sessionPm = PmHelper::GetCurrentSessionPm($caller->user());
     $analytes = array();
     $doDbQuery = FALSE;
-    if ($isFieldType && !count($sessionPm[\Library\Enums\SessionKeys::PmFieldAnalytes]) === 0) {
+    if ($isFieldType && count($sessionPm[\Library\Enums\SessionKeys::PmFieldAnalytes]) === 0) {
       $analyte = new \Applications\PMTool\Models\Dao\Field_analyte();
       $doDbQuery = TRUE;
-    } else if (!count($sessionPm[\Library\Enums\SessionKeys::PmLabAnalytes]) === 0) {
+    } else if (count($sessionPm[\Library\Enums\SessionKeys::PmLabAnalytes]) === 0) {
       $analyte = new \Applications\PMTool\Models\Dao\Lab_analyte();
       $doDbQuery = TRUE;
     }
@@ -49,15 +49,16 @@ class AnalyteHelper {
       } else {
         $sessionPm[\Library\Enums\SessionKeys::PmLabAnalytes] = $analytes;
       }
+      PmHelper::SetSessionPm($caller->user(), $sessionPm);
     }
-    PmHelper::SetSessionPm($caller->user(), $sessionPm);
-    return $sessionPm;
+    return $isFieldType ? $sessionPm[\Library\Enums\SessionKeys::PmFieldAnalytes] : $sessionPm[\Library\Enums\SessionKeys::PmLabAnalytes];
   }
 
-  public static function GetListProperties() {
-    return array("name" => "name_unit","id" => "id");
+  public static function GetListPropertiesForFieldAnalyte() {
+    return array("name" => "name_unit", "id" => "id");
   }
-  public static function AddAnalyte($caller, $result) {
+
+  public static function AddAnalyte($caller, $result, $isFieldType = TRUE) {
     $pm = PmHelper::GetCurrentSessionPm($caller->user());
 
     $manager = $caller->managers()->getManagerOf($caller->module());
@@ -65,7 +66,6 @@ class AnalyteHelper {
     $data_sent["pm_id"] = $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
 
     $analytes = array();
-    $isFieldType = TRUE;//TODO: set value according to type being added.
     $analyteObj = $isFieldType ? new \Applications\PMTool\Models\Dao\Field_analyte() : new \Applications\PMTool\Models\Dao\Lab_analyte();
     if (array_key_exists("names", $caller->dataPost())) {
       $analytes = self::_PrepareManyAnalyteObjects($data_sent, $isFieldType);
@@ -89,7 +89,8 @@ class AnalyteHelper {
     }
     return $result;
   }
-    private static function _PrepareManyAnalyteObjects($dataPost, $isFieldType = TRUE) {
+
+  private static function _PrepareManyAnalyteObjects($dataPost, $isFieldType = TRUE) {
     $analytes = array();
     $analyte_names = \Applications\PMTool\Helpers\CommonHelper::StringToArray("\n", $dataPost["names"]);
     foreach ($analyte_names as $name) {
@@ -104,6 +105,5 @@ class AnalyteHelper {
     }
     return $analytes;
   }
-
 
 }

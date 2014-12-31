@@ -2,6 +2,7 @@
 body, html, .sidebar {height: 100%}
 ol, ul {  margin-bottom: 0; }
 .btn{margin-bottom: 5px;}
+.high-textarea {height: 200px}
 /* END GENRAL */
 
 /* LOGIN */
@@ -117,7 +118,7 @@ textarea { resize: vertical;}
 }
 
 /* LOCATION */
-.add-new-locations textarea {
+.add-new-locations textarea, .field_analyte_form textarea {
   resize: vertical;
   width: 100%;
   height: 25em;

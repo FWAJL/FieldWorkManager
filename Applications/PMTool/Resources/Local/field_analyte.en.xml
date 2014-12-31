@@ -15,25 +15,4 @@
   <resource key="message_error_updateItems">Error editing the field analytes.</resource>
   <resource key="message_success_updateItems">The field analytes have been edited</resource>
 
-  <resource key="field_analyte_legend_add">Add new field analyte</resource>
-  <resource key="field_analyte_legend_edit">Edit this field analyte</resource>
-  <resource key="field_analyte_name_unit">Field analyte Name</resource>
-  <resource key="field_analyte_button_add">Add this field analyte</resource>
-  <resource key="field_analyte_button_edit">Edit this field analyte</resource>
-  <resource key="field_analyte_button_delete">Delete this field analyte</resource>
-  <resource key="field_analyte_list_all_header">Field analytes</resource>
-  <resource key="h3_field_analytes_active">Active field analytes</resource>
-  <resource key="h3_field_analytes_inactive">Inactive field analytes</resource> 
-  <resource key="h3_field_analyte_names_form">Add field analyte names</resource> 
-  <resource key="h3_field_analyte_add_buttons">Add field analyte:</resource>
-  <resource key="field_analyte_info_tab">Field analyte Info</resource>
-  
-  
-  <resource key="btn_to_inactive_list">De-activate</resource> 
-  <resource key="btn_to_active_list">Activate</resource> 
-  <resource key="btn_add_field_analyte_names">Add the field analytes</resource> 
-  <resource key="btn_add_field_analyte_gmap">Using the Map</resource> 
-  <resource key="btn_add_field_analyte_manual">With the standard form</resource> 
-  <resource key="btn_field_analyte_select_project">See list of project</resource> 
-
 </resources>

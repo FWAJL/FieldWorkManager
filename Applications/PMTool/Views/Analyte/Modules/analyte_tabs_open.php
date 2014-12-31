@@ -3,5 +3,5 @@
 <div id="tab-container" class="tab-container">
   <ul class="etabs">
     <li class="tab active" data-form-id="field_analyte_info"><a><?php echo $resx["field_analyte_info_tab"]; ?></a></li>
-    <li class="tab" data-form-id="lab_analyte__info"><a><?php echo $resx["lab_analyte_info_tab"]; ?></a></li>
+    <li class="tab" data-form-id="lab_analyte_info"><a><?php echo $resx["lab_analyte_info_tab"]; ?></a></li>
   </ul>

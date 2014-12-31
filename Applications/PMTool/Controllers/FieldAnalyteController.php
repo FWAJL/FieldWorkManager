@@ -7,56 +7,11 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class FieldAnalyteController extends \Library\BaseController {
 
-  public function executeShowForm(\Library\HttpRequest $rq) {
-    \Applications\PMTool\Helpers\TaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\TaskTabKeys::FieldAnalytesTab);
-    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-    if ($rq->getData("mode") === "edit") {
-      $this->page->addVar("location_editing_header", $this->resxData["field_analyte_legend_edit"]);
-    } else {
-      $this->page->addVar("location_editing_header", $this->resxData["field_analyte_legend_add"]);
-    }
-    //Which module?
-    $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
-    $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::tabStatus, \Applications\PMTool\Helpers\TaskHelper::GetTabsStatus($this->user()));
-  }
-
-  public function executeListAll(\Library\HttpRequest $rq) {
-    \Applications\PMTool\Helpers\TaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\TaskTabKeys::FieldAnalytesTab);
-    $sessionPm = \Applications\PMTool\Helpers\AnalyteHelper::GetListData($this);
-    $field_analytes = $sessionPm[\Library\Enums\SessionKeys::PmFieldAnalytes];
-    $data = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module =>
-        strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left =>
-        $field_analytes,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left =>
-        \Applications\PMTool\Helpers\CommonHelper::SetDynamicPropertyNamesForDualList("field_analyte", \Applications\PMTool\Helpers\AnalyteHelper::GetListProperties())
-    );
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
-
-    $modules = $this->app()->router()->selectedRoute()->phpModules();
-    $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_tab_open, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::task_tabs_open]);
-    $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_tab_close, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::task_tabs_close]);
-
-    $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::group_list_left]);
-    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-    //tab status
-    $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::tabStatus, \Applications\PMTool\Helpers\TaskHelper::GetTabsStatus($this->user()));
-  }
-
   public function executeAdd(\Library\HttpRequest $rq) {
     $result = \Applications\PMTool\Helpers\AnalyteHelper::AddAnalyte($this, $this->InitResponseWS());
     $this->SendResponseWS(
             $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
         "resx_key" => $this->action(),
         "step" => $result["dataId"] > 0 ? "success" : "error"
     ));
@@ -86,7 +41,7 @@ class FieldAnalyteController extends \Library\BaseController {
 
     $this->SendResponseWS(
             $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
         "resx_key" => $this->action(),
         "step" => $result_edit ? "success" : "error"
     ));
@@ -113,7 +68,7 @@ class FieldAnalyteController extends \Library\BaseController {
 
     $this->SendResponseWS(
             $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
         "resx_key" => $this->action(),
         "step" => $db_result !== FALSE ? "success" : "error"
     ));
@@ -126,7 +81,7 @@ class FieldAnalyteController extends \Library\BaseController {
       $step_result = $result[\Library\Enums\SessionKeys::ProjectLocations] !== NULL ? "success" : "error";
       $this->SendResponseWS(
               $result, array(
-          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
           "resx_key" => $this->action(),
           "step" => $step_result
       ));
@@ -150,7 +105,7 @@ class FieldAnalyteController extends \Library\BaseController {
     $result["field_analyte"] = $analyte_selected["object"];
     $this->SendResponseWS(
             $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
         "resx_key" => $this->action(),
         "step" => ($analyte_selected !== NULL) ? "success" : "error"
     ));
@@ -161,7 +116,7 @@ class FieldAnalyteController extends \Library\BaseController {
 
     $this->SendResponseWS(
             $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
         "resx_key" => $this->action(),
         "step" => ($result["rows_affected"] === count($result["location_ids"])) ? "success" : "error"
     ));

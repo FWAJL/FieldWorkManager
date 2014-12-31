@@ -1,4 +1,9 @@
 /**
+ * IMPORTANT NOTICE (29-12-14): 
+ *   LOOK AT analyte_manager for the new implementation 
+ *   to make AJAX calls to the web services. It is more
+ *   efficient and allows to write a lot less code.
+ *   
  * jQuery listeners for the service actions
  */
 $(document).ready(function() {
@@ -9,7 +14,6 @@ $(document).ready(function() {
     "arrayOfIds": "",
     "itemId": ""
   };
-
   $(".btn-warning").hide();
   $.contextMenu({
     selector: '.select_item',
@@ -25,39 +29,6 @@ $(document).ready(function() {
       "delete": {name: "Delete"}
     }
   });//Manages the context menu
-
-  //************************************************//
-  // Selection of services
-//  var service_ids = "";
-//  $("#active-list, #inactive-list").selectable({
-//    stop: function() {
-//      var tmpSelection = "";
-//      $(".ui-selected", this).each(function() {
-//        tmpSelection += $(this).attr("data-service-id") + ",";
-//      });
-//      tmpSelection = utils.removeLastChar(tmpSelection);
-//      if (tmpSelection.length > 0) {
-//        service_ids = tmpSelection;
-//        //Show the button to appropriate button
-//        $(".from-" + $(this).attr("id")).show();
-//      } else {
-//        service_ids = [];
-//        $(".from-" + $(this).attr("id")).hide();
-//      }
-//    }
-//  });
-//  $(".from-inactive-project-list").click(function() {
-//    service_manager.updateResources("active", service_ids);
-//  });
-//  $(".from-active-project-list").click(function() {
-//    service_manager.updateResources("inactive", service_ids);
-//  });
-  //************************************************//
-
-
-//  $("#btn-add-service-names").click(function() {
-//    service_manager.add($("textarea[name=\"service_names\"]").val(), "service", "add", false);
-//  });//Add many services
 
   $("#btn-add-service-manual").click(function() {
     utils.redirect("service/showForm?mode=add&test=true");
