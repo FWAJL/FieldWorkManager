@@ -118,7 +118,7 @@ class FieldAnalyteController extends \Library\BaseController {
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
         "resx_key" => $this->action(),
-        "step" => ($result["rows_affected"] === count($result["location_ids"])) ? "success" : "error"
+        "step" => ($result["rows_affected"] === count($result["arrayOfValues"])) ? "success" : "error"
     ));
   }
 

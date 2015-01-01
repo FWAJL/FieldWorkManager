@@ -58,6 +58,8 @@ abstract class SessionKeys {
   const ProjectTasks = "project_tasks";
   const ProjectServices = "project_services";
   const ProjectLocations = "project_locations";
+  const ProjectFieldAnalytes = "pfa";
+  const ProjectLabAnalytes = "pla";
   
   /* Task session array */
   const SessionTasks = "session_tasks";

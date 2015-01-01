@@ -36,11 +36,11 @@ class AnalyteHelper {
       switch ($loopParams[$index]) {
         case "field":
           $sessionPm = self::_StoreAnalytes(
-                  $caller, $sessionPm, \Library\Enums\SessionKeys::PmFieldAnalytes, new \Applications\PMTool\Models\Dao\Field_analyte());
+                          $caller, $sessionPm, \Library\Enums\SessionKeys::PmFieldAnalytes, new \Applications\PMTool\Models\Dao\Field_analyte());
           break;
         case "lab":
           $sessionPm = self::_StoreAnalytes(
-                  $caller, $sessionPm, \Library\Enums\SessionKeys::PmLabAnalytes, new \Applications\PMTool\Models\Dao\Lab_analyte());
+                          $caller, $sessionPm, \Library\Enums\SessionKeys::PmLabAnalytes, new \Applications\PMTool\Models\Dao\Lab_analyte());
           break;
       }
       PmHelper::SetSessionPm($caller->user(), $sessionPm);
@@ -61,6 +61,42 @@ class AnalyteHelper {
 
   public static function GetListPropertiesForFieldAnalyte() {
     return array("name" => "name_unit", "id" => "id");
+  }
+
+  public static function FilterAnalytesByProjectAnalytesList($caller, $getFieldType = TRUE) {
+    $pm = PmHelper::GetCurrentSessionPm($caller->user());
+    $project_analytes = self::GetProjectAnalytes($caller, $getFieldType);
+    $sessionKey = $getFieldType ? \Library\Enums\SessionKeys::PmFieldAnalytes : \Library\Enums\SessionKeys::PmLabAnalytes;
+    $analytePropId = $getFieldType ? "field_analyte_id" : "lab_analyte_id";
+    $matches = array();
+    foreach ($project_analytes as $project_analyte) {
+      foreach ($pm[$sessionKey] as $analyte) {
+        if (intval($analyte->$analytePropId()) === intval($project_analyte->$analytePropId())) {
+          array_push($matches, $analyte);
+          break;
+        }
+      }
+    }
+    return $matches;
+  }
+
+  public static function GetProjectAnalytes($caller, $getFieldType = TRUE) {
+    $pm = PmHelper::GetCurrentSessionPm($caller->user());
+    $project = ProjectHelper::GetCurrentSessionProject($caller->user());
+    $sessionKey = $getFieldType ? \Library\Enums\SessionKeys::ProjectFieldAnalytes : \Library\Enums\SessionKeys::ProjectLabAnalytes;
+    if (count($project[$sessionKey]) === 0) {
+      \Library\Utility\DebugHelper::LogAsHtmlComment($getFieldType);
+      $type = $getFieldType ? "field" : "lab";
+      $className = "\Applications\PMTool\Models\Dao\Project_" . $type . "_analyte";
+      \Library\Utility\DebugHelper::LogAsHtmlComment($className);
+      $project_analyte = new $className();
+      $project_analyte->setProject_id($project[\Library\Enums\SessionKeys::ProjectObject]->project_id());
+      $dal = $caller->managers()->getManagerOf($caller->module());
+      $project_analytes = $dal->selectMany($project_analyte, "project_id");
+      $project[$sessionKey] = $project_analytes;
+      ProjectHelper::SetUserSessionProject($caller->user(), $project);
+    }
+    return $project[$sessionKey];
   }
 
   public static function AddAnalyte($caller, $result, $isFieldType = TRUE) {
@@ -118,40 +154,45 @@ class AnalyteHelper {
     $result["rows_affected"] = 0;
     if ($dataPost["isFieldType"]) {
       $result = self::ProcessListAnalytes(
-              $caller, array(
-            "sessionKey" => \Library\Enums\SessionKeys::PmFieldAnalytes,
-            "dataPost" => $dataPost,
-            "analyteObj" => new \Applications\PMTool\Models\Dao\Project_field_analyte(),
-            "objPropId" => "field_analyte_id"));
+                      $caller, $result, array(
+                  "sessionKey" => \Library\Enums\SessionKeys::ProjectFieldAnalytes,
+                  "dataPost" => $dataPost,
+                  "object" => new \Applications\PMTool\Models\Dao\Project_field_analyte(),
+                  "objPropId" => "field_analyte_id"));
     } else {
       $result = self::ProcessListAnalytes(
-              $caller, array(
-            "sessionKey" => \Library\Enums\SessionKeys::PmLabAnalytes,
-            "dataPost" => $dataPost,
-            "analyteObj" => new \Applications\PMTool\Models\Dao\Project_lab_analyte(),
-            "objPropId" => "lab_analyte_id"));
+                      $caller, $result, array(
+                  "sessionKey" => \Library\Enums\SessionKeys::ProjectLabAnalytes,
+                  "dataPost" => $dataPost,
+                  "object" => new \Applications\PMTool\Models\Dao\Project_lab_analyte(),
+                  "objPropId" => "lab_analyte_id"));
     }
     return $result;
   }
 
-  private static function ProcessListAnalytes($caller, $params) {
-    $result["arrayOfIds"] = str_getcsv($params["dataPost"]["arrayOfIds"], ',');
+  private static function ProcessListAnalytes($caller, $result, $params) {
+    $result["arrayOfValues"] = str_getcsv($params["dataPost"]["arrayOfValues"], ',');
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($caller->user());
-    $project_analytes = array();
-    foreach ($result["arrayOfIds"] as $id) {
+    foreach ($result["arrayOfValues"] as $id) {
       $setMethodObjId = "set" . ucfirst($params["objPropId"]);
-      $params["obj"]->$setMethodObjId($id);
-      $params["obj"]->setProject_id($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
+      $params["object"]->$setMethodObjId($id);
+      $params["object"]->setProject_id($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
       $dal = $caller->managers()->getManagerOf($caller->module());
       if ($params["dataPost"]["action"] === "add") {
-        $result["rows_affected"] += $dal->add($params["obj"]) >= 0 ? 1 : 0;
+        $result["rows_affected"] += $dal->add($params["object"]) >= 0 ? 1 : 0;
+        $sessionProjectAnalytes = $sessionProject[$params["sessionKey"]];
+        array_push($sessionProjectAnalytes, $params["object"]);
+        $sessionProject[$params["sessionKey"]] = $sessionProjectAnalytes;
       } else {
-        $result["rows_affected"] += $dal->delete($params["obj"], $params["objPropId"]) ? 1 : 0;
+        $result["rows_affected"] += $dal->delete($params["object"], $params["objPropId"]) ? 1 : 0;
+        //TODO: remove object deleted from array list
+        $propId = $params["objPropId"];
+        $match = CommonHelper::FindIndexInObjectListById($params["object"]->$propId(), $params["objPropId"], $sessionProject, $params["sessionKey"]);
+        unset($sessionProject[$params["sessionKey"]][$match["key"]]);
       }
-      array_push($project_analytes, $params["obj"]);
     }
-    $sessionProject[$params["sessionKey"]] = $project_analytes;
     \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($caller->user(), $sessionProject);
+    return $result;
   }
 
 }

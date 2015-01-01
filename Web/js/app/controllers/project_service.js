@@ -6,7 +6,7 @@ $(document).ready(function() {
     "ajaxUrl": "service/updateItems",
     "redirectUrl": "service/listAll",
     "action": "",
-    "arrayOfIds": "",
+    "arrayOfValues": "",
     "itemId": ""
   };
 
@@ -45,12 +45,12 @@ $(document).ready(function() {
 
   $(".from-categorized-list-right").click(function() {
     ajaxParams.action = "add";
-    ajaxParams.arrayOfIds = utils.getValuesFromList(selectionParams.listRightId, selectionParams.dataAttrRight);
+    ajaxParams.arrayOfValues = utils.getValuesFromList(selectionParams.listRightId, selectionParams.dataAttrRight);
     datacx.updateItems(ajaxParams);
   });
   $(".from-categorized-list-left").click(function() {
     ajaxParams.action = "remove";
-    ajaxParams.arrayOfIds = utils.getValuesFromList(selectionParams.listLeftId, selectionParams.dataAttrLeft);
+    ajaxParams.arrayOfValues = utils.getValuesFromList(selectionParams.listLeftId, selectionParams.dataAttrLeft);
     datacx.updateItems(ajaxParams);
   });
   $("#btn_delete_service").click(function() {

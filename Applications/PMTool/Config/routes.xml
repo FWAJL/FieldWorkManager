@@ -279,8 +279,8 @@
             <php_module key="field_analyte_list" file_name="field_analyte_list.php" />
             <php_module key="project_lab_analyte_list" file_name="project_lab_analyte_list.php" />
             <php_module key="lab_analyte_list" file_name="lab_analyte_list.php" />
-            <php_module key="field_analyte_buttons" file_name="analyte_buttons.php" />
-            <php_module key="lab_analyte_buttons" file_name="analyte_buttons.php" />
+            <php_module key="field_analyte_buttons" file_name="analyte_list_buttons.php" />
+            <php_module key="lab_analyte_buttons" file_name="analyte_list_buttons.php" />
         </php_modules>
     </route>
     <!--  analyte/ListAll -->

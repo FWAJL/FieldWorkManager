@@ -83,13 +83,13 @@ class LabAnalyteController extends \Library\BaseController {
   }
 
   public function executeUpdateItems(\Library\HttpRequest $rq) {
-    $result = \Applications\PMTool\Helpers\AnalyteHelper::UpdateLocations($this);
+    $result = \Applications\PMTool\Helpers\AnalyteHelper::UpdateProjectAnalytes($this);
 
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
         "resx_key" => $this->action(),
-        "step" => ($result["rows_affected"] === count($result["location_ids"])) ? "success" : "error"
+        "step" => ($result["rows_affected"] === count($result["arrayOfValues"])) ? "success" : "error"
     ));
   }
 

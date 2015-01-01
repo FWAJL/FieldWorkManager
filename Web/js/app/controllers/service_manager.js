@@ -11,7 +11,7 @@ $(document).ready(function() {
     "ajaxUrl": "service/updateItems",
     "redirectUrl": "service/listAll",
     "action": "",
-    "arrayOfIds": "",
+    "arrayOfValues": "",
     "itemId": ""
   };
   $(".btn-warning").hide();

@@ -21,7 +21,7 @@ class AnalyteController extends \Library\BaseController {
             "field_analyte", 
             \Applications\PMTool\Helpers\AnalyteHelper::GetListPropertiesForFieldAnalyte());
     $field_analytes = $pm[\Library\Enums\SessionKeys::PmFieldAnalytes];
-    $project_field_analytes = array();
+    $project_field_analytes = \Applications\PMTool\Helpers\AnalyteHelper::FilterAnalytesByProjectAnalytesList($this);
     $data_field_analyte = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => "fieldanalyte",
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_right => $field_analytes,
@@ -34,7 +34,7 @@ class AnalyteController extends \Library\BaseController {
     //variable for the lab analyte module
     $lab_object_properties = \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList("lab_analyte");
     $lab_analytes = $pm[\Library\Enums\SessionKeys::PmLabAnalytes];
-    $project_lab_analytes = array();
+    $project_lab_analytes = \Applications\PMTool\Helpers\AnalyteHelper::FilterAnalytesByProjectAnalytesList($this, FALSE);
     $data_lab_analyte = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => "labanalyte",
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_right => $lab_analytes,
