@@ -14,7 +14,8 @@ $(document).ready(function() {
     },
     items: {
       "edit": {name: "View Info"},
-      "delete": {name: "Delete"}
+      "delete": {name: "Delete"},
+      "copy": {name: "Copy"}
     }
   });//Manages the context menu
 
