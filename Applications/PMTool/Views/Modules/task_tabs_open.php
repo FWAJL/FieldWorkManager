@@ -47,4 +47,9 @@
         Lab Sample Matrix
       </a>
     </li>
+    <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::ServicesTab]; ?>" id="tab7" data-form-id="task_services">
+      <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskServices; ?>">
+        Service Providers
+      </a>
+    </li>
   </ul>
