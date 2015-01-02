@@ -2,6 +2,8 @@
 -- > added new tables project_field_analyte and project_lab_analyte
 
 -- Table structure for table `project_field_analyte`
+USE baiken_fwm_1;
+
 CREATE TABLE `project_field_analyte` (
     `project_id` int(11) NOT NULL,
     `field_analyte_id` int(11) NOT NULL,
