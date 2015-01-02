@@ -34,14 +34,18 @@ class TaskTechnicianController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentPm, $sessionPm[\Library\Enums\SessionKeys::PmObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
     $this->page->addVar("HasItemsToDisplay", \Applications\PMTool\Helpers\PmHelper::DoesPmHaveActiveTechnicians($this->user()));
-    $data = array(
+    $data_left = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_right => $pm_technicians,
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left => $task_technicians,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("technician")),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("technician"))
     );
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
+    $data_right = array(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_right => $pm_technicians,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("technician"))
+    );
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data_left, $data_left);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data_right, $data_right);
 
     //tab status
     $this->page->addVar(

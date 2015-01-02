@@ -2,7 +2,7 @@
 <div class="right-aside main col-lg-10 col-md-10 col-sm-10">
   <h3>
     <?php // echo $current_project->project_name(); ?>
-    <span class="glyphicon glyphicon-chevron-right"></span>
+    <!--<span class="glyphicon glyphicon-chevron-right"></span>-->
     <?php // echo $analyte_editing_header ?>
   </h3>
   <div class="form_sections">

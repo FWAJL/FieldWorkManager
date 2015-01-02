@@ -319,6 +319,28 @@ CREATE TABLE `location_document` (
     UNIQUE INDEX `un_ld_l` (`location_id` ASC, `location_document_value` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- Table structure for table `project_field_analyte`
+CREATE TABLE `project_field_analyte` (
+    `project_id` int(11) NOT NULL,
+    `field_analyte_id` int(11) NOT NULL,
+    CONSTRAINT `fk_pfa_project` FOREIGN KEY (`project_id`)
+        REFERENCES `project` (`project_id`) ON DELETE CASCADE,
+    CONSTRAINT `fk_pfa_field_analyte` FOREIGN KEY (`field_analyte_id`)
+        REFERENCES `field_analyte` (`field_analyte_id`) ON DELETE CASCADE,
+	UNIQUE INDEX `un_pfa_p_fa` (`project_id` ASC, `field_analyte_id` ASC)
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
+
+-- Table structure for table `project_lab_analyte`
+CREATE TABLE `project_lab_analyte` (
+    `project_id` int(11) NOT NULL,
+    `lab_analyte_id` int(11) NOT NULL,
+    CONSTRAINT `fk_pla_project` FOREIGN KEY (`project_id`)
+        REFERENCES `project` (`project_id`) ON DELETE CASCADE,
+    CONSTRAINT `fk_pla_field_analyte` FOREIGN KEY (`lab_analyte_id`)
+        REFERENCES `lab_analyte` (`lab_analyte_id`) ON DELETE CASCADE,
+    UNIQUE INDEX `un_pla_l_la` (`project_id` ASC, `lab_analyte_id` ASC)
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
+
 -- Dumping data for table `project_manager`
 INSERT INTO `project_manager` (`pm_id`, `username`, `password`, `hint`, `pm_comp_name`, `pm_name`, `pm_address`, `pm_phone`, `pm_email`) VALUES
 (1, 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683', 'hint', 'comp name', 'John', 'Doe', '1234567890', 'test@fwa.net');

@@ -2,27 +2,27 @@
  * JavaScript Module to laod the config xml 
  * and use the values available accross the application
  */
-(function(i8n) {
-  i8n.commonResxFolderPath = "";
-  i8n.localResxFolderPath = "";
-  i8n.load = function(type, filename) {
+(function(resxUtil) {
+  resxUtil.commonResxFolderPath = "";
+  resxUtil.localResxFolderPath = "";
+  resxUtil.load = function(type, filename) {
     if (type === "common") {
-      i8n.LoadCommonResx(filename);
+      resxUtil.LoadCommonResx(filename);
     } else if (type === "local") {
-      i8n.LoadLocalResx(filename);
+      resxUtil.LoadLocalResx(filename);
     }
   };
-  i8n.LoadCommonResx = function(filename) {
+  resxUtil.LoadCommonResx = function(filename) {
     var xml = new JKL.ParseXML( "../APplication/js/settings.xml" );
     var defines = xml.parse().definitions.define;
     return defines;
   };
-  i8n.LoadLocalResx = function(filename) {
+  resxUtil.LoadLocalResx = function(filename) {
     
   };
-  i8n.get = function(key) {
+  resxUtil.get = function(key) {
    result = "";
-   $.each(i8n.load(), function (i, define) {
+   $.each(resxUtil.load(), function (i, define) {
     if (define.key === key) {
      result = define.value;
      return;
@@ -31,4 +31,4 @@
    return result;
   };
 
-}(window.i8n = window.i8n || {}));
+}(window.resxUtil = window.resxUtil || {}));

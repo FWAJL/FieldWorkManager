@@ -1,4 +1,9 @@
 /**
+ * IMPORTANT NOTICE (29-12-14): 
+ *   LOOK AT analyte_manager for the new implementation 
+ *   to make AJAX calls to the web services. It is more
+ *   efficient and allows to write a lot less code.
+ *   
  * jQuery listeners for the project actions
  */
 $(document).ready(function() {
@@ -14,7 +19,8 @@ $(document).ready(function() {
     },
     items: {
       "edit": {name: "View Info"},
-      "delete": {name: "Delete"}
+      "delete": {name: "Delete"},
+      "copy": {name: "Copy"}
     }
   });//Manages the context menu
 
