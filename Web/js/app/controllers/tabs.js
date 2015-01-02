@@ -27,12 +27,12 @@ $(document).ready(function() {
   //manage click events
   $(".tab").click(function() {
     var data_form_id = $(this).attr("data-form-id");
-    $(".data-form").hide();
-    $("#" + data_form_id).fadeIn();
+    $(".data-form, .data-form-2").hide();
+    $("#" + data_form_id).fadeIn().removeClass("hide");
     $(this).siblings().removeClass("active");
     $(this).css("display", "").addClass("active");
   });
-  $()
+  
 });
 
 $(document).ready(function() {

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <resource key="page_title">Your lab Analytes - lab Work Manager</resource>
+    
+  <resource key="message_error_add">Error inserting the lab analyte.</resource>
+  <resource key="message_success_add">The lab analyte has been inserted.</resource>
+  <resource key="message_error_getlist">Error reading the lab analytes.</resource>
+  <resource key="message_success_getlist">The lab analytes have been read.</resource>
+  <resource key="message_error_getItem">Error reading the lab analyte.</resource>
+  <resource key="message_success_getItem">The lab analyte has been read.</resource>
+  <resource key="message_error_edit">Error editing the lab analyte.</resource>
+  <resource key="message_success_edit">The lab analyte has been edited.</resource>
+  <resource key="message_error_delete">Error deleting the lab analyte.</resource>
+  <resource key="message_success_delete">The lab analyte has been deleted.</resource>
+  <resource key="message_error_updateItems">Error editing the lab analytes.</resource>
+  <resource key="message_success_updateItems">The lab analytes have been edited</resource>
+
+</resources>

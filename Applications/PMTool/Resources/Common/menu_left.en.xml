@@ -2,8 +2,9 @@
 <resources>
   <resource key="brand">Field Work Manager</resource>
   <resource key="pm_info_edit">Edit Info</resource>
+  <resource key="pm_view_info">View your details</resource>
   <resource key="logout_link_text">Logout</resource>
-  <resource key="p_user_name_label">User Name: </resource>
+  <resource key="p_user_name_label">Hello </resource>
 
   <resource key="header_projects">Projects</resource>
   <resource key="project_add">Add</resource>

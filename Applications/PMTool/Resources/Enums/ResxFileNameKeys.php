@@ -37,6 +37,9 @@ abstract class ResxFileNameKeys {
   const Task = "task";
 //  const FieldForm = "field_form";
   const Pm = "pm";
+  const Analyte = "analyte";
+  const FieldAnalyte = "field_analyte";
+  const LabAnalyte = "lab_analyte";
 }
 
 ?>
