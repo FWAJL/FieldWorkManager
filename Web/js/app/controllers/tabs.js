@@ -78,43 +78,43 @@ $(document).ready(function() {
   });
 
   $("#tab7").hide()
-  $("#well_box").change(function()
+  $("#service_providers_box").change(function()
   {
-    if ($("#well_box").is(":checked")) {
+    if ($("#service_providers_box").is(":checked")) {
       $("#tab7").show()
     } else {
       $("#tab7").hide()
     }
   });
 
-  $("#tab8").hide()
-  $("#waste_box").change(function()
-  {
-    if ($("#waste_box").is(":checked")) {
-      $("#tab8").show()
-    } else {
-      $("#tab8").hide()
-    }
-  });
-
-  $("#tab9").hide()
-  $("#rental_box").change(function()
-  {
-    if ($("#rental_box").is(":checked")) {
-      $("#tab9").show()
-    } else {
-      $("#tab9").hide()
-    }
-  });
-
-  $("#tab10").hide()
-  $("#field_test_box").change(function()
-  {
-    if ($("#field_test_box").is(":checked")) {
-      $("#tab10").show()
-    } else {
-      $("#tab10").hide()
-    }
-  });
+//  $("#tab8").hide()
+//  $("#waste_box").change(function()
+//  {
+//    if ($("#waste_box").is(":checked")) {
+//      $("#tab8").show()
+//    } else {
+//      $("#tab8").hide()
+//    }
+//  });
+//
+//  $("#tab9").hide()
+//  $("#rental_box").change(function()
+//  {
+//    if ($("#rental_box").is(":checked")) {
+//      $("#tab9").show()
+//    } else {
+//      $("#tab9").hide()
+//    }
+//  });
+//
+//  $("#tab10").hide()
+//  $("#field_test_box").change(function()
+//  {
+//    if ($("#field_test_box").is(":checked")) {
+//      $("#tab10").show()
+//    } else {
+//      $("#tab10").hide()
+//    }
+//  });
 
 });
