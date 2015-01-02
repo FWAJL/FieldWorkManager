@@ -35,4 +35,5 @@ class TaskTabKeys {
   const FieldSampleMatrixTab = "ttk_fsmt";
   const LabSampleMatrixTab = "ttk_lsmt";
   const CocTab = "ttk_ct";
+  const ServicesTab = "ttk_st";
 }
