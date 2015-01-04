@@ -30,7 +30,7 @@
   <resource key="pm_email">Your email</resource>
 
   <resource key="pm_button_add">Add this project manager</resource>
-  <resource key="pm_button_edit">Edit this project manager</resource>
+  <resource key="pm_button_edit">Edit your info</resource>
   <resource key="pm_button_delete">Delete this project manager</resource>
   <resource key="pm_list_all_header">All Project Managers</resource>
   <resource key="h3_pms_active">Active project managers</resource>
