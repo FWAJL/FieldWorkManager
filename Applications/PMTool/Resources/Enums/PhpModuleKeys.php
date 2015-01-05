@@ -54,6 +54,13 @@ class PhpModuleKeys {
   const analyte_buttons = "analyte_buttons";
   const analyte_tabs_close = "analyte_tabs_close";
 
+  const all_projects = "all_projects";
+
+  const current_project = "current_project";
+  const current_project_locations = "current_project_locations";
+  const task_locations = "task_locations";
+  const show_one = "show_one";
+
 }
 
 ?>

@@ -22,7 +22,7 @@
   
   <resource key="header_map">Map</resource>
   <resource key="map_project_all">All Projects</resource>
-  <resource key="map_project">Selected Project</resource>
+  <resource key="map_project">Current Project</resource>
   <resource key="map_project_locations">All Project's Locations</resource>
   <resource key="map_task_locations">Task Locations</resource>
   
