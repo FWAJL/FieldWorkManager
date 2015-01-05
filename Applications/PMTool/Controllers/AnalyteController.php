@@ -18,6 +18,9 @@ class AnalyteController extends \Library\BaseController {
   }
 
   public function executeListAll(\Library\HttpRequest $rq) {
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);  
+      
     \Applications\PMTool\Helpers\AnalyteHelper::StoreListsData($this);
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
 
