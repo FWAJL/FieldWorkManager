@@ -35,6 +35,7 @@
   
   <resource key="h3_field_analytes_inactive">Inactive field analytes</resource> 
   <resource key="h3_field_analyte_names_form">Add field analyte names</resource> 
+  <resource key="h3_pm_analytes">Create a custom list of analytes to be used on your Projects</resource> 
   <resource key="h3_field_analyte_add_buttons">Add field analyte:</resource>
  
   <resource key="btn_add_field_analyte_names">Add the field analytes</resource> 

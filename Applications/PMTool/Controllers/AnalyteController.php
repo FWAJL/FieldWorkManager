@@ -11,6 +11,11 @@ class AnalyteController extends \Library\BaseController {
     $this->page()->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
+  
+    public function executeUploadList(\Library\HttpRequest $rq) {
+  $this->page()->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+  }
 
   public function executeListAll(\Library\HttpRequest $rq) {
     \Applications\PMTool\Helpers\AnalyteHelper::StoreListsData($this);

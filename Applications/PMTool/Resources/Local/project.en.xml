@@ -4,6 +4,7 @@
   
   <resource key="project_h1">Welcome to Field Work Manager, for Project managers</resource>
   <resource key="project_welcome_message">Please, select an option on the left menu.</resource>
+  <resource key="project_add_header">Add new Project</resource>
   
   <resource key="message_error_add">Error inserting the project.</resource>
   <resource key="message_success_add">The project has been inserted.</resource>

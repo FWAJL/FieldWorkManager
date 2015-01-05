@@ -275,7 +275,7 @@
     </route>
     <!--  analyte/ListAll -->
     
-    <route url="analyte/uploadList" module="Analyte" action="showForm" resxfile="analyte" type="ui">
+    <route url="analyte/uploadList" module="Analyte" action="uploadList" resxfile="analyte" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/analyte_manager.js" />
         </js_files>
