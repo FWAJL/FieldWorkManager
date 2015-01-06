@@ -77,7 +77,11 @@ abstract class BaseController extends ApplicationComponent {
   public function dataPost() {
     return $this->dataPost;
   }
-
+  /**
+   * This is a shortcut to $this->app()->user()
+   * 
+   * @return \Library\User
+   */
   public function user() {
     return $this->user;
   }

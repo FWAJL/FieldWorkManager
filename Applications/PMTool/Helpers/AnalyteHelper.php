@@ -49,8 +49,6 @@ class AnalyteHelper {
 
   private static function _StoreAnalytes($caller, $sessionPm, $sessionKey, $analyteObj) {
     if (count($sessionPm[$sessionKey]) === 0) {
-//      \Library\Utility\DebugHelper::LogAsHtmlComment(__CLASS__ . '->' . __FUNCTION__ . ' ==> ' . $sessionKey);
-//      \Library\Utility\DebugHelper::LogAsHtmlComment(__CLASS__ . '->' . __FUNCTION__ . ' ==> Analytes not in session');
       $analyteObj->setPm_id($sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_id());
       $dal = $caller->managers()->getManagerOf($caller->module());
       $analytes = $dal->selectMany($analyteObj, "pm_id");
@@ -179,9 +177,15 @@ class AnalyteHelper {
       $params["object"]->setProject_id($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
       $dal = $caller->managers()->getManagerOf($caller->module());
       if ($params["dataPost"]["action"] === "add") {
-        $result["rows_affected"] += $dal->add($params["object"]) >= 0 ? 1 : 0;
+        $analyte = $params["objPropId"] === "field_analyte_id" ?
+                new \Applications\PMTool\Models\Dao\Project_field_analyte() : new \Applications\PMTool\Models\Dao\Project_lab_analyte();
+        $analyte->setProject_id($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
+        $setMethodObjId = "set" . ucfirst($params["objPropId"]);
+        $analyte->$setMethodObjId($id);
+        $newId = $dal->add($analyte);
+        $result["rows_affected"] += 1;
         $sessionProjectAnalytes = $sessionProject[$params["sessionKey"]];
-        array_push($sessionProjectAnalytes, $params["object"]);
+        array_push($sessionProjectAnalytes, $analyte);
         $sessionProject[$params["sessionKey"]] = $sessionProjectAnalytes;
       } else {
         $result["rows_affected"] += $dal->delete($params["object"], $params["objPropId"]) ? 1 : 0;
