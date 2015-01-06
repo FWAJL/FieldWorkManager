@@ -4,6 +4,7 @@
   
   <resource key="project_h1">Welcome to Field Work Manager, for Project managers</resource>
   <resource key="project_welcome_message">Please, select an option on the left menu.</resource>
+  <resource key="project_add_header">Add new Project</resource>
   
   <resource key="message_error_add">Error inserting the project.</resource>
   <resource key="message_success_add">The project has been inserted.</resource>
@@ -30,6 +31,7 @@
   <resource key="project_button_add">Add this project</resource>
   <resource key="project_button_edit">Edit this project</resource>
   <resource key="project_button_delete">Delete this project</resource>
+  <resource key="project_button_copy">Copy this project</resource>
   <resource key="project_list_all_header">Your Projects</resource>
   <resource key="h3_projects_active">Active projects</resource>
   <resource key="h3_projects_inactive">Inactive projects</resource> 

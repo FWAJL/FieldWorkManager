@@ -2,17 +2,17 @@
 
 <ol id="group-list-left" class="list-panel">
 <?php
-  foreach ($data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left] as $object) {
+  foreach ($data_left[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left] as $object) {
     $prop_name = 
-        $data
+        $data_left
         [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left]
         [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name];
     $prop_id = 
-        $data
+        $data_left
         [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left]
         [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id];
       echo
-    "<li data-" . $data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::module] . "-id=\"" . $object->$prop_id() . "\" class=\"select_item ui-widget-content\">"
+    "<li data-" . $data_left[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::module] . "-id=\"" . $object->$prop_id() . "\" class=\"select_item ui-widget-content\">"
     . $object->$prop_name()
       . "</li>";
   }

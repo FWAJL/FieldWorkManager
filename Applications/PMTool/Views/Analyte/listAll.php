@@ -1,16 +1,26 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 <div class="right-aside main col-lg-10 col-md-10 col-sm-10">
   <h3>
-    <?php // echo $current_project->project_name(); ?>
+    <?php echo $current_project->project_name(); ?>
     <span class="glyphicon glyphicon-chevron-right"></span>
-    <?php // echo $analyte_editing_header ?>
+    <?php echo $resx["h4_analytes"]; ?></h3>
   </h3>
   <div class="form_sections">
-    <?php
-    foreach ($form_modules as $key => $module_path) {
-      require $module_path;
-    }
-    ?>
+    <!-- open tabs -->
+    <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::analyte_tabs_open]; ?>
+
+    <!-- field analyte block -->
+    <div id="field_analyte_info" class="data-form-2">
+      <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Analyte::field_analyte_lists]; ?>      
+    </div>
+
+    <!-- lab analyte block -->
+    <div id="lab_analyte_info" class="hide data-form-2">
+      <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Analyte::lab_analyte_lists]; ?>
+    </div>
+
+    <!-- close tabs -->
+    <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::analyte_tabs_close]; ?>
   </div>
 
 </div>

@@ -214,7 +214,7 @@ class ServiceHelper {
     $result = $caller->InitResponseWS(); // Init result
     $dataPost = $caller->dataPost();
     $result["rows_affected"] = 0;
-    $result["service_ids"] = str_getcsv($dataPost["arrayOfIds"], ',');
+    $result["service_ids"] = str_getcsv($dataPost["arrayOfValues"], ',');
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($caller->user());
     $project_services = array();
     foreach ($result["service_ids"] as $id) {

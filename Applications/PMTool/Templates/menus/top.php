@@ -1,19 +1,18 @@
 <section id="top_header">
-  <section id="branding">
+  <div id="branding">
     <figure class="logo"><img src="<?php echo $this->app->relative_path . $this->app->logoImageUrl; ?>"></figure>
     <p class="brand"><?php echo $resx_menu_left["brand"]; ?></p>
-  </section>
-  <ul id="pm_info">
-    <li>
-      <p id="pm_name">
-        <span class="glyphicon glyphicon-cog"></span>
-        <span><?php echo $pm['pm_name']; ?></span>
-      </p>
-      <ul>
-          <li><a id="view_pm_info" class="btn btn-default" role="button" data-pm-id="<?php echo $pm['pm_id']; ?>">Edit Info</a></li>
-        <li><a href="<?php echo $logout_url; ?>" role="button"><?php echo $resx_menu_left["logout_link_text"]; ?></a></li>
-      </ul>
-    </li>
-  </ul>
+  </div>
+  <div id="pm_info">
+    <span id="pm_name" class="top-right-option">
+      <?php echo $resx_menu_left["p_user_name_label"]; ?><?php echo $pm['pm_name']; ?>
+    </span>
+    <span id="view_pm_info" class="top-right-option" data-pm-id="<?php echo $pm['pm_id']; ?>">
+      <a class="glyphicon glyphicon-user" title="<?php echo $resx_menu_left["pm_view_info"]; ?>"></a>
+    </span>
+    <span id="pm_logout" class="top-right-option">
+      <a class="glyphicon glyphicon-log-out" title="<?php echo $resx_menu_left["logout_link_text"]; ?>" href="<?php echo $logout_url; ?>" ></a>
+    </span>
+  </div>
 </section>
 <div class="clearfix"></div>

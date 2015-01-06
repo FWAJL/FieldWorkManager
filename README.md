@@ -1,2 +1,6 @@
-All the details in the [wiki] (https://github.com/FWAJL/FieldWorkAssistantMVC/wiki/1.Home)
+FieldWorkAssistantMVC
+=====================
 
+Please read the wiki before starting any development:
+
+https://github.com/FWAJL/FieldWorkAssistantMVC/wiki

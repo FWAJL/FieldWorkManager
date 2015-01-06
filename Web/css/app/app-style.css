@@ -2,15 +2,17 @@
 body, html, .sidebar {height: 100%}
 ol, ul {  margin-bottom: 0; }
 .btn{margin-bottom: 5px;}
+.high-textarea {height: 200px}
+.btn-warning { display: none; }
 /* END GENRAL */
 
 /* LOGIN */
 .login-container{margin:10px;}
 .login-container figure{
- width: 300px;
- margin: 0 auto;
- padding: 5px;
- border: solid 1px #999;
+  width: 300px;
+  margin: 0 auto;
+  padding: 5px;
+  border: solid 1px #999;
 }
 /* END LOGIN */
 
@@ -28,37 +30,18 @@ ol, ul {  margin-bottom: 0; }
   height: 40px;
 }
 #top_header #branding > * { float: left; }
-.brand, #pm_name{line-height: 40px;  padding-left: 10px; }
+.brand{line-height: 40px;  padding-left: 10px; }
+.logo {margin-left: 20px}
+#pm_name {padding: 0 12px;}
 #top_header .logo img{ height: 32px; margin: 4px }
 
 #pm_info ul{ display: none; }
-#pm_info {
-  float: right;
-  width: 125px;
-  border-left: solid 1px #999;
+#pm_info {float: right; margin-right: 40px}
+.top-right-option a {
+  padding: 12px;
 }
-li #pm_name{
- padding: 0 10px;  
-}
-#pm_name{margin: 0;}
-#pm_name:hover {
-  background-color: #ddd;
-  padding: 0 10px; 
-}
-#pm_info ul {margin-bottom: 0;}
-#pm_info li:hover ul{
-  z-index: 9999;
-  display: block;
-  background-color: #add;
-  position: fixed;
-  padding: 0 10px; 
-  margin-bottom: -10px;
-  -webkit-transition: width 2s ease;
-  -moz-transition: width 2s ease;
-  -ms-transition: width 2s ease;
-  -o-transition: width 2s ease;
-  transition: width 2s ease;
-  width:100%;
+.top-right-option a:hover {
+  background-color: #e5e5e5;
 }
 /* END TOP HEADER */
 /* BREADCRUMB */
@@ -73,6 +56,8 @@ li #pm_name{
 /* CONTENT_CONTAINER */
 .content-container {
   max-width: 100%; height: auto;
+  padding-left: 30px;
+  padding-right: 60px;
   margin: 0 auto;
 }
 .main
@@ -93,9 +78,13 @@ li #pm_name{
 .hide{display: none;}
 
 .list-panel{
-  height: 250px;
+  height: 500px;
   border: 1px solid #999;
   overflow-y: scroll;
+}
+
+.upload_list{
+ width: 100%;   
 }
 
 .buttons{
@@ -117,7 +106,7 @@ textarea { resize: vertical;}
 }
 
 /* LOCATION */
-.add-new-locations textarea {
+.add-new-locations textarea, .field_analyte_form textarea {
   resize: vertical;
   width: 100%;
   height: 25em;

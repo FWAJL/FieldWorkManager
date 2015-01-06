@@ -109,32 +109,18 @@
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
         <php_modules>
-<!--            <php_module key="location_tabs_open" file_name="location_tabs_open.php" />-->
             <php_module key="location_form" file_name="location_form.php" />
-<!--            <php_module key="gmaps_panel" file_name="gmaps_panel.php" />-->
-<!--            <php_module key="location_buttons" file_name="location_buttons.php" />-->
-<!--            <php_module key="location_tabs_close" file_name="location_tabs_close.php" />-->
         </php_modules>
     </route>
     <!-- location/showForm -->
     
-        <route url="location/uploadList" module="Location" action="showForm" resxfile="location" type="ui">
+     <route url="location/uploadList" module="Location" action="uploadList" resxfile="location" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/location_manager.js" />
         </js_files>
         <css_files>
-            <css_file value="Web/css/app/nav.css" />
-            <css_file value="Web/css/app/app-style.css" />
-            <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
-            <css_file value="Web/css/app/tabs.css" />
+            <css_file use="project" />
         </css_files>
-        <php_modules>
-<!--            <php_module key="location_tabs_open" file_name="location_tabs_open.php" />-->
-            <php_module key="location_form" file_name="locations_form.php" />
-<!--            <php_module key="gmaps_panel" file_name="gmaps_panel.php" />
-            <php_module key="location_tabs_close" file_name="location_tabs_close.php" />-->
-        </php_modules>
     </route>
     <!-- location/uploadList -->
     
@@ -275,16 +261,21 @@
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php" shared="true" />
+            <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php" />
+            <php_module key="analyte_tabs_close" file_name="analyte_tabs_close.php" />
+            <php_module key="field_analyte_lists" file_name="field_analyte_lists.php" />
+            <php_module key="lab_analyte_lists" file_name="lab_analyte_lists.php" />
+            <php_module key="project_field_analyte_list" file_name="project_field_analyte_list.php" />
             <php_module key="field_analyte_list" file_name="field_analyte_list.php" />
+            <php_module key="project_lab_analyte_list" file_name="project_lab_analyte_list.php" />
             <php_module key="lab_analyte_list" file_name="lab_analyte_list.php" />
-            <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
-            <php_module key="analyte_tabs_close" file_name="analyte_tabs_close.php" shared="true" />
+            <php_module key="field_analyte_buttons" file_name="analyte_list_buttons.php" />
+            <php_module key="lab_analyte_buttons" file_name="analyte_list_buttons.php" />
         </php_modules>
     </route>
     <!--  analyte/ListAll -->
     
-    <route url="analyte/uploadList" module="Analyte" action="showForm" resxfile="analyte" type="ui">
+    <route url="analyte/uploadList" module="Analyte" action="uploadList" resxfile="analyte" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/analyte_manager.js" />
         </js_files>
@@ -292,11 +283,11 @@
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php" shared="true" />
+            <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php" />
             <php_module key="field_analyte_form" file_name="field_analyte_form.php" />
             <php_module key="lab_analyte_form" file_name="lab_analyte_form.php" />
             <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
-            <php_module key="analyte_tabs_close" file_name="analyte_tabs_close.php" shared="true" />
+            <php_module key="analyte_tabs_close" file_name="analyte_tabs_close.php" />
         </php_modules>
     </route>
     <!-- analytes/uploadList -->

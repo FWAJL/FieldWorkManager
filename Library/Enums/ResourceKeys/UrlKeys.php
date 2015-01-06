@@ -30,6 +30,7 @@ class UrlKeys {
   const LocationRootUrl = "location";
   const LocationListAll = "location/listAll";
   const LocationShowForm = "location/showForm";
+  const LocationUploadList = "location/uploadList";
   
   const TechnicianRootUrl = "technician";
   const TechnicianListAll = "technician/listAll";
@@ -49,6 +50,7 @@ class UrlKeys {
   const TaskShowForm = "task/showForm";
   const TaskTechnicians = "task/technicians";
   const TaskLocations = "task/locations";
+  const TaskServices = "task/services";
   const TaskInspForms = "task/inspForms";
   const TaskCOC = "task/coc";
 

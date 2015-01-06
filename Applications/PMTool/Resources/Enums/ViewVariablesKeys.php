@@ -28,6 +28,8 @@ if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script acces
 class ViewVariablesKeys {
   //Generic keys
   const data = "data";
+  const data_left = "data_left";
+  const data_right = "data_right";
   const module = "module";
   const objects = "objects";
   const objects_list_left = "objects_list_left";

@@ -1,3 +1,4 @@
+USE `baiken_fwm_1`;
 ALTER TABLE `baiken_fwm_1`.`task_location` 
 ADD UNIQUE INDEX `un_t_l` (`task_id` ASC, `location_id` ASC);
 
