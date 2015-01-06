@@ -10,7 +10,7 @@ class ThisApplication extends \Library\Application {
 
     $this->name = 'PMTool';
     $this->context()->setLanguage();
-    $this->logoImageUrl = $this->imageUtil->getImageUrl("logo.jpg");
+    $this->logoImageUrl = $this->imageUtil->getImageUrl("logo.png");
 
   }
 

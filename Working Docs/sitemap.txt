@@ -1,0 +1,10 @@
+Projects
+  |
+  |->Index
+      |->List All
+      |->Add
+      |->Edit
+          |
+          |->Locations
+              |
+              |->

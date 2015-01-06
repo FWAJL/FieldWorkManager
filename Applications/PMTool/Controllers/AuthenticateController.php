@@ -3,7 +3,7 @@
 /**
  *
  * @package		Basic MVC framework
- * @author		FWA DEV Team
+ * @author		FWM DEV Team
  * @copyright	Copyright (c) 2014
  * @license
  * @link
@@ -18,7 +18,7 @@
  * @package		Application/PMTool
  * @subpackage	Controllers
  * @category	AuthenticateController
- * @author		FWA Dev Team
+ * @author		FWM DEV Team
  * @link
  */
 
@@ -55,7 +55,7 @@ class AuthenticateController extends \Library\BaseController {
    */
   public function executeAuthenticate(\Library\HttpRequest $rq) {
     //Initialize the response to error.
-    $result = $this->ManageResponseWS();
+    $result = $this->InitResponseWS();
 
     //Let's retrieve the inputs from AJAX POST request
     $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
@@ -71,13 +71,13 @@ class AuthenticateController extends \Library\BaseController {
     //If user_db is null or not matching, set error message
     if (count($user_db) === 0) {
       //TODO: redirect after 3 sec
-      //header('Location: ' . __BASEURL__ . "login");
+      //$this->Redirect("login");
     } else {
       if (!isset($data_sent["encrypt_pwd"])) {
         $this->EncryptUserPassword($manager, $user, $user_db);
       }
       //User is correct so log him in and set result to success
-      $result = $this->ManageResponseWS("success", $user_db);
+      $result = $this->InitResponseWS("success", $user_db);
     }
     //return the JSON data
     echo \Library\HttpResponse::encodeJson($result);
@@ -92,19 +92,41 @@ class AuthenticateController extends \Library\BaseController {
     $this->app->user->setAuthenticated(FALSE);
     $this->app->user->unsetAttribute(\Library\Enums\SessionKeys::UserConnected);
     session_destroy();
-    if ($redirect) header('Location: ' . __BASEURL__ . "login");
+    if ($redirect) { $this->Redirect("login"); }
   }
   
+    /**
+   * Method that logout a user from the session and then redirect him to Login page.
+   *
+   * @param \Library\HttpRequest $rq
+   */
+  public function executeCreate(\Library\HttpRequest $rq) {
+    $protect = new \Library\BL\Core\Encryption();
+    $data = array(
+      "username" => $rq->getData("login"),
+      "password" => $rq->getData("pwd"),
+      "pm_name" => "Demo User"
+    );
+    $pm = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Project_manager());
+    $pm->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $pm->password()));
+
+    $loginDal = $this->managers->getManagerOf("Login");
+    $id = $loginDal->add($pm);
+    $redirect = intval($id) > 0 ? TRUE : FALSE;
+    
+    if ($redirect) { $this->Redirect("login"); }
+  }
+
   /**
    * Prepare the User Object before calling the DB.
    * 
    * @param array $data_sent from POST request
-   * @return \Library\BO\Project_manager
+   * @return \Applications\PMTool\Models\Dao\Project_manager
    */
   private function PrepareUserObject($data_sent) {
     $protect = new \Library\BL\Core\Encryption();
 
-    $user = new \Library\BO\Project_manager();
+    $user = new \Applications\PMTool\Models\Dao\Project_manager();
     $user->setPm_email($data_sent["email"]);
     $user->setUsername($data_sent["username"]);
     if (!isset($data_sent["encrypt_pwd"])) {
@@ -125,6 +147,9 @@ class AuthenticateController extends \Library\BaseController {
     $this->app->user->setAuthenticated();
     //store user in session
     $this->app->user->setAttribute(\Library\Enums\SessionKeys::UserConnected, $pm_user);
+    //Brian
+    \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this->app()->user(), $pm_user[0], true);
+    //Test
   }
 
   /**
@@ -146,7 +171,7 @@ class AuthenticateController extends \Library\BaseController {
    * @param string $step
    * @return array
    */
-  public function ManageResponseWS($step = "init", $user = NULL) {
+  public function InitResponseWS($step = "init", $user = NULL) {
     $resourceFileKey = "login";
     if ($step === "success") {
       $this->LoginUser($user);

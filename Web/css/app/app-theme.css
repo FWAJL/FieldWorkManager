@@ -12,21 +12,27 @@
   line-height: 20px;
 }
 .login-box .login-btn{
-  position: relative;
-  top: 10px;
-  left: 125px;
+}
+/* BREADCRUMB */
+.breadcrumb{
+  line-height: 40px;
+  padding: 0;
+  margin: 0 10px;
+  text-indent: 10px;
+
+  border: solid 1px #999;
 }
 
 /* ADD PROJECT */
-.form_sections, .project_form, .facility_form{
+.form_sections, .project_form, .facility_form, .form{
   padding: 10px;
   padding-bottom: 30px;
 }
 .form_sections li label{
-  width: 250px;
+  width: 200px;
 }
 .form_sections li input, .form_sections li textarea{
-  width: 250px;
+  width: 200px;
 }
 /* VIEW PROJECTS LIST */
 .project_list_section{
@@ -41,35 +47,92 @@
   line-height:inherit;
   color:#333;
   border:0;
-  border-bottom:1px solid #e5e5e5;
+  border-bottom:1px solid #999;
 }
-table  {border-collapse:collapse;border-spacing:0;border-color:#fff;}
-table td{
-  font-size:14px;
-  padding:5px 10px;
-  border-style:solid;
-  border-width:1px;
-  overflow:hidden;
-  word-break:normal;
-  border-color:#fff;
-  color:#333;
+
+.ui-widget-content {
+  padding: 5px;
+  margin-bottom: 1px;
+  border-bottom: 1px solid #999;
 }
-table th{
-  font-size:14px;
-  font-weight:normal;
-  padding:5px 10px;
-  border-style:solid;
-  border-width:1px;
-  overflow:hidden;
-  word-break:normal;
-  border-color:#fff;
-  color:#333;
+
+.select_item:hover,.select_item:focus, ui-widget-content:focus, ui-widget-content:hover{
+  border-right: solid 4px #F39814; 
+  background-color: #ffd;
+  padding: 5px;
+  color: #F39814;
 }
-.tg .tg-0ord{text-align:right}
-.tg .tg-ifyx{background-color:#D2E4FC;text-align:right}
-.tg .tg-s6z2{text-align:center}
-.tg .tg-vn4c{background-color:#D2E4FC}
-.project_welcome > * {
+
+.welcome > * {
   padding-left: 10px;
   color: #333;
 } 
+
+.ui-selecting, .ui-selecting { background: #FECA40; }
+.ui-selected, .ui-selected { background: #F39814; color: white; }
+
+#group-list-right .ui-selecting, #group-list-left .ui-selecting { background: #FECA40; }
+#group-list-right .ui-selected, #group-list-left .ui-selected { background: #F39814; color: white; }
+
+.context-menu-active {font-weight: bold; color: #F39814;}
+
+/* ADD TASK */
+.task_form_sections .task_form .checkbox, .task_form_data_collection {
+padding: 0px 2px 0px 30px;
+}
+
+.task_form li label, .task_form li input, .task_form li textarea{
+  width: 250px;
+}
+
+.task_form .note {
+width: 500px;
+}
+
+/* ADD LOCATION */
+.location_form_sections .location_form .checkbox, .location_form_data_collection {
+padding: 0px 2px 0px 30px;
+}
+
+.location_form li label {
+  width: 150px;
+}
+
+.location_form li input, .location_form li textarea{
+  width: 250px;
+}
+
+.location_form .note {
+width: 500px;
+}
+
+.location_form {
+width: 100%;
+}
+
+#location_info {
+width: 500px;
+float: left;
+}
+
+#photo_form {
+width: 40%;
+float: right;
+}
+
+#technician_info {
+width: 500px;
+float: left;
+}
+
+li.category-name {
+  font-size: larger;
+  font-style: italic;
+  color: #fff;
+  background-color: #333;
+  padding: 4px;
+  text-decoration: underline;
+}
+.categorized li.ui-widget-content {
+  text-indent: 10px;
+}

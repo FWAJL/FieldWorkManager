@@ -1,16 +1,49 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
+  <resource key="brand">Field Work Manager</resource>
+  <resource key="pm_info_edit">Edit Info</resource>
+  <resource key="pm_view_info">View your details</resource>
   <resource key="logout_link_text">Logout</resource>
-  <resource key="p_user_name_label">User Name: </resource>
+  <resource key="p_user_name_label">Hello </resource>
+
   <resource key="header_projects">Projects</resource>
-  <resource key="header_locations">Locations</resource>
-  <resource key="project_add">Add new project</resource>
+  <resource key="project_add">Add</resource>
   <resource key="project_manage">Show/Hide Projects</resource>
-  <resource key="project_list">All Projects</resource>
-  <resource key="location_add">Add new Location</resource>
-  <resource key="location_boundary_add">Add Boundary</resource>
-  <resource key="location_upload_list">Upload Location List</resource>
-  <resource key="location_manage">Show/Hide Locations</resource>
-  <resource key="boundary_manage">Show/Hide Boundaries</resource>
-  <resource key="item_locX">A location</resource>
+  <resource key="project_list">List All</resource>
+
+  <resource key="header_locations">Locations</resource>
+  <resource key="location_list">List All</resource>
+  <resource key="location_add">Add</resource>
+  <resource key="location_upload_list">Upload List</resource>
+  
+  <resource key="header_technician">Technicians</resource>
+  <resource key="technician_add">Add</resource>
+  <resource key="technician_list">List All</resource>
+  
+  <resource key="header_map">Map</resource>
+  <resource key="map_project_all">All Projects</resource>
+  <resource key="map_project">Selected Project</resource>
+  <resource key="map_project_locations">All Project's Locations</resource>
+  <resource key="map_task_locations">Task Locations</resource>
+  
+  <resource key="header_task">Tasks</resource>
+  <resource key="task_add">Add</resource>
+  <resource key="task_list">List All</resource>
+  
+  <resource key="header_analyte">Analytes</resource>
+  <resource key="analyte_upload_list">Upload List</resource>
+  <resource key="analyte_list">List All</resource>
+  
+  <resource key="header_field_forms">Field Forms</resource>
+  <resource key="field_form_add">Add</resource>
+  <resource key="field_form_all">List All</resource>
+  
+  <resource key="header_service">Service Providers</resource>
+  <resource key="service_add">Add</resource>
+  <resource key="service_list">List All</resource>
+  
+  <resource key="header_user_results">Results</resource>
+  
+  
+  
 </resources>

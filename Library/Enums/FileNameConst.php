@@ -20,7 +20,7 @@ abstract class FileNameConst {
    */
 
   const ControllerSuffix = "Controller";
-  const ClassSuffix = ".php";
+  const Extension = ".php";
   /**
    * File name prefixes
    */
@@ -33,7 +33,7 @@ abstract class FileNameConst {
   const FooterTemplate = "/Templates/footer.php";
   const MenuTopTemplate = "/Templates/menus/top.php";
   const MenuLeftTemplate = "/Templates/menus/left.php";
-  const HeaderAppTemplate = "/Templates/genericSideMenu.php";
+  const BreadcrumbTemplate = "/Templates/breadcrumb.php";
 }
 
 ?>

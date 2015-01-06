@@ -11,17 +11,18 @@ class Router extends ApplicationComponent {
   public $isWsCall = false;
   public $routesXmlPath;
   protected $routes = array();
-  protected $lastModified = 0;//of the routes xml file
+  protected $lastModified = 0; //of the routes xml file
   protected $selectedRoute;
+  private $routesXml;
 
   const NO_ROUTE = 1;
 
-  
   // SET AND GET $selectedRoute
   // @type \Library\ROute
   public function setSelectedRoute($route) {
     $this->selectedRoute = $route;
   }
+
   public function selectedRoute() {
     return $this->selectedRoute;
   }
@@ -30,6 +31,7 @@ class Router extends ApplicationComponent {
   public function setLastModified($time_updated) {
     $this->lastModified = $time_updated;
   }
+
   public function lastModified() {
     return $this->lastModified;
   }
@@ -38,6 +40,7 @@ class Router extends ApplicationComponent {
   public function setRoutesXmlPath($path) {
     $this->routesXmlPath = $path;
   }
+
   public function routesXmlPath() {
     return $this->routesXmlPath;
   }
@@ -46,6 +49,7 @@ class Router extends ApplicationComponent {
   public function setRoutes($routes) {
     $this->routes = $routes;
   }
+
   public function routes() {
     return $this->routes;
   }
@@ -70,7 +74,7 @@ class Router extends ApplicationComponent {
       }
     }
 
-    throw new \RuntimeException('Aucune route ne correspond à l\'URL', self::NO_ROUTE);
+    throw new \RuntimeException('No route match for URL:' . $url, self::NO_ROUTE);
   }
 
   private function createListOfVars($varsValues, $varsNames, $listVars) {
@@ -89,9 +93,9 @@ class Router extends ApplicationComponent {
     $xml = new \DOMDocument;
     $xml->load($this->routesXmlPath);
 
-    $routes = $xml->getElementsByTagName('route');
+    $this->routesXml = $xml->getElementsByTagName('route');
     // On parcourt les routes du fichier XML.
-    foreach ($routes as $route) {
+    foreach ($this->routesXml as $route) {
       $vars = array();
 
       // On regarde si des variables sont présentes dans l'URL.
@@ -107,11 +111,12 @@ class Router extends ApplicationComponent {
       $route_config = array(
           "route_xml" => $route,
           "vars" => $vars,
-          "js_head" => $this->_GetJsFiles($route, "head", $path_to_add),
-          "js_html" => $this->_GetJsFiles($route, "html", $path_to_add),
-          "css" => $this->_LoadCssFiles($route, $path_to_add),
+          "js_head" => $this->_GetJsFiles($route, "head", __BASEURL__),
+          "js_html" => $this->_GetJsFiles($route, "html", __BASEURL__),
+          "css" => $this->_LoadCssFiles($route, __BASEURL__),
           "php_modules" => $this->_LoadPhpModules($route),
-          "relative_path" => $path_to_add
+          "relative_path" => $path_to_add,
+          "resxfile" => $route->getAttribute('resxfile')
       );
       $this->addRoute(new Route($route_config));
     }
@@ -127,10 +132,42 @@ class Router extends ApplicationComponent {
     $scripts = "";
     foreach ($route->getElementsByTagName('js_file') as $script) {
       if ($script->getAttribute('use') === $destination) {
-        $scripts .= '<script type="application/javascript" src="' . $path_to_add . $script->getAttribute('value') . '"></script>';
+          $scripts .= '<script type="application/javascript" src="' . $path_to_add . $script->getAttribute('value') . '"></script>';
+      } else if($script->getAttribute('use') !== "head" && $script->getAttribute('use') !== "html") {
+        //Select js files from parent route
+        $parent_route = $this->getRoute(__BASEURL__ . $script->getAttribute('use'));
+        $scripts .= $this->_GetFilesForSibbling($parent_route, $destination, $path_to_add);
       }
     }
     return $scripts;
+  }
+
+  /**
+   * Get the scripts for a sibbling route
+   * 
+   * Ex: 2 routes have the same scripts, then we use the route properties 
+   * in the routes list to set
+   * the script or css for the sibbling route. 
+   * 
+   * @param type $route \Library\Route
+   * @param type $destination
+   * @param type $path_to_add
+   * @return type
+   */
+  private function _GetFilesForSibbling($route, $destination, $path_to_add) {
+    $files = "";
+    switch ($destination) {
+      case "head":
+        $files = $route->headJsScripts();
+        break;
+      case "html":
+        $files = $route->htmlJsScripts();
+        break;
+      default://css
+        $files = $route->cssFiles();
+        break;
+    }
+    return $files;
   }
 
   /**
@@ -141,7 +178,12 @@ class Router extends ApplicationComponent {
   private function _LoadCssFiles($route, $path_to_add) {
     $css_files = "";
     foreach ($route->getElementsByTagName('css_file') as $css_file) {
-      $css_files .= '<link rel="stylesheet" type="text/css" href="' . $path_to_add . $css_file->getAttribute('value') . '"/>';
+      if ($css_file->getAttribute("use") !== "") {
+        $parent_route = $this->getRoute(__BASEURL__ . $css_file->getAttribute('use'));
+        $css_files .= $this->_GetFilesForSibbling($parent_route, "css", $path_to_add);
+      } else {
+        $css_files .= '<link rel="stylesheet" type="text/css" href="' . $path_to_add . $css_file->getAttribute('value') . '"/>';
+      }
     }
     return $css_files;
   }
@@ -168,7 +210,7 @@ class Router extends ApplicationComponent {
         $modules[$module->getAttribute('key')] =
                 __ROOT__ . \Library\Enums\FolderName::AppsFolderName
                 . $this->app->name()
-                . rtrim(\Library\Enums\FolderName::ViewsFolderName, '/') . $route->getAttibute('module') . \Library\Enums\FolderName::ModulesFolderName
+                . \Library\Enums\FolderName::ViewsFolderName . $route->getAttribute('module') . \Library\Enums\FolderName::ModulesFolderName
                 . $module->getAttribute('file_name');
       }
     }
@@ -194,7 +236,7 @@ class Router extends ApplicationComponent {
   public function hasRoutesXmlChanged(\Library\User $user) {
     if (file_exists($this->routesXmlPath)) {
       $currentLastModifiedTime = filemtime($this->routesXmlPath);
-      
+
       if (!$user->keyExistInSession(Enums\SessionKeys::SessionRoutesXmlLastModified)) {
         $user->setAttribute(Enums\SessionKeys::SessionRoutesXmlLastModified, $currentLastModifiedTime);
         return FALSE;

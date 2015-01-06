@@ -2,7 +2,7 @@
 
 <fieldset class="company_form">
   <legend><?php echo $resx["company_legend"]; ?></legend>
-  <ol class="add-new-p">
+  <ol class="add-new-item">
     <li>
       <label><?php echo $resx["company_name"]; ?></label>
       <input name="company_name" type="text" />

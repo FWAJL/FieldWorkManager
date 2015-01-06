@@ -7,11 +7,13 @@ class Managers {
 
     protected $api = null;
     protected $dao = null;
+    protected $dal_folder_path = "";
     protected $managers = array();
 
-    public function __construct($api, $dao) {
+    public function __construct($api, $app) {
         $this->api = $api;
-        $this->dao = $dao;
+        $this->dao = PDOFactory::getMysqlConnexion($app);
+        $this->dal_folder_path = $app->config()->get("DalFolderPath");
     }
 
     public function getManagerOf($module) {
@@ -21,7 +23,7 @@ class Managers {
         }
 
         if (!isset($this->managers[$module])) {
-            $manager = '\\Library\DAL\\Models\\' . $module . 'Manager_' . $this->api;
+            $manager = $this->dal_folder_path . $module . 'Dal';// . $this->api;
             $this->managers[$module] = new $manager($this->dao);
         }
 

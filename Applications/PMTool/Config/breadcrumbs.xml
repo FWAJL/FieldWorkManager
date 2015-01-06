@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <breadcrumb href="project">
+    <levels>
+      <level resourcekey="project_header" />
+    </levels>
+  </breadcrumb>
+  <breadcrumb href="project/listAll">
+    <levels>
+      <level resourcekey="project_header" />
+      <level resourcekey="project_listAll" />
+    </levels>
+  </breadcrumb>
+  <breadcrumb href="project/showForm">
+    <levels>
+      <level resourcekey="project_header" />
+      <level resourcekey="project_add" />      
+    </levels>
+  </breadcrumb>
+</root>

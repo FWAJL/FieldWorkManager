@@ -1,0 +1,38 @@
+To store the projects's information, we use associative arrays
+
+The structure is the following and you need to access the array using a key
+
+  array (
+    "projectId_X" => array(
+      "project_obj" => Object( project ),
+      "facility_obj => Object( facility ),
+      "client_obj" => Object( client )
+      "locations" => array( of Location objects ),
+      "tasks" => array( of Task objects ),
+      "technicians" => array( of Technician objects )
+    ),
+    "projectId_Y" => array(
+      "project" => Object( Project ),
+      "facility => Object( Facility ),
+      "client" => Object( Client )
+      "locations" => array( of Location objects ),
+      "tasks" => array( of Task id ),
+      "technicians" => array( of Technician id )
+    )
+  )
+
+array (
+  "ProjectManager_X" => array(
+    "project_ids" => array ( of Project id ),
+    "technicians" => array ( of Technician objects )
+    "analytes" => array ( of Analyte objects )
+    )
+)
+
+array (
+  "Task_X" => array(
+    "task_info" => Object ( Task_info ),
+    "task_analytes" => array ( of Analyte id )
+    "forms" => array ( of Form object or id??? )
+    )
+)

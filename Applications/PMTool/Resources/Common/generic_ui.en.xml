@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <resource key="btn_to_inactive_list">De-activate</resource> 
+  <resource key="btn_to_active_list">Activate</resource> 
+</resources>

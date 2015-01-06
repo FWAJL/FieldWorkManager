@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <resource key="page_title">Your tasks - Field Work Manager</resource>
+  
+  <resource key="task_h1">Welcome to Field Work Manager, for Project managers</resource>
+  <resource key="task_welcome_message">Please, select a project to view the task(s) details</resource>
+  <resource key="btn_location_select_project">Select one now</resource>
+  
+  <!-- Errors -->
+  
+  <resource key="message_error_add">Error inserting the task.</resource>
+  <resource key="message_success_add">The task has been inserted.</resource>
+  <resource key="message_error_getlist">Error reading the tasks.</resource>
+  <resource key="message_success_getlist">The tasks have been read.</resource>
+  <resource key="message_error_getItem">This task doesn't exist or is not one of your task. You will be redirected to your list of tasks in 3 seconds.</resource>
+  <resource key="message_success_getItem">The task has been read.</resource>
+  <resource key="message_error_edit">Error editing the task.</resource>
+  <resource key="message_success_edit">The task has been edited.</resource>
+  <resource key="message_error_delete">Error deleting the task.</resource>
+  <resource key="message_success_delete">The task has been deleted.</resource>
+  <resource key="message_error_updateItems">Error editing the tasks.</resource>
+  <resource key="message_success_updateItems">The tasks have been edited</resource>
+
+  <!-- Buttons -->
+
+  <resource key="task_button_add">Add this task</resource>
+  <resource key="task_button_edit">Edit this task</resource>
+  <resource key="task_button_delete">Delete this task</resource> 
+  <resource key="task_button_copy">Copy this task</resource>  
+  <resource key="btn_to_inactive_list">De-activate Task</resource> 
+  <resource key="btn_to_active_list">Activate Task</resource> 
+  <resource key="btn_to_lead_list">Assign as a Lead Technician</resource>  
+  
+  <!-- Labels -->
+
+  <resource key="task_legend_add">Add new task</resource>
+  <resource key="task_legend_edit">Edit this task</resource>
+  <resource key="task_list_all_header">Tasks</resource>
+  <resource key="h3_tasks_active">Active tasks</resource>
+  <resource key="h3_tasks_inactive">Inactive tasks</resource> 
+  <resource key="task_active">Active</resource>  
+    
+  <!--  Task Info Form-->
+  
+  <resource key="task_name">Task Name</resource>
+  <resource key="task_instructions">Instructions</resource>
+  <resource key="task_deadline">Deadline</resource>
+  <resource key="triggers">Triggers</resource>
+  <resource key="task_trigger_cal">Recurring</resource>
+  <resource key="task_trigger_pm">Manual</resource>
+  <resource key="trigger_pm_note">User must manually initiate an event, even if there are other triggers.</resource>
+  <resource key="trigger_ext_note">Example: Rain event for storm water sampling.</resource>
+  <resource key="task_trigger_ext">External</resource>
+  <resource key="resource_needs">Choose Resource Needs</resource>
+  
+  <!--  Task Technicians Form--> 
+
+  <resource key="selected_task_technicians">Technicians assigned to Task</resource>
+  <resource key="not_selected_task_technicians">All available technicians</resource>  
+
+  <!--  Task Inspections Form--> 
+
+  <!--  <resource key="">TBD</resource>-->
+
+  <!--  Field Analytes Form--> 
+
+  <!--  <resource key="">TBD</resource>-->
+
+  <!--  Field Sample Matrix Form--> 
+
+  <!--  <resource key="">TBD</resource>-->
+
+  <!--  Chain of Custody Form--> 
+
+  <resource key="po_number">Purchase Order Number</resource>
+  <resource key="lab_instructions">Instructions</resource>
+  <resource key="lab_sample_type">Sample Type</resource>
+  <resource key="lab_sample_tat">Turnaround Time</resource>
+  <resource key="project_id_num">Project ID Number</resource>
+  <resource key="results_to_name">Name</resource>
+  <resource key="results_to_company">Company</resource>
+  <resource key="results_to_address">Address</resource>
+  <resource key="results_to_phone">Phone</resource>
+  <resource key="results_to_email">email</resource>
+  
+</resources>

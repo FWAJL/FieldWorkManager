@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <resource key="project_header">My projects</resource>
+  <resource key="project_listAll">List All</resource>
+  <resource key="project_add">Project's edition</resource>
+</resources>

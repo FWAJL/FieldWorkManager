@@ -3,7 +3,7 @@
 /**
  *
  * @package		Basic MVC framework test
- * @author		FWA DEV Team
+ * @author		FWM DEV Team
  * @copyright	Copyright (c) 2014
  * @license		
  * @link		
@@ -18,7 +18,7 @@
  * @package		Application/PMTool
  * @subpackage	Controllers
  * @category	ProjectController
- * @author		FWA Dev Team
+ * @author		FWM DEV Team
  * @link		
  */
 
@@ -37,23 +37,52 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeIndex(\Library\HttpRequest $rq) {
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->page->addVar('pm', $pm[0]);
+    //Check session if pm has projects
+    $hasProjects = count(\Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->app()->user())) > 0;
+    if ($hasProjects) {
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
+    } else {
+      $this->executeGetList($rq, true); //Get and store projects to session (even if there is none)
+      if (count(\Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->app()->user())) > 0) {
+        $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
+      } else {
+        $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsShowForm . "?mode=add&test=true");
+      }
+    }
+  }
 
-    $resourceFileKey = "project";
+  /**
+   * Method that loads the add or edit view for controller
+   * 
+   * @param \Library\HttpRequest $rq: the request
+   */
+  public function executeShowForm(\Library\HttpRequest $rq) {
+    $this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+  }
 
-    $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
-    $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
-    $this->page->addVar('logout_url', "logout");
+  /**
+   * Method that loads the list all project view for controller
+   * 
+   * @param \Library\HttpRequest $rq: the request
+   */
+  public function executeListAll(\Library\HttpRequest $rq) {
+    
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+      
+      $data = array(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\CommonHelper::GetListObjectsInSessionByKey($this->app()->user(), \Library\Enums\SessionKeys::ProjectObject),
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList($this->resxfile)
+    );
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 
-    //Load Modules for view
-    $this->page->addVar('form_modules', $this->app()->router()->selectedRoute()->phpModules());
-    $this->page->addVar('project_list_modules', array()); //$this->app()->router()->selectedRoute()->phpModules());
-    //Show and hide the sections on page
-    $this->_ShowOrHideSectionsOnPage($this, $pm);
-
-    //Get list of projects and store in session
-    $this->_GetAndStoreProjectsInSession($this, $rq);
+    $modules = $this->app()->router()->selectedRoute()->phpModules();
+    $this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
+    $this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
   }
 
   /**
@@ -64,30 +93,27 @@ class ProjectController extends \Library\BaseController {
    */
   public function executeAdd(\Library\HttpRequest $rq) {
     // Init result
-    $result = $this->ManageResponseWS();
-    //Process data received from Post
-    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
+    $result = $this->InitResponseWS();
 
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $data_sent["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
-    $project = $this->PrepareUserObject($data_sent);
+    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
+    $project = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Project());
     $result["dataIn"] = $project;
-    /* Add to DB */
+
     //Load interface to query the database
-    $manager = $this->managers->getManagerOf('Project');
-    $result["dataOut"] = $manager->add($project);
-
-
+    $manager = $this->managers->getManagerOf($this->module);
+    $result["dataId"] = $manager->add($project);
+    $project->setProject_id($result["dataId"]);
     //Clear the project and facility list from session for the connect PM
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
+    \Applications\PMTool\Helpers\ProjectHelper::AddSessionProject($this->app()->user(), $project);
 
-    //Process DB result and send result
-    if (intval($result["dataOut"]) > 0)
-      $result = $this->UpdateResponseWS($result, array("resx_file" => "project", "resx_key" => "_insert", "step" => "success"));
-    //return the JSON data
-    echo \Library\HttpResponse::encodeJson($result);
+    $this->SendResponseWS(
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+      "resx_key" => $this->action(),
+      "step" => (intval($result["dataId"])) > 0 ? "success" : "error"
+    ));
   }
 
   /**
@@ -98,29 +124,27 @@ class ProjectController extends \Library\BaseController {
    */
   public function executeEdit(\Library\HttpRequest $rq) {
     // Init result
-    $result = $this->ManageResponseWS();
-    //Process data received from Post
-    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
+    $result = $this->InitResponseWS();
 
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $data_sent["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
-    $project = $this->PrepareUserObject($data_sent);
+    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
+    $project = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Project());
     $result["data"] = $project;
-    /* Add to DB */
-    //Load interface to query the database
-    $manager = $this->managers->getManagerOf('Project');
-    $result_insert = $manager->edit($project);
+    $result["dataId"] = $project->project_id();
 
-    //Clear the project and facility list from session for the connect PM
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
+    $manager = $this->managers->getManagerOf($this->module());
+    $result_insert = $manager->edit($project, "project_id");
 
-    //Process DB result and send result
-    if ($result_insert)
-      $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_edit", "step" => "success"));
-    //return the JSON data
-    echo \Library\HttpResponse::encodeJson($result);
+    $this->executeGetItem($rq, $project);
+    //\Applications\PMTool\Helpers\ProjectHelper::UpdateUserSessionProject($this->app()->user(), $project);
+
+    $this->SendResponseWS(
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+      "resx_key" => $this->action(),
+      "step" => $result_insert ? "success" : "error"
+    ));
   }
 
   /**
@@ -131,171 +155,161 @@ class ProjectController extends \Library\BaseController {
    */
   public function executeDelete(\Library\HttpRequest $rq) {
     // Init result
-    $result = $this->ManageResponseWS();
+    $result = $this->InitResponseWS();
+    $db_result = FALSE;
+    $project_id = intval($this->dataPost["project_id"]);
 
-    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
-
+    //Check if the project to be deleted if the Project manager's
+    $project_selected = \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->app()->user(), $project_id);
     //Load interface to query the database
-    $manager = $this->managers->getManagerOf('Project');
-    $result_insert = $manager->delete($data_sent["project_id"]);
+    if ($project_selected !== NULL) {
+      $manager = $this->managers->getManagerOf($this->module());
+      $db_result = $manager->delete($project_selected, "project_id");
+      \Applications\PMTool\Helpers\ProjectHelper::UnsetUserSessionProject($this->app()->user(), $project_id);
+    }
 
-    //Clear the project and facility list from session for the connect PM
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjects);
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
-
-    $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_delete", "step" => "success"));
-    //return the JSON data
-    echo \Library\HttpResponse::encodeJson($result);
+    $this->SendResponseWS(
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+      "resx_key" => $this->action(),
+      "step" => $db_result !== FALSE ? "success" : "error"
+    ));
   }
 
   /**
-   * Method that adds a project and returns the result of operation
+   * Method that gets a list of projects and returns the result of operation with the list
    * 
    * @param \Library\HttpRequest $rq
    * @return JSON
    */
-  public function executeGetList(\Library\HttpRequest $rq, $isNotWs = FALSE) {
+  public function executeGetList(\Library\HttpRequest $rq, $isNotAjaxCall = FALSE) {
     // Init result
-    $result = $this->ManageResponseWS();
+    $result = $this->InitResponseWS();
 
     //Init PDO
     $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $data_sent["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
-    $project = $this->PrepareUserObject($data_sent);
+    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
+    $project = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Project());
     $result["data"] = $project;
-    /* Get list from DB */
+
     //Load interface to query the database for projects
-    $manager = $this->managers->getManagerOf('Project');
-    $list['projects'] = $manager->selectMany($project);
+    $manager = $this->managers->getManagerOf($this->module);
+    $lists[\Library\Enums\SessionKeys::UserProjects] = $manager->selectMany($project, "pm_id");
 
     //Load interface to query the database for facilities
     $manager = $this->managers->getManagerOf('Facility');
-    $list['facilities'] = $manager->selectMany($project);
+    $lists[\Library\Enums\SessionKeys::UserProjectFacilityList] = $manager->selectMany($project, "pm_id");
 
-    //Process DB result and send result
-    $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getlist", "step" => "success"));
-    $result["lists"] = $list;
-    //return the JSON data
-    if ($isNotWs) {
-      return $list;
-    } else {
-      echo \Library\HttpResponse::encodeJson($result);
+    //Load interface to query the database for clients
+    $manager = $this->managers->getManagerOf('Client');
+    $lists[\Library\Enums\SessionKeys::UserProjectClientList] = $manager->selectMany($project, "pm_id");
+
+    $ProjectsSession = \Applications\PMTool\Helpers\ProjectHelper::StoreSessionProjects($this->app()->user(), $lists);
+
+    $result["lists"] = $lists;
+    if (!$isNotAjaxCall) {
+      $step_result = $ProjectsSession !== NULL ? "success" : "error";
+      $this->SendResponseWS(
+          $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+        "resx_key" => $this->action(),
+        "step" => $step_result
+      ));
     }
   }
 
   /**
-   * Method that adds a project and returns the result of operation
+   * Method that get a project and returns the result of operation
    * 
    * @param \Library\HttpRequest $rq
    * @return JSON
    */
-  public function executeGetItem(\Library\HttpRequest $rq) {
+  public function executeGetItem(\Library\HttpRequest $rq, \Applications\PMTool\Models\Dao\Project $project = NULL) {
     // Init result
-    $result = $this->ManageResponseWS();
+    $result = $this->InitResponseWS();
+    $project_id = intval($this->dataPost["project_id"]);
 
-    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
-
-    $project_selected = $this->_GetProjectFromSession($data_sent);
-
-    $facility = array();
-    $facility_selected = $this->_GetFacilityProjectFromSession($data_sent);
-
-    $result = $this->ManageResponseWS(array("resx_file" => "project", "resx_key" => "_getItem", "step" => "success"));
-    $result["project"] = $project_selected;
-    $result["facility"] = $facility_selected;
-    //return the JSON data
-    echo \Library\HttpResponse::encodeJson($result);
-  }
-
-  private function _GetProjectFromSession($data_sent) {
-    $projects = array();
-    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects)) {
-      $projects = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
+    $project_selected = NULL;
+    if ($project !== NULL) {
+      $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $project->project_id());
+      $project_selected = $sessionProject[\Library\Enums\SessionKeys::ProjectObject] = $project;
     } else {
-      return NULL;
+      $project_selected = \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->app()->user(), $project_id);
+      $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $project_selected->project_id());
     }
 
-    foreach ($projects as $project) {
-      if ($project->project_id() === $data_sent["project_id"]) {
-        return $project;
-      }
-    }
-    return NULL;
-  }
+    $facility_selected = $sessionProject[\Library\Enums\SessionKeys::FacilityObject];
+    $client_selected = $sessionProject[\Library\Enums\SessionKeys::ClientObject];
 
-  private function _GetFacilityProjectFromSession($data_sent) {
-    $facilities = array();
-    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjectFacilityList)) {
-      $facilities = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList);
+    $result["sessionProject"] = $sessionProject;
+    \Applications\PMTool\Helpers\ProjectHelper::UpdateUserSessionProject($this->app()->user(), $sessionProject);
+
+    if ($project == NULL) {
+      $this->SendResponseWS(
+          $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+        "resx_key" => $this->action(),
+        "step" => ($project_selected !== NULL && $facility_selected !== NULL && $client_selected !== NULL) ? "success" : "error"
+      ));
     } else {
-      return NULL;
+      return $sessionProject;
     }
-
-    foreach ($facilities as $facility) {
-      if ($facility->project_id() === $data_sent["project_id"]) {
-        return $facility;
-      }
-    }
-    return NULL;
   }
 
   /**
-   * Check if the current pm has projects to decide where to send him: stay on the project list or asking him to add a project
+   * Method that get a project and returns the result of operation
    * 
-   * @param \Library\BO\Project_manager $pm
-   * @return boolean
+   * @param \Library\HttpRequest $rq
+   * @return JSON
    */
-  private function _CheckIfPmHasProjects(\Library\BO\Project_manager $pm) {
-    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects)) {
-      $projects = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserProjects);
-      return count($projects) > 0 ? TRUE : FALSE;
+  public function executeUpdateItems(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS(); // Init result
+
+    $rows_affected = 0;
+    //Get the project objects from ids received
+    $project_ids = str_getcsv($this->dataPost["project_ids"], ',');
+    $projects = \Applications\PMTool\Helpers\CommonHelper::GetListObjectsInSessionByKey($this->app()->user(), \Library\Enums\SessionKeys::ProjectObject);
+    $matchedElements = $this->FindObjectsFromIds(
+        array(
+          "filter" => "project_id",
+          "ids" => $project_ids,
+          "objects" => $projects)
+    );
+
+    foreach ($matchedElements as $project) {
+      $project->setProject_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
+      $manager = $this->managers->getManagerOf($this->module);
+      $rows_affected += $manager->edit($project, "project_id") ? 1 : 0;
     }
-    $manager = $this->managers->getManagerOf('Project');
-    $count = $manager->countById($pm->pm_id());
-    return $count > 0 ? TRUE : FALSE;
+
+    $this->SendResponseWS(
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+      "resx_key" => $this->action(),
+      "step" => ($rows_affected === count($project_ids)) ? "success" : "error"
+    ));
   }
 
   /**
-   * Prepare the Project Object before calling the DB.
+   * Method that get a project and returns the result of operation
    * 
-   * @param array $data_sent from POST request
-   * @return \Library\BO\Project_manager
+   * @param \Library\HttpRequest $rq
+   * @return JSON
    */
-  private function PrepareUserObject($data_sent) {
-    $project = new \Library\BO\Project();
-    $project->setPm_id($data_sent["pm_id"]);
-    $project->setProject_id(!array_key_exists('project_id', $data_sent) ? NULL : $data_sent["project_id"]);
-    $project->setProject_name(!array_key_exists('project_name', $data_sent) ? NULL : $data_sent["project_name"]);
-    $project->setProject_number(!array_key_exists('project_num', $data_sent) ? "" : $data_sent["project_num"]);
-    $project->setProject_desc(!array_key_exists('project_desc', $data_sent) ? "" : $data_sent["project_desc"]);
-    $project->setActive(!array_key_exists('project_active_flag', $data_sent) ? 0 : $data_sent["project_active_flag"]);
-    $project->setVisible(!array_key_exists('project_visible_flag', $data_sent) ? 0 : $data_sent["project_visible_flag"]);
+  public function executeSetCurrentProject(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS(); // Init result
 
-    return $project;
-  }
+    $project = \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->user(), $this->dataPost["project_id"]);
+    $result["dataId"] = $project->project_id();
 
-  private function _ShowOrHideSectionsOnPage($currentController, $pm) {
-    //e.g. decide whether to see the "Add project" or the "View all projects"
-    if ($this->_CheckIfPmHasProjects($pm[0])) {
-      $currentController->page->addVar('display_project_welcome', 'show');
-      $currentController->page->addVar('display_add_project', 'hide');
-      $currentController->page->addVar('active_project_list', 'active');
-      $currentController->page->addVar('active_add_project', '');
-    } else {
-      $currentController->page->addVar('display_project_welcome', 'hide');
-      $currentController->page->addVar('display_add_project', 'show');
-      $currentController->page->addVar('active_project_list', '');
-      $currentController->page->addVar('active_add_project', 'active');
-    }
-  }
-
-  private function _GetAndStoreProjectsInSession($ctrl, $rq) {
-    if (!$ctrl->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjects) &&
-            !$ctrl->app()->user->keyExistInSession(\Library\Enums\SessionKeys::UserProjectFacilityList)) {
-      $lists = $ctrl->executeGetList($rq, TRUE);
-      $ctrl->app()->user->setAttribute(\Library\Enums\SessionKeys::UserProjects, $lists["projects"]);
-      $ctrl->app()->user->setAttribute(\Library\Enums\SessionKeys::UserProjectFacilityList, $lists["facilities"]);
-    }
+    \Applications\PMTool\Helpers\TaskHelper::UnsetCurrentSessionTask($this->user());
+    
+    $this->SendResponseWS(
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+      "resx_key" => $this->action(),
+      "step" => ($project != NULL) ? "success" : "error"
+    ));
   }
 
 }

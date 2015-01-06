@@ -13,7 +13,8 @@ try {
     $app->run();
   } else {//Otherwise, redirect to login page :)
     header('Location: ' . __BASEURL__ . "login");
+    die();
   }
 } catch (Exception $exc) {
-  echo '<!--' . $exc->getMessage() . '-->';
+  echo "<!--" . $exc->getMessage() . "\n\r" . $exc->getTraceAsString() . "-->";
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <resource key="page_title">Your Locations - Field Work Manager</resource>
+  
+  <resource key="location_h1">Welcome to Field Work Manager, for Location managers</resource>
+  <resource key="location_welcome_message">Please, select a project to view or add and edit its locations.</resource>
+  
+  <resource key="message_error_add">Error inserting the location.</resource>
+  <resource key="message_success_add">The location has been inserted.</resource>
+  <resource key="message_error_getlist">Error reading the locations.</resource>
+  <resource key="message_success_getlist">The locations have been read.</resource>
+  <resource key="message_error_getItem">Error reading the location.</resource>
+  <resource key="message_success_getItem">The location has been read.</resource>
+  <resource key="message_error_edit">Error editing the location.</resource>
+  <resource key="message_success_edit">The location has been edited.</resource>
+  <resource key="message_error_delete">Error deleting the location.</resource>
+  <resource key="message_success_delete">The location has been deleted.</resource>
+  <resource key="message_error_listAll">Error listing all locaitons.</resource>
+  <resource key="message_success_listAll">The locations have been read.</resource>
+  <resource key="message_error_updateItems">Error editing the locations.</resource>
+  <resource key="message_success_updateItems">The locations have been edited</resource>
+  
+  <resource key="location_legend_add">Add new location</resource>
+  <resource key="location_legend_edit">Edit this location</resource>
+  <resource key="location_name">Name</resource>
+  <resource key="location_num">Number</resource>
+  <resource key="location_address">Address</resource>
+  <resource key="location_document">Photo</resource>
+  <resource key="location_category">Category</resource>
+  <resource key="location_lat">Latitude</resource>
+  <resource key="location_long">Longitude</resource>
+  <resource key="location_desc">Description</resource>
+  <resource key="location_active">Active</resource>
+  <resource key="location_active_many">Set list of locations as Active</resource>
+  <resource key="location_visible">Visible</resource>
+  <resource key="location_button_add">Add this location</resource>
+  <resource key="location_button_edit">Edit this location</resource>
+  <resource key="location_button_delete">Delete this location</resource>
+  <resource key="location_list_all_header">Locations</resource>
+  <resource key="h3_locations_active">Active locations</resource>
+  <resource key="h3_upload_list">Enter or paste a list of Locations here</resource>
+  <resource key="h3_locations_inactive">Inactive locations</resource> 
+  <resource key="h3_location_names_form">Add location names</resource> 
+  <resource key="h3_location_add_buttons">Add location</resource>
+  <resource key="location_info_tab">Location Info</resource>
+  <resource key="gmaps_info_tab">Map</resource>
+  
+  
+  <resource key="btn_to_inactive_list">De-activate</resource> 
+  <resource key="btn_to_active_list">Activate</resource> 
+  <resource key="btn_add_location_names">Add locations</resource> 
+  <resource key="btn_add_location_gmap">Using the Map</resource> 
+  <resource key="btn_add_location_manual">With the standard form</resource> 
+  <resource key="btn_location_select_project">See list of project</resource> 
+
+</resources>

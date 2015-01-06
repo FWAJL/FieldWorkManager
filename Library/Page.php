@@ -23,6 +23,7 @@ class Page extends ApplicationComponent {
     }
     $user = $this->app->user();
     
+    //Get resources for the left menu
     $this->addVar("resx_menu_left", $this->app->i8n->getCommonResourceArray("menu_left"));
 
     $int = extract($this->vars);
@@ -41,12 +42,9 @@ class Page extends ApplicationComponent {
       if (!$this->app->router->isWsCall) {
         require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::HeaderTemplate;
         require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::MenuTopTemplate;
+//        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::BreadcrumbTemplate;
         require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::MenuLeftTemplate;
-      }
-
-      require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
-
-      if (!$this->app->router->isWsCall) {
+        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
         require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::FooterTemplate;
       }
     } else {
@@ -55,11 +53,7 @@ class Page extends ApplicationComponent {
        */
       if (!$this->app->router->isWsCall) {
         require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::HeaderTemplate;
-      }
-
-      require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
-
-      if (!$this->app->router->isWsCall) {
+        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
         require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::FooterTemplate;
       }
     }
