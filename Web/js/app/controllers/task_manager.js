@@ -1,46 +1,49 @@
 /**
- * IMPORTANT NOTICE (29-12-14): 
- *   LOOK AT analyte_manager for the new implementation 
+ * IMPORTANT NOTICE (29-12-14):
+ *   LOOK AT analyte_manager for the new implementation
  *   to make AJAX calls to the web services. It is more
  *   efficient and allows to write a lot less code.
- *   
+ *
  * jQuery listeners for the task actions
  */
-$(document).ready(function() {
+$(document).ready(function () {
   $(".btn-warning").hide();
   $.contextMenu({
     selector: '.select_item',
-    callback: function(key, options) {
+    callback: function (key, options) {
       if (key === "edit") {
         task_manager.retrieveTask(options.$trigger);
       } else if (key === "delete") {
         task_manager.delete(parseInt(options.$trigger.attr("data-task-id")));
+      } else if (key === "show") {
+        task_manager.show_on_map(parseInt(options.$trigger.attr("data-task-id")));
       }
     },
     items: {
       "edit": {name: "View Info"},
       "delete": {name: "Delete"},
-      "copy": {name: "Copy"}
+      "copy": {name: "Copy"},
+      "show": {name: "Show on map"}
     }
   });//Manages the context menu
 
   //************************************************//
   // Selection of tasks for de-activation
   var task_ids = "";
-  $("#active-list .select_item, #inactive-list .select_item").click(function() {
+  $("#active-list .select_item, #inactive-list .select_item").click(function () {
     $(this).siblings().removeClass("ui-selected");
     $(this).addClass("ui-selected");
     task_ids = $(this).attr("data-task-id");
     $(".from-" + $(this).parent().attr("id")).show();
   });
-  $(".from-active-list").click(function() {
+  $(".from-active-list").click(function () {
     task_manager.updateTasks("inactive", task_ids);
   });
-  $(".from-inactive-list").click(function() {
+  $(".from-inactive-list").click(function () {
     task_manager.updateTasks("active", task_ids);
   });
 
-  $("#btn_add_task").click(function() {
+  $("#btn_add_task").click(function () {
     var post_data = {};
     post_data["task"] = utils.retrieveInputs("task_form", ["task_name"]);
     if (post_data["task"].task_name !== undefined) {
@@ -48,14 +51,14 @@ $(document).ready(function() {
     }
   });//Add a task
 
-  $("#btn_edit_task").click(function() {
+  $("#btn_edit_task").click(function () {
     var post_data = utils.retrieveInputs("task_form", ["task_name"]);
     if (post_data.task_name !== undefined) {
       task_manager.edit(post_data, "task", "edit");
     }
   });//Edit a task
 
-  $("#btn_delete_task").click(function() {
+  $("#btn_delete_task").click(function () {
     task_manager.delete(parseInt(utils.getQueryVariable("task_id")));
   });//Delete a task
 
@@ -71,20 +74,20 @@ $(document).ready(function() {
   }
 
   var alreadyHovered = false;
-  $(".select_item").hover(function() {
+  $(".select_item").hover(function () {
     if (!alreadyHovered)
       toastr.info("Right-click to edit!");
     alreadyHovered = true;
   });//Show a task tip
 });
 /***********
- * task_manager namespace 
+ * task_manager namespace
  * Responsible to manage tasks.
  */
-(function(task_manager) {
-  task_manager.add = function(data, controller, action) {
+(function (task_manager) {
+  task_manager.add = function (data, controller, action) {
 //      alert(data["task"] + ", " + controller + ", " + action);
-    datacx.post(controller + "/" + action, data["task"]).then(function(reply) {//call AJAX method to call Task/Add WebService
+    datacx.post(controller + "/" + action, data["task"]).then(function (reply) {//call AJAX method to call Task/Add WebService
       if (reply === null || reply.dataOut === undefined || reply.dataOut === null || parseInt(reply.dataOut) === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
@@ -93,8 +96,11 @@ $(document).ready(function() {
       }
     });
   };
-  task_manager.edit = function(task, controller, action) {
-    datacx.post(controller + "/" + action, task).then(function(reply) {//call AJAX method to call Task/Add WebService
+  task_manager.show_on_map = function (id) {
+    utils.redirect("map/showOne?id=" + id + "&task=true");
+  };
+  task_manager.edit = function (task, controller, action) {
+    datacx.post(controller + "/" + action, task).then(function (reply) {//call AJAX method to call Task/Add WebService
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
@@ -103,8 +109,8 @@ $(document).ready(function() {
       }
     });
   };
-  task_manager.getList = function() {
-    datacx.post("task/getlist", null).then(function(reply) {//call AJAX method to call Task/GetList WebService
+  task_manager.getList = function () {
+    datacx.post("task/getlist", null).then(function (reply) {//call AJAX method to call Task/GetList WebService
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
@@ -115,7 +121,7 @@ $(document).ready(function() {
       }
     });
   };
-  task_manager.buildOutputList = function(tasks) {
+  task_manager.buildOutputList = function (tasks) {
     var active_tasks = "";
     var inactive_tasks = "";
     for (i = 0; i < tasks.length; i++) {
@@ -126,17 +132,17 @@ $(document).ready(function() {
       }
     }
     inactive_tasks = utils.isNullOrEmpty(inactive_tasks) ?
-            "<option value=\"\">{empty}</option>" : inactive_tasks;
+      "<option value=\"\">{empty}</option>" : inactive_tasks;
     active_tasks = utils.isNullOrEmpty(active_tasks) ?
-            "<option value=\"\">{empty}</option>" : active_tasks;
+      "<option value=\"\">{empty}</option>" : active_tasks;
     $("#task-data-active, #task-data-inactive").show();
     $("#task-data-active").html(active_tasks);
     $("#task-data-inactive").html(inactive_tasks);
   };
-  task_manager.retrieveTask = function(element) {
+  task_manager.retrieveTask = function (element) {
     utils.redirect("task/showForm?mode=edit&task_id=" + parseInt(element.attr("data-task-id")));
   };
-  task_manager.loadEditForm = function(dataWs) {
+  task_manager.loadEditForm = function (dataWs) {
     utils.clearForm();
     $("input[name=\"project_id\"]").val(parseInt(dataWs.task_info_obj.project_id));
     $("input[name=\"task_id\"]").val(parseInt(dataWs.task_info_obj.task_id));
@@ -149,8 +155,8 @@ $(document).ready(function() {
 //    $("input[name=\"task_trigger_ext\"]").val(dataWs.task_info_obj.task_trigger_ext);
 //    Other forms called here
   };
-  task_manager.delete = function(task_id) {
-    datacx.post("task/delete", {"task_id": task_id}).then(function(reply) {
+  task_manager.delete = function (task_id) {
+    datacx.post("task/delete", {"task_id": task_id}).then(function (reply) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
         return undefined;
@@ -161,9 +167,9 @@ $(document).ready(function() {
     });
   };
 
-  task_manager.getItem = function(task_id) {
+  task_manager.getItem = function (task_id) {
     //get task object from cache (PHP WS)
-    datacx.post("task/getItem", {"task_id": task_id}).then(function(reply) {
+    datacx.post("task/getItem", {"task_id": task_id}).then(function (reply) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
         $(".form_sections").hide();
@@ -176,7 +182,7 @@ $(document).ready(function() {
     });
   };
 
-  task_manager.fillFormWithRandomData = function() {
+  task_manager.fillFormWithRandomData = function () {
 //    utils.clearForm();
 //    var number = Math.floor((Math.random() * 100) + 1);
 //    $("input[name=\"task_name\"]").val("Task " + number);
@@ -184,8 +190,8 @@ $(document).ready(function() {
 //    $("input[name=\"task_instructions\"]").val("TO DO");
   };
 
-  task_manager.updateTasks = function(action, arrayId) {
-    datacx.post("task/updateItems", {"action": action, "task_ids": arrayId}).then(function(reply) {
+  task_manager.updateTasks = function (action, arrayId) {
+    datacx.post("task/updateItems", {"action": action, "task_ids": arrayId}).then(function (reply) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
         return undefined;

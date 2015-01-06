@@ -173,6 +173,76 @@
         </php_modules>
     </route>
     <!-- technician/showForm -->
+
+
+    <!--Map  -->
+    <route url="map/ListAll" module="Map" action="ListAll" resxfile="map" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/gmaps.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="all_projects" file_name="all_projects.php" shared="true" />
+        </php_modules>
+    </route><!--   map/ListAll -->
+
+    <route url="map/currentProject" module="Map" action="currentProject" resxfile="map" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/gmaps.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="current_project" file_name="current_project.php" shared="true" />
+        </php_modules>
+    </route><!--   map/currentProject -->
+
+    <route url="map/currentProjectLocations" module="Map" action="currentProjectLocations" resxfile="map" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/gmaps.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="current_project_locations" file_name="current_project_locations.php" shared="true" />
+        </php_modules>
+    </route><!--   map/currentProjectLocations -->
+
+    <route url="map/taskLocations" module="Map" action="taskLocations" resxfile="map" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/gmaps.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="task_locations" file_name="task_locations.php" shared="true" />
+        </php_modules>
+    </route><!--   map/taskLocations -->
+
+    <route url="map/showOne" module="Map" action="showOne" resxfile="map" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/gmaps.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="show_one" file_name="show_one.php" shared="true" />
+        </php_modules>
+    </route><!--   map/showOne -->
+
+
+
+
+
+
+
+
     
     <!--Tasks  -->
     <route url="task" module="Task" action="index" resxfile="task" type="ui">
