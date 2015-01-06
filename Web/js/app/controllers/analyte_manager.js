@@ -2,21 +2,35 @@
  * jQuery listeners for the analyte_manager actions
  */
 $(document).ready(function() {
-  $(".btn-warning").hide();
+
+  var ajaxParams = {
+    "ajaxUrl": "",
+    "redirectUrl": "analyte/listAll",
+    "action": "",
+    "arrayOfValues": [],
+    "itemId": 0,
+    "isFieldType": true
+  };
+
+  /* Context menu */
   $.contextMenu({
     selector: '.select_item',
     callback: function(key, options) {
       if (key === "edit") {
-        analyte_manager.retrieveFieldAnalyte(options.$trigger);
+        toastr.info("To be implemented.");
       } else if (key === "delete") {
-        analyte_manager.delete(parseInt(options.$trigger.attr("data-fieldanalyte-id")));
+        var isFieldAnalyte = ajaxParams.isFieldType = $(".active").attr("data-form-id") === "field_analyte_info";
+        ajaxParams.itemId = parseInt(options.$trigger.attr("data-fieldanalyte-id"));
+        ajaxParams.ajaxUrl = isFieldAnalyte ? "field_analyte/delete" : "lab_analyte/delete";
+        datacx.delete(ajaxParams);
       }
     },
     items: {
       "edit": {name: "View Info"},
       "delete": {name: "Delete"}
     }
-  });//Manages the context menu
+  });//The context menu
+  
   // Selection in the dual lists
   var selectionParamsFieldAnalytes = {
     "listLeftId": "field-analyte-list",
@@ -33,14 +47,6 @@ $(document).ready(function() {
   };
   utils.dualListSelection(selectionParamsLabAnalytes);
   /* End dual selection */
-
-  var ajaxParams = {
-    "ajaxUrl": "",
-    "redirectUrl": "analyte/listAll",
-    "action": "",
-    "arrayOfValues": [],
-    "isFieldType": true
-  };
 
   $(".from-field-analyte-list, .from-lab-analyte-list").click(function() {
     var isFieldAnalyte = ajaxParams.isFieldType = $(".active").attr("data-form-id") === "field_analyte_info";
