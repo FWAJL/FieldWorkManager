@@ -50,19 +50,18 @@ class FieldAnalyteController extends \Library\BaseController {
   public function executeDelete(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
-    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     $db_result = FALSE;
-    $location_id = intval($this->dataPost["location_id"]);
+    $analyte_id = intval($this->dataPost["itemId"]);
+    
+    $analyte = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($analyte_id, "field_analyte_id", $pm, \Library\Enums\SessionKeys::PmFieldAnalytes);
 
-    //Check if the location to be deleted if the Location manager's
-    $location_selected = $this->_GetLocationFromSession($location_id);
-    //Load interface to query the database
-    if ($location_selected["object"] !== NULL) {
+    if ($analyte["object"] !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
-      $db_result = $manager->delete($location_selected["object"], "location_id");
+      $db_result = $manager->delete($analyte["object"], "field_analyte_id");
       if ($db_result) {
-        unset($sessionProject[\Library\Enums\SessionKeys::ProjectLocations][$location_selected["key"]]);
-        \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+        unset($pm[\Library\Enums\SessionKeys::PmFieldAnalytes][$analyte["key"]]);
+        \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->user(), $pm);
       }
     }
 

@@ -50,13 +50,13 @@
   border-bottom:1px solid #999;
 }
 
-.select_item {
+.ui-widget-content {
   padding: 5px;
   margin-bottom: 1px;
   border-bottom: 1px solid #999;
 }
 
-.select_item:hover,.select_item:focus {
+.select_item:hover,.select_item:focus, ui-widget-content:focus, ui-widget-content:hover{
   border-right: solid 4px #F39814; 
   background-color: #ffd;
   padding: 5px;

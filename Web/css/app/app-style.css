@@ -3,6 +3,7 @@ body, html, .sidebar {height: 100%}
 ol, ul {  margin-bottom: 0; }
 .btn{margin-bottom: 5px;}
 .high-textarea {height: 200px}
+.btn-warning { display: none; }
 /* END GENRAL */
 
 /* LOGIN */
