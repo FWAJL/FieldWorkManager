@@ -13,15 +13,11 @@
  <fieldset class="location_form form" id="upload_locations_form">
         <div class="location-names">
             <textarea  class="list-panel upload_list" name="location_names" type="text"></textarea>
-              <input id="btn-add-location-names" type="button" value="<?php echo $resx["btn_add_location_names"] ?>" class="btn btn-primary" />
         </div>
   </fieldset>
         </div>
         <div class="col-lg-2 col-md-2">
           <div class="buttons">
-                            <br/>
-                            <br/>
-                            <br/>
             <input id="btn-add-location-names" type="button" value="<?php echo $resx["btn_add_location_names"] ?>" class="btn btn-primary" />
             <br/> 
             <ul>
