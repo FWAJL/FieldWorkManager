@@ -30,11 +30,12 @@ ol, ul {  margin-bottom: 0; }
 }
 #top_header #branding > * { float: left; }
 .brand{line-height: 40px;  padding-left: 10px; }
+.logo {margin-left: 20px}
 #pm_name {padding: 0 12px;}
 #top_header .logo img{ height: 32px; margin: 4px }
 
 #pm_info ul{ display: none; }
-#pm_info {float: right;}
+#pm_info {float: right; margin-right: 40px}
 .top-right-option a {
   padding: 12px;
 }
@@ -54,6 +55,8 @@ ol, ul {  margin-bottom: 0; }
 /* CONTENT_CONTAINER */
 .content-container {
   max-width: 100%; height: auto;
+  padding-left: 30px;
+  padding-right: 60px;
   margin: 0 auto;
 }
 .main
@@ -74,9 +77,13 @@ ol, ul {  margin-bottom: 0; }
 .hide{display: none;}
 
 .list-panel{
-  height: 250px;
+  height: 500px;
   border: 1px solid #999;
   overflow-y: scroll;
+}
+
+.upload_list{
+ width: 100%;   
 }
 
 .buttons{
