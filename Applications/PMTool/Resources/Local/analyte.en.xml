@@ -23,7 +23,7 @@
   <resource key="lab_analyte_name">Analyte</resource>
   <resource key="field_analyte_info_tab">Field analytes</resource>
   <resource key="lab_analyte_info_tab">Lab analytes</resource>
-  <resource key="analyte_button_add">Add analyte</resource>
+  <resource key="analyte_button_add">Add analytes</resource>
   <resource key="analyte_button_edit">Edit analyte</resource>
   <resource key="analyte_button_delete">Delete analyte</resource>
   <resource key="field_analytes_header">Field analytes</resource>

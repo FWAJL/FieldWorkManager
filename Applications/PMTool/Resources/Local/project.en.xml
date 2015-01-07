@@ -23,15 +23,15 @@
 
   <resource key="project_legend_add">Add new project</resource>
   <resource key="project_legend_edit">Edit this project</resource>
-  <resource key="project_name">Project Name</resource>
-  <resource key="project_number">Project Number</resource>
-  <resource key="project_desc">Project Description</resource>
+  <resource key="project_name">Name</resource>
+  <resource key="project_number">Number</resource>
+  <resource key="project_desc">Description</resource>
   <resource key="project_active">Active</resource>
   <resource key="project_visible">Visible</resource>
-  <resource key="project_button_add">Add this project</resource>
-  <resource key="project_button_edit">Edit this project</resource>
-  <resource key="project_button_delete">Delete this project</resource>
-  <resource key="project_button_copy">Copy this project</resource>
+  <resource key="project_button_add">Add</resource>
+  <resource key="project_button_edit">Edit</resource>
+  <resource key="project_button_delete">Delete</resource>
+  <resource key="project_button_copy">Copy</resource>
   <resource key="project_list_all_header">Your Projects</resource>
   <resource key="h3_projects_active">Active projects</resource>
   <resource key="h3_projects_inactive">Inactive projects</resource> 
@@ -41,30 +41,26 @@
   <resource key="h3_no_project">No Project Selected</resource> 
   
   <resource key="facility_legend">The facility</resource>
-  <resource key="facility_name">Facility Name</resource>
-  <resource key="facility_address">Facility Address</resource>
-  <resource key="facility_lat">Facility Latitude</resource>
-  <resource key="facility_long">Facility Longitude</resource>
-  <resource key="facility_contact_name">Facility - Contact Name</resource>
-  <resource key="facility_contact_phone">Facility - Contact Phone (Mobile)</resource>
-  <resource key="facility_contact_email">Facility - Contact Email</resource>
-  <resource key="facility_id_num">Facility ID Number</resource>
-  <resource key="facility_sector">Facility - Sector</resource>
-  <resource key="facility_sic">Facility - SIC Code</resource>
+  <resource key="facility_name">Name</resource>
+  <resource key="facility_address">Address</resource>
+  <resource key="facility_lat">Latitude</resource>
+  <resource key="facility_long">Longitude</resource>
+  <resource key="facility_contact_name">Contact Name</resource>
+  <resource key="facility_contact_phone">Contact Phone</resource>
+  <resource key="facility_contact_email">Contact Email</resource>
+  <resource key="facility_id_num">ID Number</resource>
+  <resource key="facility_sector">Sector</resource>
+  <resource key="facility_sic">SIC Code</resource>
   <resource key="boundary">Facility - Boundary</resource>
-  <resource key="facility_button_add">Add this facility</resource>
-  <resource key="facility_button_edit">Edit this facility</resource>
-  <resource key="facility_button_delete">Delete this facility</resource>
+
 
   <resource key="client_legend">The Client</resource>
-  <resource key="client_company_name">Client Company Name</resource>
-  <resource key="client_address">Client Address</resource>
-  <resource key="client_contact_name">Client - Contact Name</resource>
-  <resource key="client_contact_phone">Client - Contact Phone (Mobile)</resource>
-  <resource key="client_contact_email">Client - Contact Email</resource>
-  <resource key="client_button_add">Add this client</resource>
-  <resource key="client_button_edit">Edit this client</resource>
-  <resource key="client_button_delete">Delete this client</resource>
+  <resource key="client_company_name">Company Name</resource>
+  <resource key="client_address">Address</resource>
+  <resource key="client_contact_name">Contact Name</resource>
+  <resource key="client_contact_phone">Contact Phone</resource>
+  <resource key="client_contact_email">Contact Email</resource>
+
  
   
 </resources>
