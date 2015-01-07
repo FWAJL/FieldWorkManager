@@ -74,7 +74,7 @@ $(document).ready(function() {
   $("#btn_add_analyte").click(function() {
     var isFieldAnalyte = $(".active").attr("data-form-id") === "field_analyte_info";
     var getValuesParams = {
-      "attrNameValues": isFieldAnalyte ? "field_analyte_name_unit" : "lab_analyte_name",
+      "attrNameValues": isFieldAnalyte ? "field_analyte_names" : "lab_analyte_names",
       "attrNameCheckBox": "",
       "hasCheckBoxActive": false
     };
