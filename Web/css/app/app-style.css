@@ -78,7 +78,7 @@ ol, ul {  margin-bottom: 0; }
 .hide{display: none;}
 
 .list-panel{
-  height: 500px;
+  height: 475px;
   border: 1px solid #999;
   overflow-y: scroll;
 }

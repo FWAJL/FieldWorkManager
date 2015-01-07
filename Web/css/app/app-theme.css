@@ -23,17 +23,32 @@
   border: solid 1px #999;
 }
 
-/* ADD PROJECT */
-.form_sections, .project_form, .facility_form, .form{
-  padding: 10px;
+/* ADD_EDIT */
+.form_sections {
+  padding: 5px;
   padding-bottom: 30px;
 }
+
+.data-form{
+   padding: 5px;
+   padding-top: 20px; 
+}
+
 .form_sections li label{
-  width: 200px;
+  width: 120px;
 }
 .form_sections li input, .form_sections li textarea{
-  width: 200px;
+  width: 240px;
 }
+
+.buttons {
+padding-top: 60px;
+}
+
+.btn {
+width: 140px;      
+}
+
 /* VIEW PROJECTS LIST */
 .project_list_section{
   padding: 10px 20px;
@@ -81,9 +96,6 @@
 padding: 0px 2px 0px 30px;
 }
 
-.task_form li label, .task_form li input, .task_form li textarea{
-  width: 250px;
-}
 
 .task_form .note {
 width: 500px;
@@ -94,14 +106,6 @@ width: 500px;
 padding: 0px 2px 0px 30px;
 }
 
-.location_form li label {
-  width: 150px;
-}
-
-.location_form li input, .location_form li textarea{
-  width: 250px;
-}
-
 .location_form .note {
 width: 500px;
 }
@@ -110,19 +114,9 @@ width: 500px;
 width: 100%;
 }
 
-#location_info {
-width: 500px;
-float: left;
-}
-
 #photo_form {
 width: 40%;
 float: right;
-}
-
-#technician_info {
-width: 500px;
-float: left;
 }
 
 li.category-name {
