@@ -46,17 +46,17 @@ class CommonHelper {
   public static function SetDynamicPropertyNamesForDualList($module, $property_list) {
     $dynamicPropertyNames = array();
     foreach ($property_list as $key => $value) {
-      $dynamicPropertyNames[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_key . $key] 
-          = $module . "_" . $value;
+      $dynamicPropertyNames[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_key . $key]
+              = $module . "_" . $value;
     }
     return $dynamicPropertyNames;
   }
 
   public static function SetPropertyNamesForDualList($module) {
     return array(
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id => $module . "_id",
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name => $module . "_name",
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active => $module . "_active",
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id => $module . "_id",
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name => $module . "_name",
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active => $module . "_active",
     );
   }
 
@@ -130,6 +130,36 @@ class CommonHelper {
       }
     }
     return $match;
+  }
+
+  public static function FilterObjectsToExcludeRelatedObject($objects, $related_objects, $prop_id) {
+    $matches = array();
+    foreach ($objects as $object) {
+      $to_add = TRUE;
+      foreach ($related_objects as $related_object) {
+        if (intval($object->$prop_id()) === intval($related_object->$prop_id())) {
+          $to_add = FALSE;
+          break;
+        }
+      }
+      if ($to_add) {
+        array_push($matches, $object);
+      }
+    }
+    return $matches;
+  }
+
+  public static function SetActiveTab(\Library\User $user, $tab_name, $sessionKey) {
+    $tabs = $user->getAttribute($sessionKey);
+    foreach ($tabs as $key => $value) {
+      $tabs[$key] = "";
+    }
+    $tabs[$tab_name] = "active";
+    $user->setAttribute($sessionKey, $tabs);
+  }
+
+  public static function GetTabsStatus(\Library\User $user, $sessionKey) {
+    return $user->getAttribute($sessionKey);
   }
 
 }

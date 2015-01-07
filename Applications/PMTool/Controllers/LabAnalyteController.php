@@ -9,6 +9,10 @@ class LabAnalyteController extends \Library\BaseController {
 
   public function executeAdd(\Library\HttpRequest $rq) {
     $result = \Applications\PMTool\Helpers\AnalyteHelper::AddAnalyte($this, $this->InitResponseWS(), FALSE);
+
+    \Applications\PMTool\Helpers\CommonHelper::SetActiveTab(
+            $this->user(), \Applications\PMTool\Resources\Enums\AnalyteTabKeys::LabTab, \Library\Enums\SessionKeys::TabActiveAnalyte);
+
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
@@ -28,13 +32,10 @@ class LabAnalyteController extends \Library\BaseController {
     $result_edit = $manager->edit($analyte, "lab_analyte_id");
 
     if ($result_edit) {
-      $analyteMatch = 
-          \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById(
-              $analyte->field_analyte_id(), 
-              "lab_analyte_id", 
-              $pm, 
-              \Library\Enums\SessionKeys::PmLabAnalytes);
-      
+      $analyteMatch =
+              \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById(
+                      $analyte->field_analyte_id(), "lab_analyte_id", $pm, \Library\Enums\SessionKeys::PmLabAnalytes);
+
       $pm[\Library\Enums\SessionKeys::PmLabAnalytes][$analyteMatch["key"]] = $analyte;
       \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->user(), $pm);
     }
@@ -65,12 +66,9 @@ class LabAnalyteController extends \Library\BaseController {
     $lab_analyte_id = intval($this->dataPost["lab_analyte_id"]);
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     if (count($pm[\Library\Enums\SessionKeys::PmLabAnalytes]) > 0) {
-      $analyte_selected = 
-          \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById(
-              $lab_analyte_id, 
-              "lab_analyte_id", 
-              $pm, 
-              \Library\Enums\SessionKeys::PmLabAnalytes);
+      $analyte_selected =
+              \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById(
+                      $lab_analyte_id, "lab_analyte_id", $pm, \Library\Enums\SessionKeys::PmLabAnalytes);
     }
 
     $result["field_analyte"] = $analyte_selected["object"];
@@ -84,6 +82,9 @@ class LabAnalyteController extends \Library\BaseController {
 
   public function executeUpdateItems(\Library\HttpRequest $rq) {
     $result = \Applications\PMTool\Helpers\AnalyteHelper::UpdateProjectAnalytes($this);
+
+    \Applications\PMTool\Helpers\CommonHelper::SetActiveTab(
+            $this->user(), \Applications\PMTool\Resources\Enums\AnalyteTabKeys::LabTab, \Library\Enums\SessionKeys::TabActiveAnalyte);
 
     $this->SendResponseWS(
             $result, array(
