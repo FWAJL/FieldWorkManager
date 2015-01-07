@@ -50,7 +50,7 @@
             <php_module key="project_form" file_name="project_form.php" />
             <php_module key="facility_form" file_name="facility_form.php" />
             <php_module key="client_form" file_name="client_form.php" />
-<!--            <php_module key="project_buttons" file_name="project_buttons.php" />-->
+            <php_module key="project_buttons" file_name="project_buttons.php" />
             <php_module key="project_tabs_close" file_name="project_tabs_close.php" />
         </php_modules>
     </route>
@@ -109,21 +109,28 @@
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
         <php_modules>
-            <php_module key="location_tabs_open" file_name="location_tabs_open.php"/>  
             <php_module key="location_form" file_name="location_form.php" />
-<!--            <php_module key="location_buttons" file_name="location_buttons.php" />-->
-            <php_module key="location_tabs_close" file_name="location_tabs_close.php"/>  
         </php_modules>
     </route>
     <!-- location/showForm -->
     
-     <route url="location/uploadList" module="Location" action="uploadList" resxfile="location" type="ui">
+        <route url="location/uploadList" module="Location" action="showForm" resxfile="location" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/location_manager.js" />
         </js_files>
         <css_files>
-            <css_file use="project" />
+            <css_file value="Web/css/app/nav.css" />
+            <css_file value="Web/css/app/app-style.css" />
+            <css_file value="Web/css/app/app-theme.css" />
+            <css_file value="Web/css/app/theme.css" />
+            <css_file value="Web/css/app/tabs.css" />
         </css_files>
+        <php_modules>
+<!--            <php_module key="location_tabs_open" file_name="location_tabs_open.php" />-->
+            <php_module key="location_form" file_name="locations_form.php" />
+<!--            <php_module key="gmaps_panel" file_name="gmaps_panel.php" />
+            <php_module key="location_tabs_close" file_name="location_tabs_close.php" />-->
+        </php_modules>
     </route>
     <!-- location/uploadList -->
     
@@ -169,13 +176,88 @@
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
         <php_modules>
-             <php_module key="technician_tabs_open" file_name="technician_tabs_open.php"/>   
+            <!-- <php_module key="technician_tabs_open" file_name="technician_tabs_open.php"/>   -->
             <php_module key="technician_form" file_name="technician_form.php" />
-<!--            <php_module key="technician_buttons" file_name="technician_buttons.php" />-->
-            <php_module key="technician_tabs_close" file_name="technician_tabs_close.php" />
+<!--            <php_module key="technician_buttons" file_name="technician_buttons.php" />
+            <php_module key="technician_tabs_close" file_name="technician_tabs_close.php" />-->
         </php_modules>
     </route>
     <!-- technician/showForm -->
+
+
+    <!--Map  -->
+    <route url="map/ListAll" module="Map" action="ListAll" resxfile="map" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/gmaps.js" />
+        </js_files>
+        <css_files>
+					<css_file value="Web/css/app/app-theme.css" />
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="all_projects" file_name="all_projects.php" shared="true" />
+        </php_modules>
+    </route><!--   map/ListAll -->
+
+    <route url="map/currentProject" module="Map" action="currentProject" resxfile="map" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/gmaps.js" />
+        </js_files>
+        <css_files>
+				<css_file value="Web/css/app/app-theme.css" />
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="current_project" file_name="current_project.php" shared="true" />
+        </php_modules>
+    </route><!--   map/currentProject -->
+
+    <route url="map/currentProjectLocations" module="Map" action="currentProjectLocations" resxfile="map" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/gmaps.js" />
+        </js_files>
+        <css_files>
+				<css_file value="Web/css/app/app-theme.css" />
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="current_project_locations" file_name="current_project_locations.php" shared="true" />
+        </php_modules>
+    </route><!--   map/currentProjectLocations -->
+
+    <route url="map/taskLocations" module="Map" action="taskLocations" resxfile="map" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/gmaps.js" />
+        </js_files>
+        <css_files>
+				<css_file value="Web/css/app/app-theme.css" />
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="task_locations" file_name="task_locations.php" shared="true" />
+        </php_modules>
+    </route><!--   map/taskLocations -->
+
+    <route url="map/showOne" module="Map" action="showOne" resxfile="map" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/gmaps.js" />
+        </js_files>
+        <css_files>
+				<css_file value="Web/css/app/app-theme.css" />
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="show_one" file_name="show_one.php" shared="true" />
+        </php_modules>
+    </route><!--   map/showOne -->
+
+
+
+
+
+
+
+
     
     <!--Tasks  -->
     <route url="task" module="Task" action="index" resxfile="task" type="ui">
@@ -219,7 +301,7 @@
         <php_modules>
             <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
             <php_module key="task_form" file_name="task_form.php" />
-<!--            <php_module key="task_buttons" file_name="task_buttons.php" />-->
+            <php_module key="task_buttons" file_name="task_buttons.php" />
             <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true" />
         </php_modules>
     </route><!--  task/showAddForm -->
@@ -278,7 +360,7 @@
     </route>
     <!--  analyte/ListAll -->
     
-    <route url="analyte/uploadList" module="Analyte" action="uploadList" resxfile="analyte" type="ui">
+    <route url="analyte/uploadList" module="Analyte" action="showForm" resxfile="analyte" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/analyte_manager.js" />
         </js_files>
@@ -317,10 +399,8 @@
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="service_tabs_open" file_name="service_tabs_open.php" />
             <php_module key="service_form" file_name="service_form.php" />
-<!--            <php_module key="service_buttons" file_name="service_buttons.php" />-->
-            <php_module key="service_tabs_close" file_name="service_tabs_close.php" />
+            <php_module key="service_buttons" file_name="service_buttons.php" />
         </php_modules>
     </route>
     <!-- service provider/showForm -->

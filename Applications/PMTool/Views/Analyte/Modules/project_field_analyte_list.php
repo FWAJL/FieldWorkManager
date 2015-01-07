@@ -15,7 +15,7 @@
     "<li data-"
     . $data_field_analyte[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::module]
     . "-id=\"" . $object->$prop_id()
-    . "\" class=\"ui-widget-content\">"
+    . "\" class=\"select_item ui-widget-content\">"
     . $object->$prop_name()
     . "</li>";
   }

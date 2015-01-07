@@ -3,7 +3,7 @@
  */
 $(document).ready(function() {
  $("#datepicker").datepicker();
- $("#datepicker").datepicker("option", "dateFormat", "mm-dd-yy");
+ $("#datepicker").datepicker("option", "dateFormat", "yy-m-d");
 });
 /**
  * JavaScript Module to do JavaScript actions common to several views
