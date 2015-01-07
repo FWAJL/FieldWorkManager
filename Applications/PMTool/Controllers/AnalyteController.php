@@ -13,11 +13,26 @@ class AnalyteController extends \Library\BaseController {
   }
 
   public function executeUploadList(\Library\HttpRequest $rq) {
+    $tabsStatus = \Applications\PMTool\Helpers\CommonHelper::GetTabsStatus($this->user(), \Library\Enums\SessionKeys::TabActiveAnalyte);
+    if ($tabsStatus === NULL) {
+      \Applications\PMTool\Helpers\AnalyteHelper::AddTabsStatus($this->user());
+      $tabsStatus = \Applications\PMTool\Helpers\CommonHelper::GetTabsStatus($this->user(), \Library\Enums\SessionKeys::TabActiveAnalyte);
+    }
+    $this->page()->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::tabStatus, $tabsStatus);
     $this->page()->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
   public function executeListAll(\Library\HttpRequest $rq) {
+    $tabsStatus = \Applications\PMTool\Helpers\CommonHelper::GetTabsStatus($this->user(), \Library\Enums\SessionKeys::TabActiveAnalyte);
+    if ($tabsStatus === NULL) {
+      \Applications\PMTool\Helpers\AnalyteHelper::AddTabsStatus($this->user());
+      $tabsStatus = \Applications\PMTool\Helpers\CommonHelper::GetTabsStatus($this->user(), \Library\Enums\SessionKeys::TabActiveAnalyte);
+    }
+    $this->page()->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::tabStatus, $tabsStatus);
+
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 

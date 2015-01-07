@@ -149,4 +149,17 @@ class CommonHelper {
     return $matches;
   }
 
+  public static function SetActiveTab(\Library\User $user, $tab_name, $sessionKey) {
+    $tabs = $user->getAttribute($sessionKey);
+    foreach ($tabs as $key => $value) {
+      $tabs[$key] = "";
+    }
+    $tabs[$tab_name] = "active";
+    $user->setAttribute($sessionKey, $tabs);
+  }
+
+  public static function GetTabsStatus(\Library\User $user, $sessionKey) {
+    return $user->getAttribute($sessionKey);
+  }
+
 }

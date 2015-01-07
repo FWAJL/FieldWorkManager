@@ -198,5 +198,13 @@ class AnalyteHelper {
     \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($caller->user(), $sessionProject);
     return $result;
   }
+    public static function AddTabsStatus(\Library\User $user) {
+    $tabs = array(
+    \Applications\PMTool\Resources\Enums\AnalyteTabKeys::FieldTab => "active",
+    \Applications\PMTool\Resources\Enums\AnalyteTabKeys::LabTab=> ""
+    );
+    $user->setAttribute(\Library\Enums\SessionKeys::TabActiveAnalyte, $tabs);
+  }
+
 
 }
