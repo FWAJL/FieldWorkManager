@@ -23,32 +23,17 @@
   border: solid 1px #999;
 }
 
-/* ADD_EDIT */
-.form_sections {
-  padding: 5px;
+/* ADD PROJECT */
+.form_sections, .project_form, .facility_form, .form{
+  padding: 10px;
   padding-bottom: 30px;
 }
-
-.data-form{
-   padding: 5px;
-   padding-top: 20px; 
-}
-
 .form_sections li label{
-  width: 120px;
+  width: 200px;
 }
 .form_sections li input, .form_sections li textarea{
-  width: 240px;
+  width: 200px;
 }
-
-.buttons {
-padding-top: 60px;
-}
-
-.btn {
-width: 140px;      
-}
-
 /* VIEW PROJECTS LIST */
 .project_list_section{
   padding: 10px 20px;
@@ -65,13 +50,13 @@ width: 140px;
   border-bottom:1px solid #999;
 }
 
-.ui-widget-content {
+.select_item {
   padding: 5px;
   margin-bottom: 1px;
   border-bottom: 1px solid #999;
 }
 
-.select_item:hover,.select_item:focus, ui-widget-content:focus, ui-widget-content:hover{
+.select_item:hover,.select_item:focus {
   border-right: solid 4px #F39814; 
   background-color: #ffd;
   padding: 5px;
@@ -96,6 +81,9 @@ width: 140px;
 padding: 0px 2px 0px 30px;
 }
 
+.task_form li label, .task_form li input, .task_form li textarea{
+  width: 250px;
+}
 
 .task_form .note {
 width: 500px;
@@ -106,6 +94,14 @@ width: 500px;
 padding: 0px 2px 0px 30px;
 }
 
+.location_form li label {
+  width: 150px;
+}
+
+.location_form li input, .location_form li textarea{
+  width: 250px;
+}
+
 .location_form .note {
 width: 500px;
 }
@@ -114,9 +110,19 @@ width: 500px;
 width: 100%;
 }
 
+#location_info {
+width: 500px;
+float: left;
+}
+
 #photo_form {
 width: 40%;
 float: right;
+}
+
+#technician_info {
+width: 500px;
+float: left;
 }
 
 li.category-name {
@@ -129,4 +135,10 @@ li.category-name {
 }
 .categorized li.ui-widget-content {
   text-indent: 10px;
+}
+
+/* MAP */
+#map {
+	width: 100%;
+	height: 500px;
 }

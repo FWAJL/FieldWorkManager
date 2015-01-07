@@ -21,11 +21,6 @@ class LocationController extends \Library\BaseController {
     $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
-  
-    public function executeUploadList(\Library\HttpRequest $rq) {
-    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-  }
 
   public function executeListAll(\Library\HttpRequest $rq) {
     //Get list of location stored in session

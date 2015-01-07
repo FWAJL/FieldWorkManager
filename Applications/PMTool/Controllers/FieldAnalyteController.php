@@ -9,10 +9,6 @@ class FieldAnalyteController extends \Library\BaseController {
 
   public function executeAdd(\Library\HttpRequest $rq) {
     $result = \Applications\PMTool\Helpers\AnalyteHelper::AddAnalyte($this, $this->InitResponseWS());
-
-    \Applications\PMTool\Helpers\CommonHelper::SetActiveTab(
-            $this->user(), \Applications\PMTool\Resources\Enums\AnalyteTabKeys::FieldTab, \Library\Enums\SessionKeys::TabActiveAnalyte);
-
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
@@ -32,10 +28,13 @@ class FieldAnalyteController extends \Library\BaseController {
     $result_edit = $manager->edit($analyte, "field_analyte_id");
 
     if ($result_edit) {
-      $analyteMatch =
-              \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById(
-                      $analyte->field_analyte_id(), "field_analyte_id", $pm, \Library\Enums\SessionKeys::PmFieldAnalytes);
-
+      $analyteMatch = 
+          \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById(
+              $analyte->field_analyte_id(), 
+              "field_analyte_id", 
+              $pm, 
+              \Library\Enums\SessionKeys::PmFieldAnalytes);
+      
       $pm[\Library\Enums\SessionKeys::PmFieldAnalytes][$analyteMatch["key"]] = $analyte;
       \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->user(), $pm);
     }
@@ -51,18 +50,19 @@ class FieldAnalyteController extends \Library\BaseController {
   public function executeDelete(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
-    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $db_result = FALSE;
-    $analyte_id = intval($this->dataPost["itemId"]);
+    $location_id = intval($this->dataPost["location_id"]);
 
-    $analyte = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($analyte_id, "field_analyte_id", $pm, \Library\Enums\SessionKeys::PmFieldAnalytes);
-
-    if ($analyte["object"] !== NULL) {
+    //Check if the location to be deleted if the Location manager's
+    $location_selected = $this->_GetLocationFromSession($location_id);
+    //Load interface to query the database
+    if ($location_selected["object"] !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
-      $db_result = $manager->delete($analyte["object"], "field_analyte_id");
+      $db_result = $manager->delete($location_selected["object"], "location_id");
       if ($db_result) {
-        unset($pm[\Library\Enums\SessionKeys::PmFieldAnalytes][$analyte["key"]]);
-        \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->user(), $pm);
+        unset($sessionProject[\Library\Enums\SessionKeys::ProjectLocations][$location_selected["key"]]);
+        \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
       }
     }
 
@@ -94,9 +94,12 @@ class FieldAnalyteController extends \Library\BaseController {
     $field_analyte_id = intval($this->dataPost["field_analyte_id"]);
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     if (count($pm[\Library\Enums\SessionKeys::PmFieldAnalytes]) > 0) {
-      $analyte_selected =
-              \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById(
-                      $field_analyte_id, "field_analyte_id", $pm, \Library\Enums\SessionKeys::PmFieldAnalytes);
+      $analyte_selected = 
+          \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById(
+              $field_analyte_id, 
+              "field_analyte_id", 
+              $pm, 
+              \Library\Enums\SessionKeys::PmFieldAnalytes);
     }
 
     $result["field_analyte"] = $analyte_selected["object"];
@@ -110,11 +113,6 @@ class FieldAnalyteController extends \Library\BaseController {
 
   public function executeUpdateItems(\Library\HttpRequest $rq) {
     $result = \Applications\PMTool\Helpers\AnalyteHelper::UpdateProjectAnalytes($this);
-
-    $tabsStatus = \Applications\PMTool\Helpers\CommonHelper::GetTabsStatus($this->user(), \Library\Enums\SessionKeys::TabActiveAnalyte);
-
-    \Applications\PMTool\Helpers\CommonHelper::SetActiveTab(
-            $this->user(), \Applications\PMTool\Resources\Enums\AnalyteTabKeys::FieldTab, \Library\Enums\SessionKeys::TabActiveAnalyte);
 
     $this->SendResponseWS(
             $result, array(

@@ -2,35 +2,21 @@
  * jQuery listeners for the analyte_manager actions
  */
 $(document).ready(function() {
-
-  var ajaxParams = {
-    "ajaxUrl": "",
-    "redirectUrl": "analyte/listAll",
-    "action": "",
-    "arrayOfValues": [],
-    "itemId": 0,
-    "isFieldType": true
-  };
-
-  /* Context menu */
+  $(".btn-warning").hide();
   $.contextMenu({
     selector: '.select_item',
     callback: function(key, options) {
       if (key === "edit") {
-        toastr.info("To be implemented.");
+        analyte_manager.retrieveFieldAnalyte(options.$trigger);
       } else if (key === "delete") {
-        var isFieldAnalyte = ajaxParams.isFieldType = $(".active").attr("data-form-id") === "field_analyte_info";
-        ajaxParams.itemId = parseInt(options.$trigger.attr("data-fieldanalyte-id"));
-        ajaxParams.ajaxUrl = isFieldAnalyte ? "field_analyte/delete" : "lab_analyte/delete";
-        datacx.delete(ajaxParams);
+        analyte_manager.delete(parseInt(options.$trigger.attr("data-fieldanalyte-id")));
       }
     },
     items: {
       "edit": {name: "View Info"},
       "delete": {name: "Delete"}
     }
-  });//The context menu
-  
+  });//Manages the context menu
   // Selection in the dual lists
   var selectionParamsFieldAnalytes = {
     "listLeftId": "field-analyte-list",
@@ -47,6 +33,14 @@ $(document).ready(function() {
   };
   utils.dualListSelection(selectionParamsLabAnalytes);
   /* End dual selection */
+
+  var ajaxParams = {
+    "ajaxUrl": "",
+    "redirectUrl": "analyte/listAll",
+    "action": "",
+    "arrayOfValues": [],
+    "isFieldType": true
+  };
 
   $(".from-field-analyte-list, .from-lab-analyte-list").click(function() {
     var isFieldAnalyte = ajaxParams.isFieldType = $(".active").attr("data-form-id") === "field_analyte_info";
@@ -71,14 +65,10 @@ $(document).ready(function() {
     datacx.updateItems(ajaxParams);
   });
 
-  $(".analyte-names textarea").focus(function() {
-    $(".analyte-names textarea").val();
-    $('#btn_add_analyte').attr("name", $(this).attr("name"));
-  });
   $("#btn_add_analyte").click(function() {
-    var isFieldAnalyte = $(this).attr("name") === "field_analyte_names";
+    var isFieldAnalyte = $(".active").attr("data-form-id") === "field_analyte_info";
     var getValuesParams = {
-        "attrNameValues": $(this).attr("name"),
+      "attrNameValues": isFieldAnalyte ? "field_analyte_name_unit" : "lab_analyte_name",
       "attrNameCheckBox": "",
       "hasCheckBoxActive": false
     };

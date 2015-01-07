@@ -28,11 +28,11 @@
   
   <main_menu name="map" active="true">
     <links>
-      <header href="#" resourcekey="header_map" enablelink="false" />
-      <submenu id="map_project_all" resourcekey="map_project_all" active="true"/>
-      <submenu id="map_project" resourcekey="map_project" active="true"/>
-      <submenu id="map_project_locations" resourcekey="map_project_locations" active="true"/>
-      <submenu id="map_task_locations" resourcekey="map_task_locations" active="true"/>
+      <header href="map" resourcekey="header_map" enablelink="false" />
+      <submenu href="map/ListAll" id="map_project_all" resourcekey="map_project_all" active="true"/>
+      <submenu href="map/currentProject" id="map_project" resourcekey="map_project" active="true"/>
+      <submenu href="map/currentProjectLocations" id="map_project_locations" resourcekey="map_project_locations" active="true"/>
+      <submenu href="map/taskLocations" id="map_task_locations" resourcekey="map_task_locations" active="true"/>
     </links>
   </main_menu><!-- map -->  
   
