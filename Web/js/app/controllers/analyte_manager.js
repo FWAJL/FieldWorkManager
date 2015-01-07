@@ -71,10 +71,14 @@ $(document).ready(function() {
     datacx.updateItems(ajaxParams);
   });
 
+  $(".analyte-names textarea").focus(function() {
+    $(".analyte-names textarea").val();
+    $('#btn_add_analyte').attr("name", $(this).attr("name"));
+  });
   $("#btn_add_analyte").click(function() {
-    var isFieldAnalyte = $(".active").attr("data-form-id") === "field_analyte_info";
+    var isFieldAnalyte = $(this).attr("name") === "field_analyte_names";
     var getValuesParams = {
-      "attrNameValues": isFieldAnalyte ? "field_analyte_names" : "lab_analyte_names",
+        "attrNameValues": $(this).attr("name"),
       "attrNameCheckBox": "",
       "hasCheckBoxActive": false
     };

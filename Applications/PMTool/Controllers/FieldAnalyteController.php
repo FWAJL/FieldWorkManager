@@ -9,6 +9,10 @@ class FieldAnalyteController extends \Library\BaseController {
 
   public function executeAdd(\Library\HttpRequest $rq) {
     $result = \Applications\PMTool\Helpers\AnalyteHelper::AddAnalyte($this, $this->InitResponseWS());
+
+    \Applications\PMTool\Helpers\CommonHelper::SetActiveTab(
+            $this->user(), \Applications\PMTool\Resources\Enums\AnalyteTabKeys::FieldTab, \Library\Enums\SessionKeys::TabActiveAnalyte);
+
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
@@ -110,9 +114,7 @@ class FieldAnalyteController extends \Library\BaseController {
     $tabsStatus = \Applications\PMTool\Helpers\CommonHelper::GetTabsStatus($this->user(), \Library\Enums\SessionKeys::TabActiveAnalyte);
 
     \Applications\PMTool\Helpers\CommonHelper::SetActiveTab(
-            $this->user(), 
-            \Applications\PMTool\Resources\Enums\AnalyteTabKeys::FieldTab, 
-            \Library\Enums\SessionKeys::TabActiveAnalyte);
+            $this->user(), \Applications\PMTool\Resources\Enums\AnalyteTabKeys::FieldTab, \Library\Enums\SessionKeys::TabActiveAnalyte);
 
     $this->SendResponseWS(
             $result, array(

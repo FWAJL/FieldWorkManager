@@ -9,6 +9,10 @@ class LabAnalyteController extends \Library\BaseController {
 
   public function executeAdd(\Library\HttpRequest $rq) {
     $result = \Applications\PMTool\Helpers\AnalyteHelper::AddAnalyte($this, $this->InitResponseWS(), FALSE);
+
+    \Applications\PMTool\Helpers\CommonHelper::SetActiveTab(
+            $this->user(), \Applications\PMTool\Resources\Enums\AnalyteTabKeys::LabTab, \Library\Enums\SessionKeys::TabActiveAnalyte);
+
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,

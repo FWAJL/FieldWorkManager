@@ -32,7 +32,16 @@ $(document).ready(function() {
     $(this).siblings().removeClass("active");
     $(this).css("display", "").addClass("active");
   });
-  
+
+  $(".tab").each(function(index, element) {
+    if ($(this).hasClass("active")) {
+      var data_form_id = $(this).attr("data-form-id");
+      $(".data-form, .data-form-2").hide();
+      $("#" + data_form_id).fadeIn().removeClass("hide");
+    }
+    ;
+  });
+
 });
 
 $(document).ready(function() {
