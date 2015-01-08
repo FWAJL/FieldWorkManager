@@ -42,8 +42,12 @@
   <resource key="btn_field_analyte_select_project">See list of project</resource> 
   <resource key="btn_add_analyte_to_project">Add Analyte(s) to Project</resource>
   <resource key="btn_remove_analyte_to_project">Remove Analyte(s) from Project</resource>
+  <resource key="btn_add_common_analyte">Add</resource>
+  
   
   <resource key="h4_project_analytes">Analytes to be used for this Project</resource>
-  <resource key="h4_field_analytes">All Field Analytes</resource>
-  <resource key="h4_lab_analytes">All Lab Analytes</resource>
+  <resource key="h4_your_analytes">All your analytes (available for all projects)</resource>
+  <resource key="h4_analyte_form">Enter or paste a list of analytes here...</resource>
+  <resource key="h4_common_lab_analytes">...or select from this list of common lab analytes</resource>
+  <resource key="h4_common_field_analytes">...or select from this list of common field analytes</resource>
 </resources>
