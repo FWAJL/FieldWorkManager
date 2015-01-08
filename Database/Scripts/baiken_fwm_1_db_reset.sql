@@ -341,6 +341,22 @@ CREATE TABLE `project_lab_analyte` (
     UNIQUE INDEX `un_pla_l_la` (`project_id` ASC, `lab_analyte_id` ASC)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
+-- Table structure for table `common_lab_analyte`
+CREATE TABLE `common_lab_analyte` (
+    `common_lab_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
+    `common_lab_analyte_category_name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+    `common_lab_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    PRIMARY KEY (`common_lab_analyte_id`)
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
+
+-- Table structure for table `common_field_analyte`
+CREATE TABLE `common_field_analyte` (
+    `common_field_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
+    `common_field_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    PRIMARY KEY (`common_field_analyte_id`)
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
+
+
 -- Dumping data for table `project_manager`
 INSERT INTO `project_manager` (`pm_id`, `username`, `password`, `hint`, `pm_comp_name`, `pm_name`, `pm_address`, `pm_phone`, `pm_email`) VALUES
 (1, 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683', 'hint', 'comp name', 'John', 'Doe', '1234567890', 'test@fwa.net');
