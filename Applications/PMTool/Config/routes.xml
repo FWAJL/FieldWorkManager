@@ -294,7 +294,7 @@
             <php_module key="common_field_analyte_list" file_name="common_field_analyte_list.php" />
             <php_module key="lab_analyte_form" file_name="lab_analyte_form.php" />
             <php_module key="common_lab_analyte_list" file_name="common_lab_analyte_list.php" />
-            <php_module key="up_analyte_buttons" file_name="analyte_buttons.php" />
+            <php_module key="up_analyte_list_buttons" file_name="up_analyte_list_buttons.php" />
 
         </php_modules>
     </route>
