@@ -15,11 +15,14 @@ $(document).ready(function() {
         location_manager.retrieveLocation(options.$trigger);
       } else if (key === "delete") {
         location_manager.delete(parseInt(options.$trigger.attr("data-location-id")));
+      } else if (key === "show") {
+        location_manager.show_on_map(parseInt(options.$trigger.attr("data-location-id")));
       }
     },
     items: {
       "edit": {name: "View Info"},
-      "delete": {name: "Delete"}
+      "delete": {name: "Delete"},
+      "show": {name: "Show on map"}
     }
   });//Manages the context menu
 
@@ -124,6 +127,9 @@ $(document).ready(function() {
         utils.redirect("location/listAll", 1000);
       }
     });
+  };
+  location_manager.show_on_map = function (id) {
+    utils.redirect("map/showOne?id=" + id + "&location=true");
   };
   location_manager.edit = function(location, controller, action) {
     datacx.post(controller + "/" + action, location).then(function(reply) {//call AJAX method to call Location/Add WebService
