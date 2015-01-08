@@ -147,13 +147,13 @@ CREATE TABLE `service` (
         REFERENCES `project_manager` (`pm_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
--- Table structure for table `field_analyte`
-CREATE TABLE `field_analyte` (
-    `field_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
-    `field_analyte_name_unit` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+-- Table structure for table `lab_analyte`
+CREATE TABLE `lab_analyte` (
+    `lab_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
+    `lab_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `pm_id` int(11) NOT NULL COMMENT 'Foreign key => project_manager',
-    PRIMARY KEY (`field_analyte_id`),
-    CONSTRAINT `fk_field_analyte_pm` FOREIGN KEY (`pm_id`)
+    PRIMARY KEY (`lab_analyte_id`),
+    CONSTRAINT `fk_lab_analyte_pm` FOREIGN KEY (`pm_id`)
         REFERENCES `project_manager` (`pm_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -340,6 +340,22 @@ CREATE TABLE `project_lab_analyte` (
         REFERENCES `lab_analyte` (`lab_analyte_id`) ON DELETE CASCADE,
     UNIQUE INDEX `un_pla_l_la` (`project_id` ASC, `lab_analyte_id` ASC)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
+
+-- Table structure for table `common_lab_analyte`
+CREATE TABLE `common_lab_analyte` (
+    `common_lab_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
+    `common_lab_analyte_category_name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+    `common_lab_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    PRIMARY KEY (`common_lab_analyte_id`)
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
+
+-- Table structure for table `common_field_analyte`
+CREATE TABLE `common_field_analyte` (
+    `common_field_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
+    `common_field_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    PRIMARY KEY (`common_field_analyte_id`)
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
+
 
 -- Dumping data for table `project_manager`
 INSERT INTO `project_manager` (`pm_id`, `username`, `password`, `hint`, `pm_comp_name`, `pm_name`, `pm_address`, `pm_phone`, `pm_email`) VALUES
