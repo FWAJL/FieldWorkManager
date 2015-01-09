@@ -287,10 +287,15 @@
         </css_files>
         <php_modules>
             <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php" />
-            <php_module key="field_analyte_form" file_name="field_analyte_form.php" />
-            <php_module key="lab_analyte_form" file_name="lab_analyte_form.php" />
-            <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
             <php_module key="analyte_tabs_close" file_name="analyte_tabs_close.php" />
+            <php_module key="up_field_analyte_lists" file_name="up_field_analyte_lists.php" />
+            <php_module key="up_lab_analyte_lists" file_name="up_lab_analyte_lists.php" />
+            <php_module key="field_analyte_form" file_name="field_analyte_form.php" />
+            <php_module key="common_field_analyte_list" file_name="common_field_analyte_list.php" />
+            <php_module key="lab_analyte_form" file_name="lab_analyte_form.php" />
+            <php_module key="common_lab_analyte_list" file_name="common_lab_analyte_list.php" />
+            <php_module key="up_analyte_list_buttons" file_name="up_analyte_list_buttons.php" />
+
         </php_modules>
     </route>
     <!-- analytes/uploadList -->
