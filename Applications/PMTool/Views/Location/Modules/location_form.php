@@ -42,7 +42,7 @@
       <label><?php echo $resx["location_active"]; ?></label>
       <input name="location_active" type="checkbox" checked />
     </li>
-    <li style="display: none">
+    <li class="hide">
       <label><?php // echo $resx["location_visible"]; ?></label>
       <input name="location_visible" type="checkbox"/>
     </li>
