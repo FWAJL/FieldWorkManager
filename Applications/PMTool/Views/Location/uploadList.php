@@ -21,7 +21,7 @@
             <input id="btn-add-location-names" type="button" value="<?php echo $resx["btn_add_location_names"] ?>" class="btn btn-primary" />
             <br/> 
             <ul>
-               <li style="display: none">
+               <li class="hide">
                   <input id="location_upload_list" name="location_active" type="checkbox" checked />
               </li>
             </ul>
