@@ -15,9 +15,11 @@
 
       $manager = $this->managers()->getManagerOf("facility");
 
+
+
       $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module     => $this->resxfile,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects    => $manager->selectMany($facility, ""),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects    => $manager->selectManyUser($facility, "", $this->app()->user()),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList($this->resxfile)
       );
       $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
