@@ -77,10 +77,12 @@ ol, ul {  margin-bottom: 0; }
 .show{display: block;}
 .hide{display: none;}
 
+.scroll-bar{  
+  overflow-y: scroll;
+}
 .list-panel{
   height: 475px;
   border: 1px solid #999;
-  overflow-y: scroll;
 }
 
 .upload_list{
