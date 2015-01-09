@@ -22,7 +22,7 @@
         <label><?php echo $resx["task_instructions"]; ?></label>
         <textarea name="task_instructions" type="text"></textarea>
       </li>
-      <li>
+      <li class="hide">
         <label><?php echo $resx["task_active"]; ?></label>
         <input name="task_active" type="checkbox"></textarea>
       </li>
