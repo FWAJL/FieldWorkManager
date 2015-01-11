@@ -1,33 +1,29 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 <div class="right-aside main col-lg-10 col-md-10 col-sm-10">
-  <div class="project_list">
-
-    <h3>
+  <h3>
     <?php echo $resx["project_add_header"] ?>
   </h3>
-    <div class="content-container container-fluid">
-      <div class="row">
-        <div  class="col-lg-5 col-md-5">
-            <div class="form_sections">
-      <?php
-      foreach ($form_modules as $key => $module_path) {
-        require $module_path;
-      }
-      ?>
-  </div>
-        </div>
-        <div class="col-lg-2 col-md-2">
-          <div class="buttons">
-<input type="button" id="btn_add_project" class="project_add btn btn-default" value="<?php echo $resx["project_button_add"]; ?>" />
-<input type="button" id="btn_edit_project" class="project_edit hide btn btn-default" value="<?php echo $resx["project_button_edit"]; ?>" />
-<input type="button" id="btn_delete_project" class="project_edit hide btn btn-default" value="<?php echo $resx["project_button_delete"]; ?>" />
-<input type="button" id="btn_copy_project" class="project_edit hide btn btn-default" value="<?php echo $resx["project_button_copy"]; ?>" />         
-          </div>
-        </div>
-        <div  class="col-lg-5 col-md-5">
-Nothing here.
-        </div>
-      </div>
+  <div class="form_sections">
+    <!-- open tabs -->
+    <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::project_tabs_open]; ?>
+
+    <!-- project info block -->
+    <div id="project_info" class="data-form-2">
+      <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Project::project_info_lists]; ?>      
     </div>
+
+    <!-- facility info block -->
+    <div id="facility_info" class="hide data-form-2">
+      <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Project::facility_info_lists]; ?>
+    </div>
+    
+        <!-- client info block -->
+    <div id="client_info" class="hide data-form-2">
+      <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Project::client_info_lists]; ?>
+    </div>
+
+    <!-- close tabs -->
+    <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::project_tabs_close]; ?>
   </div>
-</div><!-- END RIGHT ASIDE MAIN -->
+
+</div>
