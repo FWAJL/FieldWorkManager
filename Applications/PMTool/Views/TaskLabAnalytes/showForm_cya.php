@@ -8,16 +8,11 @@
     <span class="glyphicon glyphicon-chevron-right"></span>    
     <?php echo $task_editing_header ?></h3>  
   <div class="form_sections">
-    <!-- open tabs -->
-    <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::task_tabs_open]; ?>
-    
-    <!-- task info block -->
-    <div id="task_info" class="data-form-2">
-      <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_info_lists]; ?>      
-    </div>
-
-    <!-- close tabs -->
-    <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::task_tabs_close]; ?>
+    <?php
+    foreach ($form_modules as $key => $module_path) {
+      require $module_path;
+    }
+    ?>
   </div>
 
 </div>
