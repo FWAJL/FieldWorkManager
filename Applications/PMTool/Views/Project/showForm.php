@@ -8,17 +8,17 @@
     <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::project_tabs_open]; ?>
 
     <!-- project info block -->
-    <div id="project_info" class="data-form-2">
+    <div>
       <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Project::project_info_lists]; ?>      
     </div>
 
     <!-- facility info block -->
-    <div id="facility_info" class="hide data-form-2">
+    <div>
       <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Project::facility_info_lists]; ?>
     </div>
     
         <!-- client info block -->
-    <div id="client_info" class="hide data-form-2">
+    <div>
       <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Project::client_info_lists]; ?>
     </div>
 
