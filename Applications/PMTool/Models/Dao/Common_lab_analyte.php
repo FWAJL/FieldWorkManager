@@ -1,5 +1,5 @@
 <?php
-/**** @package    Basic MVC framework* @author     Jeremie Litzler* @copyright  Copyright (c) 2014* @license* @link* @since* @filesource*/// ------------------------------------------------------------------------
+/**** @package    Basic MVC framework* @author     Jeremie Litzler* @copyright  Copyright (c) 2015* @license* @link* @since* @filesource*/// ------------------------------------------------------------------------
 /**** Common_lab_analyte Dao Class** @package     Application/PMTool* @subpackage  Models/Dao* @category    Common_lab_analyte* @author      FWM DEV Team* @link*/
 namespace Applications\PMTool\Models\Dao;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 class Common_lab_analyte extends \Library\Entity{  public     $common_lab_analyte_id,    $common_lab_analyte_category_name,    $common_lab_analyte_name;

@@ -6,7 +6,9 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
 class BaseManager extends \Library\Manager {
-//  abstract public function selectMany($debut = -1, $limite = -1);
+  public function __construct($dao, $filters) {
+    parent::__construct($dao, $filters);
+  }
 
   /**
    * Select method for one item
