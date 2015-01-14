@@ -124,7 +124,7 @@ class TaskController extends \Library\BaseController {
     //Load interface to query the database
     if ($task_selected !== NULL) {
       $manager = $this->managers->getManagerOf($this->module());
-      if ($manager->delete($task_selected, "task_id")) {
+      if ($manager->delete($task_selected[\Library\Enums\SessionKeys::TaskObj], "task_id")) {
         $sessionTasks = \Applications\PMTool\Helpers\TaskHelper::GetSessionTasks($this->app()->user());
         unset($sessionTasks[\Library\Enums\SessionKeys::TaskKey . $task_id]);
         \Applications\PMTool\Helpers\TaskHelper::SetSessionTasks($this->app()->user(), $sessionTasks);
