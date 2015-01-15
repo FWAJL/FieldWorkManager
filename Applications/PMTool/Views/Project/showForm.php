@@ -4,22 +4,26 @@
     <?php echo $resx["project_add_header"] ?>
   </h3>
   <div class="form_sections">
+
     <!-- open tabs -->
     <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::project_tabs_open]; ?>
 
-    <!-- project info block -->
-    <div>
-      <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Project::project_info_lists]; ?>      
-    </div>
-
-    <!-- facility info block -->
-    <div>
-      <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Project::facility_info_lists]; ?>
-    </div>
-    
-        <!-- client info block -->
-    <div>
-      <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Project::client_info_lists]; ?>
+    <div class="content-container container-fluid">
+      <div class="row">
+        <div  class="col-lg-5 col-md-5">
+          <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::project_form]; ?>
+          <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::facility_form]; ?>
+          <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::client_form]; ?>
+        </div>
+        <div class="col-lg-2 col-md-2">
+          <div class="buttons">
+            <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::project_buttons]; ?>
+          </div>
+        </div>
+        <div  class="col-lg-5 col-md-5">
+          Nothing here
+        </div>
+      </div>
     </div>
 
     <!-- close tabs -->

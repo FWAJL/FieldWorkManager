@@ -28,7 +28,6 @@
       </li>
     </ol>
   </fieldset>
-</div>
 
 <!--      <label><?php //echo $resx["triggers"];   ?></label>
       <table>
