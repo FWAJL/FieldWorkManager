@@ -630,7 +630,7 @@ GMaps.prototype.addMarker = function(options) {
       throw 'No latitude or longitude defined.';
     }
   }
- marker.icon="images/marker.png";
+
   marker.setMap(this.map);
 
   if(this.markerClusterer) {

@@ -32,7 +32,7 @@ abstract class Application {
     $this->context = new Context($this);
     $this->i8n = new Globalization($this);
     $this->imageUtil = new ImageUtility($this);
-    $this->locale = "en";//$this->HttpRequest->initLanguage($this, "browser");
+    $this->locale = $this->HttpRequest->initLanguage($this, "browser");
     $this->name = '';
   }
 

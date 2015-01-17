@@ -28,7 +28,7 @@
       $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::all_projects, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::all_projects]);
     }
 
-    public function executecurrentProject(\Library\HttpRequest $rq) {
+    public function executeCurrentProject(\Library\HttpRequest $rq) {
       $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
       $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
@@ -43,13 +43,13 @@
       $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::current_project, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::current_project]);
     }
 
-    public function executeshowOne(\Library\HttpRequest $rq) {
+    public function executeShowOne(\Library\HttpRequest $rq) {
       $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
       $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
-      $id = $_GET['id'];
+      $id = $rq->getData("id");
 
-      if (@$_GET['location'] == "true") {
+      if (@$rq->getData("location") == "true") {
         $taskLocation = new \Applications\PMTool\Models\Dao\Location();
         $taskLocation->setLocation_id($id);
         $dal = $this->managers()->getManagerOf("Location");
@@ -70,7 +70,7 @@
       $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::show_one, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::show_one]);
     }
 
-    public function executecurrentProjectLocations(\Library\HttpRequest $rq) {
+    public function executeCurrentProjectLocations(\Library\HttpRequest $rq) {
       $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
       $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
@@ -87,7 +87,7 @@
       $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::current_project_locations, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::current_project_locations]);
     }
 
-    public function executetaskLocations(\Library\HttpRequest $rq) {
+    public function executeTaskLocations(\Library\HttpRequest $rq) {
       $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
       $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
