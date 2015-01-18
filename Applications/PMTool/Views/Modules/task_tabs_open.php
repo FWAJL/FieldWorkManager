@@ -19,7 +19,7 @@
     </li>
     <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::InspFormsTab]; ?>" id="tab2" data-form-id="task_insp_info">
       <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskInspForms; ?>">
-        Inspection Forms
+        Forms
       </a>
     </li>
     <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::FieldAnalytesTab]; ?>" id="tab3" data-form-id="field_analytes">

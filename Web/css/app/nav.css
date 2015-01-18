@@ -6,7 +6,7 @@ a, a:hover {text-decoration: none; cursor: pointer;}
 
 .content_left > li{
   display: block;
-  padding: 5px;
+  padding: 2px;
   border-bottom: solid 1px #999;
 }
 .content_left > li:last-child{
