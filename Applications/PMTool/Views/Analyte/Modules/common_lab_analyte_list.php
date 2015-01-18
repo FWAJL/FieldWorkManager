@@ -2,19 +2,19 @@
 
 <ol id="common-lab-analyte-list" class="list-panel">
   <?php
-  foreach ($data_common_lab_analyte[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_right] as $object) {
+  foreach ($data_common_lab_analyte[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects] as $object) {
     $prop_id =
             $data_common_lab_analyte
-            [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right]
+            [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties]
             [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id];
     $prop_name =
             $data_common_lab_analyte
-            [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right]
+            [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties]
             [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name];
     echo
     "<li data-"
     . $data_common_lab_analyte[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::module]
-    . "-id=\"" . $object->$prop_id() . "\" class=\"select_item ui-widget-content\">"
+    . "-id=\"" . $object->$prop_id() . "\" class=\"ui-widget-content\">"
     . $object->$prop_name()
     . "</li>";
   }

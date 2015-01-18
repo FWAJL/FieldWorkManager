@@ -8,8 +8,8 @@
     <li style="display: none;">
       <input name="pm_id" type="text" />
     </li>
-    <li class="analyte-names">
-      <textarea class="high-textarea" name="lab_analyte_name" type="text"></textarea>
+    <li>
+      <textarea class="high-textarea" name="common_lab_analyte_name" type="text"></textarea>
     </li>
   </ol>
 </fieldset>

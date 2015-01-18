@@ -6,7 +6,9 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
 class BaseManager extends \Library\Manager {
-//  abstract public function selectMany($debut = -1, $limite = -1);
+  public function __construct($dao, $filters) {
+    parent::__construct($dao, $filters);
+  }
 
   /**
    * Select method for one item
@@ -34,12 +36,15 @@ class BaseManager extends \Library\Manager {
   public function selectMany($object, $where_filter_id) {
     $params = array("type" => "SELECT", "dao_class" => \Applications\PMTool\Helpers\CommonHelper::GetFullClassName($object));
     $select_clause = "SELECT ";
-    $where_clause = " WHERE ";
+    if ($where_filter_id !== "") {
+      $where_clause = " WHERE " . $where_filter_id . " = " . $object->$where_filter_id();
+    } else {
+      $where_clause = "";
+    }
     foreach ($object as $key => $value) {
       $select_clause .= $key . ", ";
     }
     $select_clause = rtrim($select_clause, ", ");
-    $where_clause .= $where_filter_id . " = " . $object->$where_filter_id();
     return $this->ExecuteQuery($select_clause . " FROM " . $this->GetTableName($object) . $where_clause, $params);
   }
 
@@ -109,6 +114,7 @@ class BaseManager extends \Library\Manager {
   private function ExecuteQuery($sql_query, $params) {
     try {
       $query = $this->dao->query($sql_query);
+
       $result;
       if (!$query) {
         $result = $query->errorCode();

@@ -3,7 +3,7 @@
  * XmlLoader class
  * 
  * @author Jeremie Litzler
- * @copyright (c) 2014, Jeremie Litzler
+ * @Copyright (c) 2015, Jeremie Litzler
  * @link http://jeremielitzler.net/Blog
  * 
  */

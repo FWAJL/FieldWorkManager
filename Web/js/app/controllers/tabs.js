@@ -27,7 +27,7 @@ $(document).ready(function() {
   //manage click events
   $(".tab").click(function() {
     var data_form_id = $(this).attr("data-form-id");
-    $(".data-form, .data-form-2").hide();
+    $(".data-form, .data-form-2, .btn-warning").hide();
     $("#" + data_form_id).fadeIn().removeClass("hide");
     $(this).siblings().removeClass("active");
     $(this).css("display", "").addClass("active");

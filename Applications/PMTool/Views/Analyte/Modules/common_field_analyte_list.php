@@ -2,15 +2,14 @@
 
 <ol id="common-field-analyte-list" class="list-panel">
   <?php
-  foreach ($data_common_field_analyte[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_right] as $object) {
-    $prop_id =
-            $data_common_field_analyte
-            [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right]
-            [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id];
-    $prop_name =
-            $data_common_field_analyte
-            [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right]
-            [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name];
+
+  foreach ($data_common_field_analyte[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects] as $object) {
+    $prop_id = $data_common_field_analyte
+        [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties]
+        [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id];
+    $prop_name = $data_common_field_analyte
+        [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties]
+        [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name];
     echo
     "<li data-"
     . $data_common_field_analyte[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::module]

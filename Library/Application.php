@@ -56,7 +56,7 @@ abstract class Application {
     $this->globalResources["js_files_html"] = $this->router()->selectedRoute()->htmlJsScripts();
     $this->globalResources["css_files"] = $this->router()->selectedRoute()->cssFiles();
 
-    if (preg_match("`^ws.*$`",$this->router()->selectedRoute()->type())) {//is the route used for AJAX calls?
+    if (preg_match("`.*ws$`",$this->router()->selectedRoute()->type())) {//is the route used for AJAX calls?
       $this->router()->isWsCall = true;
     }
     // On ajoute les variables de l'URL au tableau $_GET.
@@ -126,7 +126,7 @@ abstract class Application {
    * @return string : the controller class name w/ namespace
    */
   private function BuildControllerClass(\Library\Route $route) {
-    if (preg_match("`^lib$`", $route->type())) {
+    if (preg_match("`^lib.*$`", $route->type())) {
 //AJAX request for the Framework
       return Enums\NameSpaceName::LibFolderName 
         . Enums\NameSpaceName::LibControllersFolderName

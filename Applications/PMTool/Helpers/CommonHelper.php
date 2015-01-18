@@ -4,7 +4,7 @@
  *
  * @package		Basic MVC framework
  * @author		Jeremie Litzler
- * @copyright	Copyright (c) 2014
+ * @copyright	Copyright (c) 2015
  * @license		
  * @link		
  * @since		
@@ -158,7 +158,16 @@ class CommonHelper {
     $user->setAttribute($sessionKey, $tabs);
   }
 
+  //TODO: replace with GetValueInSession
   public static function GetTabsStatus(\Library\User $user, $sessionKey) {
+    return $user->getAttribute($sessionKey);
+  }
+
+  public static function SetValueInSession($user, $sessionKey, $value) {
+    $user->setAttribute($sessionKey, $value);
+  }
+
+  public static function GetValueInSession($user, $sessionKey) {
     return $user->getAttribute($sessionKey);
   }
 

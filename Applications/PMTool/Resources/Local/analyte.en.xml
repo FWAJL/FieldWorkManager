@@ -41,6 +41,7 @@
   <resource key="btn_add_field_analyte_names">Add the field analytes</resource> 
   <resource key="btn_field_analyte_select_project">See list of project</resource> 
   <resource key="btn_add_analyte_to_project">Add Analyte(s) to Project</resource>
+  <resource key="btn_add_common_analyte_to_project">Add Common Analyte(s) to Project</resource>
   <resource key="btn_remove_analyte_to_project">Remove Analyte(s) from Project</resource>
   <resource key="btn_add_common_analyte">Add</resource>
   
@@ -49,4 +50,10 @@
   <resource key="h4_analyte_form">Enter or paste a list of analytes here...</resource>
   <resource key="h4_common_lab_analytes">...or select from these common lab analytes</resource>
   <resource key="h4_common_field_analytes">...or select from these common field analytes</resource>
+  <resource key="h3_common_analytes">Common Analytes Upload</resource>
+  <resource key="h4_of_field_type">Field analyte type</resource>
+  <resource key="h4_of_lab_type">Lab analyte type</resource>
+  
+  
+  
 </resources>

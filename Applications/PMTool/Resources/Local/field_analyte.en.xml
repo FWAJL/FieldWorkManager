@@ -4,6 +4,8 @@
     
   <resource key="message_error_add">Error inserting the field analyte.</resource>
   <resource key="message_success_add">The field analyte has been inserted.</resource>
+  <resource key="message_error_addCommon">Error inserting the common field analyte.</resource>
+  <resource key="message_success_addCommon">The common field analyte has been inserted.</resource>
   <resource key="message_error_getlist">Error reading the field analytes.</resource>
   <resource key="message_success_getlist">The field analytes have been read.</resource>
   <resource key="message_error_getItem">Error reading the field analyte.</resource>

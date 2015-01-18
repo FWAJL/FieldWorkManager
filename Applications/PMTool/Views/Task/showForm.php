@@ -3,21 +3,20 @@
   <h3>
     <?php echo $current_project->project_name(); ?>
     <?php if ($current_task !== NULL) { ?>
+      <span class="glyphicon glyphicon-chevron-right"></span>    
+      <?php echo $current_task->task_name();
+    } ?>
     <span class="glyphicon glyphicon-chevron-right"></span>    
-    <?php echo $current_task->task_name(); } ?>
-    <span class="glyphicon glyphicon-chevron-right"></span>    
-    <?php echo $task_editing_header ?></h3>  
+<?php echo $task_editing_header ?></h3>  
   <div class="form_sections">
     <!-- open tabs -->
-    <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::task_tabs_open]; ?>
-    
+<?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::task_tabs_open]; ?>
+
     <!-- task info block -->
-    <div>
-      <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_info_lists]; ?>      
-    </div>
+<?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_info_lists]; ?>      
 
     <!-- close tabs -->
-    <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::task_tabs_close]; ?>
+<?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::task_tabs_close]; ?>
   </div>
 
 </div>
