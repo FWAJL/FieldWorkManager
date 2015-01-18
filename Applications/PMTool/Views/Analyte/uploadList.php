@@ -8,12 +8,12 @@
     <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::analyte_tabs_open]; ?>
 
     <!-- field analyte block -->
-    <div id="up_field_analyte_info" class="data-form-2">
+    <div id="field_analyte_info" class="data-form-2">
       <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Analyte::up_field_analyte_lists]; ?>      
     </div>
 
     <!-- lab analyte block -->
-    <div id="up_lab_analyte_info" class="hide data-form-2">
+    <div id="lab_analyte_info" class="hide data-form-2">
       <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Analyte::up_lab_analyte_lists]; ?>
     </div>
 

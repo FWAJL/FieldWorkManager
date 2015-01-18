@@ -38,7 +38,9 @@ abstract class SessionKeys {
   const UserTechnicianList = "user_technician_list"; 
   const UserTaskList = "user_task_list"; 
   
- 
+  const CommonFieldAnalytes = "common_fa";
+  const CommonLabAnalytes = "common_la";
+  
   /* Project manager session array */
   const SessionPms = "session_pms";  
   const PmKey =  "pm_";

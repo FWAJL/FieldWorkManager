@@ -45,6 +45,8 @@ class Analyte {
   const common_lab_analyte_list = "common_lab_analyte_list";
   
   
+  const analyte_buttons = "analyte_buttons";
+  const common_analyte_buttons = "common_analyte_buttons";
   const field_analyte_buttons = "field_analyte_buttons";
   const lab_analyte_buttons = "lab_analyte_buttons";
   const up_analyte_list_buttons = "up_analyte_list_buttons";

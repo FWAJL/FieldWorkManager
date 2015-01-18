@@ -34,7 +34,7 @@ $(document).ready(function() {
   });//Manages the context menu
 
   //************************************************//
-  // Selection of service technicians
+  // Selection of service
   var selectionParams = {
     "listLeftId": "categorized-list-left",
     "listRightId": "categorized-list-right",
