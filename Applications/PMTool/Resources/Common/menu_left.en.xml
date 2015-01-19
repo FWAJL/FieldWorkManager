@@ -34,9 +34,9 @@
   <resource key="analyte_upload_list">Upload List</resource>
   <resource key="analyte_list">List All</resource>
   
-  <resource key="header_field_forms">Field Forms</resource>
-  <resource key="field_form_add">Add</resource>
-  <resource key="field_form_all">List All</resource>
+  <resource key="header_form">Field Forms</resource>
+  <resource key="form_add">Add</resource>
+  <resource key="form_list">List All</resource>
   
   <resource key="header_service">Service Providers</resource>
   <resource key="service_add">Add</resource>
