@@ -129,6 +129,10 @@ $(document).ready(function() {
     });
   };
   location_manager.show_on_map = function (id) {
+    // TODO: "src={source_object} to make map/showOne standard to 
+    //   all the types (location, tasklocation, task, project)
+    // Keep the class/table name for the source_object value in order to 
+    //   instanciate the Dao class on the fly, no matter the source
     utils.redirect("map/showOne?id=" + id + "&location=true");
   };
   location_manager.edit = function(location, controller, action) {
