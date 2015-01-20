@@ -4,7 +4,7 @@
  *
  * @package		Basic MVC framework
  * @author		Jeremie Litzler
- * @copyright	Copyright (c) 2014
+ * @copyright	Copyright (c) 2015
  * @license		
  * @link		
  * @since		
@@ -47,7 +47,8 @@ class TaskHelper {
       \Applications\PMTool\Resources\Enums\TaskTabKeys::FieldSampleMatrixTab => "",
       \Applications\PMTool\Resources\Enums\TaskTabKeys::CocTab => "",
       \Applications\PMTool\Resources\Enums\TaskTabKeys::LabAnalytesTab => "",
-      \Applications\PMTool\Resources\Enums\TaskTabKeys::LabSampleMatrixTab => ""
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::LabSampleMatrixTab => "",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::ServicesTab => ""
     );
     $user->setAttribute(\Library\Enums\SessionKeys::TabsStatus, $tabs);
   }

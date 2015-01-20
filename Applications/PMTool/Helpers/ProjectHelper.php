@@ -4,7 +4,7 @@
  *
  * @package		Basic MVC framework
  * @author		Jeremie Litzler
- * @copyright	Copyright (c) 2014
+ * @copyright	Copyright (c) 2015
  * @license		
  * @link		
  * @since		
@@ -39,7 +39,7 @@ class ProjectHelper {
     $itDoes = FALSE;
     $currentProject = self::GetCurrentSessionProject($user);
     foreach ($currentProject[\Library\Enums\SessionKeys::ProjectLocations] as $location) {
-      if ($location->location_active()) { 
+      if ($location->location_active()) {
         $itDoes = TRUE;
         break;
       }
@@ -67,7 +67,7 @@ class ProjectHelper {
     //retrieve the user session project from project_id
     $userSessionProjects = self::GetSessionProjects($user);
     $key = \Library\Enums\SessionKeys::ProjectKey . $project_id;
-    $user->setAttribute(\Library\Enums\SessionKeys::CurrentProject, $userSessionProjects[$key]);
+    //$user->setAttribute(\Library\Enums\SessionKeys::CurrentProject, $userSessionProjects[$key]);
     return $userSessionProjects[$key];
   }
 
@@ -124,8 +124,8 @@ class ProjectHelper {
       $user->setAttribute(\Library\Enums\SessionKeys::UserSessionProjects, $userSessionProjects);
     }
   }
-  
-    public static function SetCurrentSessionProject(\Library\User $user, $sessionProject = NULL, $project_id = 0) {
+
+  public static function SetCurrentSessionProject(\Library\User $user, $sessionProject = NULL, $project_id = 0) {
     if ($project_id > 0 && $sessionProject === NULL) {
       $sessionProjects = self::GetUserSessionProjects($user);
       $sessionTask = $sessionProjects[\Library\Enums\SessionKeys::ProjectKey . $project_id];

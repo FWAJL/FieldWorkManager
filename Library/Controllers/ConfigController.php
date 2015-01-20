@@ -4,7 +4,7 @@
  *
  * @package		Basic MVC framework
  * @author		Jeremie Litzler
- * @copyright	Copyright (c) 2014
+ * @copyright	Copyright (c) 2015
  * @license
  * @link
  * @since
@@ -30,26 +30,12 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class ConfigController extends \Library\BaseController {
 
   public function executeGetSettingValue(\Library\HttpRequest $rq) {
-    $GET_METHOD = "get";
-    $POST_METHOD = "post";
     $result = $this->InitResponseWS(
-        array(
-          "directory" => "common",
-          "resx_file" => "ws_defaults",
-          "resx_key" => "",
-          "step" => "error")
+        array("directory" => "common", "resx_file" => "ws_defaults", "resx_key" => "", "step" => "error")
     );
+    $result = \Library\Utility\ConfigHelper::GetValue($this, $rq, $result);
 
-    if (!$this->dataPost()) {
-      $result[$this->dataPost["key"]] = $this->app()->config()->get($this->dataPost["key"]);
-      $result["method"] = $POST_METHOD;
-    }
-    if ($rq->getExists("key")) {
-      $result[$rq->getData("key")] = $this->app()->config()->get($rq->getData("key"));
-      $result["method"] = $GET_METHOD;
-    }
-
-    if ($result["method"] === $GET_METHOD) {
+    if ($result["method"] === \Library\Enums\GenericAppKeys::GET_METHOD) {
       echo '<pre>', print_r($result), '</pre>';
     } else {
       $this->SendResponseWS(

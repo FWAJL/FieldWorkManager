@@ -19,7 +19,7 @@
     </li>
     <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::InspFormsTab]; ?>" id="tab2" data-form-id="task_insp_info">
       <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskInspForms; ?>">
-        Inspection Forms
+        Forms
       </a>
     </li>
     <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::FieldAnalytesTab]; ?>" id="tab3" data-form-id="field_analytes">
@@ -29,12 +29,12 @@
     </li>
     <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::FieldSampleMatrixTab]; ?>" id="tab3a" data-form-id="field_matrix">
       <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::FieldSampleMatrix; ?>">
-        Field Sample Matrix
+        Field Matrix
       </a>
     </li>
     <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::CocTab]; ?>" id="tab4" data-form-id="task_coc_info">
       <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskCOC; ?>">
-        Chain of Custody Information
+        Chain of Custody
       </a>
     </li>    
     <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::LabAnalytesTab]; ?>" id="tab5" data-form-id="lab_analytes">
@@ -44,12 +44,12 @@
     </li>
     <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::LabSampleMatrixTab]; ?>" id="tab6" data-form-id="lab_matrix">
       <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LabSampleMatrix; ?>">
-        Lab Sample Matrix
+        Lab Matrix
       </a>
     </li>
     <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::ServicesTab]; ?>" id="tab7" data-form-id="task_services">
       <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskServices; ?>">
-        Service Providers
+        Services
       </a>
     </li>
   </ul>

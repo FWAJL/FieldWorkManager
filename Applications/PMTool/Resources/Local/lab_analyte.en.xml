@@ -4,6 +4,8 @@
     
   <resource key="message_error_add">Error inserting the lab analyte.</resource>
   <resource key="message_success_add">The lab analyte has been inserted.</resource>
+  <resource key="message_error_addCommon">Error inserting the common lab analyte.</resource>
+  <resource key="message_success_addCommon">The common lab analyte has been inserted.</resource>
   <resource key="message_error_getlist">Error reading the lab analytes.</resource>
   <resource key="message_success_getlist">The lab analytes have been read.</resource>
   <resource key="message_error_getItem">Error reading the lab analyte.</resource>

@@ -22,9 +22,12 @@
         <label><?php echo $resx["task_instructions"]; ?></label>
         <textarea name="task_instructions" type="text"></textarea>
       </li>
+      <li class="hide">
+        <label><?php echo $resx["task_active"]; ?></label>
+        <input name="task_active" type="checkbox"></textarea>
+      </li>
     </ol>
   </fieldset>
-</div>
 
 <!--      <label><?php //echo $resx["triggers"];   ?></label>
       <table>
@@ -51,7 +54,7 @@
           <td id="external_note"><?php //echo $resx["trigger_ext_note"];   ?></td>
         </tr>
       </table>-->
-<div id="task_info_data_collection" class="data-form-2">
+<!--<div id="task_info_data_collection" class="data-form-2">
   <fieldset class="task_form_data_collection">
     <ol class="add-new-item">
       <li>
@@ -77,7 +80,7 @@
             <td></td>
           </tr>
         </table> 
-      </li>
+      </li>-->
 
       <!--      <li>
               <label><?php //echo $resx["resource_needs"];   ?></label>

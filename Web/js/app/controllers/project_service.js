@@ -34,7 +34,7 @@ $(document).ready(function() {
   });//Manages the context menu
 
   //************************************************//
-  // Selection of service technicians
+  // Selection of service
   var selectionParams = {
     "listLeftId": "categorized-list-left",
     "listRightId": "categorized-list-right",
@@ -45,12 +45,12 @@ $(document).ready(function() {
 
   $(".from-categorized-list-right").click(function() {
     ajaxParams.action = "add";
-    ajaxParams.arrayOfValues = utils.getValuesFromList(selectionParams.listRightId, selectionParams.dataAttrRight);
+    ajaxParams.arrayOfValues = utils.getValuesFromList(selectionParams.listRightId, selectionParams.dataAttrRight, true);
     datacx.updateItems(ajaxParams);
   });
   $(".from-categorized-list-left").click(function() {
     ajaxParams.action = "remove";
-    ajaxParams.arrayOfValues = utils.getValuesFromList(selectionParams.listLeftId, selectionParams.dataAttrLeft);
+    ajaxParams.arrayOfValues = utils.getValuesFromList(selectionParams.listLeftId, selectionParams.dataAttrLeft, true);
     datacx.updateItems(ajaxParams);
   });
   $("#btn_delete_service").click(function() {

@@ -4,10 +4,10 @@
  *
  * @package		Basic MVC framework
  * @author		Jeremie Litzler
- * @copyright	Copyright (c) 2014
- * @license		
- * @link		
- * @since		
+ * @copyright	Copyright (c) 2015
+ * @license
+ * @link
+ * @since
  * @filesource
  */
 // ------------------------------------------------------------------------
@@ -19,7 +19,7 @@
  * @subpackage	Helpers
  * @category	AnalyteHelper
  * @author		FWM DEV Team
- * @link		
+ * @link
  */
 
 namespace Applications\PMTool\Helpers;
@@ -29,18 +29,30 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class AnalyteHelper {
 
-  public static function StoreListsData($caller) {
+  public static function StoreListsData($caller, $processCommonAnalytes = FALSE) {
     $sessionPm = PmHelper::GetCurrentSessionPm($caller->user());
-    $loopParams = array("field", "lab");
+    $COMMON = "common_";
+    $FIELD = "field";
+    $LAB = "lab";
+    $loopParams = array($processCommonAnalytes ? $COMMON . $FIELD : $FIELD, $processCommonAnalytes ? $COMMON . $LAB : $LAB);
     for ($index = 0; $index < count($loopParams); $index++) {
       switch ($loopParams[$index]) {
-        case "field":
+        case $FIELD:
           $sessionPm = self::_StoreAnalytes(
-                          $caller, $sessionPm, \Library\Enums\SessionKeys::PmFieldAnalytes, new \Applications\PMTool\Models\Dao\Field_analyte());
+                  $caller, $sessionPm, \Library\Enums\SessionKeys::PmFieldAnalytes, new \Applications\PMTool\Models\Dao\Field_analyte());
           break;
-        case "lab":
+        case $LAB:
           $sessionPm = self::_StoreAnalytes(
-                          $caller, $sessionPm, \Library\Enums\SessionKeys::PmLabAnalytes, new \Applications\PMTool\Models\Dao\Lab_analyte());
+                  $caller, $sessionPm, \Library\Enums\SessionKeys::PmLabAnalytes, new \Applications\PMTool\Models\Dao\Lab_analyte());
+          break;
+        case $COMMON . $FIELD:
+          self::_StoreCommonAnalytes(
+              $caller, \Library\Enums\SessionKeys::CommonFieldAnalytes, new \Applications\PMTool\Models\Dao\Common_field_analyte);
+          break;
+
+        case $COMMON . $LAB:
+          self::_StoreCommonAnalytes(
+              $caller, \Library\Enums\SessionKeys::CommonLabAnalytes, new \Applications\PMTool\Models\Dao\Common_lab_analyte);
           break;
       }
       PmHelper::SetSessionPm($caller->user(), $sessionPm);
@@ -55,6 +67,14 @@ class AnalyteHelper {
       $sessionPm[$sessionKey] = $analytes;
     }
     return $sessionPm;
+  }
+
+  private static function _StoreCommonAnalytes($caller, $sessionKey, $analyteObj) {
+    if (count(CommonHelper::GetValueInSession($caller->user(), $sessionKey)) === 0) {
+      $dal = $caller->managers()->getManagerOf("Analyte");
+      $analytes = $dal->selectMany($analyteObj, "");
+      CommonHelper::SetValueInSession($caller->user(), $sessionKey, $analytes);
+    }
   }
 
   public static function GetListPropertiesForFieldAnalyte() {
@@ -97,42 +117,67 @@ class AnalyteHelper {
     return $project[$sessionKey];
   }
 
-  public static function AddAnalyte($caller, $result, $isFieldType = TRUE) {
+  public static function AddAnalyte($caller, $result, $isFieldType, $isCommon) {
     $pm = PmHelper::GetCurrentSessionPm($caller->user());
 
     $manager = $caller->managers()->getManagerOf($caller->module());
-    $data_sent = $caller->dataPost();
-    $data_sent["pm_id"] = $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
+    $dataPost = $caller->dataPost();
+    $dataPost["pm_id"] = $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
 
     $analytes = array();
-    $analyteObj = $isFieldType ? new \Applications\PMTool\Models\Dao\Field_analyte() : new \Applications\PMTool\Models\Dao\Lab_analyte();
-    if (array_key_exists("names", $caller->dataPost())) {
-      $analytes = self::_PrepareManyAnalyteObjects($data_sent, $isFieldType);
+    $analyteObj = null;
+    if ($isCommon) {
+      $analyteObj = $isFieldType ? new \Applications\PMTool\Models\Dao\Common_field_analyte() : new \Applications\PMTool\Models\Dao\Common_lab_analyte();
     } else {
-      array_push($analytes, CommonHelper::PrepareUserObject($data_sent, $analyteObj));
+      $analyteObj = $isFieldType ? new \Applications\PMTool\Models\Dao\Field_analyte() : new \Applications\PMTool\Models\Dao\Lab_analyte();
+    }
+
+    if (array_key_exists("names", $dataPost)) {
+      $analytes = !$isCommon ?
+          self::_PrepareManyAnalyteObjects($dataPost, $isFieldType) :
+          self::_PrepareManyCommonAnalyteObjects($dataPost, $isFieldType);
+    } else {
+      array_push($analytes, CommonHelper::PrepareUserObject($dataPost, $analyteObj));
     }
     $result["dataIn"] = $analytes;
 
     $result["dataId"] = 0;
+    $commonSessiongKey = $isFieldType ? \Library\Enums\SessionKeys::CommonFieldAnalytes : \Library\Enums\SessionKeys::CommonLabAnalytes;
+    $commonAnalytes = self::GetCommonAnalytes($caller->user(), $commonSessiongKey);
     foreach ($analytes as $analyte) {
       $result["dataId"] = $manager->add($analyte);
-      if ($isFieldType) {
+      if ($isFieldType && !$isCommon) {
         $analyte->setField_analyte_id($result["dataId"]);
         array_push($pm[\Library\Enums\SessionKeys::PmFieldAnalytes], $analyte);
-      } else {
+      } elseif (!$isFieldType && !$isCommon) {
         $analyte->setLab_analyte_id($result["dataId"]);
         array_push($pm[\Library\Enums\SessionKeys::PmLabAnalytes], $analyte);
+      } elseif ($isFieldType && $isCommon) {
+        $analyte->setCommon_field_analyte_id($result["dataId"]);
+        array_push($commonAnalytes, $analyte);
+      } else {
+        $commonSessiongKey = \Library\Enums\SessionKeys::CommonLabAnalytes;
+        $analyte->setCommon_lab_analyte_id($result["dataId"]);
+        array_push($commonAnalytes, $analyte);
       }
     }
     if ($result["dataId"] > 0) {
-      PmHelper::SetSessionPm($caller->user(), $pm);
+      if ($isCommon) {
+        self::SetCommonAnalytes($caller->user(), $commonSessiongKey, $commonAnalytes);
+      } else {
+        PmHelper::SetSessionPm($caller->user(), $pm);
+      }
     }
     return $result;
   }
 
   private static function _PrepareManyAnalyteObjects($dataPost, $isFieldType = TRUE) {
     $analytes = array();
+    if(preg_match("`^.*,*$`", $dataPost["names"])) {
+    $analyte_names = \Applications\PMTool\Helpers\CommonHelper::StringToArray(",", $dataPost["names"]);      
+    } else {
     $analyte_names = \Applications\PMTool\Helpers\CommonHelper::StringToArray("\n", $dataPost["names"]);
+    }
     foreach ($analyte_names as $name) {
       $analyte = $isFieldType ? new \Applications\PMTool\Models\Dao\Field_analyte() : new \Applications\PMTool\Models\Dao\Lab_analyte();
       $analyte->setPm_id($dataPost["pm_id"]);
@@ -146,24 +191,43 @@ class AnalyteHelper {
     return $analytes;
   }
 
+  private static function _PrepareManyCommonAnalyteObjects($dataPost, $isFieldType = TRUE) {
+    $analytes = array();
+    if(preg_match("`^.*,*$`", $dataPost["names"])) {
+    $analyte_names = \Applications\PMTool\Helpers\CommonHelper::StringToArray(",", $dataPost["names"]);      
+    } else {
+    $analyte_names = \Applications\PMTool\Helpers\CommonHelper::StringToArray("\n", $dataPost["names"]);
+    }
+    foreach ($analyte_names as $name) {
+      $analyte = $isFieldType ? new \Applications\PMTool\Models\Dao\Common_field_analyte() : new \Applications\PMTool\Models\Dao\Common_lab_analyte();
+      if ($isFieldType) {
+        $analyte->setCommon_field_analyte_name($name);
+      } else {
+        $analyte->setCommon_lab_analyte_name($name);
+      }
+      array_push($analytes, $analyte);
+    }
+    return $analytes;
+  }
+
   public static function UpdateProjectAnalytes($caller) {
     $result = $caller->InitResponseWS(); // Init result
     $dataPost = $caller->dataPost();
     $result["rows_affected"] = 0;
     if ($dataPost["isFieldType"]) {
       $result = self::ProcessListAnalytes(
-                      $caller, $result, array(
-                  "sessionKey" => \Library\Enums\SessionKeys::ProjectFieldAnalytes,
-                  "dataPost" => $dataPost,
-                  "object" => new \Applications\PMTool\Models\Dao\Project_field_analyte(),
-                  "objPropId" => "field_analyte_id"));
+              $caller, $result, array(
+            "sessionKey" => \Library\Enums\SessionKeys::ProjectFieldAnalytes,
+            "dataPost" => $dataPost,
+            "object" => new \Applications\PMTool\Models\Dao\Project_field_analyte(),
+            "objPropId" => "field_analyte_id"));
     } else {
       $result = self::ProcessListAnalytes(
-                      $caller, $result, array(
-                  "sessionKey" => \Library\Enums\SessionKeys::ProjectLabAnalytes,
-                  "dataPost" => $dataPost,
-                  "object" => new \Applications\PMTool\Models\Dao\Project_lab_analyte(),
-                  "objPropId" => "lab_analyte_id"));
+              $caller, $result, array(
+            "sessionKey" => \Library\Enums\SessionKeys::ProjectLabAnalytes,
+            "dataPost" => $dataPost,
+            "object" => new \Applications\PMTool\Models\Dao\Project_lab_analyte(),
+            "objPropId" => "lab_analyte_id"));
     }
     return $result;
   }
@@ -178,7 +242,7 @@ class AnalyteHelper {
       $dal = $caller->managers()->getManagerOf($caller->module());
       if ($params["dataPost"]["action"] === "add") {
         $analyte = $params["objPropId"] === "field_analyte_id" ?
-                new \Applications\PMTool\Models\Dao\Project_field_analyte() : new \Applications\PMTool\Models\Dao\Project_lab_analyte();
+            new \Applications\PMTool\Models\Dao\Project_field_analyte() : new \Applications\PMTool\Models\Dao\Project_lab_analyte();
         $analyte->setProject_id($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
         $setMethodObjId = "set" . ucfirst($params["objPropId"]);
         $analyte->$setMethodObjId($id);
@@ -197,6 +261,22 @@ class AnalyteHelper {
     }
     \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($caller->user(), $sessionProject);
     return $result;
+  }
+
+  public static function AddTabsStatus(\Library\User $user) {
+    $tabs = array(
+      \Applications\PMTool\Resources\Enums\AnalyteTabKeys::FieldTab => "active",
+      \Applications\PMTool\Resources\Enums\AnalyteTabKeys::LabTab => ""
+    );
+    $user->setAttribute(\Library\Enums\SessionKeys::TabActiveAnalyte, $tabs);
+  }
+
+  public static function GetCommonAnalytes($user, $sessionKey) {
+    return $user->getAttribute($sessionKey);
+  }
+
+  public static function SetCommonAnalytes($user, $sessionKey, $value) {
+    $user->setAttribute($sessionKey, $value);
   }
 
 }
