@@ -10,7 +10,7 @@ class PMToolApplication extends \Library\Application {
 
     $this->name = 'PMTool';
     $this->context()->setLanguage();
-    $this->logoImageUrl = $this->imageUtil->getImageUrl("logo.png");
+    $this->logoImageUrl = $this->imageUtil->getImageUrl("FWM_logo.jpg");
     
   }
 

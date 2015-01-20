@@ -9,7 +9,7 @@
         <input name="pm_id" type="text" />
       </li>
       <li>
-        <textarea class="high-textarea" name="common_field_analyte_name" type="text"></textarea>
+        <textarea class="list-panel" name="common_field_analyte_name" type="text"></textarea>
       </li>
     </ol>            
   </fieldset>

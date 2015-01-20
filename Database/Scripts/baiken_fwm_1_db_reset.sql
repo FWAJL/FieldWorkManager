@@ -170,17 +170,6 @@ CREATE TABLE `field_sample_matrix` (
         REFERENCES `location` (`location_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
--- Table structure for table `inspection_question`
-CREATE TABLE `inspection_question` (
-    `inspection_question_id` int(11) NOT NULL AUTO_INCREMENT,
-    `inspection_question_form_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-    `inspection_question_data` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-    `pm_id` int(11) NOT NULL COMMENT 'Foreign key => project_manager',
-    PRIMARY KEY (`inspection_question_id`),
-    CONSTRAINT `fk_inspection_question_pm` FOREIGN KEY (`pm_id`)
-        REFERENCES `project_manager` (`pm_id`) ON DELETE CASCADE
-)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
-
 -- Table structure for table `lab_analyte`
 CREATE TABLE `lab_analyte` (
     `lab_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
