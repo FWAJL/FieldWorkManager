@@ -71,7 +71,7 @@ class AnalyteHelper {
 
   private static function _StoreCommonAnalytes($caller, $sessionKey, $analyteObj) {
     if (count(CommonHelper::GetValueInSession($caller->user(), $sessionKey)) === 0) {
-      $dal = $caller->managers()->getManagerOf("analyte");
+      $dal = $caller->managers()->getManagerOf("Analyte");
       $analytes = $dal->selectMany($analyteObj, "");
       CommonHelper::SetValueInSession($caller->user(), $sessionKey, $analytes);
     }
