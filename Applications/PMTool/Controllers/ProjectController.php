@@ -105,7 +105,6 @@ class ProjectController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf($this->module);
     $result["dataId"] = $manager->add($project);
     $project->setProject_id($result["dataId"]);
-    //Clear the project and facility list from session for the connect PM
     \Applications\PMTool\Helpers\ProjectHelper::AddSessionProject($this->app()->user(), $project);
 
     $this->SendResponseWS(

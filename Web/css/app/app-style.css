@@ -3,6 +3,10 @@ body, html, .sidebar {height: 100%}
 ol, ul {  margin-bottom: 0; }
 .btn{margin-bottom: 5px;}
 .btn-warning { display: none; }
+.btn {
+width: 100%;      
+}
+
 /* END GENRAL */
 
 /* LOGIN */
@@ -90,11 +94,7 @@ ol, ul {  margin-bottom: 0; }
 }
 
 .buttons{
-  margin: 0 auto;
-}
-.btn_set_current_project{
-  max-width: 150px;
-  white-space: initial;
+  margin-top: 40px;
 }
 
 /* FACILITY */
