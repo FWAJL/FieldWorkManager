@@ -21,7 +21,10 @@
       //Just loop through each project session array and get the facility object.
       $facility = new \Applications\PMTool\Models\Dao\Facility();
       $manager = $this->managers()->getManagerOf("facility");
-      $facilities= $manager->selectManyUser($facility, "", $this->app()->user());
+      $facilities= \Applications\PMTool\Helpers\CommonHelper::GetObjectListFromSessionArrayBySessionKey(
+          $this->user(), 
+          \Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->user()),
+          \Library\Enums\SessionKeys::FacilityObject);
       /*-----------------------------------------------------------------------------------*/
       
       $data = array(
