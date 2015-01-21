@@ -199,7 +199,7 @@
             <css_file use="project"/>
         </css_files>
         <php_modules>
-            <php_module key="all_projects" file_name="all_projects.php" shared="true"/>
+            <php_module key="all_projects" file_name="Maps/all_projects.php" shared="true"/>
         </php_modules>
     </route>
     <!--   map/listAll -->
@@ -214,7 +214,7 @@
             <css_file use="project"/>
         </css_files>
         <php_modules>
-            <php_module key="current_project" file_name="current_project.php" shared="true"/>
+            <php_module key="current_project" file_name="Maps/current_project.php" shared="true"/>
         </php_modules>
     </route>
     <!--   map/currentProject -->
@@ -229,7 +229,7 @@
             <css_file use="project"/>
         </css_files>
         <php_modules>
-            <php_module key="current_project_locations" file_name="current_project_locations.php" shared="true"/>
+            <php_module key="current_project_locations" file_name="Maps/current_project_locations.php" shared="true"/>
         </php_modules>
     </route>
     <!--   map/currentProjectLocations -->
@@ -244,7 +244,7 @@
             <css_file use="project"/>
         </css_files>
         <php_modules>
-            <php_module key="task_locations" file_name="task_locations.php" shared="true"/>
+            <php_module key="task_locations" file_name="Maps/task_locations.php" shared="true"/>
         </php_modules>
     </route>
     <!--   map/taskLocations -->

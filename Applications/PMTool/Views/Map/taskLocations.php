@@ -8,7 +8,7 @@
     <div class="content-container container-fluid">
       <div class="row">
         <div class="col-lg-12 col-md-12">
-          <?php require str_replace("Modules/", "Modules/Maps/", $task_locations);  ?>
+          <?php require $task_locations;  ?>
         </div>
       </div>
     </div>

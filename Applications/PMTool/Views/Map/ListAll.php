@@ -6,7 +6,7 @@
     <div class="content-container container-fluid">
       <div class="row">
         <div class="col-lg-12 col-md-12">
-          <?php require str_replace("Modules/", "Modules/Maps/", $all_projects); ?>
+          <?php require $all_projects; ?>
         </div>
       </div>
     </div>

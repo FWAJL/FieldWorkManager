@@ -27,19 +27,10 @@
   <resource key="project_desc">Project Description</resource>
   <resource key="project_active">Active</resource>
   <resource key="project_visible">Visible</resource>
-<<<<<<< HEAD
-  <resource key="project_button_add">Add this project</resource>
-  <resource key="project_button_edit">Edit this project</resource>
-  <resource key="project_button_delete">Delete this project</resource>
-  <resource key="project_button_copy">Copy this project</resource>
-=======
-  
   <resource key="project_button_add">Add</resource>
   <resource key="project_button_edit">Edit</resource>
   <resource key="project_button_delete">Delete</resource>
   <resource key="project_button_copy">Copy</resource>
-  
->>>>>>> dev
   <resource key="project_list_all_header">Your Projects</resource>
   <resource key="h3_projects_active">Active projects</resource>
   <resource key="h3_projects_inactive">Inactive projects</resource> 
