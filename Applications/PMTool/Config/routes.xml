@@ -112,8 +112,8 @@
         <php_modules>
             <php_module key="location_tabs_open" file_name="location_tabs_open.php"/>  
             <php_module key="location_form" file_name="location_form.php" />
-<!--            <php_module key="location_buttons" file_name="location_buttons.php" />-->
-            <php_module key="location_tabs_close" file_name="location_tabs_close.php"/>  
+            <php_module key="location_tabs_close" file_name="location_tabs_close.php"/>
+            <php_module key="upload_file" file_name="upload_file.php" shared="true"/>
         </php_modules>
     </route>
     <!-- location/showForm -->
@@ -491,4 +491,5 @@
 
   <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
   <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />
+  <route url="uploadFile" module="FileUpload" action="uploadFile" resxfile="fileupload" type="lib ws" />
 </routes>

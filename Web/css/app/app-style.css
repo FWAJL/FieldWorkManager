@@ -6,7 +6,15 @@ ol, ul {  margin-bottom: 0; }
 .btn {
 width: 100%;      
 }
-
+#document-upload 
+{ 
+  width: 100%;
+  margin: 0 auto;
+  height: 200px;
+  border-radius: 5px;
+  border: 1px solid #CCC;
+  padding: 5px;
+}
 /* END GENRAL */
 
 /* LOGIN */
@@ -59,8 +67,6 @@ width: 100%;
 /* CONTENT_CONTAINER */
 .content-container {
   max-width: 100%; height: auto;
-  padding-left: 30px;
-  padding-right: 60px;
   margin: 0 auto;
 }
 .main
