@@ -1,7 +1,7 @@
 <section id="top_header">
   <div id="branding">
     <figure class="logo"><img src="<?php echo $this->app->relative_path . $this->app->logoImageUrl; ?>"></figure>
-    <p class="brand"><?php echo $resx_menu_left["brand"]; ?></p>
+<!--    <p class="brand"><?php // echo $resx_menu_left["brand"]; ?></p>-->
   </div>
   <div id="pm_info">
     <span id="pm_name" class="top-right-option">
