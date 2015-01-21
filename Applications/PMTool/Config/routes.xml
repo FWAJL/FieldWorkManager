@@ -46,12 +46,12 @@
             <!-- The "shared" attribute specifies where to get the module, either the current view Modules folder or the main Modules folder in Views -->
             <!-- Add the keys in Applications/PMTool/Resources/Enums/PhpModuleKeys -->
             <!-- The order matters! -->
-            <php_module key="project_tabs_open" file_name="project_tabs_open.php"/>
-            <php_module key="project_form" file_name="project_form.php"/>
-            <php_module key="facility_form" file_name="facility_form.php"/>
-            <php_module key="client_form" file_name="client_form.php"/>
-            <php_module key="project_buttons" file_name="project_buttons.php"/>
-            <php_module key="project_tabs_close" file_name="project_tabs_close.php"/>
+            <php_module key="project_tabs_open" file_name="project_tabs_open.php" />
+            <php_module key="project_tabs_close" file_name="project_tabs_close.php" />
+            <php_module key="project_form" file_name="project_form.php" />
+            <php_module key="facility_form" file_name="facility_form.php" />
+            <php_module key="client_form" file_name="client_form.php" />
+            <php_module key="project_buttons" file_name="project_buttons.php" />
         </php_modules>
     </route>
     <!-- project/showAddForm -->
@@ -303,10 +303,11 @@
             <css_file use="project"/>
         </css_files>
         <php_modules>
-            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true"/>
-            <php_module key="task_form" file_name="task_form.php"/>
-            <php_module key="task_buttons" file_name="task_buttons.php"/>
-            <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true"/>
+            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
+            <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true" />
+            <php_module key="task_info_lists" file_name="task_info_lists.php" />
+            <php_module key="task_form" file_name="task_form.php" />
+            <php_module key="task_buttons" file_name="task_buttons.php" />
         </php_modules>
     </route>
     <!--  task/showAddForm -->
@@ -375,15 +376,33 @@
             <css_file use="project"/>
         </css_files>
         <php_modules>
-            <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php"/>
-            <php_module key="field_analyte_form" file_name="field_analyte_form.php"/>
-            <php_module key="lab_analyte_form" file_name="lab_analyte_form.php"/>
-            <php_module key="analyte_buttons" file_name="analyte_buttons.php"/>
-            <php_module key="analyte_tabs_close" file_name="analyte_tabs_close.php"/>
+            <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php" />
+            <php_module key="up_field_analyte_lists" file_name="up_field_analyte_lists.php" />
+            <php_module key="up_lab_analyte_lists" file_name="up_lab_analyte_lists.php" />
+            <php_module key="field_analyte_form" file_name="field_analyte_form.php" />
+            <php_module key="common_field_analyte_list" file_name="common_field_analyte_list.php" />
+            <php_module key="lab_analyte_form" file_name="lab_analyte_form.php" />
+            <php_module key="common_lab_analyte_list" file_name="common_lab_analyte_list.php" />
+            <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
+            <php_module key="common_analyte_buttons" file_name="common_analyte_buttons.php" />
+            <php_module key="analyte_tabs_close" file_name="analyte_tabs_close.php" />
         </php_modules>
     </route>
-    <!-- analytes/uploadList -->
-
+    <!-- analyte/uploadList -->
+    <route url="analyte/uploadCommons" module="Analyte" action="uploadCommonAnalytes" resxfile="analyte" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/analyte_manager.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="field_analyte_form" file_name="common_field_analyte_form.php" />
+            <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
+            <php_module key="lab_analyte_form" file_name="common_lab_analyte_form.php" />
+        </php_modules>
+    </route>
+    <!-- analyte/uploadCommons -->
     <route url="service/listAll" module="ProjectService" action="manageServices" resxfile="service" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/project_service.js"/>
@@ -475,82 +494,84 @@
           - the resxfile, which used to load the resx file in Applications/Your_App/Resources/Local
           - the type, which used to differenciate a view route from a webservice ajax route
   -->
-    <route url="auth" module="Authenticate" action="authenticate" resxfile="login" type="ws"/>
-    <route url="user/create" module="Authenticate" action="create" resxfile="login" type="ws"/>
+  <route url="auth" module="Authenticate" action="authenticate" resxfile="login" type="ws" />
+  <route url="user/create" module="Authenticate" action="create" resxfile="login" type="ws" />
+  
+  <route url="project/add" module="Project" action="add" resxfile="project" type="ws" />
+  <route url="project/edit" module="Project" action="edit" resxfile="project" type="ws" />
+  <route url="project/delete" module="Project" action="delete" resxfile="project" type="ws" />
+  <route url="project/getlist" module="Project" action="getList" resxfile="project" type="ws" />
+  <route url="project/getItem" module="Project" action="getItem" resxfile="project" type="ws" />
+  <route url="project/updateItems" module="Project" action="updateItems" resxfile="project" type="ws" />
+  <route url="project/setCurrentProject" module="Project" action="setCurrentProject" resxfile="project" type="ws" />
+  
+  <route url="facility/add" module="Facility" action="add" resxfile="facility" type="ws" />
+  <route url="facility/edit" module="Facility" action="edit" resxfile="facility" type="ws" />
+  <route url="facility/delete" module="Facility" action="delete" resxfile="facility" type="ws" />
+  <route url="facility/getlist" module="Facility" action="getList" resxfile="facility" type="ws" />
+  <route url="facility/getItem" module="Facility" action="getItem" resxfile="facility" type="ws" />
+  
+  <route url="client/add" module="Client" action="add" resxfile="client" type="ws" />
+  <route url="client/edit" module="Client" action="edit" resxfile="client" type="ws" />
+  <route url="client/delete" module="Client" action="delete" resxfile="client" type="ws" />
+  <route url="client/getlist" module="Client" action="getList" resxfile="client" type="ws" />
+  <route url="client/getItem" module="Client" action="getItem" resxfile="client" type="ws" />
+  
+  <route url="location/add" module="Location" action="add" resxfile="location" type="ws" />
+  <route url="location/edit" module="Location" action="edit" resxfile="location" type="ws" />
+  <route url="location/delete" module="Location" action="delete" resxfile="location" type="ws" />
+  <route url="location/getlist" module="Location" action="getList" resxfile="location" type="ws" />
+  <route url="location/getItem" module="Location" action="getItem" resxfile="location" type="ws" />
+  <route url="location/updateItems" module="Location" action="updateItems" resxfile="location" type="ws" />
+  
+  <route url="technician/add" module="Technician" action="add" resxfile="technician" type="ws" />
+  <route url="technician/edit" module="Technician" action="edit" resxfile="technician" type="ws" />
+  <route url="technician/delete" module="Technician" action="delete" resxfile="technician" type="ws" />
+  <route url="technician/getlist" module="Technician" action="getList" resxfile="technician" type="ws" />
+  <route url="technician/getItem" module="Technician" action="getItem" resxfile="technician" type="ws" />
+  <route url="technician/updateItems" module="Technician" action="updateItems" resxfile="technician" type="ws" />
+  
+  <route url="task/add" module="Task" action="add" resxfile="task" type="ws" />
+  <route url="task/edit" module="Task" action="edit" resxfile="task" type="ws" />
+  <route url="task/delete" module="Task" action="delete" resxfile="task" type="ws" />
+  <route url="task/getlist" module="Task" action="getList" resxfile="task" type="ws" />
+  <route url="task/getItem" module="Task" action="getItem" resxfile="task" type="ws" />
+  <route url="task/updateItems" module="Task" action="updateItems" resxfile="task" type="ws" />
+  
+  <route url="task/location/updateItems" module="TaskLocation" action="updateItems" resxfile="task_location" type="ws" />
+  <route url="task/technician/updateItems" module="TaskTechnician" action="updateItems" resxfile="task_technician" type="ws" />
+  <route url="service/updateItems" module="ProjectService" action="updateItems" resxfile="service" type="ws" />
+ 
+  <route url="service/add" module="Service" action="add" resxfile="service" type="ws" />
+  <route url="service/edit" module="Service" action="edit" resxfile="service" type="ws" />
+  <route url="service/delete" module="Service" action="delete" resxfile="service" type="ws" />
+  <route url="service/getlist" module="Service" action="getList" resxfile="service" type="ws" />
+  <route url="service/getItem" module="Service" action="getItem" resxfile="service" type="ws" />
+  <!--  <route url="service/updateItems" module="Service" action="updateItems" resxfile="service" type="ws" />-->
+  
+  <route url="pm/add" module="Pm" action="add" resxfile="pm" type="ws" />
+  <route url="pm/edit" module="Pm" action="edit" resxfile="pm" type="ws" />
+  <route url="pm/delete" module="Pm" action="delete" resxfile="pm" type="ws" />
+  <route url="pm/getlist" module="Pm" action="getList" resxfile="pm" type="ws" />
+  <route url="pm/getItem" module="Pm" action="getItem" resxfile="pm" type="ws" />
+  <route url="pm/updateItems" module="Pm" action="updateItems" resxfile="pm" type="ws" />
 
-    <route url="project/add" module="Project" action="add" resxfile="project" type="ws"/>
-    <route url="project/edit" module="Project" action="edit" resxfile="project" type="ws"/>
-    <route url="project/delete" module="Project" action="delete" resxfile="project" type="ws"/>
-    <route url="project/getlist" module="Project" action="getList" resxfile="project" type="ws"/>
-    <route url="project/getItem" module="Project" action="getItem" resxfile="project" type="ws"/>
-    <route url="project/updateItems" module="Project" action="updateItems" resxfile="project" type="ws"/>
-    <route url="project/setCurrentProject" module="Project" action="setCurrentProject" resxfile="project" type="ws"/>
+  <route url="field_analyte/add" module="FieldAnalyte" action="add" resxfile="field_analyte" type="ws" />
+  <route url="field_analyte/addCommon" module="FieldAnalyte" action="addCommon" resxfile="field_analyte" type="ws" />
+  <route url="field_analyte/edit" module="FieldAnalyte" action="edit" resxfile="field_analyte" type="ws" />
+  <route url="field_analyte/delete" module="FieldAnalyte" action="delete" resxfile="field_analyte" type="ws" />
+  <route url="field_analyte/getlist" module="FieldAnalyte" action="getList" resxfile="field_analyte" type="ws" />
+  <route url="field_analyte/getItem" module="FieldAnalyte" action="getItem" resxfile="field_analyte" type="ws" />
+  <route url="field_analyte/updateItems" module="FieldAnalyte" action="updateItems" resxfile="field_analyte" type="ws" />
+  
+  <route url="lab_analyte/add" module="LabAnalyte" action="add" resxfile="lab_analyte" type="ws" />
+  <route url="lab_analyte/addCommon" module="LabAnalyte" action="addCommon" resxfile="lab_analyte" type="ws" />
+  <route url="lab_analyte/edit" module="LabAnalyte" action="edit" resxfile="lab_analyte" type="ws" />
+  <route url="lab_analyte/delete" module="LabAnalyte" action="delete" resxfile="lab_analyte" type="ws" />
+  <route url="lab_analyte/getlist" module="LabAnalyte" action="getList" resxfile="lab_analyte" type="ws" />
+  <route url="lab_analyte/getItem" module="LabAnalyte" action="getItem" resxfile="lab_analyte" type="ws" />
+  <route url="lab_analyte/updateItems" module="LabAnalyte" action="updateItems" resxfile="lab_analyte" type="ws" />
 
-    <route url="facility/add" module="Facility" action="add" resxfile="facility" type="ws"/>
-    <route url="facility/edit" module="Facility" action="edit" resxfile="facility" type="ws"/>
-    <route url="facility/delete" module="Facility" action="delete" resxfile="facility" type="ws"/>
-    <route url="facility/getlist" module="Facility" action="getList" resxfile="facility" type="ws"/>
-    <route url="facility/getItem" module="Facility" action="getItem" resxfile="facility" type="ws"/>
-
-    <route url="client/add" module="Client" action="add" resxfile="client" type="ws"/>
-    <route url="client/edit" module="Client" action="edit" resxfile="client" type="ws"/>
-    <route url="client/delete" module="Client" action="delete" resxfile="client" type="ws"/>
-    <route url="client/getlist" module="Client" action="getList" resxfile="client" type="ws"/>
-    <route url="client/getItem" module="Client" action="getItem" resxfile="client" type="ws"/>
-
-    <route url="location/add" module="Location" action="add" resxfile="location" type="ws"/>
-    <route url="location/edit" module="Location" action="edit" resxfile="location" type="ws"/>
-    <route url="location/delete" module="Location" action="delete" resxfile="location" type="ws"/>
-    <route url="location/getlist" module="Location" action="getList" resxfile="location" type="ws"/>
-    <route url="location/getItem" module="Location" action="getItem" resxfile="location" type="ws"/>
-    <route url="location/updateItems" module="Location" action="updateItems" resxfile="location" type="ws"/>
-
-    <route url="technician/add" module="Technician" action="add" resxfile="technician" type="ws"/>
-    <route url="technician/edit" module="Technician" action="edit" resxfile="technician" type="ws"/>
-    <route url="technician/delete" module="Technician" action="delete" resxfile="technician" type="ws"/>
-    <route url="technician/getlist" module="Technician" action="getList" resxfile="technician" type="ws"/>
-    <route url="technician/getItem" module="Technician" action="getItem" resxfile="technician" type="ws"/>
-    <route url="technician/updateItems" module="Technician" action="updateItems" resxfile="technician" type="ws"/>
-
-    <route url="task/add" module="Task" action="add" resxfile="task" type="ws"/>
-    <route url="task/edit" module="Task" action="edit" resxfile="task" type="ws"/>
-    <route url="task/delete" module="Task" action="delete" resxfile="task" type="ws"/>
-    <route url="task/getlist" module="Task" action="getList" resxfile="task" type="ws"/>
-    <route url="task/getItem" module="Task" action="getItem" resxfile="task" type="ws"/>
-    <route url="task/updateItems" module="Task" action="updateItems" resxfile="task" type="ws"/>
-
-    <route url="task/location/updateItems" module="TaskLocation" action="updateItems" resxfile="task_location" type="ws"/>
-    <route url="task/technician/updateItems" module="TaskTechnician" action="updateItems" resxfile="task_technician" type="ws"/>
-    <route url="service/updateItems" module="ProjectService" action="updateItems" resxfile="service" type="ws"/>
-
-    <route url="service/add" module="Service" action="add" resxfile="service" type="ws"/>
-    <route url="service/edit" module="Service" action="edit" resxfile="service" type="ws"/>
-    <route url="service/delete" module="Service" action="delete" resxfile="service" type="ws"/>
-    <route url="service/getlist" module="Service" action="getList" resxfile="service" type="ws"/>
-    <route url="service/getItem" module="Service" action="getItem" resxfile="service" type="ws"/>
-    <!--  <route url="service/updateItems" module="Service" action="updateItems" resxfile="service" type="ws" />-->
-
-    <route url="pm/add" module="Pm" action="add" resxfile="pm" type="ws"/>
-    <route url="pm/edit" module="Pm" action="edit" resxfile="pm" type="ws"/>
-    <route url="pm/delete" module="Pm" action="delete" resxfile="pm" type="ws"/>
-    <route url="pm/getlist" module="Pm" action="getList" resxfile="pm" type="ws"/>
-    <route url="pm/getItem" module="Pm" action="getItem" resxfile="pm" type="ws"/>
-    <route url="pm/updateItems" module="Pm" action="updateItems" resxfile="pm" type="ws"/>
-
-    <route url="field_analyte/add" module="FieldAnalyte" action="add" resxfile="field_analyte" type="ws"/>
-    <route url="field_analyte/edit" module="FieldAnalyte" action="edit" resxfile="field_analyte" type="ws"/>
-    <route url="field_analyte/delete" module="FieldAnalyte" action="delete" resxfile="field_analyte" type="ws"/>
-    <route url="field_analyte/getlist" module="FieldAnalyte" action="getList" resxfile="field_analyte" type="ws"/>
-    <route url="field_analyte/getItem" module="FieldAnalyte" action="getItem" resxfile="field_analyte" type="ws"/>
-    <route url="field_analyte/updateItems" module="FieldAnalyte" action="updateItems" resxfile="field_analyte" type="ws"/>
-
-    <route url="lab_analyte/add" module="LabAnalyte" action="add" resxfile="lab_analyte" type="ws"/>
-    <route url="lab_analyte/edit" module="LabAnalyte" action="edit" resxfile="lab_analyte" type="ws"/>
-    <route url="lab_analyte/delete" module="LabAnalyte" action="delete" resxfile="lab_analyte" type="ws"/>
-    <route url="lab_analyte/getlist" module="LabAnalyte" action="getList" resxfile="lab_analyte" type="ws"/>
-    <route url="lab_analyte/getItem" module="LabAnalyte" action="getItem" resxfile="lab_analyte" type="ws"/>
-    <route url="lab_analyte/updateItems" module="LabAnalyte" action="updateItems" resxfile="lab_analyte" type="ws"/>
-
-    <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws"/>
-    <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws"/>
+  <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
+  <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />
 </routes>

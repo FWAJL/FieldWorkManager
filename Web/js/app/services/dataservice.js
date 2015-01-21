@@ -49,7 +49,7 @@
         return undefined;
       } else {//success
         toastr.success(reply.message);
-        utils.redirect(params.redirectUrl);
+        if (params.redirectUrl !== "") utils.redirect(params.redirectUrl);
       }
     });
   };

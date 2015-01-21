@@ -22,7 +22,7 @@
       <label><?php echo $resx["project_active"]; ?></label>
       <input name="project_active" type="checkbox" checked />
     </li>
-    <li style="display: none">
+    <li class="hide">
       <label><?php // echo $resx["project_visible"]; ?></label>
       <input name="project_visible" type="checkbox"/>
     </li>

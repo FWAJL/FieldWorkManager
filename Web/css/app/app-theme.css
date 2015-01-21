@@ -23,17 +23,22 @@
   border: solid 1px #999;
 }
 
-/* ADD PROJECT */
-.form_sections, .project_form, .facility_form, .form{
-  padding: 10px;
+h3 {
+    margin-top: 10px;
+}
+
+/* ADD_EDIT */
+.form_sections {
+  padding: 5px;
   padding-bottom: 30px;
 }
 .form_sections li label{
   width: 200px;
 }
 .form_sections li input, .form_sections li textarea{
-  width: 200px;
+  width: 240px;
 }
+
 /* VIEW PROJECTS LIST */
 .project_list_section{
   padding: 10px 20px;

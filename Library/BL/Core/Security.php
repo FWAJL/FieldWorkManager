@@ -5,7 +5,7 @@
  *
  * @package		Basic MVC framework
  * @author		FWM DEV Team
- * @copyright	Copyright (c) 2014
+ * @copyright	Copyright (c) 2015
  * @license		
  * @link		
  * @since		

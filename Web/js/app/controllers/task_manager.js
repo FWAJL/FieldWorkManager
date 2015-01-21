@@ -151,7 +151,7 @@ $(document).ready(function () {
     $("textarea[name=\"task_instructions\"]").val(dataWs.task_info_obj.task_instructions);
 //    $("input[name=\"task_trigger_cal\"]").val(dataWs.task_info_obj.task_trigger_cal);
 //    $("input[name=\"task_trigger_pm\"]").val(dataWs.task_info_obj.task_trigger_pm);
-//    $("input[name=\"task_active\"]").val(dataWs.task_info_obj.task_active);
+    $("input[name=\"task_active\"]").prop('checked', utils.setCheckBoxValue(dataWs.task_info_obj.task_active));
 //    $("input[name=\"task_trigger_ext\"]").val(dataWs.task_info_obj.task_trigger_ext);
 //    Other forms called here
   };
