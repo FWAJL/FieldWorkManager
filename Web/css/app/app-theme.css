@@ -24,7 +24,7 @@
 }
 
 h3 {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 /* ADD_EDIT */
@@ -34,8 +34,9 @@ h3 {
 }
 
 .data-form{
-   padding: 5px;
-   padding-top: 20px; 
+  padding: 5px;
+  padding-top: 20px; 
+
 }
 
 .form_sections li label{
@@ -89,30 +90,30 @@ h3 {
 
 /* ADD TASK */
 .task_form_sections .task_form .checkbox, .task_form_data_collection {
-padding: 0px 2px 0px 30px;
+  padding: 0px 2px 0px 30px;
 }
 
 
 .task_form .note {
-width: 500px;
+  width: 500px;
 }
 
 /* ADD LOCATION */
 .location_form_sections .location_form .checkbox, .location_form_data_collection {
-padding: 0px 2px 0px 30px;
+  padding: 0px 2px 0px 30px;
 }
 
 .location_form .note {
-width: 500px;
+  width: 500px;
 }
 
 .location_form {
-width: 100%;
+  width: 100%;
 }
 
 #photo_form {
-width: 40%;
-float: right;
+  width: 40%;
+  float: right;
 }
 
 li.category-name {
