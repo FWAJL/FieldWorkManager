@@ -13,7 +13,7 @@
     echo
     "<li data-"
     . $data_common_field_analyte[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::module]
-    . "-id=\"" . $object->$prop_id() . "\" class=\"select_item ui-widget-content\">"
+    . "-id=\"" . $object->$prop_id() . "\" class=\"ui-widget-content\">"
     . $object->$prop_name()
     . "</li>";
   }
