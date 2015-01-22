@@ -54,6 +54,7 @@ class PhpModuleKeys {
   const analyte_buttons = "analyte_buttons";
   const analyte_tabs_close = "analyte_tabs_close";
 
+  const map_view = "map_view";
   const all_projects = "all_projects";
 
   const current_project = "current_project";

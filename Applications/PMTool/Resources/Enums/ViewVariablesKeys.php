@@ -64,7 +64,7 @@ class ViewVariablesKeys {
   const task_tab_open = "task_tab_open";
   const task_tab_close = "task_tab_close";
 
-
+  const map_view = "map_view";
   const all_projects = "all_projects";
   const current_project = "current_project";
   const current_project_locations = "current_project_locations";

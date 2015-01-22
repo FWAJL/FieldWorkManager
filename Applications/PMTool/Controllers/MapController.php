@@ -1,42 +1,39 @@
 <?php
 
-  namespace Applications\PMTool\Controllers;
+namespace Applications\PMTool\Controllers;
 
-  if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
-    exit('No direct script access allowed');
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+  exit('No direct script access allowed');
 
-  class MapController extends \Library\BaseController {
+class MapController extends \Library\BaseController {
 
-    //TODO: Make this method generic. It can work for a list of:
-    //  - facilities
-    //  - locations
-    //  - task locations
-    //TODO: return the list of object in JSON from a AJAX request initiated by the client.
-    public function executeListAll(\Library\HttpRequest $rq) {
-      $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-      $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+  public function executeLoadView($rq) {
+    $modules = $this->app()->router()->selectedRoute()->phpModules();
+    $this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+  }
 
-      //TODO: No need for the Dal call here. Everything is already in Session
-      //See => \Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->user());
-      //Just loop through each project session array and get the facility object.
-      $facility = new \Applications\PMTool\Models\Dao\Facility();
-      $manager = $this->managers()->getManagerOf("facility");
-      $facilities= \Applications\PMTool\Helpers\CommonHelper::GetObjectListFromSessionArrayBySessionKey(
-          $this->user(), 
-          \Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->user()),
-          \Library\Enums\SessionKeys::FacilityObject);
-      /*-----------------------------------------------------------------------------------*/
-      
-      $data = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module     => $this->resxfile,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects    => $facilities,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList($this->resxfile)
-      );
-      $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
+  public function executeListAll(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS();
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
-      $modules = $this->app()->router()->selectedRoute()->phpModules();
-      $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::all_projects, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::all_projects]);
-    }
+    $facility = new \Applications\PMTool\Models\Dao\Facility();
+    $manager = $this->managers()->getManagerOf("facility");
+    $facilities = \Applications\PMTool\Helpers\CommonHelper::GetObjectListFromSessionArrayBySessionKey(
+                    $this->user(), \Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->user()), \Library\Enums\SessionKeys::FacilityObject);
+
+    $coordinates = \Applications\PMTool\Helpers\CommonHelper::BuildLatAndLongCoordFromGeoObjects($facilities, "facility_lat", "facility_long");
+    
+    $result["items"] = $coordinates;
+    $this->SendResponseWS(
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Map,
+        "resx_key" => $this->action(),
+        "step" => (count($coordinates) > 0) ? "success" : "error"
+    ));
+  }
+
 //
 //    public function executeCurrentProject(\Library\HttpRequest $rq) {
 //      $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
@@ -116,5 +113,4 @@
 //      $modules = $this->app()->router()->selectedRoute()->phpModules();
 //      $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_locations, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::task_locations]);
 //    }
-
-  }
+}

@@ -1,22 +1,21 @@
 var map;
 function load() {
   var array = new Array();
-  for (var i in objects) {
-    array.push({
-      "lat": objects[i][0],
-      "lng": objects[i][1]
-    });
-  }
+  datacx.post("map/listAll", {}).then(function(reply) {//call AJAX method to call Project/Add WebService
+    if (reply === null || reply.result === 0) {//has an error
+      toastr.error(reply.message);
+    } else {//success
+      map.addMarkers(reply.items);
 
-  map.addMarkers(array);
-
-  setTimeout(function () {
-    map.fitZoom(array);
-  }, 500);
+      setTimeout(function() {
+        map.fitZoom(reply.items);
+      }, 500);
+    }
+  });
 }
-$(document).ready(function () {
+$(document).ready(function() {
   if ($("#map").length) {
-    setTimeout(function () {
+    setTimeout(function() {
       map = new GMaps({
         div: '#map',
         lat: 0,

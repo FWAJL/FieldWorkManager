@@ -40,6 +40,7 @@ abstract class ResxFileNameKeys {
   const Analyte = "analyte";
   const FieldAnalyte = "field_analyte";
   const LabAnalyte = "lab_analyte";
+  const Map = "map";
 }
 
 ?>
