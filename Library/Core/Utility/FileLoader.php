@@ -13,20 +13,20 @@
 // ------------------------------------------------------------------------
 
 /**
- * FileUpload Class
+ * FileLoader Class
  *
  * @package		Library
  * @subpackage	Utility
- * @category	_TemplateClass
+ * @category	FileLoader
  * @author		Jeremie Litzler
  * @link		
  */
 
-namespace Library\Core\Utilities;
+namespace Library\Core\Utility;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class FileUpload extends \Library\ApplicationComponent {
+class FileLoader extends \Library\ApplicationComponent {
   
 }
