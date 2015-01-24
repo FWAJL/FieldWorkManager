@@ -6,7 +6,19 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
 class HttpRequest {
+  public $requestId;
 
+  public function __construct() {
+    $this->requestId = uniqid();
+  }
+
+  public function requestId() {
+    return $this->requestId;
+  }
+  public function setRequestId($requestId) {
+    $this->requestId = $requestId;
+  }
+  
   public function cookieData($key) {
     return isset($_COOKIE[$key]) ? $_COOKIE[$key] : null;
   }
