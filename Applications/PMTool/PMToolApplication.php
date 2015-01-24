@@ -15,6 +15,7 @@ class PMToolApplication extends \Library\Application {
   }
 
   public function run() {
+    \Library\Core\Utility\TimeLogger::StartHttpRequestLog($this);
     $this->i8n->loadResources();
     
     $controller = $this->getController();

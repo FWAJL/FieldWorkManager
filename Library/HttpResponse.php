@@ -33,10 +33,11 @@ class HttpResponse extends ApplicationComponent {
     // (bien que je suis sûr que les noms choisis sont assez explicites !).
     if (!$this->app->router->isWsCall) {
       //Return the content to page
-     exit($this->page->getGeneratedPage()); 
+      exit($this->page->getGeneratedPage());
     } else {
       //Since we are doing a AJAX call, we just exit.
-     exit();
+      //Core\Utility\TimeLogger::EndHttpRequestLog($this->app(), TRUE);
+      exit();
     }
   }
 

@@ -57,7 +57,7 @@ class Page extends ApplicationComponent {
         require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::FooterTemplate;
       }
     }
-
+    Core\Utility\TimeLogger::EndHttpRequestLog($this->app());
     return ob_get_clean();
   }
 
