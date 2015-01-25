@@ -48,10 +48,17 @@
   <resource key="triggers">Triggers</resource>
   <resource key="task_trigger_cal">Recurring</resource>
   <resource key="task_trigger_pm">Manual</resource>
-  <resource key="trigger_pm_note">User must manually initiate an event, even if there are other triggers.</resource>
-  <resource key="trigger_ext_note">Example: Rain event for storm water sampling.</resource>
+  <resource key="inspection">Task requires completion of a field form</resource>
+  <resource key="field_sample">Analyzing field samples</resource>
+  <resource key="lab_sample">Submitting samples to a laboratory</resource>
+  <resource key="service_provider">Outside Resources required</resource>
+  <resource key="data_collect">Data Collection and Services</resource>
+  <resource key="xxx"></resource>
+  <resource key="xxx"></resource>
+  <resource key="xxx"></resource>
+  <resource key="xxx"></resource>
+inspection
   <resource key="task_trigger_ext">External</resource>
-  <resource key="resource_needs">Choose Resource Needs</resource>
   
   <!--  Task Technicians Form--> 
 
