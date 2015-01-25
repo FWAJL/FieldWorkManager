@@ -35,7 +35,6 @@
   <resource key="analyte_list">List All</resource>
   
   <resource key="header_form">Field Forms</resource>
-<!--  <resource key="form_add">Add</resource>
   <resource key="form_list">List All</resource>-->
   
   <resource key="header_service">Service Providers</resource>
