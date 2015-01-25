@@ -22,6 +22,6 @@
       <h4><?php echo $resx["h4_project_technicians"]; ?></h4>
       <?php require $form_modules["group_list_right"]; ?>              
     </div>
-    <?php require $form_modules["task_tabs_close"]; ?>              
+    <?php require $form_modules["tabs_close"]; ?>              
   </div
 </div>

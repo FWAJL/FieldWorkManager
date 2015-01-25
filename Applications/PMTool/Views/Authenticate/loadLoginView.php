@@ -2,7 +2,7 @@
 <section id="top_header">
   <section id="branding">
     <figure class="logo"><img src="<?php echo $this->app->relative_path . $this->app->logoImageUrl; ?>"></figure>
-    <p class="brand"><?php echo $resx_menu_left["brand"]; ?></p>
+<!--    <p class="brand"><?php //echo $resx_menu_left["brand"]; ?></p>-->
   </section>
 </section>
 <section  class="login-container">

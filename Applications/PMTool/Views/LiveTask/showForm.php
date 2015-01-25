@@ -17,7 +17,7 @@
     </div>
 
     <!-- close tabs -->
-    <?php // require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\LiveTask::live_task_tabs_close]; ?>
+    <?php // require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\LiveTask::tabs_close]; ?>
   </div>
 
 </div>

@@ -28,7 +28,7 @@ if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script acces
 class Analyte {
   //Modules keys
   const analyte_tabs_open = "analyte_tabs_open";
-  const analyte_tabs_close = "analyte_tabs_close";
+  const tabs_close = "tabs_close";
   
   const field_analyte_lists = "field_analyte_lists";
   const lab_analyte_lists = "lab_analyte_lists";

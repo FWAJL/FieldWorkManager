@@ -16,7 +16,7 @@
 <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_info_lists]; ?>      
 
     <!-- close tabs -->
-<?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::task_tabs_close]; ?>
+<?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::tabs_close]; ?>
   </div>
 
 </div>

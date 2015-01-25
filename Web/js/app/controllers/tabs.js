@@ -88,5 +88,15 @@ $(document).ready(function() {
       $("#tab7").hide()
     }
   });
+  
+    $("#freq_list").hide()
+  $("#freq_list_box").change(function()
+  {
+    if ($("#freq_list_box").is(":checked")) {
+      $("#freq_list").show()
+    } else {
+      $("#freq_list").hide()
+    }
+  });
 
  });

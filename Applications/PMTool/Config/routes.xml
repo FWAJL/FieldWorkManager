@@ -47,7 +47,7 @@
             <!-- Add the keys in Applications/PMTool/Resources/Enums/PhpModuleKeys -->
             <!-- The order matters! -->
             <php_module key="project_tabs_open" file_name="project_tabs_open.php" />
-            <php_module key="project_tabs_close" file_name="project_tabs_close.php" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true"/>
             <php_module key="project_form" file_name="project_form.php" />
             <php_module key="facility_form" file_name="facility_form.php" />
             <php_module key="client_form" file_name="client_form.php" />
@@ -110,9 +110,9 @@
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
         <php_modules>
-            <php_module key="location_tabs_open" file_name="location_tabs_open.php"/>  
+<!--            <php_module key="location_tabs_open" file_name="location_tabs_open.php"/>  -->
             <php_module key="location_form" file_name="location_form.php" />
-            <php_module key="location_tabs_close" file_name="location_tabs_close.php"/>
+<!--            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />-->
             <php_module key="upload_file" file_name="upload_file.php" shared="true"/>
         </php_modules>
     </route>
@@ -170,10 +170,10 @@
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
         <php_modules>
-             <php_module key="technician_tabs_open" file_name="technician_tabs_open.php"/>   
+<!--             <php_module key="technician_tabs_open" file_name="technician_tabs_open.php"/>   -->
             <php_module key="technician_form" file_name="technician_form.php" />
 <!--            <php_module key="technician_buttons" file_name="technician_buttons.php" />-->
-            <php_module key="technician_tabs_close" file_name="technician_tabs_close.php" />
+<!--            <php_module key="tabs_close" file_name="tabs_close.php" shared="true"/>-->
         </php_modules>
     </route>
     <!-- technician/showForm -->
@@ -219,7 +219,7 @@
         </css_files>
         <php_modules>
             <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
-            <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="task_info_lists" file_name="task_info_lists.php" />
             <php_module key="task_form" file_name="task_form.php" />
             <php_module key="task_buttons" file_name="task_buttons.php" />
@@ -238,7 +238,7 @@
             <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
             <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
             <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
-            <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
         </php_modules>
     </route><!--  task/locations --> 
     
@@ -253,7 +253,7 @@
             <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
             <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
             <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
-            <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
         </php_modules>
     </route><!--  task/technicians -->
     
@@ -268,7 +268,7 @@
         </css_files>
         <php_modules>
             <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php" />
-            <php_module key="analyte_tabs_close" file_name="analyte_tabs_close.php" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="field_analyte_lists" file_name="field_analyte_lists.php" />
             <php_module key="lab_analyte_lists" file_name="lab_analyte_lists.php" />
             <php_module key="project_field_analyte_list" file_name="project_field_analyte_list.php" />
@@ -298,7 +298,7 @@
             <php_module key="common_lab_analyte_list" file_name="common_lab_analyte_list.php" />
             <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
             <php_module key="common_analyte_buttons" file_name="common_analyte_buttons.php" />
-            <php_module key="analyte_tabs_close" file_name="analyte_tabs_close.php" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true"/>
 
         </php_modules>
     </route>
@@ -340,10 +340,10 @@
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="service_tabs_open" file_name="service_tabs_open.php" />
+<!--            <php_module key="service_tabs_open" file_name="service_tabs_open.php" />-->
             <php_module key="service_form" file_name="service_form.php" />
 <!--            <php_module key="service_buttons" file_name="service_buttons.php" />-->
-            <php_module key="service_tabs_close" file_name="service_tabs_close.php" />
+<!--            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />-->
         </php_modules>
     </route>
     <!-- service provider/showForm -->
@@ -393,7 +393,7 @@
             <!-- <php_module key="pm_tabs_open" file_name="pm_tabs_open.php"/>   -->
             <php_module key="pm_form" file_name="pm_form.php" />
             <php_module key="pm_buttons" file_name="pm_buttons.php" />
-            <php_module key="pm_tabs_close" file_name="pm_tabs_close.php" />
+<!--            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />-->
         </php_modules>
     </route>
     <!-- pm/showForm -->

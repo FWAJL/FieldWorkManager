@@ -21,13 +21,13 @@
           </div>
         </div>
         <div  class="col-lg-5 col-md-5">
-          Nothing here
+          
         </div>
       </div>
     </div>
 
     <!-- close tabs -->
-    <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::project_tabs_close]; ?>
+    <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::tabs_close]; ?>
   </div>
 
 </div>
