@@ -44,10 +44,8 @@ class TaskHelper {
       \Applications\PMTool\Resources\Enums\TaskTabKeys::LocationsTab => "",
       \Applications\PMTool\Resources\Enums\TaskTabKeys::InspFormsTab => "",
       \Applications\PMTool\Resources\Enums\TaskTabKeys::FieldAnalytesTab => "",
-      \Applications\PMTool\Resources\Enums\TaskTabKeys::FieldSampleMatrixTab => "",
       \Applications\PMTool\Resources\Enums\TaskTabKeys::CocTab => "",
       \Applications\PMTool\Resources\Enums\TaskTabKeys::LabAnalytesTab => "",
-      \Applications\PMTool\Resources\Enums\TaskTabKeys::LabSampleMatrixTab => "",
       \Applications\PMTool\Resources\Enums\TaskTabKeys::ServicesTab => ""
     );
     $user->setAttribute(\Library\Enums\SessionKeys::TabsStatus, $tabs);
