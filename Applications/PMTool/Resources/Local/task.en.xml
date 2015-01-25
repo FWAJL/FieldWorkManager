@@ -38,7 +38,22 @@
   <resource key="task_list_all_header">Tasks</resource>
   <resource key="h3_tasks_active">Active tasks</resource>
   <resource key="h3_tasks_inactive">Inactive tasks</resource> 
-  <resource key="task_active">Active</resource>  
+  <resource key="task_active">Active</resource> 
+  
+  <!-- Tabs -->  
+  
+  <resource key="task_tab_info">Task Info</resource>
+  <resource key="task_tab_technicians">Technicians</resource>
+  <resource key="task_tab_locations">Locations</resource>
+  <resource key="xxx"></resource>
+  <resource key="xxx"></resource>
+  <resource key="task_tab_map">Map</resource>
+  <resource key="task_tab_forms">Forms</resource>
+  <resource key="task_tab_field_analytes">Field Analytes</resource>
+  <resource key="task_tab_lab_analytes">Lab Analytes</resource>
+  <resource key="task_tab_coc">Chain of Custody</resource>
+  <resource key="task_tab_services">Services</resource>
+                
     
   <!--  Task Info Form-->
   
@@ -53,11 +68,6 @@
   <resource key="lab_sample">Submitting samples to a laboratory</resource>
   <resource key="service_provider">Outside Resources required</resource>
   <resource key="data_collect">Data Collection and Services</resource>
-  <resource key="xxx"></resource>
-  <resource key="xxx"></resource>
-  <resource key="xxx"></resource>
-  <resource key="xxx"></resource>
-inspection
   <resource key="task_trigger_ext">External</resource>
   
   <!--  Task Technicians Form--> 
