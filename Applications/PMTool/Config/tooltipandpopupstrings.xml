@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages>
+	<message uicomponent="tooltip" targetattr="data-project-id" value="Click to select : Right‐click to edit" />
+	<message uicomponent="tooltip" targetattr="data-technician-id" value="Click to select : Right‐click to edit" />
+</messages>

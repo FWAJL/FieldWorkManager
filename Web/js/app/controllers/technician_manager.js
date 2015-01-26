@@ -103,6 +103,10 @@ $(document).ready(function() {
     $(".technician_list").fadeIn('2000').removeClass("hide");
     technician_manager.getList();
   });//Show "List All" panel
+  
+  $("li[data-technician-id]").hover(function(){
+	$(this).tooltip({ placement: "bottom" });
+  });
 
 });
 /***********
