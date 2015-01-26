@@ -28,7 +28,7 @@ if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script acces
 class Project {
   //Modules keys
   const project_tabs_open = "project_tabs_open";
-  const project_tabs_close = "project_tabs_close";
+  const tabs_close = "tabs_close";
   
   const project_info_lists = "project_info_lists";
   const facility_info_lists = "facility_info_lists";
