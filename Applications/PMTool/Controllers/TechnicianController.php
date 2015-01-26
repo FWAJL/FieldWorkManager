@@ -19,7 +19,7 @@ class TechnicianController extends \Library\BaseController {
     //Get list of object stored in session
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->app()->user());
     $technicians = \Applications\PMTool\Helpers\TechnicianHelper::GetPmTechnicians($this, $pm);
-	
+	 
 	//Fetch tooltip data from xml and pass to view as an array
 	$tooltipMessages = \Applications\PMTool\Helpers\ProjectHelper::loadToolTipMessagefromXML($this->app->name());
 	$tooltip_array = array();

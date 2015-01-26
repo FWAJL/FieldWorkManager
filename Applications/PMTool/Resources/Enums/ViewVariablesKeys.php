@@ -45,7 +45,7 @@ class ViewVariablesKeys {
   const property_name = "prop_name";
   const property_active = "prop_active";
   //For tooltip
-  const tooltip_message = "tooltip_message";
+  const tooltip_message = "tooltip_message"; 
 
   const tabStatus = "tab";
 

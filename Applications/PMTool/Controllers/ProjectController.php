@@ -69,7 +69,7 @@ class ProjectController extends \Library\BaseController {
   public function executeListAll(\Library\HttpRequest $rq) {
     
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]); 
     
 	//Fetch tooltip data from xml and pass to view as an array
 	$tooltipMessages = \Applications\PMTool\Helpers\ProjectHelper::loadToolTipMessagefromXML($this->app->name());

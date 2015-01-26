@@ -107,7 +107,7 @@ $(document).ready(function() {
   
   $("li[data-project-id]").hover(function(){
 	$(this).tooltip({ placement: "bottom" });
-  });
+  }); 
 
 });
 /***********

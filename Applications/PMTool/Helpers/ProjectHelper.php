@@ -187,7 +187,7 @@ class ProjectHelper {
       throw new Exception("In " . __CLASS__ . " > Method: " . __METHOD__);
     }
     return $xml->getElementsByTagName("message");  
-  }
+  } 
 
 }
 

@@ -106,7 +106,7 @@ $(document).ready(function() {
   
   $("li[data-technician-id]").hover(function(){
 	$(this).tooltip({ placement: "bottom" });
-  });
+  }); 
 
 });
 /***********
