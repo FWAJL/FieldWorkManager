@@ -62,7 +62,7 @@ class ViewVariablesKeys {
   
   //Task's view variabless
   const task_tab_open = "task_tab_open";
-  const task_tab_close = "task_tab_close";
+  const tab_close = "tab_close";
 }
 
 ?>

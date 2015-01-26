@@ -35,14 +35,13 @@
   <resource key="analyte_list">List All</resource>
   
   <resource key="header_form">Field Forms</resource>
-  <resource key="form_add">Add</resource>
-  <resource key="form_list">List All</resource>
+  <resource key="form_list">List All</resource>-->
   
   <resource key="header_service">Service Providers</resource>
   <resource key="service_add">Add</resource>
   <resource key="service_list">List All</resource>
   
-  <resource key="header_user_results">Results</resource>
+  <resource key="header_user_results">Completed Tasks</resource>
   
   
   
