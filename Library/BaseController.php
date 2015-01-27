@@ -45,7 +45,10 @@ abstract class BaseController extends ApplicationComponent {
 
     $br = new UC\Breadcrumb($this->app());
     //Load controller method
+    $time_log_type = Enums\ResourceKeys\GlobalAppKeys::log_controller_method_request;
+    Core\Utility\TimeLogger::StartLog($this->app(), $time_log_type);
     $result = $this->$method($this->app->HttpRequest());
+    Core\Utility\TimeLogger::EndLog($this->app(), $time_log_type);
     if ($result !== NULL) {
       $result["br"] = $br->Build();
       echo \Library\HttpResponse::encodeJson($result);
@@ -228,6 +231,7 @@ abstract class BaseController extends ApplicationComponent {
     $this->page->addVar("logout_url", __BASEURL__ . Enums\ResourceKeys\UrlKeys::LogoutUrl);
   }
   protected function Redirect($urlPart) {
+    Core\Utility\TimeLogger::EndLog($this->app(), \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
     $url = __BASEURL__ . $urlPart;
     header('Location: ' . $url);
     exit();
