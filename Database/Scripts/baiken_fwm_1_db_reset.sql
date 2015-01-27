@@ -346,6 +346,17 @@ CREATE TABLE `document` (
     UNIQUE INDEX `un_doc_cat_val` (`document_id` ASC, `document_category` ASC, `document_value` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- Table structure for table `log`
+CREATE TABLE `log` (
+    `log_id` int(11) NOT NULL AUTO_INCREMENT,
+    `log_request_id` varchar(50) NOT NULL,
+    `log_start` varchar(20) NOT NULL,
+    `log_end` varchar(20) NOT NULL COMMENT 'FORMAT: Y-m-d H:i:s',
+    `log_execution_time` float(10,6) NOT NULL COMMENT 'In milliseconds',
+    `log_type` varchar(40) NOT NULL COMMENT 'http_request, controller_method',
+    `log_filter` varchar(100) NOT NULL,
+    PRIMARY KEY (`log_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Dumping data for table `project_manager`
 INSERT INTO `project_manager` (`pm_id`, `username`, `password`, `hint`, `pm_comp_name`, `pm_name`, `pm_address`, `pm_phone`, `pm_email`) VALUES

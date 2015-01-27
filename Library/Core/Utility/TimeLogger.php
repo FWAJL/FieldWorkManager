@@ -34,28 +34,31 @@ class TimeLogger extends Logger {
 //    $this->logs[\Library\Enums\ResourceKeys\GlobalAppKeys::log_controller_method_request] = array();
 //  }
 
-  public static function SetLog($user, \Library\Core\BO\Timelog $log) {
+  public static function SetLog($user, \Library\Core\BO\Log $log) {
     $logs = Logger::GetLogs($user);
-    $logs[$log->type()][$log->id()] = $log;
+    $logs[$log->log_type()][$log->log_request_id()] = $log;
     Logger::StoreLogs($user, $logs);
   }
   
-  public static function StartHttpRequestLog(\Library\Application $app) {
-    $log = new \Library\Core\BO\Timelog();
-    $log->setType(\Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
-    $log->setId($app->HttpRequest()->requestId());
-    $log->setTimeStart(gmdate("Y-m-d H:i:s", time()));
-    $log->setTimeEnd("");
-    $log->setUrl($app->HttpRequest()->requestURI());
+  public static function StartLog(\Library\Application $app, $type) {
+    $log = new \Library\Core\BO\Log();
+    $log->setLog_type($type);
+    $log->setLog_request_id($app->HttpRequest()->requestId());
+    $log->setLog_start(Logger::GetTime());
+    $log->setLog_filter($app->HttpRequest()->requestURI());
     self::SetLog($app->user(), $log);
   }
 
-  public static function EndHttpRequestLog(\Library\Application $app) {
+  public static function EndLog(\Library\Application $app, $type) {
     $logs = Logger::GetLogs($app->user());
-    $log = $logs[\Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request][$app->HttpRequest()->requestID()];
-    $log->setTimeEnd(gmdate("Y-m-d H:i:s", time()));
-    
-//    Logger::PrintOutLogs($logs);
+    $log = $logs[$type][$app->HttpRequest()->requestID()];
+    $log->setLog_end(Logger::GetTime());
+    $log->setLog_execution_time(
+        ($log->log_end - $log->log_start()) * 1000
+        );
+    $log->setLog_start(gmdate("Y-m-d H:i:s", $log->log_start()));
+    $log->setLog_end(gmdate("Y-m-d H:i:s", $log->log_end()));
+    Logger::AddLogToDatabase($app, $log);
     Logger::StoreLogs($app->user(), $logs);
   }
 
