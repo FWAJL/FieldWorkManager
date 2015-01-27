@@ -70,8 +70,6 @@
    </div>
 
   <div class="task_info_input">    
-    <ol class="add-new-item" id="task_tab_control">
-      <li>
           <h4><?php echo $resx["data_collect"];?></h4>
         <table>
           <tr>
@@ -97,7 +95,7 @@
             </td>
             <td></td>
           </tr>
-
+          
           <tr>
             <td class="checkbox">
                 <input id='service_providers_box' type="checkbox" />
@@ -106,7 +104,5 @@
             <td></td>
           </tr>
         </table> 
-      </li>
-    </ol>
   </div>      
 </div>
