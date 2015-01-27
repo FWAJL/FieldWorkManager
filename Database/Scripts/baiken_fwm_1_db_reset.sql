@@ -235,16 +235,6 @@ CREATE TABLE `task_field_data_location` (
         REFERENCES `location` (`location_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
--- Table structure for table `task_insp_form`
-CREATE TABLE `task_insp_form` (
-    `task_id` int(11) NOT NULL,
-    `inspection_question_id` int(11) NOT NULL,
-    CONSTRAINT `fk_tif_task` FOREIGN KEY (`task_id`)
-        REFERENCES `task` (`task_id`) ON DELETE CASCADE,
-    CONSTRAINT `fk_tif_inspection` FOREIGN KEY (`inspection_question_id`)
-        REFERENCES `inspection_question` (`inspection_question_id`) ON DELETE CASCADE
-)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
-
 -- Table structure for table `task_lab_analyte`
 CREATE TABLE `task_lab_analyte` (
     `task_id` int(11) NOT NULL,
