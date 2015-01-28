@@ -29,9 +29,26 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class FileUploadController extends \Library\BaseController {
 
-  public function executeUploadFile(\Library\HttpRequest $rq) {
-    $uploader = new \Library\Core\Utility\FileUploader($this->app(), $this->files(), $this->dataPost());
+  public function executeUpload(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS();
+
+    $uploader = new \Library\Core\Utility\FileUploader(
+        $this->app(), array(
+      "files" => $this->files(),
+      "dataPost" => $this->dataPost(),
+      "resultJson" => $result)
+    );
     $uploader->UploadFiles();
+
+    $isValid = $uploader->resultJson["fileUploaded"] == count($this->files());
+
+    $this->SendResponseWS(
+        $result, array(
+      "directory" => "common",
+      "resx_file" => \Library\Enums\ResourceKeys\ResxFileNameKeys::FileUpload,
+      "resx_key" => $this->action(),
+      "step" => $isValid ? "success" : "error"
+    ));
   }
 
 }

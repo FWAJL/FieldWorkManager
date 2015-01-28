@@ -33,6 +33,7 @@ abstract class ResxFileNameKeys {
   const MenuLeft = "menu_left";
   const WsDefaults = "ws_defaults";
   const Config = "config";
+  const FileUpload = "fileupload";
 }
 
 ?>

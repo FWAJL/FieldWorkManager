@@ -184,7 +184,7 @@ class ProjectHelper {
     if (file_exists($filename)) {
       $xml->load($filename);
     } else {
-      throw new Exception("In " . __CLASS__ . " > Method: " . __METHOD__);
+      throw new \Exception("In " . __CLASS__ . " > Method: " . __METHOD__);
     }
     return $xml->getElementsByTagName("message");  
   } 
