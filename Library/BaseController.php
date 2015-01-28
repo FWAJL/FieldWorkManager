@@ -17,7 +17,7 @@ abstract class BaseController extends ApplicationComponent {
   protected $dataPost = array();
   //shortcut from $app->user() also used as $this->app()->user() in controllers
   protected $user = null;
-
+  protected $files = array();
 
   public function __construct(Application $app, $module, $action, $resxfile) {
     parent::__construct($app);
@@ -28,8 +28,9 @@ abstract class BaseController extends ApplicationComponent {
     $this->setAction($action);
     $this->setView($action);
     $this->setResxFile($resxfile);
-    $this->setDataPost($this->app->HttpRequest()->retrievePostAjaxData(NULL, FALSE));
+    $this->setDataPost($this->app->HttpRequest()->retrievePostAjaxData(FALSE));
     $this->resxData = $this->app->i8n->getLocalResourceArray($this->resxfile);
+    $this->setUploadingFiles();
   }
 
   public function execute() {
@@ -89,6 +90,9 @@ abstract class BaseController extends ApplicationComponent {
     return $this->user;
   }
   
+  public function files() {
+    return $this->files;
+  }
   public function setModule($module) {
     if (!is_string($module) || empty($module)) {
       throw new \InvalidArgumentException('the module value must be a string and not be empty');
@@ -135,6 +139,9 @@ abstract class BaseController extends ApplicationComponent {
     }
 
     $this->dataPost = $dataPost;
+  }
+  public function setUploadingFiles() {
+    $this->files = $_FILES;
   }
   /**
    * Set the default response from WS

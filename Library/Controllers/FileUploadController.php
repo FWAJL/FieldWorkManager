@@ -21,13 +21,17 @@
  * @author		FWM DEV Team
  * @link		
  */
+
 namespace Library\Controllers;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+  exit('No direct script access allowed');
 
 class FileUploadController extends \Library\BaseController {
 
   public function executeUploadFile(\Library\HttpRequest $rq) {
-    \Library\Utility\DebugHelper::LogAsHtmlComment("Upload working");
+    $uploader = new \Library\Core\Utility\FileUploader($this->app(), $this->files(), $this->dataPost());
+    $uploader->UploadFiles();
   }
 
 }

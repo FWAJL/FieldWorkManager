@@ -8,6 +8,7 @@
  */
 $(document).ready(function() {
   $(".btn-warning").hide();
+  $("#document-upload input[name=\"category\"]").val("location");
   $.contextMenu({
     selector: '.select_item',
     callback: function(key, options) {
@@ -107,7 +108,6 @@ $(document).ready(function() {
     $(".location_list").fadeIn('2000').removeClass("hide");
     location_manager.getList();
   });//Show "List All" panel
-
 });
 /***********
  * location_manager namespace 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<js_files>
+<files>
   <!-- DEFINITION FOR DEV COMMON JS FILES -->
   <js_file src="" mode="dev" />
   

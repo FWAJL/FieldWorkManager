@@ -8,7 +8,8 @@
   <define key="DefaultLanguage" value="en" />
   <define key="RootImageFolderPath" value="Web/images/" />
   <define key="DalFolderPath" value="\Applications\PMTool\Models\Dal\" />
-  
+  <define key="RootDocumentUpload" value="./uploads/" />
+
   <!-- Security -->
   <define key="encryption_key" value="g496lJL683yFiDzju2K94f1751Lo7WSw" />
   

@@ -176,6 +176,18 @@ class ProjectHelper {
       self::SetSessionProjects($user, $userSessionProjects);
     }
   }
+  
+  public static function loadToolTipMessagefromXML($appname)
+  {
+    $xml = new \DOMDocument;
+    $filename = __ROOT__ . \Library\Enums\FolderName::AppsFolderName . $appname . '/Config/tooltipandpopupstrings.xml';
+    if (file_exists($filename)) {
+      $xml->load($filename);
+    } else {
+      throw new Exception("In " . __CLASS__ . " > Method: " . __METHOD__);
+    }
+    return $xml->getElementsByTagName("message");  
+  } 
 
 }
 
