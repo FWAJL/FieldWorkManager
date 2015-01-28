@@ -30,19 +30,8 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class FileUploadController extends \Library\BaseController {
 
   public function executeUploadFile(\Library\HttpRequest $rq) {
-    $files = $this->files();
-    $dataPost = $this->dataPost();
-    if (!file_exists('path/to/directory')) {
-      mkdir('path/to/directory', 0777, true);
-    }
-    $dir = $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload);
-    //$dir = "";
-    if (move_uploaded_file(
-            $files['file']['tmp_name'], $dir . $files['file']['name'])) {
-      \Library\Utility\DebugHelper::LogAsHtmlComment($files['file']['name'] . " uploaded");
-    } else {
-      \Library\Utility\DebugHelper::LogAsHtmlComment($files['file']['name'] . " not uploaded");
-    }
+    $uploader = new \Library\Core\Utility\FileUploader($this->app(), $this->files(), $this->dataPost());
+    $uploader->UploadFiles();
   }
 
 }
