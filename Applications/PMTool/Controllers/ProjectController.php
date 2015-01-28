@@ -69,9 +69,18 @@ class ProjectController extends \Library\BaseController {
   public function executeListAll(\Library\HttpRequest $rq) {
     
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-      
-      $data = array(
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]); 
+    
+	//Fetch tooltip data from xml and pass to view as an array
+	$tooltipMessages = \Applications\PMTool\Helpers\ProjectHelper::loadToolTipMessagefromXML($this->app->name());
+	$tooltip_array = array();
+	foreach ($tooltipMessages as $msg) {
+	  if($msg->getAttribute('targetattr') == 'data-project-id')
+	    array_push($tooltip_array, $msg->getAttribute('value'));
+	}
+	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::tooltip_message, $tooltip_array);
+	  
+    $data = array(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\CommonHelper::GetListObjectsInSessionByKey($this->app()->user(), \Library\Enums\SessionKeys::ProjectObject),
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList($this->resxfile)
