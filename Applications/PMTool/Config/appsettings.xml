@@ -19,4 +19,7 @@
   <define key="Mysql_pwd" value="fwm1_62313One@" />
   <define key="Mysql_db_name" value="baiken_fwm_1" /> 
   
+  <!-- Mapping -->
+  <define key="GoogleMapsCenterLat" value="37.6" />
+  <define key="GoogleMapsCenterLng" value="-95.665" />   
 </definitions>

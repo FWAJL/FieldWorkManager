@@ -65,6 +65,9 @@ class ViewVariablesKeys {
   //Task's view variabless
   const task_tab_open = "task_tab_open";
   const tab_close = "tab_close";
+  
+  //Mapping
+  const map_view = "map_view";
 }
 
 ?>
