@@ -54,9 +54,9 @@
   
   <main_menu name="forms" active="true">
     <links>
-      <header href="form" resourcekey="header_form" enablelink="false" />
-      <submenu href="form/listAll" id="form_list_all" resourcekey="form_list" active="true"/>
-      <submenu href="form/showForm?mode=add&amp;test=true" id="btn-add-form-manual" resourcekey="form_add" active="true"/>
+      <header href="form/listAll" id="form_list_all" resourcekey="header_form" active="true" />
+      <submenu href="form/listAll" id="form_list_all" resourcekey="form_list" active="true"/><!--
+      <submenu href="form/showForm?mode=add&amp;test=true" id="btn-add-form-manual" resourcekey="form_add" active="true"/>-->
     </links>
   </main_menu><!-- forms -->
   

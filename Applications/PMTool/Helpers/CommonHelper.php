@@ -170,6 +170,13 @@ class CommonHelper {
   public static function GetValueInSession($user, $sessionKey) {
     return $user->getAttribute($sessionKey);
   }
+  public static function GetObjectListFromSessionArrayBySessionKey(\Library\User $user, $sessionArray, $sessionKey) {
+    $list = array();
+    foreach ($sessionArray as $array) {
+      array_push($list, $array[$sessionKey]);
+    }
+    return $list;
+  }
 
   public static function GetObjectListFromSessionArrayBySessionKey(\Library\User $user, $sessionArray, $sessionKey) {
     $list = array();

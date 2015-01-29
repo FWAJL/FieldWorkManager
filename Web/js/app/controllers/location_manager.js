@@ -108,7 +108,6 @@ $(document).ready(function() {
     $(".location_list").fadeIn('2000').removeClass("hide");
     location_manager.getList();
   });//Show "List All" panel
-
 });
 /***********
  * location_manager namespace 
