@@ -177,17 +177,4 @@ class CommonHelper {
     }
     return $list;
   }
-
-  public static function BuildLatAndLongCoordFromGeoObjects($objects, $latPropName, $lngPropName) {
-    $coordinates = array();
-    foreach ($objects as $object) {
-      $coordinate = array(
-          "lat" => $object->$latPropName(),
-          "lng" => $object->$lngPropName()
-      );
-      array_push($coordinates, $coordinate);
-    }
-    return $coordinates;
-  }
-
 }
