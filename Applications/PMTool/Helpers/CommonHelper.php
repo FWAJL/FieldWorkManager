@@ -178,4 +178,24 @@ class CommonHelper {
     return $list;
   }
 
+  public static function GetObjectListFromSessionArrayBySessionKey(\Library\User $user, $sessionArray, $sessionKey) {
+    $list = array();
+    foreach ($sessionArray as $array) {
+      array_push($list, $array[$sessionKey]);
+    }
+    return $list;
+  }
+
+  public static function BuildLatAndLongCoordFromGeoObjects($objects, $latPropName, $lngPropName) {
+    $coordinates = array();
+    foreach ($objects as $object) {
+      $coordinate = array(
+          "lat" => $object->$latPropName(),
+          "lng" => $object->$lngPropName()
+      );
+      array_push($coordinates, $coordinate);
+    }
+    return $coordinates;
+  }
+
 }

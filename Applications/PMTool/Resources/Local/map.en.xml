@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <resource key="page_title">Your projects - Maps</resource>
+  <resource key="message_error_listAll">Error getting the objects.</resource>
+  <resource key="message_success_listAll">The objects have been read.</resource>
+</resources>
