@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/core/jquery-ui.css" />
 
     <?php echo $this->app->globalResources["css_files"]; ?>
+
+    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
     
 <!--    <script type="application/javascript" src="
 <?php echo $this->app->relative_path; ?>

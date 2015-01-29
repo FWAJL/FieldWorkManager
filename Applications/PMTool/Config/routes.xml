@@ -182,8 +182,8 @@
     <!--Map  -->
         <route url="map/load" module="Map" action="loadView" resxfile="map" type="ui">
         <js_files>
-            <js_file use="html" value="Web/js/app/controllers/gmaps.js"/>
-            <js_file use="html" value="Web/js/app/controllers/maps.js"/>
+            <js_file use="html" value="Web/js/core/gmaps.js"/>
+            <js_file use="html" value="Web/js/app/services/maps.js"/>
         </js_files>
         <css_files>
             <css_file value="Web/css/app/app-theme.css"/>
@@ -193,67 +193,6 @@
             <php_module key="map_view" file_name="Maps/mainView.php" shared="true"/>
         </php_modules>
     </route>
-
-    <route url="map/currentProject" module="Map" action="currentProject" resxfile="map" type="ui">
-        <js_files>
-            <js_file use="head" value="Web/js/app/controllers/gmaps.js"/>
-            <js_file use="head" value="Web/js/app/controllers/maps.js"/>
-        </js_files>
-        <css_files>
-            <css_file value="Web/css/app/app-theme.css"/>
-            <css_file use="project"/>
-        </css_files>
-        <php_modules>
-            <php_module key="current_project" file_name="Maps/current_project.php" shared="true"/>
-        </php_modules>
-    </route>
-    <!--   map/currentProject -->
-
-    <route url="map/currentProjectLocations" module="Map" action="currentProjectLocations" resxfile="map" type="ui">
-        <js_files>
-            <js_file use="head" value="Web/js/app/controllers/gmaps.js"/>
-            <js_file use="head" value="Web/js/app/controllers/maps.js"/>
-        </js_files>
-        <css_files>
-            <css_file value="Web/css/app/app-theme.css"/>
-            <css_file use="project"/>
-        </css_files>
-        <php_modules>
-            <php_module key="current_project_locations" file_name="Maps/current_project_locations.php" shared="true"/>
-        </php_modules>
-    </route>
-    <!--   map/currentProjectLocations -->
-
-    <route url="map/taskLocations" module="Map" action="taskLocations" resxfile="map" type="ui">
-        <js_files>
-            <js_file use="head" value="Web/js/app/controllers/gmaps.js"/>
-            <js_file use="head" value="Web/js/app/controllers/maps.js"/>
-        </js_files>
-        <css_files>
-            <css_file value="Web/css/app/app-theme.css"/>
-            <css_file use="project"/>
-        </css_files>
-        <php_modules>
-            <php_module key="task_locations" file_name="Maps/task_locations.php" shared="true"/>
-        </php_modules>
-    </route>
-    <!--   map/taskLocations -->
-
-    <route url="map/showOne" module="Map" action="showOne" resxfile="map" type="ui">
-        <js_files>
-            <js_file use="head" value="Web/js/app/controllers/gmaps.js"/>
-            <js_file use="head" value="Web/js/app/controllers/maps.js"/>
-        </js_files>
-        <css_files>
-            <css_file value="Web/css/app/app-theme.css"/>
-            <css_file use="project"/>
-        </css_files>
-        <php_modules>
-            <php_module key="show_one" file_name="show_one.php" shared="true"/>
-        </php_modules>
-    </route>
-    <!--   map/showOne -->
-
 
     <!--Tasks  -->
     <route url="task" module="Task" action="index" resxfile="task" type="ui">
