@@ -1,29 +1,26 @@
 /**
- * IMPORTANT NOTICE (29-12-14):
- *   LOOK AT analyte_manager for the new implementation
+ * IMPORTANT NOTICE (29-12-14): 
+ *   LOOK AT analyte_manager for the new implementation 
  *   to make AJAX calls to the web services. It is more
  *   efficient and allows to write a lot less code.
- *
+ *   
  * jQuery listeners for the project actions
  */
-$(document).ready(function () {
+$(document).ready(function() {
   $(".btn-warning").hide();
   $.contextMenu({
     selector: '.select_item',
-    callback: function (key, options) {
+    callback: function(key, options) {
       if (key === "edit") {
         project_manager.retrieveProject(options.$trigger);
       } else if (key === "delete") {
         project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
-      } else if (key === "show") {
-        project_manager.show_on_map(parseInt(options.$trigger.attr("data-project-id")));
       }
     },
     items: {
       "edit": {name: "View Info"},
       "delete": {name: "Delete"},
-      "copy": {name: "Copy"},
-      "show": {name: "Show on map"}
+      "copy": {name: "Copy"}
     }
   });//Manages the context menu
 
@@ -107,6 +104,10 @@ $(document).ready(function () {
     $(".project_list").fadeIn('2000').removeClass("hide");
     project_manager.getList();
   });//Show "List All" panel
+  
+  $("li[data-project-id]").hover(function(){
+	$(this).tooltip({ placement: "bottom" });
+  }); 
 
 });
 /***********

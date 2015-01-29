@@ -113,6 +113,7 @@ class BaseManager extends \Library\Manager {
 
   private function ExecuteQuery($sql_query, $params) {
     try {
+      //\Library\Utility\DebugHelper::LogAsHtmlComment($sql_query);
       $query = $this->dao->query($sql_query);
 
       $result;

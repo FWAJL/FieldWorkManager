@@ -32,13 +32,15 @@ h3 {
   padding: 5px;
   padding-bottom: 30px;
 }
+
 .data-form{
   padding: 5px;
   padding-top: 20px; 
 
 }
+
 .form_sections li label{
-  width: 200px;
+  width: 120px;
 }
 .form_sections li input, .form_sections li textarea{
   width: 240px;
@@ -60,13 +62,13 @@ h3 {
   border-bottom:1px solid #999;
 }
 
-.select_item {
+.ui-widget-content {
   padding: 5px;
   margin-bottom: 1px;
   border-bottom: 1px solid #999;
 }
 
-.select_item:hover,.select_item:focus {
+.select_item:hover,.select_item:focus, ui-widget-content:focus, ui-widget-content:hover{
   border-right: solid 4px #F39814; 
   background-color: #ffd;
   padding: 5px;
@@ -91,9 +93,6 @@ h3 {
   padding: 0px 2px 0px 30px;
 }
 
-.task_form li label, .task_form li input, .task_form li textarea{
-  width: 250px;
-}
 
 .task_form .note {
   width: 500px;
@@ -104,14 +103,6 @@ h3 {
   padding: 0px 2px 0px 30px;
 }
 
-.location_form li label {
-  width: 150px;
-}
-
-.location_form li input, .location_form li textarea{
-  width: 250px;
-}
-
 .location_form .note {
   width: 500px;
 }
@@ -120,26 +111,16 @@ h3 {
   width: 100%;
 }
 
-#location_info {
-width: 500px;
-float: left;
-}
-
 #photo_form {
   width: 40%;
   float: right;
-}
-
-#technician_info {
-width: 500px;
-float: left;
 }
 
 li.category-name {
   font-size: larger;
   font-style: italic;
   color: #fff;
-  background-color: #333;
+  background-color: #FFB445;
   padding: 4px;
   text-decoration: underline;
 }

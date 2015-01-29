@@ -11,9 +11,9 @@
         <div  class="col-lg-5 col-md-5">
           <div class="form_sections">
             <?php
-            require $form_modules["location_tabs_open"];
+//            require $form_modules["location_tabs_open"];
             require $form_modules["location_form"];
-            require $form_modules["location_tabs_close"];
+//            require $form_modules["tabs_close"];
             ?>
           </div>
         </div>

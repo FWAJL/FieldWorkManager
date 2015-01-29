@@ -35,23 +35,7 @@ class FacilityDal extends \Library\DAL\BaseManager {
    */
   public function selectMany($facility, $where_filter_id) {
     $sql = 'SELECT f.* FROM `facility` f inner join `project` p on f.project_id = p.project_id';
-    if($where_filter_id) $sql .= ' where p.`'. $where_filter_id.'` = \'' . $facility->$where_filter_id() . '\';'; //AND `active` = 1  AND `visible` = 1;';
-
-    $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Facility');
-
-    $facility_list = $query->fetchAll();
-    $query->closeCursor();
-
-    return $facility_list;
-  }
-
-
-  public function selectManyUser($facility, $where_filter_id) {
-    $sql = 'SELECT f.* FROM `facility` f inner join `project` p on f.project_id = p.project_id';
-    $sql .= ' where p.pm_id = '.$_SESSION['user_connected'][0]->pm_id.';'; //AND `active` = 1  AND `visible` = 1;';
-    //echo $sql;
-
+    $sql .= ' where p.`'. $where_filter_id.'` = \'' . $facility->$where_filter_id() . '\';'; //AND `active` = 1  AND `visible` = 1;';
     $query = $this->dao->query($sql);
     $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Facility');
 

@@ -11,8 +11,7 @@
       echo $resx["h3_no_project"];
     }
    ?>
-    </h3>
-
+          </h3>
     <div class="content-container container-fluid">
       <div class="row">
         <div  class="col-lg-5 col-md-5">
@@ -21,8 +20,6 @@
           <br />
               <?php require $active_list_module; ?> 
 <!--          Insert Project Services module here-->
-          
-          
         </div>
         <div class="col-lg-2 col-md-2">
           <div class="buttons">

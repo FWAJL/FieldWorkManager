@@ -21,7 +21,8 @@ abstract class AppSettingKeys {
   const BaseUrlRelease = "BaseUrlRelease";
   const RootImageFolderPath = "RootImageFolderPath";
   const DalFolderPath = "DalFolderPath";
-  
+  const RootDocumentUpload = "RootDocumentUpload";
+
   const Myslq_host = "Myslq_host";
   const Mysql_user = "Mysql_user";
   const Mysql_pwd = "Mysql_pwd";

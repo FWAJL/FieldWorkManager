@@ -30,6 +30,7 @@ class UrlKeys {
   const LocationRootUrl = "location";
   const LocationListAll = "location/listAll";
   const LocationShowForm = "location/showForm";
+  const LocationUploadList = "location/uploadList";
   
   const TechnicianRootUrl = "technician";
   const TechnicianListAll = "technician/listAll";
@@ -52,7 +53,15 @@ class UrlKeys {
   const TaskServices = "task/services";
   const TaskInspForms = "task/inspForms";
   const TaskCOC = "task/coc";
-
+  
+  const ActiveTaskMap = "xxx";
+  const ActiveTaskInspForms = "xxx";
+  const ActiveTaskCOC = "xxx";
+  const ActiveTaskServices = "xxx";
+  
+  const CompleteTaskMap = "xxx";
+  const CompleteTaskInspForms = "xxx";
+  const CompleteTaskServices = "xxx";
   
   const PmRootUrl = "pm";
   const PmListAll = "pm/listAll";

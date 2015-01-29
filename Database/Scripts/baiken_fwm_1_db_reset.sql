@@ -147,13 +147,13 @@ CREATE TABLE `service` (
         REFERENCES `project_manager` (`pm_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
--- Table structure for table `lab_analyte`
-CREATE TABLE `lab_analyte` (
-    `lab_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
-    `lab_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+-- Table structure for table `field_analyte`
+CREATE TABLE `field_analyte` (
+    `field_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
+    `field_analyte_name_unit` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
     `pm_id` int(11) NOT NULL COMMENT 'Foreign key => project_manager',
-    PRIMARY KEY (`lab_analyte_id`),
-    CONSTRAINT `fk_lab_analyte_pm` FOREIGN KEY (`pm_id`)
+    PRIMARY KEY (`field_analyte_id`),
+    CONSTRAINT `fk_field_analyte_pm` FOREIGN KEY (`pm_id`)
         REFERENCES `project_manager` (`pm_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -233,16 +233,6 @@ CREATE TABLE `task_field_data_location` (
         REFERENCES `task` (`task_id`) ON DELETE CASCADE,
     CONSTRAINT `fk_tfdl_location` FOREIGN KEY (`location_id`)
         REFERENCES `location` (`location_id`) ON DELETE CASCADE
-)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
-
--- Table structure for table `task_insp_form`
-CREATE TABLE `task_insp_form` (
-    `task_id` int(11) NOT NULL,
-    `inspection_question_id` int(11) NOT NULL,
-    CONSTRAINT `fk_tif_task` FOREIGN KEY (`task_id`)
-        REFERENCES `task` (`task_id`) ON DELETE CASCADE,
-    CONSTRAINT `fk_tif_inspection` FOREIGN KEY (`inspection_question_id`)
-        REFERENCES `inspection_question` (`inspection_question_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Table structure for table `task_lab_analyte`
@@ -346,6 +336,17 @@ CREATE TABLE `document` (
     UNIQUE INDEX `un_doc_cat_val` (`document_id` ASC, `document_category` ASC, `document_value` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- Table structure for table `log`
+CREATE TABLE `log` (
+    `log_id` int(11) NOT NULL AUTO_INCREMENT,
+    `log_request_id` varchar(50) NOT NULL,
+    `log_start` varchar(20) NOT NULL,
+    `log_end` varchar(20) NOT NULL COMMENT 'FORMAT: Y-m-d H:i:s',
+    `log_execution_time` float(10,6) NOT NULL COMMENT 'In milliseconds',
+    `log_type` varchar(40) NOT NULL COMMENT 'http_request, controller_method',
+    `log_filter` varchar(100) NOT NULL,
+    PRIMARY KEY (`log_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Dumping data for table `project_manager`
 INSERT INTO `project_manager` (`pm_id`, `username`, `password`, `hint`, `pm_comp_name`, `pm_name`, `pm_address`, `pm_phone`, `pm_email`) VALUES

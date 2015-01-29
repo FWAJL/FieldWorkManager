@@ -15,15 +15,12 @@ $(document).ready(function () {
         task_manager.retrieveTask(options.$trigger);
       } else if (key === "delete") {
         task_manager.delete(parseInt(options.$trigger.attr("data-task-id")));
-      } else if (key === "show") {
-        task_manager.show_on_map(parseInt(options.$trigger.attr("data-task-id")));
       }
     },
     items: {
       "edit": {name: "View Info"},
       "delete": {name: "Delete"},
-      "copy": {name: "Copy"},
-      "show": {name: "Show on map"}
+      "copy": {name: "Copy"}
     }
   });//Manages the context menu
 
@@ -63,7 +60,7 @@ $(document).ready(function () {
   });//Delete a task
 
   if (utils.getQueryVariable("mode") === "edit") {
-    $(".task_form_sections").fadeIn('2000').addClass("show").removeClass("hide");
+    $(".form_sections").fadeIn('2000').addClass("show").removeClass("hide");
     $(".welcome").fadeOut('2000').removeClass("show").addClass("hide");
     $(".task_add").hide();
     task_manager.getItem(utils.getQueryVariable("task_id"));
@@ -95,9 +92,6 @@ $(document).ready(function () {
         utils.redirect("task/showForm?mode=edit&task_id=" + reply.dataOut, 1000);
       }
     });
-  };
-  task_manager.show_on_map = function (id) {
-    utils.redirect("map/showOne?id=" + id + "&task=true");
   };
   task_manager.edit = function (task, controller, action) {
     datacx.post(controller + "/" + action, task).then(function (reply) {//call AJAX method to call Task/Add WebService
@@ -172,7 +166,7 @@ $(document).ready(function () {
     datacx.post("task/getItem", {"task_id": task_id}).then(function (reply) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
-        $(".task_form_sections").hide();
+        $(".form_sections").hide();
         utils.redirect("task/listAll", 3000)
       } else {//success
         $(".task_edit").show().removeClass("hide");

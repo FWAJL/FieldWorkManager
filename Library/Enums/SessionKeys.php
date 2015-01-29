@@ -99,6 +99,7 @@ abstract class SessionKeys {
   
   //Tabs
   const TabsStatus = "tabs_status";
+  const TabActiveAnalyte = "tab_active_analyte";
 }
 
 ?>

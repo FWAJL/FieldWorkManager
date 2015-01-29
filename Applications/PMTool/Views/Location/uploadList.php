@@ -10,27 +10,27 @@
       <div class="row">
         <div  class="col-lg-5 col-md-5">
           <h4><?php echo $resx["h3_upload_list"]; ?></h4>
-          <fieldset class="location_form form" id="upload_locations_form">
-            <div class="location-names">
-              <textarea  class="list-panel upload_list" name="location_names" type="text"></textarea>
-            </div>
-          </fieldset>
+ <fieldset class="location_form form" id="upload_locations_form">
+        <div class="location-names">
+            <textarea  class="list-panel upload_list" name="location_names" type="text"></textarea>
+        </div>
+  </fieldset>
         </div>
         <div class="col-lg-2 col-md-2">
           <div class="buttons">
             <input id="btn-add-location-names" type="button" value="<?php echo $resx["btn_add_location_names"] ?>" class="btn btn-primary" />
             <br/> 
             <ul>
-              <li class="hide">
-                <input id="location_upload_list" name="location_active" type="checkbox" checked />
+               <li class="hide">
+                  <input id="location_upload_list" name="location_active" type="checkbox" checked />
               </li>
             </ul>
-<!--              <label for="location_upload_list"><?php //echo $resx["location_active_many"];  ?></label>-->
+<!--              <label for="location_upload_list"><?php //echo $resx["location_active_many"]; ?></label>-->
 
           </div>
         </div>
         <div  class="col-lg-5 col-md-5">
-
+            
         </div>
       </div>
     </div>

@@ -39,12 +39,11 @@ class PhpModuleKeys {
   const facility_form = "facility_form";
   const client_form = "client_form";
   const project_buttons = "project_buttons";
-  const project_tabs_close = "project_tabs_close";
+  const tabs_close = "tabs_close";
   
   const task_tabs_open = "task_tabs_open";
   const task_form = "task_form";
   const task_buttons = "task_buttons";
-  const task_tabs_close = "task_tabs_close";
   
   const analyte_tabs_open = "analyte_tabs_open";
   const field_analyte_list = "field_analyte_list";
@@ -52,15 +51,6 @@ class PhpModuleKeys {
   const field_analyte_form = "field_analyte_form";
   const lab_analyte_form = "lab_analyte_form";
   const analyte_buttons = "analyte_buttons";
-  const analyte_tabs_close = "analyte_tabs_close";
-
-  const map_view = "map_view";
-  const all_projects = "all_projects";
-
-  const current_project = "current_project";
-  const current_project_locations = "current_project_locations";
-  const task_locations = "task_locations";
-  const show_one = "show_one";
 
 }
 

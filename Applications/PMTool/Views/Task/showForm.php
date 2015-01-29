@@ -5,8 +5,7 @@
     <?php if ($current_task !== NULL) { ?>
       <span class="glyphicon glyphicon-chevron-right"></span>    
       <?php echo $current_task->task_name();
-    }
-    ?>
+    } ?>
     <span class="glyphicon glyphicon-chevron-right"></span>    
 <?php echo $task_editing_header ?></h3>  
   <div class="form_sections">
@@ -17,7 +16,7 @@
 <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_info_lists]; ?>      
 
     <!-- close tabs -->
-<?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::task_tabs_close]; ?>
+<?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::tabs_close]; ?>
   </div>
 
 </div>

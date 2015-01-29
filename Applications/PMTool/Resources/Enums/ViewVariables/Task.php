@@ -28,7 +28,7 @@ if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script acces
 class Task {
   //Modules keys
   const task_tabs_open = "task_tabs_open";
-  const task_tabs_close = "task_tabs_close";
+  const tabs_close = "tabs_close";
   
   const task_info_lists = "task_info_lists";
 

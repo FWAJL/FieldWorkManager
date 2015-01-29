@@ -8,6 +8,7 @@
  */
 $(document).ready(function() {
   $(".btn-warning").hide();
+  $("#document-upload input[name=\"category\"]").val("location");
   $.contextMenu({
     selector: '.select_item',
     callback: function(key, options) {
@@ -15,14 +16,11 @@ $(document).ready(function() {
         location_manager.retrieveLocation(options.$trigger);
       } else if (key === "delete") {
         location_manager.delete(parseInt(options.$trigger.attr("data-location-id")));
-      } else if (key === "show") {
-        location_manager.show_on_map(parseInt(options.$trigger.attr("data-location-id")));
       }
     },
     items: {
       "edit": {name: "View Info"},
-      "delete": {name: "Delete"},
-      "show": {name: "Show on map"}
+      "delete": {name: "Delete"}
     }
   });//Manages the context menu
 
@@ -127,13 +125,6 @@ $(document).ready(function() {
         utils.redirect("location/listAll", 1000);
       }
     });
-  };
-  location_manager.show_on_map = function (id) {
-    // TODO: "src={source_object} to make map/showOne standard to 
-    //   all the types (location, tasklocation, task, project)
-    // Keep the class/table name for the source_object value in order to 
-    //   instanciate the Dao class on the fly, no matter the source
-    utils.redirect("map/showOne?id=" + id + "&location=true");
   };
   location_manager.edit = function(location, controller, action) {
     datacx.post(controller + "/" + action, location).then(function(reply) {//call AJAX method to call Location/Add WebService

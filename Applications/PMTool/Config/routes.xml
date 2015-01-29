@@ -3,43 +3,43 @@
     <!-- UI routes -->
     <route url="login" module="Authenticate" action="loadLoginView" resxfile="login" type="ui">
         <js_files>
-            <js_file use="html" value="Web/js/app/validator.js"/>
-            <js_file use="html" value="Web/js/app/controllers/auth.js"/>
+            <js_file use="html" value="Web/js/app/validator.js" />
+            <js_file use="html" value="Web/js/app/controllers/auth.js" />
         </js_files>
         <css_files>
-            <css_file value="Web/css/app/app-style.css"/>
-            <css_file value="Web/css/app/app-theme.css"/>
-            <css_file value="Web/css/app/theme.css"/>
+            <css_file value="Web/css/app/app-style.css" />
+            <css_file value="Web/css/app/app-theme.css" />
+            <css_file value="Web/css/app/theme.css" />
         </css_files>
     </route>
-
+    
     <!-- login -->
-    <route url="logout" module="Authenticate" action="disconnect" resxfile="login" type="ui"/>
+    <route url="logout" module="Authenticate" action="disconnect" resxfile="login" type="ui" />
     <route url="project" module="Project" action="index" resxfile="project" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/facility_manager.js"/>
-            <js_file use="head" value="Web/js/app/controllers/project_manager.js"/>
-            <js_file use="head" value="Web/js/app/controllers/client_manager.js"/>
-            <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js"/>
+            <js_file use="head" value="Web/js/app/controllers/facility_manager.js" />
+            <js_file use="head" value="Web/js/app/controllers/project_manager.js" />
+            <js_file use="head" value="Web/js/app/controllers/client_manager.js" />
+            <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js" />
         </js_files>
         <css_files>
-            <css_file value="Web/css/app/nav.css"/>
-            <css_file value="Web/css/app/app-style.css"/>
-            <css_file value="Web/css/app/app-theme.css"/>
-            <css_file value="Web/css/app/theme.css"/>
-            <css_file value="Web/css/app/tabs.css"/>
+            <css_file value="Web/css/app/nav.css" />
+            <css_file value="Web/css/app/app-style.css" />
+            <css_file value="Web/css/app/app-theme.css" />
+            <css_file value="Web/css/app/theme.css" />
+            <css_file value="Web/css/app/tabs.css" />
         </css_files>
     </route>
-
+    
     <!-- project/index -->
     <route url="project/showForm" module="Project" action="showForm" resxfile="project" type="ui">
         <js_files>
             <!-- This uses the same scripts as the project route, e.g. use attribute => route value -->
-            <js_file use="project"/>
+            <js_file use="project" />
         </js_files>
         <css_files>
             <!-- This uses the same css as the project route, e.g. use attribute => route value -->
-            <css_file use="project"/>
+            <css_file use="project" />
         </css_files>
         <php_modules>
             <!-- Add just the file name, the Router class will take of building the correct path -->
@@ -47,38 +47,39 @@
             <!-- Add the keys in Applications/PMTool/Resources/Enums/PhpModuleKeys -->
             <!-- The order matters! -->
             <php_module key="project_tabs_open" file_name="project_tabs_open.php" />
-            <php_module key="project_tabs_close" file_name="project_tabs_close.php" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true"/>
             <php_module key="project_form" file_name="project_form.php" />
             <php_module key="facility_form" file_name="facility_form.php" />
             <php_module key="client_form" file_name="client_form.php" />
             <php_module key="project_buttons" file_name="project_buttons.php" />
+
         </php_modules>
     </route>
     <!-- project/showAddForm -->
-
+    
     <route url="project/listAll" module="Project" action="listAll" resxfile="project" type="ui">
         <js_files>
-            <js_file use="project"/>
+            <js_file use="project" />
         </js_files>
         <css_files>
-            <css_file use="project"/>
+            <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="active_list_module" file_name="active_list.php" shared="true"/>
-            <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true"/>
+            <php_module key="active_list_module" file_name="active_list.php" shared="true" />
+            <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
         </php_modules>
     </route>
     <!-- project/listAll -->
-
+    
     <!-- locations -->
     <route url="location" module="Location" action="index" resxfile="location" type="ui">
         <js_files></js_files>
         <css_files>
-            <css_file value="Web/css/app/nav.css"/>
-            <css_file value="Web/css/app/app-style.css"/>
-            <css_file value="Web/css/app/app-theme.css"/>
-            <css_file value="Web/css/app/theme.css"/>
-            <css_file value="Web/css/app/tabs.css"/>
+            <css_file value="Web/css/app/nav.css" />
+            <css_file value="Web/css/app/app-style.css" />
+            <css_file value="Web/css/app/app-theme.css" />
+            <css_file value="Web/css/app/theme.css" />
+            <css_file value="Web/css/app/tabs.css" />
         </css_files>
     </route>
     <!-- location/index -->
@@ -88,101 +89,91 @@
             <js_file use="head" value="Web/js/app/controllers/location_manager.js"/>
         </js_files>
         <css_files>
-            <css_file use="project"/>
+            <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="active_list_module" file_name="active_list.php" shared="true"/>
-            <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true"/>
+            <php_module key="active_list_module" file_name="active_list.php" shared="true" />
+            <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
         </php_modules>
     </route>
     <!-- location/listAll -->
-
+    
     <route url="location/showForm" module="Location" action="showForm" resxfile="location" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/location_manager.js"/>
+            <js_file use="head" value="Web/js/app/controllers/location_manager.js" />
         </js_files>
         <css_files>
-            <css_file value="Web/css/app/nav.css"/>
-            <css_file value="Web/css/app/app-style.css"/>
-            <css_file value="Web/css/app/app-theme.css"/>
-            <css_file value="Web/css/app/theme.css"/>
-            <css_file value="Web/css/app/tabs.css"/>
+            <css_file value="Web/css/app/nav.css" />
+            <css_file value="Web/css/app/app-style.css" />
+            <css_file value="Web/css/app/app-theme.css" />
+            <css_file value="Web/css/app/theme.css" />
+            <css_file value="Web/css/app/tabs.css" />
         </css_files>
         <php_modules>
-            <php_module key="location_tabs_open" file_name="location_tabs_open.php"/>  
+<!--            <php_module key="location_tabs_open" file_name="location_tabs_open.php"/>  -->
             <php_module key="location_form" file_name="location_form.php" />
-            <php_module key="location_tabs_close" file_name="location_tabs_close.php"/>
+<!--            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />-->
             <php_module key="upload_file" file_name="upload_file.php" shared="true"/>
         </php_modules>
     </route>
     <!-- location/showForm -->
-
-    <route url="location/uploadList" module="Location" action="showForm" resxfile="location" type="ui">
+    
+     <route url="location/uploadList" module="Location" action="uploadList" resxfile="location" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/location_manager.js"/>
+            <js_file use="head" value="Web/js/app/controllers/location_manager.js" />
         </js_files>
         <css_files>
-            <css_file value="Web/css/app/nav.css"/>
-            <css_file value="Web/css/app/app-style.css"/>
-            <css_file value="Web/css/app/app-theme.css"/>
-            <css_file value="Web/css/app/theme.css"/>
-            <css_file value="Web/css/app/tabs.css"/>
+            <css_file use="project" />
         </css_files>
-        <php_modules>
-            <!--            <php_module key="location_tabs_open" file_name="location_tabs_open.php" />-->
-            <php_module key="location_form" file_name="locations_form.php"/>
-            <!--            <php_module key="gmaps_panel" file_name="gmaps_panel.php" />
-                        <php_module key="location_tabs_close" file_name="location_tabs_close.php" />-->
-        </php_modules>
     </route>
     <!-- location/uploadList -->
-
+    
     <!-- technicians -->
     <route url="technician" module="Technician" action="index" resxfile="technician" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/technician_manager.js"/>
-            <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js"/>
+            <js_file use="head" value="Web/js/app/controllers/technician_manager.js" />
+            <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js" />
         </js_files>
         <css_files>
-            <css_file value="Web/css/app/nav.css"/>
-            <css_file value="Web/css/app/app-style.css"/>
-            <css_file value="Web/css/app/app-theme.css"/>
-            <css_file value="Web/css/app/theme.css"/>
-            <css_file value="Web/css/app/tabs.css"/>
+            <css_file value="Web/css/app/nav.css" />
+            <css_file value="Web/css/app/app-style.css" />
+            <css_file value="Web/css/app/app-theme.css" />
+            <css_file value="Web/css/app/theme.css" />
+            <css_file value="Web/css/app/tabs.css" />
         </css_files>
     </route>
     <!-- technician/index -->
-
+    
     <route url="technician/listAll" module="Technician" action="listAll" resxfile="technician" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/technician_manager.js"/>
+            <js_file use="head" value="Web/js/app/controllers/technician_manager.js" />
         </js_files>
         <css_files>
-            <css_file use="project"/>
+            <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="active_list_module" file_name="active_list.php" shared="true"/>
-            <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true"/>
+            <php_module key="active_list_module" file_name="active_list.php" shared="true" />
+            <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
         </php_modules>
     </route>
     <!-- technician/listAll -->
-
+    
     <route url="technician/showForm" module="Technician" action="showForm" resxfile="technician" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/technician_manager.js"/>
+            <js_file use="head" value="Web/js/app/controllers/technician_manager.js" />
         </js_files>
         <css_files>
-            <css_file value="Web/css/app/nav.css"/>
-            <css_file value="Web/css/app/app-style.css"/>
-            <css_file value="Web/css/app/app-theme.css"/>
-            <css_file value="Web/css/app/theme.css"/>
-            <css_file value="Web/css/app/tabs.css"/>
+            <css_file value="Web/css/app/nav.css" />
+            <css_file value="Web/css/app/app-style.css" />
+            <css_file value="Web/css/app/app-theme.css" />
+            <css_file value="Web/css/app/theme.css" />
+            <css_file value="Web/css/app/tabs.css" />
         </css_files>
         <php_modules>
-            <!-- <php_module key="technician_tabs_open" file_name="technician_tabs_open.php"/>   -->
-            <php_module key="technician_form" file_name="technician_form.php"/>
-            <!--            <php_module key="technician_buttons" file_name="technician_buttons.php" />
-                        <php_module key="technician_tabs_close" file_name="technician_tabs_close.php" />-->
+<!--             <php_module key="technician_tabs_open" file_name="technician_tabs_open.php"/>   -->
+            <php_module key="technician_form" file_name="technician_form.php" />
+<!--            <php_module key="technician_buttons" file_name="technician_buttons.php" />-->
+<!--            <php_module key="tabs_close" file_name="tabs_close.php" shared="true"/>-->
         </php_modules>
     </route>
     <!-- technician/showForm -->
@@ -267,115 +258,112 @@
     <!--Tasks  -->
     <route url="task" module="Task" action="index" resxfile="task" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/task_manager.js"/>
+            <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
             <!--      <js_file use="head" value="Web/js/app/controllers/task_technicians_manager.js"/>
       etc.-->
-            <js_file use="head" value="Web/js/jspkg-archive/vendor/jquery-1.7.1.min.js"/>
-            <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js"/>
+            <js_file use="head" value="Web/js/jspkg-archive/vendor/jquery-1.7.1.min.js" />
+            <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js" />
         </js_files>
         <css_files>
-            <css_file value="Web/css/app/nav.css"/>
-            <css_file value="Web/css/app/app-style.css"/>
-            <css_file value="Web/css/app/app-theme.css"/>
-            <css_file value="Web/css/app/theme.css"/>
-            <css_file value="Web/css/app/tabs.css"/>
+            <css_file value="Web/css/app/nav.css" />
+            <css_file value="Web/css/app/app-style.css" />
+            <css_file value="Web/css/app/app-theme.css" />
+            <css_file value="Web/css/app/theme.css" />
+            <css_file value="Web/css/app/tabs.css" />
         </css_files>
     </route>
     <!--   task/index  -->
-
+    
     <route url="task/listAll" module="Task" action="listAll" resxfile="task" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/task_manager.js"/>
+            <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
         </js_files>
         <css_files>
-            <css_file use="project"/>
+            <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="active_list_module" file_name="active_list.php" shared="true"/>
-            <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true"/>
+            <php_module key="active_list_module" file_name="active_list.php" shared="true" />
+            <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
         </php_modules>
-    </route>
-    <!--   task/listAll -->
-
+    </route><!--   task/listAll -->
+    
     <route url="task/showForm" module="Task" action="showForm" resxfile="task" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/task_manager.js"/>
+            <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
         </js_files>
         <css_files>
-            <css_file use="project"/>
+            <css_file use="project" />
         </css_files>
         <php_modules>
             <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
-            <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="task_info_lists" file_name="task_info_lists.php" />
             <php_module key="task_form" file_name="task_form.php" />
             <php_module key="task_buttons" file_name="task_buttons.php" />
-        </php_modules>
-    </route>
-    <!--  task/showAddForm -->
 
+        </php_modules>
+    </route><!--  task/showAddForm -->
+    
     <route url="task/locations" module="TaskLocation" action="manageLocations" resxfile="task_location" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/task_location.js"/>
+            <js_file use="head" value="Web/js/app/controllers/task_location.js" />
         </js_files>
         <css_files>
-            <css_file use="project"/>
+            <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true"/>
-            <php_module key="group_list_left" file_name="group_list_left.php" shared="true"/>
-            <php_module key="group_list_right" file_name="group_list_right.php" shared="true"/>
-            <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true"/>
+            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
+            <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
+            <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
         </php_modules>
-    </route>
-    <!--  task/locations -->
-
+    </route><!--  task/locations --> 
+    
     <route url="task/technicians" module="TaskTechnician" action="manageTechnicians" resxfile="task_technician" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/task_technician.js"/>
+            <js_file use="head" value="Web/js/app/controllers/task_technician.js" />
         </js_files>
         <css_files>
-            <css_file use="project"/>
+            <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true"/>
-            <php_module key="group_list_left" file_name="group_list_left.php" shared="true"/>
-            <php_module key="group_list_right" file_name="group_list_right.php" shared="true"/>
-            <php_module key="task_tabs_close" file_name="task_tabs_close.php" shared="true"/>
+            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
+            <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
+            <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
         </php_modules>
-    </route>
-    <!--  task/technicians -->
-
-
+    </route><!--  task/technicians -->
+    
+    
     <!-- analytes -->
     <route url="analyte/listAll" module="Analyte" action="listAll" resxfile="analyte" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/analyte_manager.js"/>
+            <js_file use="head" value="Web/js/app/controllers/analyte_manager.js" />
         </js_files>
         <css_files>
-            <css_file use="project"/>
+            <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php"/>
-            <php_module key="analyte_tabs_close" file_name="analyte_tabs_close.php"/>
-            <php_module key="field_analyte_lists" file_name="field_analyte_lists.php"/>
-            <php_module key="lab_analyte_lists" file_name="lab_analyte_lists.php"/>
-            <php_module key="project_field_analyte_list" file_name="project_field_analyte_list.php"/>
-            <php_module key="field_analyte_list" file_name="field_analyte_list.php"/>
-            <php_module key="project_lab_analyte_list" file_name="project_lab_analyte_list.php"/>
-            <php_module key="lab_analyte_list" file_name="lab_analyte_list.php"/>
-            <php_module key="field_analyte_buttons" file_name="analyte_list_buttons.php"/>
-            <php_module key="lab_analyte_buttons" file_name="analyte_list_buttons.php"/>
+            <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+            <php_module key="field_analyte_lists" file_name="field_analyte_lists.php" />
+            <php_module key="lab_analyte_lists" file_name="lab_analyte_lists.php" />
+            <php_module key="project_field_analyte_list" file_name="project_field_analyte_list.php" />
+            <php_module key="field_analyte_list" file_name="field_analyte_list.php" />
+            <php_module key="project_lab_analyte_list" file_name="project_lab_analyte_list.php" />
+            <php_module key="lab_analyte_list" file_name="lab_analyte_list.php" />
+            <php_module key="field_analyte_buttons" file_name="analyte_list_buttons.php" />
+            <php_module key="lab_analyte_buttons" file_name="analyte_list_buttons.php" />
         </php_modules>
     </route>
     <!--  analyte/ListAll -->
-
-    <route url="analyte/uploadList" module="Analyte" action="showForm" resxfile="analyte" type="ui">
+    
+    <route url="analyte/uploadList" module="Analyte" action="uploadList" resxfile="analyte" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/analyte_manager.js"/>
+            <js_file use="head" value="Web/js/app/controllers/analyte_manager.js" />
         </js_files>
         <css_files>
-            <css_file use="project"/>
+            <css_file use="project" />
         </css_files>
         <php_modules>
             <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php" />
@@ -387,7 +375,8 @@
             <php_module key="common_lab_analyte_list" file_name="common_lab_analyte_list.php" />
             <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
             <php_module key="common_analyte_buttons" file_name="common_analyte_buttons.php" />
-            <php_module key="analyte_tabs_close" file_name="analyte_tabs_close.php" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true"/>
+
         </php_modules>
     </route>
     <!-- analyte/uploadList -->
@@ -405,85 +394,101 @@
         </php_modules>
     </route>
     <!-- analyte/uploadCommons -->
-    <route url="service/listAll" module="ProjectService" action="manageServices" resxfile="service" type="ui">
+    
+    <route url="form" module="Form" action="showForm" resxfile="form" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/project_service.js"/>
+        <js_file use="head" value="Web/js/app/controllers/form.js" /> 
         </js_files>
         <css_files>
-            <css_file use="project"/>
+            <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true"/>
-            <php_module key="categorized_list_right" file_name="categorized_list_right.php" shared="true"/>
+            <php_module key="form_form" file_name="form_form.php" shared="true" />
+        </php_modules>
+    </route>
+    <!-- service provider/listAll -->   
+    
+    <route url="service/listAll" module="ProjectService" action="manageServices" resxfile="service" type="ui">
+        <js_files>
+        <js_file use="head" value="Web/js/app/controllers/project_service.js" /> 
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
+            <php_module key="categorized_list_right" file_name="categorized_list_right.php" shared="true" />
         </php_modules>
     </route>
     <!-- service provider/listAll -->
-
+    
     <route url="service/showForm" module="Service" action="showForm" resxfile="service" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/service_manager.js"/>
+            <js_file use="head" value="Web/js/app/controllers/service_manager.js" />
         </js_files>
         <css_files>
-            <css_file use="project"/>
+            <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="service_form" file_name="service_form.php"/>
-            <php_module key="service_buttons" file_name="service_buttons.php"/>
+<!--            <php_module key="service_tabs_open" file_name="service_tabs_open.php" />-->
+            <php_module key="service_form" file_name="service_form.php" />
+<!--            <php_module key="service_buttons" file_name="service_buttons.php" />-->
+<!--            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />-->
         </php_modules>
     </route>
     <!-- service provider/showForm -->
-
+    
     <!-- pms -->
     <route url="pm" module="Pm" action="index" resxfile="pm" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/pm_manager.js"/>
-            <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js"/>
+            <js_file use="head" value="Web/js/app/controllers/pm_manager.js" />
+            <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js" />
         </js_files>
         <css_files>
-            <css_file value="Web/css/app/nav.css"/>
-            <css_file value="Web/css/app/app-style.css"/>
-            <css_file value="Web/css/app/app-theme.css"/>
-            <css_file value="Web/css/app/theme.css"/>
-            <css_file value="Web/css/app/tabs.css"/>
+            <css_file value="Web/css/app/nav.css" />
+            <css_file value="Web/css/app/app-style.css" />
+            <css_file value="Web/css/app/app-theme.css" />
+            <css_file value="Web/css/app/theme.css" />
+            <css_file value="Web/css/app/tabs.css" />
         </css_files>
     </route>
     <!-- pm/index -->
-
+    
     <route url="pm/listAll" module="Pm" action="listAll" resxfile="pm" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/pm_manager.js"/>
+            <js_file use="head" value="Web/js/app/controllers/pm_manager.js" />
         </js_files>
         <css_files>
-            <css_file use="project"/>
+            <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="active_list_module" file_name="active_list.php" shared="true"/>
-            <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true"/>
+            <php_module key="active_list_module" file_name="active_list.php" shared="true" />
+            <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
         </php_modules>
     </route>
     <!-- pm/listAll -->
-
+    
     <route url="pm/showForm" module="Pm" action="showForm" resxfile="pm" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/pm_manager.js"/>
+            <js_file use="head" value="Web/js/app/controllers/pm_manager.js" />
         </js_files>
         <css_files>
-            <css_file value="Web/css/app/nav.css"/>
-            <css_file value="Web/css/app/app-style.css"/>
-            <css_file value="Web/css/app/app-theme.css"/>
-            <css_file value="Web/css/app/theme.css"/>
-            <css_file value="Web/css/app/tabs.css"/>
+            <css_file value="Web/css/app/nav.css" />
+            <css_file value="Web/css/app/app-style.css" />
+            <css_file value="Web/css/app/app-theme.css" />
+            <css_file value="Web/css/app/theme.css" />
+            <css_file value="Web/css/app/tabs.css" />
         </css_files>
         <php_modules>
             <!-- <php_module key="pm_tabs_open" file_name="pm_tabs_open.php"/>   -->
-            <php_module key="pm_form" file_name="pm_form.php"/>
-            <php_module key="pm_buttons" file_name="pm_buttons.php"/>
-            <php_module key="pm_tabs_close" file_name="pm_tabs_close.php"/>
+            <php_module key="pm_form" file_name="pm_form.php" />
+            <php_module key="pm_buttons" file_name="pm_buttons.php" />
+<!--            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />-->
         </php_modules>
     </route>
     <!-- pm/showForm -->
-
-
+    
+    
     <!-- WebService AJAX routes -->
     <!-- INSTRUCTIONS
   
@@ -551,6 +556,8 @@
   <route url="service/getItem" module="Service" action="getItem" resxfile="service" type="ws" />
   <!--  <route url="service/updateItems" module="Service" action="updateItems" resxfile="service" type="ws" />-->
   
+  <route url="form/getlist" module="Form" action="getList" resxfile="service" type="ws" />
+  
   <route url="pm/add" module="Pm" action="add" resxfile="pm" type="ws" />
   <route url="pm/edit" module="Pm" action="edit" resxfile="pm" type="ws" />
   <route url="pm/delete" module="Pm" action="delete" resxfile="pm" type="ws" />
@@ -578,5 +585,5 @@
 
   <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
   <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />
-  <route url="uploadFile" module="FileUpload" action="uploadFile" resxfile="fileupload" type="lib ws" />
+  <route url="upload" module="FileUpload" action="upload" resxfile="fileupload" type="lib ws" />
 </routes>

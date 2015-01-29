@@ -17,7 +17,7 @@ abstract class BaseController extends ApplicationComponent {
   protected $dataPost = array();
   //shortcut from $app->user() also used as $this->app()->user() in controllers
   protected $user = null;
-
+  protected $files = array();
 
   public function __construct(Application $app, $module, $action, $resxfile) {
     parent::__construct($app);
@@ -28,8 +28,9 @@ abstract class BaseController extends ApplicationComponent {
     $this->setAction($action);
     $this->setView($action);
     $this->setResxFile($resxfile);
-    $this->setDataPost($this->app->HttpRequest()->retrievePostAjaxData(NULL, FALSE));
+    $this->setDataPost($this->app->HttpRequest()->retrievePostAjaxData(FALSE));
     $this->resxData = $this->app->i8n->getLocalResourceArray($this->resxfile);
+    $this->setUploadingFiles();
   }
 
   public function execute() {
@@ -45,7 +46,10 @@ abstract class BaseController extends ApplicationComponent {
 
     $br = new UC\Breadcrumb($this->app());
     //Load controller method
+    $time_log_type = Enums\ResourceKeys\GlobalAppKeys::log_controller_method_request;
+    Core\Utility\TimeLogger::StartLog($this->app(), $time_log_type);
     $result = $this->$method($this->app->HttpRequest());
+    Core\Utility\TimeLogger::EndLog($this->app(), $time_log_type);
     if ($result !== NULL) {
       $result["br"] = $br->Build();
       echo \Library\HttpResponse::encodeJson($result);
@@ -61,15 +65,15 @@ abstract class BaseController extends ApplicationComponent {
   public function leftMenu() {
     return $this->leftMenu;
   }
-  
+
   public function managers() {
     return $this->managers;
   }
-  
+
   public function module() {
     return $this->module;
   }
-  
+
   public function action() {
     return $this->action;
   }
@@ -78,10 +82,19 @@ abstract class BaseController extends ApplicationComponent {
     return $this->dataPost;
   }
 
+  /**
+   * This is a shortcut to $this->app()->user()
+   * 
+   * @return \Library\User
+   */
   public function user() {
     return $this->user;
   }
-  
+
+  public function files() {
+    return $this->files;
+  }
+
   public function setModule($module) {
     if (!is_string($module) || empty($module)) {
       throw new \InvalidArgumentException('the module value must be a string and not be empty');
@@ -106,14 +119,14 @@ abstract class BaseController extends ApplicationComponent {
     $this->view = $view;
 
     $this->page->setContentFile(
-            __ROOT__ . Enums\FolderName::AppsFolderName
-            . $this->app->name()
-            . Enums\FolderName::ViewsFolderName
-            . $this->module
-            . '/'
-            . $this->view . '.php');
+        __ROOT__ . Enums\FolderName::AppsFolderName
+        . $this->app->name()
+        . Enums\FolderName::ViewsFolderName
+        . $this->module
+        . '/'
+        . $this->view . '.php');
   }
-  
+
   public function setResxFile($resxfile) {
     if (!is_string($resxfile) || empty($resxfile)) {
       throw new \InvalidArgumentException('The resx file must be a string and not be empty');
@@ -121,7 +134,7 @@ abstract class BaseController extends ApplicationComponent {
 
     $this->resxfile = $resxfile;
   }
-  
+
   public function setDataPost($dataPost) {
     if (!is_array($dataPost) || empty($dataPost)) {
       $this->dataPost = array();
@@ -129,6 +142,11 @@ abstract class BaseController extends ApplicationComponent {
 
     $this->dataPost = $dataPost;
   }
+
+  public function setUploadingFiles() {
+    $this->files = $_FILES;
+  }
+
   /**
    * Set the default response from WS
    * 
@@ -140,17 +158,17 @@ abstract class BaseController extends ApplicationComponent {
   public function InitResponseWS($params = array("resx_file" => "ws_defaults", "resx_key" => "", "step" => "error")) {
     if ($params["step"] === "success") {
       return array(
-          "result" => 1,
-          "message" => $params["resx_file"] === "ws_defaults" ?
-                  $this->app->i8n->getCommonResource($params["resx_file"], "message_success" . $params["resx_key"]) :
-                  $this->app->i8n->getLocalResource($params["resx_file"], "message_success" . $params["resx_key"])
+        "result" => 1,
+        "message" => $params["resx_file"] === "ws_defaults" ?
+            $this->app->i8n->getCommonResource($params["resx_file"], "message_success" . $params["resx_key"]) :
+            $this->app->i8n->getLocalResource($params["resx_file"], "message_success" . $params["resx_key"])
       );
     } else {
       return array(
-          "result" => 0,
-          "message" => $params["resx_file"] === "ws_defaults" ?
-                  $this->app->i8n->getCommonResource($params["resx_file"], "message_error" . $params["resx_key"]) :
-                  $this->app->i8n->getLocalResource($params["resx_file"], "message_error" . $params["resx_key"])
+        "result" => 0,
+        "message" => $params["resx_file"] === "ws_defaults" ?
+            $this->app->i8n->getCommonResource($params["resx_file"], "message_error" . $params["resx_key"]) :
+            $this->app->i8n->getLocalResource($params["resx_file"], "message_error" . $params["resx_key"])
       );
     }
   }
@@ -166,14 +184,14 @@ abstract class BaseController extends ApplicationComponent {
   public function SendResponseWS($result, $params) {
     if ($params["step"] === "success") {
       $result["result"] = 1;
-      $result["message"] = $params["resx_file"] === "ws_defaults" ?
-              $this->app->i8n->getCommonResource($params["resx_file"], "message_success_" . $params["resx_key"]) :
-              $this->app->i8n->getLocalResource($params["resx_file"], "message_success_" . $params["resx_key"]);
+      $result["message"] = ($params["resx_file"] === "ws_defaults" || (array_key_exists("directory", $params) && $params["directory"] === "common")) ?
+          $this->app->i8n->getCommonResource($params["resx_file"], "message_success_" . $params["resx_key"]) :
+          $this->app->i8n->getLocalResource($params["resx_file"], "message_success_" . $params["resx_key"]);
     } else {
       $result["result"] = 0;
-      $result["message"] = $params["resx_file"] === "ws_defaults" ?
-              $this->app->i8n->getCommonResource($params["resx_file"], "message_error_" . $params["resx_key"]) :
-              $this->app->i8n->getLocalResource($params["resx_file"], "message_error_" . $params["resx_key"]);
+      $result["message"] = ($params["resx_file"] === "ws_defaults" || (array_key_exists("directory", $params) && $params["directory"] === "common")) ?
+          $this->app->i8n->getCommonResource($params["resx_file"], "message_error_" . $params["resx_key"]) :
+          $this->app->i8n->getLocalResource($params["resx_file"], "message_error_" . $params["resx_key"]);
     }
     echo \Library\HttpResponse::encodeJson($result);
   }
@@ -184,8 +202,8 @@ abstract class BaseController extends ApplicationComponent {
    * @param type $params
    *    array(
    *      "filter" => "property_name_of_object_type",
-          "ids" => ids_to_filter_objects, 
-          "objects" => the_objects
+    "ids" => ids_to_filter_objects,
+    "objects" => the_objects
    *    )
    * @return array of objects
    */
@@ -194,7 +212,7 @@ abstract class BaseController extends ApplicationComponent {
     $matchedElements = array();
     foreach ($params["objects"] as $object) {
       foreach ($params["ids"] as $id) {
-        if(intval($object->$params["filter"]()) === intval($id)) {
+        if (intval($object->$params["filter"]()) === intval($id)) {
           array_push($matchedElements, $object);
           break;
         }
@@ -202,7 +220,7 @@ abstract class BaseController extends ApplicationComponent {
     }
     return $matchedElements;
   }
-  
+
   /**
    * Add to the page object the common variables to use in the views
    * 
@@ -223,9 +241,12 @@ abstract class BaseController extends ApplicationComponent {
     $this->app->pageTitle = $this->app->i8n->getLocalResource($this->resxfile, "page_title");
     $this->page->addVar("logout_url", __BASEURL__ . Enums\ResourceKeys\UrlKeys::LogoutUrl);
   }
+
   protected function Redirect($urlPart) {
+    Core\Utility\TimeLogger::EndLog($this->app(), \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
     $url = __BASEURL__ . $urlPart;
     header('Location: ' . $url);
     exit();
   }
+
 }
