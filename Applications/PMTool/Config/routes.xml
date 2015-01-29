@@ -83,10 +83,10 @@
         </css_files>
     </route>
     <!-- location/index -->
-    
+
     <route url="location/listAll" module="Location" action="listAll" resxfile="location" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/location_manager.js" />
+            <js_file use="head" value="Web/js/app/controllers/location_manager.js"/>
         </js_files>
         <css_files>
             <css_file use="project" />
@@ -177,7 +177,84 @@
         </php_modules>
     </route>
     <!-- technician/showForm -->
-    
+
+
+    <!--Map  -->
+        <route url="map/load" module="Map" action="loadView" resxfile="map" type="ui">
+        <js_files>
+            <js_file use="html" value="Web/js/app/controllers/gmaps.js"/>
+            <js_file use="html" value="Web/js/app/controllers/maps.js"/>
+        </js_files>
+        <css_files>
+            <css_file value="Web/css/app/app-theme.css"/>
+            <css_file use="project"/>
+        </css_files>
+        <php_modules>
+            <php_module key="map_view" file_name="Maps/mainView.php" shared="true"/>
+        </php_modules>
+    </route>
+
+    <route url="map/currentProject" module="Map" action="currentProject" resxfile="map" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/gmaps.js"/>
+            <js_file use="head" value="Web/js/app/controllers/maps.js"/>
+        </js_files>
+        <css_files>
+            <css_file value="Web/css/app/app-theme.css"/>
+            <css_file use="project"/>
+        </css_files>
+        <php_modules>
+            <php_module key="current_project" file_name="Maps/current_project.php" shared="true"/>
+        </php_modules>
+    </route>
+    <!--   map/currentProject -->
+
+    <route url="map/currentProjectLocations" module="Map" action="currentProjectLocations" resxfile="map" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/gmaps.js"/>
+            <js_file use="head" value="Web/js/app/controllers/maps.js"/>
+        </js_files>
+        <css_files>
+            <css_file value="Web/css/app/app-theme.css"/>
+            <css_file use="project"/>
+        </css_files>
+        <php_modules>
+            <php_module key="current_project_locations" file_name="Maps/current_project_locations.php" shared="true"/>
+        </php_modules>
+    </route>
+    <!--   map/currentProjectLocations -->
+
+    <route url="map/taskLocations" module="Map" action="taskLocations" resxfile="map" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/gmaps.js"/>
+            <js_file use="head" value="Web/js/app/controllers/maps.js"/>
+        </js_files>
+        <css_files>
+            <css_file value="Web/css/app/app-theme.css"/>
+            <css_file use="project"/>
+        </css_files>
+        <php_modules>
+            <php_module key="task_locations" file_name="Maps/task_locations.php" shared="true"/>
+        </php_modules>
+    </route>
+    <!--   map/taskLocations -->
+
+    <route url="map/showOne" module="Map" action="showOne" resxfile="map" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/gmaps.js"/>
+            <js_file use="head" value="Web/js/app/controllers/maps.js"/>
+        </js_files>
+        <css_files>
+            <css_file value="Web/css/app/app-theme.css"/>
+            <css_file use="project"/>
+        </css_files>
+        <php_modules>
+            <php_module key="show_one" file_name="show_one.php" shared="true"/>
+        </php_modules>
+    </route>
+    <!--   map/showOne -->
+
+
     <!--Tasks  -->
     <route url="task" module="Task" action="index" resxfile="task" type="ui">
         <js_files>
@@ -503,6 +580,8 @@
   <route url="lab_analyte/getlist" module="LabAnalyte" action="getList" resxfile="lab_analyte" type="ws" />
   <route url="lab_analyte/getItem" module="LabAnalyte" action="getItem" resxfile="lab_analyte" type="ws" />
   <route url="lab_analyte/updateItems" module="LabAnalyte" action="updateItems" resxfile="lab_analyte" type="ws" />
+
+  <route url="map/listAll" module="Map" action="listAll" resxfile="map" type="ws" />
 
   <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
   <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />
