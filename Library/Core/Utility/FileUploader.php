@@ -30,41 +30,43 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class FileUploader extends \Library\ApplicationComponent {
 
   public
-          $rootDirectory = "",
-          $uploadDirectory = "",
-          $files = array(),
-          $dataPost = array();
+      $rootDirectory = "",
+      $uploadDirectory = "",
+      $files = array(),
+      $dataPost = array(),
+      $resultJson = array();
 
-  public function __construct(\Library\Application $app, $files, $dataPost) {
+  public function __construct(\Library\Application $app, $data) {
     parent::__construct($app);
     $this->rootDirectory = $app->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload);
-    $this->files = $files;
-    $this->dataPost = $dataPost;
+    $this->files = $data["files"];
+    $this->dataPost = $data["dataPost"];
+    $this->resultJson = $data["resultJson"];
   }
 
   public function UploadFiles() {
     $this->uploadDirectory = $this->rootDirectory . $this->dataPost["category"];
-
+    $this->resultJson["fileUploaded"] = 0;
     foreach ($this->files as $file) {
-      $fileName = $this->uploadDirectory . "/" . $file['file']['name'];
-      $this->_GetDirectory($fileName);
-      $this->UploadAFile($file);
+      $fileName = $this->uploadDirectory . "/" . $file['name'];
+      $this->GetDirectory($fileName);
+      $this->resultJson["fileUploaded"] += $this->UploadAFile($file);
     }
+    return $this->resultJson;
   }
 
-  private function _GetDirectory($fileName) {
+  private function GetDirectory($fileName) {
     if (!file_exists($fileName)) {
-      mkdir($dir, 0777, true);
+      mkdir($this->uploadDirectory, 0777, true);
     }
   }
 
   private function UploadAFile($file) {
     if (move_uploaded_file(
-                    $file['tmp_name'], $this->uploadDirectory . "/" . $file['name'])) {
-      \Library\Utility\DebugHelper::LogAsHtmlComment($file['name'] . " uploaded in " . $this->uploadDirectory);
-      $addToDB = TRUE;
+            $file['tmp_name'], $this->uploadDirectory . "/" . $file['name'])) {
+      return 1;
     } else {
-      \Library\Utility\DebugHelper::LogAsHtmlComment($file['name'] . " not uploaded");
+      return 0;
     }
   }
 
