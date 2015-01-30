@@ -13,6 +13,18 @@
   <resource key="btn_to_active_list">Activate Task</resource> 
   <resource key="btn_to_lead_list">Assign as a Lead Technician</resource>  
   
+    <!-- Tabs -->  
+  
+  <resource key="task_tab_info">Task Info</resource>
+  <resource key="task_tab_technicians">Technicians</resource>
+  <resource key="task_tab_locations">Locations</resource>
+  <resource key="task_tab_map">Map</resource>
+  <resource key="task_tab_forms">Forms</resource>
+  <resource key="task_tab_field_analytes">Field Analytes</resource>
+  <resource key="task_tab_lab_analytes">Lab Analytes</resource>
+  <resource key="task_tab_coc">Chain of Custody</resource>
+  <resource key="task_tab_services">Services</resource>
+  
   <!--  Task Locations Form--> 
   <resource key="task_locations_header">Locations</resource>
   <resource key="h4_task_locations">Task locations</resource>

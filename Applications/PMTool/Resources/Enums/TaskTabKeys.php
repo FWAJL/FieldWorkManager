@@ -32,8 +32,21 @@ class TaskTabKeys {
   const InspFormsTab = "ttk_itft";
   const FieldAnalytesTab = "ttk_fat";
   const LabAnalytesTab = "ttk_lat";
-  const FieldSampleMatrixTab = "ttk_fsmt";
-  const LabSampleMatrixTab = "ttk_lsmt";
   const CocTab = "ttk_ct";
   const ServicesTab = "ttk_st";
+}
+
+class ActiveTaskTabKeys {
+  const ActiveInfoTab = "attk_ait";
+  const ActiveTaskMapTab = "attk_atmt";
+  const ActiveInspFormsTab = "attk_aift";
+  const ActiveCocTab = "attk_act";
+  const ActiveTaskServicesTab = "attk_atst";
+}
+
+class CompleteTaskTabKeys {
+  const CompleteInfoTab = "cttk_cit";
+  const CompleteTaskMapTab = "cttk_ctmt";
+  const CompleteInspFormsTab = "cttk_cift";
+  const CompleteTaskServicesTab = "cttk_ctst";
 }

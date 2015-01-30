@@ -28,9 +28,9 @@ $(document).ready(function() {
   // Selection of projects
   var project_ids = [];
   $("#active-list, #inactive-list").selectable({
-    stop: function() {
+    stop: function () {
       var tmpSelection = "";
-      $(".ui-selected", this).each(function() {
+      $(".ui-selected", this).each(function () {
         tmpSelection += $(this).attr("data-project-id") + ",";
       });
       tmpSelection = utils.removeLastChar(tmpSelection);
@@ -45,38 +45,38 @@ $(document).ready(function() {
       }
     }
   });
-  $(".from-inactive-list").click(function() {
+  $(".from-inactive-list").click(function () {
     project_manager.updateProjects("active", project_ids);
   });
-  $(".from-active-list").click(function() {
+  $(".from-active-list").click(function () {
     project_manager.updateProjects("inactive", project_ids);
   });
 
   //************************************************//
-  $(".btn_set_current_project").click(function() {
+  $(".btn_set_current_project").click(function () {
     project_manager.setCurrentProject(project_ids.split(",")[0]);
   });
 
 
-  $("#btn_add_project").click(function() {
+  $("#btn_add_project").click(function () {
     var post_data = {};
     post_data["project"] = utils.retrieveInputs("project_form", ["project_name"]);
     post_data["facility"] = utils.retrieveInputs("facility_form", ["facility_name"]);
     post_data["client"] = utils.retrieveInputs();
     if (post_data["project"].project_name !== undefined &&
-            post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
+      post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
       project_manager.add(post_data, "project", "add");
     }
   });//Add a project
 
-  $("#btn_edit_project").click(function() {
+  $("#btn_edit_project").click(function () {
     var post_data = utils.retrieveInputs("project_form", ["project_name"]);
     if (post_data.project_name !== undefined) {
       project_manager.edit(post_data, "project", "edit");
     }
   });//Edit a project
 
-  $("#btn_delete_project").click(function() {
+  $("#btn_delete_project").click(function () {
     project_manager.delete(parseInt(utils.getQueryVariable("project_id")));
   });//Delete a project
 
@@ -92,27 +92,31 @@ $(document).ready(function() {
   }
 
   var alreadyHovered = false;
-  $(".select_item").hover(function() {
+  $(".select_item").hover(function () {
     if (!alreadyHovered)
       toastr.info("Right-click to edit!");
     alreadyHovered = true;
   });//Show a project tip
 
-  $("#project_list_all").click(function() {
+  $("#project_list_all").click(function () {
     utils.clearForm();
     $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
     $(".project_list").fadeIn('2000').removeClass("hide");
     project_manager.getList();
   });//Show "List All" panel
+  
+  $("li[data-project-id]").hover(function(){
+	$(this).tooltip({ placement: "bottom" });
+  }); 
 
 });
 /***********
- * project_manager namespace 
+ * project_manager namespace
  * Responsible to manage projects.
  */
-(function(project_manager) {
-  project_manager.add = function(data, controller, action) {
-    datacx.post(controller + "/" + action, data["project"]).then(function(reply) {//call AJAX method to call Project/Add WebService
+(function (project_manager) {
+  project_manager.add = function (data, controller, action) {
+    datacx.post(controller + "/" + action, data["project"]).then(function (reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
@@ -130,8 +134,8 @@ $(document).ready(function() {
       }
     });
   };
-  project_manager.edit = function(project, controller, action) {
-    datacx.post(controller + "/" + action, project).then(function(reply) {//call AJAX method to call Project/Add WebService
+  project_manager.edit = function (project, controller, action) {
+    datacx.post(controller + "/" + action, project).then(function (reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
@@ -146,8 +150,8 @@ $(document).ready(function() {
       }
     });
   };
-  project_manager.getList = function() {
-    datacx.post("project/getlist", null).then(function(reply) {//call AJAX method to call Project/GetList WebService
+  project_manager.getList = function () {
+    datacx.post("project/getlist", null).then(function (reply) {//call AJAX method to call Project/GetList WebService
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
@@ -158,7 +162,7 @@ $(document).ready(function() {
       }
     });
   };
-  project_manager.buildOutputList = function(projects) {
+  project_manager.buildOutputList = function (projects) {
     var active_projects = "";
     var inactive_projects = "";
     for (i = 0; i < projects.length; i++) {
@@ -169,17 +173,20 @@ $(document).ready(function() {
       }
     }
     inactive_projects = utils.isNullOrEmpty(inactive_projects) ?
-            "<option value=\"\">{empty}</option>" : inactive_projects;
+      "<option value=\"\">{empty}</option>" : inactive_projects;
     active_projects = utils.isNullOrEmpty(active_projects) ?
-            "<option value=\"\">{empty}</option>" : active_projects;
+      "<option value=\"\">{empty}</option>" : active_projects;
     $("#project-data-active, #project-data-inactive").show();
     $("#project-data-active").html(active_projects);
     $("#project-data-inactive").html(inactive_projects);
   };
-  project_manager.retrieveProject = function(element) {
+  project_manager.retrieveProject = function (element) {
     utils.redirect("project/showForm?mode=edit&project_id=" + parseInt(element.attr("data-project-id")));
   };
-  project_manager.loadEditForm = function(dataWs) {
+  project_manager.show_on_map = function (id) {
+    utils.redirect("map/showOne?id=" +id);
+  };
+  project_manager.loadEditForm = function (dataWs) {
     utils.clearForm();
     $(".project_form input[name=\"project_id\"]").val(parseInt(dataWs.project_obj.project_id));
     $(".project_form .add-new-item input[name=\"project_name\"]").val(dataWs.project_obj.project_name);
@@ -190,8 +197,8 @@ $(document).ready(function() {
     facility_manager.loadEditForm(dataWs);
     client_manager.loadEditForm(dataWs);
   };
-  project_manager.delete = function(project_id) {
-    datacx.post("project/delete", {"project_id": project_id}).then(function(reply) {
+  project_manager.delete = function (project_id) {
+    datacx.post("project/delete", {"project_id": project_id}).then(function (reply) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
         return undefined;
@@ -203,9 +210,9 @@ $(document).ready(function() {
     });
   };
 
-  project_manager.getItem = function(project_id) {
+  project_manager.getItem = function (project_id) {
     //get project object from cache (PHP WS)
-    datacx.post("project/getItem", {"project_id": project_id}).then(function(reply) {
+    datacx.post("project/getItem", {"project_id": project_id}).then(function (reply) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
         $(".form_sections").hide();
@@ -218,7 +225,7 @@ $(document).ready(function() {
     });
   };
 
-  project_manager.fillFormWithRandomData = function() {
+  project_manager.fillFormWithRandomData = function () {
     utils.clearForm();
     var number = Math.floor((Math.random() * 1000) + 1);
     $(".project_form input[name=\"project_name\"]").val("Project " + number);
@@ -231,8 +238,8 @@ $(document).ready(function() {
     $(".client_form .add-new-item input[name=\"client_contact_phone\"]").val(Math.floor(Math.random() * 1000000000));
   };
 
-  project_manager.updateProjects = function(action, arrayId) {
-    datacx.post("project/updateItems", {"action": action, "project_ids": arrayId}).then(function(reply) {
+  project_manager.updateProjects = function (action, arrayId) {
+    datacx.post("project/updateItems", {"action": action, "project_ids": arrayId}).then(function (reply) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
         return undefined;
@@ -242,8 +249,8 @@ $(document).ready(function() {
       }
     });
   };
-  project_manager.setCurrentProject = function(projectId) {
-    datacx.post("project/setCurrentProject", {"project_id": projectId}).then(function(reply) {
+  project_manager.setCurrentProject = function (projectId) {
+    datacx.post("project/setCurrentProject", {"project_id": projectId}).then(function (reply) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
         return undefined;
@@ -253,7 +260,7 @@ $(document).ready(function() {
       }
     });
   };
-  project_manager.hideSetCurrentProject = function(showButton) {
+  project_manager.hideSetCurrentProject = function (showButton) {
     if (!showButton) {
       $(".btn_set_current_project").hide();
     } else {

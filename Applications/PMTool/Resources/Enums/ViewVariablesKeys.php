@@ -44,6 +44,8 @@ class ViewVariablesKeys {
   const property_id = "prop_id";
   const property_name = "prop_name";
   const property_active = "prop_active";
+  //For tooltip
+  const tooltip_message = "tooltip_message"; 
 
   const tabStatus = "tab";
 
@@ -62,7 +64,10 @@ class ViewVariablesKeys {
   
   //Task's view variabless
   const task_tab_open = "task_tab_open";
-  const task_tab_close = "task_tab_close";
+  const tab_close = "tab_close";
+  
+  //Mapping
+  const map_view = "map_view";
 }
 
 ?>

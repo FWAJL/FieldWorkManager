@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/core/jquery-ui.css" />
 
     <?php echo $this->app->globalResources["css_files"]; ?>
+
+    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
     
 <!--    <script type="application/javascript" src="
 <?php echo $this->app->relative_path; ?>
@@ -21,7 +23,7 @@ Web/js/app/controllers/pm_manager.js"></script>-->
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/app/controllers/pm_manager.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <!--<link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->app->relative_path; ?>Web/images/favicon.ico">-->
     <!--<link href='http://fonts.googleapis.com/css?family=Droid+Serif:700,400,400italic,700italic' rel='stylesheet' type='text/css'>-->
 
     <!--[if IE]>

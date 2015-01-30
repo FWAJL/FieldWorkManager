@@ -11,7 +11,7 @@
       </div>
     </div>
     <div  class="col-lg-5 col-md-5">
-Nothing here
+
     </div>
   </div>
 </div>

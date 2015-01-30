@@ -14,6 +14,7 @@ class HttpResponse extends ApplicationComponent {
   }
 
   public function redirect($location) {
+    Core\Utility\TimeLogger::EndLog($this->app(), \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
     header('Location: ' . $location);
     exit;
   }
@@ -33,10 +34,11 @@ class HttpResponse extends ApplicationComponent {
     // (bien que je suis sûr que les noms choisis sont assez explicites !).
     if (!$this->app->router->isWsCall) {
       //Return the content to page
-     exit($this->page->getGeneratedPage()); 
+      exit($this->page->getGeneratedPage());
     } else {
       //Since we are doing a AJAX call, we just exit.
-     exit();
+      Core\Utility\TimeLogger::EndLog($this->app, \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
+      exit();
     }
   }
 

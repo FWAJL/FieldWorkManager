@@ -8,7 +8,8 @@
   <define key="DefaultLanguage" value="en" />
   <define key="RootImageFolderPath" value="Web/images/" />
   <define key="DalFolderPath" value="\Applications\PMTool\Models\Dal\" />
-  
+  <define key="RootDocumentUpload" value="./uploads/" />
+
   <!-- Security -->
   <define key="encryption_key" value="g496lJL683yFiDzju2K94f1751Lo7WSw" />
   
@@ -18,4 +19,7 @@
   <define key="Mysql_pwd" value="fwm1_62313One@" />
   <define key="Mysql_db_name" value="baiken_fwm_1" /> 
   
+  <!-- Mapping -->
+  <define key="GoogleMapsCenterLat" value="37.6" />
+  <define key="GoogleMapsCenterLng" value="-95.665" />   
 </definitions>

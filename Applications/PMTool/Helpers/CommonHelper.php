@@ -177,5 +177,4 @@ class CommonHelper {
     }
     return $list;
   }
-
 }
