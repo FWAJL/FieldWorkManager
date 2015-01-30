@@ -104,11 +104,6 @@ $(document).ready(function() {
     $(".project_list").fadeIn('2000').removeClass("hide");
     project_manager.getList();
   });//Show "List All" panel
-  
-  $("li[data-project-id]").hover(function(){
-	$(this).tooltip({ placement: "bottom" });
-  }); 
-
 });
 /***********
  * project_manager namespace
