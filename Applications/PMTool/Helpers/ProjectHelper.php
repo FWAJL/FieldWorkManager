@@ -176,7 +176,5 @@ class ProjectHelper {
       self::SetSessionProjects($user, $userSessionProjects);
     }
   }
-   
-
 }
 

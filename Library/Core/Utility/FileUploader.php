@@ -16,8 +16,8 @@
  * FileUploader Class
  *
  * @package		Library
- * @subpackage	Utility
- * @category	_TemplateClass
+ * @subpackage	Core
+ * @category	Utility
  * @author		Jeremie Litzler
  * @link		
  */
@@ -30,11 +30,12 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class FileUploader extends \Library\ApplicationComponent {
 
   public
-      $rootDirectory = "",
-      $uploadDirectory = "",
-      $files = array(),
-      $dataPost = array(),
-      $resultJson = array();
+          $rootDirectory = "",
+          $uploadDirectory = "",
+          $currentFile = null,
+          $files = array(),
+          $dataPost = array(),
+          $resultJson = array();
 
   public function __construct(\Library\Application $app, $data) {
     parent::__construct($app);
@@ -46,27 +47,32 @@ class FileUploader extends \Library\ApplicationComponent {
 
   public function UploadFiles() {
     $this->uploadDirectory = $this->rootDirectory . $this->dataPost["category"];
-    $this->resultJson["fileUploaded"] = 0;
     foreach ($this->files as $file) {
-      $fileName = $this->uploadDirectory . "/" . $file['name'];
-      $this->GetDirectory($fileName);
-      $this->resultJson["fileUploaded"] += $this->UploadAFile($file);
+      $this->currentFile = new \Library\Core\BO\FileUploadResult(
+              $this->uploadDirectory . "/" . $file['name'], $file["tmp_name"]
+      );
+      $this->currentFile->setDoesExist($this->GetDirectory($this->currentFile->filePath()));
+      $this->currentFile->setIsUploaded($this->UploadAFile(
+                      $this->currentFile->tmpFilePath(), $this->currentFile->filePath()));
+      $result["fileUploadResult"] = $this->currentFile;
     }
     return $this->resultJson;
   }
 
-  private function GetDirectory($fileName) {
-    if (!file_exists($fileName)) {
+  private function GetDirectory($filePath) {
+    if (!file_exists($filePath) && !is_dir($filePath)) {
       mkdir($this->uploadDirectory, 0777, true);
+      return FALSE;
+    } else {
+      return TRUE;
     }
   }
 
-  private function UploadAFile($file) {
-    if (move_uploaded_file(
-            $file['tmp_name'], $this->uploadDirectory . "/" . $file['name'])) {
-      return 1;
+  private function UploadAFile($tmp, $file) {
+    if (move_uploaded_file($tmp, $file)) {
+      return TRUE;
     } else {
-      return 0;
+      return FALSE;
     }
   }
 

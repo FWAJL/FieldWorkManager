@@ -45,21 +45,17 @@ class Globalization extends ApplicationComponent {
    */
 
   public function loadResources() {
-    $this->resoures_path = __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name;
+    $this->resoures_path = __ROOT__ . Enums\ApplicationFolderName::AppsFolderName . $this->app->name;
     //Get list of resource files
-    $this->_files_common = $this->getFilesList($this->resoures_path . Enums\FolderName::ResourceCommonFolderName);
-    $this->_files_local = $this->getFilesList($this->resoures_path . Enums\FolderName::ResourceLocalFolderName);
+    $this->_files_common = Core\DirectoryManager::GetFileNames($this->resoures_path . Enums\ApplicationFolderName::ResourceCommonFolderName);
+    $this->_files_local = Core\DirectoryManager::GetFileNames($this->resoures_path . Enums\ApplicationFolderName::ResourceLocalFolderName);
     //For each resource type, load data into the appropriate array
     foreach ($this->_files_common as $file) {
-      $this->loadFile("common", $this->resoures_path . Enums\FolderName::ResourceCommonFolderName . $file);
+      $this->loadFile("common", $this->resoures_path . Enums\ApplicationFolderName::ResourceCommonFolderName . $file);
     }
     foreach ($this->_files_local as $file) {
-      $this->loadFile("local", $this->resoures_path . Enums\FolderName::ResourceLocalFolderName . $file);
+      $this->loadFile("local", $this->resoures_path . Enums\ApplicationFolderName::ResourceLocalFolderName . $file);
     }
-  }
-
-  private function getFilesList($dir) {
-    return array_diff(scandir($dir), array('..', '.'));
   }
 
   private function loadFile($type, $file) {
