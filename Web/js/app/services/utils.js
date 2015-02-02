@@ -4,6 +4,8 @@
 $(document).ready(function() {
   $("#datepicker").datepicker();
   $("#datepicker").datepicker("option", "dateFormat", "mm-dd-yy");
+  //toolip
+  $("li[has-tool-tip]").tooltip({ placement: $("li[has-tool-tip]").attr("placement") });
 });
 /**
  * JavaScript Module to do JavaScript actions common to several views

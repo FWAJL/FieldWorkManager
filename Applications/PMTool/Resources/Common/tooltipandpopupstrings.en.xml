@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<resource uicomponent="tooltip" targetattr="data-project-id" value="Click to select : Right‐click to edit" placement="bottom" />
+	<resource uicomponent="tooltip" targetattr="data-technician-id" value="Click to select : Right‐click to edit" placement="top" />
+	<resource uicomponent="tooltip" targetattr="data-anyotherentity-id" value="Click to select : Right‐click to edit" placement="bottom" />
+</resources>

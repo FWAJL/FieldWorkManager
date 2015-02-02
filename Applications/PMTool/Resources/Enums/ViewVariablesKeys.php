@@ -67,7 +67,7 @@ class ViewVariablesKeys {
   const tab_close = "tab_close";
   
   //Mapping
-  const map_view = "map_view";
+  const map_module = "map_module";
 }
 
 ?>
