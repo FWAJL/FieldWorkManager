@@ -46,7 +46,7 @@ class PopUpHelper {
   public static function loadToolTipMessagefromXML()
   {
     $xml = new \DOMDocument;
-    $filename = __ROOT__ . \Library\Enums\FolderName::AppsFolderName . PopUpHelper::$appname . '/Resources/Common/tooltipandpopupstrings.en.xml';
+    $filename = __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . PopUpHelper::$appname . '/Resources/Common/tooltipandpopupstrings.en.xml';
     if (file_exists($filename)) {
       $xml->load($filename);
     } else {
