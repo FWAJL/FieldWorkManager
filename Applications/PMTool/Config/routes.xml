@@ -180,7 +180,7 @@
 
 
     <!--Map  -->
-        <route url="map/load" module="Map" action="loadView" resxfile="map" type="ui">
+        <route url="map/allProjects" module="Map" action="loadView" resxfile="map" type="ui">
         <js_files>
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/services/maps.js"/>
@@ -190,7 +190,7 @@
             <css_file use="project"/>
         </css_files>
         <php_modules>
-            <php_module key="map_view" file_name="Maps/mainView.php" shared="true"/>
+            <php_module key="map_module" file_name="map.php" shared="true"/>
         </php_modules>
     </route>
 

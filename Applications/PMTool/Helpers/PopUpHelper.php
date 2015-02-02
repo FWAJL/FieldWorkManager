@@ -29,22 +29,22 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class PopUpHelper {
 
-  public static $appname;	
-	
-  public static function getTooltipMsgForAttribute($attrib, $appname)
-  {
+  public static $appname;
+
+  public static function getTooltipMsgForAttribute($attrib, $appname) {
     PopUpHelper::$appname = $appname;
-	$tooltipMessages = self::loadToolTipMessagefromXML();
-	foreach ($tooltipMessages as $msg) {
-	  if($msg->getAttribute('targetattr') == $attrib)
-	    $tooltip_array = array('value' => $msg->getAttribute('value'), 'placement' => $msg->getAttribute('placement'));
-	}
-	
-	return $tooltip_array;
+    $tooltipMessages = self::loadToolTipMessagefromXML();
+    $tooltip_array = array();
+    foreach ($tooltipMessages as $msg) {
+      if ($msg->getAttribute('targetattr') == $attrib) {
+        $tooltip_array = array('value' => $msg->getAttribute('value'), 'placement' => $msg->getAttribute('placement'));
+      }
+    }
+
+    return $tooltip_array;
   }
-  
-  public static function loadToolTipMessagefromXML()
-  {
+
+  public static function loadToolTipMessagefromXML() {
     $xml = new \DOMDocument;
     $filename = __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . PopUpHelper::$appname . '/Resources/Common/tooltipandpopupstrings.en.xml';
     if (file_exists($filename)) {
@@ -52,6 +52,7 @@ class PopUpHelper {
     } else {
       throw new \Exception("In " . __CLASS__ . " > Method: " . __METHOD__);
     }
-    return $xml->getElementsByTagName("resource");  
+    return $xml->getElementsByTagName("resource");
   }
+
 }
