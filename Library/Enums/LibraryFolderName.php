@@ -1,37 +1,44 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @package     Basic MVC framework
+ * @author      Jeremie Litzler
+ * @copyright   Copyright (c) 2015
+ * @license		
+ * @link		
+ * @since		
+ * @filesource
  */
+// ------------------------------------------------------------------------
 
 /**
- * Description of Paths
+ * LibraryFolderName Class
  *
- * @author jl
+ * @package       Library
+ * @subpackage    Enums
+ * @category      LibraryFolderName
+ * @author        Jeremie Litzler
+ * @link		
  */
+
 
 namespace Library\Enums;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-/**
- * Constants to load files
- */
 abstract class LibraryFolderName {
-
-  const AppsFolderName = "Applications/";
-  const ControllersFolderName = "/Controllers/";
-  const ViewsFolderName = "/Views/";
-  const TemplatesFolderName = "/Templates/";
-  const ConfigFolderName = "/Config/";
-  const ResourceCommonFolderName = "/Resources/Common/";
-  const ResourceLocalFolderName = "/Resources/Local/";
-  const WebJsAppFolderName = "";
-  const WebJsAppControllersFolderName = "";
-  const ModulesFolderName = "/Modules/";
-
+  const Library = "Library/";
+  const BL = "BL/";
+  const Core = "Core/";
+  const Controllers = "Controllers/";
+  const BO = "BO/";
+  const Utility = "Utility/";
+  const DAL = "DAL/";
+  const Modules = "Modules/";
+  const Enums = "Enums/";
+  const ResourceKeys = "ResourceKeys/";
+  const UC = "UC/";
+  
 }
-
-?>
