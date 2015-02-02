@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files>
+  <!-- DEFINITION FOR JS FILES -->
+  <js_files>
+    <js_file file_path="app/services/utils.js" version="" />
+  </js_files>
+  
+  <!-- DEFINITION FOR CSS FILES -->
+  <css_files>
+    <css_file file_path="app/app-style.css" version="" />
+  </css_files>
+</files>

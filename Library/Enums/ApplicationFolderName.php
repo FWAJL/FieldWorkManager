@@ -1,14 +1,25 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @package     Basic MVC framework
+ * @author      Jeremie Litzler
+ * @copyright   Copyright (c) 2015
+ * @license		
+ * @link		
+ * @since		
+ * @filesource
  */
+// ------------------------------------------------------------------------
 
 /**
- * Description of Paths
+ * AppsAndWebFolderName Class
  *
- * @author jl
+ * @package       Library
+ * @subpackage    Enums
+ * @category      AppsAndWebFolderName
+ * @author        Jeremie Litzler
+ * @link		
  */
 
 namespace Library\Enums;
@@ -17,7 +28,6 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
 abstract class ApplicationFolderName {
-
   const AppsFolderName = "Applications/";
   const ControllersFolderName = "/Controllers/";
   const ViewsFolderName = "/Views/";
@@ -25,10 +35,8 @@ abstract class ApplicationFolderName {
   const ConfigFolderName = "/Config/";
   const ResourceCommonFolderName = "/Resources/Common/";
   const ResourceLocalFolderName = "/Resources/Local/";
-  const WebJsAppFolderName = "";
-  const WebJsAppControllersFolderName = "";
+  const WebJs = "Web/js/";
+  const WebCss = "Web/css/";
   const ModulesFolderName = "/Modules/";
-
 }
 
-?>

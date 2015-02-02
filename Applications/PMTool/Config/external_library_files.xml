@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<files>
-  <!-- DEFINITION FOR DEV COMMON JS FILES -->
-  <js_file src="" mode="dev" />
-  
-  <!-- DEFINITION FOR LIVE COMMON JS FILES -->
-  <js_file src="" mode="live" />
-</js_files>

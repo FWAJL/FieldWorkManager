@@ -38,9 +38,12 @@ class FileUploadController extends \Library\BaseController {
       "dataPost" => $this->dataPost(),
       "resultJson" => $result)
     );
-    $uploader->UploadFiles();
-
-    $isValid = $uploader->resultJson["fileUploaded"] == count($this->files());
+    $result = $uploader->UploadFiles();
+    //if (count($result["fileUploadResults"]) > 0 && $result["fileUploadResults"][0]->isUploaded()) {
+    //  $db = new \Library\DAL\Managers('PDO', $this->app());
+    //  $dal = $db->getManagerOf("Document", TRUE);
+    //  $dal->add();
+    //}
 
     $this->SendResponseWS(
         $result, array(

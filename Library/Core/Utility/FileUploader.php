@@ -30,12 +30,12 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class FileUploader extends \Library\ApplicationComponent {
 
   public
-          $rootDirectory = "",
-          $uploadDirectory = "",
-          $currentFile = null,
-          $files = array(),
-          $dataPost = array(),
-          $resultJson = array();
+      $rootDirectory = "",
+      $uploadDirectory = "",
+      $currentFile = null,
+      $files = array(),
+      $dataPost = array(),
+      $resultJson = array();
 
   public function __construct(\Library\Application $app, $data) {
     parent::__construct($app);
@@ -47,14 +47,16 @@ class FileUploader extends \Library\ApplicationComponent {
 
   public function UploadFiles() {
     $this->uploadDirectory = $this->rootDirectory . $this->dataPost["category"];
+    $this->resultJson["fileUploadResults"] = array();
     foreach ($this->files as $file) {
       $this->currentFile = new \Library\Core\BO\FileUploadResult(
-              $this->uploadDirectory . "/" . $file['name'], $file["tmp_name"]
+          $this->uploadDirectory . "/" . $file['name'], $file["tmp_name"]
       );
+      $this->resultJson["document"] = self::InitDocumentobject();
       $this->currentFile->setDoesExist($this->GetDirectory($this->currentFile->filePath()));
       $this->currentFile->setIsUploaded($this->UploadAFile(
-                      $this->currentFile->tmpFilePath(), $this->currentFile->filePath()));
-      $result["fileUploadResult"] = $this->currentFile;
+              $this->currentFile->tmpFilePath(), $this->currentFile->filePath()));
+      array_push($this->resultJson["fileUploadResults"], $this->currentFile);
     }
     return $this->resultJson;
   }
@@ -74,6 +76,13 @@ class FileUploader extends \Library\ApplicationComponent {
     } else {
       return FALSE;
     }
+  }
+  
+  private function InitDocumentObject() {
+    $document = new \Applications\PMTool\Models\Dao\Document();
+    $document->setDocument_category($this->dataPost["category"]);
+    $document->setDocument_content_type($this->files[""]);
+    $document->setDocument_value("");
   }
 
 }
