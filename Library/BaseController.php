@@ -119,9 +119,9 @@ abstract class BaseController extends ApplicationComponent {
     $this->view = $view;
 
     $this->page->setContentFile(
-        __ROOT__ . Enums\FolderName::AppsFolderName
+        __ROOT__ . Enums\ApplicationFolderName::AppsFolderName
         . $this->app->name()
-        . Enums\FolderName::ViewsFolderName
+        . Enums\ApplicationFolderName::ViewsFolderName
         . $this->module
         . '/'
         . $this->view . '.php');

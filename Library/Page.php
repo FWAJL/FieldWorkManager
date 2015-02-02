@@ -40,21 +40,21 @@ class Page extends ApplicationComponent {
        * FOR AUTHENTICATED USERS
        */
       if (!$this->app->router->isWsCall) {
-        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::HeaderTemplate;
-        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::MenuTopTemplate;
+        require __ROOT__ . Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::HeaderTemplate;
+        require __ROOT__ . Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::MenuTopTemplate;
 //        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::BreadcrumbTemplate;
-        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::MenuLeftTemplate;
-        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
-        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::FooterTemplate;
+        require __ROOT__ . Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::MenuLeftTemplate;
+        require __ROOT__ . Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
+        require __ROOT__ . Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::FooterTemplate;
       }
     } else {
       /**
        * FOR NON AUTHENTICATED USERS
        */
       if (!$this->app->router->isWsCall) {
-        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::HeaderTemplate;
-        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
-        require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::FooterTemplate;
+        require __ROOT__ . Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::HeaderTemplate;
+        require __ROOT__ . Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
+        require __ROOT__ . Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::FooterTemplate;
       }
     }
     Core\Utility\TimeLogger::EndLog($this->app(), \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
@@ -75,13 +75,13 @@ class Page extends ApplicationComponent {
    */
   protected function setNonAuthenticatedPageLayout() {
     if (!$this->app->router->isWsCall) {
-      require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::HeaderTemplate;
+      require __ROOT__ . Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::HeaderTemplate;
     }
 
-    require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
+    require __ROOT__ . Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
 
     if (!$this->app->router->isWsCall) {
-      require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::FooterTemplate;
+      require __ROOT__ . Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::FooterTemplate;
     }
   }
 
@@ -92,14 +92,14 @@ class Page extends ApplicationComponent {
    */
   protected function setAuthenticatedPageLayout() {
     if (!$this->app->router->isWsCall) {
-      require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::HeaderTemplate;
+      require __ROOT__ . Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::HeaderTemplate;
 //      require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::HeaderTemplate;
     }
 
-    require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
+    require __ROOT__ . Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::ContenTemplate;
 
     if (!$this->app->router->isWsCall) {
-      require __ROOT__ . Enums\FolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::FooterTemplate;
+      require __ROOT__ . Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . Enums\FileNameConst::FooterTemplate;
     }
   }
 

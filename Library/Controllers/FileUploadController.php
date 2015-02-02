@@ -47,7 +47,7 @@ class FileUploadController extends \Library\BaseController {
       "directory" => "common",
       "resx_file" => \Library\Enums\ResourceKeys\ResxFileNameKeys::FileUpload,
       "resx_key" => $this->action(),
-      "step" => $isValid ? "success" : "error"
+      "step" => TRUE ? "success" : "error"
     ));
   }
 

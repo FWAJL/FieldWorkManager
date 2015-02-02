@@ -10,7 +10,7 @@ class Config extends ApplicationComponent {
   public function get($key) {
     if (!$this->settings) {
       $xml = new \DOMDocument;
-      $xml->load(__ROOT__.Enums\FolderName::AppsFolderName. $this->app->name() . '/Config/appsettings.xml');
+      $xml->load(__ROOT__.Enums\ApplicationFolderName::AppsFolderName. $this->app->name() . '/Config/appsettings.xml');
 
       $elements = $xml->getElementsByTagName('define');
 
