@@ -1,6 +1,5 @@
 var map;
 function load(params) {
- var array = new Array();
  datacx.post(
          params.dataUrl,
          {"objectType": params.objectType,

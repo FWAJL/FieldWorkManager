@@ -16,10 +16,7 @@ namespace Library\Enums;
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-/**
- * Constants to load files
- */
-abstract class FolderName {
+abstract class ApplicationFolderName {
 
   const AppsFolderName = "Applications/";
   const ControllersFolderName = "/Controllers/";

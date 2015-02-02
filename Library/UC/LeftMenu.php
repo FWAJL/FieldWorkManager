@@ -65,7 +65,7 @@ class LeftMenu {
    */
   private function _LoadXml() {
     $xml = new \DOMDocument;
-    $filename = __ROOT__ . \Library\Enums\FolderName::AppsFolderName . $this->app->name() . '/Config/menus.xml';
+    $filename = __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . '/Config/menus.xml';
     if (file_exists($filename)) {
       $xml->load($filename);
     } else {
