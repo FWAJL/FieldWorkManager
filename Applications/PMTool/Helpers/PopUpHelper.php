@@ -3,7 +3,7 @@
 /**
  *
  * @package		Basic MVC framework
- * @author		Souvik Ghosh
+ * @author		FWM DEV Team
  * @copyright	Copyright (c) 2015
  * @license		
  * @link		
@@ -13,12 +13,12 @@
 // ------------------------------------------------------------------------
 
 /**
- * CommonHelper Class
+ * PopUpHelper Class
  *
- * @package		Application/PMTool
- * @subpackage	Helpers
- * @category	ProjectHelper
- * @author		FWM DEV Team
+ * @package		Applications/
+ * @subpackage	PMTool
+ * @category	Helpers
+ * @author		Souvik Ghosh
  * @link		
  */
 
@@ -34,7 +34,7 @@ class PopUpHelper {
   public static function getTooltipMsgForAttribute($attrib, $appname)
   {
     PopUpHelper::$appname = $appname;
-	$tooltipMessages = PopUpHelper::loadToolTipMessagefromXML();
+	$tooltipMessages = self::loadToolTipMessagefromXML();
 	foreach ($tooltipMessages as $msg) {
 	  if($msg->getAttribute('targetattr') == $attrib)
 	    $tooltip_array = array('value' => $msg->getAttribute('value'), 'placement' => $msg->getAttribute('placement'));
@@ -50,7 +50,7 @@ class PopUpHelper {
     if (file_exists($filename)) {
       $xml->load($filename);
     } else {
-      throw new Exception("In " . __CLASS__ . " > Method: " . __METHOD__);
+      throw new \Exception("In " . __CLASS__ . " > Method: " . __METHOD__);
     }
     return $xml->getElementsByTagName("resource");  
   }
