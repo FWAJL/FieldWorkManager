@@ -13,8 +13,31 @@ $(document).ready(function() {
     callback: function(key, options) {
       if (key === "edit") {
         project_manager.retrieveProject(options.$trigger);
-      } else if (key === "delete") {
-        project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
+      } else if (key === "delete") { 
+		var attr = $(this).attr('confirmdelete');
+		if (typeof attr !== typeof undefined && attr !== false) {
+		  bootbox.confirm({
+		    buttons: {
+			  confirm: {
+			    label: 'Ok',
+			    className: 'btn btn-default confirmbuttons'
+			  },
+			  cancel: {
+			    label: 'Cancel',
+			    className: 'btn btn-primary confirmbuttons'
+			  }
+		    },
+		    message: attr,
+		    callback: function(result) {
+			  if(result)
+			  	project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
+		    }
+		  });
+		}
+		else
+		{
+		  project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
+		}
       }
     },
     items: {

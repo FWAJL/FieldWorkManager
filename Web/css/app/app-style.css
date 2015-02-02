@@ -143,3 +143,9 @@ textarea { resize: vertical;}
 .checkbox_text{
  margin-left: 20px;
 }
+
+/* CONFIRM BOX BUTTONS */
+.confirmbuttons {
+	margin-bottom:0;
+	width:auto;
+}

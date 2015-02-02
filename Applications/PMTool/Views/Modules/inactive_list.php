@@ -2,11 +2,20 @@
 <div class="scroll-bar">
   <ol id="inactive-list" class="list-panel">
     <?php
+    $tooltip_configstr = "";
     if (isset($tooltip_message) && !empty($tooltip_message)) {
-      $tooltip_configstr = " title=\"" . $tooltip_message['value'] . "\" has-tool-tip=\"1\" placement=\"" . $tooltip_message['placement'] . "\"";;
-    } else {
-      $tooltip_configstr = "";
-    }
+	  foreach($tooltip_message as $the_msg_node)
+	  {
+	    if(isset($the_msg_node['tooltip']))
+		{
+		  $tooltip_configstr .= " title=\"" . $the_msg_node['tooltip']['value'] . "\" has-tool-tip=\"1\" placement=\"" . $the_msg_node['tooltip']['placement'] . "\"";;  
+		}
+		elseif(isset($the_msg_node['confirmdelete']))
+		{
+		  $tooltip_configstr .= " confirmdelete=\"" . $the_msg_node['confirmdelete']['value'] . "\"";
+		}
+	  }
+	}
 
     foreach ($data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects] as $object) {
       if (!$object->

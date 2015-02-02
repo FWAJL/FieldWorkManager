@@ -30,18 +30,27 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class PopUpHelper {
 
   public static $appname;
-
+  
+  /**
+  * Fetches all messages associated with a particular
+  * attribute. This included tooltip and confirm box
+  * messages
+  */
   public static function getTooltipMsgForAttribute($attrib, $appname) {
     PopUpHelper::$appname = $appname;
     $tooltipMessages = self::loadToolTipMessagefromXML();
-    $tooltip_array = array();
+    $msg_array = array();
     foreach ($tooltipMessages as $msg) {
-      if ($msg->getAttribute('targetattr') == $attrib) {
-        $tooltip_array = array('value' => $msg->getAttribute('value'), 'placement' => $msg->getAttribute('placement'));
+      if ($msg->getAttribute('targetattr') == $attrib && $msg->getAttribute('uicomponent') == 'tooltip') {
+		array_push($msg_array, array('tooltip' => array('value' => $msg->getAttribute('value'), 'placement' => $msg->getAttribute('placement'))));
       }
+	  elseif ($msg->getAttribute('targetattr') == $attrib && $msg->getAttribute('uicomponent') == 'confirmdelete')
+	  {
+		array_push($msg_array, array('confirmdelete' => array('value' => $msg->getAttribute('value'))));
+	  }
     }
 
-    return $tooltip_array;
+    return $msg_array;
   }
 
   public static function loadToolTipMessagefromXML() {

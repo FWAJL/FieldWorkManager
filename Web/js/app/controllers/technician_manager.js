@@ -14,7 +14,30 @@ $(document).ready(function() {
       if (key === "edit") {
         technician_manager.retrieveTechnician(options.$trigger);
       } else if (key === "delete") {
-        technician_manager.delete(parseInt(options.$trigger.attr("data-technician-id")));
+	    var attr = $(this).attr('confirmdelete');
+		if (typeof attr !== typeof undefined && attr !== false) {
+		  bootbox.confirm({
+		    buttons: {
+			  confirm: {
+			    label: 'Ok',
+			    className: 'btn btn-default confirmbuttons'
+			  },
+			  cancel: {
+			    label: 'Cancel',
+			    className: 'btn btn-primary confirmbuttons'
+			  }
+		    },
+		    message: attr,
+		    callback: function(result) {
+			  if(result)
+			  	technician_manager.delete(parseInt(options.$trigger.attr("data-technician-id")));
+		    }
+		  });
+		}
+		else
+		{
+		  technician_manager.delete(parseInt(options.$trigger.attr("data-technician-id")));
+		}
       }
     },
     items: {
