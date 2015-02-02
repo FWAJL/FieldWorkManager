@@ -62,7 +62,7 @@ class MapHelper {
    * @param string $lngPropName <p>
    * The longitude property name of a given object type
    * </p>
-   * @return array  $coordinates <p>
+   * @return array $coordinates <p>
    * The array in Google Maps API format
    * </p>
    */

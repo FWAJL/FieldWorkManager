@@ -21,6 +21,8 @@ abstract class Application {
   public $config;
   public $i8n;
   public $imageUtil;
+  public $jsManager;
+  public $cssManager;
 
   public function __construct() {
     $this->HttpRequest = new HttpRequest($this);
@@ -34,6 +36,8 @@ abstract class Application {
     $this->imageUtil = new ImageUtility($this);
     $this->locale = $this->HttpRequest->initLanguage($this, "browser");
     $this->name = '';
+//    $this->jsManager = new Core\Utility\JavascriptManager($this);
+//    $this->cssManager = new Core\Utility\CssManager($this);
   }
 
   public function initConfig() {

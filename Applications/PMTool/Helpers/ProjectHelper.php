@@ -180,7 +180,7 @@ class ProjectHelper {
   public static function loadToolTipMessagefromXML($appname)
   {
     $xml = new \DOMDocument;
-    $filename = __ROOT__ . \Library\Enums\FolderName::AppsFolderName . $appname . '/Config/tooltipandpopupstrings.xml';
+    $filename = __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . $appname . '/Config/tooltipandpopupstrings.xml';
     if (file_exists($filename)) {
       $xml->load($filename);
     } else {

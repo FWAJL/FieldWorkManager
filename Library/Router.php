@@ -202,15 +202,15 @@ class Router extends ApplicationComponent {
     foreach ($route->getElementsByTagName('php_module') as $module) {
       if ($module->getAttribute('shared')) {
         $modules[$module->getAttribute('key')] =
-                __ROOT__ . \Library\Enums\FolderName::AppsFolderName
+                __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName
                 . $this->app->name()
-                . rtrim(\Library\Enums\FolderName::ViewsFolderName, '/') . \Library\Enums\FolderName::ModulesFolderName
+                . rtrim(\Library\Enums\ApplicationFolderName::ViewsFolderName, '/') . \Library\Enums\ApplicationFolderName::ModulesFolderName
                 . $module->getAttribute('file_name');
       } else {
         $modules[$module->getAttribute('key')] =
-                __ROOT__ . \Library\Enums\FolderName::AppsFolderName
+                __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName
                 . $this->app->name()
-                . \Library\Enums\FolderName::ViewsFolderName . $route->getAttribute('module') . \Library\Enums\FolderName::ModulesFolderName
+                . \Library\Enums\ApplicationFolderName::ViewsFolderName . $route->getAttribute('module') . \Library\Enums\ApplicationFolderName::ModulesFolderName
                 . $module->getAttribute('file_name');
       }
     }
