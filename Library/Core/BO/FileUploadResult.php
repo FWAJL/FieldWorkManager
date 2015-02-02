@@ -62,6 +62,6 @@ class FileUploadResult {
     $this->doesExist = $doesExist;
   }
   public function setIsUploaded($uploaded) {
-    $this->isUploadedsUploaded = $uploaded;
+    $this->isUploaded = $uploaded;
   }
 }
