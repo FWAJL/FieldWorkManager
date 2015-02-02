@@ -21,12 +21,7 @@ class TechnicianController extends \Library\BaseController {
     $technicians = \Applications\PMTool\Helpers\TechnicianHelper::GetPmTechnicians($this, $pm);
 	 
 	//Fetch tooltip data from xml and pass to view as an array
-	$tooltipMessages = \Applications\PMTool\Helpers\ProjectHelper::loadToolTipMessagefromXML($this->app->name());
-	$tooltip_array = array();
-	foreach ($tooltipMessages as $msg) {
-	  if($msg->getAttribute('targetattr') == 'data-technician-id')
-	    array_push($tooltip_array, $msg->getAttribute('value'));
-	}
+	$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('data-technician-id', $this->app->name());
 	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::tooltip_message, $tooltip_array);
 	
     $data = array(

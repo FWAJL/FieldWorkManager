@@ -69,13 +69,18 @@ class MapHelper {
   public static function BuildLatAndLongCoordFromGeoObjects($objects, $latPropName, $lngPropName) {
     $coordinates = array();
     foreach ($objects as $object) {
-      $coordinate = array(
-          "lat" => $object->$latPropName(),
-          "lng" => $object->$lngPropName()
-      );
-      array_push($coordinates, $coordinate);
+      if (self::CheckCoordinateValue($object->$latPropName()) && self::CheckCoordinateValue($object->$lngPropName())) {
+        $coordinate = array(
+            "lat" => $object->$latPropName(),
+            "lng" => $object->$lngPropName()
+        );
+        array_push($coordinates, $coordinate);
+      }
     }
     return $coordinates;
   }
-
+  
+  private static function CheckCoordinateValue($value) {
+    return $value !== "" && $value !== "0.000000";
+  }
 }
