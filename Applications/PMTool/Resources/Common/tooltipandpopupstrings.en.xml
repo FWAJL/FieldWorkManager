@@ -3,6 +3,10 @@
 	<resource uicomponent="tooltip" targetattr="data-project-id" value="Click to select : Right‐click to edit" placement="bottom" />
 	<resource uicomponent="tooltip" targetattr="data-technician-id" value="Click to select : Right‐click to edit" placement="top" />
 	<resource uicomponent="tooltip" targetattr="data-anyotherentity-id" value="Click to select : Right‐click to edit" placement="bottom" />
-	<resource uicomponent="confirmdelete" targetattr="data-project-id" value="Sure to delete this project?" placement="" />
-	<resource uicomponent="confirmdelete" targetattr="data-technician-id" value="Sure to delete this technician?" placement="" />
+	<resource uicomponent="confirm" targetcontroller="project" targetaction="list" operation="delete" value="Sure to delete this project?" />
+	<resource uicomponent="confirm" targetcontroller="project" targetaction="view" operation="delete" value="Viewing a project, delete it?" />
+	<resource uicomponent="confirm" targetcontroller="project" targetaction="list" operation="activate" value="Sure to activate this project?" />
+	<resource uicomponent="confirm" targetcontroller="technician" targetaction="list" operation="delete" value="Sure to delete this technician?" />
+	<resource uicomponent="confirm" targetcontroller="technician" targetaction="view" operation="delete" value="You are viewing a technician, delete this record?" />
+	<resource uicomponent="confirm" targetcontroller="technician" targetaction="list" operation="activate" value="Activate this technician?" />
 </resources>

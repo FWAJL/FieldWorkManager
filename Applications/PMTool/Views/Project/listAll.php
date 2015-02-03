@@ -31,8 +31,11 @@
         </div>
         <div  class="col-lg-5 col-md-5">
           <h4><?php echo $resx["h3_projects_inactive"]; ?></h4>
-          <?php require $inactive_list_module; ?>              
+          <?php require $inactive_list_module; ?>
         </div>
+				<?php
+				require $popup_msg_module;
+				?>
       </div>
     </div>
   </div>

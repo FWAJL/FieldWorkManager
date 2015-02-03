@@ -33,8 +33,7 @@ class PopUpHelper {
   
   /**
   * Fetches all messages associated with a particular
-  * attribute. This included tooltip and confirm box
-  * messages
+  * attribute.
   */
   public static function getTooltipMsgForAttribute($attrib, $appname) {
     PopUpHelper::$appname = $appname;
@@ -42,15 +41,36 @@ class PopUpHelper {
     $msg_array = array();
     foreach ($tooltipMessages as $msg) {
       if ($msg->getAttribute('targetattr') == $attrib && $msg->getAttribute('uicomponent') == 'tooltip') {
-		array_push($msg_array, array('tooltip' => array('value' => $msg->getAttribute('value'), 'placement' => $msg->getAttribute('placement'))));
+				array_push($msg_array, array('tooltip' => array('value' => $msg->getAttribute('value'), 'placement' => $msg->getAttribute('placement'))));
       }
-	  elseif ($msg->getAttribute('targetattr') == $attrib && $msg->getAttribute('uicomponent') == 'confirmdelete')
-	  {
-		array_push($msg_array, array('confirmdelete' => array('value' => $msg->getAttribute('value'))));
-	  }
     }
 
     return $msg_array;
+  }
+  
+  /**
+  * Fetches configurations for confirmBox
+  * Accepts a json of the form:
+  * {targetcontroller: the_controller, targetaction: the_action, operation: the_operation}
+  */
+  public static function getConfirmBoxMsg($param, $appname)
+  {
+		PopUpHelper::$appname = $appname;
+	  $param_arr = json_decode($param, true);
+	  $msg_array = array();
+		$resourcesFromXml = self::loadToolTipMessagefromXML();
+		foreach ($resourcesFromXml as $msg) {
+			if($msg->getAttribute('uicomponent') == 'confirm' &&
+						$msg->getAttribute('targetcontroller') == $param_arr['targetcontroller'] &&
+						$msg->getAttribute('targetaction') == $param_arr['targetaction'] &&
+						in_array($msg->getAttribute('operation'), $param_arr['operation'])
+						)
+			{
+				array_push($msg_array, array('confirmmsg' => array('value' => $msg->getAttribute('value'), 'operation' => $msg->getAttribute('operation'))));
+			}
+		}
+	  
+	  return $msg_array;
   }
 
   public static function loadToolTipMessagefromXML() {

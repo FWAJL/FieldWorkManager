@@ -24,10 +24,11 @@
           
         </div>
       </div>
+      <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::popup_msg_module]; ?>
     </div>
 
     <!-- close tabs -->
     <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::tabs_close]; ?>
   </div>
-
+	
 </div>

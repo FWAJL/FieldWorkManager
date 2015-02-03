@@ -10,10 +10,6 @@
 		{
 		  $tooltip_configstr .= " title=\"" . $the_msg_node['tooltip']['value'] . "\" has-tool-tip=\"1\" placement=\"" . $the_msg_node['tooltip']['placement'] . "\"";;  
 		}
-		elseif(isset($the_msg_node['confirmdelete']))
-		{
-		  $tooltip_configstr .= " confirmdelete=\"" . $the_msg_node['confirmdelete']['value'] . "\"";
-		}
 	  }
 	}
 
