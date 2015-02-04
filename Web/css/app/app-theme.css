@@ -1,3 +1,5 @@
+/*APPLIES TO: position/margins/widths/heights*/
+
 /*  COMMON */
 .validator {
   display: none;
@@ -42,7 +44,9 @@ h3 {
 .form_sections li label{
   width: 120px;
 }
-.form_sections li input, .form_sections li textarea{
+/*.form_sections li input, */
+
+.form_sections li textarea, .form_sections li text{
   width: 240px;
 }
 
@@ -89,23 +93,34 @@ h3 {
 .context-menu-active {font-weight: bold; color: #F39814;}
 
 /* ADD TASK */
-.task_form_sections .task_form .checkbox, .task_form_data_collection {
-  padding: 0px 2px 0px 30px;
+
+.task_info_input{
+ margin-left: 10px;
+ margin-top: 25px;
 }
 
+.task_info_input li{
+padding-bottom: 10px;
+}
 
-.task_form .note {
-  width: 500px;
+.task_boxes{
+    margin-left: 10px;
+}
+
+#freq_list {
+ margin-left: 20px;
+}
+
+.task_box_label{
+    padding-left: 20px;
+    font-weight: bold;
+}
+
+.tab_cbox{
+    width: 400px;
 }
 
 /* ADD LOCATION */
-.location_form_sections .location_form .checkbox, .location_form_data_collection {
-  padding: 0px 2px 0px 30px;
-}
-
-.location_form .note {
-  width: 500px;
-}
 
 .location_form {
   width: 100%;
