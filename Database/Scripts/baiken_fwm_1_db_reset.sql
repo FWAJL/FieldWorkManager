@@ -328,10 +328,11 @@ CREATE TABLE `common_field_analyte` (
 
 -- Table structure for table `document`
 CREATE TABLE `document` (
-    `document_id` int(11) NOT NULL,
+    `document_id` int(11) NOT NULL AUTO_INCREMENT,
     `document_content_type` varchar(50) NOT NULL COMMENT 'Store the content type of the document',
     `document_category` varchar(50) NOT NULL COMMENT 'Is the name of the table/class for which we want a document. Possible values(13-01-14): location, technician',
-    `document_value` int(11) NOT NULL COMMENT 'A unique constraint prevent adding the same document as a given type',
+    `document_value` varchar(100) NOT NULL COMMENT 'A unique constraint prevent adding the same document as a given type',
+    `document_size` int(11) NOT NULL COMMENT 'File size in Kb',
     PRIMARY KEY (`document_id`),
     UNIQUE INDEX `un_doc_cat_val` (`document_id` ASC, `document_category` ASC, `document_value` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

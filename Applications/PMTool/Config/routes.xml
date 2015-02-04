@@ -110,9 +110,7 @@
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
         <php_modules>
-<!--            <php_module key="location_tabs_open" file_name="location_tabs_open.php"/>  -->
             <php_module key="location_form" file_name="location_form.php" />
-<!--            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />-->
             <php_module key="upload_file" file_name="upload_file.php" shared="true"/>
         </php_modules>
     </route>
@@ -170,10 +168,8 @@
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
         <php_modules>
-<!--             <php_module key="technician_tabs_open" file_name="technician_tabs_open.php"/>   -->
             <php_module key="technician_form" file_name="technician_form.php" />
-<!--            <php_module key="technician_buttons" file_name="technician_buttons.php" />-->
-<!--            <php_module key="tabs_close" file_name="tabs_close.php" shared="true"/>-->
+            <php_module key="upload_file" file_name="upload_file.php" shared="true"/>
         </php_modules>
     </route>
     <!-- technician/showForm -->

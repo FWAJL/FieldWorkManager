@@ -22,6 +22,24 @@ class Managers {
     $this->core_dal_folder_path = "\Library\DAL\Modules\\";
   }
 
+  /**
+   * <p>
+   * Retrieve the Dal instance for a given module.
+   * </p>
+   * <p>
+   * A module is the name of the Dal Class, either found in Library/DAL/Modules
+   * if $isCoreModule = TRUE or in Applications/CurrentApp/Models/Dal otherwise.
+   * </p>
+   * @param type <p>
+   * $module: Name of the module to load. </p>
+   * @param type <p>
+   * $isCoreModule: Define if the module is to be load from the Library/DAL/Modules 
+   * directory instead of the Applications/CurrentApp/Models/Dal. </p>
+   * @return object <p>
+   * Variable of type \Library\DAL\BaseManager for the requested module. </p>
+   * @throws \InvalidArgumentException <p>
+   * Thrown if the module isn't given in $module parameter. </p>
+   */
   public function getManagerOf($module, $isCoreModule = FALSE) {
     error_log("Module is <" . $module . ">");
     if (!is_string($module) || empty($module)) {
