@@ -34,8 +34,7 @@ class FileUploadResult {
           $doesExist = FALSE,
           $isUploaded = FALSE;
   
-  public function __construct($filePath, $tmpFilePath) {
-    $this->setFilePath($filePath);
+  public function __construct($tmpFilePath) {
     $this->setTmpFilePath($tmpFilePath);
   }
   

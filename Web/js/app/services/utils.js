@@ -5,7 +5,10 @@ $(document).ready(function() {
   $("#datepicker").datepicker();
   $("#datepicker").datepicker("option", "dateFormat", "mm-dd-yy");
   //toolip
-  $("li[has-tool-tip]").tooltip({ placement: $("li[has-tool-tip]").attr("placement") });
+  $("li[has-tool-tip]").tooltip({placement: $("li[has-tool-tip]").attr("placement")});
+  //file upload
+  $("#document-upload input[name=\"itemCategory\"]").val(utils.getDataFromUploadFile("^.*(_id)$", true));
+  $("#document-upload input[name=\"itemId\"]").val(utils.getDataFromUploadFile("^.*(_id)$", false));
 });
 /**
  * JavaScript Module to do JavaScript actions common to several views
@@ -221,4 +224,26 @@ $(document).ready(function() {
     var reg = new RegExp(pattern);
     return reg.test(string);
   };
+  /**
+   * Retrieve the value associated to a query string key
+   * 
+   * @param {string} variable : query string key
+   * @param {Boolean} useRegex : find value using a Regex
+   * @returns {string|Boolean} : the query string value or FALSE if not found
+   */
+  utils.getDataFromUploadFile = function(variable, findCategory) {
+    var patt = new RegExp(variable);
+    var query = window.location.search.substring(1);//remove "?"
+    var vars = query.split("&");
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split("=");
+      if (findCategory && patt.test(pair[0])) {
+        return pair[0];
+      } else if (patt.test(pair[0])) {
+        return pair[1];
+      }
+    }
+    return(false);
+  };
+
 }(window.utils = window.utils || {}));
