@@ -57,7 +57,7 @@ class FileUploader extends \Library\ApplicationComponent {
       $fileExists = \Library\Core\DirectoryManager::CreateDirectoryAndReturnFileExists($this->uploadDirectory, $this->currentFile->filePath());
       $this->currentFile->setDoesExist($fileExists);
       //Add document to DB
-      if ($fileExists) {//Don't add the document in DB
+      if (!$fileExists) {//Don't add the document in DB if already
         $this->AddDocumentToDatabase($document);
       }
       //Add document to uploads directory
@@ -88,7 +88,16 @@ class FileUploader extends \Library\ApplicationComponent {
   }
 
   private function GetUploadDirectory() {
-    return $this->rootDirectory . str_replace("_id", "", $this->dataPost["itemCategory"]);
+    return $this->rootDirectory . $this->GetCategory();
+  }
+  
+  private function GetCategory() {
+    return str_replace("_id", "", $this->dataPost["itemCategory"]);
+  }
+  
+  private function GetSizeInKb() {
+    $sizeInBytes = intval($this->files["file"]["size"]);
+    return $sizeInBytes / 1024;
   }
 
   private function InitDocumentObject() {
@@ -96,6 +105,7 @@ class FileUploader extends \Library\ApplicationComponent {
     $document->setDocument_category($this->dataPost["itemCategory"]);
     $document->setDocument_content_type($this->GetExtension());
     $document->setDocument_value($this->GetFileNameToSaveInDatabase());
+    $document->setDocument_size($this->GetSizeInKb());
     return $document;
   }
 
