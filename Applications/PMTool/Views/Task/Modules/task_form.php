@@ -30,16 +30,13 @@
   </fieldset>
     
   <div class="task_info_input">
-      <h4><?php echo $resx["triggers"];?></h4>
+   <h4><?php echo $resx["triggers"];?></h4>
     <fieldset>
-      <table>
-        <tr>
-          <td class="checkbox">
-              <input id="freq_list_box" type="checkbox" />
-              <span class="checkbox_text"><?php echo $resx["task_trigger_cal"];?></span>
-          </td>
-          <td>
-              <select id="freq_list">
+        <ol class="task_boxes">
+          <li> 
+           <input name="freq_list_box" id="freq_list_box" type="checkbox" />
+           <span class="task_box_label"><?php echo $resx["task_trigger_cal"]; ?></span>
+           <select id="freq_list">
               <option value="" selected='selected'>Select</option>
               <option value="Daily" >Daily</option>
               <option value="Weekly">Weekly</option>
@@ -49,60 +46,44 @@
               <option value="Quarterly" >Quarterly</option>
               <option value="semi-Annual" >semi-Annual</option>
               <option value="Annual" >Annual</option>
-            </select>  
-          </td>
-        <tr>
-          <td class="checkbox">
-              <input name ="task_trigger_pm" id="manual_box" type="checkbox">
-              <span class="checkbox_text"><?php echo $resx["task_trigger_pm"];?></span>
-          </td>
-          <td>popup: PM must initiate...</td>
-        </tr>
-        <tr>
-          <td class="checkbox">
-              <input id="external_box" type="checkbox">
-              <span class="checkbox_text"><?php echo $resx["task_trigger_ext"];?></span>
-          </td>
-          <td>popup: e.g. storm event</td>
-        </tr>
-      </table>
+            </select> 
+          </li>
+
+          <li> 
+           <input name="task_trigger_pm" id="manual_box" type="checkbox" />
+           <span class="task_box_label"><?php echo $resx["task_trigger_pm"]; ?></span>
+          </li>
+
+          <li> 
+           <input name="task_trigger_ext" id="external_box" type="checkbox" />
+           <span class="task_box_label"><?php echo $resx["task_trigger_ext"]; ?></span>
+          </li>
+        </ol>     
     </fieldset>
    </div>
 
   <div class="task_info_input">    
           <h4><?php echo $resx["data_collect"];?></h4>
-        <table>
-          <tr>
-            <td class="checkbox">
-                <input id="insp_note_box" type="checkbox" />
-                <span class="checkbox_text"><?php echo $resx["inspection"];?></span>
-            </td>
-            <td id="insp_note">
-            </td>
-          </tr> 
-          <tr>
-            <td class="checkbox">
-                <input id="field_data_box" type="checkbox" />
-                <span class="checkbox_text"><?php echo $resx["field_sample"];?></span>            
-            </td>
-            <td></td>
-          </tr> 
+                <ol class="task_boxes">
+          <li> 
+           <input name="insp_note_box" id="insp_note_box" type="checkbox" />
+           <span class="task_box_label tab_cbox"><?php echo $resx["inspection"]; ?></span>
+          </li>
 
-          <tr>
-            <td class="checkbox">
-                <input id='lab_sample_box' type="checkbox" />
-                <span class="checkbox_text"><?php echo $resx["lab_sample"];?></span>
-            </td>
-            <td></td>
-          </tr>
+          <li> 
+           <input name="field_data_box" id="field_data_box" type="checkbox" />
+           <span class="task_box_label tab_cbox"><?php echo $resx["field_sample"]; ?></span>
+          </li>
+
+          <li> 
+           <input name="lab_sample_box" id="lab_sample_box" type="checkbox" />
+           <span class="task_box_label tab_cbox"><?php echo $resx["lab_sample"]; ?></span>
+          </li>
           
-          <tr>
-            <td class="checkbox">
-                <input id='service_providers_box' type="checkbox" />
-                <span class="checkbox_text"><?php echo $resx["service_provider"];?></span>
-            </td>
-            <td></td>
-          </tr>
-        </table> 
+          <li> 
+           <input name="service_providers_box" id="service_providers_box" type="checkbox" />
+           <span class="task_box_label tab_cbox"><?php echo $resx["service_provider"]; ?></span>
+          </li>
+        </ol> 
   </div>      
 </div>
