@@ -57,7 +57,7 @@ class FileUploader extends \Library\ApplicationComponent {
       $fileExists = \Library\Core\DirectoryManager::CreateDirectoryAndReturnFileExists($this->uploadDirectory, $this->currentFile->filePath());
       $this->currentFile->setDoesExist($fileExists);
       //Add document to DB
-      if (!$fileExists) {//Don't add the document in DB if already
+      if (!$fileExists) {//Don't add the document in DB if already added
         $this->AddDocumentToDatabase($document);
       }
       //Add document to uploads directory

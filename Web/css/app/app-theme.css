@@ -142,3 +142,7 @@ li.category-name {
 .categorized li.ui-widget-content {
   text-indent: 10px;
 }
+
+.context-menu-list{
+    margin-left: 10px;
+}
