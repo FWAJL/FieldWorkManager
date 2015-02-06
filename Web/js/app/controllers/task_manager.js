@@ -37,7 +37,19 @@ $(document).ready(function () {
     task_manager.updateTasks("inactive", task_ids);
   });
   $(".from-inactive-list").click(function () {
-    task_manager.updateTasks("active", task_ids);
+		var msg = $('#confirmmsg-activate').val();
+		if (typeof msg !== typeof undefined && msg !== false) {
+			utils.showConfirmBox(msg, function(result){
+				if(result)
+				{
+					task_manager.updateTasks("active", task_ids);
+				}
+			});
+		}
+		else
+		{
+			task_manager.updateTasks("active", task_ids);
+		}
   });
 
   $("#btn_add_task").click(function () {

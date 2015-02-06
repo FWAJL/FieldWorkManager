@@ -224,6 +224,7 @@ $(document).ready(function() {
     var reg = new RegExp(pattern);
     return reg.test(string);
   };
+
   /**
    * Retrieve the value associated to a query string key
    * 
@@ -246,4 +247,20 @@ $(document).ready(function() {
     return(false);
   };
 
+  utils.showConfirmBox = function(msg, decision){
+    bootbox.confirm({
+	  buttons: {
+		confirm: {
+		  label: 'Ok',
+		  className: 'btn btn-default confirmbuttons'
+		},
+		cancel: {
+		  label: 'Cancel',
+			className: 'btn btn-primary confirmbuttons'
+		}
+	  },
+	  message: msg,
+	  callback: decision
+	});
+  };
 }(window.utils = window.utils || {}));
