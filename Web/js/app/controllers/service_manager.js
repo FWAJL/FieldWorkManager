@@ -36,10 +36,42 @@ $(document).ready(function() {
 
   $("#btn_add_service").click(function() {
     var post_data = {};
-    post_data = utils.retrieveInputs("service_form", ["service_name"]);
-    if (post_data.service_name !== undefined) {
-      service_manager.add(post_data, "service", "add", true);
-    }
+    post_data = utils.retrieveInputs("service_form", ["service_name", "service_type"]);
+	
+	var msg = $('#confirmmsg-add').val();
+	if (typeof msg !== typeof undefined && msg !== false) {
+	  if (post_data.service_name !== undefined  && post_data.service_type !== undefined) {
+		//Check uniqueness
+		service_manager.ifServiceProviderExists(post_data.service_name, function(record_count){
+		  if(record_count > 0)
+		  {
+			utils.showAlert(msg);
+		  }
+		  else
+		  {
+			if (post_data.service_name !== undefined) {
+			  service_manager.add(post_data, "service", "add", true);
+			}
+		  }
+		  
+		});  
+	  }
+	  else
+	  {
+		utils.showAlert(msg);
+	  }
+	}
+	else
+	{
+	  //Old code
+	  if (post_data.service_name !== undefined) {
+		service_manager.add(post_data, "service", "add", true);
+	  }
+	}
+	
+	return false;
+	
+    
   });//Add a service
 
   $("#btn_edit_service").click(function() {
@@ -199,6 +231,13 @@ $(document).ready(function() {
         toastr.success(reply.message);
         utils.redirect("service/listAll");
       }
+    });
+  };
+  
+  service_manager.ifServiceProviderExists = function (providerName, decision) {
+    datacx.post("service/ifProviderExists", {service_name: providerName}).then(function (reply) {
+	  //alert(reply.record_count);
+	  decision(reply.record_count);
     });
   };
 

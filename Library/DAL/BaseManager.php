@@ -33,11 +33,18 @@ class BaseManager extends \Library\Manager {
    *
    * @param array $item array containing the data to use to build the SQL statement
    */
-  public function selectMany($object, $where_filter_id) {
+  public function selectMany($object, $where_filter_id, $filter_as_string = false) {
     $params = array("type" => "SELECT", "dao_class" => \Applications\PMTool\Helpers\CommonHelper::GetFullClassName($object));
     $select_clause = "SELECT ";
     if ($where_filter_id !== "") {
-      $where_clause = " WHERE " . $where_filter_id . " = " . $object->$where_filter_id();
+	  if($filter_as_string)
+	  {
+		$where_clause = " WHERE " . $where_filter_id . " = '" . $object->$where_filter_id() . "'";
+	  }
+	  else
+	  {
+        $where_clause = " WHERE " . $where_filter_id . " = " . $object->$where_filter_id();
+	  }
     } else {
       $where_clause = "";
     }

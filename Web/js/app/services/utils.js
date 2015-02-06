@@ -256,11 +256,22 @@ $(document).ready(function() {
 		},
 		cancel: {
 		  label: 'Cancel',
-			className: 'btn btn-primary confirmbuttons'
+		  className: 'btn btn-primary confirmbuttons'
 		}
 	  },
 	  message: msg,
 	  callback: decision
 	});
   };
+  
+  utils.showAlert = function(msg){
+    bootbox.alert({
+	  message:msg,
+	  callback:function(){
+		//idle at present
+	  }
+	});
+	$('.btn-primary').addClass('confirmbuttons');
+  }
+  
 }(window.utils = window.utils || {}));

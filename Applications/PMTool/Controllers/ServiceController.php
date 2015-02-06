@@ -10,6 +10,8 @@ class ServiceController extends \Library\BaseController {
 public function executeIndex(\Library\HttpRequest $rq) {  }
     
 public function executeShowForm(\Library\HttpRequest $rq) {
+	$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"service", "targetaction": "view", "operation": ["delete", "add"]}', $this->app->name());
+	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::confirm_message, $confirm_msg);
     //Load Modules for view
     $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
@@ -164,7 +166,7 @@ public function executeGetItem(\Library\HttpRequest $rq) {
     ));
   }
   
-    public function executeUpdateItems(\Library\HttpRequest $rq) {
+  public function executeUpdateItems(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS(); // Init result
 
     $rows_affected = 0;
@@ -192,6 +194,23 @@ public function executeGetItem(\Library\HttpRequest $rq) {
         "resx_key" => $this->action(),
         "step" => ($rows_affected === count($service_ids)) ? "success" : "error"
     ));
+  }
+  
+  public function executeIfProviderExists(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS(); // Init result
+	
+	$service = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Service());
+	
+	$manager = $this->managers->getManagerOf($this->module());
+	$result_query = $manager->selectMany($service, "service_name", true);
+	$result['record_count'] = count($result_query);
+	
+	$this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Service,
+        "resx_key" => $this->action(),
+        "step" => ($result['record_count'] > 0) ? "success" : "error"
+      ));
   }
     
     /**
