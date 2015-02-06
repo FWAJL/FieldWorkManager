@@ -14,7 +14,7 @@
 
 /**
 *
-* Document Class
+* DocumentDal Class
 *
 * @package     Library
 * @subpackage  DAL
@@ -26,6 +26,6 @@
 namespace Library\DAL\Modules;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-class Document extends \Library\DAL\BaseManager {
+class DocumentDal extends \Library\DAL\BaseManager {
   //Common implementation is done Library\DAL\BaseManager
 }

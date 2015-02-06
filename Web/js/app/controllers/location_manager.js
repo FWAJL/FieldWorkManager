@@ -8,7 +8,6 @@
  */
 $(document).ready(function() {
   $(".btn-warning").hide();
-  $("#document-upload input[name=\"category\"]").val("location");
   $.contextMenu({
     selector: '.select_item',
     callback: function(key, options) {
