@@ -92,7 +92,8 @@ $(document).ready(function() {
 	var msg = $('#confirmmsg-add').val();
 	if (typeof msg !== typeof undefined && msg !== false) {
 	  if(post_data["project"].project_name !== undefined &&
-			  post_data["facility"].facility_name !== undefined)
+			  post_data["facility"].facility_address !== undefined &&
+			  post_data["facility"].facility_address !== "")
 	  {
 		project_manager.ifProjectExists(post_data["project"]['project_name'], function(record_count){
 		  if(record_count > 0 || post_data["project"].project_name == undefined)
