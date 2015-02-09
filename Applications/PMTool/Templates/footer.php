@@ -2,7 +2,7 @@
 </div><!-- END ROW DIV -->
 </div><!-- END CONTENT CONTAINER -->
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/parsexml.js"></script>
-    <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/ko.js"></script>
+<!--    <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/ko.js"></script>-->
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/bootstrap.min.js"></script>
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/bootbox.min.js"></script>
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/moment.locales.js"></script>  
