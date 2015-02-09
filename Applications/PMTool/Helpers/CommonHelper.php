@@ -97,10 +97,22 @@ class CommonHelper {
     return $object;
   }
 
-  public static function FindObject($id, $prop_name, $list_of_obj) {
+  /**
+   * Find an object in a list filtering by the value of one property name.
+   * 
+   * @param string $filter <p>
+   * The filter used to compare with the property name of each object of the list. </p>
+   * @param string $prop_name <p>
+   * The property name to build the property getter function to perform a comparaison with the filter value provided. </p>
+   * @param array (of object) $list_of_obj <p>
+   * The list of objects of type T to look into. </p>
+   * @return mixed{boolean,object} <p>
+   * The object if found or FALSE otherwise. </p>
+   */
+  public static function FindObject($filter, $prop_name, $list_of_obj) {
     $match = FALSE;
     foreach ($list_of_obj as $obj) {
-      if (intval($obj->$prop_name()) === $id) {
+      if (intval($obj->$prop_name()) === $filter) {
         $match = $obj;
         break;
       }

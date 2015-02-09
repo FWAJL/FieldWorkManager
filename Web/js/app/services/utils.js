@@ -246,7 +246,6 @@ $(document).ready(function() {
   }
   return(false);
  };
-
  utils.showConfirmBox = function(msg, decision) {
   bootbox.confirm({
    buttons: {
@@ -268,4 +267,14 @@ $(document).ready(function() {
    throw new Error("Cannot find JSON.stringify(). Some browsers (e.g., IE < 8) don't support it natively, but you can overcome this by adding a script reference to json2.js, downloadable from http://www.json.org/json2.js");
   return JSON.stringify(data);
  };
+  utils.showAlert = function(msg){
+    bootbox.alert({
+	  message:msg,
+	  callback:function(){
+		//idle at present
+	  }
+	});
+	$('.btn-primary').addClass('confirmbuttons');
+  }
+  
 }(window.utils = window.utils || {}));

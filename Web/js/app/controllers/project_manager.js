@@ -14,19 +14,19 @@ $(document).ready(function() {
       if (key === "edit") {
         project_manager.retrieveProject(options.$trigger);
       } else if (key === "delete") { 
-				var msg = $('#confirmmsg-delete').val();
-				if (typeof msg !== typeof undefined && msg !== false) {
-		  		utils.showConfirmBox(msg, function(result){
-						if(result)
-						{
-							project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
-						}
-				  });
-				}
-				else
-				{
-					project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
-				}
+		var msg = $('#confirmmsg-delete').val();
+		if (typeof msg !== typeof undefined && msg !== false) {
+		  utils.showConfirmBox(msg, function(result){
+			if(result)
+			{
+			  project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
+			}
+		  });
+		}
+		else
+		{
+		  project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
+		}
       }
     },
     items: {
@@ -58,19 +58,19 @@ $(document).ready(function() {
     }
   });
   $(".from-inactive-list").click(function () {
-		var msg = $('#confirmmsg-activate').val();
-		if (typeof msg !== typeof undefined && msg !== false) {
-			utils.showConfirmBox(msg, function(result){
-				if(result)
-				{
-					project_manager.updateProjects("active", project_ids);
-				}
-			});
-		}
-		else
+	var msg = $('#confirmmsg-activate').val();
+	if (typeof msg !== typeof undefined && msg !== false) {
+	  utils.showConfirmBox(msg, function(result){
+		if(result)
 		{
-			project_manager.updateProjects("active", project_ids);
+		  project_manager.updateProjects("active", project_ids);
 		}
+	  });
+	}
+	else
+	{
+	  project_manager.updateProjects("active", project_ids);
+	}
   });
   $(".from-active-list").click(function () {
     project_manager.updateProjects("inactive", project_ids);
@@ -83,14 +83,44 @@ $(document).ready(function() {
 
 
   $("#btn_add_project").click(function () {
-    var post_data = {};
+    
+	var post_data = {};
     post_data["project"] = utils.retrieveInputs("project_form", ["project_name"]);
     post_data["facility"] = utils.retrieveInputs("facility_form", ["facility_name"]);
     post_data["client"] = utils.retrieveInputs();
-    if (post_data["project"].project_name !== undefined &&
-      post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
-      project_manager.add(post_data, "project", "add");
-    }
+	
+	var msg = $('#confirmmsg-add').val();
+	if (typeof msg !== typeof undefined && msg !== false) {
+	  if(post_data["project"].project_name !== undefined &&
+			  post_data["facility"].facility_address !== undefined &&
+			  post_data["facility"].facility_address !== "")
+	  {
+		project_manager.ifProjectExists(post_data["project"]['project_name'], function(record_count){
+		  if(record_count > 0 || post_data["project"].project_name == undefined)
+		  {
+			utils.showAlert(msg);
+		  }
+		  else
+		  {
+			if (post_data["project"].project_name !== undefined &&
+			  post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
+			  project_manager.add(post_data, "project", "add");
+			}
+		  }
+		});
+	  }
+	  else
+	  {
+		utils.showAlert(msg);
+	  }
+	}
+	else
+	{
+	  if (post_data["project"].project_name !== undefined &&
+		post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
+		project_manager.add(post_data, "project", "add");
+	  }
+	}
   });//Add a project
 
   $("#btn_edit_project").click(function () {
@@ -101,20 +131,19 @@ $(document).ready(function() {
   });//Edit a project
 
   $("#btn_delete_project").click(function () {
-		var msg = $('#confirmmsg-delete').val();
-		if (typeof msg !== typeof undefined && msg !== false) {
-			utils.showConfirmBox(msg, function(result){
-				if(result)
-				{
-					project_manager.delete(parseInt(utils.getQueryVariable("project_id")));
-				}
-			});
-		}
-		else
+    var msg = $('#confirmmsg-delete').val();
+	if (typeof msg !== typeof undefined && msg !== false) {
+	  utils.showConfirmBox(msg, function(result){
+		if(result)
 		{
-			project_manager.delete(parseInt(utils.getQueryVariable("project_id")));
+		  project_manager.delete(parseInt(utils.getQueryVariable("project_id")));
 		}
-    
+	  });
+	}
+	else
+	{
+	  project_manager.delete(parseInt(utils.getQueryVariable("project_id")));
+	}
   });//Delete a project
 
   if (utils.getQueryVariable("mode") === "edit") {
@@ -299,6 +328,13 @@ $(document).ready(function() {
       $(".btn_set_current_project").show();
     }
 
+  };
+  
+  project_manager.ifProjectExists = function (projectName, decision) {
+    datacx.post("project/ifProjectExists", {project_name: projectName}).then(function (reply) {
+	  //alert(reply.record_count);
+	  decision(reply.record_count);
+    });
   };
 
 
