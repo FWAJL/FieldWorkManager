@@ -153,6 +153,7 @@ CREATE TABLE `field_analyte` (
     `field_analyte_name_unit` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
     `pm_id` int(11) NOT NULL COMMENT 'Foreign key => project_manager',
     PRIMARY KEY (`field_analyte_id`),
+    UNIQUE INDEX `un_fa` (`field_analyte_name_unit` ASC),
     CONSTRAINT `fk_field_analyte_pm` FOREIGN KEY (`pm_id`)
         REFERENCES `project_manager` (`pm_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
@@ -176,6 +177,7 @@ CREATE TABLE `lab_analyte` (
     `lab_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `pm_id` int(11) NOT NULL COMMENT 'Foreign key => project_manager',
     PRIMARY KEY (`lab_analyte_id`),
+    UNIQUE INDEX `un_la` (`lab_analyte_name` ASC),
     CONSTRAINT `fk_lab_analyte_pm` FOREIGN KEY (`pm_id`)
         REFERENCES `project_manager` (`pm_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
@@ -316,6 +318,7 @@ CREATE TABLE `common_lab_analyte` (
     `common_lab_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
     `common_lab_analyte_category_name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
     `common_lab_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    UNIQUE INDEX `un_cla` (`common_lab_analyte_name` ASC),
     PRIMARY KEY (`common_lab_analyte_id`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -323,6 +326,7 @@ CREATE TABLE `common_lab_analyte` (
 CREATE TABLE `common_field_analyte` (
     `common_field_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
     `common_field_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    UNIQUE INDEX `un_cfa` (`common_field_analyte_name` ASC),
     PRIMARY KEY (`common_field_analyte_id`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 

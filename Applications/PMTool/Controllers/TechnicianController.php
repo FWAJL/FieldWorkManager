@@ -10,6 +10,11 @@ class TechnicianController extends \Library\BaseController {
   public function executeIndex(\Library\HttpRequest $rq) {  }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
+		
+		//Get confirm msg for Technician deletion from showForm screen
+		$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"technician", "targetaction": "view", "operation": ["delete"]}', $this->app->name());
+		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::confirm_message, $confirm_msg);
+		
     //Load Modules for view
     $this->page->addVar(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
@@ -20,9 +25,13 @@ class TechnicianController extends \Library\BaseController {
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->app()->user());
     $technicians = \Applications\PMTool\Helpers\TechnicianHelper::GetPmTechnicians($this, $pm);
 	 
-	//Fetch tooltip data from xml and pass to view as an array
-	$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('data-technician-id', $this->app->name());
-	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::tooltip_message, $tooltip_array);
+		//Fetch tooltip data from xml and pass to view as an array
+		$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('data-technician-id', $this->app->name());
+		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::tooltip_message, $tooltip_array);
+		
+		//Get confirm msg for Technician deletion from context menu
+		$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"technician", "targetaction": "list", "operation": ["delete","activate"]}', $this->app->name());
+		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::confirm_message, $confirm_msg);
 	
     $data = array(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
@@ -36,6 +45,8 @@ class TechnicianController extends \Library\BaseController {
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
     $this->page->addVar(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
+		$this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {

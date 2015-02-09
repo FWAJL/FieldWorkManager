@@ -13,8 +13,20 @@ $(document).ready(function() {
     callback: function(key, options) {
       if (key === "edit") {
         project_manager.retrieveProject(options.$trigger);
-      } else if (key === "delete") {
-        project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
+      } else if (key === "delete") { 
+				var msg = $('#confirmmsg-delete').val();
+				if (typeof msg !== typeof undefined && msg !== false) {
+		  		utils.showConfirmBox(msg, function(result){
+						if(result)
+						{
+							project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
+						}
+				  });
+				}
+				else
+				{
+					project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
+				}
       }
     },
     items: {
@@ -46,7 +58,19 @@ $(document).ready(function() {
     }
   });
   $(".from-inactive-list").click(function () {
-    project_manager.updateProjects("active", project_ids);
+		var msg = $('#confirmmsg-activate').val();
+		if (typeof msg !== typeof undefined && msg !== false) {
+			utils.showConfirmBox(msg, function(result){
+				if(result)
+				{
+					project_manager.updateProjects("active", project_ids);
+				}
+			});
+		}
+		else
+		{
+			project_manager.updateProjects("active", project_ids);
+		}
   });
   $(".from-active-list").click(function () {
     project_manager.updateProjects("inactive", project_ids);
@@ -77,7 +101,20 @@ $(document).ready(function() {
   });//Edit a project
 
   $("#btn_delete_project").click(function () {
-    project_manager.delete(parseInt(utils.getQueryVariable("project_id")));
+		var msg = $('#confirmmsg-delete').val();
+		if (typeof msg !== typeof undefined && msg !== false) {
+			utils.showConfirmBox(msg, function(result){
+				if(result)
+				{
+					project_manager.delete(parseInt(utils.getQueryVariable("project_id")));
+				}
+			});
+		}
+		else
+		{
+			project_manager.delete(parseInt(utils.getQueryVariable("project_id")));
+		}
+    
   });//Delete a project
 
   if (utils.getQueryVariable("mode") === "edit") {
