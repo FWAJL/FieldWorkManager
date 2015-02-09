@@ -21,6 +21,9 @@
             <h4><?php echo $resx["h3_tasks_inactive"]; ?></h4>
             <?php require $inactive_list_module; ?>              
           </div>
+          <?php
+					require $popup_msg_module;
+					?>
         </div>
       </div>
     </div>

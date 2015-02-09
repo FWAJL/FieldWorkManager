@@ -52,7 +52,8 @@
             <php_module key="facility_form" file_name="facility_form.php" />
             <php_module key="client_form" file_name="client_form.php" />
             <php_module key="project_buttons" file_name="project_buttons.php" />
-
+						<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+						
         </php_modules>
     </route>
     <!-- project/showAddForm -->
@@ -67,6 +68,7 @@
         <php_modules>
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
+						<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
         </php_modules>
     </route>
     <!-- project/listAll -->
@@ -152,6 +154,7 @@
         <php_modules>
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
+						<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
         </php_modules>
     </route>
     <!-- technician/listAll -->
@@ -170,6 +173,7 @@
         <php_modules>
             <php_module key="technician_form" file_name="technician_form.php" />
             <php_module key="upload_file" file_name="upload_file.php" shared="true"/>
+			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
         </php_modules>
     </route>
     <!-- technician/showForm -->
@@ -219,6 +223,7 @@
         <php_modules>
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
+						<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
         </php_modules>
     </route><!--   task/listAll -->
     
