@@ -2,6 +2,10 @@
 
 <!-- One set of buttons for all tabs -->
 <div class="buttons">
-  <input type="button" value="<?php echo $resx["btn_add_common_analyte_to_project"]; ?>" class="btn btn-warning from-common-field-analyte-list" />
-  <input type="button" value="<?php echo $resx["btn_add_common_analyte_to_project"]; ?>" class="btn btn-warning from-common-lab-analyte-list" />
+  <button title="<?php echo $resx["btn_add_common_analyte_to_project"]; ?>" data-target-element="field_analyte_name_unit" class="btn btn-warning">
+    <span class="glyphicon glyphicon-arrow-left"></span>
+  </button>
+  <button title="<?php echo $resx["btn_add_common_analyte_to_project"]; ?>" data-target-element="lab_analyte_name" class="btn btn-warning">
+    <span class="glyphicon glyphicon-arrow-left"></span>
+  </button>
 </div>
