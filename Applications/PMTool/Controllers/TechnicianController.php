@@ -170,7 +170,7 @@ class TechnicianController extends \Library\BaseController {
     $technician_id = intval($this->dataPost["technician_id"]);
 
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->app()->user());
-    $technician_selected = \Applications\PMTool\Helpers\CommonHelper::FindObject($technician_id, "technician_id", $pm[\Library\Enums\SessionKeys::PmTechnicians]);
+    $technician_selected = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue($technician_id, "technician_id", $pm[\Library\Enums\SessionKeys::PmTechnicians]);
 
     $result["technician"] = $technician_selected;
     $this->SendResponseWS(

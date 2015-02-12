@@ -57,10 +57,9 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeShowForm(\Library\HttpRequest $rq) {
-		
-		//Get confirm msg for Project deletion from showForm screen
-		$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"project", "targetaction": "view", "operation": ["delete"]}', $this->app->name());
-		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::confirm_message, $confirm_msg);
+	//Get confirm msg for Project deletion from showForm screen
+	$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"project", "targetaction": "view", "operation": ["delete", "add"]}', $this->app->name());
+	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::confirm_message, $confirm_msg);
 		
     $this->page->addVar(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
@@ -326,5 +325,24 @@ class ProjectController extends \Library\BaseController {
       "step" => ($project != NULL) ? "success" : "error"
     ));
   }
-
+  
+  /**
+   * Method which checks for existence of the project name in the database
+  */
+  public function executeIfProjectExists(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS(); // Init result
+	
+	$project = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Project());
+	
+	$manager = $this->managers->getManagerOf($this->module());
+	$result_query = $manager->selectMany($project, "project_name", true);
+	$result['record_count'] = count($result_query);
+	
+	$this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+        "resx_key" => $this->action(),
+        "step" => ($result['record_count'] > 0) ? "success" : "error"
+      ));
+  }
 }

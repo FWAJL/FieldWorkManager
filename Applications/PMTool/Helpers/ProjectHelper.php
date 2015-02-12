@@ -145,10 +145,10 @@ class ProjectHelper {
     foreach ($ProjectsSession as $sessionProject) {
       $project_id = intval($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
 
-      $facility = CommonHelper::FindObject($project_id, "project_id", $lists[\Library\Enums\SessionKeys::UserProjectFacilityList]);
+      $facility = CommonHelper::FindObjectByIntValue($project_id, "project_id", $lists[\Library\Enums\SessionKeys::UserProjectFacilityList]);
       $sessionProject[\Library\Enums\SessionKeys::FacilityObject] = $facility;
 
-      $client = CommonHelper::FindObject($project_id, "project_id", $lists[\Library\Enums\SessionKeys::UserProjectClientList]);
+      $client = CommonHelper::FindObjectByIntValue($project_id, "project_id", $lists[\Library\Enums\SessionKeys::UserProjectClientList]);
       $sessionProject[\Library\Enums\SessionKeys::ClientObject] = $client;
 
       $ProjectsSession[\Library\Enums\SessionKeys::ProjectKey . $project_id] = $sessionProject;
