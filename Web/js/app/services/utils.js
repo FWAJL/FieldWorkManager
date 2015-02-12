@@ -65,7 +65,7 @@ $(document).ready(function() {
   * @returns {Boolean}
   */
  utils.isNullOrEmpty = function(value) {
-  return value !== null || value !== "" ? false : true;
+  return value === "" || value === null || value === undefined ? true : false;
  };
 
  /**
@@ -196,14 +196,19 @@ $(document).ready(function() {
   return selector;
  };
 
- utils.getValuesFromList = function(sourceList, attrToRead, readAttr) {
+ utils.getValuesFromList = function(sourceList, attrToRead, readAttr, delimiter) {
+  if (typeof (readAttr) === 'undefined')
+   readAttr = false;
+  if (typeof (delimiter) === 'undefined')
+   delimiter = ",";
+
   var values = "";
   $("#" + sourceList + " .ui-selected").each(function(i, obj) {
    if ($(this).attr(attrToRead) !== undefined) {
     values +=
             readAttr ?
-            $(this).attr(attrToRead) + "," :
-            $(this).text() + ",";
+            $(this).attr(attrToRead) + delimiter :
+            $(this).text() + delimiter;
    }
   });
   values = utils.removeLastChar(values);
@@ -246,7 +251,6 @@ $(document).ready(function() {
   }
   return(false);
  };
-
  utils.showConfirmBox = function(msg, decision) {
   bootbox.confirm({
    buttons: {
@@ -267,5 +271,32 @@ $(document).ready(function() {
   if (!JSON || !JSON.stringify)
    throw new Error("Cannot find JSON.stringify(). Some browsers (e.g., IE < 8) don't support it natively, but you can overcome this by adding a script reference to json2.js, downloadable from http://www.json.org/json2.js");
   return JSON.stringify(data);
+ };
+ utils.showAlert = function(msg) {
+  bootbox.alert({
+   message: msg,
+   callback: function() {
+    //idle at present
+   }
+  });
+  $('.btn-primary').addClass('confirmbuttons');
+ };
+ utils.mergeStringsExclusive = function(target, source, delimiter) {
+  delimiter = delimiter || "\n";
+  if (!utils.endsWith(target, delimiter) && !utils.isNullOrEmpty(target)) {
+   target += delimiter;
+  }
+  source.split(delimiter).forEach(function(e, i, array) {
+   if (target.indexOf(e) === -1) {
+    target += e + delimiter;
+    return;
+   } else {
+    toastr.warning(e + "is already present in the values typed or added.");
+   }
+  });
+  return target;
+ };
+ utils.endsWith = function(str, suffix) {
+  return str.indexOf(suffix, str.length - suffix.length) !== -1;
  };
 }(window.utils = window.utils || {}));

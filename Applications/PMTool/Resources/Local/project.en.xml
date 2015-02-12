@@ -20,6 +20,8 @@
   <resource key="message_success_updateItems">The projects have been edited</resource>
   <resource key="message_error_setCurrentProject">Error setting current project.</resource>
   <resource key="message_success_setCurrentProject">The project has been set as current working project</resource>
+  <resource key="message_success_ifProjectExists">Project exists</resource>
+  <resource key="message_error_ifProjectExists">Project doesn't exist</resource>
 
   <resource key="project_legend_add">Add new project</resource>
   <resource key="project_legend_edit">Edit this project</resource>

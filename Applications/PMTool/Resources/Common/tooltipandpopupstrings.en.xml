@@ -8,4 +8,6 @@
 	<resource uicomponent="confirm" targetcontroller="technician" targetaction="list" operation="delete" value="Sure to delete this technician?" />
 	<resource uicomponent="confirm" targetcontroller="technician" targetaction="view" operation="delete" value="You are viewing a technician, delete this record?" />
 	<resource uicomponent="confirm" targetcontroller="task" targetaction="list" operation="activate" value="Sure to activate this task?" />
+	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="add" value="To open a new Project, you must provide the Project Name and Facility Address" />
+	<resource uicomponent="alert" targetcontroller="service" targetaction="view" operation="add" value="To add a new Service Provider, you must provide the Company Name and Category." />
 </resources>

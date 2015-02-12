@@ -4,11 +4,11 @@
   <div class="row">
     <div  class="col-lg-5 col-md-5">
       <h4><?php echo $resx["h4_analyte_form"]; ?></h4>
+      <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::analyte_buttons]; ?>
       <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::field_analyte_form]; ?>
     </div>
     <div class="col-lg-2 col-md-2">
-        <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::analyte_buttons]; ?>
-        <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::common_analyte_buttons]; ?>
+      <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::common_analyte_buttons]; ?>
     </div>
     <div  class="col-lg-5 col-md-5">
       <h4><?php echo $resx["h4_common_field_analytes"]; ?></h4>
