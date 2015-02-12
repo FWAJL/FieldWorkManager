@@ -46,17 +46,16 @@ class CommonHelper {
   public static function SetDynamicPropertyNamesForDualList($module, $property_list) {
     $dynamicPropertyNames = array();
     foreach ($property_list as $key => $value) {
-      $dynamicPropertyNames[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_key . $key]
-              = $module . "_" . $value;
+      $dynamicPropertyNames[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_key . $key] = $module . "_" . $value;
     }
     return $dynamicPropertyNames;
   }
 
   public static function SetPropertyNamesForDualList($module) {
     return array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id => $module . "_id",
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name => $module . "_name",
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active => $module . "_active",
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id => $module . "_id",
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name => $module . "_name",
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active => $module . "_active",
     );
   }
 
@@ -98,25 +97,60 @@ class CommonHelper {
   }
 
   /**
-   * Find an object in a list filtering by the value of one property name.
+   * Find an object in a list filtering by the id value of  given property name of each object.
    * 
-   * @param string $filter <p>
-   * The filter used to compare with the property name of each object of the list. </p>
-   * @param string $prop_name <p>
-   * The property name to build the property getter function to perform a comparaison with the filter value provided. </p>
-   * @param array (of object) $list_of_obj <p>
-   * The list of objects of type T to look into. </p>
+   * @param string $idValue <p>
+   * The id value used to compare with the property name given of each object of the list. </p>
+   * @param string $propName <p>
+   * The property name to build the property getter function to perform a comparaison with the id value provided. </p>
+   * @param array (of object) $listOfObjects <p>
+   * The list of objects of type T to look into. T is defined by the caller. </p>
    * @return mixed{boolean,object} <p>
    * The object if found or FALSE otherwise. </p>
    */
-  public static function FindObject($filter, $prop_name, $list_of_obj) {
+  public static function FindObjectByIntValue($idValue, $propName, $listOfObjects) {
     $match = FALSE;
-    foreach ($list_of_obj as $obj) {
-      if (intval($obj->$prop_name()) === $filter) {
-        $match = $obj;
-        break;
+      foreach ($listOfObjects as $obj) {
+        if (intval($obj->$propName()) === $idValue) {
+          $match = $obj;
+          break;
+        }
+      }
+    return $match;
+  }
+  /**
+   * Find an object in a list filtering by the string value of one property name of each object.
+   * 
+   * @param string $filter <p>
+   * The filter used to compare with the property name of each object of the list. </p>
+   * @param string $propName <p>
+   * The property name to build the property getter function to perform a comparaison with the filter value provided. </p>
+   * @param array (of object) $list_of_obj <p>
+   * The list of objects of type T to look into. </p>
+   * @param string $key <p>
+   * The key to read the value in an associative array if the list of object
+   * is a list of associative arrays.
+   * @return mixed{boolean,object} <p>
+   * The object if found or FALSE otherwise. </p>
+   */
+  public static function FindObjectByStringValue($filter, $propName, $listOfObjects, $key = NULL) {
+    $match = FALSE;
+    if ($key === NULL) {
+      foreach ($listOfObjects as $obj) {
+        if ($obj->$prop_name() === $filter) {
+          $match = $obj;
+          break;
+        }
+      }
+    } else {
+      foreach ($listOfObjects as $obj) {
+        if ($obj[$key]->$prop_name() === $filter) {
+          $match = $obj[$key];
+          break;
+        }
       }
     }
+
     return $match;
   }
 
@@ -182,6 +216,7 @@ class CommonHelper {
   public static function GetValueInSession($user, $sessionKey) {
     return $user->getAttribute($sessionKey);
   }
+
   public static function GetObjectListFromSessionArrayBySessionKey(\Library\User $user, $sessionArray, $sessionKey) {
     $list = array();
     foreach ($sessionArray as $array) {
@@ -189,4 +224,5 @@ class CommonHelper {
     }
     return $list;
   }
+
 }

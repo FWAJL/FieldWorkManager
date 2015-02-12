@@ -140,18 +140,19 @@ $(document).ready(function() {
   var analytesTyped = [];
   var params = {
    "fa_attr": "field_analyte_name_unit",
-   "la_attr": "lab_analyte_name"
+   "la_attr": "lab_analyte_name",
+   "delimiter": "\n"
   };
   if ($(this).attr("data-analyte-type") === "CFA") {
    analytesTyped = $("textarea[name=\"" + params.fa_attr + "\"]").val();
-   analytesSelected = utils.getValuesFromList(selectionParams.fieldListId, selectionParams.dataAttrFA, false, "\n");
-   $("textarea[name=\"" + params.fa_attr + "\"]").val(utils.mergeStringsExclusive(analytesTyped, analytesSelected) + "\n");
+   analytesSelected = utils.getValuesFromList(selectionParams.fieldListId, selectionParams.dataAttrFA, false, params.delimiter);
+   $("textarea[name=\"" + params.fa_attr + "\"]").val(utils.mergeStringsExclusive(analytesTyped, analytesSelected, params.delimiter));
    $('.btn-add-analyte').attr("name", params.fa_attr);
   }
   else {
    analytesTyped = $("textarea[name=\"" + params.la_attr + "\"]").val().split("\n");
-   analytesSelected = utils.getValuesFromList(selectionParams.labListId, selectionParams.dataAttrLA, false, "\n");
-   $("textarea[name=\"" + params.la_attr + "\"]").val(analytesTyped + analytesSelected + "\n");
+   analytesSelected = utils.getValuesFromList(selectionParams.labListId, selectionParams.dataAttrLA, false, params.delimiter);
+   $("textarea[name=\"" + params.la_attr + "\"]").val(analytesTyped + analytesSelected, params.delimiter);
    $('.btn-add-analyte').attr("name", params.la_attr);
   }
  });

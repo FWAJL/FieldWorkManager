@@ -119,11 +119,10 @@ class BaseManager extends \Library\Manager {
   }
 
   private function ExecuteQuery($sql_query, $params) {
+    $result = -1;
     try {
       //\Library\Utility\DebugHelper::LogAsHtmlComment($sql_query);
       $query = $this->dao->query($sql_query);
-
-      $result;
       if (!$query) {
         $result = $query->errorCode();
       } else {
@@ -149,8 +148,8 @@ class BaseManager extends \Library\Manager {
       $query->closeCursor();
     } catch (\PDOException $pdo_ex) {
       json_encode($pdo_ex);
-      echo "<!--" . $pdo_ex->getMessage() . "-->";
-      $result = FALSE;
+      //echo "<!--" . $pdo_ex->getMessage() . "-->";
+      $result *=  $pdo_ex->getCode();
     }
     return $result;
   }
