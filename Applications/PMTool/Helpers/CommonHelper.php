@@ -137,14 +137,14 @@ class CommonHelper {
     $match = FALSE;
     if ($key === NULL) {
       foreach ($listOfObjects as $obj) {
-        if ($obj->$prop_name() === $filter) {
+        if ($obj->$propName() === $filter) {
           $match = $obj;
           break;
         }
       }
     } else {
       foreach ($listOfObjects as $obj) {
-        if ($obj[$key]->$prop_name() === $filter) {
+        if ($obj[$key]->$propName() === $filter) {
           $match = $obj[$key];
           break;
         }
