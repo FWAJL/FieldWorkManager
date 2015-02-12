@@ -1,3 +1,5 @@
+/*APPLIES TO: colors/fonts/border style*/
+
 /* GENERAL STYLES */
 body, html, .sidebar {height: 100%}
 ol, ul {  margin-bottom: 0; }
@@ -142,4 +144,10 @@ textarea { resize: vertical;}
 }
 .checkbox_text{
  margin-left: 20px;
+}
+
+/* CONFIRM BOX BUTTONS */
+.confirmbuttons {
+	margin-bottom:0;
+	width:auto;
 }

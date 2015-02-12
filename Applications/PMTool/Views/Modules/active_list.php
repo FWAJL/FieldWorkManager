@@ -2,11 +2,17 @@
 <div class="scroll-bar">
   <ol id="active-list" class="list-panel">
     <?php
-    if (isset($tooltip_message)) {
-      $title = $tooltip_message[0];
-    } else {
-      $title = "";
-    }
+	$tooltip_configstr = "";
+    if (isset($tooltip_message) && !empty($tooltip_message)) {
+	  foreach($tooltip_message as $the_msg_node)
+	  {
+	    if(isset($the_msg_node['tooltip']))
+		{
+		  $tooltip_configstr .= " title=\"" . $the_msg_node['tooltip']['value'] . "\" has-tool-tip=\"1\" placement=\"" . $the_msg_node['tooltip']['placement'] . "\"";;  
+		}
+	  }
+	}
+	
     $prop_active =
             $data
             [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties]
@@ -24,7 +30,7 @@
         echo
         "<li data-"
         . $data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::module] . "-id=\"" . $object->$prop_id()
-        . "\" class=\"select_item ui-widget-content\" title=\"" . $title . "\">" 
+        . "\" class=\"select_item ui-widget-content\"" . $tooltip_configstr . ">" 
         . $object->$prop_name()
         . "</li>";
       }

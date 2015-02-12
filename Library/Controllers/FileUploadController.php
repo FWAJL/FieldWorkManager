@@ -38,16 +38,14 @@ class FileUploadController extends \Library\BaseController {
       "dataPost" => $this->dataPost(),
       "resultJson" => $result)
     );
-    $uploader->UploadFiles();
-
-    $isValid = $uploader->resultJson["fileUploaded"] == count($this->files());
+    $result = $uploader->UploadFiles();
 
     $this->SendResponseWS(
         $result, array(
       "directory" => "common",
       "resx_file" => \Library\Enums\ResourceKeys\ResxFileNameKeys::FileUpload,
       "resx_key" => $this->action(),
-      "step" => $isValid ? "success" : "error"
+      "step" => TRUE ? "success" : "error"
     ));
   }
 

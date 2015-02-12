@@ -142,11 +142,17 @@ class AnalyteHelper {
     $result["dataIn"] = $analytes;
 
     $result["dataId"] = 0;
+    $result["error"] = array("hasError" => FALSE, "code" => 0, "message" => "");
     $commonSessiongKey = $isFieldType ? \Library\Enums\SessionKeys::CommonFieldAnalytes : \Library\Enums\SessionKeys::CommonLabAnalytes;
     $commonAnalytes = self::GetCommonAnalytes($caller->user(), $commonSessiongKey);
     foreach ($analytes as $analyte) {
+      $result["dataId"] = 0;
       $result["dataId"] = $manager->add($analyte);
-      if ($isFieldType && !$isCommon) {
+      if ($result["dataId"] < 0) {
+        $result["error"]["hasError"] = TRUE;
+        $result["error"]["code"] = $result["dataId"];
+        $result["error"]["message"] = "Some items couldn't be added to the database";
+      } elseif ($isFieldType && !$isCommon) {
         $analyte->setField_analyte_id($result["dataId"]);
         array_push($pm[\Library\Enums\SessionKeys::PmFieldAnalytes], $analyte);
       } elseif (!$isFieldType && !$isCommon) {

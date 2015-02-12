@@ -46,11 +46,14 @@ class ViewVariablesKeys {
   const property_active = "prop_active";
   //For tooltip
   const tooltip_message = "tooltip_message"; 
+	//Form messages in confirm boxes
+	const confirm_message = "confirm_message"; 
 
   const tabStatus = "tab";
 
   const active_list = "active_list_module";
   const inactive_list = "inactive_list_module";
+	const popup_msg = "popup_msg_module";
   
   const currentPm = "current_pm";
   const currentProject = "current_project";
@@ -67,7 +70,7 @@ class ViewVariablesKeys {
   const tab_close = "tab_close";
   
   //Mapping
-  const map_view = "map_view";
+  const map_module = "map_module";
 }
 
 ?>

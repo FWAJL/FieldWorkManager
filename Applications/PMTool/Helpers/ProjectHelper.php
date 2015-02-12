@@ -145,10 +145,10 @@ class ProjectHelper {
     foreach ($ProjectsSession as $sessionProject) {
       $project_id = intval($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
 
-      $facility = CommonHelper::FindObject($project_id, "project_id", $lists[\Library\Enums\SessionKeys::UserProjectFacilityList]);
+      $facility = CommonHelper::FindObjectByIntValue($project_id, "project_id", $lists[\Library\Enums\SessionKeys::UserProjectFacilityList]);
       $sessionProject[\Library\Enums\SessionKeys::FacilityObject] = $facility;
 
-      $client = CommonHelper::FindObject($project_id, "project_id", $lists[\Library\Enums\SessionKeys::UserProjectClientList]);
+      $client = CommonHelper::FindObjectByIntValue($project_id, "project_id", $lists[\Library\Enums\SessionKeys::UserProjectClientList]);
       $sessionProject[\Library\Enums\SessionKeys::ClientObject] = $client;
 
       $ProjectsSession[\Library\Enums\SessionKeys::ProjectKey . $project_id] = $sessionProject;
@@ -176,18 +176,5 @@ class ProjectHelper {
       self::SetSessionProjects($user, $userSessionProjects);
     }
   }
-  
-  public static function loadToolTipMessagefromXML($appname)
-  {
-    $xml = new \DOMDocument;
-    $filename = __ROOT__ . \Library\Enums\FolderName::AppsFolderName . $appname . '/Config/tooltipandpopupstrings.xml';
-    if (file_exists($filename)) {
-      $xml->load($filename);
-    } else {
-      throw new \Exception("In " . __CLASS__ . " > Method: " . __METHOD__);
-    }
-    return $xml->getElementsByTagName("message");  
-  } 
-
 }
 

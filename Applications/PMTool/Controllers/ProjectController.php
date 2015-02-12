@@ -57,6 +57,10 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeShowForm(\Library\HttpRequest $rq) {
+	//Get confirm msg for Project deletion from showForm screen
+	$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"project", "targetaction": "view", "operation": ["delete", "add"]}', $this->app->name());
+	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::confirm_message, $confirm_msg);
+		
     $this->page->addVar(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
@@ -71,14 +75,14 @@ class ProjectController extends \Library\BaseController {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]); 
     
-	//Fetch tooltip data from xml and pass to view as an array
-	$tooltipMessages = \Applications\PMTool\Helpers\ProjectHelper::loadToolTipMessagefromXML($this->app->name());
-	$tooltip_array = array();
-	foreach ($tooltipMessages as $msg) {
-	  if($msg->getAttribute('targetattr') == 'data-project-id')
-	    array_push($tooltip_array, $msg->getAttribute('value'));
-	}
-	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::tooltip_message, $tooltip_array);
+	
+		//Fetch tooltip data from xml and pass to view as an array
+		$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('data-project-id', $this->app->name());
+		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::tooltip_message, $tooltip_array);
+		
+		//Get confirm msg for project deletion from context menu
+		$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"project", "targetaction": "list", "operation": ["delete","activate"]}', $this->app->name());
+		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::confirm_message, $confirm_msg);
 	  
     $data = array(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
@@ -92,6 +96,8 @@ class ProjectController extends \Library\BaseController {
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
     $this->page->addVar(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
+		$this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
   }
 
   /**
@@ -319,5 +325,24 @@ class ProjectController extends \Library\BaseController {
       "step" => ($project != NULL) ? "success" : "error"
     ));
   }
-
+  
+  /**
+   * Method which checks for existence of the project name in the database
+  */
+  public function executeIfProjectExists(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS(); // Init result
+	
+	$project = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Project());
+	
+	$manager = $this->managers->getManagerOf($this->module());
+	$result_query = $manager->selectMany($project, "project_name", true);
+	$result['record_count'] = count($result_query);
+	
+	$this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+        "resx_key" => $this->action(),
+        "step" => ($result['record_count'] > 0) ? "success" : "error"
+      ));
+  }
 }

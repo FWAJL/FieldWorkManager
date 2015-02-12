@@ -14,7 +14,7 @@
   datacx.post = function(url, data) {
     return $.ajax({
       url: config.rootFolder + url,
-      data: ko.toJSON(data), //using KnockOut library to encode data variable to JSON
+      data: utils.stringifyJson(data), //using KnockOut library to encode data variable to JSON
       type: 'POST',
       contentType: 'application/json',
       dataType: 'json'
@@ -44,8 +44,8 @@
   };
   datacx.add = function(params) {
     datacx.post(params.ajaxUrl, params.arrayOfValues).then(function(reply) {
-      if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+      if (reply === null || reply.result === 0 || reply.error.code < 0) {//has an error
+        toastr.error(reply.message + "\n" + reply.error.message);
         return undefined;
       } else {//success
         toastr.success(reply.message);
