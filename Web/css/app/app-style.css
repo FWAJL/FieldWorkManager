@@ -1,153 +1,90 @@
 /*APPLIES TO: colors/fonts/border style*/
 
 /* GENERAL STYLES */
-body, html, .sidebar {height: 100%}
-ol, ul {  margin-bottom: 0; }
-.btn{margin-bottom: 5px;}
-.btn-warning { display: none; }
-.btn {
-  width: 100%;      
+.validator {
+ // display: none;
+ // color: #FC7F6F;
 }
-#document-upload 
-{ 
-  width: 100%;
-  margin: 0 auto;
-  height: 200px;
-  border-radius: 5px;
-  border: 1px solid #CCC;
-  padding: 5px;
-}
+
 /* END GENRAL */
 
 /* LOGIN */
-.login-container{margin:10px;}
-.login-container figure{
-  width: 300px;
-  margin: 0 auto;
-  padding: 5px;
-  border: solid 1px #999;
-}
+
 /* END LOGIN */
 
 /* TOP HEADER */
 #top_header{
-  text-shadow: 0 1px 0 #fff;
-  border-bottom: 1px solid #e5e5e5;
-  /*min-width: 1000px;*/
   background-color: #f3f3f3;
   background-image: -moz-linear-gradient(#f9f9f9, #f3f3f3);
   background-image: -webkit-linear-gradient(#f9f9f9, #f3f3f3);
   background-image: linear-gradient(#f9f9f9, #f3f3f3);
   background-repeat: repeat-x;
-  clear: both;
-  height: 40px;
 }
-#top_header #branding > * { float: left; }
-.brand{line-height: 40px;  padding-left: 10px; }
-.logo {margin-left: 20px}
-#pm_name {padding: 0 12px;}
-#top_header .logo img{ height: 32px; margin: 4px }
 
-#pm_info ul{ display: none; }
-#pm_info {float: right; margin-right: 40px}
-.top-right-option a {
-  padding: 12px;
-}
 .top-right-option a:hover {
   background-color: #e5e5e5;
 }
 /* END TOP HEADER */
+
 /* BREADCRUMB */
-.breadcrumb li {
-  /*float: left;*/
-  display: inline-block;
-}
-.br_seperator {
-  margin-left: -10px;
-}
+
 /* END BREADCRUMB */
+
 /* CONTENT_CONTAINER */
-.content-container {
-  max-width: 100%; height: auto;
-  margin: 0 auto;
-}
-.main
-{
-  border-left: solid 1px #999;
-}
-.right-aside
-{
-}
+
 /* END CONTENT_CONTAINER */
 
+/* COMMON FORM ELEMENTS */
+.welcome > * { color: #333; } 
+
+/* BUTTONS */
+.btn-primary {
+  background-color: #FFF;
+  border-color: #999;
+  color: #333;
+}
+
+.btn-primary:hover, 
+.btn-primary:focus, 
+.btn-primary:active, 
+.btn-primary.active, 
+.open .dropdown-toggle.btn-primary{
+  background-color: #000;
+  border-color: #999;
+}
+/* END COMMON FORM ELEMENTS */
+
 /* PROJECT */
-#btn_edit_project{display: none;}
-.form_sections input[type="button"]{
-  white-space:initial;
-}
 
-.show{display: block;}
-.hide{display: none;}
-
-.scroll-bar{  
-  overflow-y: scroll;
-}
-.list-panel{
-  height: 475px;
-  border: 1px solid #999;
-}
-
-.upload_list{
- width: 100%;   
-}
-
-.buttons{
-  margin-top: 40px;
-}
+/* END PROJECT */
 
 /* FACILITY */
-textarea { resize: vertical;}
-/*.facility_form {display: none;}*/
 
 /* CLIENT */
-.client_form{
-  padding: 10px;
-  /*display: none;*/
-}
 
 /* LOCATION */
 
-.btn-add-location-names {display: inline-block;}
-
-.field_analyte_form textarea, .lab_analyte_form textarea
-{
-  width: 100% !important;
-}
-
-/* MAP */
-#map {
-  width: 100%;
-  height: 600px;
-}
 /* TASK */
-.task_info_input{
- margin-left: 30px;
- margin-top: 25px;
-}
-.checkbox {
-  margin-left: 25px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-#freq_list {
- margin-left: 40px;
-}
-.checkbox_text{
- margin-left: 20px;
+
+/* JS WIDGETS */
+
+.select_item:hover,
+.select_item:focus, 
+ui-widget-content:focus, 
+ui-widget-content:hover {
+  background-color: #ffd;
+  color: #F39814;
 }
 
-/* CONFIRM BOX BUTTONS */
-.confirmbuttons {
-	margin-bottom:0;
-	width:auto;
+.ui-selecting { background: #FECA40; }
+
+.ui-selected { 
+    background: #F39814; 
+    color: white; 
 }
+
+.context-menu-active {
+    font-weight: bold; 
+    color: #F39814;
+}
+/* JS WIDGETS */
