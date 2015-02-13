@@ -353,6 +353,17 @@ CREATE TABLE `log` (
     PRIMARY KEY (`log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- Table structure for table `project_service`
+CREATE TABLE `project_service` (
+  `project_id` int(11) NOT NULL,
+  `service_id` int(11) NOT NULL,
+    CONSTRAINT `fk_ps_p` FOREIGN KEY (`project_id`)
+        REFERENCES `project` (`project_id`) ON DELETE CASCADE,
+    CONSTRAINT `fk_ps_s` FOREIGN KEY (`service_id`)
+        REFERENCES `service` (`service_id`) ON DELETE CASCADE,
+    UNIQUE INDEX `un_p_s` (`project_id` ASC, `service_id` ASC)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 -- Dumping data for table `project_manager`
 INSERT INTO `project_manager` (`pm_id`, `username`, `password`, `hint`, `pm_comp_name`, `pm_name`, `pm_address`, `pm_phone`, `pm_email`) VALUES
 (1, 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683', 'hint', 'comp name', 'John', 'Doe', '1234567890', 'test@fwa.net');

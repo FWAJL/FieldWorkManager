@@ -331,12 +331,16 @@ class ProjectController extends \Library\BaseController {
   */
   public function executeIfProjectExists(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS(); // Init result
-	
 	$project = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Project());
 	
-	$manager = $this->managers->getManagerOf($this->module());
-	$result_query = $manager->selectMany($project, "project_name", true);
-	$result['record_count'] = count($result_query);
+	//Check session if the project name is already used
+	$match = \Applications\PMTool\Helpers\CommonHelper::FindObjectByStringValue(
+				$project->project_name(), "project_name",
+				\Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->user()),
+				\Library\Enums\SessionKeys::ProjectObject
+    		);
+	$result['record_count'] = (!$match || empty($match)) ? 0 : 1;
+	
 	
 	$this->SendResponseWS(
       $result, array(
