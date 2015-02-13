@@ -7,7 +7,7 @@
  * jQuery listeners for the service actions
  */
 $(document).ready(function() {
-    var ajaxParams = {
+  var ajaxParams = {
     "ajaxUrl": "service/updateItems",
     "redirectUrl": "service/listAll",
     "action": "",
@@ -37,41 +37,43 @@ $(document).ready(function() {
   $("#btn_add_service").click(function() {
     var post_data = {};
     post_data = utils.retrieveInputs("service_form", ["service_name", "service_type"]);
-	
-	var msg = $('#confirmmsg-add').val();
-	if (typeof msg !== typeof undefined && msg !== false) {
-	  if (post_data.service_name !== undefined  && post_data.service_type !== undefined) {
-		//Check uniqueness
-		service_manager.ifServiceProviderExists(post_data.service_name, function(record_count){
-		  if(record_count > 0)
-		  {
-			utils.showAlert(msg);
-		  }
-		  else
-		  {
-			if (post_data.service_name !== undefined) {
-			  service_manager.add(post_data, "service", "add", true);
-			}
-		  }
-		  
-		});  
-	  }
-	  else
-	  {
-		utils.showAlert(msg);
-	  }
-	}
-	else
-	{
-	  //Old code
-	  if (post_data.service_name !== undefined) {
-		service_manager.add(post_data, "service", "add", true);
-	  }
-	}
-	
-	return false;
-	
-    
+
+    var msgNullCheck = $('#confirmmsg-addNullCheck').val();
+    var msgUniqueCheck = $('#confirmmsg-addUniqueCheck').val();
+    if (typeof msgNullCheck !== typeof undefined && msgNullCheck !== false &&
+            typeof msgUniqueCheck !== typeof undefined && msgUniqueCheck !== false) {
+      if (post_data.service_name !== undefined && post_data.service_type !== undefined) {
+        //Check uniqueness
+        service_manager.ifServiceProviderExists(post_data.service_name, function(record_count) {
+          if (record_count > 0)
+          {
+            utils.showAlert(msgUniqueCheck.replace("{0}", post_data.service_name));
+          }
+          else
+          {
+            if (post_data.service_name !== undefined) {
+              service_manager.add(post_data, "service", "add", true);
+            }
+          }
+
+        });
+      }
+      else
+      {
+        utils.showAlert(msgNullCheck);
+      }
+    }
+    else
+    {
+      //Old code
+      if (post_data.service_name !== undefined) {
+        service_manager.add(post_data, "service", "add", true);
+      }
+    }
+
+    return false;
+
+
   });//Add a service
 
   $("#btn_edit_service").click(function() {
@@ -119,7 +121,7 @@ $(document).ready(function() {
  */
 (function(service_manager) {
   service_manager.add = function(data, controller, action) {
- 
+
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Resource/Add WebService
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
@@ -212,16 +214,16 @@ $(document).ready(function() {
     });
   };
 
- /** service_manager.fillFormWithRandomData = function() {
-    utils.clearForm();
-    var number = Math.floor((Math.random() * 100) + 1);
-    $(".service_form input[name=\"service_name\"]").val("Resource " + number);
-    $("input[name=\"service_num\"]").val("n-" + number);
-    $("input[name=\"service_desc\"]").val("Description " + number);
-    $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
-    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
-  };
-*/
+  /** service_manager.fillFormWithRandomData = function() {
+   utils.clearForm();
+   var number = Math.floor((Math.random() * 100) + 1);
+   $(".service_form input[name=\"service_name\"]").val("Resource " + number);
+   $("input[name=\"service_num\"]").val("n-" + number);
+   $("input[name=\"service_desc\"]").val("Description " + number);
+   $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
+   $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
+   };
+   */
   service_manager.updateServices = function(action, arrayId) {
     datacx.post("service/updateItems", {"action": action, "service_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
@@ -233,11 +235,11 @@ $(document).ready(function() {
       }
     });
   };
-  
-  service_manager.ifServiceProviderExists = function (providerName, decision) {
-    datacx.post("service/ifProviderExists", {service_name: providerName}).then(function (reply) {
-	  //alert(reply.record_count);
-	  decision(reply.record_count);
+
+  service_manager.ifServiceProviderExists = function(providerName, decision) {
+    datacx.post("service/ifProviderExists", {service_name: providerName}).then(function(reply) {
+      //alert(reply.record_count);
+      decision(reply.record_count);
     });
   };
 
