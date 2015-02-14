@@ -10,7 +10,7 @@ class ServiceController extends \Library\BaseController {
 public function executeIndex(\Library\HttpRequest $rq) {  }
     
 public function executeShowForm(\Library\HttpRequest $rq) {
-	$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"service", "targetaction": "view", "operation": ["delete", "add"]}', $this->app->name());
+	$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"service", "targetaction": "view", "operation": ["delete", "addNullCheck", "addUniqueCheck"]}', $this->app->name());
 	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::confirm_message, $confirm_msg);
     //Load Modules for view
     $this->page->addVar(
