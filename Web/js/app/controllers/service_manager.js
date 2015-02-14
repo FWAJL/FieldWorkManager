@@ -100,13 +100,6 @@ $(document).ready(function() {
 //    service_manager.fillFormWithRandomData();
 //  }
 
-  var alreadyHovered = false;
-  $(".select_item").hover(function() {
-    if (!alreadyHovered)
-      toastr.info("Right-click to edit!");
-    alreadyHovered = true;
-  });//Show a service tip
-
   $("#service_list_all").click(function() {
     utils.clearForm();
     $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
