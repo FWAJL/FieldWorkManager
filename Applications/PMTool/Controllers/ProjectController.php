@@ -2,9 +2,9 @@
 
 /**
  *
- * @package		Basic MVC framework test
- * @author		FWM DEV Team
- * @copyright	Copyright (c) 2015
+ * @package     Basic MVC framework test
+ * @author      FWM DEV Team
+ * @copyright   Copyright (c) 2015
  * @license		
  * @link		
  * @since		
@@ -13,12 +13,12 @@
 // ------------------------------------------------------------------------
 
 /**
- * Authenticate controller Class
+ * ProjectController Class
  *
- * @package		Application/PMTool
- * @subpackage	Controllers
- * @category	ProjectController
- * @author		FWM DEV Team
+ * @package     Applications 
+ * @subpackage  PMTool
+ * @category    Controllers
+ * @author      FWM DEV Team
  * @link		
  */
 
@@ -58,7 +58,7 @@ class ProjectController extends \Library\BaseController {
    */
   public function executeShowForm(\Library\HttpRequest $rq) {
 	//Get confirm msg for Project deletion from showForm screen
-	$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"project", "targetaction": "view", "operation": ["delete", "add"]}', $this->app->name());
+	$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"project", "targetaction": "view", "operation": ["delete", "addNullCheck", "addUniqueCheck"]}', $this->app->name());
 	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::confirm_message, $confirm_msg);
 		
     $this->page->addVar(

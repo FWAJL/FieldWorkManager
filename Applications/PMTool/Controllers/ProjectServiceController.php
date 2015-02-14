@@ -40,7 +40,6 @@ class ProjectServiceController extends \Library\BaseController {
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("service"))  
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
-//    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list, $pm_services);
 
     //tab status
     $this->page->addVar(

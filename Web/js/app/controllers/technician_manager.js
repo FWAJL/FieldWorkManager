@@ -127,13 +127,6 @@ $(document).ready(function() {
 //    technician_manager.fillFormWithRandomData();
 //  }
 
-  var alreadyHovered = false;
-  $(".select_item").hover(function() {
-    if (!alreadyHovered)
-      toastr.info("Right-click to edit!");
-    alreadyHovered = true;
-  });//Show a technician tip
-
   $("#technician_list_all").click(function() {
     utils.clearForm();
     $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
