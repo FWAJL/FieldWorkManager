@@ -217,12 +217,20 @@ class CommonHelper {
     return $user->getAttribute($sessionKey);
   }
 
-  public static function GetObjectListFromSessionArrayBySessionKey(\Library\User $user, $sessionArray, $sessionKey) {
+  public static function GetObjectListFromSessionArrayBySessionKey($sessionArray, $sessionKey) {
     $list = array();
     foreach ($sessionArray as $array) {
       array_push($list, $array[$sessionKey]);
     }
     return $list;
+  }
+
+  public static function GetObjectFromSessionProjectBySessionKey($sessionProject, $sessionKey) {
+      return $sessionProject[$sessionKey];
+  }
+
+  public static function GetPropValueFromObjectByPropName($object, $propName) {
+      return $object[$propName];
   }
 
 }

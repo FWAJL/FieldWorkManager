@@ -21,5 +21,11 @@
   
   <!-- Mapping -->
   <define key="GoogleMapsCenterLat" value="37.6" />
-  <define key="GoogleMapsCenterLng" value="-95.665" />   
+  <define key="GoogleMapsCenterLng" value="-95.665" />
+  <define key="GoogleMapsProjectActiveIcon" value="https://maps.google.com/mapfiles/kml/paddle/purple-stars_maps.png" />
+  <define key="GoogleMapsProjectInactiveIcon" value="https://maps.google.com/mapfiles/kml/paddle/wht-stars_maps.png" />
+  <define key="GoogleMapsLocationActiveIcon" value="http://maps.google.com/mapfiles/kml/paddle/blu-circle_maps.png" />
+  <define key="GoogleMapsLocationInactiveIcon" value="https://maps.gstatic.com/intl/en_us/mapfiles/markers2/measle_blue.png" />
+  <define key="GoogleMapsTaskIcon" value="http://maps.google.com/mapfiles/kml/paddle/red-circle_maps.png" />
+
 </definitions>
