@@ -12,4 +12,6 @@
 	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addUniqueCheck" value="'{0}' is already used for an existing project as a project name. Please choose another name." />
 	<resource uicomponent="alert" targetcontroller="service" targetaction="view" operation="addNullCheck" value="To add a new Service Provider, you must provide the Company Name and Category." />
 	<resource uicomponent="alert" targetcontroller="service" targetaction="view" operation="addUniqueCheck" value="'{0}' is already used for an existing service provider as the service provider name. Please choose another name." />
+	<resource uicomponent="alert" targetcontroller="task" targetaction="view" operation="addUniqueCheck" value="Task name is taken. Choose a new Task name" />
+	<resource uicomponent="prompt" targetcontroller="task" targetaction="view" operation="addNullCheck" value="To continue, you must enter the new Task Name." />
 </resources>

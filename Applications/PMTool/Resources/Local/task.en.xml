@@ -20,6 +20,8 @@
   <resource key="message_success_delete">The task has been deleted.</resource>
   <resource key="message_error_updateItems">Error editing the tasks.</resource>
   <resource key="message_success_updateItems">The tasks have been edited</resource>
+  <resource key="message_error_ifTaskExists">The task does not exist</resource>
+  <resource key="message_success_ifTaskExists">The task exist</resource>
 
   <!-- Buttons -->
 

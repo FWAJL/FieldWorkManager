@@ -73,6 +73,31 @@ class PopUpHelper {
 	return $msg_array;
   }
   
+  /**
+  * Fetches configurations for Prompt boxes
+  * Accepts a json of the form:
+  * {targetcontroller: the_controller, targetaction: the_action, operation: the_operation}
+  */
+  public static function getPromptBoxMsg($param, $appname)
+  {
+	PopUpHelper::$appname = $appname;
+	$param_arr = json_decode($param, true);
+	$msg_array = array();
+	$resourcesFromXml = self::loadToolTipMessagefromXML();
+	foreach ($resourcesFromXml as $msg) {
+	  if($msg->getAttribute('uicomponent') == 'prompt' &&
+	      $msg->getAttribute('targetcontroller') == $param_arr['targetcontroller'] &&
+		  $msg->getAttribute('targetaction') == $param_arr['targetaction'] &&
+		  in_array($msg->getAttribute('operation'), $param_arr['operation'])
+		  )
+	  {
+		array_push($msg_array, array('promptmsg' => array('value' => $msg->getAttribute('value'), 'operation' => $msg->getAttribute('operation'))));
+	  }
+	}
+	  
+	return $msg_array;
+  }
+  
 
   public static function loadToolTipMessagefromXML() {
     $xml = new \DOMDocument;

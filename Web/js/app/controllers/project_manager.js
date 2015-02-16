@@ -327,7 +327,6 @@ $(document).ready(function() {
 
  project_manager.ifProjectExists = function(projectName, decision) {
   datacx.post("project/ifProjectExists", {project_name: projectName}).then(function(reply) {
-   //alert(reply.record_count);
    decision(reply.record_count);
   });
  };
