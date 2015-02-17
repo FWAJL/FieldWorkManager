@@ -28,6 +28,60 @@ $(document).ready(function() {
      project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
     }
    }
+	else if (key == "copy")
+  	{
+		//alert(options.$trigger.html());
+		if(project_manager.prompt_box_msg == null || project_manager.prompt_box_msg == '') {
+			project_manager.prompt_box_msg = $('#promptmsg-addNullCheck').val();
+		}
+		
+		$('#promptmsg-addNullCheck').val(project_manager.prompt_box_msg.replace('{0}', options.$trigger.html()));
+		utils.showPromptBox("addNullCheck", function(){
+			if($('#text_input').val() !== '')
+			{
+				//Check unique
+				
+				project_manager.ifProjectExists($('#text_input').val(), function(record_count) {
+					if(record_count == 0)
+					{
+						project_manager.getItemforCopy(parseInt(options.$trigger.attr("data-project-id")), function(reply){
+							var post_data = {};
+							post_data["project"] = reply.sessionProject.project_obj;
+							post_data["facility"] = reply.sessionProject.facility_obj;
+							post_data["client"] = reply.sessionProject.client_obj;
+							
+							//Remove some attributes
+							delete(post_data["project"]['project_id']);
+							delete(post_data["facility"]['project_id']);
+							delete(post_data["facility"]['facility_id']);
+							delete(post_data["client"]['project_id']);
+							delete(post_data["client"]['client_id']);
+							//Set some new attributes
+							post_data["project"]['project_name'] = $('#text_input').val();
+							console.log(post_data);
+							//add
+							project_manager.copyWithNewName(post_data, "project", "add");
+							
+						});
+					}
+					else
+					{
+						utils.togglePromptBox();
+						utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
+							utils.togglePromptBox();
+						});
+					}
+				});
+				
+			}
+			else
+			{
+				$('#text_input').focus();
+			}
+			
+		});
+		
+   }
   },
   items: {
    "edit": {name: "View Info"},
@@ -147,6 +201,59 @@ $(document).ready(function() {
    project_manager.delete(parseInt(utils.getQueryVariable("project_id")));
   }
  });//Delete a project
+ 
+  $('#btn_copy_project').click(function(){
+    //alert(options.$trigger.html());
+	if(project_manager.prompt_box_msg == null || project_manager.prompt_box_msg == '') {
+		project_manager.prompt_box_msg = $('#promptmsg-addNullCheck').val();
+	}
+	
+	$('#promptmsg-addNullCheck').val(project_manager.prompt_box_msg.replace('{0}', $('input[name=project_name]').val()));
+	utils.showPromptBox("addNullCheck", function(){
+		if($('#text_input').val() !== '')
+		{
+			//Check unique		
+			project_manager.ifProjectExists($('#text_input').val(), function(record_count) {
+				if(record_count == 0)
+				{
+					project_manager.getItemforCopy(parseInt(utils.getQueryVariable("project_id")), function(reply){
+						var post_data = {};
+						post_data["project"] = reply.sessionProject.project_obj;
+						post_data["facility"] = reply.sessionProject.facility_obj;
+						post_data["client"] = reply.sessionProject.client_obj;
+						
+						//Remove some attributes
+						delete(post_data["project"]['project_id']);
+						delete(post_data["facility"]['project_id']);
+						delete(post_data["facility"]['facility_id']);
+						delete(post_data["client"]['project_id']);
+						delete(post_data["client"]['client_id']);
+						//Set some new attributes
+						post_data["project"]['project_name'] = $('#text_input').val();
+						console.log(post_data);
+						//add
+						project_manager.copyWithNewName(post_data, "project", "add");
+						
+					});
+				}
+				else
+				{
+					utils.togglePromptBox();
+					var confirmMsg = $('#confirmmsg-addUniqueCheck').val().replace('{0}', $('#text_input').val());
+					utils.showAlert(confirmMsg, function(){
+						utils.togglePromptBox();
+					});
+				}
+			});
+			
+		}
+		else
+		{
+			$('#text_input').focus();
+		}
+		
+	});
+  });//Copy a project
 
  if (utils.getQueryVariable("mode") === "edit") {
   $(".form_sections").fadeIn('2000').addClass("show").removeClass("hide");
@@ -171,6 +278,10 @@ $(document).ready(function() {
  * Responsible to manage projects.
  */
 (function(project_manager) {
+ 
+ //To keep the original msg from the hidden intact
+ project_manager.prompt_box_msg;
+
  project_manager.add = function(data, controller, action) {
   datacx.post(controller + "/" + action, data["project"]).then(function(reply) {//call AJAX method to call Project/Add WebService
    if (reply === null || reply.result === 0) {//has an error
@@ -190,6 +301,33 @@ $(document).ready(function() {
    }
   });
  };
+ 
+ 
+ project_manager.copyWithNewName = function(data, controller, action) {
+  datacx.post(controller + "/" + action, data["project"]).then(function(reply) {//call AJAX method to call Project/Add WebService
+   if (reply === null || reply.result === 0) {//has an error
+    toastr.error(reply.message);
+   } else {//success
+    toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
+
+    //var facility_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
+	var facility_data = data["facility"];
+    if (facility_data.facility_name !== undefined && facility_data.facility_address !== undefined) {
+     facility_data["project_id"] = reply.dataId;
+     facility_manager.send("facility/" + action, facility_data);
+    }
+    //var client_data = utils.retrieveInputs("client_form", []);
+	var client_data = data["client"];
+    client_data["project_id"] = reply.dataId;
+    client_manager.send("client/" + action, client_data);
+    //project_manager.fillFormWithRandomData();
+	utils.redirect("project/showForm?mode=edit&project_id=" + parseInt(reply.dataId));
+	
+   }
+  });
+ };
+ 
+ 
  project_manager.edit = function(project, controller, action) {
   datacx.post(controller + "/" + action, project).then(function(reply) {//call AJAX method to call Project/Add WebService
    if (reply === null || reply.result === 0) {//has an error
@@ -277,6 +415,18 @@ $(document).ready(function() {
     $(".project_edit").show().removeClass("hide");
     toastr.success(reply.message);
     project_manager.loadEditForm(reply.sessionProject);
+   }
+  });
+ };
+ 
+ project_manager.getItemforCopy = function(project_id, executeCopy) {
+  //get project object from cache (PHP WS)
+  datacx.post("project/getItem", {"project_id": project_id}).then(function(reply) {
+   if (reply === null || reply.result === 0) {//has an error
+    toastr.error(reply.message);
+   } else {//success
+    //return reply;
+	executeCopy(reply);
    }
   });
  };
