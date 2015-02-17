@@ -33,13 +33,16 @@ class MapController extends \Library\BaseController {
     public function executeLoadCurrentView($rq) {
         $modules = $this->app()->router()->selectedRoute()->phpModules();
         $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-        $this->_GetAndStoreLocationsInSession($sessionProject);
-        $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+
         if($sessionProject===false)
         {
             $this->Redirect('project/listAll');
-            die();
+            return;
         }
+        //refresh locations
+        $this->_GetAndStoreLocationsInSession($sessionProject);
+        $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+
         $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
         $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
@@ -60,7 +63,7 @@ class MapController extends \Library\BaseController {
         if($sessionProject===false)
         {
             $this->Redirect('project/listAll');
-            die();
+            return;
         }
         $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
         $this->page->addVar(
@@ -82,11 +85,11 @@ class MapController extends \Library\BaseController {
         if($sessionProject===false)
         {
             $this->Redirect('project/listAll');
-            die();
+            return;
         } else if ($sessionTask === false)
         {
             $this->Redirect('task/listAll');
-            die();
+            return;
         }
         //add view vars for breadcrumb
         $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
@@ -132,9 +135,6 @@ class MapController extends \Library\BaseController {
 
         //get current session project
         $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-
-        //set view vars
-        $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
         //load marker icons from config
         $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->config());
@@ -192,9 +192,6 @@ class MapController extends \Library\BaseController {
         //get current session project
         $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
 
-        //set view vars
-        $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-
         //load marker icons from config
         $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->config());
 
@@ -250,9 +247,6 @@ class MapController extends \Library\BaseController {
         $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
         $this->_GetAndStoreLocationsInSession($sessionProject);
         $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-
-        //set view vars
-        $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
         //load marker icons from config
         $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->config());
@@ -312,13 +306,10 @@ class MapController extends \Library\BaseController {
         $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
 
         //create two arrays with current project's locations, one for locations linked with the task and other unlinked
-        $taskLocations = \Applications\PMTool\Helpers\LocationHelper::GetLocationsFromTaskLocations($this->app()->user(),$sessionTask);
+        $taskLocations = \Applications\PMTool\Helpers\LocationHelper::GetAndStoreTaskLocations($this, $sessionTask);
+
         $projectLocations = \Applications\PMTool\Helpers\LocationHelper::GetProjectLocations($this->app()->user(),$sessionProject,$taskLocations);
         $locations = array(\Library\Enums\SessionKeys::ProjectLocations=>$projectLocations,\Library\Enums\SessionKeys::TaskLocations=>$taskLocations);
-
-        //add view vars
-        $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-        $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
 
         //load marker icons from config
         $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->config());

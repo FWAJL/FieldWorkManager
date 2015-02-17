@@ -184,6 +184,7 @@
         <js_files>
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/services/maps.js"/>
+            <js_file use="html" value="Web/js/app/controllers/map/mapAllProjects.js"/>
         </js_files>
         <css_files>
             <css_file value="Web/css/app/app-theme.css"/>
@@ -198,7 +199,8 @@
     <route url="map/currentProject" module="Map" action="loadCurrentView" resxfile="map" type="ui">
         <js_files>
             <js_file use="html" value="Web/js/core/gmaps.js"/>
-            <js_file use="html" value="Web/js/app/services/mapCurrentProject.js"/>
+            <js_file use="html" value="Web/js/app/services/maps.js"/>
+            <js_file use="html" value="Web/js/app/controllers/map/mapCurrentProject.js"/>
         </js_files>
         <css_files>
             <css_file value="Web/css/app/app-theme.css"/>
@@ -213,7 +215,8 @@
     <route url="map/currentProjectLocations" module="Map" action="loadCurrentLocationsView" resxfile="map" type="ui">
         <js_files>
             <js_file use="html" value="Web/js/core/gmaps.js"/>
-            <js_file use="html" value="Web/js/app/services/mapCurrentLocations.js"/>
+            <js_file use="html" value="Web/js/app/services/maps.js"/>
+            <js_file use="html" value="Web/js/app/controllers/map/mapCurrentLocations.js"/>
         </js_files>
         <css_files>
             <css_file value="Web/css/app/app-theme.css"/>
@@ -228,7 +231,8 @@
     <route url="map/taskLocations" module="Map" action="loadCurrentTasksView" resxfile="map" type="ui">
         <js_files>
             <js_file use="html" value="Web/js/core/gmaps.js"/>
-            <js_file use="html" value="Web/js/app/services/mapCurrentTasks.js"/>
+            <js_file use="html" value="Web/js/app/services/maps.js"/>
+            <js_file use="html" value="Web/js/app/controllers/map/mapCurrentTasks.js"/>
         </js_files>
         <css_files>
             <css_file value="Web/css/app/app-theme.css"/>
