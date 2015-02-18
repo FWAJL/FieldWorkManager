@@ -59,13 +59,13 @@ class MapHelper {
    * </p>
    */
   public static function GetActiveInactiveIcons($configManager) {
-      return array(
-          "projectActive" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsProjectActiveIcon),
-          "projectInactive" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsProjectInactiveIcon),
-          "locationActive" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsLocationActiveIcon),
-          "locationInactive" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsLocationInactiveIcon),
-          "task" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsTaskIcon),
-      );
+    return array(
+        "projectActive" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsProjectActiveIcon),
+        "projectInactive" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsProjectInactiveIcon),
+        "locationActive" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsLocationActiveIcon),
+        "locationInactive" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsLocationInactiveIcon),
+        "task" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsTaskIcon),
+    );
   }
 
   /**
@@ -116,115 +116,102 @@ class MapHelper {
    * </p>
    */
   public static function CreateFacilityMarkerItems($sessionProjects, $properties, $icons) {
-      $markers = array();
-      foreach ($sessionProjects as $project) {
-          $marker = array();
-          foreach($properties as $objectType=>$objectProperties){
-              $currentObject = \Applications\PMTool\Helpers\CommonHelper::GetObjectFromSessionProjectBySessionKey($project, $objectType);
-                  if(isset($objectProperties["objectLatPropName"]) && isset($objectProperties["objectLngPropName"]) && self::CheckCoordinateValue($currentObject->$objectProperties["objectLatPropName"]()) && self::CheckCoordinateValue($currentObject->$objectProperties["objectLngPropName"]()))
-                  {
-                      $marker["lat"] = $currentObject->$objectProperties["objectLatPropName"]();
-                      $marker["lng"] = $currentObject->$objectProperties["objectLngPropName"]();
-
-                  }
-                  else if(isset($objectProperties["objectActivePropName"]))
-                  {
-                      $marker["icon"] = ($currentObject->$objectProperties["objectActivePropName"]())?$icons["projectActive"]:$icons["projectInactive"];
-                  }
-
-          }
-
-          array_push($markers, $marker);
+    $markers = array();
+    foreach ($sessionProjects as $project) {
+      $marker = array();
+      foreach ($properties as $objectType => $objectProperties) {
+        $currentObject = \Applications\PMTool\Helpers\CommonHelper::GetValueFromArrayByKey($project, $objectType);
+        if (isset($objectProperties["objectLatPropName"]) && isset($objectProperties["objectLngPropName"]) && self::CheckCoordinateValue($currentObject->$objectProperties["objectLatPropName"]()) && self::CheckCoordinateValue($currentObject->$objectProperties["objectLngPropName"]())) {
+          $marker["lat"] = $currentObject->$objectProperties["objectLatPropName"]();
+          $marker["lng"] = $currentObject->$objectProperties["objectLngPropName"]();
+        } else if (isset($objectProperties["objectActivePropName"])) {
+          $marker["icon"] = ($currentObject->$objectProperties["objectActivePropName"]()) ? $icons["projectActive"] : $icons["projectInactive"];
+        }
       }
-      return $markers;
+
+      array_push($markers, $marker);
+    }
+    return $markers;
   }
 
-    /**
-     * <p> Retrieve complete marker items based on latitude, longitude and active properties of Location objects
-     * </p>
-     * <p> Build as an output an associative array in the Google Maps API format
-     * </p>
-     * @param array $sessionProject <p>
-     * The session project with all project objects and nested location objects
-     * </p>
-     * @param string $properties <p>
-     * Associative object->property list
-     * @return array $markers <p>
-     * The array in Google Maps API format
-     * </p>
-     */
-    public static function CreateLocationMarkerItems($sessionProject, $properties, $icons) {
-        $markers = array();
-        $marker = array();
-        $locationObjectType = reset($properties);
-        $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
-        foreach($locations as $location){
-                if(isset($locationObjectType["objectLatPropName"]) && isset($locationObjectType["objectLngPropName"]) && self::CheckCoordinateValue($location->$locationObjectType["objectLatPropName"]()) && self::CheckCoordinateValue($location->$locationObjectType["objectLngPropName"]()))
-                {
-                    $marker["lat"] = $location->$locationObjectType["objectLatPropName"]();
-                    $marker["lng"] = $location->$locationObjectType["objectLngPropName"]();
-
-                }
-                if(isset($locationObjectType["objectActivePropName"]))
-                {
-                    $marker["icon"] = ($location->$locationObjectType["objectActivePropName"]())?$icons["locationActive"]:$icons["locationInactive"];
-                }
-            array_push($markers, $marker);
-        }
-
-
-        return $markers;
+  /**
+   * <p> Retrieve complete marker items based on latitude, longitude and active properties of Location objects
+   * </p>
+   * <p> Build as an output an associative array in the Google Maps API format
+   * </p>
+   * @param array $sessionProject <p>
+   * The session project with all project objects and nested location objects
+   * </p>
+   * @param string $properties <p>
+   * Associative object->property list
+   * @return array $markers <p>
+   * The array in Google Maps API format
+   * </p>
+   */
+  public static function CreateLocationMarkerItems($sessionProject, $properties, $icons) {
+    $markers = array();
+    $marker = array();
+    $locationObjectType = reset($properties);
+    $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
+    foreach ($locations as $location) {
+      if (isset($locationObjectType["objectLatPropName"]) && isset($locationObjectType["objectLngPropName"]) && self::CheckCoordinateValue($location->$locationObjectType["objectLatPropName"]()) && self::CheckCoordinateValue($location->$locationObjectType["objectLngPropName"]())) {
+        $marker["lat"] = $location->$locationObjectType["objectLatPropName"]();
+        $marker["lng"] = $location->$locationObjectType["objectLngPropName"]();
+      }
+      if (isset($locationObjectType["objectActivePropName"])) {
+        $marker["icon"] = ($location->$locationObjectType["objectActivePropName"]()) ? $icons["locationActive"] : $icons["locationInactive"];
+      }
+      array_push($markers, $marker);
     }
 
 
-    /**
-     * <p> Retrieve complete marker items based on latitude, longitude and active properties of Location objects with no task and Location objects with task linked
-     * </p>
-     * <p> Build as an output an associative array in the Google Maps API format
-     * </p>
-     * @param array $locations <p>
-     * 2 element array with nested array for locations with no tasks and for locations with tasks linked
-     * array(
-     * "\Library\Enums\SessionKeys::TaskLocations" => $projectLocationsArray,
-     * "\Library\Enums\SessionKeys::ProjectLocations" => $taskLocationsArray
-     * )
-     * </p>
-     * @param string $properties <p>
-     * Associative object->property list
-     * @return array $markers <p>
-     * The array in Google Maps API format
-     * </p>
-     */
-    public static function CreateTaskLocationMarkerItems($locations, $properties, $icons) {
-        $markers = array();
-        $marker = array();
-        $locationObjectType = reset($properties);
-        foreach($locations as $locationType=>$currentLocations){
-            foreach($currentLocations as $location){
-                if(isset($locationObjectType["objectLatPropName"]) && isset($locationObjectType["objectLngPropName"]) && self::CheckCoordinateValue($location->$locationObjectType["objectLatPropName"]()) && self::CheckCoordinateValue($location->$locationObjectType["objectLngPropName"]()))
-                {
-                    $marker["lat"] = $location->$locationObjectType["objectLatPropName"]();
-                    $marker["lng"] = $location->$locationObjectType["objectLngPropName"]();
+    return $markers;
+  }
 
-                }
-                if(isset($locationObjectType["objectActivePropName"]))
-                {
-                    if($locationType==\Library\Enums\SessionKeys::TaskLocations)
-                    {
-                        $marker["icon"] = $icons['task'];
-                    } else {
-                        $marker["icon"] = ($location->$locationObjectType["objectActivePropName"]())?$icons["locationActive"]:$icons["locationInactive"];
-                    }
-                }
-                array_push($markers, $marker);
-            }
+  /**
+   * <p> Retrieve complete marker items based on latitude, longitude and active properties of Location objects with no task and Location objects with task linked
+   * </p>
+   * <p> Build as an output an associative array in the Google Maps API format
+   * </p>
+   * @param array $locations <p>
+   * 2 element array with nested array for locations with no tasks and for locations with tasks linked
+   * array(
+   * "\Library\Enums\SessionKeys::TaskLocations" => $projectLocationsArray,
+   * "\Library\Enums\SessionKeys::ProjectLocations" => $taskLocationsArray
+   * )
+   * </p>
+   * @param string $properties <p>
+   * Associative object->property list
+   * @return array $markers <p>
+   * The array in Google Maps API format
+   * </p>
+   */
+  public static function CreateTaskLocationMarkerItems($locations, $properties, $icons) {
+    $markers = array();
+    $marker = array();
+    $locationObjectType = reset($properties);
+    foreach ($locations as $locationType => $currentLocations) {
+      foreach ($currentLocations as $location) {
+        if (isset($locationObjectType["objectLatPropName"]) && isset($locationObjectType["objectLngPropName"]) && self::CheckCoordinateValue($location->$locationObjectType["objectLatPropName"]()) && self::CheckCoordinateValue($location->$locationObjectType["objectLngPropName"]())) {
+          $marker["lat"] = $location->$locationObjectType["objectLatPropName"]();
+          $marker["lng"] = $location->$locationObjectType["objectLngPropName"]();
         }
-
-        return $markers;
+        if (isset($locationObjectType["objectActivePropName"])) {
+          if ($locationType == \Library\Enums\SessionKeys::TaskLocations) {
+            $marker["icon"] = $icons['task'];
+          } else {
+            $marker["icon"] = ($location->$locationObjectType["objectActivePropName"]()) ? $icons["locationActive"] : $icons["locationInactive"];
+          }
+        }
+        array_push($markers, $marker);
+      }
     }
 
+    return $markers;
+  }
 
   private static function CheckCoordinateValue($value) {
     return $value !== "" && $value !== "0.000000";
   }
+
 }
