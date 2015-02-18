@@ -285,9 +285,16 @@ $(document).ready(function() {
   $('.btn-primary').addClass('confirmbuttons');
  };
  
- utils.showPromptBox = function(operation, callback) {
+ utils.showPromptBox = function(operation, callback, useThisIdForMsg) {
    if(operation == 'addNullCheck'){
-     $('#prompt_title').html($('#promptmsg-addNullCheck').val());
+	 if(useThisIdForMsg !== undefined && useThisIdForMsg !== "")
+	 {
+	   $('#prompt_title').html($('#' + useThisIdForMsg).val());
+	 }
+	 else
+	 {
+       $('#prompt_title').html($('#promptmsg-addNullCheck').val());
+	 }
    }
    $('.prompt-modal').modal('show');
    //Events

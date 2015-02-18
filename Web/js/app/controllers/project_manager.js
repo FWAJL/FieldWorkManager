@@ -390,6 +390,8 @@ $(document).ready(function() {
   $(".project_form .add-new-item input[name=\"project_visible\"]").val(dataWs.project_obj.project_visible);
   facility_manager.loadEditForm(dataWs);
   client_manager.loadEditForm(dataWs);
+  //breadcrumb
+  $('h3').html('Edit ' + dataWs.project_obj.project_name);
  };
  project_manager.delete = function(project_id) {
   datacx.post("project/delete", {"project_id": project_id}).then(function(reply) {
