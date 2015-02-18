@@ -53,9 +53,9 @@ class CommonHelper {
 
   public static function SetPropertyNamesForDualList($module) {
     return array(
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id => $module . "_id",
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name => $module . "_name",
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active => $module . "_active",
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id => $module . "_id",
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name => $module . "_name",
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active => $module . "_active",
     );
   }
 
@@ -110,14 +110,15 @@ class CommonHelper {
    */
   public static function FindObjectByIntValue($idValue, $propName, $listOfObjects) {
     $match = FALSE;
-      foreach ($listOfObjects as $obj) {
-        if (intval($obj->$propName()) === $idValue) {
-          $match = $obj;
-          break;
-        }
+    foreach ($listOfObjects as $obj) {
+      if (intval($obj->$propName()) === $idValue) {
+        $match = $obj;
+        break;
       }
+    }
     return $match;
   }
+
   /**
    * Find an object in a list filtering by the string value of one property name of each object.
    * 
@@ -217,12 +218,23 @@ class CommonHelper {
     return $user->getAttribute($sessionKey);
   }
 
-  public static function GetObjectListFromSessionArrayBySessionKey(\Library\User $user, $sessionArray, $sessionKey) {
+  public static function GetObjectListFromSessionArrayBySessionKey($sessionArray, $sessionKey) {
     $list = array();
     foreach ($sessionArray as $array) {
       array_push($list, $array[$sessionKey]);
     }
     return $list;
+  }
+
+  public static function GetValueFromArrayByKey($array, $key) {
+    return $sessionProject[$sessionKey];
+  }
+
+  public static function GetPropValueFromObjectByPropName($object, $propName, $isArray = TRUE) {
+    return
+            $isArray ?
+            $object[$propName] :
+            $object->$propName();
   }
 
 }

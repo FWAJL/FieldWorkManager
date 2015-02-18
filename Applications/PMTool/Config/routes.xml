@@ -180,11 +180,12 @@
     <!-- technician/showForm -->
 
 
-    <!--Map  -->
-        <route url="map/allProjects" module="Map" action="loadView" resxfile="map" type="ui">
+    <!--Maps -->
+    <route url="map/allProjects" module="Map" action="loadView" resxfile="map" type="ui">
         <js_files>
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/services/maps.js"/>
+            <js_file use="html" value="Web/js/app/controllers/map/mapAllProjects.js"/>
         </js_files>
         <css_files>
             <css_file value="Web/css/app/app-theme.css"/>
@@ -194,6 +195,55 @@
             <php_module key="map_module" file_name="map.php" shared="true"/>
         </php_modules>
     </route>
+    <!--Map all projects-->
+
+    <route url="map/currentProject" module="Map" action="loadCurrentView" resxfile="map" type="ui">
+        <js_files>
+            <js_file use="html" value="Web/js/core/gmaps.js"/>
+            <js_file use="html" value="Web/js/app/services/maps.js"/>
+            <js_file use="html" value="Web/js/app/controllers/map/mapCurrentProject.js"/>
+        </js_files>
+        <css_files>
+            <css_file value="Web/css/app/app-theme.css"/>
+            <css_file use="project"/>
+        </css_files>
+        <php_modules>
+            <php_module key="map_module" file_name="map.php" shared="true"/>
+        </php_modules>
+    </route>
+    <!--Map current project-->
+
+    <route url="map/currentProjectLocations" module="Map" action="loadCurrentLocationsView" resxfile="map" type="ui">
+        <js_files>
+            <js_file use="html" value="Web/js/core/gmaps.js"/>
+            <js_file use="html" value="Web/js/app/services/maps.js"/>
+            <js_file use="html" value="Web/js/app/controllers/map/mapCurrentLocations.js"/>
+        </js_files>
+        <css_files>
+            <css_file value="Web/css/app/app-theme.css"/>
+            <css_file use="project"/>
+        </css_files>
+        <php_modules>
+            <php_module key="map_module" file_name="map.php" shared="true"/>
+        </php_modules>
+    </route>
+    <!--Map current project locations-->
+
+    <route url="map/taskLocations" module="Map" action="loadCurrentTasksView" resxfile="map" type="ui">
+        <js_files>
+            <js_file use="html" value="Web/js/core/gmaps.js"/>
+            <js_file use="html" value="Web/js/app/services/maps.js"/>
+            <js_file use="html" value="Web/js/app/controllers/map/mapCurrentTasks.js"/>
+        </js_files>
+        <css_files>
+            <css_file value="Web/css/app/app-theme.css"/>
+            <css_file use="project"/>
+        </css_files>
+        <php_modules>
+            <php_module key="map_module" file_name="map.php" shared="true"/>
+        </php_modules>
+    </route>
+    <!--Map current project-->
 
     <!--Tasks  -->
     <route url="task" module="Task" action="index" resxfile="task" type="ui">
@@ -528,6 +578,9 @@
   <route url="lab_analyte/updateItems" module="LabAnalyte" action="updateItems" resxfile="lab_analyte" type="ws" />
 
   <route url="map/listAll" module="Map" action="listAll" resxfile="map" type="ws" />
+  <route url="map/listCurrentProject" module="Map" action="listCurrentProject" resxfile="map" type="ws" />
+  <route url="map/listCurrentProjectLocations" module="Map" action="listCurrentProjectLocations" resxfile="map" type="ws" />
+  <route url="map/listCurrentProjectTasks" module="Map" action="listCurrentProjectTasks" resxfile="map" type="ws" />
 
   <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
   <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />
