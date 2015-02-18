@@ -249,7 +249,7 @@ class MapController extends \Library\BaseController {
         //if there are no markers try to set default position to facility location
         if(count($items)==0){
             $defaultLocations = \Applications\PMTool\Helpers\MapHelper::BuildLatAndLongCoordFromGeoObjects(array(\Applications\PMTool\Helpers\CommonHelper::GetValueFromArrayByKey($sessionProject,$defaultLocationProperties['object'])),$defaultLocationProperties['objectLatPropName'],$defaultLocationProperties['objectLngPropName']);
-            if(count($defaultLocations>0)){
+            if(count($defaultLocations)>0){
                 $result['defaultPosition'] = $defaultLocations[0];
             }
         }
