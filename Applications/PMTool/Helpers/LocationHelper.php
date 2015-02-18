@@ -134,7 +134,7 @@ class LocationHelper {
       $locations = $dataOut[\Library\Enums\SessionKeys::ProjectLocations];
     }
     if ($task_locations !== NULL) {
-      self::FilterLocationsToExcludeTaskLocations($locations, $task_locations);
+      $locations = self::FilterLocationsToExcludeTaskLocations($locations, $task_locations);
     }
 
     return $locations;

@@ -3,7 +3,16 @@
   <resource key="page_title">Your projects - Maps</resource>
   <resource key="message_error_listAll">Error getting the objects.</resource>
   <resource key="message_success_listAll">The objects have been read.</resource>
-  
+  <resource key="message_error_listCurrentProject">Error getting the object.</resource>
+  <resource key="message_success_listCurrentProject">The object have been read.</resource>
+  <resource key="message_error_listCurrentProjectLocations">Error getting the object.</resource>
+  <resource key="message_success_listCurrentProjectLocations">The object have been read.</resource>
+  <resource key="message_error_listCurrentProjectTasks">Error getting the object.</resource>
+  <resource key="message_success_listCurrentProjectTasks">The object have been read.</resource>
+
+
   <resource key="h3_title">Map</resource>
   <resource key="h3_sub_title_all_projects">Projects</resource>
+  <resource key="h3_no_project">No Project Selected</resource>
+  <resource key="h3_no_task">No Task Selected</resource>
 </resources>
