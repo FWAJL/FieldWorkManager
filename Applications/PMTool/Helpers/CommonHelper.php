@@ -227,7 +227,7 @@ class CommonHelper {
   }
 
   public static function GetValueFromArrayByKey($array, $key) {
-    return $sessionProject[$sessionKey];
+    return $array[$key];
   }
 
   public static function GetPropValueFromObjectByPropName($object, $propName, $isArray = TRUE) {
