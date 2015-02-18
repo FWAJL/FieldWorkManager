@@ -34,11 +34,6 @@ class MapController extends \Library\BaseController {
         $modules = $this->app()->router()->selectedRoute()->phpModules();
         $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
 
-        if($sessionProject===false)
-        {
-            $this->Redirect('project/listAll');
-            return;
-        }
         //refresh locations
         $this->_GetAndStoreLocationsInSession($sessionProject);
         $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
@@ -60,11 +55,7 @@ class MapController extends \Library\BaseController {
     public function executeLoadCurrentLocationsView($rq) {
         $modules = $this->app()->router()->selectedRoute()->phpModules();
         $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-        if($sessionProject===false)
-        {
-            $this->Redirect('project/listAll');
-            return;
-        }
+
         $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
         $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
@@ -82,15 +73,7 @@ class MapController extends \Library\BaseController {
         $modules = $this->app()->router()->selectedRoute()->phpModules();
         $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
         $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
-        if($sessionProject===false)
-        {
-            $this->Redirect('project/listAll');
-            return;
-        } else if ($sessionTask === false)
-        {
-            $this->Redirect('task/listAll');
-            return;
-        }
+
         //add view vars for breadcrumb
         $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
         $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
@@ -243,6 +226,12 @@ class MapController extends \Library\BaseController {
         $dataPost = $this->dataPost();
         $properties = json_decode($dataPost['properties'],true);
 
+        //get facility location info
+        $defaultLocationProperties = $properties['defaultLocation'];
+
+        //unset default location because we don't want to show facility marker
+        unset($properties['defaultLocation']);
+
         //get current sesion project and refresh project's locations
         $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
         $this->_GetAndStoreLocationsInSession($sessionProject);
@@ -256,6 +245,15 @@ class MapController extends \Library\BaseController {
 
         $result["items"] = $items;
         $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
+
+        //if there are no markers try to set default position to facility location
+        if(count($items)==0){
+            $defaultLocations = \Applications\PMTool\Helpers\MapHelper::BuildLatAndLongCoordFromGeoObjects(array(\Applications\PMTool\Helpers\CommonHelper::GetValueFromArrayByKey($sessionProject,$defaultLocationProperties['object'])),$defaultLocationProperties['objectLatPropName'],$defaultLocationProperties['objectLngPropName']);
+            if(count($defaultLocations>0)){
+                $result['defaultPosition'] = $defaultLocations[0];
+            }
+        }
+
         $this->SendResponseWS(
             $result, array(
             "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Map,
