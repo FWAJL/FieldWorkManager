@@ -128,8 +128,9 @@ class MapHelper {
           $marker["icon"] = ($currentObject->$objectProperties["objectActivePropName"]()) ? $icons["projectActive"] : $icons["projectInactive"];
         }
       }
-
-      array_push($markers, $marker);
+      if(isset($marker["lat"]) && isset($marker["lng"])){
+          array_push($markers, $marker);
+      }
     }
     return $markers;
   }
@@ -161,7 +162,10 @@ class MapHelper {
       if (isset($locationObjectType["objectActivePropName"])) {
         $marker["icon"] = ($location->$locationObjectType["objectActivePropName"]()) ? $icons["locationActive"] : $icons["locationInactive"];
       }
-      array_push($markers, $marker);
+      if(isset($marker["lat"]) && isset($marker["lng"])){
+        array_push($markers, $marker);
+      }
+
     }
 
 
@@ -203,7 +207,9 @@ class MapHelper {
             $marker["icon"] = ($location->$locationObjectType["objectActivePropName"]()) ? $icons["locationActive"] : $icons["locationInactive"];
           }
         }
-        array_push($markers, $marker);
+        if(isset($marker["lat"]) && isset($marker["lng"])){
+            array_push($markers, $marker);
+        }
       }
     }
 
