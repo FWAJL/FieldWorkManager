@@ -18,5 +18,7 @@
     <!-- close tabs -->
 <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::tabs_close]; ?>
   </div>
+  <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::popup_msg_module]; ?>
+  <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::popup_prompt_module]; ?>
 
 </div>
