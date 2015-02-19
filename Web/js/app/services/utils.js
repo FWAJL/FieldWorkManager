@@ -9,6 +9,10 @@ $(document).ready(function() {
  //file upload
  $("#document-upload input[name=\"itemCategory\"]").val(utils.getDataFromUploadFile("^.*(_id)$", true));
  $("#document-upload input[name=\"itemId\"]").val(utils.getDataFromUploadFile("^.*(_id)$", false));
+ //Auto focus, prompt box first input
+ $('.prompt-modal').on('shown.bs.modal', function () {
+   $('#text_input').focus();
+ })
 });
 /**
  * JavaScript Module to do JavaScript actions common to several views
@@ -272,15 +276,37 @@ $(document).ready(function() {
    throw new Error("Cannot find JSON.stringify(). Some browsers (e.g., IE < 8) don't support it natively, but you can overcome this by adding a script reference to json2.js, downloadable from http://www.json.org/json2.js");
   return JSON.stringify(data);
  };
- utils.showAlert = function(msg) {
+ 
+ utils.showAlert = function(msg, doWhenOk) {
   bootbox.alert({
    message: msg,
-   callback: function() {
-    //idle at present
-   }
+   callback: doWhenOk
   });
   $('.btn-primary').addClass('confirmbuttons');
  };
+ 
+ utils.showPromptBox = function(operation, callback, useThisIdForMsg) {
+   if(operation == 'addNullCheck'){
+	 if(useThisIdForMsg !== undefined && useThisIdForMsg !== "")
+	 {
+	   $('#prompt_title').html($('#' + useThisIdForMsg).val());
+	 }
+	 else
+	 {
+       $('#prompt_title').html($('#promptmsg-addNullCheck').val());
+	 }
+   }
+   $('.prompt-modal').modal('show');
+   //Events
+   $('#prompt_ok').on('click', function(){
+	   callback();
+   });
+ };
+ 
+ utils.togglePromptBox = function(){
+   $('.prompt-modal').toggle();
+ };
+ 
  utils.mergeStringsExclusive = function(target, source, delimiter) {
   delimiter = delimiter || "\n";
   if (!utils.endsWith(target, delimiter) && !utils.isNullOrEmpty(target)) {

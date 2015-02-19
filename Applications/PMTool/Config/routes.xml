@@ -53,7 +53,7 @@
             <php_module key="client_form" file_name="client_form.php" />
             <php_module key="project_buttons" file_name="project_buttons.php" />
 			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-						
+			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />			
         </php_modules>
     </route>
     <!-- project/showAddForm -->
@@ -68,7 +68,8 @@
         <php_modules>
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
-						<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
         </php_modules>
     </route>
     <!-- project/listAll -->
@@ -273,7 +274,8 @@
         <php_modules>
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
-						<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
         </php_modules>
     </route><!--   task/listAll -->
     
@@ -290,7 +292,8 @@
             <php_module key="task_info_lists" file_name="task_info_lists.php" />
             <php_module key="task_form" file_name="task_form.php" />
             <php_module key="task_buttons" file_name="task_buttons.php" />
-
+			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
         </php_modules>
     </route><!--  task/showAddForm -->
     
@@ -536,6 +539,7 @@
   <route url="task/getlist" module="Task" action="getList" resxfile="task" type="ws" />
   <route url="task/getItem" module="Task" action="getItem" resxfile="task" type="ws" />
   <route url="task/updateItems" module="Task" action="updateItems" resxfile="task" type="ws" />
+  <route url="task/ifTaskExists" module="Task" action="ifTaskExists" resxfile="task" type="ws" />
   
   <route url="task/location/updateItems" module="TaskLocation" action="updateItems" resxfile="task_location" type="ws" />
   <route url="task/technician/updateItems" module="TaskTechnician" action="updateItems" resxfile="task_technician" type="ws" />
