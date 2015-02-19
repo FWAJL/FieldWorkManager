@@ -22,6 +22,9 @@ class TaskController extends \Library\BaseController {
   public function executeShowForm(\Library\HttpRequest $rq) {
     \Applications\PMTool\Helpers\TaskHelper::AddTabsStatus($this->user());
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
+	//Check if a project needs to be selected in order to display this page
+	if(!$sessionProject)
+	  $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::TaskShowForm);
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::SetCurrentSessionTask($this->user(), NULL, $rq->getData("task_id"));
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
@@ -47,6 +50,11 @@ class TaskController extends \Library\BaseController {
 
   public function executeListAll(\Library\HttpRequest $rq) {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+	
+	//Check if a project needs to be selected in order to display this page
+	if(!$sessionProject)
+	  $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
+	
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 		
 	//Get confirm msg for project deletion from context menu

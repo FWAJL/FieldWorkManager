@@ -73,6 +73,22 @@
         </php_modules>
     </route>
     <!-- project/listAll -->
+	
+	<route url="project/selectProject" module="Project" action="selectProject" resxfile="project" type="ui">
+        <js_files>
+            <js_file use="project" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+			<php_module key="active_list_module" file_name="active_list.php" shared="true" />
+			<php_module key="popup_projectselector_module" file_name="popup_projectselector.php" shared="true" />
+        </php_modules>
+    </route>
+	<!-- project/selectProject -->
+	
     
     <!-- locations -->
     <route url="location" module="Location" action="index" resxfile="location" type="ui">
@@ -506,6 +522,7 @@
   <route url="project/updateItems" module="Project" action="updateItems" resxfile="project" type="ws" />
   <route url="project/setCurrentProject" module="Project" action="setCurrentProject" resxfile="project" type="ws" />
   <route url="project/ifProjectExists" module="Project" action="ifProjectExists" resxfile="project" type="ws" />
+  <route url="project/selectProject" module="Project" action="selectProject" resxfile="project" type="ws" />
   
   <route url="facility/add" module="Facility" action="add" resxfile="facility" type="ws" />
   <route url="facility/edit" module="Facility" action="edit" resxfile="facility" type="ws" />

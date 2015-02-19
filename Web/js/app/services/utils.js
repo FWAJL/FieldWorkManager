@@ -307,6 +307,24 @@ $(document).ready(function() {
    $('.prompt-modal').toggle();
  };
  
+ utils.showSelectProjectPrompt = function(clbkOk, clbkCancel){
+   $('#prompt_title').html($('#promptmsg-checkCurrentProject').val());
+   //disable context menu
+   $(".select_item").removeClass("select_item");
+   if($('.pselector-modal') !== undefined)
+   {
+     $('.pselector-modal').modal('show');
+   }
+   
+   //Events
+   $('#prompt_ok').on('click', function(){
+	 clbkOk();
+   });
+   $('.pselector-modal').on('hidden.bs.modal', function (e) {
+     clbkCancel();
+   })
+ }
+ 
  utils.mergeStringsExclusive = function(target, source, delimiter) {
   delimiter = delimiter || "\n";
   if (!utils.endsWith(target, delimiter) && !utils.isNullOrEmpty(target)) {

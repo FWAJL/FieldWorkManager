@@ -75,10 +75,9 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeListAll(\Library\HttpRequest $rq) {
-    
+	  
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]); 
-    
 	
 	//Fetch tooltip data from xml and pass to view as an array
 	$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('data-project-id', $this->app->name());
@@ -109,6 +108,42 @@ class ProjectController extends \Library\BaseController {
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
 	$this->page->addVar(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::prompt_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_prompt]);
+  }
+  
+  /**
+   * Method that loads the select project view for controller
+   * This is when any other action of any other controller
+   * is selected but that is dependent on a project which is
+   * already selected. What this action does is, lets the user
+   * know if the action they selected is dependent on a project
+   * and let's them select a project. If a project is already 
+   * selected, it just redirects to the actual action user 
+   * wanted to visit.
+   *
+   * @param \Library\HttpRequest $rq: the request
+   */
+  public function executeSelectProject(\Library\HttpRequest $rq) {
+	
+	//Fetch prompt box data from xml and pass to view as an array
+	$urlParts = explode("/", $_GET['onSuccess']);
+	$prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"' . $urlParts[0] . '", "targetaction": "' . $urlParts[1] . '", "operation": ["checkCurrentProject"]}', $this->app->name());
+	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::prompt_message, $prompt_msg);
+	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::redirect_on_success, $_GET['onSuccess']);
+	
+	$data = array(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\CommonHelper::GetListObjectsInSessionByKey($this->app()->user(), \Library\Enums\SessionKeys::ProjectObject),
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList($this->resxfile)
+    );
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
+	
+	$modules = $this->app()->router()->selectedRoute()->phpModules();
+	$this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
+    $this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
+	$this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::prompt_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_projectselector]);
   }
 
   /**

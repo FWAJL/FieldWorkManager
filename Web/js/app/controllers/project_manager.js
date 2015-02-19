@@ -89,6 +89,26 @@ $(document).ready(function() {
    "copy": {name: "Copy"}
   }
  });//Manages the context menu
+ 
+  //Auto open prompt when on selecProject view
+  utils.showSelectProjectPrompt(
+  	function(){
+	  //utils.redirect($("#redirectOnSuccess").val());
+	  if($(".ui-selected").html() !== undefined)
+	  {
+		  //alert($(".ui-selected").attr("data-project-id"));
+		  project_manager.setCurrentProject(parseInt($(".ui-selected").attr("data-project-id")));
+	  }
+	  else
+	  {
+		$("#active-list").focus();
+	  }
+	},
+	function(){
+	  utils.redirect("project/listAll");
+	}
+  );
+ 
 
  //************************************************//
  // Selection of projects
@@ -464,7 +484,13 @@ $(document).ready(function() {
     return undefined;
    } else {//success
     toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
-    utils.redirect("project/listAll");
+	
+	if($("#redirectOnSuccess").val() !== undefined){
+	  utils.redirect($("#redirectOnSuccess").val());
+	}
+	else {
+      utils.redirect("project/listAll");
+	}
    }
   });
  };
