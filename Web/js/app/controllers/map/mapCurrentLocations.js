@@ -6,6 +6,11 @@ $(document).ready(function() {
                 "objectLatPropName": "location_lat",
                 "objectLngPropName": "location_long",
                 "objectActivePropName": "location_active"
+            },
+            "defaultLocation": {
+                "object": "facility_obj",
+                "objectLatPropName": "facility_lat",
+                "objectLngPropName": "facility_long"
             }
         }
     };
