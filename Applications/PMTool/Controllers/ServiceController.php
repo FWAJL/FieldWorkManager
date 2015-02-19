@@ -10,7 +10,7 @@ class ServiceController extends \Library\BaseController {
 public function executeIndex(\Library\HttpRequest $rq) {  }
     
 public function executeShowForm(\Library\HttpRequest $rq) {
-	$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"service", "targetaction": "view", "operation": ["delete", "add"]}', $this->app->name());
+	$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"service", "targetaction": "view", "operation": ["delete", "addNullCheck", "addUniqueCheck"]}', $this->app->name());
 	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::confirm_message, $confirm_msg);
     //Load Modules for view
     $this->page->addVar(
@@ -18,10 +18,12 @@ public function executeShowForm(\Library\HttpRequest $rq) {
   } 
   
   public function executeListAll(\Library\HttpRequest $rq) {
+	
+	  
     $sessionPm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-      
+	  
     $list = \Applications\PMTool\Helpers\ServiceHelper::GetServiceList($this, $sessionPm);
     
     $data = array(
@@ -30,7 +32,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
-
+	
     $modules = $this->app()->router()->selectedRoute()->phpModules();
     $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
@@ -198,12 +200,26 @@ public function executeGetItem(\Library\HttpRequest $rq) {
   
   public function executeIfProviderExists(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS(); // Init result
+	$pmSession = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
 	
+	//Check if already list exists in Session
 	$service = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Service());
+	if (!array_key_exists(\Library\Enums\SessionKeys::PmServices, $pmSession)) {
+	  //No, we have to query db and then populate the list into Session
+	  $manager = $this->managers->getManagerOf($this->module());
+	  $allServiceProviders = $manager->selectMany($service, "", true);
+	  
+	  $pmSession[\Library\Enums\SessionKeys::PmServices] = $allServiceProviders;
+	  \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->user(), $pmSession);
+    }
 	
-	$manager = $this->managers->getManagerOf($this->module());
-	$result_query = $manager->selectMany($service, "service_name", true);
-	$result['record_count'] = count($result_query);
+	//Now check if Service provider already exists
+	$match = \Applications\PMTool\Helpers\CommonHelper::FindObjectByStringValue(
+				$service->service_name(), "service_name",
+				$pmSession[\Library\Enums\SessionKeys::PmServices]
+    		);
+	
+	$result['record_count'] = (!$match || empty($match)) ? 0 : 1;
 	
 	$this->SendResponseWS(
       $result, array(

@@ -150,9 +150,9 @@ $(document).ready(function() {
    $('.btn-add-analyte').attr("name", params.fa_attr);
   }
   else {
-   analytesTyped = $("textarea[name=\"" + params.la_attr + "\"]").val().split("\n");
+   analytesTyped = $("textarea[name=\"" + params.la_attr + "\"]").val();
    analytesSelected = utils.getValuesFromList(selectionParams.labListId, selectionParams.dataAttrLA, false, params.delimiter);
-   $("textarea[name=\"" + params.la_attr + "\"]").val(analytesTyped + analytesSelected, params.delimiter);
+   $("textarea[name=\"" + params.la_attr + "\"]").val(utils.mergeStringsExclusive(analytesTyped, analytesSelected, params.delimiter));
    $('.btn-add-analyte').attr("name", params.la_attr);
   }
  });
