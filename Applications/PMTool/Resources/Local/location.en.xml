@@ -33,22 +33,22 @@
   <resource key="location_active">Active</resource>
   <resource key="location_active_many">Set list of locations as Active</resource>
   <resource key="location_visible">Visible</resource>
-  <resource key="location_button_add">Add this location</resource>
-  <resource key="location_button_edit">Edit this location</resource>
-  <resource key="location_button_delete">Delete this location</resource>
+  <resource key="location_button_add">Add</resource>
+  <resource key="location_button_edit">Edit</resource>
+  <resource key="location_button_delete">Delete</resource>
   <resource key="location_list_all_header">Locations</resource>
   <resource key="h3_locations_active">Active locations</resource>
   <resource key="h3_upload_list">Enter or paste a list of Locations here</resource>
   <resource key="h3_locations_inactive">Inactive locations</resource> 
-  <resource key="h3_location_names_form">Add location names</resource> 
-  <resource key="h3_location_add_buttons">Add location</resource>
+  <resource key="h3_location_names_form">Add</resource> 
+  <resource key="h3_location_add_buttons">Add</resource>
   <resource key="location_info_tab">Location Info</resource>
   <resource key="gmaps_info_tab">Map</resource>
   
   
   <resource key="btn_to_inactive_list">De-activate</resource> 
   <resource key="btn_to_active_list">Activate</resource> 
-  <resource key="btn_add_location_names">Add locations</resource> 
+  <resource key="btn_add_location_names">Add</resource> 
   <resource key="btn_add_location_gmap">Using the Map</resource> 
   <resource key="btn_add_location_manual">With the standard form</resource> 
   <resource key="btn_location_select_project">See list of project</resource> 

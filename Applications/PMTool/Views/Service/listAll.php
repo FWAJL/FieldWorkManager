@@ -21,7 +21,7 @@
               <?php require $active_list_module; ?> 
 <!--          Insert Project Services module here-->
         </div>
-        <div class="col-lg-2 col-md-2">
+        <div class="col-lg-1 col-md-1">
           <div class="buttons">
             <input type="button" value="<?php echo $resx["btn_to_inactive_project_list"]; ?>" class="btn btn-warning from-active-project-list" />
             <input type="button" value="<?php echo $resx["btn_to_active_project_list"]; ?>"  class="btn btn-warning from-inactive-project-list" />            

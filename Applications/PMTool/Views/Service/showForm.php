@@ -16,7 +16,7 @@
             ?>
           </div>
         </div>
-        <div class="col-lg-2 col-md-2">
+        <div class="col-lg-1 col-md-1">
           <div class="buttons">
             <input type="button" id="btn_add_service" class="service_add btn btn-default" value="<?php echo $resx["service_button_add"]; ?>" />
             <input type="button" id="btn_edit_service" class="service_edit hide btn btn-default" value="<?php echo $resx["service_button_edit"]; ?>" />

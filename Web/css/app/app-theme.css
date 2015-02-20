@@ -90,6 +90,16 @@ h3 { margin-top: 10px; }
   height: auto;
   margin: 0 auto;
 }
+
+.container-fluid {
+    padding-right: 0px;
+}
+
+.col-md-1, .col-lg-1 {
+/*    padding-right: 5px;
+    padding-left: 5px;*/
+}
+
 .main { border-left: solid 1px #999; }
 /* END CONTENT_CONTAINER */
 
@@ -102,11 +112,11 @@ h3 { margin-top: 10px; }
 .form_sections input[type="button"] {
   white-space:initial;
 }
-.form_sections li label { width: 120px; }
+/*.form_sections li label { width: 120px; }
 
 .form_sections li textarea, 
 .form_sections li text
-{ width: 240px; }
+{ width: 240px; }*/
 
 textarea { resize: vertical;}
 
@@ -124,6 +134,25 @@ textarea { resize: vertical;}
 .data-form {
   padding: 5px;
   padding-top: 20px; 
+}
+
+li label {
+    width: 30%;
+    margin-bottom: 3px;
+}
+
+li input, li textarea {
+    width: 65%;
+    margin-bottom: 3px;
+}
+
+li textarea {
+    height: 6em;
+}
+
+.cbox {
+    width: 15px;
+    margin-bottom: 3px;
 }
 
 .welcome > * { padding-left: 10px; } 
