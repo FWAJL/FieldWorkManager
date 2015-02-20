@@ -144,9 +144,80 @@ textarea { resize: vertical;}
 /* END PROJECT */
 
 /* MAP */
+#map-wrapper {
+  position: relative;
+}
 #map {
   width: 100%;
   height: 600px;
+}
+#map-info {
+  position: absolute;
+  background-color: transparent;
+  top: 100px;
+  right: -20px;
+  z-index: 99;
+  height: 400px;
+  width: 350px;
+  min-width:50px;
+  background-color: white;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+#map-ruler {
+  background-color: white;
+  height: 20px;
+  min-width: 50px;
+  overflow-x: hidden;
+  position: absolute;
+  right: -20px;
+  bottom: 30px;
+  width: 350px;
+  z-index: 99;
+  display:none;
+}
+
+.map-info-row {
+    height:35px;
+}
+
+#map-info-title {
+  height:30px;
+}
+
+.map-info-icon-image {
+    width:35px;
+    height:35px;
+    margin: 0 auto;
+}
+#map-info-shape, #map-info-add, #map-info-pan, #map-info-ruler {
+  cursor:pointer;
+}
+#map-info-ruler-icon {
+  background-image: url(../../images/map-ruler.png);
+  height:50px;
+  width:50px;
+}
+#map-info-add-icon {
+  background-image: url(../../images/map-add.png);
+  height:50px;
+  width:50px;
+}
+#map-info-pan-icon {
+  background-image: url(../../images/map-existing.png);
+  height:50px;
+  width:50px;
+}
+#map-info-shape-icon {
+  background-image: url(../../images/map-shape.png);
+  height:50px;
+  width:50px;
+}
+#map-info-toggle {
+  cursor: pointer;
+}
+#map-info .row {
+  width:350px;
 }
 /* END MAP */
 

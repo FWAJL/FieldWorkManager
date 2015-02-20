@@ -12,7 +12,7 @@
 
     <?php echo $this->app->globalResources["css_files"]; ?>
 
-    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry&sensor=true"></script>
     
 <!--    <script type="application/javascript" src="
 <?php echo $this->app->relative_path; ?>

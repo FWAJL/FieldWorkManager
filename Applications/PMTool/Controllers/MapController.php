@@ -125,6 +125,7 @@ class MapController extends \Library\BaseController {
         //create google maps marker items
         $items = \Applications\PMTool\Helpers\MapHelper::CreateFacilityMarkerItems(\Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->user()),$properties,$icons);
 
+        $result["ruler"] = $icons["ruler"];
         $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
         $result["items"] = $items;
         $this->SendResponseWS(
@@ -181,6 +182,8 @@ class MapController extends \Library\BaseController {
         //create google maps marker items
         $items = \Applications\PMTool\Helpers\MapHelper::CreateFacilityMarkerItems(array($sessionProject),$properties,$icons);
 
+        $result["ruler"] = $icons["ruler"];
+        $result["noLatLngIcon"] = $icons["noLatLng"];
         $result["items"] = $items;
         $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
         $this->SendResponseWS(
@@ -243,6 +246,10 @@ class MapController extends \Library\BaseController {
         //create google maps marker items
         $items = \Applications\PMTool\Helpers\MapHelper::CreateLocationMarkerItems($sessionProject,$properties,$icons);
 
+        $result["ruler"] = $icons["ruler"];
+        $result["noLatLngIcon"] = $icons["noLatLng"];
+        $result["activeIcon"] = $icons["locationActive"];
+        $result["inactiveIcon"] = $icons["locationInactive"];
         $result["items"] = $items;
         $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
 
@@ -315,7 +322,8 @@ class MapController extends \Library\BaseController {
         //create google maps marker items
         $items = \Applications\PMTool\Helpers\MapHelper::CreateTaskLocationMarkerItems($locations, $properties, $icons);
 
-
+        $result["ruler"] = $icons["ruler"];
+        $result["noLatLngIcon"] = $icons["noLatLng"];
         $result["items"] = $items;
         $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
         $this->SendResponseWS(
