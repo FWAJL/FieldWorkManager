@@ -308,11 +308,11 @@ $(document).ready(function() {
  };
  
  utils.showSelectProjectPrompt = function(clbkOk, clbkCancel){
-   $('#prompt_title').html($('#promptmsg-checkCurrentProject').val());
-   //disable context menu
-   $(".select_item").removeClass("select_item");
-   if($('.pselector-modal') !== undefined)
+   if($('.pselector-modal').length !== 0)
    {
+	 $('#prompt_title').html($('#promptmsg-checkCurrentProject').val());
+   	 //disable context menu
+   	 $(".select_item").removeClass("select_item");
      $('.pselector-modal').modal('show');
    }
    
