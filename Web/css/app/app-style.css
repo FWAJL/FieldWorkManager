@@ -71,6 +71,14 @@
 
 /* TASK */
 
+li.category-name {
+  font-size: larger;
+  font-style: italic;
+  color: #fff;
+  background-color: #FFB445;
+  text-decoration: underline;
+}
+
 /* JS WIDGETS */
 
 .select_item:hover,

@@ -3,7 +3,10 @@
     	<resource uicomponent="tooltip" targetattr="active-project-header" value="Click on any Project to select : Right click to edit" placement="right" />
         <resource uicomponent="tooltip" targetattr="inactive-project-header" value="Inactive Projects do not auto-initiate any tasks" placement="right" />
 
-	<resource uicomponent="tooltip" targetattr="data-project-id" value="Click to select : Right‐click to edit" placement="bottom" />
+<!--	<resource uicomponent="tooltip" targetattr="data-project-id" 
+                  value="Click to select 
+                         Right‐click to edit" 
+                   placement="bottom" />-->
 	<resource uicomponent="tooltip" targetattr="data-technician-id" value="Click to select : Right‐click to edit" placement="top" />
 	<resource uicomponent="tooltip" targetattr="data-anyotherentity-id" value="Click to select : Right‐click to edit" placement="bottom" />
 	
