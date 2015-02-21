@@ -35,6 +35,11 @@
 /* END CONTENT_CONTAINER */
 
 /* COMMON FORM ELEMENTS */
+.header4 {
+   font-size: 14px;
+   font-style: bold;
+}
+
 .welcome > * { color: #333; } 
 
 /* BUTTONS */

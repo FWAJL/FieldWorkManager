@@ -93,17 +93,22 @@ h3 { margin-top: 10px; }
 
 .container-fluid {
     padding-right: 0px;
+    padding-top: 10px;
 }
 
 .col-md-1, .col-lg-1 {
-/*    padding-right: 5px;
-    padding-left: 5px;*/
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 .main { border-left: solid 1px #999; }
 /* END CONTENT_CONTAINER */
 
 /* COMMON FORM ELEMENTS */
+.h4 {
+    margin-right: 3px;
+}
+
 .form_sections {
   padding: 5px;
   padding-bottom: 30px;
@@ -112,23 +117,19 @@ h3 { margin-top: 10px; }
 .form_sections input[type="button"] {
   white-space:initial;
 }
-/*.form_sections li label { width: 120px; }
-
-.form_sections li textarea, 
-.form_sections li text
-{ width: 240px; }*/
 
 textarea { resize: vertical;}
 
 .scroll-bar { overflow-y: scroll; }
 
 .list-panel {
-  height: 475px;
+  height: 500px;
   border: 1px solid #999;
+  margin-top: 10px;
 }
 
 .upload_list {
- width: 100%;   
+ width: 100%;
 }
 
 .data-form {
@@ -158,7 +159,8 @@ li textarea {
 .welcome > * { padding-left: 10px; } 
 
 /* BUTTONS */
-.buttons{ margin-top: 40px; }
+.buttons { margin-top: 40px; }
+
 
 /* END COMMON FORM ELEMENTS */
 
