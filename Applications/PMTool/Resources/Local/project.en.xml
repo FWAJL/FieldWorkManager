@@ -32,7 +32,7 @@
   <resource key="project_visible">Visible</resource>
   
   <resource key="project_button_add">Add</resource>
-  <resource key="project_button_edit">Edit</resource>
+  <resource key="project_button_edit">Save</resource>
   <resource key="project_button_delete">Delete</resource>
   <resource key="project_button_copy">Copy</resource>
   

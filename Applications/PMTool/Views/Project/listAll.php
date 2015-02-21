@@ -27,7 +27,7 @@
  <!--           <input type="button" value="<?php echo $resx["btn_to_active_list"]; ?>"  class="btn btn-warning from-inactive-list" />-->
             <button value="<?php echo $resx["btn_to_active_list"]; ?>" class="btn btn-warning from-inactive-list"> 
               <span class="glyphicon glyphicon-arrow-left" title="Activate"></span> </button>
-            <input type="button" value="<?php echo $resx["btn_set_current_project"]; ?>"  class="btn btn-warning btn_set_current_project" />            
+<!--            <input type="button" value="<?php echo $resx["btn_set_current_project"]; ?>"  class="btn btn-warning btn_set_current_project" />            -->
           </div>
         </div>
         <div  class="col-lg-5 col-md-5">
