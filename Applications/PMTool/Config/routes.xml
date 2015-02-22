@@ -363,6 +363,7 @@
             <php_module key="lab_analyte_list" file_name="lab_analyte_list.php" />
             <php_module key="field_analyte_buttons" file_name="analyte_list_buttons.php" />
             <php_module key="lab_analyte_buttons" file_name="analyte_list_buttons.php" />
+			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
         </php_modules>
     </route>
     <!--  analyte/ListAll -->

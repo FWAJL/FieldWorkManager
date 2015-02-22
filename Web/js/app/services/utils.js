@@ -287,15 +287,12 @@ $(document).ready(function() {
  
  utils.showPromptBox = function(operation, callback, useThisIdForMsg) {
    if(operation == 'addNullCheck'){
-	 if(useThisIdForMsg !== undefined && useThisIdForMsg !== "")
-	 {
-	   $('#prompt_title').html($('#' + useThisIdForMsg).val());
-	 }
-	 else
-	 {
-       $('#prompt_title').html($('#promptmsg-addNullCheck').val());
-	 }
+     $('#prompt_title').html($('#promptmsg-addNullCheck').val()); 
    }
+   else if(useThisIdForMsg !== undefined && useThisIdForMsg !== "") {
+     $('#prompt_title').html($('#' + useThisIdForMsg).val());
+   }
+   
    $('.prompt-modal').modal('show');
    //Events
    $('#prompt_ok').on('click', function(){
