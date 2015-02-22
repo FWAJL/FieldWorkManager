@@ -96,29 +96,13 @@ function load(params) {
                         distance = google.maps.geometry.spherical.computeLength(path);
                         infoContainer.html("Distance: "+(distance/1000).toFixed(2)+" km "+(distance*0.62137).toFixed(2)+" miles");
                     } else {
-                        if(type == google.maps.drawing.OverlayType.RECTANGLE){
-                            point1 = overlay.bounds.getSouthWest();
-                            point2 = overlay.bounds.getNorthEast();
-                            southWest = new google.maps.LatLng(point1.lat(), point1.lng());
-                            northEast = new google.maps.LatLng(point2.lat(), point2.lng());
-                            southEast = new google.maps.LatLng(point1.lat(), point2.lng());
-                            northWest = new google.maps.LatLng(point2.lat(), point1.lng());
-                            path = new Array(northEast, northWest, southWest, southEast);
-                            pathSize = 4;
-                            infoPosition = northWest;
-                            area = google.maps.geometry.spherical.computeArea(path);
-                        } else if(type == google.maps.drawing.OverlayType.CIRCLE){
-                            radius = overlay.getRadius();
-                            area = radius*radius*Math.PI;
-                            infoPosition = overlay.center;
-                        } else {
                             path = overlay.getPath();
                             pathSize = path.getLength();
                             infoPosition = path.getAt(pathSize-1);
                             area = google.maps.geometry.spherical.computeArea(path);
+                            infoContainer.html("Area: "+(area/1000000).toFixed(2)+" sq kms "+(area/2589988.11).toFixed(2)+" sq miles");
                         }
-                        infoContainer.html("Area: "+(area/1000000).toFixed(2)+" square kms "+(area/2589988.11).toFixed(2)+" square miles");
-                    }
+
                 };
 
                 $("#map-info-ruler").click(function(){
@@ -228,26 +212,8 @@ function load(params) {
                             drawingControlOptions: {
                                 position: google.maps.ControlPosition.TOP_CENTER,
                                 drawingModes: [
-                                    google.maps.drawing.OverlayType.CIRCLE,
-                                    google.maps.drawing.OverlayType.POLYGON,
-                                    google.maps.drawing.OverlayType.RECTANGLE
+                                    google.maps.drawing.OverlayType.POLYGON
                                 ]
-                            },
-                            circleOptions: {
-                                fillColor: '#FF0000',
-                                fillOpacity: .3,
-                                strokeWeight: 3,
-                                clickable: false,
-                                editable: true,
-                                zIndex: 1
-                            },
-                            rectangleOptions: {
-                                fillColor: '#FF0000',
-                                fillOpacity: .3,
-                                strokeWeight: 3,
-                                clickable: false,
-                                editable: true,
-                                zIndex: 1
                             },
                             polygonOptions: {
                                 fillColor: '#FF0000',
@@ -266,7 +232,6 @@ function load(params) {
                             if (e.type != google.maps.drawing.OverlayType.MARKER) {
                                 // Switch back to non-drawing mode after drawing a shape.
                                 drawingManager.setDrawingMode(null);
-
                                 // Add an event listener that selects the newly-drawn shape when the user
                                 // mouses down on it.
                                 var newShape = e.overlay;
@@ -281,6 +246,7 @@ function load(params) {
                 function toggleRuler(toggle){
                     if(toggle===false){
                         $("#map-ruler").hide();
+                        $("#map-ruler").html("");
                         $("#map-info-ruler").css("background-color","transparent");
                         if(typeof(drawingManagerRuler)==="object"){
                             drawingManagerRuler.setDrawingMode(null);
@@ -298,27 +264,9 @@ function load(params) {
                             drawingControlOptions: {
                                 position: google.maps.ControlPosition.TOP_CENTER,
                                 drawingModes: [
-                                    google.maps.drawing.OverlayType.CIRCLE,
                                     google.maps.drawing.OverlayType.POLYGON,
-                                    google.maps.drawing.OverlayType.POLYLINE,
-                                    google.maps.drawing.OverlayType.RECTANGLE
+                                    google.maps.drawing.OverlayType.POLYLINE
                                 ]
-                            },
-                            circleOptions: {
-                                fillColor: '#FF0000',
-                                fillOpacity: .3,
-                                strokeWeight: 3,
-                                clickable: false,
-                                editable: true,
-                                zIndex: 1
-                            },
-                            rectangleOptions: {
-                                fillColor: '#FF0000',
-                                fillOpacity: .3,
-                                strokeWeight: 3,
-                                clickable: false,
-                                editable: true,
-                                zIndex: 1
                             },
                             polygonOptions: {
                                 fillColor: '#FF0000',
@@ -348,22 +296,12 @@ function load(params) {
                                         computeMeasurements(newShape,newShape.type)
                                     });
                                 } else {
-                                    if(newShape.type == google.maps.drawing.OverlayType.RECTANGLE){
-                                        google.maps.event.addListener(newShape,'bounds_changed',function(e){
-                                            computeMeasurements(newShape,newShape.type)
-                                        });
-                                    } else if(newShape.type == google.maps.drawing.OverlayType.CIRCLE){
-                                        google.maps.event.addListener(newShape,'radius_changed',function(e){
-                                            computeMeasurements(newShape,newShape.type)
-                                        });
-                                    } else {
-                                        google.maps.event.addListener(newShape.getPath(),'insert_at',function(e){
-                                            computeMeasurements(newShape,newShape.type)
-                                        });
-                                        google.maps.event.addListener(newShape.getPath(),'set_at',function(e){
-                                            computeMeasurements(newShape,newShape.type)
-                                        });
-                                    }
+                                    google.maps.event.addListener(newShape.getPath(),'insert_at',function(e){
+                                        computeMeasurements(newShape,newShape.type)
+                                    });
+                                    google.maps.event.addListener(newShape.getPath(),'set_at',function(e){
+                                        computeMeasurements(newShape,newShape.type)
+                                    });
                                 }
 
                             }
@@ -375,15 +313,4 @@ function load(params) {
                 }
             }
         });
-
-    $("#map-info-toggle").click(function(){
-        if($("#map-info").css("width")!="50px"){
-            $("#map-info").animate({width:'50px'},350);
-            $("#map-info-toggle").html("<<");
-        }
-        else{
-            $("#map-info").animate({width:'350px'},350);
-            $("#map-info-toggle").html(">>");
-        }
-    });
 }

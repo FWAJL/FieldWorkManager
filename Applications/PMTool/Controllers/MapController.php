@@ -17,8 +17,7 @@ class MapController extends \Library\BaseController {
      */
     public function executeLoadView($rq) {
         $modules = $this->app()->router()->selectedRoute()->phpModules();
-        $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+        $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
     }
 
 
@@ -39,8 +38,7 @@ class MapController extends \Library\BaseController {
         $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
 
         $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-        $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+        $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
     }
 
 
@@ -57,8 +55,7 @@ class MapController extends \Library\BaseController {
         $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
 
         $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-        $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+        $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
     }
 
     /**
@@ -77,8 +74,7 @@ class MapController extends \Library\BaseController {
         //add view vars for breadcrumb
         $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
         $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-        $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+        $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
     }
 
     /**

@@ -193,6 +193,7 @@
         </css_files>
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
+            <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
         </php_modules>
     </route>
     <!--Map all projects-->
@@ -209,6 +210,7 @@
         </css_files>
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
+            <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
         </php_modules>
     </route>
     <!--Map current project-->
@@ -225,6 +227,7 @@
         </css_files>
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
+            <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
         </php_modules>
     </route>
     <!--Map current project locations-->
@@ -241,6 +244,7 @@
         </css_files>
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
+            <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
         </php_modules>
     </route>
     <!--Map current project-->

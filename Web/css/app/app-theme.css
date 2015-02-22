@@ -152,33 +152,34 @@ textarea { resize: vertical;}
   height: 600px;
 }
 #map-info {
-  position: absolute;
-  background-color: transparent;
-  top: 100px;
-  right: -20px;
-  z-index: 99;
-  height: 400px;
-  width: 350px;
-  min-width:50px;
-  background-color: white;
-  overflow-y: scroll;
+  width: 250px;
+  min-width: 50px;
+  max-height: 600px;
+  overflow-y: auto;
   overflow-x: hidden;
+
 }
 #map-ruler {
   background-color: white;
   height: 20px;
   min-width: 50px;
-  overflow-x: hidden;
-  position: absolute;
-  right: -20px;
-  bottom: 30px;
-  width: 350px;
-  z-index: 99;
-  display:none;
+  display: none;
 }
 
 .map-info-row {
-    height:35px;
+  height: 35px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#map-info > .row {
+  padding-left: 0;
+  padding-rigt: 0;
+}
+
+#map-info > .row > [class*='col-'] {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 #map-info-title {
@@ -217,7 +218,7 @@ textarea { resize: vertical;}
   cursor: pointer;
 }
 #map-info .row {
-  width:350px;
+  width:250px;
 }
 /* END MAP */
 
