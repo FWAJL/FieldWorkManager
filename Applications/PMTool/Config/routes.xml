@@ -312,6 +312,20 @@
 			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
         </php_modules>
     </route><!--  task/showAddForm -->
+	
+	<route url="task/addPrompt" module="Task" action="addPrompt" resxfile="task" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+        </php_modules>
+    </route>
+	<!-- task/addPrompt -->
     
     <route url="task/locations" module="TaskLocation" action="manageLocations" resxfile="task_location" type="ui">
         <js_files>
@@ -342,8 +356,7 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
         </php_modules>
     </route><!--  task/technicians -->
-    
-    
+	
     <!-- analytes -->
     <route url="analyte/listAll" module="Analyte" action="listAll" resxfile="analyte" type="ui">
         <js_files>

@@ -285,7 +285,7 @@ $(document).ready(function() {
   $('.btn-primary').addClass('confirmbuttons');
  };
  
- utils.showPromptBox = function(operation, callback, useThisIdForMsg) {
+ utils.showPromptBox = function(operation, callback, useThisIdForMsg, callbackOnCancel) {
    if(operation == 'addNullCheck'){
      $('#prompt_title').html($('#promptmsg-addNullCheck').val()); 
    }
@@ -298,6 +298,12 @@ $(document).ready(function() {
    $('#prompt_ok').on('click', function(){
 	   callback();
    });
+   if(callbackOnCancel !== undefined)
+   {
+	   $('.prompt-modal').on('hidden.bs.modal', function (e) {
+		 callbackOnCancel();
+	   })
+   }
  };
  
  utils.togglePromptBox = function(){
