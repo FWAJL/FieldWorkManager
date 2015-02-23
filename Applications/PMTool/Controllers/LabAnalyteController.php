@@ -47,7 +47,7 @@ class LabAnalyteController extends \Library\BaseController {
 
     if ($result_edit) {
       $analyteMatch = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById(
-              $analyte->field_analyte_id(), "lab_analyte_id", $pm, \Library\Enums\SessionKeys::PmLabAnalytes);
+              $analyte->lab_analyte_id(), "lab_analyte_id", $pm, \Library\Enums\SessionKeys::PmLabAnalytes);
 
       $pm[\Library\Enums\SessionKeys::PmLabAnalytes][$analyteMatch["key"]] = $analyte;
       \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->user(), $pm);

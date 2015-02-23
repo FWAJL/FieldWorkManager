@@ -3,6 +3,7 @@
  */
 $(document).ready(function() {
 
+ var prompt_box_msg;
  var ajaxParams = {
   "ajaxUrl": "",
   "redirectUrl": "analyte/listAll",
@@ -18,7 +19,57 @@ $(document).ready(function() {
   selector: '.select_item',
   callback: function(key, options) {
    if (key === "edit") {
-    toastr.info("To be implemented.");
+	 
+	 if(prompt_box_msg == null || prompt_box_msg == '') {
+	   prompt_box_msg = $('#promptmsg-edit').val();
+	 }
+     $('#promptmsg-edit').val(prompt_box_msg.replace('{0}', options.$trigger.html()));
+	 $('#text_input').val(options.$trigger.html());
+	 utils.showPromptBox("edit", function(){
+	  
+	   var isFieldAnalyte = ajaxParams.isFieldType = $(".active").attr("data-form-id") === "field_analyte_info";
+	   
+	   var actionPath = isFieldAnalyte ? "field_analyte/edit" : "lab_analyte/edit";
+	   if (isFieldAnalyte) {
+		   
+		 getAnalyteItem("field", parseInt(options.$trigger.attr("data-fieldanalyte-id")), function(data){
+		 	 var post_data = {};  
+			 post_data["field_analyte"] = data.field_analyte;
+			 post_data["field_analyte"]["field_analyte_name_unit"] = $('#text_input').val();
+			 
+			 datacx.post(actionPath, post_data["field_analyte"]).then(function(reply) {//call AJAX method to call Project/Add WebService
+			   if (reply === null || reply.result === 0) {//has an error
+				 toastr.error(reply.message);
+			   } else {//success
+				 toastr.success(reply.message.replace("field_analyte", "field_analyte (ID:" + reply.dataId + ")"));
+				 utils.redirect("analyte/listAll");
+			   }
+			 });
+			 
+		 });
+		 
+	   } else {
+		 getAnalyteItem("lab", parseInt(options.$trigger.attr("data-labanalyte-id")), function(data){
+		     var post_data = {};
+			 post_data["lab_analyte"] = data.field_analyte;
+			 post_data["lab_analyte"]["lab_analyte_name"] = $('#text_input').val();
+			 
+			 datacx.post(actionPath, post_data["lab_analyte"]).then(function(reply) {//call AJAX method to call Project/Add WebService
+			   if (reply === null || reply.result === 0) {//has an error
+				 toastr.error(reply.message);
+			   } else {//success
+				 toastr.success(reply.message.replace("lab_analyte", "lab_analyte (ID:" + reply.dataId + ")"));
+				 utils.redirect("analyte/listAll");
+			   }
+			 });
+			 
+		 });
+	   }  
+	   
+		 
+		 
+		 
+	 }, 'promptmsg-edit'); 
    } else if (key === "delete") {
     var isFieldAnalyte = ajaxParams.isFieldType = $(".active").attr("data-form-id") === "field_analyte_info";
     ajaxParams.itemId =
@@ -30,10 +81,38 @@ $(document).ready(function() {
    }
   },
   items: {
-   "edit": {name: "View Info"},
+   "edit": {name: "Edit"},
    "delete": {name: "Delete"}
   }
  });//The context menu
+ 
+ //get item for field/lab analyte
+ getAnalyteItem = function(anlyteType, analyteId, executeWithData) {
+	 var actionPath = (anlyteType === "field") ? "field_analyte/getItem" : "lab_analyte/getItem";
+	 if((anlyteType === "field"))
+	 {
+		 datacx.post(actionPath, {field_analyte_id:analyteId}).then(function(reply) {
+		   if (reply === null || reply.result === 0) {//has an error
+			toastr.error(reply.message);
+		   } else {//success
+			//return reply;
+			executeWithData(reply);
+		   }
+		  });
+	 }
+	 else
+	 {
+		 datacx.post(actionPath, {lab_analyte_id:analyteId}).then(function(reply) {
+		   if (reply === null || reply.result === 0) {//has an error
+			toastr.error(reply.message);
+		   } else {//success
+			//return reply;
+			executeWithData(reply);
+		   }
+		  });
+	 }
+	 
+ }
 
  // Selection in the dual lists
  var selectionParamsFieldAnalytes = {

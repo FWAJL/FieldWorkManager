@@ -40,7 +40,7 @@
     <links>
       <header href="task" resourcekey="header_task" enablelink="false" />
       <submenu href="task/listAll" id="task_list_all" resourcekey="task_list" active="true"/>
-      <submenu href="task/showForm" id="btn-add-task-manual" resourcekey="task_add" active="true"/>
+      <submenu href="task/addPrompt" id="btn-add-task-manual" resourcekey="task_add" active="true"/>
     </links>
   </main_menu><!-- task -->
   

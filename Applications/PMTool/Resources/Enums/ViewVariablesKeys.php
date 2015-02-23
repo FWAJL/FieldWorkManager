@@ -57,6 +57,7 @@ class ViewVariablesKeys {
   const inactive_list = "inactive_list_module";
   const popup_msg = "popup_msg_module";
   const prompt_msg = "prompt_msg_module";
+  const prompt_projectselect = "prompt_projectselect_module";
   
   const currentPm = "current_pm";
   const currentProject = "current_project";
@@ -64,7 +65,8 @@ class ViewVariablesKeys {
   
   //Project's views variables
   const form_modules = "form_modules"; 
-  const projects = "projects"; 
+  const projects = "projects";
+  const redirect_on_success = "redirect_on_success";
   
   //Location's views variables
   

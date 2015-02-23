@@ -22,6 +22,10 @@ class TaskController extends \Library\BaseController {
   public function executeShowForm(\Library\HttpRequest $rq) {
     \Applications\PMTool\Helpers\TaskHelper::AddTabsStatus($this->user());
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
+	//Check if a project needs to be selected in order to display this page
+	if(!$sessionProject) {
+	  $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::TaskAddPrompt);
+	}
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::SetCurrentSessionTask($this->user(), NULL, $rq->getData("task_id"));
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
@@ -47,6 +51,11 @@ class TaskController extends \Library\BaseController {
 
   public function executeListAll(\Library\HttpRequest $rq) {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+	
+	//Check if a project needs to be selected in order to display this page
+	if(!$sessionProject)
+	  $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
+	
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 		
 	//Get confirm msg for project deletion from context menu
@@ -77,6 +86,29 @@ class TaskController extends \Library\BaseController {
         	\Applications\PMTool\Resources\Enums\ViewVariablesKeys::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
 	$this->page->addVar(
         	\Applications\PMTool\Resources\Enums\ViewVariablesKeys::prompt_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_prompt]);
+  }
+  
+  
+  public function executeAddPrompt(\Library\HttpRequest $rq) {
+	$sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+	//Check if a project needs to be selected in order to display this page
+	if(!$sessionProject)
+	  $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::TaskAddPrompt);
+	
+	if(!\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($this->user(), 0)) {
+      $this->executeGetList($rq, NULL, FALSE);
+    }
+	
+	//Fetch prompt box data from xml and pass to view as an array
+	$prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"task", "targetaction": "addPrompt", "operation": ["addNullCheckAddPrompt"]}', $this->app->name());
+	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::prompt_message, $prompt_msg);
+	
+	//Fetch alert box data
+	$alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"task", "targetaction": "view", "operation": ["addUniqueCheck"]}', $this->app->name());
+	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::confirm_message, $alert_msg);
+	  
+	$this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {
