@@ -9,7 +9,6 @@
         <css_files>
             <css_file value="Web/css/app/app-style.css" />
             <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
         </css_files>
     </route>
     
@@ -26,7 +25,6 @@
             <css_file value="Web/css/app/nav.css" />
             <css_file value="Web/css/app/app-style.css" />
             <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
     </route>
@@ -97,7 +95,6 @@
             <css_file value="Web/css/app/nav.css" />
             <css_file value="Web/css/app/app-style.css" />
             <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
     </route>
@@ -125,7 +122,6 @@
             <css_file value="Web/css/app/nav.css" />
             <css_file value="Web/css/app/app-style.css" />
             <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
         <php_modules>
@@ -155,7 +151,6 @@
             <css_file value="Web/css/app/nav.css" />
             <css_file value="Web/css/app/app-style.css" />
             <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
     </route>
@@ -184,7 +179,6 @@
             <css_file value="Web/css/app/nav.css" />
             <css_file value="Web/css/app/app-style.css" />
             <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
         <php_modules>
@@ -199,6 +193,7 @@
     <!--Maps -->
     <route url="map/allProjects" module="Map" action="loadView" resxfile="map" type="ui">
         <js_files>
+            <js_file use="head" type="external" value="http://maps.google.com/maps/api/js?sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/services/maps.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapAllProjects.js"/>
@@ -215,6 +210,7 @@
 
     <route url="map/currentProject" module="Map" action="loadCurrentView" resxfile="map" type="ui">
         <js_files>
+            <js_file use="head" type="external" value="http://maps.google.com/maps/api/js?sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/services/maps.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapCurrentProject.js"/>
@@ -231,6 +227,7 @@
 
     <route url="map/currentProjectLocations" module="Map" action="loadCurrentLocationsView" resxfile="map" type="ui">
         <js_files>
+            <js_file use="head" type="external" value="http://maps.google.com/maps/api/js?sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/services/maps.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapCurrentLocations.js"/>
@@ -247,6 +244,7 @@
 
     <route url="map/taskLocations" module="Map" action="loadCurrentTasksView" resxfile="map" type="ui">
         <js_files>
+            <js_file use="head" type="external" value="http://maps.google.com/maps/api/js?sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/services/maps.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapCurrentTasks.js"/>
@@ -274,7 +272,6 @@
             <css_file value="Web/css/app/nav.css" />
             <css_file value="Web/css/app/app-style.css" />
             <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
     </route>
@@ -472,7 +469,6 @@
             <css_file value="Web/css/app/nav.css" />
             <css_file value="Web/css/app/app-style.css" />
             <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
     </route>
@@ -500,7 +496,6 @@
             <css_file value="Web/css/app/nav.css" />
             <css_file value="Web/css/app/app-style.css" />
             <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
         <php_modules>
