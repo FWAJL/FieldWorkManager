@@ -45,7 +45,7 @@ $(document).ready(function() {
         if (!isCopying) {
           utils.redirect("project/listAll", 3000);
         } else {
-          utils.redirect("project/showForm?mode=edit&project_id=" + parseInt(reply.dataId));
+          utils.redirect("project/showForm?mode=edit&project_id=" + parseInt(client["project_id"]));
         }
       }
     });
