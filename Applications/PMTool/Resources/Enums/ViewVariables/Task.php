@@ -28,11 +28,16 @@ if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script acces
 class Task {
   //Modules keys
   const task_tabs_open = "task_tabs_open";
+  const active_task_tabs_open = "active_task_tabs_open";
+
+  
   const tabs_close = "tabs_close";
   
   const task_info_lists = "task_info_lists";
+  const active_task_info_lists = "active_task_info_lists";
 
   const task_form = "task_form";
+  const active_task_form = "active_task_form"; 
 
   const task_buttons = "task_buttons";
 

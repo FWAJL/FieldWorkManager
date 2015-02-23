@@ -33,7 +33,7 @@
         . "-id=\"" 
         . $object->
         $prop_id()
-        . "\" class=\"select_item ui-widget-content\"" 
+        . "\" class=\"active_item select_item ui-widget-content\"" 
         . $tooltip_configstr . ">" 
         . $object->$prop_name()
         . "</li>";

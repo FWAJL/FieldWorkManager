@@ -24,7 +24,7 @@
         . $object->
         $data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties]
         [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id]
-        . "\" class=\"select_item ui-widget-content\"". $tooltip_configstr .">"
+        . "\" class=\"inactive_item select_item ui-widget-content\"". $tooltip_configstr .">"
         . $object->
         $data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties]
         [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name]

@@ -9,7 +9,7 @@
 $(document).ready(function () {
   $(".btn-warning").hide();
   $.contextMenu({
-    selector: '.select_item',
+    selector: '.inactive_item',
     callback: function (key, options) {
       if (key === "edit") {
         task_manager.retrieveTask(options.$trigger);
@@ -67,8 +67,21 @@ $(document).ready(function () {
       "delete": {name: "Delete"},
       "copy": {name: "Copy"}
     }
-  });//Manages the context menu
-
+  });//Manages the context menu for inactive Tasks
+  
+  $(".btn-warning").hide();
+  $.contextMenu({
+    selector: '.active_item',
+    callback: function (key, options) {
+      if (key === "monitor") {
+        task_manager.retrieveActiveTask(options.$trigger);
+      }   
+    },
+    items: {
+      "monitor": {name: "Check Task Status"}
+    }
+  });//Manages the context menu for active Tasks
+  
   //************************************************//
   // Selection of tasks for de-activation
   var task_ids = "";
@@ -296,6 +309,9 @@ $(document).ready(function () {
   };
   task_manager.retrieveTask = function (element) {
     utils.redirect("task/showForm?mode=edit&task_id=" + parseInt(element.attr("data-task-id")));
+  };
+    task_manager.retrieveActiveTask = function (element) {
+    utils.redirect("activetask/showForm?mode=edit&task_id=" + parseInt(element.attr("data-task-id")));
   };
   task_manager.loadEditForm = function (dataWs) {
     utils.clearForm();
