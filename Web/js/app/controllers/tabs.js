@@ -57,25 +57,31 @@ $(document).ready(function() {
 
   $("#tab2").hide();
   $("#tab3").hide();
+  $("#tab3a").hide();
   $("#field_data_box").change(function() {
     if ($("#field_data_box").is(":checked")) {
       $("#tab2").show();
       $("#tab3").show();
+      $("#tab3a").show();
     } else {
       $("#tab2").hide();
       $("#tab3").hide();
+      $("#tab3a").hide();
     }
   });
 
   $("#tab4").hide();
   $("#tab5").hide();
+  $("#tab5a").hide();
   $("#lab_sample_box").change(function() {
     if ($("#lab_sample_box").is(":checked")) {
       $("#tab4").show();
       $("#tab5").show();
+      $("#tab5a").show();
     } else {
       $("#tab4").hide();
       $("#tab5").hide();
+      $("#tab5a").hide();
     }
   });
 
