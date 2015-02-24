@@ -23,8 +23,8 @@
         </div>
         <div class="col-lg-1 col-md-1">
           <div class="buttons">
-            <input type="button" value="<?php echo $resx["btn_to_inactive_project_list"]; ?>" class="btn btn-warning from-active-project-list" />
-            <input type="button" value="<?php echo $resx["btn_to_active_project_list"]; ?>"  class="btn btn-warning from-inactive-project-list" />            
+            <?php require $promote_buttons_module; ?>         
+              Test
           </div>
         </div>
         <div  class="col-lg-5 col-md-5">

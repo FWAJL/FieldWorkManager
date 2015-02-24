@@ -50,6 +50,7 @@ class Analyte {
   const field_analyte_buttons = "field_analyte_buttons";
   const lab_analyte_buttons = "lab_analyte_buttons";
   const up_analyte_list_buttons = "up_analyte_list_buttons";
+  const promote_buttons = "promote_buttons_module";
   
   //Data keys
   const data_field_analyte = "data_field_analyte";

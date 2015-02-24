@@ -13,10 +13,7 @@
           <?php require $active_list_module; ?>              
         </div>
         <div class="col-lg-1 col-md-1">
-          <div class="buttons">
-            <input type="button" value="<?php echo $resx["btn_to_inactive_list"]; ?>" class="btn btn-warning from-active-list" />
-            <input type="button" value="<?php echo $resx["btn_to_active_list"]; ?>"  class="btn btn-warning from-inactive-list" />            
-          </div>
+            <?php require $promote_buttons_module; ?>    
         </div>
         <div  class="col-lg-5 col-md-5">
           <h4><?php echo $resx["h3_locations_inactive"]; ?></h4>

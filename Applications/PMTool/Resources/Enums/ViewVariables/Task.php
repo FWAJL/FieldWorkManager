@@ -30,7 +30,6 @@ class Task {
   const task_tabs_open = "task_tabs_open";
   const active_task_tabs_open = "active_task_tabs_open";
 
-  
   const tabs_close = "tabs_close";
   
   const task_info_lists = "task_info_lists";
@@ -40,6 +39,8 @@ class Task {
   const active_task_form = "active_task_form"; 
 
   const task_buttons = "task_buttons";
+  const promote_buttons_module = "promote_buttons_module";
+
 
   const popup_msg_module = "popup_msg_module";
 

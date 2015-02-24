@@ -105,10 +105,12 @@ class ProjectController extends \Library\BaseController {
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
     $this->page->addVar(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
-	$this->page->addVar(
+    $this->page->addVar(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
-	$this->page->addVar(
+    $this->page->addVar(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::prompt_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_prompt]);
+    $this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::promote_buttons, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::promote_buttons]);
   }
 
   /**

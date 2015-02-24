@@ -47,6 +47,7 @@ class ProjectServiceController extends \Library\BaseController {
     //form modules
     $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+ 
   }
 
 }

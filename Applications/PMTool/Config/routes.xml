@@ -52,8 +52,8 @@
             <php_module key="facility_form" file_name="facility_form.php" />
             <php_module key="client_form" file_name="client_form.php" />
             <php_module key="project_buttons" file_name="project_buttons.php" />
-			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />			
+            <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />			
         </php_modules>
     </route>
     <!-- project/showAddForm -->
@@ -68,8 +68,9 @@
         <php_modules>
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
-			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+            <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
         </php_modules>
     </route>
     <!-- project/listAll -->
@@ -97,6 +98,7 @@
         <php_modules>
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
+            <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>            
         </php_modules>
     </route>
     <!-- location/listAll -->
@@ -155,7 +157,8 @@
         <php_modules>
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
-						<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+            <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
         </php_modules>
     </route>
     <!-- technician/listAll -->
@@ -174,7 +177,7 @@
         <php_modules>
             <php_module key="technician_form" file_name="technician_form.php" />
             <php_module key="upload_file" file_name="upload_file.php" shared="true"/>
-			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
         </php_modules>
     </route>
     <!-- technician/showForm -->
@@ -274,8 +277,9 @@
         <php_modules>
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
-			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+            <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+            <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
         </php_modules>
     </route><!--   task/listAll -->
     
@@ -292,8 +296,8 @@
             <php_module key="task_info_lists" file_name="task_info_lists.php" />
             <php_module key="task_form" file_name="task_form.php" />
             <php_module key="task_buttons" file_name="task_buttons.php" />
-			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+            <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
         </php_modules>
     </route><!--  task/showAddForm -->
     
@@ -327,6 +331,7 @@
             <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
             <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+            <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>            
         </php_modules>
     </route><!--  task/locations --> 
     
@@ -342,6 +347,7 @@
             <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
             <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+            <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
         </php_modules>
     </route><!--  task/technicians -->
     
@@ -365,6 +371,7 @@
             <php_module key="lab_analyte_list" file_name="lab_analyte_list.php" />
             <php_module key="field_analyte_buttons" file_name="analyte_list_buttons.php" />
             <php_module key="lab_analyte_buttons" file_name="analyte_list_buttons.php" />
+            <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
         </php_modules>
     </route>
     <!--  analyte/ListAll -->
@@ -387,6 +394,7 @@
             <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
             <php_module key="common_analyte_buttons" file_name="common_analyte_buttons.php" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true"/>
+            <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
 
         </php_modules>
     </route>
@@ -429,6 +437,7 @@
         <php_modules>
             <php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
             <php_module key="categorized_list_right" file_name="categorized_list_right.php" shared="true" />
+            <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>            
         </php_modules>
     </route>
     <!-- service provider/listAll -->
@@ -443,7 +452,7 @@
         <php_modules>
 <!--            <php_module key="service_tabs_open" file_name="service_tabs_open.php" />-->
             <php_module key="service_form" file_name="service_form.php" />
-			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
 <!--            <php_module key="service_buttons" file_name="service_buttons.php" />-->
 <!--            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />-->
         </php_modules>
