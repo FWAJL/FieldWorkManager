@@ -125,7 +125,7 @@ class ProjectController extends \Library\BaseController {
   public function executeSelectProject(\Library\HttpRequest $rq) {
 	
 	//Fetch prompt box data from xml and pass to view as an array
-	$urlParts = explode("/", $_GET['onSuccess']);
+	$urlParts = explode("/", $rq->getData('onSuccess'));
 	$prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"' . $urlParts[0] . '", "targetaction": "' . $urlParts[1] . '", "operation": ["checkCurrentProject"]}', $this->app->name());
 	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::prompt_message, $prompt_msg);
 	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::redirect_on_success, $_GET['onSuccess']);
