@@ -21,6 +21,7 @@
 
     <!-- close tabs -->
     <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::tabs_close]; ?>
+    <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::popup_prompt_module]; ?>
   </div>
 
 </div>

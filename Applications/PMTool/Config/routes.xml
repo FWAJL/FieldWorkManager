@@ -9,7 +9,6 @@
         <css_files>
             <css_file value="Web/css/app/app-style.css" />
             <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
         </css_files>
     </route>
     
@@ -26,7 +25,6 @@
             <css_file value="Web/css/app/nav.css" />
             <css_file value="Web/css/app/app-style.css" />
             <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
     </route>
@@ -73,6 +71,22 @@
         </php_modules>
     </route>
     <!-- project/listAll -->
+	
+	<route url="project/selectProject" module="Project" action="selectProject" resxfile="project" type="ui">
+        <js_files>
+            <js_file use="project" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+			<php_module key="active_list_module" file_name="active_list.php" shared="true" />
+			<php_module key="popup_selector_module" file_name="popup_selector.php" shared="true" />
+        </php_modules>
+    </route>
+	<!-- project/selectProject -->
+	
     
     <!-- locations -->
     <route url="location" module="Location" action="index" resxfile="location" type="ui">
@@ -81,7 +95,6 @@
             <css_file value="Web/css/app/nav.css" />
             <css_file value="Web/css/app/app-style.css" />
             <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
     </route>
@@ -109,7 +122,6 @@
             <css_file value="Web/css/app/nav.css" />
             <css_file value="Web/css/app/app-style.css" />
             <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
         <php_modules>
@@ -139,7 +151,6 @@
             <css_file value="Web/css/app/nav.css" />
             <css_file value="Web/css/app/app-style.css" />
             <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
     </route>
@@ -168,7 +179,6 @@
             <css_file value="Web/css/app/nav.css" />
             <css_file value="Web/css/app/app-style.css" />
             <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
         <php_modules>
@@ -183,6 +193,7 @@
     <!--Maps -->
     <route url="map/allProjects" module="Map" action="loadView" resxfile="map" type="ui">
         <js_files>
+            <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/services/maps.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapAllProjects.js"/>
@@ -200,6 +211,7 @@
 
     <route url="map/currentProject" module="Map" action="loadCurrentView" resxfile="map" type="ui">
         <js_files>
+            <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/services/maps.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapCurrentProject.js"/>
@@ -217,6 +229,7 @@
 
     <route url="map/currentProjectLocations" module="Map" action="loadCurrentLocationsView" resxfile="map" type="ui">
         <js_files>
+            <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/services/maps.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapCurrentLocations.js"/>
@@ -234,6 +247,7 @@
 
     <route url="map/taskLocations" module="Map" action="loadCurrentTasksView" resxfile="map" type="ui">
         <js_files>
+            <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/services/maps.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapCurrentTasks.js"/>
@@ -300,6 +314,20 @@
 			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
         </php_modules>
     </route><!--  task/showAddForm -->
+	
+	<route url="task/addPrompt" module="Task" action="addPrompt" resxfile="task" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+        </php_modules>
+    </route>
+	<!-- task/addPrompt -->
     
     <route url="task/locations" module="TaskLocation" action="manageLocations" resxfile="task_location" type="ui">
         <js_files>
@@ -330,8 +358,7 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
         </php_modules>
     </route><!--  task/technicians -->
-    
-    
+	
     <!-- analytes -->
     <route url="analyte/listAll" module="Analyte" action="listAll" resxfile="analyte" type="ui">
         <js_files>
@@ -351,6 +378,7 @@
             <php_module key="lab_analyte_list" file_name="lab_analyte_list.php" />
             <php_module key="field_analyte_buttons" file_name="analyte_list_buttons.php" />
             <php_module key="lab_analyte_buttons" file_name="analyte_list_buttons.php" />
+			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
         </php_modules>
     </route>
     <!--  analyte/ListAll -->
@@ -446,7 +474,6 @@
             <css_file value="Web/css/app/nav.css" />
             <css_file value="Web/css/app/app-style.css" />
             <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
     </route>
@@ -474,7 +501,6 @@
             <css_file value="Web/css/app/nav.css" />
             <css_file value="Web/css/app/app-style.css" />
             <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
         <php_modules>
@@ -510,6 +536,7 @@
   <route url="project/updateItems" module="Project" action="updateItems" resxfile="project" type="ws" />
   <route url="project/setCurrentProject" module="Project" action="setCurrentProject" resxfile="project" type="ws" />
   <route url="project/ifProjectExists" module="Project" action="ifProjectExists" resxfile="project" type="ws" />
+  <route url="project/selectProject" module="Project" action="selectProject" resxfile="project" type="ws" />
   
   <route url="facility/add" module="Facility" action="add" resxfile="facility" type="ws" />
   <route url="facility/edit" module="Facility" action="edit" resxfile="facility" type="ws" />

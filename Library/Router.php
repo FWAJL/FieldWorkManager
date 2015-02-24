@@ -132,7 +132,9 @@ class Router extends ApplicationComponent {
     $scripts = "";
     foreach ($route->getElementsByTagName('js_file') as $script) {
       if ($script->getAttribute('use') === $destination) {
-          $scripts .= '<script type="application/javascript" src="' . $path_to_add . $script->getAttribute('value') . '"></script>';
+          $scripts .= $script->getAttribute("type") === "external" ?
+            '<script type="application/javascript" src="' . $script->getAttribute('value') . '"></script>' :
+            '<script type="application/javascript" src="' . $path_to_add . $script->getAttribute('value') . '"></script>';
       } else if($script->getAttribute('use') !== "head" && $script->getAttribute('use') !== "html") {
         //Select js files from parent route
         $parent_route = $this->getRoute(__BASEURL__ . $script->getAttribute('use'));
