@@ -7,13 +7,15 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class LocationController extends \Library\BaseController {
 
-  public function executeIndex(\Library\HttpRequest $rq) {  }
+  public function executeIndex(\Library\HttpRequest $rq) {
+    
+  }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-	//Check if a project needs to be selected in order to display this page
-	if(!$sessionProject)
-	  $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::LocationShowForm);
+    //Check if a project needs to be selected in order to display this page
+    if (!$sessionProject)
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::LocationShowForm);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     if ($rq->getData("mode") === "edit") {
       $this->page->addVar("location_editing_header", $this->resxData["location_legend_edit"]);
@@ -24,21 +26,22 @@ class LocationController extends \Library\BaseController {
     $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
-  
+
   public function executeUploadList(\Library\HttpRequest $rq) {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-	//Check if a project needs to be selected in order to display this page
-	if(!$sessionProject)
-	  $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::LocationUploadList);
+    //Check if a project needs to be selected in order to display this page
+    if (!$sessionProject)
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::LocationUploadList);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
   }
 
   public function executeListAll(\Library\HttpRequest $rq) {
     //Get list of location stored in session
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-	//Check if a project needs to be selected in order to display this page
-	if(!$sessionProject)
-	  $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
+    //Check if a project needs to be selected in order to display this page
+    if (!$sessionProject)
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
+    
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
     $this->_GetAndStoreLocationsInSession($sessionProject);
@@ -59,7 +62,7 @@ class LocationController extends \Library\BaseController {
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {
-    $result = \Applications\PMTool\Helpers\LocationHelper::AddProjectLocation($this, $this->InitResponseWS());    
+    $result = \Applications\PMTool\Helpers\LocationHelper::AddProjectLocation($this, $this->InitResponseWS());
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
