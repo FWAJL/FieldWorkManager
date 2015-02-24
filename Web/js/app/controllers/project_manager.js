@@ -60,7 +60,7 @@ $(document).ready(function() {
                   post_data["project"]['project_name'] = $('#text_input').val();
                   console.log(post_data);
                   //add
-                  project_manager.copyWithNewName(post_data, "project", "add");
+                  project_manager.add(post_data, "project", "add", true);//adding a copy
 
                 });
               }
@@ -302,46 +302,35 @@ $(document).ready(function() {
   //To keep the original msg from the hidden intact
   project_manager.prompt_box_msg;
 
-  project_manager.add = function(data, controller, action) {
+  project_manager.add = function(data, controller, action, isCopying) {
+    isCopying = isCopying || false;
     datacx.post(controller + "/" + action, data["project"]).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
+        var facility_data = [];
+        var client_data = [];
+        if (!isCopying) {
+           facility_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
+           client_data = utils.retrieveInputs("client_form", []);
+        } else {
+          facility_data = data["facility"];
+          client_data = data["client"];
+        }
 
-        var facility_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
         if (facility_data.facility_name !== undefined && facility_data.facility_address !== undefined) {
           facility_data["project_id"] = reply.dataId;
           facility_manager.send("facility/" + action, facility_data);
         }
-        var client_data = utils.retrieveInputs("client_form", []);
         client_data["project_id"] = reply.dataId;
-        client_manager.send("client/" + action, client_data);
-        project_manager.fillFormWithRandomData();
+        client_manager.send("client/" + action, client_data, isCopying);
+        if (!isCopying) {
+          project_manager.fillFormWithRandomData();
+         }
       }
     });
   };
-
-
-  project_manager.copyWithNewName = function(data, controller, action) {
-    datacx.post(controller + "/" + action, data["project"]).then(function(reply) {//call AJAX method to call Project/Add WebService
-      if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
-      } else {//success
-        toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
-
-        var facility_data = data["facility"];
-        if (facility_data.facility_name !== undefined && facility_data.facility_address !== undefined) {
-          facility_data["project_id"] = reply.dataId;
-          facility_manager.send("facility/" + action, facility_data);
-        }
-        var client_data = data["client"];
-        client_data["project_id"] = reply.dataId;
-        client_manager.send("client/" + action, client_data, true);
-      }
-    });
-  };
-
 
   project_manager.edit = function(project, controller, action) {
     datacx.post(controller + "/" + action, project).then(function(reply) {//call AJAX method to call Project/Add WebService
