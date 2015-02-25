@@ -2,8 +2,16 @@
 
 <!-- One set of buttons for all tabs -->
 <div class="buttons">
-  <input type="button" value="<?php echo $resx["btn_add_analyte_to_project"]; ?>" class="btn btn-warning from-field-analyte-list" />
-  <input type="button" value="<?php echo $resx["btn_remove_analyte_to_project"]; ?>"  class="btn btn-warning from-project-field-analyte-list" />            
-  <input type="button" value="<?php echo $resx["btn_add_analyte_to_project"]; ?>" class="btn btn-warning from-lab-analyte-list" />
-  <input type="button" value="<?php echo $resx["btn_remove_analyte_to_project"]; ?>"  class="btn btn-warning from-project-lab-analyte-list" />            
+  <button title="<?php echo $resx["btn_add_analyte_to_project"]; ?>" class="btn btn-warning from-field-analyte-list">
+    <span class="glyphicon glyphicon-arrow-left"></span>
+  </button>
+  <button title="<?php echo $resx["btn_remove_analyte_to_project"]; ?>"  class="btn btn-warning from-project-field-analyte-list">
+    <span class="glyphicon glyphicon-arrow-right"></span>
+  </button>
+  <button title="<?php echo $resx["btn_add_analyte_to_project"]; ?>" class="btn btn-warning from-lab-analyte-list">
+    <span class="glyphicon glyphicon-arrow-left"></span>
+  </button>
+  <button title="<?php echo $resx["btn_remove_analyte_to_project"]; ?>"  class="btn btn-warning from-project-lab-analyte-list">
+    <span class="glyphicon glyphicon-arrow-right"></span>
+  </button>
 </div>

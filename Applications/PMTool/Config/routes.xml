@@ -276,7 +276,6 @@
             <css_file value="Web/css/app/nav.css" />
             <css_file value="Web/css/app/app-style.css" />
             <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
             <css_file value="Web/css/app/tabs.css" />
         </css_files>
     </route>
