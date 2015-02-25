@@ -92,7 +92,7 @@ class AnalyteController extends \Library\BaseController {
 	
 	//Fetch prompt box data from xml and pass to view as an array
 	$prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"analyte", "targetaction": "listAll", "operation": ["edit"]}', $this->app->name());
-	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::prompt_message, $prompt_msg);
+	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
 
     //variables for the field analyte module
     $field_object_properties = \Applications\PMTool\Helpers\CommonHelper::SetDynamicPropertyNamesForDualList(

@@ -17,7 +17,7 @@
       </div>
 
       <div class="modal-body">
-        <?php require $active_list_module; ?>
+        <?php require $popup_prompt_list; ?>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary confirmbuttons" id="prompt_ok">Ok</button>

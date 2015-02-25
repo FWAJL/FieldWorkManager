@@ -19,6 +19,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 abstract class AppSettingKeys {
 
   const ApplicationMode = "ApplicationMode";
+  const CurrentVersion = "CurrentVersion";
   const DefaultLanguage = "DefaultLanguage";
   const BaseUrl = "base_url";
   const BaseUrlRelease = "BaseUrlRelease";
