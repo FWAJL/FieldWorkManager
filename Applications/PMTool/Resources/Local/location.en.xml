@@ -19,7 +19,11 @@
   <resource key="message_success_listAll">The locations have been read.</resource>
   <resource key="message_error_updateItems">Error editing the locations.</resource>
   <resource key="message_success_updateItems">The locations have been edited</resource>
-  
+  <resource key="message_error_ifLocationExists">The location doesn't exist</resource>
+  <resource key="message_success_ifLocationExists">The location exist</resource>
+  <resource key="message_error_mapEdit">Error editing the location.</resource>
+  <resource key="message_success_mapEdit">The location has been edited.</resource>
+
   <resource key="location_legend_add">Add new location</resource>
   <resource key="location_legend_edit">Edit this location</resource>
   <resource key="location_name">Name</resource>

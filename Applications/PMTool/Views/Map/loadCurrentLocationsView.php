@@ -9,12 +9,14 @@
         ?></h3>
     <div class="content-container container-fluid">
         <div class="row">
-            <div class="col-lg-10 col-md-10">
+            <div class="col-xs-10">
                 <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_module]; ?>
             </div>
-            <div class="col-lg-2 col-md-2">
+            <div class="col-xs-2 map-info-col">
                 <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_info_module]; ?>
             </div>
+            <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::popup_msg_module]; ?>
+            <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::popup_prompt_module]; ?>
         </div>
     </div>
 </div><!-- END RIGHT ASIDE MAIN -->
