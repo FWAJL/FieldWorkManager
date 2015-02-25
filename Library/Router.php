@@ -109,14 +109,14 @@ class Router extends ApplicationComponent {
       $path_to_add = $this->_GetRelativePath($route->getAttribute('url'));
       // On ajoute la route au routeur.
       $route_config = array(
-          "route_xml" => $route,
-          "vars" => $vars,
-          "js_head" => $this->_GetJsFiles($route, "head", __BASEURL__),
-          "js_html" => $this->_GetJsFiles($route, "html", __BASEURL__),
-          "css" => $this->_LoadCssFiles($route, __BASEURL__),
-          "php_modules" => $this->_LoadPhpModules($route),
-          "relative_path" => $path_to_add,
-          "resxfile" => $route->getAttribute('resxfile')
+        "route_xml" => $route,
+        "vars" => $vars,
+        "js_head" => $this->_GetJsFiles($route, "head", __BASEURL__),
+        "js_html" => $this->_GetJsFiles($route, "html", __BASEURL__),
+        "css" => $this->_LoadCssFiles($route, __BASEURL__),
+        "php_modules" => $this->_LoadPhpModules($route),
+        "relative_path" => $path_to_add,
+        "resxfile" => $route->getAttribute('resxfile')
       );
       $this->addRoute(new Route($route_config));
     }
@@ -132,10 +132,10 @@ class Router extends ApplicationComponent {
     $scripts = "";
     foreach ($route->getElementsByTagName('js_file') as $script) {
       if ($script->getAttribute('use') === $destination) {
-          $scripts .= $script->getAttribute("type") === "external" ?
-            '<script type="application/javascript" src="' . $script->getAttribute('value') . '"></script>' :
-            '<script type="application/javascript" src="' . $path_to_add . $script->getAttribute('value') . '"></script>';
-      } else if($script->getAttribute('use') !== "head" && $script->getAttribute('use') !== "html") {
+        $scripts .= $script->getAttribute("type") === "external" ?
+            $this->_GetExternalScriptTag($script) :
+            $this->_GetInternalScriptTag($script, $path_to_add);
+      } else if ($script->getAttribute('use') !== "head" && $script->getAttribute('use') !== "html") {
         //Select js files from parent route
         $parent_route = $this->getRoute(__BASEURL__ . $script->getAttribute('use'));
         $scripts .= $this->_GetFilesForSibbling($parent_route, $destination, $path_to_add);
@@ -184,7 +184,7 @@ class Router extends ApplicationComponent {
         $parent_route = $this->getRoute(__BASEURL__ . $css_file->getAttribute('use'));
         $css_files .= $this->_GetFilesForSibbling($parent_route, "css", $path_to_add);
       } else {
-        $css_files .= '<link rel="stylesheet" type="text/css" href="' . $path_to_add . $css_file->getAttribute('value') . '"/>';
+        $css_files .= $this->_GetInternalCssTag($css_file, $path_to_add);
       }
     }
     return $css_files;
@@ -203,17 +203,15 @@ class Router extends ApplicationComponent {
     $modules = array();
     foreach ($route->getElementsByTagName('php_module') as $module) {
       if ($module->getAttribute('shared')) {
-        $modules[$module->getAttribute('key')] =
-                __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName
-                . $this->app->name()
-                . rtrim(\Library\Enums\ApplicationFolderName::ViewsFolderName, '/') . \Library\Enums\ApplicationFolderName::ModulesFolderName
-                . $module->getAttribute('file_name');
+        $modules[$module->getAttribute('key')] = __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName
+            . $this->app->name()
+            . rtrim(\Library\Enums\ApplicationFolderName::ViewsFolderName, '/') . \Library\Enums\ApplicationFolderName::ModulesFolderName
+            . $module->getAttribute('file_name');
       } else {
-        $modules[$module->getAttribute('key')] =
-                __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName
-                . $this->app->name()
-                . \Library\Enums\ApplicationFolderName::ViewsFolderName . $route->getAttribute('module') . \Library\Enums\ApplicationFolderName::ModulesFolderName
-                . $module->getAttribute('file_name');
+        $modules[$module->getAttribute('key')] = __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName
+            . $this->app->name()
+            . \Library\Enums\ApplicationFolderName::ViewsFolderName . $route->getAttribute('module') . \Library\Enums\ApplicationFolderName::ModulesFolderName
+            . $module->getAttribute('file_name');
       }
     }
     return $modules;
@@ -250,6 +248,29 @@ class Router extends ApplicationComponent {
         return $result;
       }
     }
+  }
+
+  private function _GetExternalScriptTag($script) {
+    return '<script type="application/javascript" src="' .
+        $script->getAttribute('value') .
+        "?v" . $this->app()->config()->get(Enums\AppSettingKeys::CurrentVersion) .
+        '"></script>';
+  }
+
+  private function _GetInternalScriptTag($script, $path_to_add) {
+    return '<script type="application/javascript" src="' .
+        $path_to_add .
+        $script->getAttribute('value') .
+        "?v" . $this->app()->config()->get(Enums\AppSettingKeys::CurrentVersion) .
+        '"></script>';
+  }
+  
+  private function _GetInternalCssTag($css_file, $path_to_add) {
+    return '<link rel="stylesheet" type="text/css" href="' . 
+        $path_to_add . 
+        $css_file->getAttribute('value') . 
+        "?v" . $this->app()->config()->get(Enums\AppSettingKeys::CurrentVersion) .
+        '"/>';
   }
 
 }
