@@ -252,7 +252,7 @@ $(document).ready(function() {
               post_data["project"]['project_name'] = $('#text_input').val();
               console.log(post_data);
               //add
-              project_manager.copyWithNewName(post_data, "project", "add");
+              project_manager.add(post_data, "project", "add", true);
 
             });
           }
