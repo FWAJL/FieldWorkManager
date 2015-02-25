@@ -67,4 +67,5 @@ class ViewVariablesKeys {
   
   //Mapping
   const map_module = "map_module";
+  const map_info_module = "map_info_module";
 }
