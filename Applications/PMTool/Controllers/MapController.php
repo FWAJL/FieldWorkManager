@@ -17,8 +17,7 @@ class MapController extends \Library\BaseController {
      */
     public function executeLoadView($rq) {
         $modules = $this->app()->router()->selectedRoute()->phpModules();
-        $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+        $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
     }
 
 
@@ -39,8 +38,7 @@ class MapController extends \Library\BaseController {
         $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
 
         $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-        $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+        $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
     }
 
 
@@ -57,8 +55,7 @@ class MapController extends \Library\BaseController {
         $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
 
         $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-        $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+        $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
     }
 
     /**
@@ -77,8 +74,7 @@ class MapController extends \Library\BaseController {
         //add view vars for breadcrumb
         $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
         $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-        $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+        $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
     }
 
     /**
@@ -125,6 +121,7 @@ class MapController extends \Library\BaseController {
         //create google maps marker items
         $items = \Applications\PMTool\Helpers\MapHelper::CreateFacilityMarkerItems(\Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->user()),$properties,$icons);
 
+        $result["ruler"] = $icons["ruler"];
         $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
         $result["items"] = $items;
         $this->SendResponseWS(
@@ -181,6 +178,8 @@ class MapController extends \Library\BaseController {
         //create google maps marker items
         $items = \Applications\PMTool\Helpers\MapHelper::CreateFacilityMarkerItems(array($sessionProject),$properties,$icons);
 
+        $result["ruler"] = $icons["ruler"];
+        $result["noLatLngIcon"] = $icons["noLatLng"];
         $result["items"] = $items;
         $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
         $this->SendResponseWS(
@@ -243,6 +242,10 @@ class MapController extends \Library\BaseController {
         //create google maps marker items
         $items = \Applications\PMTool\Helpers\MapHelper::CreateLocationMarkerItems($sessionProject,$properties,$icons);
 
+        $result["ruler"] = $icons["ruler"];
+        $result["noLatLngIcon"] = $icons["noLatLng"];
+        $result["activeIcon"] = $icons["locationActive"];
+        $result["inactiveIcon"] = $icons["locationInactive"];
         $result["items"] = $items;
         $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
 
@@ -315,7 +318,8 @@ class MapController extends \Library\BaseController {
         //create google maps marker items
         $items = \Applications\PMTool\Helpers\MapHelper::CreateTaskLocationMarkerItems($locations, $properties, $icons);
 
-
+        $result["ruler"] = $icons["ruler"];
+        $result["noLatLngIcon"] = $icons["noLatLng"];
         $result["items"] = $items;
         $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
         $this->SendResponseWS(

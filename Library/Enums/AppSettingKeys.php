@@ -37,6 +37,8 @@ abstract class AppSettingKeys {
   const GoogleMapsLocationActiveIcon = "GoogleMapsLocationActiveIcon";
   const GoogleMapsLocationInactiveIcon = "GoogleMapsLocationInactiveIcon";
   const GoogleMapsTaskIcon = "GoogleMapsTaskIcon";
+  const GoogleMapsRulerIcon = "GoogleMapsRulerIcon";
+  const GoogleMapsNoLatLngIcon = "GoogleMapsNoLatLngIcon";
 
 }
 

@@ -27,5 +27,7 @@
   <define key="GoogleMapsLocationActiveIcon" value="http://maps.google.com/mapfiles/kml/paddle/blu-circle_maps.png" />
   <define key="GoogleMapsLocationInactiveIcon" value="https://maps.gstatic.com/intl/en_us/mapfiles/markers2/measle_blue.png" />
   <define key="GoogleMapsTaskIcon" value="http://maps.google.com/mapfiles/kml/paddle/red-circle_maps.png" />
+  <define key="GoogleMapsRulerIcon" value="http://maps.google.com/mapfiles/kml/shapes/arrow_maps.png" />
+  <define key="GoogleMapsNoLatLngIcon" value="http://maps.google.com/mapfiles/kml/paddle/ltblu-blank_maps.png" />
 
 </definitions>

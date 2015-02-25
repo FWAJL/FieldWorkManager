@@ -5,7 +5,9 @@ $(document).ready(function() {
             "location_obj": {
                 "objectLatPropName": "location_lat",
                 "objectLngPropName": "location_long",
-                "objectActivePropName": "location_active"
+                "objectActivePropName": "location_active",
+                "objectNamePropName": "location_name",
+                "objectIdPropName": "location_id"
             }
         }
     };
