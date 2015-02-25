@@ -82,7 +82,7 @@
         <php_modules>
 			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
 			<php_module key="active_list_module" file_name="active_list.php" shared="true" />
-			<php_module key="popup_projectselector_module" file_name="popup_projectselector.php" shared="true" />
+			<php_module key="popup_selector_module" file_name="popup_selector.php" shared="true" />
         </php_modules>
     </route>
 	<!-- project/selectProject -->
@@ -193,7 +193,7 @@
     <!--Maps -->
     <route url="map/allProjects" module="Map" action="loadView" resxfile="map" type="ui">
         <js_files>
-            <js_file use="head" type="external" value="http://maps.google.com/maps/api/js?sensor=true" />
+            <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/services/maps.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapAllProjects.js"/>
@@ -204,13 +204,14 @@
         </css_files>
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
+            <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
         </php_modules>
     </route>
     <!--Map all projects-->
 
     <route url="map/currentProject" module="Map" action="loadCurrentView" resxfile="map" type="ui">
         <js_files>
-            <js_file use="head" type="external" value="http://maps.google.com/maps/api/js?sensor=true" />
+            <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/services/maps.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapCurrentProject.js"/>
@@ -221,13 +222,14 @@
         </css_files>
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
+            <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
         </php_modules>
     </route>
     <!--Map current project-->
 
     <route url="map/currentProjectLocations" module="Map" action="loadCurrentLocationsView" resxfile="map" type="ui">
         <js_files>
-            <js_file use="head" type="external" value="http://maps.google.com/maps/api/js?sensor=true" />
+            <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/services/maps.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapCurrentLocations.js"/>
@@ -238,13 +240,14 @@
         </css_files>
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
+            <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
         </php_modules>
     </route>
     <!--Map current project locations-->
 
     <route url="map/taskLocations" module="Map" action="loadCurrentTasksView" resxfile="map" type="ui">
         <js_files>
-            <js_file use="head" type="external" value="http://maps.google.com/maps/api/js?sensor=true" />
+            <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/services/maps.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapCurrentTasks.js"/>
@@ -255,6 +258,7 @@
         </css_files>
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
+            <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
         </php_modules>
     </route>
     <!--Map current project-->

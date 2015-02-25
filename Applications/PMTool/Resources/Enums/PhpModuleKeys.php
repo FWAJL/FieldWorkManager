@@ -33,7 +33,7 @@ class PhpModuleKeys {
   const inactive_list = "inactive_list_module";
   const popup_msg = "popup_msg_module";
   const popup_prompt = "popup_prompt_module";
-  const popup_projectselector = "popup_projectselector_module";
+  const popup_selector_module = "popup_selector_module";
   const group_list_left = "group_list_left";
   const group_list_right = "group_list_right";
 	

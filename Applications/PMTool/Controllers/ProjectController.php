@@ -57,14 +57,14 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeShowForm(\Library\HttpRequest $rq) {
-	//Get confirm msg for Project deletion from showForm screen
-	$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"project", "targetaction": "view", "operation": ["delete", "addNullCheck", "addUniqueCheck"]}', $this->app->name());
-	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::confirm_message, $confirm_msg);
-	
-	//Fetch prompt box data from xml and pass to view as an array
-	$prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"project", "targetaction": "view", "operation": ["addNullCheck"]}', $this->app->name());
-	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::prompt_message, $prompt_msg);
-		
+    //Get confirm msg for Project deletion from showForm screen
+    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"project", "targetaction": "view", "operation": ["delete", "addNullCheck", "addUniqueCheck"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
+
+    //Fetch prompt box data from xml and pass to view as an array
+    $prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"project", "targetaction": "view", "operation": ["addNullCheck"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
+
     $this->page->addVar(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
@@ -75,23 +75,23 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeListAll(\Library\HttpRequest $rq) {
-	  
+
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]); 
-	
-	//Fetch tooltip data from xml and pass to view as an array
-	$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('data-project-id', $this->app->name());
-	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::tooltip_message, $tooltip_array);
-	
-	//Get confirm msg for project deletion from context menu
-	$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"project", "targetaction": "list", "operation": ["delete","activate","addUniqueCheck"]}', $this->app->name());
-	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::confirm_message, $confirm_msg);
-	
-	//Fetch prompt box data from xml and pass to view as an array
-	$prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"project", "targetaction": "list", "operation": ["addNullCheck"]}', $this->app->name());
-	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::prompt_message, $prompt_msg);
-		
-	  
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+
+    //Fetch tooltip data from xml and pass to view as an array
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('data-project-id', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+
+    //Get confirm msg for project deletion from context menu
+    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"project", "targetaction": "list", "operation": ["delete","activate","addUniqueCheck"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
+
+    //Fetch prompt box data from xml and pass to view as an array
+    $prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"project", "targetaction": "list", "operation": ["addNullCheck"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
+
+
     $data = array(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\CommonHelper::GetListObjectsInSessionByKey($this->app()->user(), \Library\Enums\SessionKeys::ProjectObject),
@@ -104,12 +104,12 @@ class ProjectController extends \Library\BaseController {
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
     $this->page->addVar(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
-	$this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
-	$this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::prompt_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_prompt]);
+    $this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
+    $this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_prompt]);
   }
-  
+
   /**
    * Method that loads the select project view for controller
    * This is when any other action of any other controller
@@ -123,27 +123,27 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeSelectProject(\Library\HttpRequest $rq) {
-	
-	//Fetch prompt box data from xml and pass to view as an array
-	$urlParts = explode("/", $rq->getData('onSuccess'));
-	$prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"' . $urlParts[0] . '", "targetaction": "' . $urlParts[1] . '", "operation": ["checkCurrentProject"]}', $this->app->name());
-	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::prompt_message, $prompt_msg);
-	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::redirect_on_success, $_GET['onSuccess']);
-	
-	$data = array(
+
+    //Fetch prompt box data from xml and pass to view as an array
+    $urlParts = explode("/", $rq->getData('onSuccess'));
+    $prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"' . $urlParts[0] . '", "targetaction": "' . $urlParts[1] . '", "operation": ["checkCurrentProject"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::redirect_on_success, $rq->getData('onSuccess'));
+
+    $data = array(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\CommonHelper::GetListObjectsInSessionByKey($this->app()->user(), \Library\Enums\SessionKeys::ProjectObject),
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList($this->resxfile)
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
-	
-	$modules = $this->app()->router()->selectedRoute()->phpModules();
-	$this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
+
+    $modules = $this->app()->router()->selectedRoute()->phpModules();
     $this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
-	$this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::prompt_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_projectselector]);
+        \Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_prompt_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
+    $this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
+    $this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_selector_module]);
   }
 
   /**
@@ -363,7 +363,7 @@ class ProjectController extends \Library\BaseController {
     $result["dataId"] = $project->project_id();
 
     \Applications\PMTool\Helpers\TaskHelper::UnsetCurrentSessionTask($this->user());
-    
+
     $this->SendResponseWS(
         $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
@@ -371,28 +371,27 @@ class ProjectController extends \Library\BaseController {
       "step" => ($project != NULL) ? "success" : "error"
     ));
   }
-  
+
   /**
    * Method which checks for existence of the project name in the database
-  */
+   */
   public function executeIfProjectExists(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS(); // Init result
-	$project = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Project());
-	
-	//Check session if the project name is already used
-	$match = \Applications\PMTool\Helpers\CommonHelper::FindObjectByStringValue(
-				$project->project_name(), "project_name",
-				\Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->user()),
-				\Library\Enums\SessionKeys::ProjectObject
-    		);
-	$result['record_count'] = (!$match || empty($match)) ? 0 : 1;
-	
-	
-	$this->SendResponseWS(
-      $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
-        "resx_key" => $this->action(),
-        "step" => ($result['record_count'] > 0) ? "success" : "error"
-      ));
+    $project = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Project());
+
+    //Check session if the project name is already used
+    $match = \Applications\PMTool\Helpers\CommonHelper::FindObjectByStringValue(
+            $project->project_name(), "project_name", \Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->user()), \Library\Enums\SessionKeys::ProjectObject
+    );
+    $result['record_count'] = (!$match || empty($match)) ? 0 : 1;
+
+
+    $this->SendResponseWS(
+        $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+      "resx_key" => $this->action(),
+      "step" => ($result['record_count'] > 0) ? "success" : "error"
+    ));
   }
+
 }
