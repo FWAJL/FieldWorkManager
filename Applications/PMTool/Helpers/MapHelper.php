@@ -65,6 +65,8 @@ class MapHelper {
         "locationActive" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsLocationActiveIcon),
         "locationInactive" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsLocationInactiveIcon),
         "task" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsTaskIcon),
+        "ruler" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsRulerIcon),
+        "noLatLng" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsNoLatLngIcon),
     );
   }
 
@@ -112,7 +114,7 @@ class MapHelper {
    * @param string $properties <p>
    * Associative object->property list
    * @return array $markers <p>
-   * The array in Google Maps API format
+   * The array with location info and nested array "marker" in Google Maps API format
    * </p>
    */
   public static function CreateFacilityMarkerItems($sessionProjects, $properties, $icons) {
@@ -122,15 +124,23 @@ class MapHelper {
       foreach ($properties as $objectType => $objectProperties) {
         $currentObject = \Applications\PMTool\Helpers\CommonHelper::GetValueFromArrayByKey($project, $objectType);
         if (isset($objectProperties["objectLatPropName"]) && isset($objectProperties["objectLngPropName"]) && self::CheckCoordinateValue($currentObject->$objectProperties["objectLatPropName"]()) && self::CheckCoordinateValue($currentObject->$objectProperties["objectLngPropName"]())) {
-          $marker["lat"] = $currentObject->$objectProperties["objectLatPropName"]();
-          $marker["lng"] = $currentObject->$objectProperties["objectLngPropName"]();
+          $marker["marker"]["lat"] = $currentObject->$objectProperties["objectLatPropName"]();
+          $marker["marker"]["lng"] = $currentObject->$objectProperties["objectLngPropName"]();
+          $marker["id"] = $currentObject->$objectProperties["objectIdPropName"]();
+          $marker["name"] = $currentObject->$objectProperties["objectNamePropName"]();
+        } else if(isset($objectProperties["objectLatPropName"]) && isset($objectProperties["objectLngPropName"]) && self::CheckCoordinateValue($currentObject->$objectProperties["objectLatPropName"]())===false && self::CheckCoordinateValue($currentObject->$objectProperties["objectLngPropName"]())===false) {
+          $marker["noLatLng"] = true;
+          $marker["id"] = $currentObject->$objectProperties["objectIdPropName"]();
+          $marker["name"] = $currentObject->$objectProperties["objectNamePropName"]();
         } else if (isset($objectProperties["objectActivePropName"])) {
-          $marker["icon"] = ($currentObject->$objectProperties["objectActivePropName"]()) ? $icons["projectActive"] : $icons["projectInactive"];
+          $marker["marker"]["icon"] = ($currentObject->$objectProperties["objectActivePropName"]()) ? $icons["projectActive"] : $icons["projectInactive"];
+          $marker["active"] = $currentObject->$objectProperties["objectActivePropName"]();
         }
       }
-      if(isset($marker["lat"]) && isset($marker["lng"])){
-          array_push($markers, $marker);
+      if(!isset($marker["marker"]["lat"]) && !isset($marker["marker"]["lng"])){
+        unset($marker["marker"]);
       }
+      $markers[]=$marker;
     }
     return $markers;
   }
@@ -146,7 +156,7 @@ class MapHelper {
    * @param string $properties <p>
    * Associative object->property list
    * @return array $markers <p>
-   * The array in Google Maps API format
+   * The array with location info and nested array "marker" in Google Maps API format
    * </p>
    */
   public static function CreateLocationMarkerItems($sessionProject, $properties, $icons) {
@@ -156,15 +166,21 @@ class MapHelper {
     $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
     foreach ($locations as $location) {
       if (isset($locationObjectType["objectLatPropName"]) && isset($locationObjectType["objectLngPropName"]) && self::CheckCoordinateValue($location->$locationObjectType["objectLatPropName"]()) && self::CheckCoordinateValue($location->$locationObjectType["objectLngPropName"]())) {
-        $marker["lat"] = $location->$locationObjectType["objectLatPropName"]();
-        $marker["lng"] = $location->$locationObjectType["objectLngPropName"]();
+        $marker["marker"]["lat"] = $location->$locationObjectType["objectLatPropName"]();
+        $marker["marker"]["lng"] = $location->$locationObjectType["objectLngPropName"]();
+      } else {
+        $marker["noLatLng"] = true;
       }
+        $marker["id"] = $location->$locationObjectType["objectIdPropName"]();
+        $marker["name"] = $location->$locationObjectType["objectNamePropName"]();
+        $marker["active"] = $location->$locationObjectType["objectActivePropName"]();
       if (isset($locationObjectType["objectActivePropName"])) {
-        $marker["icon"] = ($location->$locationObjectType["objectActivePropName"]()) ? $icons["locationActive"] : $icons["locationInactive"];
+        $marker["marker"]["icon"] = ($location->$locationObjectType["objectActivePropName"]()) ? $icons["locationActive"] : $icons["locationInactive"];
       }
-      if(isset($marker["lat"]) && isset($marker["lng"])){
-        array_push($markers, $marker);
+      if(!isset($marker["marker"]["lat"]) && !isset($marker["marker"]["lng"])){
+        unset($marker["marker"]);
       }
+      $markers[]=$marker;
 
     }
 
@@ -187,7 +203,7 @@ class MapHelper {
    * @param string $properties <p>
    * Associative object->property list
    * @return array $markers <p>
-   * The array in Google Maps API format
+   * The array with location info and nested array "marker" in Google Maps API format
    * </p>
    */
   public static function CreateTaskLocationMarkerItems($locations, $properties, $icons) {
@@ -197,19 +213,27 @@ class MapHelper {
     foreach ($locations as $locationType => $currentLocations) {
       foreach ($currentLocations as $location) {
         if (isset($locationObjectType["objectLatPropName"]) && isset($locationObjectType["objectLngPropName"]) && self::CheckCoordinateValue($location->$locationObjectType["objectLatPropName"]()) && self::CheckCoordinateValue($location->$locationObjectType["objectLngPropName"]())) {
-          $marker["lat"] = $location->$locationObjectType["objectLatPropName"]();
-          $marker["lng"] = $location->$locationObjectType["objectLngPropName"]();
+          $marker["marker"]["lat"] = $location->$locationObjectType["objectLatPropName"]();
+          $marker["marker"]["lng"] = $location->$locationObjectType["objectLngPropName"]();
+          $marker["id"] = $location->$locationObjectType["objectIdPropName"]();
+          $marker["name"] = $location->$locationObjectType["objectNamePropName"]();
+        } else {
+          $marker["noLatLng"] = true;
+          $marker["id"] = $location->$locationObjectType["objectIdPropName"]();
+          $marker["name"] = $location->$locationObjectType["objectNamePropName"]();
         }
         if (isset($locationObjectType["objectActivePropName"])) {
           if ($locationType == \Library\Enums\SessionKeys::TaskLocations) {
-            $marker["icon"] = $icons['task'];
+            $marker["marker"]["icon"] = $icons['task'];
           } else {
-            $marker["icon"] = ($location->$locationObjectType["objectActivePropName"]()) ? $icons["locationActive"] : $icons["locationInactive"];
+            $marker["marker"]["icon"] = ($location->$locationObjectType["objectActivePropName"]()) ? $icons["locationActive"] : $icons["locationInactive"];
           }
         }
-        if(isset($marker["lat"]) && isset($marker["lng"])){
-            array_push($markers, $marker);
+        if(!isset($marker["marker"]["lat"]) && !isset($marker["marker"]["lng"])){
+          unset($marker["marker"]);
         }
+          $markers[]=$marker;
+
       }
     }
 

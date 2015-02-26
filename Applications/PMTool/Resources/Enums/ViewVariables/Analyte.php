@@ -36,6 +36,7 @@ class Analyte {
   const up_lab_analyte_lists = "up_lab_analyte_lists";
   const field_analyte_form = "field_analyte_form";
   const lab_analyte_form = "lab_analyte_form";
+  const popup_prompt_module = "popup_prompt_module";
 
   const project_field_analyte_list = "project_field_analyte_list";
   const field_analyte_list = "field_analyte_list";

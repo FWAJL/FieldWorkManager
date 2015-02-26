@@ -83,6 +83,43 @@ $(document).ready(function () {
   });//Manages the context menu for active Tasks
   
   //************************************************//
+  
+  //Adding task through promptbox from anywhere
+  if($('#promptmsg-addNullCheckAddPrompt').length !== 0)
+  {
+	  var post_data = {};
+	  utils.showPromptBox("addNullCheckAddPrompt", function(){
+		if($('#text_input').val() !== '')
+		{
+		  //Check unique
+		  task_manager.ifTaskExists($('#text_input').val(), function(record_count) {
+			if(record_count == 0)
+			{
+			  //Ok to add
+			  post_data["task"] = {};
+			  post_data["task"]["task_name"] = $('#text_input').val();
+			  task_manager.add(post_data, "task", "add");
+			}
+			else
+			{
+			  //Show alert, that task is already taken, choose new
+			  utils.togglePromptBox();
+			  utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
+				  utils.togglePromptBox();
+			  });
+			}
+		  });
+		}
+		else
+		{
+		  $('#text_input').focus();
+		}
+	  }, "promptmsg-addNullCheckAddPrompt", function(){
+		utils.redirect("task/listAll");  
+	  });
+	  
+  }
+  
   // Selection of tasks for de-activation
   var task_ids = "";
   $("#active-list .select_item, #inactive-list .select_item").click(function () {

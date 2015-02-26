@@ -43,7 +43,7 @@ class AnalyteController extends \Library\BaseController {
     $this->page()->addVar(
         "data_common_lab_analyte", $data_common_lab_analyte);
   }
-    public function executeUploadCommonAnalytes(\Library\HttpRequest $rq) {
+  public function executeUploadCommonAnalytes(\Library\HttpRequest $rq) {
     $tabsStatus = \Applications\PMTool\Helpers\CommonHelper::GetTabsStatus($this->user(), \Library\Enums\SessionKeys::TabActiveAnalyte);
     if ($tabsStatus === NULL) {
       \Applications\PMTool\Helpers\AnalyteHelper::AddTabsStatus($this->user());
@@ -89,6 +89,10 @@ class AnalyteController extends \Library\BaseController {
 
     \Applications\PMTool\Helpers\AnalyteHelper::StoreListsData($this);
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+	
+	//Fetch prompt box data from xml and pass to view as an array
+	$prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"analyte", "targetaction": "listAll", "operation": ["edit"]}', $this->app->name());
+	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
 
     //variables for the field analyte module
     $field_object_properties = \Applications\PMTool\Helpers\CommonHelper::SetDynamicPropertyNamesForDualList(

@@ -285,27 +285,48 @@ $(document).ready(function() {
   $('.btn-primary').addClass('confirmbuttons');
  };
  
- utils.showPromptBox = function(operation, callback, useThisIdForMsg) {
+ utils.showPromptBox = function(operation, callback, useThisIdForMsg, callbackOnCancel) {
    if(operation == 'addNullCheck'){
-	 if(useThisIdForMsg !== undefined && useThisIdForMsg !== "")
-	 {
-	   $('#prompt_title').html($('#' + useThisIdForMsg).val());
-	 }
-	 else
-	 {
-       $('#prompt_title').html($('#promptmsg-addNullCheck').val());
-	 }
+     $('#prompt_title').html($('#promptmsg-addNullCheck').val()); 
    }
+   else if(useThisIdForMsg !== undefined && useThisIdForMsg !== "") {
+     $('#prompt_title').html($('#' + useThisIdForMsg).val());
+   }
+   
    $('.prompt-modal').modal('show');
    //Events
    $('#prompt_ok').on('click', function(){
 	   callback();
    });
+   if(callbackOnCancel !== undefined)
+   {
+	   $('.prompt-modal').on('hidden.bs.modal', function (e) {
+		 callbackOnCancel();
+	   })
+   }
  };
  
  utils.togglePromptBox = function(){
    $('.prompt-modal').toggle();
  };
+ 
+ utils.showSelectProjectPrompt = function(clbkOk, clbkCancel){
+   if($('.pselector-modal').length !== 0)
+   {
+	 $('#prompt_title').html($('#promptmsg-checkCurrentProject').val());
+   	 //disable context menu
+   	 $(".select_item").removeClass("select_item");
+     $('.pselector-modal').modal('show');
+   }
+   
+   //Events
+   $('#prompt_ok').on('click', function(){
+	 clbkOk();
+   });
+   $('.pselector-modal').on('hidden.bs.modal', function (e) {
+     clbkCancel();
+   })
+ }
  
  utils.mergeStringsExclusive = function(target, source, delimiter) {
   delimiter = delimiter || "\n";

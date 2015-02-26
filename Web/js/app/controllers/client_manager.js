@@ -35,13 +35,18 @@ $(document).ready(function() {
  * Responsible to add a client.
  */
 (function(client_manager) {
-  client_manager.send = function(ws_url,client) {
+  client_manager.send = function(ws_url,client, isCopying) {
+    isCopying = isCopying || false;
     datacx.post(ws_url, client).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message.replace("client", "client (ID:" + reply.dataId + ")"));
-        utils.redirect("project/listAll", 3000);
+        if (!isCopying) {
+          utils.redirect("project/listAll", 3000);
+        } else {
+          utils.redirect("project/showForm?mode=edit&project_id=" + parseInt(client["project_id"]));
+        }
       }
     });
   };  

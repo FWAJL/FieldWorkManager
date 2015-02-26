@@ -29,12 +29,8 @@
       if ($object->$prop_active()) {
         echo
         "<li data-"
-        . $data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::module] 
-        . "-id=\"" 
-        . $object->
-        $prop_id()
-        . "\" class=\"active_item select_item ui-widget-content\"" 
-        . $tooltip_configstr . ">" 
+        . $data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::module] . "-id=\"" . $object->$prop_id()
+        . "\" class=\"select_item ui-widget-content\"" . $tooltip_configstr . ">" 
         . $object->$prop_name()
         . "</li>";
       }
