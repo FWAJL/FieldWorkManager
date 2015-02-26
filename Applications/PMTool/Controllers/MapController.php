@@ -332,6 +332,12 @@ class MapController extends \Library\BaseController {
     $dataPost = $this->dataPost();
     $properties = json_decode($dataPost['properties'],true);
 
+    //get facility location info
+    $defaultLocationProperties = $properties['defaultLocation'];
+
+    //unset default location because we don't want to show facility marker
+    unset($properties['defaultLocation']);
+
     //get current sesion project and refresh project's locations then get current session task
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->_GetAndStoreLocationsInSession($sessionProject);
@@ -341,7 +347,7 @@ class MapController extends \Library\BaseController {
     //create two arrays with current project's locations, one for locations linked with the task and other unlinked
     $taskLocations = \Applications\PMTool\Helpers\LocationHelper::GetAndStoreTaskLocations($this, $sessionTask);
 
-    $projectLocations = \Applications\PMTool\Helpers\LocationHelper::GetProjectLocations($this->app()->user(),$sessionProject,$taskLocations);
+    $projectLocations = \Applications\PMTool\Helpers\LocationHelper::GetProjectLocations($this,$sessionProject,$taskLocations);
     $locations = array(\Library\Enums\SessionKeys::ProjectLocations=>$projectLocations,\Library\Enums\SessionKeys::TaskLocations=>$taskLocations);
 
     //load marker icons from config
@@ -355,6 +361,13 @@ class MapController extends \Library\BaseController {
     $result["items"] = $items;
     $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
     $result["boundary"] = \Applications\PMTool\Helpers\MapHelper::GetBoundary($sessionProject);
+
+    if(count($items)==0){
+      $defaultLocations = \Applications\PMTool\Helpers\MapHelper::BuildLatAndLongCoordFromGeoObjects(array(\Applications\PMTool\Helpers\CommonHelper::GetValueFromArrayByKey($sessionProject,$defaultLocationProperties['object'])),$defaultLocationProperties['objectLatPropName'],$defaultLocationProperties['objectLngPropName']);
+      if(count($defaultLocations)>0){
+        $result['defaultPosition'] = $defaultLocations[0];
+      }
+    }
 
     $result["controls"] = array(
       "markers" => false,
