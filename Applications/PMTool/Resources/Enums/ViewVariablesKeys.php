@@ -58,7 +58,8 @@ class ViewVariablesKeys {
   const popup_msg = "popup_msg_module";
   const prompt_msg = "prompt_msg_module";
   
-  const promote_buttons = "promote_buttons";
+  const promote_buttons = "promote_buttons_module";
+  const categorized_promote_buttons = "categorized_promote_buttons_module";
   
   const currentPm = "current_pm";
   const currentProject = "current_project";

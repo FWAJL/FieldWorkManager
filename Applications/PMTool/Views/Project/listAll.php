@@ -20,7 +20,7 @@
           <?php require $active_list_module; ?>              
         </div>
         <div class="col-lg-1 col-md-1">
-        <?php //require $promote_buttons_module; ?>
+        <?php require $promote_buttons_module; ?>
         </div>
         <div  class="col-lg-5 col-md-5">
           <span class="h4"><?php echo $resx["h3_projects_inactive"]; ?></span>

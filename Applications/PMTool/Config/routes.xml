@@ -437,7 +437,7 @@
         <php_modules>
             <php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
             <php_module key="categorized_list_right" file_name="categorized_list_right.php" shared="true" />
-            <php_module key="promote_buttons" file_name="promote_buttons.php" shared="true"/>            
+            <php_module key="categorized_promote_buttons_module" file_name="categorized_promote_buttons.php" shared="true"/>            
         </php_modules>
     </route>
     <!-- service provider/listAll -->
