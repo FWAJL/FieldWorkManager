@@ -253,7 +253,6 @@ class Router extends ApplicationComponent {
   private function _GetExternalScriptTag($script) {
     return '<script type="application/javascript" src="' .
         $script->getAttribute('value') .
-        "?v" . $this->app()->config()->get(Enums\AppSettingKeys::CurrentVersion) .
         '"></script>';
   }
 
