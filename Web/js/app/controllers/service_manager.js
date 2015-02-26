@@ -106,6 +106,30 @@ $(document).ready(function() {
     $(".service_list").fadeIn('2000').removeClass("hide");
     service_manager.getList();
   });//Show "List All" panel
+  
+    var selectionParams = {
+    "listLeftId": "categorized-list-left",
+    "listRightId": "categorized-list-right",
+    "dataAttrLeft": "data-service-id",
+    "dataAttrRight": "data-service-id"
+  };
+  utils.dualListSelection(selectionParams);
+
+  $(".from-inactive-list").click(function() {
+    ajaxParams.action = "add";
+    ajaxParams.arrayOfValues = utils.getValuesFromList(selectionParams.listRightId, selectionParams.dataAttrRight, true);
+    datacx.updateItems(ajaxParams);
+  });
+  $(".from-categorized-list-left").click(function() {
+    ajaxParams.action = "remove";
+    ajaxParams.arrayOfValues = utils.getValuesFromList(selectionParams.listLeftId, selectionParams.dataAttrLeft, true);
+    datacx.updateItems(ajaxParams);
+  });
+  $("#btn_delete_service").click(function() {
+    ajaxParams.ajaxUrl = "service/delete";
+    ajaxParams.itemId = parseInt(parseInt(utils.getQueryVariable("service_id")));
+    datacx.delete(ajaxParams);
+  });
 
 });
 /***********

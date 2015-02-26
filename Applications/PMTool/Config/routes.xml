@@ -427,7 +427,7 @@
     </route>
     <!-- service provider/listAll -->   
     
-    <route url="service/listAll" module="ProjectService" action="manageServices" resxfile="service" type="ui">
+    <route url="service/listAll" module="Service" action="listAll" resxfile="service" type="ui">
         <js_files>
         <js_file use="head" value="Web/js/app/controllers/project_service.js" /> 
         </js_files>
@@ -437,7 +437,7 @@
         <php_modules>
             <php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
             <php_module key="categorized_list_right" file_name="categorized_list_right.php" shared="true" />
-            <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>            
+            <php_module key="promote_buttons" file_name="promote_buttons.php" shared="true"/>            
         </php_modules>
     </route>
     <!-- service provider/listAll -->
@@ -570,7 +570,7 @@
   
   <route url="task/location/updateItems" module="TaskLocation" action="updateItems" resxfile="task_location" type="ws" />
   <route url="task/technician/updateItems" module="TaskTechnician" action="updateItems" resxfile="task_technician" type="ws" />
-  <route url="service/updateItems" module="ProjectService" action="updateItems" resxfile="service" type="ws" />
+<!--  <route url="service/updateItems" module="ProjectService" action="updateItems" resxfile="service" type="ws" />-->
  
   <route url="service/add" module="Service" action="add" resxfile="service" type="ws" />
   <route url="service/edit" module="Service" action="edit" resxfile="service" type="ws" />
@@ -578,7 +578,7 @@
   <route url="service/getlist" module="Service" action="getList" resxfile="service" type="ws" />
   <route url="service/getItem" module="Service" action="getItem" resxfile="service" type="ws" />
   <route url="service/ifProviderExists" module="Service" action="ifProviderExists" resxfile="service" type="ws" />
-  <!--  <route url="service/updateItems" module="Service" action="updateItems" resxfile="service" type="ws" />-->
+  <route url="service/updateItems" module="Service" action="updateItems" resxfile="service" type="ws" />
   
   <route url="form/getlist" module="Form" action="getList" resxfile="service" type="ws" />
   
