@@ -66,7 +66,7 @@ class ProjectController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
 
     $this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
   /**
@@ -93,23 +93,23 @@ class ProjectController extends \Library\BaseController {
 
 
     $data = array(
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\CommonHelper::GetListObjectsInSessionByKey($this->app()->user(), \Library\Enums\SessionKeys::ProjectObject),
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList($this->resxfile)
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\CommonHelper::GetListObjectsInSessionByKey($this->app()->user(), \Library\Enums\SessionKeys::ProjectObject),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList($this->resxfile)
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 
     $modules = $this->app()->router()->selectedRoute()->phpModules();
     $this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
     $this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
     $this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::promote_buttons, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::promote_buttons]);
     $this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::promote_buttons, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::promote_buttons]);
-        \Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
+            \Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
     $this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_prompt]);
+            \Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_prompt]);
   }
 
   /**
@@ -133,19 +133,19 @@ class ProjectController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::redirect_on_success, $rq->getData('onSuccess'));
 
     $data = array(
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\CommonHelper::GetListObjectsInSessionByKey($this->app()->user(), \Library\Enums\SessionKeys::ProjectObject),
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList($this->resxfile)
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => $this->resxfile,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\CommonHelper::GetListObjectsInSessionByKey($this->app()->user(), \Library\Enums\SessionKeys::ProjectObject),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList($this->resxfile)
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 
     $modules = $this->app()->router()->selectedRoute()->phpModules();
     $this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_prompt_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
+            \Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_prompt_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
     $this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
+            \Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
     $this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_selector_module]);
+            \Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_selector_module]);
   }
 
   /**
@@ -171,10 +171,10 @@ class ProjectController extends \Library\BaseController {
     \Applications\PMTool\Helpers\ProjectHelper::AddSessionProject($this->app()->user(), $project);
 
     $this->SendResponseWS(
-        $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
-      "resx_key" => $this->action(),
-      "step" => (intval($result["dataId"])) > 0 ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+        "resx_key" => $this->action(),
+        "step" => (intval($result["dataId"])) > 0 ? "success" : "error"
     ));
   }
 
@@ -202,10 +202,10 @@ class ProjectController extends \Library\BaseController {
     //\Applications\PMTool\Helpers\ProjectHelper::UpdateUserSessionProject($this->app()->user(), $project);
 
     $this->SendResponseWS(
-        $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
-      "resx_key" => $this->action(),
-      "step" => $result_insert ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+        "resx_key" => $this->action(),
+        "step" => $result_insert ? "success" : "error"
     ));
   }
 
@@ -231,10 +231,10 @@ class ProjectController extends \Library\BaseController {
     }
 
     $this->SendResponseWS(
-        $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
-      "resx_key" => $this->action(),
-      "step" => $db_result !== FALSE ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+        "resx_key" => $this->action(),
+        "step" => $db_result !== FALSE ? "success" : "error"
     ));
   }
 
@@ -272,10 +272,10 @@ class ProjectController extends \Library\BaseController {
     if (!$isNotAjaxCall) {
       $step_result = $ProjectsSession !== NULL ? "success" : "error";
       $this->SendResponseWS(
-          $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
-        "resx_key" => $this->action(),
-        "step" => $step_result
+              $result, array(
+          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+          "resx_key" => $this->action(),
+          "step" => $step_result
       ));
     }
   }
@@ -308,10 +308,10 @@ class ProjectController extends \Library\BaseController {
 
     if ($project == NULL) {
       $this->SendResponseWS(
-          $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
-        "resx_key" => $this->action(),
-        "step" => ($project_selected !== NULL && $facility_selected !== NULL && $client_selected !== NULL) ? "success" : "error"
+              $result, array(
+          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+          "resx_key" => $this->action(),
+          "step" => ($project_selected !== NULL && $facility_selected !== NULL && $client_selected !== NULL) ? "success" : "error"
       ));
     } else {
       return $sessionProject;
@@ -332,10 +332,10 @@ class ProjectController extends \Library\BaseController {
     $project_ids = str_getcsv($this->dataPost["project_ids"], ',');
     $projects = \Applications\PMTool\Helpers\CommonHelper::GetListObjectsInSessionByKey($this->app()->user(), \Library\Enums\SessionKeys::ProjectObject);
     $matchedElements = $this->FindObjectsFromIds(
-        array(
-          "filter" => "project_id",
-          "ids" => $project_ids,
-          "objects" => $projects)
+            array(
+                "filter" => "project_id",
+                "ids" => $project_ids,
+                "objects" => $projects)
     );
 
     foreach ($matchedElements as $project) {
@@ -345,10 +345,10 @@ class ProjectController extends \Library\BaseController {
     }
 
     $this->SendResponseWS(
-        $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
-      "resx_key" => $this->action(),
-      "step" => ($rows_affected === count($project_ids)) ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+        "resx_key" => $this->action(),
+        "step" => ($rows_affected === count($project_ids)) ? "success" : "error"
     ));
   }
 
@@ -367,10 +367,10 @@ class ProjectController extends \Library\BaseController {
     \Applications\PMTool\Helpers\TaskHelper::UnsetCurrentSessionTask($this->user());
 
     $this->SendResponseWS(
-        $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
-      "resx_key" => $this->action(),
-      "step" => ($project != NULL) ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+        "resx_key" => $this->action(),
+        "step" => ($project != NULL) ? "success" : "error"
     ));
   }
 
@@ -383,16 +383,16 @@ class ProjectController extends \Library\BaseController {
 
     //Check session if the project name is already used
     $match = \Applications\PMTool\Helpers\CommonHelper::FindObjectByStringValue(
-            $project->project_name(), "project_name", \Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->user()), \Library\Enums\SessionKeys::ProjectObject
+                    $project->project_name(), "project_name", \Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->user()), \Library\Enums\SessionKeys::ProjectObject
     );
     $result['record_count'] = (!$match || empty($match)) ? 0 : 1;
 
 
     $this->SendResponseWS(
-        $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
-      "resx_key" => $this->action(),
-      "step" => ($result['record_count'] > 0) ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+        "resx_key" => $this->action(),
+        "step" => ($result['record_count'] > 0) ? "success" : "error"
     ));
   }
 
