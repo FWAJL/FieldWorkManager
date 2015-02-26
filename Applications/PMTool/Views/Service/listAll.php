@@ -11,25 +11,24 @@
       echo $resx["h3_no_project"];
     }
    ?>
-          </h3>
+    </h3>
+
     <div class="content-container container-fluid">
       <div class="row">
         <div  class="col-lg-5 col-md-5">
           <h4><?php echo $resx["h3_project_services"]; ?></h4>
-          Active List as placeholder
-          <br />
-              <?php require $active_list_module; ?> 
-<!--          Insert Project Services module here-->
+          <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_left]; ?> 
         </div>
-        <div class="col-lg-2 col-md-2">
+        <div class="col-lg-1 col-md-1">
           <div class="buttons">
-            <input type="button" value="<?php echo $resx["btn_to_inactive_project_list"]; ?>" class="btn btn-warning from-active-project-list" />
-            <input type="button" value="<?php echo $resx["btn_to_active_project_list"]; ?>"  class="btn btn-warning from-inactive-project-list" />            
+<!--            <input type="button" value="<?php //echo $resx["btn_add_to_project_list"]; ?>" class="btn btn-warning from-categorized-list-right" />
+            <input type="button" value="<?php //echo $resx["btn_remove_from_project_list"]; ?>"  class="btn btn-warning from-categorized-list-left" />            -->
+            <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_promote_buttons]; ?>
           </div>
         </div>
         <div  class="col-lg-5 col-md-5">
           <h4><?php echo $resx["h3_services_active"]; ?></h4>
-          <?php require $active_list_module; ?>              
+          <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_right]; ?>              
         </div>
       </div>
     </div>

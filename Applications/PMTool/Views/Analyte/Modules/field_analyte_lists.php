@@ -6,7 +6,7 @@
       <h4><?php echo $resx["h4_project_analytes"]; ?></h4>
       <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::project_field_analyte_list]; ?>
     </div>
-    <div class="col-lg-2 col-md-2">
+    <div class="col-lg-1 col-md-1">
       <div class="buttons">
         <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::field_analyte_buttons]; ?>
       </div>
