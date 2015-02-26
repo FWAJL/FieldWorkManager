@@ -16,7 +16,7 @@
         </div>
   </fieldset>
         </div>
-        <div class="col-lg-2 col-md-2">
+        <div class="col-lg-1 col-md-1">
           <div class="buttons">
             <input id="btn-add-location-names" type="button" value="<?php echo $resx["btn_add_location_names"] ?>" class="btn btn-primary" />
             <br/> 

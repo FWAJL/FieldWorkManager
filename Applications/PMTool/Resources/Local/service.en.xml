@@ -37,7 +37,11 @@
   <resource key="h3_services_active">All Service Providers</resource>
   <resource key="h3_project_services">Service Providers for This Project</resource> 
   <resource key="btn_remove_from_project_list">Remove from Project list</resource> 
-  <resource key="btn_add_to_project_list">Add to Project List</resource> 
+  <resource key="btn_add_to_project_list">Add to Project List</resource>
+    <resource key="btn_to_active_list">Remove from Project list</resource> 
+  <resource key="btn_to_inactive_list">Add to Project List</resource> 
+  <resource key="btn_to_pm_list">Remove from Project list</resource> 
+  <resource key="btn_to_project_list">Add to Project List</resource>   
   <resource key="h3_no_project">No Project Selected</resource> 
   
 </resources>

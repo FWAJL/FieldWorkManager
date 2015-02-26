@@ -12,7 +12,7 @@
       <h4><?php echo $resx["h4_task_technicians"]; ?></h4>
       <?php require $form_modules["group_list_left"]; ?>              
     </div>
-    <div class="col-lg-2 col-md-2">
+    <div class="col-lg-1 col-md-1">
       <div class="buttons">
         <p><input type="button" value="<?php echo $resx["btn_add_to_task"]; ?>" class="btn btn-warning from-group-list-right" /></p>
         <p><input type="button" value="<?php echo $resx["btn_remove_from_task"]; ?>"  class="btn btn-warning from-group-list-left" /></p>

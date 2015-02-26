@@ -35,6 +35,11 @@
 /* END CONTENT_CONTAINER */
 
 /* COMMON FORM ELEMENTS */
+.header4 {
+   font-size: 14px;
+   font-style: bold;
+}
+
 .welcome > * { color: #333; } 
 
 /* BUTTONS */
@@ -65,6 +70,14 @@
 /* LOCATION */
 
 /* TASK */
+
+li.category-name {
+  font-size: larger;
+  font-style: italic;
+  color: #fff;
+  background-color: #FFB445;
+  text-decoration: underline;
+}
 
 /* JS WIDGETS */
 

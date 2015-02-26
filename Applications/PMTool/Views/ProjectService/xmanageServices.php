@@ -19,10 +19,11 @@
           <h4><?php echo $resx["h3_project_services"]; ?></h4>
           <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_left]; ?> 
         </div>
-        <div class="col-lg-2 col-md-2">
+        <div class="col-lg-1 col-md-1">
           <div class="buttons">
             <input type="button" value="<?php echo $resx["btn_add_to_project_list"]; ?>" class="btn btn-warning from-categorized-list-right" />
             <input type="button" value="<?php echo $resx["btn_remove_from_project_list"]; ?>"  class="btn btn-warning from-categorized-list-left" />            
+<!-- <?php //require $form_modules[Applications\PMTool\Resources\Enums\ViewVariablesKeys::promote_buttons]; ?> -->
           </div>
         </div>
         <div  class="col-lg-5 col-md-5">
