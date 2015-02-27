@@ -13,13 +13,14 @@ $(document).ready(function() {
     callback: function(key, options) {
       if (key === "edit") {
         location_manager.retrieveLocation(options.$trigger);
-      } else if (key === "delete") {
-        location_manager.delete(parseInt(options.$trigger.attr("data-location-id")));
-      }
+    } //else if (key === "delete") {
+//        location_manager.delete(parseInt(options.$trigger.attr("data-location-id")));
+//      }
     },
     items: {
-      "edit": {name: "View Info"},
-      "delete": {name: "Delete"}
+      "edit": {name: "Edit"}
+//      ,
+//      "delete": {name: "Delete"}
     }
   });//Manages the context menu
 

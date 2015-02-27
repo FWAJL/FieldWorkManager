@@ -8,7 +8,7 @@
       if (isset($current_project)) {
         echo $current_project->project_name();
       } else {
-        echo $resx["h3_no_project"];
+        echo '<span class="noCP">' . $resx["h3_no_project"] . '</span>';
       }
       ?>
     </h3>
