@@ -46,7 +46,9 @@ class TaskHelper {
       \Applications\PMTool\Resources\Enums\TaskTabKeys::FieldAnalytesTab => "",
       \Applications\PMTool\Resources\Enums\TaskTabKeys::CocTab => "",
       \Applications\PMTool\Resources\Enums\TaskTabKeys::LabAnalytesTab => "",
-      \Applications\PMTool\Resources\Enums\TaskTabKeys::ServicesTab => ""
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::ServicesTab => "",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::FieldSampleMatrixTab => "",
+      \Applications\PMTool\Resources\Enums\TaskTabKeys::LabSampleMatrixTab => ""
     );
     $user->setAttribute(\Library\Enums\SessionKeys::TabsStatus, $tabs);
   }

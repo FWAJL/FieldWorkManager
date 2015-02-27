@@ -362,7 +362,7 @@
             <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
             <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
-            <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>            
+            <php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>            
         </php_modules>
     </route><!--  task/locations --> 
     
@@ -378,7 +378,7 @@
             <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
             <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
-            <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
+            <php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>
         </php_modules>
     </route><!--  task/technicians -->
 	
