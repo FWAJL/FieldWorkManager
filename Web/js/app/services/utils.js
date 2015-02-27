@@ -85,6 +85,18 @@ $(document).ready(function() {
   }, timeout);
  };
  /**
+  * Load a given page
+  * 
+  * @param {string} page : the relative url to load
+  * @param {integer} timeout : the time to wait before the load happens. By default, it is 0.
+  */
+ utils.loadUrl = function(page, timeout) {
+  timeout = timeout || 0;
+  setTimeout(function() {
+   window.open(config.rootFolder + page, "_SELF");
+  }, timeout);
+ };
+ /**
   * Clear a form inputs in the current dom (input text, input textarea, checkbox)
   * 
   */
