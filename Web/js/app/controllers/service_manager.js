@@ -39,6 +39,31 @@ $(document).ready(function() {
 //      "delete": {name: "Delete"}
     }
   });//Manages the context menu
+  // 
+// Replace by project_service function
+  //$(document).ready(function() {
+//  var ajaxParams = {
+//    "ajaxUrl": "service/updateItems",
+//    "redirectUrl": "service/listAll",
+//    "action": "",
+//    "arrayOfValues": "",
+//    "itemId": ""
+//  };
+//  $(".btn-warning").hide();
+//  $.contextMenu({
+//    selector: '.select_item',
+//    callback: function(key, options) {
+//      if (key === "edit") {
+//        service_manager.retrieveResource(options.$trigger);
+//      } else if (key === "delete") {
+//        service_manager.delete(parseInt(options.$trigger.attr("data-service-id")));
+//      }
+//    },
+//    items: {
+//      "edit": {name: "View Info"},
+//      "delete": {name: "Delete"}
+//    }
+//  });//Manages the context menu
 
   $("#btn-add-service-manual").click(function() {
     utils.redirect("service/showForm?mode=add&test=true");
@@ -106,6 +131,10 @@ $(document).ready(function() {
     service_manager.getItem(utils.getQueryVariable("service_id"));
   }//Load service
 
+//  if (utils.getQueryVariable("mode") === "add" && utils.getQueryVariable("test") === "true") {
+//    service_manager.fillFormWithRandomData();
+//  }
+
   $("#service_list_all").click(function() {
     utils.clearForm();
     $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
@@ -138,6 +167,32 @@ $(document).ready(function() {
   });
 });
 
+//REplaced by project service function
+//var selectionParams = {
+//    "listLeftId": "categorized-list-left",
+//    "listRightId": "categorized-list-right",
+//    "dataAttrLeft": "data-service-id",
+//    "dataAttrRight": "data-service-id"
+//  };
+//  utils.dualListSelection(selectionParams);
+//
+//  $(".from-inactive-list").click(function() {
+//    ajaxParams.action = "add";
+//    ajaxParams.arrayOfValues = utils.getValuesFromList(selectionParams.listRightId, selectionParams.dataAttrRight, true);
+//    datacx.updateItems(ajaxParams);
+//  });
+//  $(".from-categorized-list-left").click(function() {
+//    ajaxParams.action = "remove";
+//    ajaxParams.arrayOfValues = utils.getValuesFromList(selectionParams.listLeftId, selectionParams.dataAttrLeft, true);
+//    datacx.updateItems(ajaxParams);
+//  });
+//  $("#btn_delete_service").click(function() {
+//    ajaxParams.ajaxUrl = "service/delete";
+//    ajaxParams.itemId = parseInt(parseInt(utils.getQueryVariable("service_id")));
+//    datacx.delete(ajaxParams);
+//  });
+//
+//});
 /***********
  * service_manager namespace 
  * Responsible to manage services.
@@ -237,6 +292,16 @@ $(document).ready(function() {
     });
   };
 
+  /** service_manager.fillFormWithRandomData = function() {
+   utils.clearForm();
+   var number = Math.floor((Math.random() * 100) + 1);
+   $(".service_form input[name=\"service_name\"]").val("Resource " + number);
+   $("input[name=\"service_num\"]").val("n-" + number);
+   $("input[name=\"service_desc\"]").val("Description " + number);
+   $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
+   $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
+   };
+   */
   service_manager.updateServices = function(action, arrayId) {
     datacx.post("service/updateItems", {"action": action, "service_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
