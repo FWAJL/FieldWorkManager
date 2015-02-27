@@ -461,7 +461,7 @@
     
     <route url="service/listAll" module="Service" action="listAll" resxfile="service" type="ui">
         <js_files>
-        <js_file use="head" value="Web/js/app/controllers/project_service.js" /> 
+        <js_file use="head" value="Web/js/app/controllers/service_manager.js" /> 
         </js_files>
         <css_files>
             <css_file use="project" />
