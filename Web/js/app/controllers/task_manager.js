@@ -14,7 +14,7 @@ $(document).ready(function () {
       if (key === "edit") {
         task_manager.retrieveTask(options.$trigger);
       } else if (key === "set") {
-//        task_manager.retrieveTask(parseInt(options.$trigger.attr("data-task-id")));
+        task_manager.set(options.$trigger);
     }
 //        else if (key === "delete") {
 //        task_manager.delete(parseInt(options.$trigger.attr("data-task-id")));
@@ -79,10 +79,13 @@ $(document).ready(function () {
     callback: function (key, options) {
       if (key === "monitor") {
         task_manager.retrieveActiveTask(options.$trigger);
-      }   
+      } else if (key === "set") {
+        task_manager.set(options.$trigger);
+    }
     },
     items: {
-      "monitor": {name: "Check Task Status"}
+      "monitor": {name: "Check Task Status"},
+      "set": {name: "Select (as current Task)"}
     }
   });//Manages the context menu for active Tasks
   
@@ -318,6 +321,11 @@ $(document).ready(function () {
       }
     });
   };
+    
+    task_manager.set = function (element) {
+    utils.redirect("task/listAll?task_id=" + parseInt(element.attr("data-task-id")));
+  };
+  
   task_manager.getList = function () {
     datacx.post("task/getlist", null).then(function (reply) {//call AJAX method to call Task/GetList WebService
       if (reply === null || reply.result === 0) {//has an error

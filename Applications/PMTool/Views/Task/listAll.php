@@ -3,8 +3,10 @@
     <div class="task_list">
       <h3>
        <?php echo $current_project->project_name(); ?>
-       <span class="glyphicon glyphicon-chevron-right"></span>    
-          <?php echo $resx["task_list_all_header"]; ?></h3>
+       <?php if ($current_task !== NULL) { ?>
+      <span class="glyphicon glyphicon-chevron-right"></span>    
+      <?php echo $current_task->task_name();
+    } ?>
       <div class="content-container container-fluid">
         <div class="row">
           <div  class="col-lg-5 col-md-5">
