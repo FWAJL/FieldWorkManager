@@ -7,6 +7,7 @@
       <span class="glyphicon glyphicon-chevron-right"></span>    
       <?php echo $current_task->task_name();
     } ?>
+      </h3>
       <div class="content-container container-fluid">
         <div class="row">
           <div  class="col-lg-5 col-md-5">
