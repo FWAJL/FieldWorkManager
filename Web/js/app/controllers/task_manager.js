@@ -81,9 +81,7 @@ $(document).ready(function () {
   $("#active-list .select_item").ready(function () {
    if($("#active-list li").length === 1) {
    if ($(".noCT").length ) { 
-       alert("One Active Task")
        onetaskid = (parseInt($(".select_item").attr("data-task-id")));
-       alert(onetaskid);
      utils.redirect("task/listAll?task_id=" + onetaskid);   
    }
    }
