@@ -16,60 +16,10 @@ $(document).ready(function () {
       } else if (key === "set") {
         task_manager.set(options.$trigger);
     }
-//        else if (key === "delete") {
-//        task_manager.delete(parseInt(options.$trigger.attr("data-task-id")));
-//      } else if (key === "copy") {
-//		//alert(options.$trigger.html());
-//		if(task_manager.prompt_box_msg == null || task_manager.prompt_box_msg == '') {
-//			task_manager.prompt_box_msg = $('#promptmsg-addNullCheckForCopy').val();
-//		}
-//		
-//		$('#promptmsg-addNullCheckForCopy').val(task_manager.prompt_box_msg.replace('{0}', options.$trigger.html()));
-//		  utils.showPromptBox("addNullCheck", function(){
-//			if($('#text_input').val() !== '')
-//			{
-//				//Check unique
-//				
-//				task_manager.ifTaskExists($('#text_input').val(), function(record_count) {
-//					if(record_count == 0)
-//					{
-//						task_manager.getItemforCopy(parseInt(options.$trigger.attr("data-task-id")), function(reply){
-//							var post_data = {};
-//							post_data["task"] = reply.task.task_info_obj;
-//							//Remove some attributes
-//							delete(post_data["task"]['task_id']);
-//							//Set some new attributes
-//							post_data["task"]['task_name'] = $('#text_input').val();
-//							
-//							//Add
-//							task_manager.copyWithNewName(post_data, "task", "add");
-//						});
-//					}
-//					else
-//					{
-//						utils.togglePromptBox();
-//						utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
-//							utils.togglePromptBox();
-//						});
-//					}
-//				});
-//				
-//			}
-//			else
-//			{
-//				$('#text_input').focus();
-//			}
-//			
-//		}, "promptmsg-addNullCheckForCopy");
-//	  }
-	
-	  
     },
     items: {
       "edit": {name: "Edit"},
       "set": {name: "Select (as current Task)"}
-//      ,
-//      "copy": {name: "Copy"}
     }
   });//Manages the context menu for inactive Tasks
   
@@ -126,6 +76,18 @@ $(document).ready(function () {
 	  });
 	  
   }
+  
+  // If only one Active Task - auto set to current Task
+  $("#active-list .select_item").ready(function () {
+   if($("#active-list li").length === 1) {
+   if ($(".noCT").length ) { 
+       alert("One Active Task")
+       onetaskid = (parseInt($(".select_item").attr("data-task-id")));
+       alert(onetaskid);
+     utils.redirect("task/listAll?task_id=" + onetaskid);   
+   }
+   }
+});
   
   // Selection of tasks for de-activation
   var task_ids = "";

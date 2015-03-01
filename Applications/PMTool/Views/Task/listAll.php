@@ -6,7 +6,12 @@
        <?php if ($current_task !== NULL) { ?>
       <span class="glyphicon glyphicon-chevron-right"></span>    
       <?php echo $current_task->task_name();
-    } ?>
+    } else { ?>
+        <span class="glyphicon glyphicon-chevron-right"></span> 
+        <?php
+    echo '<span class="noCT">' . $resx["h3_no_task"] . '</span>';    
+    }
+    ?>
       </h3>
       <div class="content-container container-fluid">
         <div class="row">
