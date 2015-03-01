@@ -66,8 +66,9 @@
         <php_modules>
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
-	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
         </php_modules>
     </route>
@@ -111,7 +112,8 @@
         <php_modules>
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
-            <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>            
+            <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
     <!-- location/listAll -->
@@ -168,7 +170,8 @@
         <php_modules>
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
-	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+		    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
         </php_modules>
     </route>
@@ -295,7 +298,8 @@
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+	    	<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
         </php_modules>
     </route><!--   task/listAll -->
@@ -402,8 +406,8 @@
             <php_module key="field_analyte_buttons" file_name="analyte_list_buttons.php" />
             <php_module key="lab_analyte_buttons" file_name="analyte_list_buttons.php" />
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
-	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
-
+	    	<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
     <!--  analyte/ListAll -->

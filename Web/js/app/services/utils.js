@@ -13,6 +13,13 @@ $(document).ready(function() {
  $('.prompt-modal').on('shown.bs.modal', function () {
    $('#text_input').focus();
  })
+ 
+ //Tooltip
+  $('[id^="tooltipmsg_"]').each(function() {
+	var hidd_parts = $(this).attr('id').split('_');
+	$('#' + hidd_parts[1]).tooltip({placement: $(this).attr('placement'), title: $(this).val()});
+  });
+ 
 });
 /**
  * JavaScript Module to do JavaScript actions common to several views

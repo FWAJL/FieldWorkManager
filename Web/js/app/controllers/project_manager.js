@@ -98,23 +98,23 @@ $(document).ready(function() {
 
   //Auto open prompt when on selecProject view
   utils.showSelectProjectPrompt(
-          function() {
-            //utils.redirect($("#redirectOnSuccess").val());
-            if ($(".ui-selected").html() !== undefined)
-            {
-              //alert($(".ui-selected").attr("data-project-id"));
-              project_manager.setCurrentProject(parseInt($(".ui-selected").attr("data-project-id")));
-            }
-            else
-            {
-              $("#active-list").focus();
-            }
-          },
-          function() {
-            utils.redirect("project/listAll");
-          }
+	  function() {
+		//utils.redirect($("#redirectOnSuccess").val());
+		if ($(".ui-selected").html() !== undefined)
+		{
+		  //alert($(".ui-selected").attr("data-project-id"));
+		  project_manager.setCurrentProject(parseInt($(".ui-selected").attr("data-project-id")));
+		}
+		else
+		{
+		  $("#active-list").focus();
+		}
+	  },
+	  function() {
+		utils.redirect("project/listAll");
+	  }
   );
-
+  
 // If only one Active Project - auto set to current Project
    if($("#active-list li").length === 1) {
    if ($(".noCP").length ) {
