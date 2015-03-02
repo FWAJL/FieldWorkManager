@@ -115,12 +115,12 @@ $(document).ready(function() {
           }
   );
 
-// If only one Active Project - auto set to current Project
-   if($("#active-list li").length === 1) {
-   if ($(".noCP").length ) {
-   project_manager.setCurrentProject(parseInt($(".select_item").attr("data-project-id")));
-   }
-}
+//// If only one Active Project - auto set to current Project
+//   if($("#active-list li").length === 1) {
+//   if ($(".noCP").length ) {
+//   project_manager.setCurrentProject(parseInt($(".select_item").attr("data-project-id")));
+//   }
+//}
 //
 //************************************************//
   // Selection of projects
