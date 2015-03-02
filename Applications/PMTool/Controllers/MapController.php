@@ -16,6 +16,11 @@ class MapController extends \Library\BaseController {
      * @return void
      */
     public function executeLoadView($rq) {
+		
+		//Fetch tooltip data from xml and pass to view as an array
+		$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "allProjects", "targetattr": ["map-info-add","map-info-shape","map-info-ruler","question-map-h3"]}', $this->app->name());
+		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+		
         $modules = $this->app()->router()->selectedRoute()->phpModules();
         $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
     }
@@ -32,6 +37,10 @@ class MapController extends \Library\BaseController {
     public function executeLoadCurrentView($rq) {
         $modules = $this->app()->router()->selectedRoute()->phpModules();
         $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+		
+		//Fetch tooltip data from xml and pass to view as an array
+		$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "currentProject", "targetattr": ["question-map-h3"]}', $this->app->name());
+		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
         //refresh locations
         $this->_GetAndStoreLocationsInSession($sessionProject);
@@ -53,6 +62,10 @@ class MapController extends \Library\BaseController {
     public function executeLoadCurrentLocationsView($rq) {
         $modules = $this->app()->router()->selectedRoute()->phpModules();
         $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+		
+		//Fetch tooltip data from xml and pass to view as an array
+		$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "currentProjectLocations", "targetattr": ["question-map-h3"]}', $this->app->name());
+		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
         $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
         $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
@@ -70,6 +83,10 @@ class MapController extends \Library\BaseController {
         $modules = $this->app()->router()->selectedRoute()->phpModules();
         $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
         $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
+		
+		//Fetch tooltip data from xml and pass to view as an array
+		$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "taskLocations", "targetattr": ["question-map-h3"]}', $this->app->name());
+		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
         //add view vars for breadcrumb
         $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);

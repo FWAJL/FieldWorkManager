@@ -17,7 +17,12 @@ $(document).ready(function() {
  //Tooltip
   $('[id^="tooltipmsg_"]').each(function() {
 	var hidd_parts = $(this).attr('id').split('_');
-	$('#' + hidd_parts[1]).tooltip({placement: $(this).attr('placement'), title: $(this).val()});
+	if($(this).attr('delayshow') !== undefined) {
+	  $('#' + hidd_parts[1]).tooltip({placement: $(this).attr('placement'), title: $(this).val(), delay:{show:$(this).attr('delayshow'), hide:$(this).attr('delayhide')}});
+	}
+	else {
+	  $('#' + hidd_parts[1]).tooltip({placement: $(this).attr('placement'), title: $(this).val()});
+	}
   });
  
 });
