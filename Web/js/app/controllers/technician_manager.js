@@ -13,25 +13,27 @@ $(document).ready(function() {
     callback: function(key, options) {
       if (key === "edit") {
         technician_manager.retrieveTechnician(options.$trigger);
-      } else if (key === "delete") {
-				var msg = $('#confirmmsg-delete').val();
-				if (typeof msg !== typeof undefined && msg !== false) {
-					utils.showConfirmBox(msg, function(result){
-						if(result)
-						{
-							technician_manager.delete(parseInt(options.$trigger.attr("data-technician-id")));
-						}
-					});
-				}
-				else
-				{
-					technician_manager.delete(parseInt(options.$trigger.attr("data-technician-id")));
-				}
-      }
+      } 
+//      else if (key === "delete") {
+//				var msg = $('#confirmmsg-delete').val();
+//				if (typeof msg !== typeof undefined && msg !== false) {
+//					utils.showConfirmBox(msg, function(result){
+//						if(result)
+//						{
+//							technician_manager.delete(parseInt(options.$trigger.attr("data-technician-id")));
+//						}
+//					});
+//				}
+//				else
+//				{
+//					technician_manager.delete(parseInt(options.$trigger.attr("data-technician-id")));
+//				}
+//      }
     },
     items: {
-      "edit": {name: "View Info"},
-      "delete": {name: "Delete"}
+      "edit": {name: "Edit"}
+//      ,
+//      "delete": {name: "Delete"}
     }
   });//Manages the context menu
 

@@ -89,7 +89,6 @@ class FacilityController extends \Library\BaseController {
                 "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Facility, 
                 "resx_key" => $this->action(), "step" => $result_edit ? "success" : "error"));
   }
-
   /**
    * Method that edits a facility based on request params and returns the result of operation
    *

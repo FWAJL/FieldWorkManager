@@ -9,66 +9,83 @@
 $(document).ready(function () {
   $(".btn-warning").hide();
   $.contextMenu({
-    selector: '.select_item',
+    selector: '#inactive-list .select_item',
     callback: function (key, options) {
       if (key === "edit") {
         task_manager.retrieveTask(options.$trigger);
-      } else if (key === "delete") {
-        task_manager.delete(parseInt(options.$trigger.attr("data-task-id")));
-      } else if (key === "copy") {
-		//alert(options.$trigger.html());
-		if(task_manager.prompt_box_msg == null || task_manager.prompt_box_msg == '') {
-			task_manager.prompt_box_msg = $('#promptmsg-addNullCheckForCopy').val();
-		}
-		
-		$('#promptmsg-addNullCheckForCopy').val(task_manager.prompt_box_msg.replace('{0}', options.$trigger.html()));
-		  utils.showPromptBox("addNullCheck", function(){
-			if($('#text_input').val() !== '')
-			{
-				//Check unique
-				
-				task_manager.ifTaskExists($('#text_input').val(), function(record_count) {
-					if(record_count == 0)
-					{
-						task_manager.getItemforCopy(parseInt(options.$trigger.attr("data-task-id")), function(reply){
-							var post_data = {};
-							post_data["task"] = reply.task.task_info_obj;
-							//Remove some attributes
-							delete(post_data["task"]['task_id']);
-							//Set some new attributes
-							post_data["task"]['task_name'] = $('#text_input').val();
-							
-							//Add
-							task_manager.copyWithNewName(post_data, "task", "add");
-						});
-					}
-					else
-					{
-						utils.togglePromptBox();
-						utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
-							utils.togglePromptBox();
-						});
-					}
-				});
-				
-			}
-			else
-			{
-				$('#text_input').focus();
-			}
-			
-		}, "promptmsg-addNullCheckForCopy");
-	  }
+      } else if (key === "set") {
+//        task_manager.retrieveTask(parseInt(options.$trigger.attr("data-task-id")));
+    }
+//        else if (key === "delete") {
+//        task_manager.delete(parseInt(options.$trigger.attr("data-task-id")));
+//      } else if (key === "copy") {
+//		//alert(options.$trigger.html());
+//		if(task_manager.prompt_box_msg == null || task_manager.prompt_box_msg == '') {
+//			task_manager.prompt_box_msg = $('#promptmsg-addNullCheckForCopy').val();
+//		}
+//		
+//		$('#promptmsg-addNullCheckForCopy').val(task_manager.prompt_box_msg.replace('{0}', options.$trigger.html()));
+//		  utils.showPromptBox("addNullCheck", function(){
+//			if($('#text_input').val() !== '')
+//			{
+//				//Check unique
+//				
+//				task_manager.ifTaskExists($('#text_input').val(), function(record_count) {
+//					if(record_count == 0)
+//					{
+//						task_manager.getItemforCopy(parseInt(options.$trigger.attr("data-task-id")), function(reply){
+//							var post_data = {};
+//							post_data["task"] = reply.task.task_info_obj;
+//							//Remove some attributes
+//							delete(post_data["task"]['task_id']);
+//							//Set some new attributes
+//							post_data["task"]['task_name'] = $('#text_input').val();
+//							
+//							//Add
+//							task_manager.copyWithNewName(post_data, "task", "add");
+//						});
+//					}
+//					else
+//					{
+//						utils.togglePromptBox();
+//						utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
+//							utils.togglePromptBox();
+//						});
+//					}
+//				});
+//				
+//			}
+//			else
+//			{
+//				$('#text_input').focus();
+//			}
+//			
+//		}, "promptmsg-addNullCheckForCopy");
+//	  }
 	
 	  
     },
     items: {
-      "edit": {name: "View Info"},
-      "delete": {name: "Delete"},
-      "copy": {name: "Copy"}
+      "edit": {name: "Edit"},
+      "set": {name: "Select (as current Task)"}
+//      ,
+//      "copy": {name: "Copy"}
     }
-  });//Manages the context menu
-
+  });//Manages the context menu for inactive Tasks
+  
+  $(".btn-warning").hide();
+  $.contextMenu({
+    selector: '#active-list .select_item',
+    callback: function (key, options) {
+      if (key === "monitor") {
+        task_manager.retrieveActiveTask(options.$trigger);
+      }   
+    },
+    items: {
+      "monitor": {name: "Check Task Status"}
+    }
+  });//Manages the context menu for active Tasks
+  
   //************************************************//
   
   //Adding task through promptbox from anywhere
@@ -333,6 +350,9 @@ $(document).ready(function () {
   };
   task_manager.retrieveTask = function (element) {
     utils.redirect("task/showForm?mode=edit&task_id=" + parseInt(element.attr("data-task-id")));
+  };
+    task_manager.retrieveActiveTask = function (element) {
+    utils.redirect("activetask/showForm?mode=edit&task_id=" + parseInt(element.attr("data-task-id")));
   };
   task_manager.loadEditForm = function (dataWs) {
     utils.clearForm();

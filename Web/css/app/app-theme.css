@@ -90,10 +90,25 @@ h3 { margin-top: 10px; }
   height: auto;
   margin: 0 auto;
 }
+
+.container-fluid {
+    padding-right: 0px;
+    padding-top: 10px;
+}
+
+.col-md-1, .col-lg-1 {
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
 .main { border-left: solid 1px #999; }
 /* END CONTENT_CONTAINER */
 
 /* COMMON FORM ELEMENTS */
+.h4 {
+    margin-right: 3px;
+}
+
 .form_sections {
   padding: 5px;
   padding-bottom: 30px;
@@ -102,23 +117,19 @@ h3 { margin-top: 10px; }
 .form_sections input[type="button"] {
   white-space:initial;
 }
-.form_sections li label { width: 120px; }
-
-.form_sections li textarea, 
-.form_sections li text
-{ width: 240px; }
 
 textarea { resize: vertical;}
 
 .scroll-bar { overflow-y: scroll; }
 
 .list-panel {
-  height: 475px;
+  height: 500px;
   border: 1px solid #999;
+  margin-top: 10px;
 }
 
 .upload_list {
- width: 100%;   
+ width: 100%;
 }
 
 .data-form {
@@ -126,10 +137,30 @@ textarea { resize: vertical;}
   padding-top: 20px; 
 }
 
+li label {
+    width: 30%;
+    margin-bottom: 3px;
+}
+
+li input, li textarea {
+    width: 65%;
+    margin-bottom: 3px;
+}
+
+li textarea {
+    height: 6em;
+}
+
+.cbox {
+    width: 15px;
+    margin-bottom: 3px;
+}
+
 .welcome > * { padding-left: 10px; } 
 
 /* BUTTONS */
-.buttons{ margin-top: 40px; }
+.buttons { margin-top: 40px; }
+
 
 /* END COMMON FORM ELEMENTS */
 
@@ -155,6 +186,7 @@ textarea { resize: vertical;}
   padding:0;
 }
 #map-info {
+  width: 250px;
   min-width: 50px;
   max-height: 600px;
   overflow-y: auto;
@@ -280,12 +312,7 @@ textarea { resize: vertical;}
 }
 
 li.category-name {
-  font-size: larger;
-  font-style: italic;
-  color: #fff;
-  background-color: #FFB445;
   padding: 4px;
-  text-decoration: underline;
 }
 
 .context-menu-list{ margin-left: 10px; }
@@ -312,5 +339,11 @@ ui-widget-content:hover {
 
 .categorized li.ui-widget-content {
   text-indent: 10px;
+}
+
+.tooltip-inner {
+    white-space:pre-wrap;
+   width:auto;
+
 }
 /* JS WIDGETS */

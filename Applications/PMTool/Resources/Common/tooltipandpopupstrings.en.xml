@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-	<resource uicomponent="tooltip" targetattr="data-project-id" value="Click to select : Right‐click to edit" placement="bottom" />
+    	<resource uicomponent="tooltip" targetattr="active-project-header" value="Click on any Project to select : Right click to edit" placement="right" />
+        <resource uicomponent="tooltip" targetattr="inactive-project-header" value="Inactive Projects do not auto-initiate any tasks" placement="right" />
+
+<!--	<resource uicomponent="tooltip" targetattr="data-project-id" 
+                  value="Click to select 
+                         Right‐click to edit" 
+                   placement="bottom" />-->
 	<resource uicomponent="tooltip" targetattr="data-technician-id" value="Click to select : Right‐click to edit" placement="top" />
 	<resource uicomponent="tooltip" targetattr="data-anyotherentity-id" value="Click to select : Right‐click to edit" placement="bottom" />
-	<resource uicomponent="confirm" targetcontroller="project" targetaction="list" operation="delete" value="Sure to delete this project?" />
-	<resource uicomponent="confirm" targetcontroller="project" targetaction="view" operation="delete" value="Viewing a project, delete it?" />
+	
+        <resource uicomponent="confirm" targetcontroller="project" targetaction="list" operation="delete" value="Sure to delete this project?" />
+        <resource uicomponent="confirm" targetcontroller="project" targetaction="view" operation="delete" value="Viewing a project, delete it?" />
 	<resource uicomponent="confirm" targetcontroller="technician" targetaction="list" operation="delete" value="Sure to delete this technician?" />
 	<resource uicomponent="confirm" targetcontroller="technician" targetaction="view" operation="delete" value="You are viewing a technician, delete this record?" />
 	<resource uicomponent="confirm" targetcontroller="task" targetaction="list" operation="activate" value="Sure to activate this task?" />
-	<resource uicomponent="alert" targetcontroller="project" targetaction="list" operation="addUniqueCheck" value="Project name is taken. Choose a new project name." />
+	
+        <resource uicomponent="alert" targetcontroller="project" targetaction="list" operation="addUniqueCheck" value="Project name is taken. Choose a new project name." />
 	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addNullCheck" value="To open a new Project, you must provide the Project Name and Facility Address" />
 	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addUniqueCheck" value="'{0}' is already used for an existing project as a project name. Please choose another name." />
 	<resource uicomponent="alert" targetcontroller="service" targetaction="view" operation="addNullCheck" value="To add a new Service Provider, you must provide the Company Name and Category." />
@@ -16,7 +24,7 @@
 	<resource uicomponent="alert" targetcontroller="task" targetaction="view" operation="addUniqueCheck" value="Task name is taken. Choose a new Task name" />
 	<resource uicomponent="alert" targetcontroller="task" targetaction="list" operation="addUniqueCheck" value="Task name is taken. Choose a new Task name" />
 	<resource uicomponent="alert" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="addUniqueCheck" value="Location name is taken. Choose a new Location name" />
-	<resource uicomponent="prompt" targetcontroller="project" targetaction="list" operation="addNullCheck" value="This will create a copy of Project '{0}'. To continue, you must enter the new project name." />
+        <resource uicomponent="prompt" targetcontroller="project" targetaction="list" operation="addNullCheck" value="This will create a copy of Project '{0}'. To continue, you must enter the new project name." />
 	<resource uicomponent="prompt" targetcontroller="project" targetaction="view" operation="addNullCheck" value="This will create a copy of Project '{0}'. To continue, you must enter the new project name." />
 	<resource uicomponent="prompt" targetcontroller="task" targetaction="view" operation="addNullCheck" value="To continue, you must enter the new Task Name." />
 	<resource uicomponent="prompt" targetcontroller="task" targetaction="view" operation="addNullCheckForCopy" value="This will create a copy of Task '{0}'. To continue, you must enter the new task name." />

@@ -25,10 +25,10 @@
 
   <!-- Buttons -->
 
-  <resource key="task_button_add">Add this task</resource>
-  <resource key="task_button_edit">Edit this task</resource>
-  <resource key="task_button_delete">Delete this task</resource> 
-  <resource key="task_button_copy">Copy this task</resource>  
+  <resource key="task_button_add">Add</resource>
+  <resource key="task_button_edit">Edit</resource>
+  <resource key="task_button_delete">Delete</resource> 
+  <resource key="task_button_copy">Copy</resource>  
   <resource key="btn_to_inactive_list">De-activate Task</resource> 
   <resource key="btn_to_active_list">Activate Task</resource> 
   <resource key="btn_to_lead_list">Assign as a Lead Technician</resource>  

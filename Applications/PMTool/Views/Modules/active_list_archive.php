@@ -1,8 +1,8 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 <div class="scroll-bar">
-  <ol id="inactive-list" class="list-panel">
+  <ol id="active-list" class="list-panel">
     <?php
-    $tooltip_configstr = "";
+	$tooltip_configstr = "";
     if (isset($tooltip_message) && !empty($tooltip_message)) {
 	  foreach($tooltip_message as $the_msg_node)
 	  {
@@ -12,7 +12,7 @@
 		}
 	  }
 	}
-
+	
     $prop_active =
             $data
             [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties]
@@ -26,7 +26,7 @@
             [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties]
             [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name];
     foreach ($data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects] as $object) {
-      if (!$object->$prop_active()) {
+      if ($object->$prop_active()) {
         echo
         "<li data-"
         . $data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::module] . "-id=\"" . $object->$prop_id()

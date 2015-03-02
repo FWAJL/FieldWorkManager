@@ -8,7 +8,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class LocationController extends \Library\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
-
+    
   }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
@@ -24,7 +24,7 @@ class LocationController extends \Library\BaseController {
     }
     //Which module?
     $this->page->addVar(
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
   public function executeUploadList(\Library\HttpRequest $rq) {
@@ -41,33 +41,35 @@ class LocationController extends \Library\BaseController {
     //Check if a project needs to be selected in order to display this page
     if (!$sessionProject)
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
-
+    
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
     $this->_GetAndStoreLocationsInSession($sessionProject);
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
     $data = array(
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $locations,
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $locations,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 
     $modules = $this->app()->router()->selectedRoute()->phpModules();
     $this->page->addVar(
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
     $this->page->addVar(
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
+    $this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::promote_buttons, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::promote_buttons]);
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {
     $result = \Applications\PMTool\Helpers\LocationHelper::AddProjectLocation($this, $this->InitResponseWS());
     $this->SendResponseWS(
-      $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
-      "resx_key" => $this->action(),
-      "step" => $result["dataId"] > 0 ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_key" => $this->action(),
+        "step" => $result["dataId"] > 0 ? "success" : "error"
     ));
   }
 
@@ -92,10 +94,10 @@ class LocationController extends \Library\BaseController {
     }
 
     $this->SendResponseWS(
-      $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
-      "resx_key" => $this->action(),
-      "step" => $result_edit ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_key" => $this->action(),
+        "step" => $result_edit ? "success" : "error"
     ));
   }
   /*
@@ -159,10 +161,10 @@ class LocationController extends \Library\BaseController {
     }
 
     $this->SendResponseWS(
-      $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
-      "resx_key" => $this->action(),
-      "step" => $db_result !== FALSE ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_key" => $this->action(),
+        "step" => $db_result !== FALSE ? "success" : "error"
     ));
   }
 
@@ -172,10 +174,10 @@ class LocationController extends \Library\BaseController {
     if ($isAjaxCall) {
       $step_result = $result[\Library\Enums\SessionKeys::ProjectLocations] !== NULL ? "success" : "error";
       $this->SendResponseWS(
-        $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
-        "resx_key" => $this->action(),
-        "step" => $step_result
+              $result, array(
+          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+          "resx_key" => $this->action(),
+          "step" => $step_result
       ));
     }
   }
@@ -189,10 +191,10 @@ class LocationController extends \Library\BaseController {
 
     $result["location"] = $location_selected["object"];
     $this->SendResponseWS(
-      $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
-      "resx_key" => $this->action(),
-      "step" => ($location_selected !== NULL) ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_key" => $this->action(),
+        "step" => ($location_selected !== NULL) ? "success" : "error"
     ));
   }
 
@@ -200,10 +202,10 @@ class LocationController extends \Library\BaseController {
     $result = \Applications\PMTool\Helpers\LocationHelper::UpdateLocations($this);
 
     $this->SendResponseWS(
-      $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
-      "resx_key" => $this->action(),
-      "step" => ($result["rows_affected"] === count($result["location_ids"])) ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+        "resx_key" => $this->action(),
+        "step" => ($result["rows_affected"] === count($result["location_ids"])) ? "success" : "error"
     ));
   }
 
