@@ -182,13 +182,16 @@ li textarea {
   width: 100%;
   height: 600px;
 }
+.map-info-col {
+  padding:0;
+}
 #map-info {
   width: 250px;
   min-width: 50px;
   max-height: 600px;
   overflow-y: auto;
   overflow-x: hidden;
-
+  padding-left:15px;
 }
 #map-ruler {
   background-color: white;
@@ -249,7 +252,15 @@ li textarea {
   cursor: pointer;
 }
 #map-info .row {
-  width:250px;
+}
+.map-info-control-active {
+  background-color: #EEEEEE;
+}
+.map-info-marker-clickable {
+  cursor: pointer;
+}
+.map-info-marker-selected {
+  background-color: #EEEEEE;
 }
 /* END MAP */
 

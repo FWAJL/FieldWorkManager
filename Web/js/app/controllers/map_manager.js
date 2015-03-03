@@ -12,9 +12,10 @@ var polygonSettings = {
   "fillOpacity": .3,
   "strokeWeight": 3
 };
+
 /*
-* On marker drag function
-*/
+ * On marker drag function
+ */
 var markerDrag = function(e){
   var post_data = {};
   post_data.location_lat = e.latLng.lat();
@@ -33,8 +34,8 @@ var boundaryClick = function(e) {
   }
 }
 /*
-* Add marker on the map and call edit or load msg prompt
-*/
+ * Add marker on the map and call edit or load msg prompt
+ */
 var addMarkerClick = function(e) {
   if (addActive === true && selectedMarker !== 0) {
 
@@ -57,8 +58,8 @@ var addMarkerClick = function(e) {
 
     $("#marker-" + selectedMarker).find(".map-info-icon img").attr("src", selectedMarkerIcon);
     $("#marker-" + selectedMarker).removeClass('map-info-marker');
-    $("#marker-" + selectedMarker).css("background-color", "transparent");
-    $("#marker-" + selectedMarker).css("cursor", "default");
+    $("#marker-" + selectedMarker).removeClass("map-info-marker-clickable");
+    $("#marker-" + selectedMarker).removeClass("map-info-marker-selected");
 
     $("#map-info-add").trigger('click');
 
@@ -78,13 +79,14 @@ var addMarkerClick = function(e) {
   }
 }
 /*
-* Add new marker, call msg prompt
-*/
+ * Add new marker, call msg prompt
+ */
 var saveMarkerData = function (marker){
   //Adding task through promptbox from anywhere
   if($('#promptmsg-addNullCheckAddPrompt').length !== 0)
   {
     $("#prompt_ok").off('click');
+    $('#text_input').val("");
     var post_data = {};
     utils.showPromptBox("addNullCheckAddPrompt", function(){
       if($('#text_input').val() !== '')
@@ -127,8 +129,8 @@ var saveMarkerData = function (marker){
 }
 
 /*
-* Add new marker to the map-info sidebar list
-*/
+ * Add new marker to the map-info sidebar list
+ */
 var addLocationToMapInfo = function(location, marker){
   marker.id = location.location_id;
   $("#map-info").append(
@@ -264,8 +266,8 @@ function load(params) {
 
         };
         /*
-        * save boundary shape called on point edit or new shape
-        */
+         * save boundary shape called on point edit or new shape
+         */
         function saveBoundary(shape){
           var post_data = {};
           post_data.boundary = google.maps.geometry.encoding.encodePath(shape.getPath());
@@ -310,8 +312,8 @@ function load(params) {
             if (addActive === true) {
               existingActive = true;
               if (selectedMarker !== $(this).data("id")) {
-                $(".map-info-marker").css("background-color", "transparent");
-                $(this).css("background-color", "#EEEEEE");
+                $(".map-info-marker").removeClass("map-info-marker-selected");
+                $(this).addClass("map-info-marker-selected");
                 selectedMarker = $(this).data("id");
                 if ($(this).data('active') === 1) {
                   selectedMarkerIcon = activeIcon;
@@ -320,7 +322,7 @@ function load(params) {
                 }
 
               } else {
-                $(".map-info-marker").css("background-color", "transparent");
+                $(".map-info-marker").removeClass("map-info-marker-selected");
                 selectedMarker = 0;
                 existingActive = false;
               }
@@ -337,14 +339,14 @@ function load(params) {
           if(reply.controls.markers === true){
             if (toggle === false) {
               addActive = false;
-              $("#map-info-add").css("background-color", "transparent");
+              $("#map-info-add").removeClass("map-info-control-active");
               map.setOptions({draggableCursor: 'grab'});
-              $(".map-info-marker").css("cursor", "default");
+              $(".map-info-marker").removeClass("map-info-marker-clickable");
             } else {
-              $("#map-info-add").css("background-color", "#EEEEEE");
+              $("#map-info-add").addClass("map-info-control-active");
               addActive = true;
               map.setOptions({draggableCursor: 'pointer'});
-              $(".map-info-marker").css("cursor", "pointer");
+              $(".map-info-marker").addClass("map-info-marker-clickable");
             }
           }
         }
@@ -353,13 +355,13 @@ function load(params) {
         function togglePan(toggle) {
           if (toggle === false) {
             panActive = false;
-            $("#map-info-pan").css("background-color", "transparent");
-            $(".map-info-marker").css("background-color", "transparent");
+            $("#map-info-pan").removeClass("map-info-control-active");
+            $(".map-info-marker").removeClass("map-info-marker-selected");
             map.setOptions({draggableCursor: 'grab'});
             selectedMarker = 0;
           } else {
             panActive = true;
-            $("#map-info-pan").css("background-color", "#EEEEEE");
+            $("#map-info-pan").addClass("map-info-control-active");
             map.setOptions({draggableCursor: 'grab'});
           }
         }
@@ -368,7 +370,7 @@ function load(params) {
         function toggleShape(toggle) {
           if(reply.controls.shapes === true){
             if (toggle === false) {
-              $("#map-info-shape").css("background-color", "transparent");
+              $("#map-info-shape").removeClass("map-info-control-active");
               if (typeof(drawingManager) === "object") {
                 drawingManager.setDrawingMode(null);
                 drawingManager.setMap(null);
@@ -422,7 +424,7 @@ function load(params) {
                   });
                 }
               });
-              $("#map-info-shape").css("background-color", "#EEEEEE");
+              $("#map-info-shape").addClass("map-info-control-active");
             }
           }
         };
@@ -432,7 +434,7 @@ function load(params) {
             if (toggle === false) {
               $("#map-ruler").hide();
               $("#map-ruler").html("");
-              $("#map-info-ruler").css("background-color", "transparent");
+              $("#map-info-ruler").removeClass("map-info-control-active");
               if (typeof(drawingManagerRuler) === "object") {
                 drawingManagerRuler.setDrawingMode(null);
                 map.removeOverlays();
@@ -483,22 +485,10 @@ function load(params) {
                 }
               });
               rulerActive = true;
-              $("#map-info-ruler").css("background-color", "#EEEEEE");
+              $("#map-info-ruler").addClass("map-info-control-active");
               $("#map-ruler").show();
             }
           }
-        }
-
-        function addLocationToMapInfo(location, marker){
-          marker.id = location.location_id;
-          $("#map-info").append(
-            "<div id='marker-" + location.location_id
-              + "' data-id='" + location.location_id
-              + "' data-active='" + location.location_active
-              + "' class='row  map-info-row "
-              + "'><div class='map-info-icon col-md-2'><span class='map-info-icon-image'><img src='" + activeIcon
-              + "' /></span></div><div class='map-info-name col-md-9'>" + location.location_name
-              + "</div></div>");
         }
 
       }
