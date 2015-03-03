@@ -100,6 +100,46 @@ class LocationController extends \Library\BaseController {
         "step" => $result_edit ? "success" : "error"
     ));
   }
+  /*
+   * Preload location object and edit only fields set in request
+   */
+  public function executeMapEdit(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $db_result = false;
+    //get location id from post
+    $location_id = intval($this->dataPost["location_id"]);
+
+    //load location by id from session
+    $location_selected = $this->_GetLocationFromSession($location_id);
+
+    $location = $location_selected["object"];
+    if ($location !== NULL) {
+      //Init PDO
+      $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
+      $location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), $location);
+      $result["data"] = $location;
+
+      $manager = $this->managers->getManagerOf($this->module());
+      $result_edit = $manager->edit($location, "location_id");
+    }
+
+    //Clear the location and facility list from session for the connect PM
+    if ($result_edit) {
+      $locationMatch = $this->_GetLocationFromSession(intval($location->location_id()));
+      $sessionProject[\Library\Enums\SessionKeys::ProjectLocations][$locationMatch["key"]] = $location;
+      \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+    }
+
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+      "resx_key" => $this->action(),
+      "step" => $result_edit ? "success" : "error"
+    ));
+  }
+
 
   public function executeDelete(\Library\HttpRequest $rq) {
     // Init result
@@ -166,6 +206,31 @@ class LocationController extends \Library\BaseController {
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
         "resx_key" => $this->action(),
         "step" => ($result["rows_affected"] === count($result["location_ids"])) ? "success" : "error"
+    ));
+  }
+
+  public function executeIfLocationExists(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS(); // Init result
+    //get current project
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    //prepare location
+    $location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Location());
+
+    //get locations of the current project
+    $sessionLocations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
+
+    $match = \Applications\PMTool\Helpers\CommonHelper::FindObjectByStringValue(
+      $location->location_name(), "location_name",
+      $sessionLocations
+    );
+
+    $result['record_count'] = (!$match || empty($match)) ? 0 : 1;
+
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+      "resx_key" => $this->action(),
+      "step" => ($result['record_count'] > 0) ? "success" : "error"
     ));
   }
 

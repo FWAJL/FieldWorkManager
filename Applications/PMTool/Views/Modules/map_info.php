@@ -1,5 +1,5 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
-<div id="map-info" class="container">
+<div id="map-info">
   <div class="row">
     <div id="map-info-pan" class="col-md-3 col-lg-3">
       <div id="map-info-pan-icon"></div>

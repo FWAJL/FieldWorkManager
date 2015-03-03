@@ -58,7 +58,7 @@ class ProjectHelper {
       $key = \Library\Enums\SessionKeys::ProjectKey . $project_id;
       $user->setAttribute(\Library\Enums\SessionKeys::CurrentProject, $userSessionProjects[$key]);
       return array_key_exists($key, $userSessionProjects) ?
-              $userSessionProjects[$key][\Library\Enums\SessionKeys::ProjectObject] : NULL;
+          $userSessionProjects[$key][\Library\Enums\SessionKeys::ProjectObject] : NULL;
     }
     return NULL;
   }
@@ -77,19 +77,19 @@ class ProjectHelper {
 
   public static function GetCurrentSessionProject($user) {
     return $user->keyExistInSession(\Library\Enums\SessionKeys::CurrentProject) ?
-            $user->getAttribute(\Library\Enums\SessionKeys::CurrentProject) : FALSE;
+        $user->getAttribute(\Library\Enums\SessionKeys::CurrentProject) : FALSE;
   }
 
   public static function MakeSessionProject(\Applications\PMTool\Models\Dao\Project $project) {
     $arrayToReturn = array(
-        \Library\Enums\SessionKeys::ProjectObject => $project,
-        \Library\Enums\SessionKeys::FacilityObject => NULL,
-        \Library\Enums\SessionKeys::ClientObject => NULL,
-        \Library\Enums\SessionKeys::ProjectLocations => array(),
-        \Library\Enums\SessionKeys::ProjectTasks => array(),
-        \Library\Enums\SessionKeys::ProjectFieldAnalytes => array(),
-        \Library\Enums\SessionKeys::ProjectLabAnalytes => array()
-            //Add a line for data linked to a project, e.g. results/reports?
+      \Library\Enums\SessionKeys::ProjectObject => $project,
+      \Library\Enums\SessionKeys::FacilityObject => NULL,
+      \Library\Enums\SessionKeys::ClientObject => NULL,
+      \Library\Enums\SessionKeys::ProjectLocations => array(),
+      \Library\Enums\SessionKeys::ProjectTasks => array(),
+      \Library\Enums\SessionKeys::ProjectFieldAnalytes => array(),
+      \Library\Enums\SessionKeys::ProjectLabAnalytes => array()
+        //Add a line for data linked to a project, e.g. results/reports?
     );
     return $arrayToReturn;
   }
@@ -128,7 +128,7 @@ class ProjectHelper {
   public static function SetCurrentSessionProject(\Library\User $user, $sessionProject = NULL, $project_id = 0) {
     if ($project_id > 0 && $sessionProject === NULL) {
       $sessionProjects = self::GetUserSessionProjects($user);
-      $sessionTask = $sessionProjects[\Library\Enums\SessionKeys::ProjectKey . $project_id];
+      $sessionProject = $sessionProjects[\Library\Enums\SessionKeys::ProjectKey . $project_id];
     }
     $user->setAttribute(\Library\Enums\SessionKeys::CurrentProject, $sessionProject);
     return $sessionProject;
@@ -169,12 +169,20 @@ class ProjectHelper {
     $userSessionProjects = self::GetSessionProjects($user);
     if ($userSessionProjects !== NULL) {
       $currentSessionProject = $user->getAttribute(\Library\Enums\SessionKeys::CurrentProject);
-      $userSessionProjects[\Library\Enums\SessionKeys::ProjectKey . $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id()]
-              = $currentSessionProject
-              = $sessionProject;
+      $userSessionProjects[\Library\Enums\SessionKeys::ProjectKey . $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id()] = $currentSessionProject = $sessionProject;
       self::SetUserSessionProject($user, $currentSessionProject);
       self::SetSessionProjects($user, $userSessionProjects);
     }
   }
-}
 
+  public static function SetCurrentProjectIfPmHasOnlyOneAndReturnProjects(\Library\User $user) {
+    $projects = \Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($user);
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($user);
+    $project_ids = count($pm[\Library\Enums\SessionKeys::PmProjectIds]) > 0 ? $pm[\Library\Enums\SessionKeys::PmProjectIds] : FALSE;
+    if (count($projects) === 1 && $project_ids !== FALSE) {
+      \Applications\PMTool\Helpers\ProjectHelper::SetCurrentSessionProject($user, $projects[\Library\Enums\SessionKeys::ProjectKey . $project_ids[0]]);
+    }
+    return $projects;
+  }
+
+}

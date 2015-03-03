@@ -168,11 +168,12 @@ class MapHelper {
       if (isset($locationObjectType["objectLatPropName"]) && isset($locationObjectType["objectLngPropName"]) && self::CheckCoordinateValue($location->$locationObjectType["objectLatPropName"]()) && self::CheckCoordinateValue($location->$locationObjectType["objectLngPropName"]())) {
         $marker["marker"]["lat"] = $location->$locationObjectType["objectLatPropName"]();
         $marker["marker"]["lng"] = $location->$locationObjectType["objectLngPropName"]();
+        $marker["noLatLng"] = false;
       } else {
         $marker["noLatLng"] = true;
       }
         $marker["id"] = $location->$locationObjectType["objectIdPropName"]();
-        $marker["name"] = $location->$locationObjectType["objectNamePropName"]();
+        $marker["marker"]["title"] = $marker["name"] = $location->$locationObjectType["objectNamePropName"]();
         $marker["active"] = $location->$locationObjectType["objectActivePropName"]();
       if (isset($locationObjectType["objectActivePropName"])) {
         $marker["marker"]["icon"] = ($location->$locationObjectType["objectActivePropName"]()) ? $icons["locationActive"] : $icons["locationInactive"];
@@ -216,7 +217,8 @@ class MapHelper {
           $marker["marker"]["lat"] = $location->$locationObjectType["objectLatPropName"]();
           $marker["marker"]["lng"] = $location->$locationObjectType["objectLngPropName"]();
           $marker["id"] = $location->$locationObjectType["objectIdPropName"]();
-          $marker["name"] = $location->$locationObjectType["objectNamePropName"]();
+          $marker["marker"]["title"] = $marker["name"] = $location->$locationObjectType["objectNamePropName"]();
+          $marker["noLatLng"] = false;
         } else {
           $marker["noLatLng"] = true;
           $marker["id"] = $location->$locationObjectType["objectIdPropName"]();
@@ -238,6 +240,17 @@ class MapHelper {
     }
 
     return $markers;
+  }
+
+  public static function GetBoundary($sessionProject) {
+    $boundary = "";
+
+    //get facility object for current project
+    $facilityObj = $sessionProject[\Library\Enums\SessionKeys::FacilityObject];
+
+    $boundary = $facilityObj->boundary();
+
+    return $boundary;
   }
 
   private static function CheckCoordinateValue($value) {

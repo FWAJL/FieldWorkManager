@@ -26,18 +26,21 @@ $(document).ready(function() {
       };
       if (key === "edit") {
         utils.loadItem(params);
-      } else if (key === "delete") {
-        ajaxParams.ajaxUrl = "service/delete";
-        ajaxParams.itemId = parseInt(options.$trigger.attr("data-service-id"));
-        datacx.delete(ajaxParams);
-      }
+    } 
+//      else if (key === "delete") {
+//        ajaxParams.ajaxUrl = "service/delete";
+//        ajaxParams.itemId = parseInt(options.$trigger.attr("data-service-id"));
+//        datacx.delete(ajaxParams);
+//      }
     },
     items: {
-      "edit": {name: "View Info"},
-      "delete": {name: "Delete"}
+      "edit": {name: "Edit"}
+//      ,
+//      "delete": {name: "Delete"}
     }
   });//Manages the context menu
-  // Replace by project_service function
+  // 
+// Replace by project_service function
   //$(document).ready(function() {
 //  var ajaxParams = {
 //    "ajaxUrl": "service/updateItems",
