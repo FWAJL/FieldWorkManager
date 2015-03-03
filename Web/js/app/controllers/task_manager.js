@@ -14,62 +14,12 @@ $(document).ready(function () {
       if (key === "edit") {
         task_manager.retrieveTask(options.$trigger);
       } else if (key === "set") {
-//        task_manager.retrieveTask(parseInt(options.$trigger.attr("data-task-id")));
+        task_manager.set(options.$trigger);
     }
-//        else if (key === "delete") {
-//        task_manager.delete(parseInt(options.$trigger.attr("data-task-id")));
-//      } else if (key === "copy") {
-//		//alert(options.$trigger.html());
-//		if(task_manager.prompt_box_msg == null || task_manager.prompt_box_msg == '') {
-//			task_manager.prompt_box_msg = $('#promptmsg-addNullCheckForCopy').val();
-//		}
-//		
-//		$('#promptmsg-addNullCheckForCopy').val(task_manager.prompt_box_msg.replace('{0}', options.$trigger.html()));
-//		  utils.showPromptBox("addNullCheck", function(){
-//			if($('#text_input').val() !== '')
-//			{
-//				//Check unique
-//				
-//				task_manager.ifTaskExists($('#text_input').val(), function(record_count) {
-//					if(record_count == 0)
-//					{
-//						task_manager.getItemforCopy(parseInt(options.$trigger.attr("data-task-id")), function(reply){
-//							var post_data = {};
-//							post_data["task"] = reply.task.task_info_obj;
-//							//Remove some attributes
-//							delete(post_data["task"]['task_id']);
-//							//Set some new attributes
-//							post_data["task"]['task_name'] = $('#text_input').val();
-//							
-//							//Add
-//							task_manager.copyWithNewName(post_data, "task", "add");
-//						});
-//					}
-//					else
-//					{
-//						utils.togglePromptBox();
-//						utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
-//							utils.togglePromptBox();
-//						});
-//					}
-//				});
-//				
-//			}
-//			else
-//			{
-//				$('#text_input').focus();
-//			}
-//			
-//		}, "promptmsg-addNullCheckForCopy");
-//	  }
-	
-	  
     },
     items: {
       "edit": {name: "Edit"},
       "set": {name: "Select (as current Task)"}
-//      ,
-//      "copy": {name: "Copy"}
     }
   });//Manages the context menu for inactive Tasks
   
@@ -79,10 +29,13 @@ $(document).ready(function () {
     callback: function (key, options) {
       if (key === "monitor") {
         task_manager.retrieveActiveTask(options.$trigger);
-      }   
+      } else if (key === "set") {
+        task_manager.set(options.$trigger);
+    }
     },
     items: {
-      "monitor": {name: "Check Task Status"}
+      "monitor": {name: "Check Task Status"},
+      "set": {name: "Select (as current Task)"}
     }
   });//Manages the context menu for active Tasks
   
@@ -123,6 +76,16 @@ $(document).ready(function () {
 	  });
 	  
   }
+  
+  // If only one Active Task - auto set to current Task
+  $("#active-list .select_item").ready(function () {
+   if($("#active-list li").length === 1) {
+   if ($(".noCT").length ) { 
+       onetaskid = (parseInt($(".select_item").attr("data-task-id")));
+     utils.redirect("task/listAll?task_id=" + onetaskid);   
+   }
+   }
+});
   
   // Selection of tasks for de-activation
   var task_ids = "";
@@ -318,6 +281,11 @@ $(document).ready(function () {
       }
     });
   };
+    
+    task_manager.set = function (element) {
+    utils.redirect("task/listAll?task_id=" + parseInt(element.attr("data-task-id")));
+  };
+  
   task_manager.getList = function () {
     datacx.post("task/getlist", null).then(function (reply) {//call AJAX method to call Task/GetList WebService
       if (reply === null || reply.result === 0) {//has an error

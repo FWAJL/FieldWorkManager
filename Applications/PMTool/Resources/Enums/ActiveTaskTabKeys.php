@@ -12,34 +12,22 @@
 // ------------------------------------------------------------------------
 
 /**
- * Project Class
+ * TaskTabKeys Class
  *
  * @package		Applications/PMTool
  * @subpackage	Resources/Enum
- * @category	Project
+ * @category	TaskTabKeys
  * @author		FWM DEV Team
  * @link		
  */
 
 
-namespace Applications\PMTool\Resources\Enums\ViewVariables;
+namespace Applications\PMTool\Resources\Enums;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-class Technician {
-  //Modules keys
-
-  const project_buttons = "project_buttons";
-  const promote_buttons_module = "promote_buttons_module";
-
-
-  //popup confirm msgs
-  const popup_msg_module = "popup_msg_module";
-
-  //prompt msg
-  const popup_prompt_module = "popup_prompt_module";
-  //Data keys
-
-  
+class ActiveTaskTabKeys {
+  const ActiveTaskStatusTab = "attk_tst";
+  const ActiveTaskMapTab = "attk_atmt";
+  const ActiveTaskFormsTab = "attk_atft";
+  const ActiveTaskCommTab = "attk_atct";
 }
-
-?>

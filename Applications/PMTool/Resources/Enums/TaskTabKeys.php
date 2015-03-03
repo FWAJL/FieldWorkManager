@@ -38,13 +38,6 @@ class TaskTabKeys {
   const ServicesTab = "ttk_st";
 }
 
-class ActiveTaskTabKeys {
-  const ActiveTaskStatusTab = "attk_tst";
-  const ActiveTaskMapTab = "attk_atmt";
-  const ActiveTaskFormsTab = "attk_atft";
-  const ActiveTaskCommTab = "attk_atct";
-}
-
 class CompleteTaskTabKeys {
   const CompleteInfoTab = "cttk_cit";
   const CompleteTaskMapTab = "cttk_ctmt";
