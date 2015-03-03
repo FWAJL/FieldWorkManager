@@ -200,9 +200,14 @@ class TechnicianController extends \Library\BaseController {
     foreach ($matchedElements as $technician) {
       //With the line below, you will update the item $pm[\Library\Enums\SessionKeys::PmTechnicians]
       //Therefore, you just need to save the variable $pm at the end of the processing
-      $technician->setTechnician_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
+      $active = ($this->dataPost["action"] === "active") ? TRUE : FALSE;
+      $technician->setTechnician_active($active);
       $manager = $this->managers->getManagerOf($this->module);
       $rows_affected += $manager->edit($technician, "technician_id") ? 1 : 0;
+      $task_technician = new \Applications\PMTool\Models\Dao\Task_technician();
+      $task_technician->setTechnician_id($technician->technician_id());
+      $manager = $this->managers->getManagerOf('TaskTechnician');
+      $manager->delete($task_technician,'technician_id');
     }
     if ($rows_affected === count($technician_ids)) {
       \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->app()->user(), $pm);

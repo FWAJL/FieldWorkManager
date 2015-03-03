@@ -196,7 +196,7 @@
     <!--Maps -->
     <route url="map/allProjects" module="Map" action="loadView" resxfile="map" type="ui">
         <js_files>
-            <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
+            <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/controllers/map_manager.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapAllProjects.js"/>
@@ -214,7 +214,7 @@
 
     <route url="map/currentProject" module="Map" action="loadCurrentView" resxfile="map" type="ui">
         <js_files>
-            <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
+            <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/controllers/map_manager.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapCurrentProject.js"/>
@@ -232,7 +232,7 @@
 
     <route url="map/currentProjectLocations" module="Map" action="loadCurrentLocationsView" resxfile="map" type="ui">
         <js_files>
-            <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
+            <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/controllers/map_manager.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapCurrentLocations.js"/>
@@ -252,7 +252,7 @@
 
     <route url="map/taskLocations" module="Map" action="loadCurrentTasksView" resxfile="map" type="ui">
         <js_files>
-            <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
+            <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/controllers/map_manager.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapCurrentTasks.js"/>

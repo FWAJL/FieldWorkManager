@@ -124,12 +124,11 @@ class MapController extends \Library\BaseController {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
 
     //load marker icons from config
-    $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->config());
+    $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->relative_path,$this->app()->imageUtil,$this->app()->config());
 
     //create google maps marker items
     $items = \Applications\PMTool\Helpers\MapHelper::CreateFacilityMarkerItems(\Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->user()),$properties,$icons);
 
-    $result["ruler"] = $icons["ruler"];
     $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
     $result["items"] = $items;
     $result["noLatLngIcon"] = $icons["noLatLng"];
@@ -189,12 +188,11 @@ class MapController extends \Library\BaseController {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
 
     //load marker icons from config
-    $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->config());
+    $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->relative_path,$this->app()->imageUtil,$this->app()->config());
 
     //create google maps marker items
     $items = \Applications\PMTool\Helpers\MapHelper::CreateFacilityMarkerItems(array($sessionProject),$properties,$icons);
 
-    $result["ruler"] = $icons["ruler"];
     $result["noLatLngIcon"] = $icons["noLatLng"];
     $result["items"] = $items;
     $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
@@ -261,12 +259,11 @@ class MapController extends \Library\BaseController {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
 
     //load marker icons from config
-    $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->config());
+    $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->relative_path,$this->app()->imageUtil,$this->app()->config());
 
     //create google maps marker items
     $items = \Applications\PMTool\Helpers\MapHelper::CreateLocationMarkerItems($sessionProject,$properties,$icons);
 
-    $result["ruler"] = $icons["ruler"];
     $result["noLatLngIcon"] = $icons["noLatLng"];
     $result["activeIcon"] = $icons["locationActive"];
     $result["inactiveIcon"] = $icons["locationInactive"];
@@ -351,12 +348,11 @@ class MapController extends \Library\BaseController {
     $locations = array(\Library\Enums\SessionKeys::ProjectLocations=>$projectLocations,\Library\Enums\SessionKeys::TaskLocations=>$taskLocations);
 
     //load marker icons from config
-    $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->config());
+    $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->relative_path,$this->app()->imageUtil,$this->app()->config());
 
     //create google maps marker items
     $items = \Applications\PMTool\Helpers\MapHelper::CreateTaskLocationMarkerItems($locations, $properties, $icons);
 
-    $result["ruler"] = $icons["ruler"];
     $result["noLatLngIcon"] = $icons["noLatLng"];
     $result["items"] = $items;
     $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
