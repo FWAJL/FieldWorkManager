@@ -90,6 +90,46 @@ class FacilityController extends \Library\BaseController {
                 "resx_key" => $this->action(), "step" => $result_edit ? "success" : "error"));
   }
   /**
+   * Method that edits a facility based on request params and returns the result of operation
+   *
+   * @param \Library\HttpRequest $rq
+   * @return JSON
+   */
+  public function executeMapEdit(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $db_result = false;
+
+    //load facility for current project
+    $facility = $sessionProject[\Library\Enums\SessionKeys::FacilityObject];
+
+    if ($facility !== NULL) {
+      //Init PDO
+      $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
+      $facility = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), $facility);
+      $result["data"] = $facility;
+
+      $manager = $this->managers->getManagerOf($this->module());
+      $result_edit = $manager->edit($facility, "facility_id");
+    }
+
+    //Clear the location and facility list from session for the connect PM
+    if ($result_edit) {
+      $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+      $sessionProject[\Library\Enums\SessionKeys::FacilityObject] = $facility;
+      \Applications\PMTool\Helpers\ProjectHelper::UpdateUserSessionProject($this->app()->user(), $sessionProject);
+    }
+
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Facility,
+      "resx_key" => $this->action(),
+      "step" => $result_edit ? "success" : "error"
+    ));
+  }
+
+  /**
    * Method that delete a facility and returns the result of operation
    * 
    * @param \Library\HttpRequest $rq

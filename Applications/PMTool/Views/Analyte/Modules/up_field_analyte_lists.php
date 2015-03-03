@@ -3,8 +3,7 @@
 <div class="content-container container-fluid">
   <div class="row">
     <div  class="col-lg-5 col-md-5">
-      <span class="h4"><?php echo $resx["h4_analyte_form"]; ?></span>
-      <span class="glyphicon glyphicon-question-sign" id="activequestion-fieldanalyte-uploadList-headerH4"></span>
+      <h4><?php echo $resx["h4_analyte_form"]; ?></h4>
       <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::analyte_buttons]; ?>
       <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::field_analyte_form]; ?>
     </div>
@@ -12,8 +11,7 @@
       <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::common_analyte_buttons]; ?>
     </div>
     <div  class="col-lg-5 col-md-5">
-      <span class="h4"><?php echo $resx["h4_common_field_analytes"]; ?></span>
-      <span class="glyphicon glyphicon-question-sign" id="inactivequestion-fieldanalyte-uploadList-headerH4"></span>
+      <h4><?php echo $resx["h4_common_field_analytes"]; ?></h4>
       <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::common_field_analyte_list]; ?>
     </div>
   </div>

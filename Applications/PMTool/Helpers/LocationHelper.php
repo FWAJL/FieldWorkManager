@@ -162,19 +162,26 @@ class LocationHelper {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($caller->user());
     $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
     $matchedElements = $caller->FindObjectsFromIds(
-            array(
-                "filter" => "location_id",
-                "ids" => $result["location_ids"],
-                "objects" => $locations)
+      array(
+        "filter" => "location_id",
+        "ids" => $result["location_ids"],
+        "objects" => $locations)
     );
     $result["rows_affected"] = 0;
     foreach ($matchedElements as $location) {
-      $location->setLocation_active($dataPost["action"] === "active" ? TRUE : FALSE);
+      $active = ($dataPost["action"] === "active")?TRUE:FALSE;
+      $location->setLocation_active($active);
       $manager = $caller->managers()->getManagerOf($caller->module());
       $result["rows_affected"] += $manager->edit($location, "location_id") ? 1 : 0;
-      self::DeleteLocation($caller, "TaskLocation", $location, "location_id");
+      if($active === false){
+        $task_location = new \Applications\PMTool\Models\Dao\Task_location();
+        $task_location->setLocation_id($location->location_id());
+        $manager = $caller->managers()->getManagerOf("TaskLocation");
+        $manager->delete($task_location,"location_id");
       }
-    \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($caller->user(), $sessionProject);
+      //self::DeleteLocation($caller,'TaskLocation',$location,'location_id');
+    }
+    self::GetLocationList($caller, $sessionProject);
     return $result;
   }
   

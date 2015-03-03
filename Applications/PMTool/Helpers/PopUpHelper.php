@@ -48,18 +48,7 @@ class PopUpHelper {
 		  in_array($msg->getAttribute('targetattr'), $param_arr['targetattr'])
 		  )
 	  {
-		//Check if delay exists as an attribute
-		$delayshow = $msg->getAttribute('delayshow');
-		if($delayshow != '') {
-			//Check if delayhide exists in xml, then use it, else use 0 by default
-			$delayhide = ($msg->getAttribute('delayhide') != '') ? $msg->getAttribute('delayhide') : 0;
-			
-			$msgconfig_arr = array('value' => $msg->getAttribute('value'), 'targetattr' => $msg->getAttribute('targetattr'), 'placement' => $msg->getAttribute('placement'), 'delayshow' => $delayshow, 'delayhide' => $delayhide);
-		}
-		else {
-			$msgconfig_arr = array('value' => $msg->getAttribute('value'), 'targetattr' => $msg->getAttribute('targetattr'), 'placement' => $msg->getAttribute('placement'));
-		}
-		array_push($msg_array, array('tooltipmsg' => $msgconfig_arr));
+		array_push($msg_array, array('tooltipmsg' => array('value' => $msg->getAttribute('value'), 'targetattr' => $msg->getAttribute('targetattr'), 'placement' => $msg->getAttribute('placement'))));
 	  }
 	}
 	  

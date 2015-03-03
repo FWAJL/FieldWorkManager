@@ -142,9 +142,6 @@
         <css_files>
             <css_file use="project" />
         </css_files>
-		<php_modules>
-            <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
-        </php_modules>
     </route>
     <!-- location/uploadList -->
     
@@ -204,7 +201,7 @@
         <js_files>
             <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
-            <js_file use="html" value="Web/js/app/services/maps.js"/>
+            <js_file use="html" value="Web/js/app/controllers/map_manager.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapAllProjects.js"/>
         </js_files>
         <css_files>
@@ -214,7 +211,6 @@
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
-			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
     <!--Map all projects-->
@@ -223,7 +219,7 @@
         <js_files>
             <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
-            <js_file use="html" value="Web/js/app/services/maps.js"/>
+            <js_file use="html" value="Web/js/app/controllers/map_manager.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapCurrentProject.js"/>
         </js_files>
         <css_files>
@@ -233,7 +229,6 @@
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
-			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
     <!--Map current project-->
@@ -242,7 +237,7 @@
         <js_files>
             <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
-            <js_file use="html" value="Web/js/app/services/maps.js"/>
+            <js_file use="html" value="Web/js/app/controllers/map_manager.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapCurrentLocations.js"/>
         </js_files>
         <css_files>
@@ -252,7 +247,8 @@
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
-			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+            <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
         </php_modules>
     </route>
     <!--Map current project locations-->
@@ -261,7 +257,7 @@
         <js_files>
             <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
-            <js_file use="html" value="Web/js/app/services/maps.js"/>
+            <js_file use="html" value="Web/js/app/controllers/map_manager.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapCurrentTasks.js"/>
         </js_files>
         <css_files>
@@ -271,7 +267,6 @@
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
-			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
     <!--Map current project-->
@@ -324,15 +319,14 @@
             <php_module key="task_info_lists" file_name="task_info_lists.php" />
             <php_module key="task_form" file_name="task_form.php" />
             <php_module key="task_buttons" file_name="task_buttons.php" />
-	    	<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
             <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
-			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route><!--  task/showAddForm -->
     
-        <route url="activetask/showForm" module="ActiveTask" action="showForm" resxfile="task" type="ui">
+        <route url="activetask/showForm" module="ActiveTask" action="showForm" resxfile="active_task" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
+            <js_file use="head" value="Web/js/app/controllers/active_task.js" />
         </js_files>
         <css_files>
             <css_file use="project" />
@@ -342,11 +336,11 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="active_task_info_lists" file_name="active_task_info_lists.php" />
             <php_module key="active_task_form" file_name="active_task_form.php" />
-            <php_module key="task_buttons" file_name="task_buttons.php" />
-			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+            <php_module key="active_task_buttons" file_name="active_task_buttons.php" />
+	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+            <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
         </php_modules>
-    </route><!--  task/showAddForm -->
+    </route><!--  activetask/showAddForm -->
 	
 	<route url="task/addPrompt" module="Task" action="addPrompt" resxfile="task" type="ui">
         <js_files>
@@ -391,7 +385,6 @@
             <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>
-			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route><!--  task/technicians -->
 	
@@ -440,7 +433,7 @@
             <php_module key="common_analyte_buttons" file_name="common_analyte_buttons.php" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true"/>
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
-			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+
         </php_modules>
     </route>
     <!-- analyte/uploadList -->
@@ -474,7 +467,7 @@
     
     <route url="service/listAll" module="Service" action="listAll" resxfile="service" type="ui">
         <js_files>
-        <js_file use="head" value="Web/js/app/controllers/project_service.js" /> 
+        <js_file use="head" value="Web/js/app/controllers/service_manager.js" /> 
         </js_files>
         <css_files>
             <css_file use="project" />
@@ -482,8 +475,7 @@
         <php_modules>
             <php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
             <php_module key="categorized_list_right" file_name="categorized_list_right.php" shared="true" />
-            <php_module key="categorized_promote_buttons_module" file_name="categorized_promote_buttons.php" shared="true"/>
-			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="categorized_promote_buttons_module" file_name="categorized_promote_buttons.php" shared="true"/>            
         </php_modules>
     </route>
     <!-- service provider/listAll -->
@@ -584,7 +576,8 @@
   <route url="facility/delete" module="Facility" action="delete" resxfile="facility" type="ws" />
   <route url="facility/getlist" module="Facility" action="getList" resxfile="facility" type="ws" />
   <route url="facility/getItem" module="Facility" action="getItem" resxfile="facility" type="ws" />
-  
+  <route url="facility/mapEdit" module="Facility" action="mapEdit" resxfile="facility" type="ws" />
+
   <route url="client/add" module="Client" action="add" resxfile="client" type="ws" />
   <route url="client/edit" module="Client" action="edit" resxfile="client" type="ws" />
   <route url="client/delete" module="Client" action="delete" resxfile="client" type="ws" />
@@ -597,7 +590,9 @@
   <route url="location/getlist" module="Location" action="getList" resxfile="location" type="ws" />
   <route url="location/getItem" module="Location" action="getItem" resxfile="location" type="ws" />
   <route url="location/updateItems" module="Location" action="updateItems" resxfile="location" type="ws" />
-  
+  <route url="location/ifLocationExists" module="Location" action="ifLocationExists" resxfile="location" type="ws" />
+  <route url="location/mapEdit" module="Location" action="mapEdit" resxfile="location" type="ws" />
+
   <route url="technician/add" module="Technician" action="add" resxfile="technician" type="ws" />
   <route url="technician/edit" module="Technician" action="edit" resxfile="technician" type="ws" />
   <route url="technician/delete" module="Technician" action="delete" resxfile="technician" type="ws" />

@@ -43,7 +43,8 @@ class ProjectController extends \Library\BaseController {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
     } else {
       $this->executeGetList($rq, true); //Get and store projects to session (even if there is none)
-      if (count(\Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->app()->user())) > 0) {
+      
+      if (count(\Applications\PMTool\Helpers\ProjectHelper::SetCurrentProjectIfPmHasOnlyOneAndReturnProjects($this->user())) > 0) {
         $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
       } else {
         $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsShowForm . "?mode=add&test=true");
@@ -75,7 +76,7 @@ class ProjectController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeListAll(\Library\HttpRequest $rq) {
-
+    \Applications\PMTool\Helpers\ProjectHelper::SetCurrentProjectIfPmHasOnlyOneAndReturnProjects($this->user());
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 

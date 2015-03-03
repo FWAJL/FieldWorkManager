@@ -14,75 +14,6 @@ $(document).ready(function() {
       if (key === "edit") {
         project_manager.retrieveProject(options.$trigger);
       }
-//   else if (key === "delete") {
-//    var msg = $('#confirmmsg-delete').val();
-//    if (typeof msg !== typeof undefined && msg !== false) {
-//     utils.showConfirmBox(msg, function(result) {
-//      if (result)
-//      {
-//       project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
-//      }
-//     });
-//    }
-//    else
-//    {
-//     project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
-//    }
-//   }
-//	else if (key == "copy")
-//  	{
-//		//alert(options.$trigger.html());
-//		if(project_manager.prompt_box_msg == null || project_manager.prompt_box_msg == '') {
-//			project_manager.prompt_box_msg = $('#promptmsg-addNullCheck').val();
-//		}
-//		
-//		$('#promptmsg-addNullCheck').val(project_manager.prompt_box_msg.replace('{0}', options.$trigger.html()));
-//		utils.showPromptBox("addNullCheck", function(){
-//			if($('#text_input').val() !== '')
-//			{
-//				//Check unique
-//				
-//				project_manager.ifProjectExists($('#text_input').val(), function(record_count) {
-//					if(record_count == 0)
-//					{
-//						project_manager.getItemforCopy(parseInt(options.$trigger.attr("data-project-id")), function(reply){
-//							var post_data = {};
-//							post_data["project"] = reply.sessionProject.project_obj;
-//							post_data["facility"] = reply.sessionProject.facility_obj;
-//							post_data["client"] = reply.sessionProject.client_obj;
-//							
-//							//Remove some attributes
-//							delete(post_data["project"]['project_id']);
-//							delete(post_data["facility"]['project_id']);
-//							delete(post_data["facility"]['facility_id']);
-//							delete(post_data["client"]['project_id']);
-//							delete(post_data["client"]['client_id']);
-//							//Set some new attributes
-//							post_data["project"]['project_name'] = $('#text_input').val();
-//							console.log(post_data);
-//							//add
-//							project_manager.copyWithNewName(post_data, "project", "add");
-//							
-//						});
-//					}
-//					else
-//					{
-//						utils.togglePromptBox();
-//						utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
-//							utils.togglePromptBox();
-//						});
-//					}
-//				});
-//				
-//			}
-//			else
-//			{
-//				$('#text_input').focus();
-//			}
-//			
-//		});
-//		
-//   }
       else if (key === "set")
       {
         project_manager.setCurrentProject(parseInt(options.$trigger.attr("data-project-id")));
@@ -90,37 +21,35 @@ $(document).ready(function() {
     },
     items: {
       "edit": {name: "Edit"},
-//   "delete": {name: "Delete"},
-//   "copy": {name: "Copy"},
       "set": {name: "Select (as current Project)"}
     }
   });//Manages the context menu
 
   //Auto open prompt when on selecProject view
   utils.showSelectProjectPrompt(
-	  function() {
-		//utils.redirect($("#redirectOnSuccess").val());
-		if ($(".ui-selected").html() !== undefined)
-		{
-		  //alert($(".ui-selected").attr("data-project-id"));
-		  project_manager.setCurrentProject(parseInt($(".ui-selected").attr("data-project-id")));
-		}
-		else
-		{
-		  $("#active-list").focus();
-		}
-	  },
-	  function() {
-		utils.redirect("project/listAll");
-	  }
+          function() {
+            //utils.redirect($("#redirectOnSuccess").val());
+            if ($(".ui-selected").html() !== undefined)
+            {
+              //alert($(".ui-selected").attr("data-project-id"));
+              project_manager.setCurrentProject(parseInt($(".ui-selected").attr("data-project-id")));
+            }
+            else
+            {
+              $("#active-list").focus();
+            }
+          },
+          function() {
+            utils.redirect("project/listAll");
+          }
   );
-  
-// If only one Active Project - auto set to current Project
-   if($("#active-list li").length === 1) {
-   if ($(".noCP").length ) {
-   project_manager.setCurrentProject(parseInt($(".select_item").attr("data-project-id")));
-   }
-}
+
+//// If only one Active Project - auto set to current Project
+//   if($("#active-list li").length === 1) {
+//   if ($(".noCP").length ) {
+//   project_manager.setCurrentProject(parseInt($(".select_item").attr("data-project-id")));
+//   }
+//}
 //
 //************************************************//
   // Selection of projects
