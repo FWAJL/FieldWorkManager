@@ -41,6 +41,7 @@
   <resource key="h3_tasks_active">Active tasks</resource>
   <resource key="h3_tasks_inactive">Inactive tasks</resource> 
   <resource key="task_active">Active</resource> 
+  <resource key="h3_no_task">No Task Selected</resource> 
   
   <!-- Tabs -->  
   

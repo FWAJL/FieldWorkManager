@@ -320,9 +320,9 @@
         </php_modules>
     </route><!--  task/showAddForm -->
     
-        <route url="activetask/showForm" module="ActiveTask" action="showForm" resxfile="task" type="ui">
+        <route url="activetask/showForm" module="ActiveTask" action="showForm" resxfile="active_task" type="ui">
         <js_files>
-            <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
+            <js_file use="head" value="Web/js/app/controllers/active_task.js" />
         </js_files>
         <css_files>
             <css_file use="project" />
@@ -332,11 +332,11 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="active_task_info_lists" file_name="active_task_info_lists.php" />
             <php_module key="active_task_form" file_name="active_task_form.php" />
-            <php_module key="task_buttons" file_name="task_buttons.php" />
-			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+            <php_module key="active_task_buttons" file_name="active_task_buttons.php" />
+	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+            <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
         </php_modules>
-    </route><!--  task/showAddForm -->
+    </route><!--  activetask/showAddForm -->
 	
 	<route url="task/addPrompt" module="Task" action="addPrompt" resxfile="task" type="ui">
         <js_files>
@@ -463,7 +463,7 @@
     
     <route url="service/listAll" module="Service" action="listAll" resxfile="service" type="ui">
         <js_files>
-        <js_file use="head" value="Web/js/app/controllers/project_service.js" /> 
+        <js_file use="head" value="Web/js/app/controllers/service_manager.js" /> 
         </js_files>
         <css_files>
             <css_file use="project" />
