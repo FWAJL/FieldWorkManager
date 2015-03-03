@@ -7,7 +7,7 @@
       <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::analyte_buttons]; ?>
       <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::lab_analyte_form]; ?>
     </div>
-    <div class="col-lg-2 col-md-2">
+    <div class="col-lg-1 col-md-1">
       <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::common_analyte_buttons]; ?>
     </div>
     <div  class="col-lg-5 col-md-5">

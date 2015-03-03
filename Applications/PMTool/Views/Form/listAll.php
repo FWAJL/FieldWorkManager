@@ -17,7 +17,7 @@
       ?>
   </div>
         </div>
-        <div class="col-lg-2 col-md-2">
+        <div class="col-lg-1 col-md-1">
           <div class="buttons">
 <input type="button" id="btn_add_form" class="form_add btn btn-default" value="<?php echo $resx["form_button_add"]; ?>" />
 <input type="button" id="btn_edit_form" class="form_edit hide btn btn-default" value="<?php echo $resx["form_button_edit"]; ?>" />

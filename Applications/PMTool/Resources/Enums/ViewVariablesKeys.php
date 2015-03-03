@@ -44,16 +44,14 @@ class ViewVariablesKeys {
   const property_id = "prop_id";
   const property_name = "prop_name";
   const property_active = "prop_active";
-  //For tooltip
-  const tooltip_message = "tooltip_message"; 
-	//Form messages in confirm boxes
-	const confirm_message = "confirm_message"; 
 
   const tabStatus = "tab";
 
   const active_list = "active_list_module";
   const inactive_list = "inactive_list_module";
-	const popup_msg = "popup_msg_module";
+  
+  const promote_buttons = "promote_buttons_module";
+  const categorized_promote_buttons = "categorized_promote_buttons_module";
   
   const currentPm = "current_pm";
   const currentProject = "current_project";
@@ -61,7 +59,8 @@ class ViewVariablesKeys {
   
   //Project's views variables
   const form_modules = "form_modules"; 
-  const projects = "projects"; 
+  const projects = "projects";
+  const redirect_on_success = "redirect_on_success";
   
   //Location's views variables
   
@@ -71,6 +70,5 @@ class ViewVariablesKeys {
   
   //Mapping
   const map_module = "map_module";
+  const map_info_module = "map_info_module";
 }
-
-?>

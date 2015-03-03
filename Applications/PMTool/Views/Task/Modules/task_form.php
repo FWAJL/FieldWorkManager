@@ -34,7 +34,7 @@
     <fieldset>
         <ol class="task_boxes">
           <li> 
-           <input name="freq_list_box" id="freq_list_box" type="checkbox" />
+           <input class="cbox" name="freq_list_box" id="freq_list_box" type="checkbox" />
            <span class="task_box_label"><?php echo $resx["task_trigger_cal"]; ?></span>
            <select id="freq_list">
               <option value="" selected='selected'>Select</option>
@@ -50,12 +50,12 @@
           </li>
 
           <li> 
-           <input name="task_trigger_pm" id="manual_box" type="checkbox" />
+           <input class="cbox" name="task_trigger_pm" id="manual_box" type="checkbox" />
            <span class="task_box_label"><?php echo $resx["task_trigger_pm"]; ?></span>
           </li>
 
           <li> 
-           <input name="task_trigger_ext" id="external_box" type="checkbox" />
+           <input class="cbox" name="task_trigger_ext" id="external_box" type="checkbox" />
            <span class="task_box_label"><?php echo $resx["task_trigger_ext"]; ?></span>
           </li>
         </ol>     
@@ -66,22 +66,22 @@
           <h4><?php echo $resx["data_collect"];?></h4>
                 <ol class="task_boxes">
           <li> 
-           <input name="insp_note_box" id="insp_note_box" type="checkbox" />
+           <input class="cbox" name="insp_note_box" id="insp_note_box" type="checkbox" />
            <span class="task_box_label tab_cbox"><?php echo $resx["inspection"]; ?></span>
           </li>
 
           <li> 
-           <input name="field_data_box" id="field_data_box" type="checkbox" />
+           <input class="cbox" name="field_data_box" id="field_data_box" type="checkbox" />
            <span class="task_box_label tab_cbox"><?php echo $resx["field_sample"]; ?></span>
           </li>
 
           <li> 
-           <input name="lab_sample_box" id="lab_sample_box" type="checkbox" />
+           <input class="cbox" name="lab_sample_box" id="lab_sample_box" type="checkbox" />
            <span class="task_box_label tab_cbox"><?php echo $resx["lab_sample"]; ?></span>
           </li>
           
           <li> 
-           <input name="service_providers_box" id="service_providers_box" type="checkbox" />
+           <input class="cbox" name="service_providers_box" id="service_providers_box" type="checkbox" />
            <span class="task_box_label tab_cbox"><?php echo $resx["service_provider"]; ?></span>
           </li>
         </ol> 

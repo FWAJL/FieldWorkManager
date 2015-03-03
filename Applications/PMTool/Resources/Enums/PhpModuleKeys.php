@@ -31,7 +31,11 @@ class PhpModuleKeys {
 
   const active_list = "active_list_module";
   const inactive_list = "inactive_list_module";
-	const popup_msg = "popup_msg_module";
+  const popup_msg = "popup_msg_module";
+  const popup_prompt = "popup_prompt_module";
+  const promote_buttons = "promote_buttons_module";
+  
+  const popup_selector_module = "popup_selector_module";
   const group_list_left = "group_list_left";
   const group_list_right = "group_list_right";
 	
@@ -40,6 +44,7 @@ class PhpModuleKeys {
   const facility_form = "facility_form";
   const client_form = "client_form";
   const project_buttons = "project_buttons";
+
   const tabs_close = "tabs_close";
   
   const task_tabs_open = "task_tabs_open";

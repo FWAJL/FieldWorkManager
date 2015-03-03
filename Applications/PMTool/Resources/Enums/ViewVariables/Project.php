@@ -39,11 +39,14 @@ class Project {
   const client_form = "client_form";
 
   const project_buttons = "project_buttons";
-	
-	//popup confirm msgs
-	const popup_msg_module = "popup_msg_module";
+  const promote_buttons_module = "promote_buttons_module";
 
-  
+
+  //popup confirm msgs
+  const popup_msg_module = "popup_msg_module";
+
+  //prompt msg
+  const popup_prompt_module = "popup_prompt_module";
   //Data keys
 
   

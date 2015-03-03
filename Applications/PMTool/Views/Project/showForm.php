@@ -15,7 +15,7 @@
           <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::facility_form]; ?>
           <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::client_form]; ?>
         </div>
-        <div class="col-lg-2 col-md-2">
+        <div class="col-lg-1 col-md-1">
           <div class="buttons">
             <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::project_buttons]; ?>
           </div>
@@ -25,6 +25,7 @@
         </div>
       </div>
       <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::popup_msg_module]; ?>
+      <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::popup_prompt_module]; ?>
     </div>
 
     <!-- close tabs -->

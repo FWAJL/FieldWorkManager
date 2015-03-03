@@ -11,13 +11,13 @@ class LabAnalyteController extends \Library\BaseController {
     $result = \Applications\PMTool\Helpers\AnalyteHelper::AddAnalyte($this, $this->InitResponseWS(), FALSE, FALSE);
 
     \Applications\PMTool\Helpers\CommonHelper::SetActiveTab(
-        $this->user(), \Applications\PMTool\Resources\Enums\AnalyteTabKeys::LabTab, \Library\Enums\SessionKeys::TabActiveAnalyte);
+            $this->user(), \Applications\PMTool\Resources\Enums\AnalyteTabKeys::LabTab, \Library\Enums\SessionKeys::TabActiveAnalyte);
 
     $this->SendResponseWS(
-        $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
-      "resx_key" => $this->action(),
-      "step" => $result["dataId"] > 0 ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
+        "resx_key" => $this->action(),
+        "step" => $result["dataId"] > 0 ? "success" : "error"
     ));
   }
 
@@ -25,19 +25,23 @@ class LabAnalyteController extends \Library\BaseController {
     $result = \Applications\PMTool\Helpers\AnalyteHelper::AddAnalyte($this, $this->InitResponseWS(), FALSE, TRUE);
 
     \Applications\PMTool\Helpers\CommonHelper::SetActiveTab(
-        $this->user(), \Applications\PMTool\Resources\Enums\AnalyteTabKeys::FieldTab, \Library\Enums\SessionKeys::TabActiveAnalyte);
+            $this->user(), \Applications\PMTool\Resources\Enums\AnalyteTabKeys::FieldTab, \Library\Enums\SessionKeys::TabActiveAnalyte);
 
     $this->SendResponseWS(
-        $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
-      "resx_key" => $this->action(),
-      "step" => $result["dataId"] > 0 ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
+        "resx_key" => $this->action(),
+        "step" => $result["dataId"] > 0 ? "success" : "error"
     ));
   }
 
   public function executeEdit(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
+
+    \Applications\PMTool\Helpers\CommonHelper::SetActiveTab(
+            $this->user(), \Applications\PMTool\Resources\Enums\AnalyteTabKeys::LabTab, \Library\Enums\SessionKeys::TabActiveAnalyte);
+
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     $analyte = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Lab_analyte());
     $result["data"] = $analyte;
@@ -47,24 +51,24 @@ class LabAnalyteController extends \Library\BaseController {
 
     if ($result_edit) {
       $analyteMatch = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById(
-              $analyte->field_analyte_id(), "lab_analyte_id", $pm, \Library\Enums\SessionKeys::PmLabAnalytes);
+                      $analyte->lab_analyte_id(), "lab_analyte_id", $pm, \Library\Enums\SessionKeys::PmLabAnalytes);
 
       $pm[\Library\Enums\SessionKeys::PmLabAnalytes][$analyteMatch["key"]] = $analyte;
       \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->user(), $pm);
     }
 
     $this->SendResponseWS(
-        $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
-      "resx_key" => $this->action(),
-      "step" => $result_edit ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
+        "resx_key" => $this->action(),
+        "step" => $result_edit ? "success" : "error"
     ));
   }
 
   public function executeDelete(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
-    
+
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     $db_result = FALSE;
     $analyte_id = intval($this->dataPost["itemId"]);
@@ -80,10 +84,10 @@ class LabAnalyteController extends \Library\BaseController {
       }
     }
     $this->SendResponseWS(
-        $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
-      "resx_key" => $this->action(),
-      "step" => $db_result !== FALSE ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
+        "resx_key" => $this->action(),
+        "step" => $db_result !== FALSE ? "success" : "error"
     ));
   }
 
@@ -94,15 +98,15 @@ class LabAnalyteController extends \Library\BaseController {
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     if (count($pm[\Library\Enums\SessionKeys::PmLabAnalytes]) > 0) {
       $analyte_selected = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById(
-              $lab_analyte_id, "lab_analyte_id", $pm, \Library\Enums\SessionKeys::PmLabAnalytes);
+                      $lab_analyte_id, "lab_analyte_id", $pm, \Library\Enums\SessionKeys::PmLabAnalytes);
     }
 
     $result["field_analyte"] = $analyte_selected["object"];
     $this->SendResponseWS(
-        $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
-      "resx_key" => $this->action(),
-      "step" => ($analyte_selected !== NULL) ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
+        "resx_key" => $this->action(),
+        "step" => ($analyte_selected !== NULL) ? "success" : "error"
     ));
   }
 
@@ -110,13 +114,13 @@ class LabAnalyteController extends \Library\BaseController {
     $result = \Applications\PMTool\Helpers\AnalyteHelper::UpdateProjectAnalytes($this);
 
     \Applications\PMTool\Helpers\CommonHelper::SetActiveTab(
-        $this->user(), \Applications\PMTool\Resources\Enums\AnalyteTabKeys::LabTab, \Library\Enums\SessionKeys::TabActiveAnalyte);
+            $this->user(), \Applications\PMTool\Resources\Enums\AnalyteTabKeys::LabTab, \Library\Enums\SessionKeys::TabActiveAnalyte);
 
     $this->SendResponseWS(
-        $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
-      "resx_key" => $this->action(),
-      "step" => ($result["rows_affected"] === count($result["arrayOfValues"])) ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
+        "resx_key" => $this->action(),
+        "step" => ($result["rows_affected"] === count($result["arrayOfValues"])) ? "success" : "error"
     ));
   }
 

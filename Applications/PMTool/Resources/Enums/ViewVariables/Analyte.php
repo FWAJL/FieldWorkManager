@@ -36,6 +36,7 @@ class Analyte {
   const up_lab_analyte_lists = "up_lab_analyte_lists";
   const field_analyte_form = "field_analyte_form";
   const lab_analyte_form = "lab_analyte_form";
+  const popup_prompt_module = "popup_prompt_module";
 
   const project_field_analyte_list = "project_field_analyte_list";
   const field_analyte_list = "field_analyte_list";
@@ -50,6 +51,7 @@ class Analyte {
   const field_analyte_buttons = "field_analyte_buttons";
   const lab_analyte_buttons = "lab_analyte_buttons";
   const up_analyte_list_buttons = "up_analyte_list_buttons";
+  const promote_buttons = "promote_buttons_module";
   
   //Data keys
   const data_field_analyte = "data_field_analyte";

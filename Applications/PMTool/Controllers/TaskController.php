@@ -11,9 +11,9 @@ class TaskController extends \Library\BaseController {
     $currentTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
     if ($currentTask !== NULL) {
       $this->Redirect(
-          \Library\Enums\ResourceKeys\UrlKeys::TaskShowForm 
-          . "?mode=edit&task_id="
-          . $currentTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+              \Library\Enums\ResourceKeys\UrlKeys::TaskShowForm
+              . "?mode=edit&task_id="
+              . $currentTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
     } else {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskShowForm . "?mode=add");
     }
@@ -22,9 +22,22 @@ class TaskController extends \Library\BaseController {
   public function executeShowForm(\Library\HttpRequest $rq) {
     \Applications\PMTool\Helpers\TaskHelper::AddTabsStatus($this->user());
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
+    //Check if a project needs to be selected in order to display this page
+    if (!$sessionProject) {
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::TaskAddPrompt);
+    }
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::SetCurrentSessionTask($this->user(), NULL, $rq->getData("task_id"));
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
+
+    //Fetch prompt box data from xml and pass to view as an array
+    $prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"task", "targetaction": "view", "operation": ["addNullCheck","addNullCheckForCopy"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
+
+    //Fetch alert box data
+    $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"task", "targetaction": "view", "operation": ["addUniqueCheck"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);
+
     if ($rq->getData("mode") === "edit") {
       $this->page->addVar("task_editing_header", $this->resxData["task_legend_edit"]);
     } else {
@@ -38,13 +51,23 @@ class TaskController extends \Library\BaseController {
 
   public function executeListAll(\Library\HttpRequest $rq) {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+
+    //Check if a project needs to be selected in order to display this page
+    if (!$sessionProject)
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::TaskListAll);
+
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-		
-		//Get confirm msg for project deletion from context menu
-		$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"task", "targetaction": "list", "operation": ["activate"]}', $this->app->name());
-		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::confirm_message, $confirm_msg);
-    
-    if(!\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($this->user(), 0)) {
+
+    //Get confirm msg for project deletion from context menu
+    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"task", "targetaction": "list", "operation": ["activate","addUniqueCheck"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
+
+    //Fetch prompt box data from xml and pass to view as an array
+    //Also let's just fetch the message for the showForm view and reuse it
+    $prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"task", "targetaction": "view", "operation": ["addNullCheck","addNullCheckForCopy"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
+
+    if (!\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($this->user(), 0)) {
       $this->executeGetList($rq, NULL, FALSE);
     }
     $data = array(
@@ -59,8 +82,34 @@ class TaskController extends \Library\BaseController {
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
     $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
-		$this->page->addVar(
-        		\Applications\PMTool\Resources\Enums\ViewVariablesKeys::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
+    $this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::promote_buttons, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::promote_buttons]);
+    $this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
+    $this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_prompt]);
+  }
+
+  public function executeAddPrompt(\Library\HttpRequest $rq) {
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    //Check if a project needs to be selected in order to display this page
+    if (!$sessionProject)
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::TaskAddPrompt);
+
+    if (!\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($this->user(), 0)) {
+      $this->executeGetList($rq, NULL, FALSE);
+    }
+
+    //Fetch prompt box data from xml and pass to view as an array
+    $prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"task", "targetaction": "addPrompt", "operation": ["addNullCheckAddPrompt"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
+
+    //Fetch alert box data
+    $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"task", "targetaction": "view", "operation": ["addUniqueCheck"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);
+
+    $this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {
@@ -215,6 +264,27 @@ class TaskController extends \Library\BaseController {
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
         "resx_key" => $this->action(),
         "step" => ($rows_affected === count($task_ids)) ? "success" : "error"
+    ));
+  }
+
+  public function executeIfTaskExists(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS(); // Init result
+
+    $taskSession = \Applications\PMTool\Helpers\TaskHelper::GetSessionTasks($this->user());
+
+    $task = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Task());
+
+    $match = \Applications\PMTool\Helpers\CommonHelper::FindObjectByStringValue(
+                    $task->task_name(), "task_name", $taskSession, \Library\Enums\SessionKeys::TaskObj
+    );
+
+    $result['record_count'] = (!$match || empty($match)) ? 0 : 1;
+
+    $this->SendResponseWS(
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
+        "resx_key" => $this->action(),
+        "step" => ($result['record_count'] > 0) ? "success" : "error"
     ));
   }
 

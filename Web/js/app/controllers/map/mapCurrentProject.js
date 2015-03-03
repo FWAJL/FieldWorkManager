@@ -4,7 +4,9 @@ $(document).ready(function() {
         "properties": {
             "facility_obj": {
                 "objectLatPropName": "facility_lat",
-                "objectLngPropName": "facility_long"
+                "objectLngPropName": "facility_long",
+                "objectNamePropName": "facility_name",
+                "objectIdPropName": "facility_id"
             },
             "project_obj": {
                 "objectActivePropName": "project_active"

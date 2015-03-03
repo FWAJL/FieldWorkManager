@@ -26,6 +26,7 @@ class UrlKeys {
   const ProjectsRootUrl = "project";
   const ProjectsListAll = "project/listAll";
   const ProjectsShowForm = "project/showForm";
+  const ProjectsSelectProject = "project/selectProject";
   
   const LocationRootUrl = "location";
   const LocationListAll = "location/listAll";
@@ -48,6 +49,7 @@ class UrlKeys {
   const TaskRootUrl = "task";
   const TaskListAll = "task/listAll";
   const TaskShowForm = "task/showForm";
+  const TaskAddPrompt = "task/addPrompt";
   const TaskTechnicians = "task/technicians";
   const TaskLocations = "task/locations";
   const TaskServices = "task/services";

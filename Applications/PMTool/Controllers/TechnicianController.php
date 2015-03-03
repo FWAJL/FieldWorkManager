@@ -13,7 +13,7 @@ class TechnicianController extends \Library\BaseController {
 		
 		//Get confirm msg for Technician deletion from showForm screen
 		$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"technician", "targetaction": "view", "operation": ["delete"]}', $this->app->name());
-		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::confirm_message, $confirm_msg);
+		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
 		
     //Load Modules for view
     $this->page->addVar(
@@ -27,11 +27,11 @@ class TechnicianController extends \Library\BaseController {
 	 
 		//Fetch tooltip data from xml and pass to view as an array
 		$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('data-technician-id', $this->app->name());
-		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::tooltip_message, $tooltip_array);
+		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 		
 		//Get confirm msg for Technician deletion from context menu
 		$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"technician", "targetaction": "list", "operation": ["delete","activate"]}', $this->app->name());
-		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::confirm_message, $confirm_msg);
+		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
 	
     $data = array(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
@@ -45,8 +45,10 @@ class TechnicianController extends \Library\BaseController {
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
     $this->page->addVar(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
+    $this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::promote_buttons, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::promote_buttons]);
 		$this->page->addVar(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
+        \Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {

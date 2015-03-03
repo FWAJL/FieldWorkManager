@@ -9,22 +9,121 @@
 $(document).ready(function () {
   $(".btn-warning").hide();
   $.contextMenu({
-    selector: '.select_item',
+    selector: '#inactive-list .select_item',
     callback: function (key, options) {
       if (key === "edit") {
         task_manager.retrieveTask(options.$trigger);
-      } else if (key === "delete") {
-        task_manager.delete(parseInt(options.$trigger.attr("data-task-id")));
-      }
+      } else if (key === "set") {
+//        task_manager.retrieveTask(parseInt(options.$trigger.attr("data-task-id")));
+    }
+//        else if (key === "delete") {
+//        task_manager.delete(parseInt(options.$trigger.attr("data-task-id")));
+//      } else if (key === "copy") {
+//		//alert(options.$trigger.html());
+//		if(task_manager.prompt_box_msg == null || task_manager.prompt_box_msg == '') {
+//			task_manager.prompt_box_msg = $('#promptmsg-addNullCheckForCopy').val();
+//		}
+//		
+//		$('#promptmsg-addNullCheckForCopy').val(task_manager.prompt_box_msg.replace('{0}', options.$trigger.html()));
+//		  utils.showPromptBox("addNullCheck", function(){
+//			if($('#text_input').val() !== '')
+//			{
+//				//Check unique
+//				
+//				task_manager.ifTaskExists($('#text_input').val(), function(record_count) {
+//					if(record_count == 0)
+//					{
+//						task_manager.getItemforCopy(parseInt(options.$trigger.attr("data-task-id")), function(reply){
+//							var post_data = {};
+//							post_data["task"] = reply.task.task_info_obj;
+//							//Remove some attributes
+//							delete(post_data["task"]['task_id']);
+//							//Set some new attributes
+//							post_data["task"]['task_name'] = $('#text_input').val();
+//							
+//							//Add
+//							task_manager.copyWithNewName(post_data, "task", "add");
+//						});
+//					}
+//					else
+//					{
+//						utils.togglePromptBox();
+//						utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
+//							utils.togglePromptBox();
+//						});
+//					}
+//				});
+//				
+//			}
+//			else
+//			{
+//				$('#text_input').focus();
+//			}
+//			
+//		}, "promptmsg-addNullCheckForCopy");
+//	  }
+	
+	  
     },
     items: {
-      "edit": {name: "View Info"},
-      "delete": {name: "Delete"},
-      "copy": {name: "Copy"}
+      "edit": {name: "Edit"},
+      "set": {name: "Select (as current Task)"}
+//      ,
+//      "copy": {name: "Copy"}
     }
-  });//Manages the context menu
-
+  });//Manages the context menu for inactive Tasks
+  
+  $(".btn-warning").hide();
+  $.contextMenu({
+    selector: '#active-list .select_item',
+    callback: function (key, options) {
+      if (key === "monitor") {
+        task_manager.retrieveActiveTask(options.$trigger);
+      }   
+    },
+    items: {
+      "monitor": {name: "Check Task Status"}
+    }
+  });//Manages the context menu for active Tasks
+  
   //************************************************//
+  
+  //Adding task through promptbox from anywhere
+  if($('#promptmsg-addNullCheckAddPrompt').length !== 0)
+  {
+	  var post_data = {};
+	  utils.showPromptBox("addNullCheckAddPrompt", function(){
+		if($('#text_input').val() !== '')
+		{
+		  //Check unique
+		  task_manager.ifTaskExists($('#text_input').val(), function(record_count) {
+			if(record_count == 0)
+			{
+			  //Ok to add
+			  post_data["task"] = {};
+			  post_data["task"]["task_name"] = $('#text_input').val();
+			  task_manager.add(post_data, "task", "add");
+			}
+			else
+			{
+			  //Show alert, that task is already taken, choose new
+			  utils.togglePromptBox();
+			  utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
+				  utils.togglePromptBox();
+			  });
+			}
+		  });
+		}
+		else
+		{
+		  $('#text_input').focus();
+		}
+	  }, "promptmsg-addNullCheckAddPrompt", function(){
+		utils.redirect("task/listAll");  
+	  });
+	  
+  }
+  
   // Selection of tasks for de-activation
   var task_ids = "";
   $("#active-list .select_item, #inactive-list .select_item").click(function () {
@@ -54,10 +153,53 @@ $(document).ready(function () {
 
   $("#btn_add_task").click(function () {
     var post_data = {};
-    post_data["task"] = utils.retrieveInputs("task_form", ["task_name"]);
-    if (post_data["task"].task_name !== undefined) {
-      task_manager.add(post_data, "task", "add");
+    //post_data["task"] = utils.retrieveInputs("task_form", ["task_name"]);
+	post_data["task"] = utils.retrieveInputs("task_form", []);
+	//check if task name is not empty
+    if (post_data["task"].task_name !== undefined && post_data["task"].task_name !== '') {
+	  //check if unique
+	  task_manager.ifTaskExists(post_data["task"].task_name, function(record_count) {
+	    if(record_count == 0)
+		{
+		  //Ok to add
+		  task_manager.add(post_data, "task", "add");
+		}
+		else
+		{
+		  //Show alert, that task is already taken, choose new
+		  utils.showAlert($('#confirmmsg-addUniqueCheck').val());      
+		}
+	  });
     }
+	else
+	{
+	  utils.showPromptBox("addNullCheck", function(){
+		if($('#text_input').val() !== '')
+		{
+		  //Check unique
+		  task_manager.ifTaskExists($('#text_input').val(), function(record_count) {
+			if(record_count == 0)
+			{
+			  //Ok to add
+			  post_data["task"].task_name = $('#text_input').val();
+			  task_manager.add(post_data, "task", "add");
+			}
+			else
+			{
+			  //Show alert, that task is already taken, choose new
+			  utils.togglePromptBox();
+			  utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
+				  utils.togglePromptBox();
+			  });
+			}
+		  });
+		}
+		else
+		{
+		  $('#text_input').focus();
+		}
+	  });
+	}
   });//Add a task
 
   $("#btn_edit_task").click(function () {
@@ -66,6 +208,52 @@ $(document).ready(function () {
       task_manager.edit(post_data, "task", "edit");
     }
   });//Edit a task
+  
+  $("#btn_copy_task").click(function(){
+	  //alert(options.$trigger.html());
+	if(task_manager.prompt_box_msg == null || task_manager.prompt_box_msg == '') {
+		task_manager.prompt_box_msg = $('#promptmsg-addNullCheckForCopy').val();
+	}
+	
+	$('#promptmsg-addNullCheckForCopy').val(task_manager.prompt_box_msg.replace('{0}', $('input[name=task_name]').val()));
+	utils.showPromptBox("addNullCheck", function(){
+		if($('#text_input').val() !== '')
+		{
+			//Check unique
+			task_manager.ifTaskExists($('#text_input').val(), function(record_count) {
+				if(record_count == 0)
+				{
+					task_manager.getItemforCopy(parseInt(utils.getQueryVariable("task_id")), function(reply){
+						var post_data = {};
+						post_data["task"] = reply.task.task_info_obj;
+						//Remove some attributes
+						delete(post_data["task"]['task_id']);
+						//Set some new attributes
+						post_data["task"]['task_name'] = $('#text_input').val();
+						
+						//Add
+						task_manager.copyWithNewName(post_data, "task", "add");
+					});
+				}
+				else
+				{
+					utils.togglePromptBox();
+					var confirmMsg = $('#confirmmsg-addUniqueCheck').val().replace('{0}', $('#text_input').val());
+					utils.showAlert(confirmMsg, function(){
+						utils.togglePromptBox();
+					});
+				}
+			});
+			
+		}
+		else
+		{
+			$('#text_input').focus();
+		}
+		
+	}, "promptmsg-addNullCheckForCopy");
+	
+  });//Copy a task
 
   $("#btn_delete_task").click(function () {
     task_manager.delete(parseInt(utils.getQueryVariable("task_id")));
@@ -93,7 +281,10 @@ $(document).ready(function () {
  * task_manager namespace
  * Responsible to manage tasks.
  */
-(function (task_manager) {
+(function (task_manager) {	
+ //To keep the original msg from the hidden intact
+ task_manager.prompt_box_msg;	
+	
   task_manager.add = function (data, controller, action) {
 //      alert(data["task"] + ", " + controller + ", " + action);
     datacx.post(controller + "/" + action, data["task"]).then(function (reply) {//call AJAX method to call Task/Add WebService
@@ -105,6 +296,18 @@ $(document).ready(function () {
       }
     });
   };
+  
+  task_manager.copyWithNewName = function(data, controller, action) {
+    datacx.post(controller + "/" + action, data["task"]).then(function(reply) {//call AJAX method to call Project/Add WebService
+   	  if (reply === null || reply.result === 0) {//has an error
+    	toastr.error(reply.message);
+   	  } else {//success
+    	toastr.success(reply.message);
+        utils.redirect("task/showForm?mode=edit&task_id=" + reply.dataOut, 1000);
+   	  }
+    });
+  };
+  
   task_manager.edit = function (task, controller, action) {
     datacx.post(controller + "/" + action, task).then(function (reply) {//call AJAX method to call Task/Add WebService
       if (reply === null || reply.result === 0) {//has an error
@@ -148,6 +351,9 @@ $(document).ready(function () {
   task_manager.retrieveTask = function (element) {
     utils.redirect("task/showForm?mode=edit&task_id=" + parseInt(element.attr("data-task-id")));
   };
+    task_manager.retrieveActiveTask = function (element) {
+    utils.redirect("activetask/showForm?mode=edit&task_id=" + parseInt(element.attr("data-task-id")));
+  };
   task_manager.loadEditForm = function (dataWs) {
     utils.clearForm();
     $("input[name=\"project_id\"]").val(parseInt(dataWs.task_info_obj.project_id));
@@ -187,6 +393,18 @@ $(document).ready(function () {
       }
     });
   };
+  
+  task_manager.getItemforCopy = function(task_id, executeCopy) {
+    //get task object from cache (PHP WS)
+    datacx.post("task/getItem", {"task_id": task_id}).then(function(reply) {
+      if (reply === null || reply.result === 0) {//has an error
+	    toastr.error(reply.message);
+   	  } else {//success
+    	//return reply;
+		executeCopy(reply);
+   	  }
+  });
+ };
 
   task_manager.fillFormWithRandomData = function () {
 //    utils.clearForm();
@@ -207,5 +425,11 @@ $(document).ready(function () {
       }
     });
   };
+  
+  task_manager.ifTaskExists = function(taskName, decision) {
+    datacx.post("task/ifTaskExists", {task_name: taskName}).then(function(reply) {
+      decision(reply.record_count);
+  });
+ };
 
 }(window.task_manager = window.task_manager || {}));

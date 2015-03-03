@@ -20,13 +20,15 @@
   <resource key="message_success_delete">The task has been deleted.</resource>
   <resource key="message_error_updateItems">Error editing the tasks.</resource>
   <resource key="message_success_updateItems">The tasks have been edited</resource>
+  <resource key="message_error_ifTaskExists">The task does not exist</resource>
+  <resource key="message_success_ifTaskExists">The task exist</resource>
 
   <!-- Buttons -->
 
-  <resource key="task_button_add">Add this task</resource>
-  <resource key="task_button_edit">Edit this task</resource>
-  <resource key="task_button_delete">Delete this task</resource> 
-  <resource key="task_button_copy">Copy this task</resource>  
+  <resource key="task_button_add">Add</resource>
+  <resource key="task_button_edit">Edit</resource>
+  <resource key="task_button_delete">Delete</resource> 
+  <resource key="task_button_copy">Copy</resource>  
   <resource key="btn_to_inactive_list">De-activate Task</resource> 
   <resource key="btn_to_active_list">Activate Task</resource> 
   <resource key="btn_to_lead_list">Assign as a Lead Technician</resource>  

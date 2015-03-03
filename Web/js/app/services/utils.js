@@ -9,6 +9,10 @@ $(document).ready(function() {
  //file upload
  $("#document-upload input[name=\"itemCategory\"]").val(utils.getDataFromUploadFile("^.*(_id)$", true));
  $("#document-upload input[name=\"itemId\"]").val(utils.getDataFromUploadFile("^.*(_id)$", false));
+ //Auto focus, prompt box first input
+ $('.prompt-modal').on('shown.bs.modal', function () {
+   $('#text_input').focus();
+ })
 });
 /**
  * JavaScript Module to do JavaScript actions common to several views
@@ -78,6 +82,18 @@ $(document).ready(function() {
   timeout = timeout || 0;
   setTimeout(function() {
    document.location.replace(config.rootFolder + page);
+  }, timeout);
+ };
+ /**
+  * Load a given page
+  * 
+  * @param {string} page : the relative url to load
+  * @param {integer} timeout : the time to wait before the load happens. By default, it is 0.
+  */
+ utils.loadUrl = function(page, timeout) {
+  timeout = timeout || 0;
+  setTimeout(function() {
+   window.open(config.rootFolder + page, "_SELF");
   }, timeout);
  };
  /**
@@ -272,15 +288,58 @@ $(document).ready(function() {
    throw new Error("Cannot find JSON.stringify(). Some browsers (e.g., IE < 8) don't support it natively, but you can overcome this by adding a script reference to json2.js, downloadable from http://www.json.org/json2.js");
   return JSON.stringify(data);
  };
- utils.showAlert = function(msg) {
+ 
+ utils.showAlert = function(msg, doWhenOk) {
   bootbox.alert({
    message: msg,
-   callback: function() {
-    //idle at present
-   }
+   callback: doWhenOk
   });
   $('.btn-primary').addClass('confirmbuttons');
  };
+ 
+ utils.showPromptBox = function(operation, callback, useThisIdForMsg, callbackOnCancel) {
+   if(operation == 'addNullCheck'){
+     $('#prompt_title').html($('#promptmsg-addNullCheck').val()); 
+   }
+   else if(useThisIdForMsg !== undefined && useThisIdForMsg !== "") {
+     $('#prompt_title').html($('#' + useThisIdForMsg).val());
+   }
+   
+   $('.prompt-modal').modal('show');
+   //Events
+   $('#prompt_ok').on('click', function(){
+	   callback();
+   });
+   if(callbackOnCancel !== undefined)
+   {
+	   $('.prompt-modal').on('hidden.bs.modal', function (e) {
+		 callbackOnCancel();
+	   })
+   }
+ };
+ 
+ utils.togglePromptBox = function(){
+   $('.prompt-modal').toggle();
+ };
+ 
+ utils.showSelectProjectPrompt = function(clbkOk, clbkCancel){
+   if($('.pselector-modal').length !== 0)
+   {
+	 $('#prompt_title').html($('#promptmsg-checkCurrentProject').val());
+   	 //disable context menu
+   	 $(".select_item").removeClass("select_item");
+     $('.pselector-modal').modal('show');
+   }
+   
+   //Events
+   $('#prompt_ok').on('click', function(){
+	 clbkOk();
+   });
+   $('.pselector-modal').on('hidden.bs.modal', function (e) {
+     clbkCancel();
+   })
+ }
+ 
  utils.mergeStringsExclusive = function(target, source, delimiter) {
   delimiter = delimiter || "\n";
   if (!utils.endsWith(target, delimiter) && !utils.isNullOrEmpty(target)) {
