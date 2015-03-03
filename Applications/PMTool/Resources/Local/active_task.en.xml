@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+ <resource key="page_title">Your Active Tasks - Field Work Manager</resource>
+   <!-- Labels -->
+
+  <resource key="active_task_header">View Task Status</resource>
+  
+  <resource key="task_tab_info">Task Status</resource>
+  <resource key="task_tab_map">Map</resource>
+  <resource key="task_tab_forms">Forms</resource>
+  <resource key="task_tab_comm">Communications</resource>  
+</resources>
