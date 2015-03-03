@@ -198,7 +198,7 @@
         <js_files>
             <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
-            <js_file use="html" value="Web/js/app/services/maps.js"/>
+            <js_file use="html" value="Web/js/app/controllers/map_manager.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapAllProjects.js"/>
         </js_files>
         <css_files>
@@ -216,7 +216,7 @@
         <js_files>
             <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
-            <js_file use="html" value="Web/js/app/services/maps.js"/>
+            <js_file use="html" value="Web/js/app/controllers/map_manager.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapCurrentProject.js"/>
         </js_files>
         <css_files>
@@ -234,7 +234,7 @@
         <js_files>
             <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
-            <js_file use="html" value="Web/js/app/services/maps.js"/>
+            <js_file use="html" value="Web/js/app/controllers/map_manager.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapCurrentLocations.js"/>
         </js_files>
         <css_files>
@@ -244,6 +244,8 @@
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
+            <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+            <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
         </php_modules>
     </route>
     <!--Map current project locations-->
@@ -252,7 +254,7 @@
         <js_files>
             <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry%26sensor=true" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
-            <js_file use="html" value="Web/js/app/services/maps.js"/>
+            <js_file use="html" value="Web/js/app/controllers/map_manager.js"/>
             <js_file use="html" value="Web/js/app/controllers/map/mapCurrentTasks.js"/>
         </js_files>
         <css_files>
@@ -570,7 +572,8 @@
   <route url="facility/delete" module="Facility" action="delete" resxfile="facility" type="ws" />
   <route url="facility/getlist" module="Facility" action="getList" resxfile="facility" type="ws" />
   <route url="facility/getItem" module="Facility" action="getItem" resxfile="facility" type="ws" />
-  
+  <route url="facility/mapEdit" module="Facility" action="mapEdit" resxfile="facility" type="ws" />
+
   <route url="client/add" module="Client" action="add" resxfile="client" type="ws" />
   <route url="client/edit" module="Client" action="edit" resxfile="client" type="ws" />
   <route url="client/delete" module="Client" action="delete" resxfile="client" type="ws" />
@@ -583,7 +586,9 @@
   <route url="location/getlist" module="Location" action="getList" resxfile="location" type="ws" />
   <route url="location/getItem" module="Location" action="getItem" resxfile="location" type="ws" />
   <route url="location/updateItems" module="Location" action="updateItems" resxfile="location" type="ws" />
-  
+  <route url="location/ifLocationExists" module="Location" action="ifLocationExists" resxfile="location" type="ws" />
+  <route url="location/mapEdit" module="Location" action="mapEdit" resxfile="location" type="ws" />
+
   <route url="technician/add" module="Technician" action="add" resxfile="technician" type="ws" />
   <route url="technician/edit" module="Technician" action="edit" resxfile="technician" type="ws" />
   <route url="technician/delete" module="Technician" action="delete" resxfile="technician" type="ws" />
