@@ -18,6 +18,7 @@
     </div>
 
     <!-- close tabs -->
+    <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg] ?>
     <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::tabs_close]; ?>
   </div>
 

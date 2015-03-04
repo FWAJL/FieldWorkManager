@@ -52,11 +52,13 @@
           <li> 
            <input class="cbox" name="task_trigger_pm" id="manual_box" type="checkbox" />
            <span class="task_box_label"><?php echo $resx["task_trigger_pm"]; ?></span>
+           <span class="glyphicon glyphicon-question-sign" id="question-task-showForm-manual-box"></span>
           </li>
 
           <li> 
            <input class="cbox" name="task_trigger_ext" id="external_box" type="checkbox" />
            <span class="task_box_label"><?php echo $resx["task_trigger_ext"]; ?></span>
+           <span class="glyphicon glyphicon-question-sign" id="question-task-showForm-external-box"></span>
           </li>
         </ol>     
     </fieldset>
@@ -85,5 +87,6 @@
            <span class="task_box_label tab_cbox"><?php echo $resx["service_provider"]; ?></span>
           </li>
         </ol> 
-  </div>      
+  </div>
+  <?php require($form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]) ?>      
 </div>

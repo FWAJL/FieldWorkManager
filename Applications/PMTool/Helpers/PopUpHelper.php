@@ -33,19 +33,37 @@ class PopUpHelper {
   
   /**
   * Fetches all messages associated with a particular
-  * attribute.
+  * attribute passed through the JSON var param.
   */
-  public static function getTooltipMsgForAttribute($attrib, $appname) {
-    PopUpHelper::$appname = $appname;
-    $tooltipMessages = self::loadToolTipMessagefromXML();
-    $msg_array = array();
-    foreach ($tooltipMessages as $msg) {
-      if ($msg->getAttribute('targetattr') == $attrib && $msg->getAttribute('uicomponent') == 'tooltip') {
-				array_push($msg_array, array('tooltip' => array('value' => $msg->getAttribute('value'), 'placement' => $msg->getAttribute('placement'))));
-      }
-    }
-
-    return $msg_array;
+  public static function getTooltipMsgForAttribute($param, $appname) {
+	
+	PopUpHelper::$appname = $appname;
+	$param_arr = json_decode($param, true);
+	$msg_array = array();
+	$resourcesFromXml = self::loadToolTipMessagefromXML();
+	foreach ($resourcesFromXml as $msg) {
+	  if($msg->getAttribute('uicomponent') == 'tooltip' &&
+	      $msg->getAttribute('targetcontroller') == $param_arr['targetcontroller'] &&
+		  $msg->getAttribute('targetaction') == $param_arr['targetaction'] &&
+		  in_array($msg->getAttribute('targetattr'), $param_arr['targetattr'])
+		  )
+	  {
+		//Check if delay exists as an attribute
+		$delayshow = $msg->getAttribute('delayshow');
+		if($delayshow != '') {
+			//Check if delayhide exists in xml, then use it, else use 0 by default
+			$delayhide = ($msg->getAttribute('delayhide') != '') ? $msg->getAttribute('delayhide') : 0;
+			
+			$msgconfig_arr = array('value' => $msg->getAttribute('value'), 'targetattr' => $msg->getAttribute('targetattr'), 'placement' => $msg->getAttribute('placement'), 'delayshow' => $delayshow, 'delayhide' => $delayhide);
+		}
+		else {
+			$msgconfig_arr = array('value' => $msg->getAttribute('value'), 'targetattr' => $msg->getAttribute('targetattr'), 'placement' => $msg->getAttribute('placement'));
+		}
+		array_push($msg_array, array('tooltipmsg' => $msgconfig_arr));
+	  }
+	}
+	  
+	return $msg_array;
   }
   
   /**
