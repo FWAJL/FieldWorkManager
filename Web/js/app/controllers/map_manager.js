@@ -7,6 +7,8 @@ var selectedMarker = 0;
 var markers = new Array();
 var drawingManager = drawingManagerRuler = "";
 var activeIcon = inactiveIcon = selectedMarkerIcon = "default";
+var facilityId;
+var projectId;
 var polygonSettings = {
   "fillColor": "#FF0000",
   "fillOpacity": .3,
@@ -21,7 +23,7 @@ var markerDrag = function(e){
   post_data.location_lat = e.latLng.lat();
   post_data.location_long = e.latLng.lng();
   post_data.location_id = this.id;
-  map_manager.edit(post_data, "location", "mapEdit");
+  map_manager.edit(post_data, "location", "mapEdit", function(){});
 }
 
 
@@ -31,6 +33,8 @@ var markerDrag = function(e){
 var boundaryClick = function(e) {
   if(addActive === true) {
     addMarkerClick(e);
+  } else {
+    openProjectInfo(e,facilityId)
   }
 }
 /*
@@ -88,7 +92,7 @@ var saveMarkerData = function (marker){
     $("#prompt_ok").off('click');
     $('#text_input').val("");
     var post_data = {};
-    utils.showPromptBox("addNullCheckAddPrompt", function(){
+    utils.showPromptBoxById("location-prompt","addNullCheckAddPrompt", function(){
       if($('#text_input').val() !== '')
       {
         //Check unique
@@ -146,18 +150,77 @@ var addLocationToMapInfo = function(location, marker){
 /*
  * Open project info window
  */
-
-var openProjectInfo = function(id) {
-  datacx.post('facility/getItem',{'facility_id':id}).then(function(reply){
-    item = reply.data[0];
-    console.log(item);
-    $("#project_name-modal").val(item.project.project_name);
-    $("#facility_name-modal").val(item.facility.facility_name);
-    $("#latitude-modal").val(item.facility.facility_lat);
-    $("#longitude-modal").val(item.facility.facility_long);
+var setZoomEvent = function(e) {
+  $("#zoom-modal").off('click');
+  $("#zoom-modal").on('click',function(ev){
+    ev.preventDefault();
+    if(typeof(boundaryShape) === "object"){
+      map.fitLatLngBounds(boundaryPath);
+    } else {
+      console.log(e.position.lat());
+      map.setCenter(e.position.lat(), e.position.lng());
+      map.zoomIn(7);
+    }
+    $("#project-info-modal").modal("hide");
   });
-  utils.showInfoWindow('#project-info-modal',function(){
-  },function(){});
+}
+
+var setBoundaryEditEvent = function(e, projectId) {
+  $("#edit-boundary-modal").off('click');
+  $("#edit-boundary-modal").on('click',function(ev){
+    ev.preventDefault();
+    if(typeof(boundaryShape) === "object" || typeof(facilityId) !== "undefined"){
+      if(!shapeActive) {
+        $("#map-info-shape").trigger('click');
+      }
+    } else {
+      datacx.post('project/setCurrentProject',{project_id: projectId}).then(function(reply){
+        if(reply.dataId == projectId) {
+          toastr.success(reply.message);
+          utils.redirect('map/currentProject',200);
+        } else {
+          toastr.error(reply.message);
+        }
+
+      });
+
+    }
+    $("#project-info-modal").modal("hide");
+  });
+}
+
+var openProjectInfo = function(e,id) {
+  datacx.post('facility/getItem',{'facility_id':id}).then(function(reply){
+    if(reply.data.length > 0) {
+      toastr.success(reply.message);
+      item = reply.data[0];
+      $("#project_name-modal").val(item.project.project_name);
+      $("#facility_name-modal").val(item.facility.facility_name);
+      $("#latitude-modal").val(item.facility.facility_lat);
+      $("#longitude-modal").val(item.facility.facility_long);
+      setZoomEvent(e);
+      setBoundaryEditEvent(e, item.project.project_id);
+      utils.showInfoWindow('#project-info-modal',function(){
+        post_data = {};
+        post_data.project = {};
+        post_data.facility = {};
+        post_data.project.project_id = item.project.project_id;
+        post_data.project.project_name = $("#project_name-modal").val();
+        post_data.facility.facility_id = id;
+        post_data.facility.facility_name = $("#facility_name-modal").val();
+        post_data.facility.facility_lat = $("#latitude-modal").val();
+        post_data.facility.facility_long = $("#longitude-modal").val();
+        map_manager.edit({params: utils.stringifyJson(post_data)},'project','mapEdit',function(r){
+          location.reload();
+        });
+
+      },function(){});
+
+    } else {
+      toastr.error(reply.message);
+    }
+
+  });
 }
 
 function load(params) {
@@ -168,6 +231,14 @@ function load(params) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
+
+        //set current facility and project ids if they are set
+        if(typeof(reply.facility_id) !== 'undefined') {
+          facilityId = reply.facility_id;
+        }
+        if(typeof(reply.project_id) !== 'undefined') {
+          projectId = reply.project_id;
+        }
 
         if(reply.controls.markers !== true){
           $("#map-info-add").hide();
@@ -211,6 +282,8 @@ function load(params) {
           inactiveIcon = reply.inactiveIcon;
         }
 
+
+
         //Build markers list
         $.each(reply.items, function(index, item) {
           markerIcon = "";
@@ -227,7 +300,7 @@ function load(params) {
             }
             if(reply.type == 'facility') {
               item.marker.clickable = true;
-              item.marker.click = function(e){openProjectInfo(item.id)};
+              item.marker.click = function(e){openProjectInfo(e,item.marker.id)};
             }
             markers.push(item.marker);
             markerIcon = item.marker.icon;
@@ -236,7 +309,7 @@ function load(params) {
             "<div id='marker-" + item.id
               + "' data-id='" + item.id
               + "' data-active='" + item.active
-              + "' class='row  map-info-row " + markerClass
+              + "' class='row map-info-row " + markerClass
               + "'><div class='map-info-icon col-md-2'><span class='map-info-icon-image'><img src='" + markerIcon
               + "' /></span></div><div class='map-info-name col-md-9'>" + item.name
               + "</div></div>");
@@ -253,7 +326,7 @@ function load(params) {
             map.fitLatLngBounds(boundaryPath);
           } else {
             if (markers.length > 1) {
-              map.fitZoom(markers);
+              map.fitZoom();
             } else if (markers.length === 1)
             {
               map.setCenter(markers[0].lat, markers[0].lng);
@@ -512,6 +585,29 @@ function load(params) {
           }
         }
 
+        //toggle active control
+        if(reply.activeControl == "markers"){
+          toggleAdd(!addActive);
+          togglePan(false);
+          toggleShape(false);
+          toggleRuler(false);
+        } else if (reply.activeControl == "shapes") {
+          toggleAdd(false);
+          togglePan(false);
+          toggleShape(!shapeActive);
+          toggleRuler(false);
+        } else if (reply.activeControl == "ruler") {
+          toggleAdd(false);
+          togglePan(false);
+          toggleShape(false);
+          toggleRuler(!rulerActive);
+        } else {
+          toggleAdd(false);
+          togglePan(!panActive);
+          toggleShape(false);
+          toggleRuler(false);
+        }
+
       }
     });
 }
@@ -541,12 +637,15 @@ function load(params) {
     });
   };
 
-  map_manager.edit = function(location, controller, action) {
-    datacx.post(controller + "/" + action, location).then(function(reply) {//call location/edit
+  map_manager.edit = function(data, controller, action, callback) {
+    datacx.post(controller + "/" + action, data).then(function(reply) {//call edit
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
+        if(callback !== undefined){
+          callback(reply);
+        }
       }
     });
   };

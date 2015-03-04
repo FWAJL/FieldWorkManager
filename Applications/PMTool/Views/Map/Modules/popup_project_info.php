@@ -5,7 +5,7 @@
     foreach($prompt_message as $the_msg){
       ?>
       <input type="hidden" id="promptmsg-<?php echo $the_msg['promptmsg']['operation'] ?>" value="<?php echo $the_msg['promptmsg']['value'] ?>" />
-    <?php
+      <?php
     }
   }
 
@@ -26,10 +26,12 @@
         <input class="form-control" type="text" id="latitude-modal" name="latitude">
         <label for="longitude">Longitude</label>
         <input class="form-control" type="text" id="longitude-modal" name="longitude">
+        <a href="#" id="zoom-modal"><span class="glyphicon glyphicon-zoom-in"></span> Zoom</a>
+        <a href="#" id="edit-boundary-modal"><span class="glyphicon glyphicon-pencil"></span> Edit boundary</a>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary confirmbuttons" id="prompt_ok">Update</button>
-        <button type="button" class="btn btn-default confirmbuttons" data-dismiss="modal" id="prompt_cancel">Cancel</button>
+        <button type="submit" class="btn btn-primary confirmbuttons modal-update">Update</button>
+        <button type="button" class="btn btn-default confirmbuttons" data-dismiss="modal">Cancel</button>
       </div>
 
     </div>

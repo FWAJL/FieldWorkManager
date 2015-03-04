@@ -204,6 +204,7 @@ li textarea {
   height: 35px;
   padding-left: 0;
   padding-right: 0;
+  overflow-y: hidden;
 }
 
 #map-info > .row {

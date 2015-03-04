@@ -158,7 +158,7 @@ class MapController extends \Library\BaseController {
       "shapes" => false,
       "ruler" => true
     );
-
+    $result["activeControl"] = "pan";
     $this->SendResponseWS(
       $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Map,
@@ -217,13 +217,16 @@ class MapController extends \Library\BaseController {
     $result["items"] = $items;
     $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
     $result["boundary"] = \Applications\PMTool\Helpers\MapHelper::GetBoundary($sessionProject);
+    $result["facility_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->facility_id();
+    $result["project_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->project_id();
+    $result["type"] = "facility";
 
     $result["controls"] = array(
       "markers" => false,
       "shapes" => true,
       "ruler" => true
     );
-
+    $result["activeControl"] = "pan";
     $this->SendResponseWS(
       $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Map,
@@ -290,14 +293,15 @@ class MapController extends \Library\BaseController {
     $result["items"] = $items;
     $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
     $result["boundary"] = \Applications\PMTool\Helpers\MapHelper::GetBoundary($sessionProject);
-
+    $result["facility_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->facility_id();
+    $result["project_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->project_id();
 
     $result["controls"] = array(
       "markers" => true,
       "shapes" => true,
       "ruler" => true
     );
-
+    $result["activeControl"] = "pan";
     //if there are no markers try to set default position to facility location
     if(count($items)==0){
       $defaultLocations = \Applications\PMTool\Helpers\MapHelper::BuildLatAndLongCoordFromGeoObjects(array(\Applications\PMTool\Helpers\CommonHelper::GetValueFromArrayByKey($sessionProject,$defaultLocationProperties['object'])),$defaultLocationProperties['objectLatPropName'],$defaultLocationProperties['objectLngPropName']);
@@ -377,6 +381,8 @@ class MapController extends \Library\BaseController {
     $result["items"] = $items;
     $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
     $result["boundary"] = \Applications\PMTool\Helpers\MapHelper::GetBoundary($sessionProject);
+    $result["facility_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->facility_id();
+    $result["project_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->project_id();
 
     if(count($items)==0){
       $defaultLocations = \Applications\PMTool\Helpers\MapHelper::BuildLatAndLongCoordFromGeoObjects(array(\Applications\PMTool\Helpers\CommonHelper::GetValueFromArrayByKey($sessionProject,$defaultLocationProperties['object'])),$defaultLocationProperties['objectLatPropName'],$defaultLocationProperties['objectLngPropName']);
@@ -390,7 +396,7 @@ class MapController extends \Library\BaseController {
       "shapes" => true,
       "ruler" => true
     );
-
+    $result["activeControl"] = "pan";
     $this->SendResponseWS(
       $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Map,

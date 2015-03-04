@@ -235,6 +235,7 @@
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="popup_project_info" file_name="popup_project_info.php" />
         </php_modules>
     </route>
     <!--Map current project-->
@@ -254,8 +255,9 @@
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-            <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+            <php_module key="popup_prompt_module" file_name="popup_prompt.php" />
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="popup_project_info" file_name="popup_project_info.php" />
         </php_modules>
     </route>
     <!--Map current project locations-->
@@ -275,6 +277,7 @@
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="popup_project_info" file_name="popup_project_info.php" />
         </php_modules>
     </route>
     <!--Map current project-->
@@ -581,7 +584,8 @@
   <route url="project/setCurrentProject" module="Project" action="setCurrentProject" resxfile="project" type="ws" />
   <route url="project/ifProjectExists" module="Project" action="ifProjectExists" resxfile="project" type="ws" />
   <route url="project/selectProject" module="Project" action="selectProject" resxfile="project" type="ws" />
-  
+  <route url="project/mapEdit" module="Project" action="mapEdit" resxfile="project" type="ws" />
+
   <route url="facility/add" module="Facility" action="add" resxfile="facility" type="ws" />
   <route url="facility/edit" module="Facility" action="edit" resxfile="facility" type="ws" />
   <route url="facility/delete" module="Facility" action="delete" resxfile="facility" type="ws" />

@@ -355,7 +355,8 @@ $(document).ready(function() {
   utils.showInfoWindow = function(id, callback, callbackOnCancel) {
     $(id).modal('show');
     //Events
-    $('#prompt_ok').on('click', function(){
+    $('.modal-update').off('click');
+    $('.modal-update').on('click', function(){
       callback();
     });
     if(callbackOnCancel !== undefined)
@@ -365,7 +366,28 @@ $(document).ready(function() {
       })
     }
   };
- 
+
+  utils.showPromptBoxById = function(id, operation, callback, useThisIdForMsg, callbackOnCancel) {
+    if(operation == 'addNullCheck'){
+      $('#prompt_title').html($('#promptmsg-addNullCheck').val());
+    }
+    else if(useThisIdForMsg !== undefined && useThisIdForMsg !== "") {
+      $('#prompt_title').html($('#' + useThisIdForMsg).val());
+    }
+
+    $('#'+id).modal('show');
+    //Events
+    $('#'+id+" .modal-update").on('click', function(){
+      callback();
+    });
+    if(callbackOnCancel !== undefined)
+    {
+      $('#'+id).on('hidden.bs.modal', function (e) {
+        callbackOnCancel();
+      })
+    }
+  };
+
  utils.mergeStringsExclusive = function(target, source, delimiter) {
   delimiter = delimiter || "\n";
   if (!utils.endsWith(target, delimiter) && !utils.isNullOrEmpty(target)) {
