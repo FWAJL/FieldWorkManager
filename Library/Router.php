@@ -260,7 +260,7 @@ class Router extends ApplicationComponent {
     return '<script type="application/javascript" src="' .
         $path_to_add .
         $script->getAttribute('value') .
-        "?v" . $this->app()->config()->get(Enums\AppSettingKeys::CurrentVersion) .
+        "?v" . __VERSION_NUMBER__ .
         '"></script>';
   }
   
@@ -268,7 +268,7 @@ class Router extends ApplicationComponent {
     return '<link rel="stylesheet" type="text/css" href="' . 
         $path_to_add . 
         $css_file->getAttribute('value') . 
-        "?v" . $this->app()->config()->get(Enums\AppSettingKeys::CurrentVersion) .
+        "?v" . __VERSION_NUMBER__ .
         '"/>';
   }
 
