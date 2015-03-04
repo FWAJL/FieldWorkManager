@@ -1,5 +1,7 @@
 <?php
 
+define('__VERSION_NUMBER__', '1.6.8');
+
 require '../Applications/autoload.php';
 
 error_reporting(E_ALL);

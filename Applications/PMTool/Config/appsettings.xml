@@ -3,8 +3,6 @@
   <!-- MODES : DEV or RELEASE -->
   <define key="ApplicationMode" value="DEV" />
   
-  <define key="CurrentVersion" value="1.6.8" />
-  
   <define key="base_url" value="/FieldWorkAssistantMVC/" />
   <define key="BaseUrlRelease" value="/" />
   <define key="DefaultLanguage" value="en" />
