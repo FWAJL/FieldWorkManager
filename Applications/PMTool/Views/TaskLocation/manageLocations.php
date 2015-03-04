@@ -7,7 +7,9 @@
     <span class="glyphicon glyphicon-chevron-right"></span>    
     <?php echo $resx["task_locations_header"] ?></h3>  
   <div class="form_sections">
-    <?php require $form_modules["task_tabs_open"]; ?>              
+    <?php require $form_modules["task_tabs_open"]; ?> 
+<div class="content-container container-fluid">
+  <div class="row">
     <div  class="col-lg-5 col-md-5">
       <h4><?php echo $resx["h4_task_locations"]; ?></h4>
       <?php require $form_modules["group_list_left"]; ?>              
@@ -20,5 +22,7 @@
       <?php require $form_modules["group_list_right"]; ?>              
     </div>
     <?php require $form_modules["tabs_close"]; ?>              
-  </div
+  </div>
+</div>
+</div>
 </div>

@@ -22,12 +22,11 @@
   <!-- Mapping -->
   <define key="GoogleMapsCenterLat" value="37.6" />
   <define key="GoogleMapsCenterLng" value="-95.665" />
-  <define key="GoogleMapsProjectActiveIcon" value="https://maps.google.com/mapfiles/kml/paddle/purple-stars_maps.png" />
-  <define key="GoogleMapsProjectInactiveIcon" value="https://maps.google.com/mapfiles/kml/paddle/wht-stars_maps.png" />
-  <define key="GoogleMapsLocationActiveIcon" value="http://maps.google.com/mapfiles/kml/paddle/blu-circle_maps.png" />
-  <define key="GoogleMapsLocationInactiveIcon" value="https://maps.gstatic.com/intl/en_us/mapfiles/markers2/measle_blue.png" />
-  <define key="GoogleMapsTaskIcon" value="http://maps.google.com/mapfiles/kml/paddle/red-circle_maps.png" />
-  <define key="GoogleMapsRulerIcon" value="http://maps.google.com/mapfiles/kml/shapes/arrow_maps.png" />
-  <define key="GoogleMapsNoLatLngIcon" value="http://maps.google.com/mapfiles/kml/paddle/ltblu-blank_maps.png" />
+  <define key="GoogleMapsProjectActiveIcon" value="purple-stars_maps.png" />
+  <define key="GoogleMapsProjectInactiveIcon" value="wht-stars_maps.png" />
+  <define key="GoogleMapsLocationActiveIcon" value="blu-circle_maps.png" />
+  <define key="GoogleMapsLocationInactiveIcon" value="measle_blue.png" />
+  <define key="GoogleMapsTaskIcon" value="red-circle_maps.png" />
+  <define key="GoogleMapsNoLatLngIcon" value="ltblu-blank_maps.png" />
 
 </definitions>
