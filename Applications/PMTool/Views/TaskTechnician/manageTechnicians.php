@@ -9,16 +9,21 @@
   <div class="form_sections">
     <?php require $form_modules["task_tabs_open"]; ?>              
     <div  class="col-lg-5 col-md-5">
-      <h4><?php echo $resx["h4_task_technicians"]; ?></h4>
+      <span class="h4"><?php echo $resx["h4_task_technicians"]; ?></span>
+      <span class="glyphicon glyphicon-info-sign" id="active-taskTechnician-header"></span>
       <?php require $form_modules["group_list_left"]; ?>              
     </div>
     <div class="col-lg-1 col-md-1">
         <?php require $form_modules["group_list_promote_buttons_module"]; ?> 
     </div>
     <div  class="col-lg-5 col-md-5">
-      <h4><?php echo $resx["h4_project_technicians"]; ?></h4>
+      <span class="h4"><?php echo $resx["h4_project_technicians"]; ?></span>
+      <span class="glyphicon glyphicon-question-sign" id="inactive-taskTechnician-header"></span>
       <?php require $form_modules["group_list_right"]; ?>              
     </div>
-    <?php require $form_modules["tabs_close"]; ?>              
+    <?php 
+	require $form_modules["tabs_close"]; 
+	require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; 
+	?>          
   </div
-</div>
+></div>

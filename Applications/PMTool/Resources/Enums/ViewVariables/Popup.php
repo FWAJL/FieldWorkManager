@@ -30,6 +30,8 @@ class Popup {
   const popup_prompt_module = "popup_prompt_module";
     //For tooltip
   const tooltip_message = "tooltip_message"; 
+  //The module for populating the tooltip hiddens
+  const tooltip_message_module = "tooltip_message_module"; 
   //For messages in confirm boxes
   const confirm_message = "confirm_message"; 
   //For messages in prompt boxes

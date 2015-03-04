@@ -13,6 +13,18 @@ $(document).ready(function() {
  $('.prompt-modal').on('shown.bs.modal', function () {
    $('#text_input').focus();
  })
+ 
+ //Tooltip
+  $('[id^="tooltipmsg_"]').each(function() {
+	var hidd_parts = $(this).attr('id').split('_');
+	if($(this).attr('delayshow') !== undefined) {
+	  $('#' + hidd_parts[1]).tooltip({placement: $(this).attr('placement'), title: $(this).val(), delay:{show:$(this).attr('delayshow'), hide:$(this).attr('delayhide')}});
+	}
+	else {
+	  $('#' + hidd_parts[1]).tooltip({placement: $(this).attr('placement'), title: $(this).val()});
+	}
+  });
+ 
 });
 /**
  * JavaScript Module to do JavaScript actions common to several views
