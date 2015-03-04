@@ -21,10 +21,12 @@ class MapController extends \Library\BaseController {
 		$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "allProjects", "targetattr": ["map-info-add","map-info-shape","map-info-ruler","question-map-h3"]}', $this->app->name());
 		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 		
-        $modules = $this->app()->router()->selectedRoute()->phpModules();
-        $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+    $modules = $this->app()->router()->selectedRoute()->phpModules();
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+    //Fetch prompt box data from xml and pass to view as an array
+    $infoWindow = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"map", "targetaction": "loadProjectInfo", "operation": ["addNullCheckAddPrompt"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Map::popup_project_info, $infoWindow);
     }
-
 
     /**
      * <p> Method to load the Map view as configured in routes.xml </p>
@@ -149,6 +151,7 @@ class MapController extends \Library\BaseController {
     $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
     $result["items"] = $items;
     $result["noLatLngIcon"] = $icons["noLatLng"];
+    $result["type"] = "facility";
 
     $result["controls"] = array(
       "markers" => false,

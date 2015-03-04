@@ -351,6 +351,20 @@ $(document).ready(function() {
      clbkCancel();
    })
  }
+
+  utils.showInfoWindow = function(id, callback, callbackOnCancel) {
+    $(id).modal('show');
+    //Events
+    $('#prompt_ok').on('click', function(){
+      callback();
+    });
+    if(callbackOnCancel !== undefined)
+    {
+      $('.prompt-modal').on('hidden.bs.modal', function (e) {
+        callbackOnCancel();
+      })
+    }
+  };
  
  utils.mergeStringsExclusive = function(target, source, delimiter) {
   delimiter = delimiter || "\n";

@@ -143,6 +143,23 @@ var addLocationToMapInfo = function(location, marker){
       + "</div></div>");
 }
 
+/*
+ * Open project info window
+ */
+
+var openProjectInfo = function(id) {
+  datacx.post('facility/getItem',{'facility_id':id}).then(function(reply){
+    item = reply.data[0];
+    console.log(item);
+    $("#project_name-modal").val(item.project.project_name);
+    $("#facility_name-modal").val(item.facility.facility_name);
+    $("#latitude-modal").val(item.facility.facility_lat);
+    $("#longitude-modal").val(item.facility.facility_long);
+  });
+  utils.showInfoWindow('#project-info-modal',function(){
+  },function(){});
+}
+
 function load(params) {
   datacx.post(
     params.dataUrl,
@@ -207,6 +224,10 @@ function load(params) {
             if(reply.controls.markers === true){
               item.marker.draggable = true;
               item.marker.dragend = markerDrag;
+            }
+            if(reply.type == 'facility') {
+              item.marker.clickable = true;
+              item.marker.click = function(e){openProjectInfo(item.id)};
             }
             markers.push(item.marker);
             markerIcon = item.marker.icon;

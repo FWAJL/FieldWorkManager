@@ -16,8 +16,8 @@
             <div class="col-xs-2 map-info-col">
                 <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_info_module]; ?>
             </div>
-            <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::popup_msg_module]; ?>
-            <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::popup_prompt_module]; ?>
+            <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_msg_module]; ?>
+            <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_prompt_module]; ?>
         </div>
         <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; ?>
     </div>
