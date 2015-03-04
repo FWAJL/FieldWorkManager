@@ -58,15 +58,14 @@ class MapHelper {
    * The array of marker icons
    * </p>
    */
-  public static function GetActiveInactiveIcons($configManager) {
+  public static function GetActiveInactiveIcons($relativePath, $imageUtil, $configManager) {
     return array(
-        "projectActive" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsProjectActiveIcon),
-        "projectInactive" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsProjectInactiveIcon),
-        "locationActive" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsLocationActiveIcon),
-        "locationInactive" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsLocationInactiveIcon),
-        "task" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsTaskIcon),
-        "ruler" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsRulerIcon),
-        "noLatLng" => $configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsNoLatLngIcon),
+        "projectActive" => $relativePath.$imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsProjectActiveIcon)),
+        "projectInactive" => $relativePath.$imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsProjectInactiveIcon)),
+        "locationActive" => $relativePath.$imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsLocationActiveIcon)),
+        "locationInactive" => $relativePath.$imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsLocationInactiveIcon)),
+        "task" => $relativePath.$imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsTaskIcon)),
+        "noLatLng" => $relativePath.$imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsNoLatLngIcon)),
     );
   }
 
