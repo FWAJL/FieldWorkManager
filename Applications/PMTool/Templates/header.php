@@ -1,5 +1,5 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
-<?php $version = "?v" . $this->app()->config()->get(Library\Enums\AppSettingKeys::CurrentVersion); ?>
+<?php $version = "?v" . __VERSION_NUMBER__; ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->app->locale; ?>">
   <head>
