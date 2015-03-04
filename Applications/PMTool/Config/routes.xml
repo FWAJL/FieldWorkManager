@@ -66,8 +66,9 @@
         <php_modules>
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
-	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
         </php_modules>
     </route>
@@ -111,7 +112,8 @@
         <php_modules>
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
-            <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>            
+            <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
     <!-- location/listAll -->
@@ -140,6 +142,9 @@
         <css_files>
             <css_file use="project" />
         </css_files>
+		<php_modules>
+            <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+        </php_modules>
     </route>
     <!-- location/uploadList -->
     
@@ -168,7 +173,8 @@
         <php_modules>
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
-	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+		    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
         </php_modules>
     </route>
@@ -208,6 +214,7 @@
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
     <!--Map all projects-->
@@ -226,6 +233,7 @@
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
     <!--Map current project-->
@@ -246,6 +254,7 @@
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
             <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+            <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
     <!--Map current project locations-->
@@ -264,6 +273,7 @@
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
     <!--Map current project-->
@@ -297,7 +307,8 @@
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+	    	<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
         </php_modules>
     </route><!--   task/listAll -->
@@ -317,6 +328,7 @@
             <php_module key="task_buttons" file_name="task_buttons.php" />
 	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
             <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route><!--  task/showAddForm -->
     
@@ -381,6 +393,7 @@
             <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route><!--  task/technicians -->
 	
@@ -404,8 +417,8 @@
             <php_module key="field_analyte_buttons" file_name="analyte_list_buttons.php" />
             <php_module key="lab_analyte_buttons" file_name="analyte_list_buttons.php" />
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
-	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
-
+	    	<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
     <!--  analyte/ListAll -->
@@ -429,7 +442,7 @@
             <php_module key="common_analyte_buttons" file_name="common_analyte_buttons.php" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true"/>
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
-
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
     <!-- analyte/uploadList -->
@@ -471,7 +484,8 @@
         <php_modules>
             <php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
             <php_module key="categorized_list_right" file_name="categorized_list_right.php" shared="true" />
-            <php_module key="categorized_promote_buttons_module" file_name="categorized_promote_buttons.php" shared="true"/>            
+            <php_module key="categorized_promote_buttons_module" file_name="categorized_promote_buttons.php" shared="true"/>
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
     <!-- service provider/listAll -->
@@ -606,7 +620,7 @@
   
   <route url="task/location/updateItems" module="TaskLocation" action="updateItems" resxfile="task_location" type="ws" />
   <route url="task/technician/updateItems" module="TaskTechnician" action="updateItems" resxfile="task_technician" type="ws" />
-<!--  <route url="service/updateItems" module="ProjectService" action="updateItems" resxfile="service" type="ws" />-->
+  <!--  <route url="service/updateItems" module="ProjectService" action="updateItems" resxfile="service" type="ws" />-->
  
   <route url="service/add" module="Service" action="add" resxfile="service" type="ws" />
   <route url="service/edit" module="Service" action="edit" resxfile="service" type="ws" />

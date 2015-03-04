@@ -9,7 +9,8 @@
     <div class="content-container container-fluid">
       <div class="row">
         <div  class="col-lg-5 col-md-5">
-          <h4><?php echo $resx["h3_upload_list"]; ?></h4>
+          <span class="h4"><?php echo $resx["h3_upload_list"]; ?></span>
+          <span class="glyphicon glyphicon-question-sign" id="question-location-headingH3"></span>
  <fieldset class="location_form form" id="upload_locations_form">
         <div class="location-names">
             <textarea  class="list-panel upload_list" name="location_names" type="text"></textarea>
@@ -33,6 +34,7 @@
             
         </div>
       </div>
+      <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg] ?>
     </div>
   </div>
 </div><!-- END RIGHT ASIDE MAIN -->

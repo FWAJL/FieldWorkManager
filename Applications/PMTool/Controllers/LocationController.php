@@ -32,7 +32,14 @@ class LocationController extends \Library\BaseController {
     //Check if a project needs to be selected in order to display this page
     if (!$sessionProject)
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::LocationUploadList);
+	  
+	//Fetch tooltip data from xml and pass to view as an array
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"location", "targetaction": "uploadList", "targetattr": ["question-location-headingH3"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+	
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+	$this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
   public function executeListAll(\Library\HttpRequest $rq) {
@@ -41,6 +48,10 @@ class LocationController extends \Library\BaseController {
     //Check if a project needs to be selected in order to display this page
     if (!$sessionProject)
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
+	  
+	//Fetch tooltip data from xml and pass to view as an array
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"location", "targetaction": "list", "targetattr": ["active-location-header","inactive-location-header"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
     
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
@@ -61,6 +72,8 @@ class LocationController extends \Library\BaseController {
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
     $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::promote_buttons, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::promote_buttons]);
+	$this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message_module, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]);
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {

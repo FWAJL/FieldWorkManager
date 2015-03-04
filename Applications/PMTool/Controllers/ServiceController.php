@@ -20,6 +20,10 @@ public function executeShowForm(\Library\HttpRequest $rq) {
   public function executeListAll(\Library\HttpRequest $rq) {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+	
+	//Fetch tooltip data from xml and pass to view as an array
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"service", "targetaction": "list", "targetattr": ["active-service-header","inactive-service-header"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
     $sessionPm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     $pm_services = \Applications\PMTool\Helpers\ServiceHelper::GetPmServices($this, $sessionPm, NULL, TRUE);

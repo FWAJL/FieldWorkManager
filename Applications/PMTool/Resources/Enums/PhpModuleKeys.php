@@ -34,8 +34,9 @@ class PhpModuleKeys {
   const popup_msg = "popup_msg_module";
   const popup_prompt = "popup_prompt_module";
   const promote_buttons = "promote_buttons_module";
-  
   const popup_selector_module = "popup_selector_module";
+  const tooltip_msg = "tooltip_msg_module";
+  
   const group_list_left = "group_list_left";
   const group_list_right = "group_list_right";
 	
