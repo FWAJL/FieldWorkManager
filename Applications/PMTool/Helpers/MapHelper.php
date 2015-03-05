@@ -60,12 +60,12 @@ class MapHelper {
    */
   public static function GetActiveInactiveIcons($relativePath, $imageUtil, $configManager) {
     return array(
-        "projectActive" => $relativePath.$imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsProjectActiveIcon)),
-        "projectInactive" => $relativePath.$imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsProjectInactiveIcon)),
-        "locationActive" => $relativePath.$imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsLocationActiveIcon)),
-        "locationInactive" => $relativePath.$imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsLocationInactiveIcon)),
-        "task" => $relativePath.$imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsTaskIcon)),
-        "noLatLng" => $relativePath.$imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsNoLatLngIcon)),
+        "projectActive" => $relativePath . $imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsProjectActiveIcon)),
+        "projectInactive" => $relativePath . $imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsProjectInactiveIcon)),
+        "locationActive" => $relativePath . $imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsLocationActiveIcon)),
+        "locationInactive" => $relativePath . $imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsLocationInactiveIcon)),
+        "task" => $relativePath . $imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsTaskIcon)),
+        "noLatLng" => $relativePath . $imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsNoLatLngIcon)),
     );
   }
 
@@ -127,7 +127,7 @@ class MapHelper {
           $marker["marker"]["lng"] = $currentObject->$objectProperties["objectLngPropName"]();
           $marker["id"] = $currentObject->$objectProperties["objectIdPropName"]();
           $marker["name"] = $currentObject->$objectProperties["objectNamePropName"]();
-        } else if(isset($objectProperties["objectLatPropName"]) && isset($objectProperties["objectLngPropName"]) && self::CheckCoordinateValue($currentObject->$objectProperties["objectLatPropName"]())===false && self::CheckCoordinateValue($currentObject->$objectProperties["objectLngPropName"]())===false) {
+        } else if (isset($objectProperties["objectLatPropName"]) && isset($objectProperties["objectLngPropName"]) && self::CheckCoordinateValue($currentObject->$objectProperties["objectLatPropName"]()) === false && self::CheckCoordinateValue($currentObject->$objectProperties["objectLngPropName"]()) === false) {
           $marker["noLatLng"] = true;
           $marker["id"] = $currentObject->$objectProperties["objectIdPropName"]();
           $marker["name"] = $currentObject->$objectProperties["objectNamePropName"]();
@@ -136,10 +136,10 @@ class MapHelper {
           $marker["active"] = $currentObject->$objectProperties["objectActivePropName"]();
         }
       }
-      if(!isset($marker["marker"]["lat"]) && !isset($marker["marker"]["lng"])){
+      if (!isset($marker["marker"]["lat"]) && !isset($marker["marker"]["lng"])) {
         unset($marker["marker"]);
       }
-      $markers[]=$marker;
+      $markers[] = $marker;
     }
     return $markers;
   }
@@ -171,17 +171,16 @@ class MapHelper {
       } else {
         $marker["noLatLng"] = true;
       }
-        $marker["id"] = $location->$locationObjectType["objectIdPropName"]();
-        $marker["marker"]["title"] = $marker["name"] = $location->$locationObjectType["objectNamePropName"]();
-        $marker["active"] = $location->$locationObjectType["objectActivePropName"]();
+      $marker["id"] = $location->$locationObjectType["objectIdPropName"]();
+      $marker["marker"]["title"] = $marker["name"] = $location->$locationObjectType["objectNamePropName"]();
+      $marker["active"] = $location->$locationObjectType["objectActivePropName"]();
       if (isset($locationObjectType["objectActivePropName"])) {
         $marker["marker"]["icon"] = ($location->$locationObjectType["objectActivePropName"]()) ? $icons["locationActive"] : $icons["locationInactive"];
       }
-      if(!isset($marker["marker"]["lat"]) && !isset($marker["marker"]["lng"])){
+      if (!isset($marker["marker"]["lat"]) && !isset($marker["marker"]["lng"])) {
         unset($marker["marker"]);
       }
-      $markers[]=$marker;
-
+      $markers[] = $marker;
     }
 
 
@@ -230,11 +229,10 @@ class MapHelper {
             $marker["marker"]["icon"] = ($location->$locationObjectType["objectActivePropName"]()) ? $icons["locationActive"] : $icons["locationInactive"];
           }
         }
-        if(!isset($marker["marker"]["lat"]) && !isset($marker["marker"]["lng"])){
+        if (!isset($marker["marker"]["lat"]) && !isset($marker["marker"]["lng"])) {
           unset($marker["marker"]);
         }
-          $markers[]=$marker;
-
+        $markers[] = $marker;
       }
     }
 
