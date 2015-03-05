@@ -27,6 +27,10 @@ class TaskLocationController extends \Library\BaseController {
     //filter the project locations after we retrieve the task locations
     $project_locations = \Applications\PMTool\Helpers\LocationHelper::FilterLocationsToExcludeTaskLocations($project_locations, $task_locations);
 
+    //Fetch tooltip data from xml and pass to view as an array
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"taskLocation", "targetaction": "locations", "targetattr": ["active-taskLocation-header","inactive-taskLocation-header"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
     $this->page->addVar("HasItemsToDisplay", \Applications\PMTool\Helpers\ProjectHelper::DoesProjectHasActiveLocations($this->user()));

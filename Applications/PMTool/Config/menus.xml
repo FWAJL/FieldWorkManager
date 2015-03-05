@@ -36,7 +36,7 @@
     </links>
   </main_menu><!-- map -->  
   
-   <main_menu name="task" active="true">
+  <main_menu name="task" active="true">
     <links>
       <header href="task" resourcekey="header_task" enablelink="false" />
       <submenu href="task/listAll" id="task_list_all" resourcekey="task_list" active="true"/>
@@ -44,7 +44,7 @@
     </links>
   </main_menu><!-- task -->
   
-     <main_menu name="analyte" active="true">
+  <main_menu name="analyte" active="true">
     <links>
       <header href="analyte" resourcekey="header_analyte" enablelink="false" />
       <submenu href="analyte/listAll" id="analyte_list_all" resourcekey="analyte_list" active="true" />
