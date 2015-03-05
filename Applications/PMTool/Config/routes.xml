@@ -131,6 +131,7 @@
         <php_modules>
             <php_module key="location_form" file_name="location_form.php" />
             <php_module key="upload_file" file_name="upload_file.php" shared="true"/>
+			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
         </php_modules>
     </route>
     <!-- location/showForm -->
@@ -420,6 +421,7 @@
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
 	    	<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
         </php_modules>
     </route>
     <!--  analyte/ListAll -->
@@ -500,8 +502,8 @@
         </css_files>
         <php_modules>
 <!--            <php_module key="service_tabs_open" file_name="service_tabs_open.php" />-->
-            <php_module key="service_form" file_name="service_form.php" />
-	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+          <php_module key="service_form" file_name="service_form.php" />
+	      <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
 <!--            <php_module key="service_buttons" file_name="service_buttons.php" />-->
 <!--            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />-->
         </php_modules>

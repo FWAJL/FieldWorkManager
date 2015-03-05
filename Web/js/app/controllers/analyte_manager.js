@@ -66,13 +66,20 @@ $(document).ready(function() {
           }
         }, 'promptmsg-edit');
       } else if (key === "delete") {
-        var isFieldAnalyte = ajaxParams.isFieldType = $(".active").attr("data-form-id") === "field_analyte_info";
-        ajaxParams.itemId =
-                isFieldAnalyte ?
-                parseInt(options.$trigger.attr("data-fieldanalyte-id")) :
-                parseInt(options.$trigger.attr("data-labanalyte-id"));
-        ajaxParams.ajaxUrl = isFieldAnalyte ? "field_analyte/delete" : "lab_analyte/delete";
-        datacx.delete(ajaxParams);
+		var isFieldAnalyte = $(".active").attr("data-form-id") === "field_analyte_info";
+		var msg = (isFieldAnalyte) ? $('#confirmmsg-deleteField').val() : $('#confirmmsg-deleteLab').val();
+		if (typeof msg !== typeof undefined && msg !== false) {
+		  utils.showConfirmBox(msg, function(result) {
+			if (result)
+			{
+			  delAnalyte(ajaxParams, options);
+			}
+		  });
+		}
+		else
+		{
+		  delAnalyte(ajaxParams, options);
+		}
       }
     },
     items: {
@@ -107,6 +114,17 @@ $(document).ready(function() {
       });
     }
 
+  }
+  
+  //delete analyte, contextual menu
+  delAnalyte = function(ajaxParams, options) {
+	var isFieldAnalyte = ajaxParams.isFieldType = $(".active").attr("data-form-id") === "field_analyte_info";
+	ajaxParams.itemId =
+			isFieldAnalyte ?
+			parseInt(options.$trigger.attr("data-fieldanalyte-id")) :
+			parseInt(options.$trigger.attr("data-labanalyte-id"));
+	ajaxParams.ajaxUrl = isFieldAnalyte ? "field_analyte/delete" : "lab_analyte/delete";
+	datacx.delete(ajaxParams);
   }
 
   // Selection in the dual lists
