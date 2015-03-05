@@ -77,15 +77,15 @@ $(document).ready(function () {
 	  
   }
   
-  // If only one Active Task - auto set to current Task
-  $("#active-list .select_item").ready(function () {
-   if($("#active-list li").length === 1) {
-   if ($(".noCT").length ) { 
-       onetaskid = (parseInt($(".select_item").attr("data-task-id")));
-     utils.redirect("task/listAll?task_id=" + onetaskid);   
-   }
-   }
-});
+//  // If only one Active Task - auto set to current Task
+//  $("#active-list .select_item").ready(function () {
+//   if($("#active-list li").length === 1) {
+//   if ($(".noCT").length ) { 
+//       onetaskid = (parseInt($(".select_item").attr("data-task-id")));
+//     utils.redirect("task/listAll?task_id=" + onetaskid);   
+//   }
+//   }
+//});
   
   // Selection of tasks for de-activation
   var task_ids = "";
