@@ -21,7 +21,7 @@
         <input class="form-control" type="text" id="text_input" name="text_input">
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary confirmbuttons" id="prompt_ok">Ok</button>
+        <button type="submit" class="btn btn-primary confirmbuttons modal-update" id="prompt_ok">Ok</button>
         <button type="button" class="btn btn-default confirmbuttons" data-dismiss="modal" id="prompt_cancel">Cancel</button>
       </div>
 
