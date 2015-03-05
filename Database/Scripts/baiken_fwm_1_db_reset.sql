@@ -364,6 +364,16 @@ CREATE TABLE `project_service` (
     UNIQUE INDEX `un_p_s` (`project_id` ASC, `service_id` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- Table structure for table `master_lab_analyte`
+CREATE TABLE `master_lab_analyte` (
+    `master_lab_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
+    `master_lab_analyte_category_name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+    `master_lab_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    UNIQUE INDEX `un_cla` (`master_lab_analyte_name` ASC),
+    PRIMARY KEY (`master_lab_analyte_id`)
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
+
+
 -- Dumping data for table `project_manager`
 INSERT INTO `project_manager` (`pm_id`, `username`, `password`, `hint`, `pm_comp_name`, `pm_name`, `pm_address`, `pm_phone`, `pm_email`) VALUES
 (1, 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683', 'hint', 'comp name', 'John', 'Doe', '1234567890', 'test@fwa.net');
