@@ -7,42 +7,43 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class MapController extends \Library\BaseController {
 
-    /**
-     * <p> Method to load the Map view as configured in routes.xml </p>
-     * <p> Set the modules for the route to the page object </p>
-     * @param object $rq <p>
-     * The current HttpRequest.
-     * </p>
-     * @return void
-     */
-    public function executeLoadView($rq) {
-		
-		//Fetch tooltip data from xml and pass to view as an array
-		$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "allProjects", "targetattr": ["map-info-add","map-info-shape","map-info-ruler","question-map-h3"]}', $this->app->name());
-		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
-		
+  /**
+   * <p> Method to load the Map view as configured in routes.xml </p>
+   * <p> Set the modules for the route to the page object </p>
+   * @param \Library\HttpRequest $rq <p>
+   * The current HttpRequest.
+   * </p>
+   * @return void
+   */
+  public function executeLoadView($rq) {
+
+    //Fetch tooltip data from xml and pass to view as an array
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "allProjects", "targetattr": ["map-info-add","map-info-shape","map-info-ruler","question-map-h3"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+
     $modules = $this->app()->router()->selectedRoute()->phpModules();
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
     //Fetch prompt box data from xml and pass to view as an array
     $infoWindow = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"map", "targetaction": "loadProjectInfo", "operation": ["addNullCheckAddPrompt"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Map::popup_project_info, $infoWindow);
-    }
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Map::default_active_control, $rq->getData('active') ?: 'pan');
+  }
 
-    /**
-     * <p> Method to load the Map view as configured in routes.xml </p>
-     * <p> Set the modules for the route to the page object </p>
-     * @param object $rq <p>
-     * The current HttpRequest.
-     * </p>
-     * @return void
-     */
-    public function executeLoadCurrentView($rq) {
-        $modules = $this->app()->router()->selectedRoute()->phpModules();
-        $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-		
-		//Fetch tooltip data from xml and pass to view as an array
-		$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "currentProject", "targetattr": ["question-map-h3", "map-info-shape", "map-info-ruler", "map-info-add"]}', $this->app->name());
-		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+  /**
+   * <p> Method to load the Map view as configured in routes.xml </p>
+   * <p> Set the modules for the route to the page object </p>
+   * @param object $rq <p>
+   * The current HttpRequest.
+   * </p>
+   * @return void
+   */
+  public function executeLoadCurrentView($rq) {
+    $modules = $this->app()->router()->selectedRoute()->phpModules();
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+
+    //Fetch tooltip data from xml and pass to view as an array
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "currentProject", "targetattr": ["question-map-h3", "map-info-shape", "map-info-ruler", "map-info-add"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
     //refresh locations
     $this->_GetAndStoreLocationsInSession($sessionProject);
@@ -50,6 +51,7 @@ class MapController extends \Library\BaseController {
 
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Map::default_active_control, $rq->getData('active') ?: 'pan');
   }
 
 
@@ -65,9 +67,9 @@ class MapController extends \Library\BaseController {
     $modules = $this->app()->router()->selectedRoute()->phpModules();
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
 
-		//Fetch tooltip data from xml and pass to view as an array
-		$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "currentProjectLocations", "targetattr": ["question-map-h3", "map-info-ruler", "map-info-shape", "map-info-add"]}', $this->app->name());
-		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+    //Fetch tooltip data from xml and pass to view as an array
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "currentProjectLocations", "targetattr": ["question-map-h3", "map-info-ruler", "map-info-shape", "map-info-add"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
     //Fetch prompt box data from xml and pass to view as an array
     $prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"map", "targetaction": "loadCurrentLocationsView", "operation": ["addNullCheckAddPrompt"]}', $this->app->name());
@@ -79,29 +81,32 @@ class MapController extends \Library\BaseController {
 
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Map::default_active_control, $rq->getData('active') ?: 'pan');
+
   }
 
-    /**
-     * <p> Method to load the Map view as configured in routes.xml </p>
-     * <p> Set the modules for the route to the page object </p>
-     * @param object $rq <p>
-     * The current HttpRequest.
-     * </p>
-     * @return void
-     */
-    public function executeLoadCurrentTasksView($rq) {
-        $modules = $this->app()->router()->selectedRoute()->phpModules();
-        $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-        $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
-		
-		//Fetch tooltip data from xml and pass to view as an array
-		$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "taskLocations", "targetattr": ["question-map-h3", "map-info-ruler", "map-info-shape", "map-info-add"]}', $this->app->name());
-		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+  /**
+   * <p> Method to load the Map view as configured in routes.xml </p>
+   * <p> Set the modules for the route to the page object </p>
+   * @param object $rq <p>
+   * The current HttpRequest.
+   * </p>
+   * @return void
+   */
+  public function executeLoadCurrentTasksView($rq) {
+    $modules = $this->app()->router()->selectedRoute()->phpModules();
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
+
+    //Fetch tooltip data from xml and pass to view as an array
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "taskLocations", "targetattr": ["question-map-h3", "map-info-ruler", "map-info-shape", "map-info-add"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
     //add view vars for breadcrumb
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Map::default_active_control, $rq->getData('active') ?: 'pan');
   }
 
   /**
@@ -158,7 +163,6 @@ class MapController extends \Library\BaseController {
       "shapes" => false,
       "ruler" => true
     );
-    $result["activeControl"] = "pan";
     $this->SendResponseWS(
       $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Map,
@@ -226,7 +230,6 @@ class MapController extends \Library\BaseController {
       "shapes" => true,
       "ruler" => true
     );
-    $result["activeControl"] = "pan";
     $this->SendResponseWS(
       $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Map,
@@ -301,7 +304,6 @@ class MapController extends \Library\BaseController {
       "shapes" => true,
       "ruler" => true
     );
-    $result["activeControl"] = "pan";
 
     $noCoordinateMarkers = count(array_filter($items,function($item){return !$item['noLatLng'];}));
     //if there are no markers try to set default position to facility location
@@ -400,7 +402,6 @@ class MapController extends \Library\BaseController {
       "shapes" => true,
       "ruler" => true
     );
-    $result["activeControl"] = "pan";
     $this->SendResponseWS(
       $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Map,

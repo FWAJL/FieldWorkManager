@@ -263,6 +263,10 @@ li textarea {
 .map-info-marker-selected {
   background-color: #EEEEEE;
 }
+
+.map-info-marker-highlighted {
+  background-color: #EEEEEE;
+}
 /* END MAP */
 
 /* TASK */

@@ -9,6 +9,7 @@ var drawingManager = drawingManagerRuler = "";
 var activeIcon = inactiveIcon = selectedMarkerIcon = "default";
 var facilityId;
 var projectId;
+var highlightCircle;
 var polygonSettings = {
   "fillColor": "#FF0000",
   "fillOpacity": .3,
@@ -53,7 +54,10 @@ var addMarkerClick = function(e) {
       draggable: true,
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
-      dragend: markerDrag
+      dragend: markerDrag,
+      zIndex: 500,
+      optimized: false
+
     });
     newMarker.id = selectedMarker;
     if (selectedMarkerIcon !== "") {
@@ -73,7 +77,9 @@ var addMarkerClick = function(e) {
       draggable: true,
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
-      dragend: markerDrag
+      dragend: markerDrag,
+      zIndex: 500,
+      optimized: false
     });
     if (activeIcon !== "") {
       newMarker.setIcon(activeIcon);
@@ -137,6 +143,8 @@ var saveMarkerData = function (marker){
  */
 var addLocationToMapInfo = function(location, marker){
   marker.id = location.location_id;
+  console.log(marker);
+  google.maps.event.addListener(marker,'mouseover',function(e) { highlightMarker(e,marker.id);});
   $("#map-info").append(
     "<div id='marker-" + location.location_id
       + "' data-id='" + location.location_id
@@ -177,7 +185,7 @@ var setBoundaryEditEvent = function(e, projectId) {
       datacx.post('project/setCurrentProject',{project_id: projectId}).then(function(reply){
         if(reply.dataId == projectId) {
           toastr.success(reply.message);
-          utils.redirect('map/currentProject',200);
+          utils.redirect('map/currentProject?active=shape',200);
         } else {
           toastr.error(reply.message);
         }
@@ -221,6 +229,35 @@ var openProjectInfo = function(e,id) {
     }
 
   });
+}
+
+var highlightMarker = function(e,id, latLng) {
+  unhighlightMarker(e);
+  $("#marker-"+id).addClass('map-info-marker-highlighted');
+  highlightCircle = new google.maps.Marker({
+    position: e.latLng || latLng,
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      fillOpacity: 0,
+      fillColor: '#ff0000',
+      strokeOpacity: 1.0,
+      strokeColor: '#FFFFFF',
+      strokeWeight: 3.0,
+      scale: 25,
+      anchor: new google.maps.Point(0,0.66)
+    },
+    optimized: false,
+    zIndex: -50,
+    map: map.map
+  });
+  google.maps.event.addListener(highlightCircle,'mouseout',unhighlightMarker);
+}
+
+var unhighlightMarker = function(e) {
+  $(".map-info-row").removeClass('map-info-marker-highlighted');
+  if(typeof highlightCircle === 'object'){
+    highlightCircle.setMap(null);
+  }
 }
 
 function load(params) {
@@ -302,6 +339,10 @@ function load(params) {
               item.marker.clickable = true;
               item.marker.click = function(e){openProjectInfo(e,item.marker.id)};
             }
+            item.marker.zIndex = 500;
+            item.marker.optimized = false;
+            item.marker.mouseover = function(e) { highlightMarker(e,item.marker.id);};
+            //item.marker.mouseout = unhighlightMarker;
             markers.push(item.marker);
             markerIcon = item.marker.icon;
           }
@@ -314,11 +355,19 @@ function load(params) {
               + "' /></span></div><div class='map-info-name col-md-9'>" + item.name
               + "</div></div>");
         });
-        if (markers.length === 1) {
-          var mrk = map.addMarker(markers[0]);
-        } else {
-          markers = map.addMarkers(markers);
-        }
+        markers = map.addMarkers(markers);
+        $(document).on('mouseover', '.map-info-row', function () {
+          var el= $(this);
+          var marker = markers.find(function(mkr) {return el.data('id') == mkr.id ? mkr : false;});
+          if (typeof marker != "undefined") {
+            highlightMarker(false, el.data('id'), marker.position);
+          } else {
+            $("#marker-"+el.data('id')).addClass('map-info-marker-highlighted');
+          }
+        });
+        $(document).on('mouseout', '.map-info-row', function () {
+          unhighlightMarker(false);
+        });
 
 
         setTimeout(function() {
@@ -329,7 +378,7 @@ function load(params) {
               map.fitZoom();
             } else if (markers.length === 1)
             {
-              map.setCenter(markers[0].lat, markers[0].lng);
+              map.setCenter(markers[0].position.lat(), markers[0].position.lng());
             }
           }
         }, 500);
@@ -376,7 +425,7 @@ function load(params) {
           toggleRuler(!rulerActive);
         });
 
-        $("#map-info-shape").click(function() {
+        $("#map-info-shape").on('click', function() {
           //toggle all other controls and make sure to toggle current control last
           toggleAdd(false);
           togglePan(false);
@@ -585,8 +634,10 @@ function load(params) {
           }
         }
 
+        $(".control-active").trigger("click");
+
         //toggle active control
-        if(reply.activeControl == "markers"){
+        /*if(reply.activeControl == "markers"){
           toggleAdd(!addActive);
           togglePan(false);
           toggleShape(false);
@@ -606,7 +657,7 @@ function load(params) {
           togglePan(!panActive);
           toggleShape(false);
           toggleRuler(false);
-        }
+        }*/
 
       }
     });
