@@ -11,8 +11,13 @@
 	<resource uicomponent="tooltip" targetcontroller="task" targetaction="list" targetattr="inactive-task-header" value="Tooltip for inactive Tasks go here" placement="top" />
 	<resource uicomponent="tooltip" targetcontroller="task" targetaction="showForm" targetattr="question-task-showForm-manual-box" value="Task show form manual" placement="right" />
 	<resource uicomponent="tooltip" targetcontroller="task" targetaction="showForm" targetattr="question-task-showForm-external-box" value="Task show form external" placement="right" />
+	
 	<resource uicomponent="tooltip" targetcontroller="taskTechnician" targetaction="list" targetattr="active-taskTechnician-header" value="Tooltip for active Technicians for a Task" placement="bottom" />
 	<resource uicomponent="tooltip" targetcontroller="taskTechnician" targetaction="list" targetattr="inactive-taskTechnician-header" value="Tooltip for inactive Technicians for a Task" placement="bottom" />
+	
+	<resource uicomponent="tooltip" targetcontroller="taskLocation" targetaction="locations" targetattr="active-taskLocation-header" value="Tooltip for active Locations for a Task" placement="bottom" />
+	<resource uicomponent="tooltip" targetcontroller="taskLocation" targetaction="locations" targetattr="inactive-taskLocation-header" value="Tooltip for inactive Locations for a Task" placement="bottom" />
+	
 	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="list" targetattr="active-fieldanalyte-header" value="Tooltip for active Field Analyte" placement="top" />
 	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="list" targetattr="inactive-fieldanalyte-header" value="Tooltip for inactive Field Analyte" placement="top" />
 	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="list" targetattr="active-labanalyte-header" value="Tooltip for active Lab Analyte" placement="top" />
@@ -24,15 +29,27 @@
 	
 	<resource uicomponent="tooltip" targetcontroller="service" targetaction="list" targetattr="active-service-header" value="Tooltip for active Service providers" placement="right" />
 	<resource uicomponent="tooltip" targetcontroller="service" targetaction="list" targetattr="inactive-service-header" value="Tooltip for inactive Service providers" placement="bottom" />
-	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="map-info-add" value="Add map for all projects, this is a big tooltip" placement="top" delayshow="1000" delayhide="100" />
-	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="map-info-shape" value="Shape icon for all projects" placement="top" delayshow="1000" delayhide="100" />
-	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="map-info-ruler" value="Ruler icon for all projects" placement="top" delayshow="1000" delayhide="100" />-->
 	
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="question-map-h3" value="Maps for all project H3" placement="right" />
-	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="question-map-h3" value="Maps for current project H3" placement="right" />
-	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="question-map-h3" value="Maps for current project location H3" placement="right" />
-	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="question-map-h3" value="Maps for current project task location H3" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="map-info-add" value="Add map for all projects, this is a big tooltip" placement="top" delayshow="1000" delayhide="100" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="map-info-shape" value="Shape icon for all projects" placement="top" delayshow="1000" delayhide="100" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="map-info-ruler" value="Ruler icon for all projects" placement="top" delayshow="1000" delayhide="100" />
 	
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="question-map-h3" value="Maps for current project H3" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="map-info-shape" value="Shape icon for current projects" placement="top" delayshow="1000" delayhide="100" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="map-info-ruler" value="Ruler icon for current projects" placement="top" delayshow="1000" delayhide="100" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="map-info-add" value="Add icon for current projects" placement="top" delayshow="1000" delayhide="100" />
+	
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="question-map-h3" value="Maps for current project location H3" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="map-info-add" value="Add icon for current project location" placement="top" delayshow="1000" delayhide="100"  />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="map-info-shape" value="Shape icon for current project location" placement="top" delayshow="1000" delayhide="100"  />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="map-info-ruler" value="Ruler icon for current project location" placement="top" delayshow="1000" delayhide="100"  />
+	
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="question-map-h3" value="Maps for current project task location H3" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="map-info-ruler" value="Ruler icon for current task location" placement="top" delayshow="1000" delayhide="100"  />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="map-info-shape" value="Shape icon for current task location" placement="top" delayshow="1000" delayhide="100"  />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="map-info-add" value="Add icon for current task location" placement="top" delayshow="1000" delayhide="100"  />
+
 	<resource uicomponent="confirm" targetcontroller="project" targetaction="list" operation="delete" value="Sure to delete this project?" />
 	<resource uicomponent="confirm" targetcontroller="project" targetaction="view" operation="delete" value="Viewing a project, delete it?" />
 	<resource uicomponent="confirm" targetcontroller="technician" targetaction="list" operation="delete" value="Sure to delete this technician?" />

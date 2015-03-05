@@ -13,18 +13,18 @@ class TaskTechnicianController extends \Library\BaseController {
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
         "resx_key" => $this->action(),
-        "step" => ($result["rows_affected"] === count($result["technician_ids"] )) ? "success" : "error"
+        "step" => ($result["rows_affected"] === count($result["technician_ids"])) ? "success" : "error"
     ));
   }
 
   public function executeManageTechnicians(\Library\HttpRequest $rq) {
-       // Set $current_project for breadcrumb
+    // Set $current_project for breadcrumb
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-      
+
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
-	
-	//Fetch tooltip data from xml and pass to view as an array
+
+    //Fetch tooltip data from xml and pass to view as an array
     $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"taskTechnician", "targetaction": "list", "targetattr": ["active-taskTechnician-header","inactive-taskTechnician-header"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
