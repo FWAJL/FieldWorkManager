@@ -13,4 +13,5 @@
       </div>
       <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; ?>
   </div>
+  <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_legend_module]; ?>
 </div><!-- END RIGHT ASIDE MAIN -->

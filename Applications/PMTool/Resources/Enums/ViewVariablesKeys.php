@@ -71,4 +71,5 @@ class ViewVariablesKeys {
   //Mapping
   const map_module = "map_module";
   const map_info_module = "map_info_module";
+  const map_legend_module = "map_legend_module";
 }

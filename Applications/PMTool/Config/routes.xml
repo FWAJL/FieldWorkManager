@@ -214,7 +214,8 @@
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
-			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="map_legend_module" file_name="map_legend.php" shared="true" />
+	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
     <!--Map all projects-->
@@ -233,7 +234,7 @@
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
-			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
     <!--Map current project-->
