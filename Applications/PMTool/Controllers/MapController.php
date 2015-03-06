@@ -288,7 +288,7 @@ class MapController extends \Library\BaseController {
     $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->relative_path,$this->app()->imageUtil,$this->app()->config());
 
     //create google maps marker items
-    $items = \Applications\PMTool\Helpers\MapHelper::CreateLocationMarkerItems($sessionProject,$properties,$icons);
+    $projectLocationMarkers = \Applications\PMTool\Helpers\MapHelper::CreateLocationMarkerItems($sessionProject,$properties,$icons);
 
     $result["noLatLngIcon"] = $icons["noLatLng"];
     $result["activeIcon"] = $icons["locationActive"];
@@ -304,10 +304,11 @@ class MapController extends \Library\BaseController {
       "shapes" => true,
       "ruler" => true
     );
+    $result["activeControl"] = "pan";
 
-    $noCoordinateMarkers = count(array_filter($items,function($item){return !$item['noLatLng'];}));
+    $hasAtLeastOneMarker = count(array_filter($projectLocationMarkers,function($item){return !$marker['noLatLng'];}));
     //if there are no markers try to set default position to facility location
-    if($noCoordinateMarkers==0){
+    if($hasAtLeastOneMarker==0){
       $defaultLocations = \Applications\PMTool\Helpers\MapHelper::BuildLatAndLongCoordFromGeoObjects(array(\Applications\PMTool\Helpers\CommonHelper::GetValueFromArrayByKey($sessionProject,$defaultLocationProperties['object'])),$defaultLocationProperties['objectLatPropName'],$defaultLocationProperties['objectLngPropName']);
       if(count($defaultLocations)>0){
         $result['defaultPosition'] = $defaultLocations[0];
@@ -318,7 +319,7 @@ class MapController extends \Library\BaseController {
       $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Map,
       "resx_key" => $this->action(),
-      "step" => (count($items) >= 0) ? "success" : "error"
+      "step" => (count($projectLocationMarkers) >= 0) ? "success" : "error"
     ));
   }
 

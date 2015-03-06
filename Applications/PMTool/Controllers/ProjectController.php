@@ -414,7 +414,6 @@ class ProjectController extends \Library\BaseController {
       $sessionProject = $sessionProjects[\Library\Enums\SessionKeys::ProjectKey . $dataPost["project"]["project_id"]];
       $facility = $sessionProject[\Library\Enums\SessionKeys::FacilityObject];
       $project = $sessionProject[\Library\Enums\SessionKeys::ProjectObject];
-      $test = 123;
     }
 
     if ($facility !== NULL && $project !== NULL) {

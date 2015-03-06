@@ -335,7 +335,7 @@ function load(params) {
               item.marker.draggable = true;
               item.marker.dragend = markerDrag;
             }
-            if(reply.type == 'facility') {
+            if(reply.type === 'facility') {
               item.marker.clickable = true;
               item.marker.click = function(e){openProjectInfo(e,item.marker.id)};
             }
@@ -637,17 +637,17 @@ function load(params) {
         $(".control-active").trigger("click");
 
         //toggle active control
-        /*if(reply.activeControl == "markers"){
+        /*if(reply.activeControl === "markers"){
           toggleAdd(!addActive);
           togglePan(false);
           toggleShape(false);
           toggleRuler(false);
-        } else if (reply.activeControl == "shapes") {
+        } else if (reply.activeControl === "shapes") {
           toggleAdd(false);
           togglePan(false);
           toggleShape(!shapeActive);
           toggleRuler(false);
-        } else if (reply.activeControl == "ruler") {
+        } else if (reply.activeControl === "ruler") {
           toggleAdd(false);
           togglePan(false);
           toggleShape(false);
