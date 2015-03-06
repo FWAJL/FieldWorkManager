@@ -397,6 +397,23 @@
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route><!--  task/technicians -->
+    
+    <route url="task/fieldAnalytes" module="TaskFieldAnalyte" action="manageFieldAnalytes" resxfile="task_field_analyte" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/task_field_analyte.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
+            <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
+            <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+            <php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+        </php_modules>
+    </route><!--  task/fieldAnalytes -->
 	
     <!-- analytes -->
     <route url="analyte/listAll" module="Analyte" action="listAll" resxfile="analyte" type="ui">
