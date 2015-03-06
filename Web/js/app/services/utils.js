@@ -352,6 +352,18 @@ $(document).ready(function() {
    })
  }
  
+ utils.showMapLegends = function() {
+   if($('.maplegend-modal').length !== 0)
+   {
+     $('.maplegend-modal').modal('show');
+   }
+   
+   //Events
+   $('#mlalert_ok').on('click', function(){
+	 $('.maplegend-modal').modal('hide');
+   });
+ }
+ 
  utils.mergeStringsExclusive = function(target, source, delimiter) {
   delimiter = delimiter || "\n";
   if (!utils.endsWith(target, delimiter) && !utils.isNullOrEmpty(target)) {
