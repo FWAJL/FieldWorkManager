@@ -93,49 +93,44 @@ var addMarkerClick = function(e) {
  */
 var saveMarkerData = function (marker){
   //Adding task through promptbox from anywhere
-  if($('#promptmsg-addNullCheckAddPrompt').length !== 0)
-  {
-    $("#prompt_ok").off('click');
-    $('#text_input').val("");
-    var post_data = {};
-    utils.showPromptBoxById("location-prompt","addNullCheckAddPrompt", function(){
-      if($('#text_input').val() !== '')
-      {
-        //Check unique
-        map_manager.ifLocationExists($('#text_input').val(), function(record_count) {
-          if(record_count == 0)
-          {
-            console.log('duplicate');
-            //Ok to add
-            $("#prompt_ok").off('click');
-            $(".prompt-modal").off('hidden.bs.modal');
-            post_data["location"] = {};
-            post_data["location"]["location_name"] = $('#text_input').val();
-            post_data["location"]["location_active"] = 1;
-            post_data["location"]["location_lat"] = marker.getPosition().lat();
-            post_data["location"]["location_long"] = marker.getPosition().lng();
-            map_manager.add(post_data, "location", "add", marker, addLocationToMapInfo);
-            $('.prompt-modal').modal('hide');
-          }
-          else
-          {
-            //Show alert, that task is already taken, choose new
+  $("#prompt_ok").off('click');
+  $('#text_input').val("");
+  var post_data = {};
+  utils.showPromptBoxById("location-prompt","addNullCheckAddPrompt", function(){
+    if($('#text_input').val() !== '')
+    {
+      //Check unique
+      map_manager.ifLocationExists($('#text_input').val(), function(record_count) {
+        if(record_count == 0)
+        {
+          //Ok to add
+          $("#prompt_ok").off('click');
+          $(".prompt-modal").off('hidden.bs.modal');
+          post_data["location"] = {};
+          post_data["location"]["location_name"] = $('#text_input').val();
+          post_data["location"]["location_active"] = 1;
+          post_data["location"]["location_lat"] = marker.getPosition().lat();
+          post_data["location"]["location_long"] = marker.getPosition().lng();
+          map_manager.add(post_data, "location", "add", marker, addLocationToMapInfo);
+          $('.prompt-modal').modal('hide');
+        }
+        else
+        {
+          //Show alert, that location is already taken, choose new
+          utils.togglePromptBox();
+          utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
             utils.togglePromptBox();
-            utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
-              utils.togglePromptBox();
-            });
-          }
-        });
-      }
-      else
-      {
-        $('#text_input').focus();
-      }
-    }, "promptmsg-addNullCheckAddPrompt", function(){
-      map.removeMarker(marker);
-    });
-
-  }
+          });
+        }
+      });
+    }
+    else
+    {
+      $('#text_input').focus();
+    }
+  }, "promptmsg-addNullCheckAddPrompt", function(){
+    map.removeMarker(marker);
+  });
 }
 
 /*
@@ -143,7 +138,6 @@ var saveMarkerData = function (marker){
  */
 var addLocationToMapInfo = function(location, marker){
   marker.id = location.location_id;
-  console.log(marker);
   google.maps.event.addListener(marker,'mouseover',function(e) { highlightMarker(e,marker.id);});
   $("#map-info").append(
     "<div id='marker-" + location.location_id
@@ -165,7 +159,6 @@ var setZoomEvent = function(e) {
     if(typeof(boundaryShape) === "object"){
       map.fitLatLngBounds(boundaryPath);
     } else {
-      console.log(e.position.lat());
       map.setCenter(e.position.lat(), e.position.lng());
       map.zoomIn(7);
     }
@@ -197,6 +190,16 @@ var setBoundaryEditEvent = function(e, projectId) {
   });
 }
 
+var checkLatLng = function(lat, lon){
+  var validLat = /^(-?[1-8]?\d(?:\.\d{1,18})?|90(?:\.0{1,18})?)$/.test(lat);
+  var validLon = /^(-?(?:1[0-7]|[1-9])?\d(?:\.\d{1,18})?|180(?:\.0{1,18})?)$/.test(lon);
+  if(validLat && validLon) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 var openProjectInfo = function(e,id) {
   datacx.post('facility/getItem',{'facility_id':id}).then(function(reply){
     if(reply.data.length > 0) {
@@ -209,19 +212,27 @@ var openProjectInfo = function(e,id) {
       setZoomEvent(e);
       setBoundaryEditEvent(e, item.project.project_id);
       utils.showInfoWindow('#project-info-modal',function(){
-        post_data = {};
-        post_data.project = {};
-        post_data.facility = {};
-        post_data.project.project_id = item.project.project_id;
-        post_data.project.project_name = $("#project_name-modal").val();
-        post_data.facility.facility_id = id;
-        post_data.facility.facility_name = $("#facility_name-modal").val();
-        post_data.facility.facility_lat = $("#latitude-modal").val();
-        post_data.facility.facility_long = $("#longitude-modal").val();
-        map_manager.edit({params: utils.stringifyJson(post_data)},'project','mapEdit',function(r){
-          location.reload();
-        });
-
+        if(!checkLatLng($("#latitude-modal").val(),$("#longitude-modal").val())) {
+          utils.togglePromptBox();
+          utils.showAlert($('#confirmmsg-checkCoordinates').val(), function(){
+            utils.togglePromptBox();
+          });
+        } else if($("#project_name-modal").val() !== '' && $("#facility_name-modal").val() !== '') {
+          post_data = {};
+          post_data.project = {};
+          post_data.facility = {};
+          post_data.project.project_id = item.project.project_id;
+          post_data.project.project_name = $("#project_name-modal").val();
+          post_data.facility.facility_id = id;
+          post_data.facility.facility_name = $("#facility_name-modal").val();
+          post_data.facility.facility_lat = $("#latitude-modal").val();
+          post_data.facility.facility_long = $("#longitude-modal").val();
+          map_manager.edit({params: utils.stringifyJson(post_data)},'project','mapEdit',function(r){
+            location.reload();
+          });
+        } else {
+          $('#project_name-modal').focus();
+        }
       },function(){});
 
     } else {
@@ -638,26 +649,26 @@ function load(params) {
 
         //toggle active control
         /*if(reply.activeControl === "markers"){
-          toggleAdd(!addActive);
-          togglePan(false);
-          toggleShape(false);
-          toggleRuler(false);
-        } else if (reply.activeControl === "shapes") {
-          toggleAdd(false);
-          togglePan(false);
-          toggleShape(!shapeActive);
-          toggleRuler(false);
-        } else if (reply.activeControl === "ruler") {
-          toggleAdd(false);
-          togglePan(false);
-          toggleShape(false);
-          toggleRuler(!rulerActive);
-        } else {
-          toggleAdd(false);
-          togglePan(!panActive);
-          toggleShape(false);
-          toggleRuler(false);
-        }*/
+         toggleAdd(!addActive);
+         togglePan(false);
+         toggleShape(false);
+         toggleRuler(false);
+         } else if (reply.activeControl === "shapes") {
+         toggleAdd(false);
+         togglePan(false);
+         toggleShape(!shapeActive);
+         toggleRuler(false);
+         } else if (reply.activeControl === "ruler") {
+         toggleAdd(false);
+         togglePan(false);
+         toggleShape(false);
+         toggleRuler(!rulerActive);
+         } else {
+         toggleAdd(false);
+         togglePan(!panActive);
+         toggleShape(false);
+         toggleRuler(false);
+         }*/
 
       }
     });

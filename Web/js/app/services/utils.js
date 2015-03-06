@@ -369,10 +369,15 @@ $(document).ready(function() {
 
   utils.showPromptBoxById = function(id, operation, callback, useThisIdForMsg, callbackOnCancel) {
     if(operation == 'addNullCheck'){
-      $('#prompt_title').html($('#promptmsg-addNullCheck').val());
+      if($('#prompt_title').html() == '') {
+        $('#prompt_title').html($('#promptmsg-addNullCheck').val());
+      }
+
     }
     else if(useThisIdForMsg !== undefined && useThisIdForMsg !== "") {
-      $('#prompt_title').html($('#' + useThisIdForMsg).val());
+      if($('#prompt_title').html() == '') {
+        $('#prompt_title').html($('#' + useThisIdForMsg).val());
+      }
     }
 
     $('#'+id).modal('show');
