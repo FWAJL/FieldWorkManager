@@ -103,19 +103,19 @@ $(document).ready(function() {
   });//Edit a technician
 
   $("#btn_delete_technician").click(function() {
-		var msg = $('#confirmmsg-delete').val();
-		if (typeof msg !== typeof undefined && msg !== false) {
-			utils.showConfirmBox(msg, function(result){
-				if(result)
-				{
-					technician_manager.delete(parseInt(utils.getQueryVariable("technician_id")));
-				}
-			});
-		}
-		else
+	var msg = $('#confirmmsg-delete').val();
+	if (typeof msg !== typeof undefined && msg !== false) {
+	  utils.showConfirmBox(msg, function(result){
+		if(result)
 		{
 			technician_manager.delete(parseInt(utils.getQueryVariable("technician_id")));
 		}
+	  });
+	}
+	else
+	{
+	  technician_manager.delete(parseInt(utils.getQueryVariable("technician_id")));
+	}
   });//Delete a technician
 
   if (utils.getQueryVariable("mode") === "edit") {

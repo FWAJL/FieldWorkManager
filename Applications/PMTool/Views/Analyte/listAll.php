@@ -23,6 +23,7 @@
     <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::tabs_close]; ?>
     <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::popup_prompt_module]; ?>
     <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; ?>
+    <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]; ?>
   </div>
 
 </div>
