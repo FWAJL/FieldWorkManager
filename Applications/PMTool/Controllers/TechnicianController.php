@@ -11,9 +11,9 @@ class TechnicianController extends \Library\BaseController {
 
   public function executeShowForm(\Library\HttpRequest $rq) {
 		
-		//Get confirm msg for Technician deletion from showForm screen
-		$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"technician", "targetaction": "view", "operation": ["delete"]}', $this->app->name());
-		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
+	//Get confirm msg for Technician deletion from showForm screen
+	$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"technician", "targetaction": "view", "operation": ["delete"]}', $this->app->name());
+	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
 		
     //Load Modules for view
     $this->page->addVar(

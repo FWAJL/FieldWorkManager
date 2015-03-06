@@ -81,7 +81,19 @@ $(document).ready(function() {
   });//Edit a location
 
   $("#btn_delete_location").click(function() {
-    location_manager.delete(parseInt(utils.getQueryVariable("location_id")));
+	var msg = $('#confirmmsg-delete').val();
+    if (typeof msg !== typeof undefined && msg !== false) {
+      utils.showConfirmBox(msg, function(result) {
+        if (result)
+        {
+          location_manager.delete(parseInt(utils.getQueryVariable("location_id")));
+        }
+      });
+    }
+    else
+    {
+      location_manager.delete(parseInt(utils.getQueryVariable("location_id")));
+    }
   });//Delete a location
 
   if (utils.getQueryVariable("mode") === "edit") {
