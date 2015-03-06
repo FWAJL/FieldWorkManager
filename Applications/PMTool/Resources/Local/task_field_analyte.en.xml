@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <resource key="page_title">Your task field_analytes - Field Work Manager</resource>
+  
+  <resource key="message_error_updateItems">Error editing the analytes.</resource>
+  <resource key="message_success_updateItems">The analytes have been edited</resource>
+    
+  <!--  Task Field Analytes --> 
+  <resource key="task_field_analytes_header">Field Analytes</resource>
+  <resource key="h4_task_field_analytes">Task field_analytes</resource>
+  <resource key="h4_project_field_analytes">Project field_analytes</resource>
+  <resource key="selected_task_field_analytes">Field Analytes for this Task</resource>
+  <resource key="not_selected_task_field_analytes">All available field_analytes</resource>
+  <resource key="btn_add_to_task">Add field_analyte(s)</resource>
+  <resource key="btn_remove_from_task">Remove field_analyte(s)</resource>
+  <resource key="no_items_to_display_message">There is no active field_analytes. Go to Field Analytes > List all to activate some</resource>
+  
+</resources>

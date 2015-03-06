@@ -41,6 +41,9 @@ abstract class ResxFileNameKeys {
   const FieldAnalyte = "field_analyte";
   const LabAnalyte = "lab_analyte";
   
+  const TaskFieldAnalyte = "task_field_analyte";
+  const TaskLabAnalyte = "task_lab_analyte";
+  
   const Map = "map";
 }
 
