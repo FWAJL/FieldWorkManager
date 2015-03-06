@@ -306,9 +306,9 @@ class MapController extends \Library\BaseController {
     );
     $result["activeControl"] = "pan";
 
-    $hasAtLeastOneMarker = count(array_filter($projectLocationMarkers,function($item){return !$marker['noLatLng'];}));
+    $noCoordinateMarkers = count(array_filter($projectLocationMarkers,function($marker){return !$marker['noLatLng'];}));
     //if there are no markers try to set default position to facility location
-    if($hasAtLeastOneMarker==0){
+    if($noCoordinateMarkers==0){
       $defaultLocations = \Applications\PMTool\Helpers\MapHelper::BuildLatAndLongCoordFromGeoObjects(array(\Applications\PMTool\Helpers\CommonHelper::GetValueFromArrayByKey($sessionProject,$defaultLocationProperties['object'])),$defaultLocationProperties['objectLatPropName'],$defaultLocationProperties['objectLngPropName']);
       if(count($defaultLocations)>0){
         $result['defaultPosition'] = $defaultLocations[0];
