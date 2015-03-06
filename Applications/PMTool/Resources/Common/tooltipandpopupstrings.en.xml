@@ -55,6 +55,10 @@
 	<resource uicomponent="confirm" targetcontroller="technician" targetaction="list" operation="delete" value="Sure to delete this technician?" />
 	<resource uicomponent="confirm" targetcontroller="technician" targetaction="view" operation="delete" value="You are viewing a technician, delete this record?" />
 	<resource uicomponent="confirm" targetcontroller="task" targetaction="list" operation="activate" value="Sure to activate this task?" />
+	<resource uicomponent="confirm" targetcontroller="service" targetaction="view" operation="delete" value="Viewing a service, delete it?" />
+	<resource uicomponent="confirm" targetcontroller="analyte" targetaction="list" operation="deleteField" value="Sure to delete this field analyte?" />
+	<resource uicomponent="confirm" targetcontroller="analyte" targetaction="list" operation="deleteLab" value="Sure to delete this Lab analyte?" />
+	<resource uicomponent="confirm" targetcontroller="location" targetaction="view" operation="delete" value="Viewing a location, delete it?" />
 	
 	<resource uicomponent="alert" targetcontroller="project" targetaction="list" operation="addUniqueCheck" value="Project name is taken. Choose a new project name." />
 	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addNullCheck" value="To open a new Project, you must provide the Project Name and Facility Address" />
