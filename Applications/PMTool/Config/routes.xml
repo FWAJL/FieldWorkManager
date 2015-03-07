@@ -216,6 +216,7 @@
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+			<php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
         </php_modules>
     </route>
     <!--Map all projects-->
@@ -235,6 +236,7 @@
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+			<php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
         </php_modules>
     </route>
     <!--Map current project-->
@@ -256,6 +258,7 @@
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
             <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+			<php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
         </php_modules>
     </route>
     <!--Map current project locations-->
@@ -275,6 +278,7 @@
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+			<php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
         </php_modules>
     </route>
     <!--Map current project-->
