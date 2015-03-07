@@ -351,8 +351,19 @@ $(document).ready(function() {
      clbkCancel();
    })
  }
-
-  utils.showInfoWindow = function(id, callback, callbackOnCancel) {
+ 
+ utils.showMapLegends = function() {
+   if($('.maplegend-modal').length !== 0)
+   {
+     $('.maplegend-modal').modal('show');
+   }
+   
+   //Events
+   $('#mlalert_ok').on('click', function(){
+	 $('.maplegend-modal').modal('hide');
+   });
+ }
+ utils.showInfoWindow = function(id, callback, callbackOnCancel) {
     $(id).modal('show');
     //Events
     $('.modal-update').off('click');
@@ -392,7 +403,6 @@ $(document).ready(function() {
       })
     }
   };
-
  utils.mergeStringsExclusive = function(target, source, delimiter) {
   delimiter = delimiter || "\n";
   if (!utils.endsWith(target, delimiter) && !utils.isNullOrEmpty(target)) {
