@@ -16,16 +16,16 @@
   <resource key="h3_no_project">No Project Selected</resource>
   <resource key="h3_no_task">No Task Selected</resource>
   
-<!--  Legend-->
-  <resource key="active_project">  Active Project</resource>
-  <resource key="inactive_project">  Inactive Project</resource>
-  <resource key="active_location">  Active Location</resource>
-  <resource key="inactive_location">  Inactive Location</resource>
-  <resource key="task_location_start">  Task Location (not started)</resource>
-  <resource key="task_location_inprocess">  Task Location (in process)</resource>
-  <resource key="task_location_complete">  Task Location (finished)</resource>
-  <resource key="ruler">  Click to measure distances or areas</resource>
-  <resource key="add-icon">  Click to move or add Locations</resource>
-  <resource key="boundary">  Click to add Project boundary</resource>
-
+  <!-- Legend-->
+  <resource key="h4_legend_heading">LEGEND</resource>
+  <resource key="active_project"> Active Project</resource>
+  <resource key="inactive_project"> Inactive Project</resource>
+  <resource key="active_location"> Active Location</resource>
+  <resource key="inactive_location"> Inactive Location</resource>
+  <resource key="task_location_start"> Task Location (not started)</resource>
+  <resource key="task_location_inprocess"> Task Location (in process)</resource>
+  <resource key="task_location_complete"> Task Location (finished)</resource>
+  <resource key="ruler"> Click to measure distances or areas</resource>
+  <resource key="add-icon"> Click to move or add Locations</resource>
+  <resource key="boundary"> Click to add Project boundary</resource>
 </resources>

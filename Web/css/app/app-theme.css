@@ -262,14 +262,6 @@ li textarea {
 .map-info-marker-selected {
   background-color: #EEEEEE;
 }
-
-.map_legend {
-    margin-top: 50px;
-}
-
-.map_legend li {
-    margin: 3px;
-}
 /* END MAP */
 
 /* TASK */

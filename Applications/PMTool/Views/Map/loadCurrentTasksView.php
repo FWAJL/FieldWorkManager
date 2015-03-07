@@ -25,5 +25,6 @@
             </div>
         </div>
         <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; ?>
+        <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_maplegends_module]; ?>
     </div>
 </div><!-- END RIGHT ASIDE MAIN -->

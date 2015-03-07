@@ -96,8 +96,8 @@ class AnalyteController extends \Library\BaseController {
     $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"analyte", "targetaction": "list", "targetattr": ["active-fieldanalyte-header","inactive-fieldanalyte-header","active-labanalyte-header","inactive-labanalyte-header"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 	
-	//Get confirm msg for Project deletion from showForm screen
-    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"analyte", "targetaction": "list", "operation": ["deleteField", "deleteLab"]}', $this->app->name());
+	//Get confirm msg for analyte deletion from showForm screen
+    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"analyte", "targetaction": "list", "operation": ["deleteField", "deleteLab", "noAnalyteForProject"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
 
     \Applications\PMTool\Helpers\AnalyteHelper::StoreListsData($this);
