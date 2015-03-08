@@ -69,6 +69,10 @@
 	<resource uicomponent="alert" targetcontroller="service" targetaction="view" operation="addUniqueCheck" value="'{0}' is already used for an existing service provider as the service provider name. Please choose another name." />
 	<resource uicomponent="alert" targetcontroller="task" targetaction="view" operation="addUniqueCheck" value="Task name is taken. Choose a new Task name" />
 	<resource uicomponent="alert" targetcontroller="task" targetaction="list" operation="addUniqueCheck" value="Task name is taken. Choose a new Task name" />
+	<resource uicomponent="alert" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="addUniqueCheck" value="Location name is taken. Choose a new Location name" />
+	<resource uicomponent="alert" targetcontroller="analyte" targetaction="list" operation="noAnalyteForProject" value="You do not have any Analytes for your Projects. You can start building your own custom analyte list by clicking Analyte > Upload List" />
+	
+	<resource uicomponent="prompt" targetcontroller="project" targetaction="list" operation="addNullCheck" value="This will create a copy of Project '{0}'. To continue, you must enter the new project name." />
 	<resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="addUniqueCheck" value="Location name is taken. Choose a new Location name" />
     <resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="checkCoordinates" value="Invalid coordinates" />
     <resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="noPhotos" value="No available photos for this location" />
@@ -83,6 +87,5 @@
 	<resource uicomponent="prompt" targetcontroller="location" targetaction="showForm" operation="checkCurrentProject" value="To add a location, you must select a project." />
 	<resource uicomponent="prompt" targetcontroller="location" targetaction="uploadList" operation="checkCurrentProject" value="To upload a list of locations, you must select a project." />
 	<resource uicomponent="prompt" targetcontroller="analyte" targetaction="listAll" operation="edit" value="Edit '{0}'." />
-	<resource uicomponent="prompt" targetcontroller="map" targetaction="loadProjectInfo" operation="addNullCheckAddPrompt" value="To continue, you must fill all fields." />
-
+	<resource uicomponent="prompt" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="addNullCheckAddPrompt" value="To continue, you must enter the new Location Name." />
 </resources>

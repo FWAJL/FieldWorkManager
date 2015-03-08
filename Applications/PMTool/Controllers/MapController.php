@@ -317,7 +317,7 @@ class MapController extends \Library\BaseController {
 
     $noCoordinateMarkers = count(array_filter($projectLocationMarkers,function($marker){return !$marker['noLatLng'];}));
     //if there are no markers try to set default position to facility location
-    if($noCoordinateMarkers==0){
+    if($noCoordinateMarkers===0){
       $defaultLocations = \Applications\PMTool\Helpers\MapHelper::BuildLatAndLongCoordFromGeoObjects(array(\Applications\PMTool\Helpers\CommonHelper::GetValueFromArrayByKey($sessionProject,$defaultLocationProperties['object'])),$defaultLocationProperties['objectLatPropName'],$defaultLocationProperties['objectLngPropName']);
       if(count($defaultLocations)>0){
         $result['defaultPosition'] = $defaultLocations[0];
@@ -400,7 +400,7 @@ class MapController extends \Library\BaseController {
     $result["type"] = 'task';
     $noCoordinateMarkers = count(array_filter($projectLocationMarkers,function($item){return !$item['noLatLng'];}));
 
-    if($noCoordinateMarkers==0){
+    if($noCoordinateMarkers===0){
       $defaultLocations = \Applications\PMTool\Helpers\MapHelper::BuildLatAndLongCoordFromGeoObjects(array(\Applications\PMTool\Helpers\CommonHelper::GetValueFromArrayByKey($sessionProject,$defaultLocationProperties['object'])),$defaultLocationProperties['objectLatPropName'],$defaultLocationProperties['objectLngPropName']);
       if(count($defaultLocations)>0){
         $result['defaultPosition'] = $defaultLocations[0];
