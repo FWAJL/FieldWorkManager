@@ -90,6 +90,11 @@ class AnalyteController extends \Library\BaseController {
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::tabStatus, $tabsStatus);
 
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+	
+	//Check if a project needs to be selected in order to display this page
+    if (!$sessionProject)
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::AnalyteListAll);
+	
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 	
 	//Fetch tooltip data from xml and pass to view as an array
