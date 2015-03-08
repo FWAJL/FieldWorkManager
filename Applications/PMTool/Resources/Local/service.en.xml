@@ -31,7 +31,7 @@
   <resource key="service_contact_email">Email</resource>
 <!--  <resource key="service_active">Active</resource>-->
   <resource key="service_button_add">Add</resource>
-  <resource key="service_button_edit">Edit</resource>
+  <resource key="service_button_edit">Save</resource>
   <resource key="service_button_delete">Delete</resource>
   <resource key="service_list_all_header">Service Providers</resource>
   <resource key="h3_services_active">All Service Providers</resource>

@@ -26,7 +26,7 @@
   <resource key="technician_document">Photo</resource>
   <resource key="technician_active">Active</resource>
   <resource key="technician_button_add">Add</resource>
-  <resource key="technician_button_edit">Edit</resource>
+  <resource key="technician_button_edit">Save</resource>
   <resource key="technician_button_delete">Delete</resource>
   <resource key="technician_list_all_header">Your Technicians</resource>
   <resource key="h3_technicians_active">Available technicians</resource>

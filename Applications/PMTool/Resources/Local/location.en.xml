@@ -38,7 +38,7 @@
   <resource key="location_active_many">Set list of locations as Active</resource>
   <resource key="location_visible">Visible</resource>
   <resource key="location_button_add">Add</resource>
-  <resource key="location_button_edit">Edit</resource>
+  <resource key="location_button_edit">Save</resource>
   <resource key="location_button_delete">Delete</resource>
   <resource key="location_list_all_header">Locations</resource>
   <resource key="h3_locations_active">Active locations</resource>
