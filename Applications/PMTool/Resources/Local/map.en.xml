@@ -28,4 +28,5 @@
   <resource key="ruler"> Click to measure distances or areas</resource>
   <resource key="add-icon"> Click to move or add Locations</resource>
   <resource key="boundary"> Click to add Project boundary</resource>
+  <resource key="popup_ok_button">OK</resource>
 </resources>
