@@ -19,13 +19,33 @@
   <!-- Project Info Window -->
   <resource key="project_window_title">Project Info</resource>
   <resource key="project_window_project_name">Project name</resource>
-  <resource key="project_window_project_name_facility_name">Facility name</resource>
+  <resource key="project_window_facility_name">Facility name</resource>
   <resource key="project_window_latitude">Latitude</resource>
   <resource key="project_window_longitude">Longitude</resource>
   <resource key="project_window_zoom">Zoom</resource>
+  <resource key="project_window_update_coordinates">Load coordinates from the map marker</resource>
   <resource key="project_window_edit_boundary">Edit boundary</resource>
   <resource key="project_window_edit_update">Update</resource>
   <resource key="project_window_edit_cancel">Cancel</resource>
+  <!-- Location Info Window -->
+  <resource key="location_window_title">Location Info</resource>
+  <resource key="location_window_location_name">Location name</resource>
+  <resource key="location_window_location_desc">Location description</resource>
+  <resource key="location_window_project_id">Project name</resource>
+  <resource key="location_window_location_lat">Latitude</resource>
+  <resource key="location_window_location_long">Longitude</resource>
+  <resource key="location_window_zoom">Zoom</resource>
+  <resource key="location_window_photos">View photos</resource>
+  <resource key="location_window_edit_update">Update</resource>
+  <resource key="location_window_edit_cancel">Cancel</resource>
+  <!-- Task Info Window -->
+  <resource key="task_location_window_title">Task Location Info</resource>
+  <resource key="task_location_window_location_name">Location name</resource>
+  <resource key="task_location_window_zoom">Zoom</resource>
+  <resource key="task_location_window_remove">Remove from task</resource>
+  <resource key="task_location_window_add">Add to task</resource>
+  <resource key="task_location_window_edit_update">Update</resource>
+  <resource key="task_location_window_edit_cancel">Cancel</resource>
   <!-- New location prompt -->
   <resource key="location_prompt_title">To continue, you must enter the new Location Name</resource>
   <resource key="location_prompt_ok">OK</resource>

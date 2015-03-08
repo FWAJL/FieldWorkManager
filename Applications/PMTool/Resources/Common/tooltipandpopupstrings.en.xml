@@ -63,12 +63,15 @@
 	<resource uicomponent="alert" targetcontroller="project" targetaction="list" operation="addUniqueCheck" value="Project name is taken. Choose a new project name." />
 	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addNullCheck" value="To open a new Project, you must provide the Project Name and Facility Address" />
 	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addUniqueCheck" value="'{0}' is already used for an existing project as a project name. Please choose another name." />
+	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addAddressCheck" value="Error finding the coordinates for facility address. You can edit them on the project map." />
+	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addCoordinatesCheck" value="Invalid coordinates." />
 	<resource uicomponent="alert" targetcontroller="service" targetaction="view" operation="addNullCheck" value="To add a new Service Provider, you must provide the Company Name and Category." />
 	<resource uicomponent="alert" targetcontroller="service" targetaction="view" operation="addUniqueCheck" value="'{0}' is already used for an existing service provider as the service provider name. Please choose another name." />
 	<resource uicomponent="alert" targetcontroller="task" targetaction="view" operation="addUniqueCheck" value="Task name is taken. Choose a new Task name" />
 	<resource uicomponent="alert" targetcontroller="task" targetaction="list" operation="addUniqueCheck" value="Task name is taken. Choose a new Task name" />
 	<resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="addUniqueCheck" value="Location name is taken. Choose a new Location name" />
     <resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="checkCoordinates" value="Invalid coordinates" />
+    <resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="noPhotos" value="No available photos for this location" />
         <resource uicomponent="prompt" targetcontroller="project" targetaction="list" operation="addNullCheck" value="This will create a copy of Project '{0}'. To continue, you must enter the new project name." />
 	<resource uicomponent="prompt" targetcontroller="project" targetaction="view" operation="addNullCheck" value="This will create a copy of Project '{0}'. To continue, you must enter the new project name." />
 	<resource uicomponent="prompt" targetcontroller="task" targetaction="view" operation="addNullCheck" value="To continue, you must enter the new Task Name." />

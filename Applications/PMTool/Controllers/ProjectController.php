@@ -59,7 +59,7 @@ class ProjectController extends \Library\BaseController {
    */
   public function executeShowForm(\Library\HttpRequest $rq) {
     //Get confirm msg for Project deletion from showForm screen
-    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"project", "targetaction": "view", "operation": ["delete", "addNullCheck", "addUniqueCheck"]}', $this->app->name());
+    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"project", "targetaction": "view", "operation": ["delete", "addNullCheck", "addUniqueCheck","addAddressCheck","addCoordinatesCheck"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
 
     //Fetch prompt box data from xml and pass to view as an array

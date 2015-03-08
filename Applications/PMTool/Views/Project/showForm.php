@@ -26,6 +26,7 @@
       </div>
       <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::popup_msg_module]; ?>
       <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::popup_prompt_module]; ?>
+      <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Project::popup_address]; ?>
     </div>
 
     <!-- close tabs -->

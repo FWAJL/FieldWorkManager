@@ -7,8 +7,8 @@ $(document).ready(function() {
  //toolip
  $("li[has-tool-tip]").tooltip({placement: $("li[has-tool-tip]").attr("placement")});
  //file upload
- $("#document-upload input[name=\"itemCategory\"]").val(utils.getDataFromUploadFile("^.*(_id)$", true));
- $("#document-upload input[name=\"itemId\"]").val(utils.getDataFromUploadFile("^.*(_id)$", false));
+ //$("#document-upload input[name=\"itemCategory\"]").val(utils.getDataFromUploadFile("^.*(_id)$", true));
+ //$("#document-upload input[name=\"itemId\"]").val(utils.getDataFromUploadFile("^.*(_id)$", false));
  //Auto focus, prompt box first input
  $('.prompt-modal').on('shown.bs.modal', function () {
    $('#text_input').focus();
@@ -361,7 +361,7 @@ $(document).ready(function() {
     });
     if(callbackOnCancel !== undefined)
     {
-      $('.prompt-modal').on('hidden.bs.modal', function (e) {
+      $(id+' .prompt-modal').on('hidden.bs.modal', function (e) {
         callbackOnCancel();
       })
     }
@@ -411,4 +411,13 @@ $(document).ready(function() {
  utils.endsWith = function(str, suffix) {
   return str.indexOf(suffix, str.length - suffix.length) !== -1;
  };
+ utils.checkLatLng = function(lat,lng) {
+   validLat = /^(-?[1-8]?\d(?:\.\d{1,18})?|90(?:\.0{1,18})?)$/.test(lat);
+   validLng = /^(-?(?:1[0-7]|[1-9])?\d(?:\.\d{1,18})?|180(?:\.0{1,18})?)$/.test(lng);
+   if(validLat && validLng) {
+     return true;
+   } else {
+     return false;
+   }
+ }
 }(window.utils = window.utils || {}));

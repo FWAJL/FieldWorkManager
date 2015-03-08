@@ -37,8 +37,14 @@ class FacilityController extends \Library\BaseController {
    */
   public function executeAdd(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS();
+    $dataPost = $this->dataPost();
 
-    $facility = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Facility());
+    if($dataPost['facility_lat'] == "" or $dataPost['facility_long'] == ""){
+      $latLng =  \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
+      $dataPost['facility_lat'] = $latLng['lat'];
+      $dataPost['facility_long'] = $latLng['lng'];
+    }
+    $facility = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($dataPost, new \Applications\PMTool\Models\Dao\Facility());
     $result["data"] = $facility;
     //Load interface to query the database
     $manager = $this->managers->getManagerOf($this->module());

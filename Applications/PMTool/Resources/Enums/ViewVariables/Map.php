@@ -28,6 +28,8 @@ if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script acces
 class Map {
   //Modules keys
   const popup_project_info = "popup_project_info";
+  const popup_location_info = "popup_location_info";
+  const popup_task_location_info = "popup_task_location_info";
   const default_active_control = "default_active_control";
 }
 

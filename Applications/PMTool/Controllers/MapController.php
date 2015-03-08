@@ -82,7 +82,7 @@ class MapController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
 
     //Fetch alert box data
-    $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"map", "targetaction": "loadMaps", "operation": ["addUniqueCheck","checkCoordinates"]}', $this->app->name());
+    $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"map", "targetaction": "loadMaps", "operation": ["addUniqueCheck","checkCoordinates","noPhotos"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);
 
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
@@ -307,7 +307,7 @@ class MapController extends \Library\BaseController {
     $result["boundary"] = \Applications\PMTool\Helpers\MapHelper::GetBoundary($sessionProject);
     $result["facility_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->facility_id();
     $result["project_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->project_id();
-
+    $result["type"] = "location";
     $result["controls"] = array(
       "markers" => true,
       "shapes" => true,
@@ -397,7 +397,7 @@ class MapController extends \Library\BaseController {
     $result["boundary"] = \Applications\PMTool\Helpers\MapHelper::GetBoundary($sessionProject);
     $result["facility_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->facility_id();
     $result["project_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->project_id();
-
+    $result["type"] = 'task';
     $noCoordinateMarkers = count(array_filter($projectLocationMarkers,function($item){return !$item['noLatLng'];}));
 
     if($noCoordinateMarkers==0){
