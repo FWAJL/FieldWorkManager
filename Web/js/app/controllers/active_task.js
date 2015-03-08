@@ -46,16 +46,6 @@
 	  
   }
 
-//  if (utils.getQueryVariable("mode") === "edit") {
-//    $(".form_sections").fadeIn('2000').addClass("show").removeClass("hide");
-//    $(".welcome").fadeOut('2000').removeClass("show").addClass("hide");
-//    $(".task_add").hide();
-//    task_manager.getItem(utils.getQueryVariable("task_id"));
-//  }//Load task
-//
-//  if (utils.getQueryVariable("mode") === "add" && utils.getQueryVariable("test") === "true") {
-//    task_manager.fillFormWithRandomData();
-//  }
 
 /***********
  * task_manager namespace
