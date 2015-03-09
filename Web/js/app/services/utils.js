@@ -334,10 +334,12 @@ $(document).ready(function() {
    $('.prompt-modal').toggle();
  };
  
- utils.showSelectProjectPrompt = function(clbkOk, clbkCancel){
+ utils.showSelectEntityPrompt = function(clbkOk, clbkCancel){
    if($('.pselector-modal').length !== 0)
    {
-	 $('#prompt_title').html($('#promptmsg-checkCurrentProject').val());
+	 //$('#prompt_title').html($('#promptmsg-checkCurrentProject').val());
+	 $('#prompt_title').html($('[id^="promptmsg-checkCurrent"]').val());
+	 
    	 //disable context menu
    	 $(".select_item").removeClass("select_item");
      $('.pselector-modal').modal('show');

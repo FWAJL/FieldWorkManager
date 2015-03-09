@@ -75,6 +75,12 @@
 	<resource uicomponent="prompt" targetcontroller="task" targetaction="view" operation="addNullCheck" value="To continue, you must enter the new Task Name." />
 	<resource uicomponent="prompt" targetcontroller="task" targetaction="view" operation="addNullCheckForCopy" value="This will create a copy of Task '{0}'. To continue, you must enter the new task name." />
 	<resource uicomponent="prompt" targetcontroller="task" targetaction="listAll" operation="checkCurrentProject" value="To list tasks, you must select a project." />
+	<resource uicomponent="prompt" targetcontroller="analyte" targetaction="listAll" operation="checkCurrentProject" value="To list Analytes, you must select a project." />
+	<resource uicomponent="prompt" targetcontroller="map" targetaction="currentProject" operation="checkCurrentProject" value="To see Map for current project, you must select a project." />
+	<resource uicomponent="prompt" targetcontroller="map" targetaction="currentProjectLocations" operation="checkCurrentProject" value="To see Map for current locations, you must select a project." />
+	<resource uicomponent="prompt" targetcontroller="map" targetaction="taskLocations" operation="checkCurrentProject" value="To see Map for Task locations, you must select a project." />
+	
+	<resource uicomponent="prompt" targetcontroller="map" targetaction="taskLocations" operation="checkCurrentTask" value="To see Map for Task locations, you must select a Task as well." />
 	<resource uicomponent="prompt" targetcontroller="task" targetaction="showForm" operation="checkCurrentProject" value="To add a task, you must select a project." />
 	<resource uicomponent="prompt" targetcontroller="task" targetaction="addPrompt" operation="addNullCheckAddPrompt" value="To continue, you must enter the new Task Name." />
 	<resource uicomponent="prompt" targetcontroller="location" targetaction="listAll" operation="checkCurrentProject" value="To list locations, you must select a project." />
