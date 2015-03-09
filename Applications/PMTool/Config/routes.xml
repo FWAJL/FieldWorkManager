@@ -317,6 +317,20 @@
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
         </php_modules>
     </route><!--   task/listAll -->
+	
+	<route url="task/selectTask" module="Task" action="selectTask" resxfile="task" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+			<php_module key="active_list_module" file_name="active_list.php" shared="true" />
+			<php_module key="popup_selector_module" file_name="popup_selector.php" shared="true" />
+        </php_modules>
+    </route><!--   task/listAll -->
     
     <route url="task/showForm" module="Task" action="showForm" resxfile="task" type="ui">
         <js_files>
@@ -641,6 +655,7 @@
   <route url="task/getItem" module="Task" action="getItem" resxfile="task" type="ws" />
   <route url="task/updateItems" module="Task" action="updateItems" resxfile="task" type="ws" />
   <route url="task/ifTaskExists" module="Task" action="ifTaskExists" resxfile="task" type="ws" />
+  <route url="task/selectTask" module="Task" action="selectTask" resxfile="task" type="ws" />
   
   <route url="task/location/updateItems" module="TaskLocation" action="updateItems" resxfile="task_location" type="ws" />
   <route url="task/technician/updateItems" module="TaskTechnician" action="updateItems" resxfile="task_technician" type="ws" />

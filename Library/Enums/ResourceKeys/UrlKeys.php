@@ -33,6 +33,10 @@ class UrlKeys {
   const LocationShowForm = "location/showForm";
   const LocationUploadList = "location/uploadList";
   
+  const MapCurrentProject = "map/currentProject";
+  const MapCurrentProjectLocations = "map/currentProjectLocations";
+  const MapTaskLocations = "map/taskLocations";
+  
   const TechnicianRootUrl = "technician";
   const TechnicianListAll = "technician/listAll";
   const TechnicianShowForm = "technician/showForm";
@@ -41,6 +45,7 @@ class UrlKeys {
   const ServiceListAll = "service/listAll";
   const ServiceShowForm = "service/showForm";
   
+  const AnalyteListAll = "analyte/listAll";
   const FieldAnalytes = "field_analyte/listAll";
   const FieldSampleMatrix = "field_analyte/sampleMatrix";
   const LabAnalytes = "lab_analyte/listAll";
@@ -55,6 +60,7 @@ class UrlKeys {
   const TaskServices = "task/services";
   const TaskInspForms = "task/inspForms";
   const TaskCOC = "task/coc";
+  const TaskSelectTask = "task/selectTask";
   
   const ActiveTaskShowForm = "activetask/showForm";
   const ActiveTaskMap = "xxx";

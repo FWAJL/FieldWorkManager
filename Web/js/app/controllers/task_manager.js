@@ -23,6 +23,34 @@ $(document).ready(function () {
     }
   });//Manages the context menu for inactive Tasks
   
+  //ol-li selection patch
+  if($('#active-list').length !== 0) {
+	$('#active-list li').click(function(){
+	  $('#active-list li').removeClass('ui-selected');
+	  $(this).addClass('ui-selected');
+	});
+  }
+  
+  //Auto open prompt when on selectTask view
+  utils.showSelectEntityPrompt(
+	function() {
+	  //utils.redirect($("#redirectOnSuccess").val());
+	  if ($(".ui-selected").html() !== undefined)
+	  {
+		task_manager.set($(".ui-selected"));
+	  }
+	  else
+	  {
+		  
+	    $("#active-list").focus();
+	  }
+	},
+	function() {
+	  utils.redirect("task/listAll");
+	}
+  );
+  
+  
   $(".btn-warning").hide();
   $.contextMenu({
     selector: '#active-list .select_item',
