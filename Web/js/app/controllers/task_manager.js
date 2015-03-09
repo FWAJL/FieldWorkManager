@@ -37,11 +37,11 @@ $(document).ready(function () {
 	  //utils.redirect($("#redirectOnSuccess").val());
 	  if ($(".ui-selected").html() !== undefined)
 	  {
-		task_manager.set($(".ui-selected"));
+		//task_manager.set($(".ui-selected"));
+		utils.redirect("task/listAll?task_id=" + parseInt($(".ui-selected").attr("data-task-id")) + "&onSuccess=" + $("#redirectOnSuccess").val());
 	  }
 	  else
 	  {
-		  
 	    $("#active-list").focus();
 	  }
 	},
