@@ -16,6 +16,13 @@ var polygonSettings = {
   "strokeWeight": 3
 };
 
+$(document).ready(function(){
+  //glyphicon-questionclick shows map legend
+	$('.glyphicon-question-sign').click(function(){
+	  utils.showMapLegends();
+	});
+});
+
 /*
  * On marker drag function
  */
@@ -644,6 +651,7 @@ function load(params) {
             }
           }
         }
+<<<<<<< HEAD
 
         $(".control-active").trigger("click");
 
@@ -670,6 +678,8 @@ function load(params) {
          toggleRuler(false);
          }*/
 
+=======
+>>>>>>> dev
       }
     });
 }

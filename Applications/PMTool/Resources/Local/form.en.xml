@@ -29,7 +29,7 @@
   <resource key="form_contact_email">Email</resource>
 <!--  <resource key="form_active">Active</resource>-->
   <resource key="form_button_add">Add</resource>
-  <resource key="form_button_edit">Edit</resource>
+  <resource key="form_button_edit">Save</resource>
   <resource key="form_button_delete">Delete</resource>
   <resource key="form_list_all_header">Forms</resource>
   <resource key="h3_forms_active">All Forms</resource>

@@ -363,6 +363,7 @@ $(document).ready(function() {
 	 $('.maplegend-modal').modal('hide');
    });
  }
+<<<<<<< HEAD
  utils.showInfoWindow = function(id, callback, callbackOnCancel) {
     $(id).modal('show');
     //Events
@@ -403,6 +404,9 @@ $(document).ready(function() {
       })
     }
   };
+=======
+ 
+>>>>>>> dev
  utils.mergeStringsExclusive = function(target, source, delimiter) {
   delimiter = delimiter || "\n";
   if (!utils.endsWith(target, delimiter) && !utils.isNullOrEmpty(target)) {

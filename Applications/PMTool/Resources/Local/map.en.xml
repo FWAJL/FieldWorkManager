@@ -15,6 +15,7 @@
   <resource key="h3_sub_title_all_projects">Projects</resource>
   <resource key="h3_no_project">No Project Selected</resource>
   <resource key="h3_no_task">No Task Selected</resource>
+<<<<<<< HEAD
 
   <!-- Project Info Window -->
   <resource key="project_window_title">Project Info</resource>
@@ -31,6 +32,10 @@
   <resource key="location_prompt_ok">OK</resource>
   <resource key="location_prompt_cancel">Cancel</resource>
    <!-- Legend-->
+=======
+  
+  <!-- Legend-->
+>>>>>>> dev
   <resource key="h4_legend_heading">LEGEND</resource>
   <resource key="active_project"> Active Project</resource>
   <resource key="inactive_project"> Inactive Project</resource>
@@ -42,4 +47,8 @@
   <resource key="ruler"> Click to measure distances or areas</resource>
   <resource key="add-icon"> Click to move or add Locations</resource>
   <resource key="boundary"> Click to add Project boundary</resource>
+<<<<<<< HEAD
+=======
+  <resource key="popup_ok_button">OK</resource>
+>>>>>>> dev
 </resources>

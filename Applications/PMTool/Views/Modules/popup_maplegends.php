@@ -88,7 +88,11 @@
          </li>
       </div>
       <div class="modal-footer">
+<<<<<<< HEAD
         <button type="button" id="mlalert_ok" class="btn btn-primary confirmbuttons" data-bb-handler="cancel">Ok</button>
+=======
+        <button type="button" id="mlalert_ok" class="btn btn-primary confirmbuttons" data-bb-handler="cancel"><?php echo $resx["popup_ok_button"] ?></button>
+>>>>>>> dev
       </div>
 
     </div>
