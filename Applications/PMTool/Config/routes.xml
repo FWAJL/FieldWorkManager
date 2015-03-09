@@ -34,6 +34,7 @@
         <js_files>
             <!-- This uses the same scripts as the project route, e.g. use attribute => route value -->
             <js_file use="project" />
+            <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
         </js_files>
         <css_files>
             <!-- This uses the same css as the project route, e.g. use attribute => route value -->
@@ -51,7 +52,8 @@
             <php_module key="client_form" file_name="client_form.php" />
             <php_module key="project_buttons" file_name="project_buttons.php" />
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />			
+	        <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+	        <php_module key="popup_address" file_name="popup_address.php" />
         </php_modules>
     </route>
     <!-- project/showAddForm -->
@@ -215,10 +217,10 @@
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
-	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
             <php_module key="popup_project_info" file_name="popup_project_info.php" />
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-	    <php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
+	    	    			<php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
         </php_modules>
     </route>
     <!--Map all projects-->
@@ -237,10 +239,10 @@
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
-	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
             <php_module key="popup_project_info" file_name="popup_project_info.php" />
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-	    <php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
+	    	    			<php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
         </php_modules>
     </route>
     <!--Map current project-->
@@ -260,16 +262,12 @@
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-<<<<<<< HEAD
-	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
-            <php_module key="popup_project_info" file_name="popup_project_info.php" />
-            <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-	    <php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
-=======
             <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
-			<php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
->>>>>>> dev
+            <php_module key="popup_project_info" file_name="popup_project_info.php" />
+            <php_module key="popup_location_info" file_name="popup_location_info.php" />
+            <php_module key="upload_file" file_name="upload_file.php" shared="true" />
+	    <php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
         </php_modules>
     </route>
     <!--Map current project locations-->
@@ -288,15 +286,11 @@
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
-<<<<<<< HEAD
-	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
             <php_module key="popup_project_info" file_name="popup_project_info.php" />
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+            <php_module key="popup_task_location_info" file_name="popup_task_location_info.php" />
 	    <php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
-=======
-			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
-			<php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
->>>>>>> dev
         </php_modules>
     </route>
     <!--Map current project-->
@@ -333,6 +327,20 @@
 	    	<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
+        </php_modules>
+    </route><!--   task/listAll -->
+	
+	<route url="task/selectTask" module="Task" action="selectTask" resxfile="task" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+			<php_module key="active_list_module" file_name="active_list.php" shared="true" />
+			<php_module key="popup_selector_module" file_name="popup_selector.php" shared="true" />
         </php_modules>
     </route><!--   task/listAll -->
     
@@ -622,7 +630,8 @@
   <route url="project/setCurrentProject" module="Project" action="setCurrentProject" resxfile="project" type="ws" />
   <route url="project/ifProjectExists" module="Project" action="ifProjectExists" resxfile="project" type="ws" />
   <route url="project/selectProject" module="Project" action="selectProject" resxfile="project" type="ws" />
-  
+  <route url="project/mapEdit" module="Project" action="mapEdit" resxfile="project" type="ws" />
+
   <route url="facility/add" module="Facility" action="add" resxfile="facility" type="ws" />
   <route url="facility/edit" module="Facility" action="edit" resxfile="facility" type="ws" />
   <route url="facility/delete" module="Facility" action="delete" resxfile="facility" type="ws" />
@@ -659,6 +668,7 @@
   <route url="task/getItem" module="Task" action="getItem" resxfile="task" type="ws" />
   <route url="task/updateItems" module="Task" action="updateItems" resxfile="task" type="ws" />
   <route url="task/ifTaskExists" module="Task" action="ifTaskExists" resxfile="task" type="ws" />
+  <route url="task/selectTask" module="Task" action="selectTask" resxfile="task" type="ws" />
   
   <route url="task/location/updateItems" module="TaskLocation" action="updateItems" resxfile="task_location" type="ws" />
   <route url="task/technician/updateItems" module="TaskTechnician" action="updateItems" resxfile="task_technician" type="ws" />
@@ -705,4 +715,5 @@
   <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
   <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />
   <route url="upload" module="FileUpload" action="upload" resxfile="fileupload" type="lib ws" />
+  <route url="load" module="FileLoad" action="load" resxfile="fileload" type="lib ws" />
 </routes>

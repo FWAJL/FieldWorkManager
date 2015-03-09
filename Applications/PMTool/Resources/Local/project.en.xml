@@ -24,6 +24,8 @@
   <resource key="message_error_ifProjectExists">Project doesn't exist</resource>
   <resource key="message_success_mapEdit">The project has been edited</resource>
   <resource key="message_error_mapEdit">Error editing the project</resource>
+  <resource key="message_error_getList">Error reading project list.</resource>
+  <resource key="message_success_getList">Project list has been read</resource>
 
   <resource key="project_legend_add">Add new project</resource>
   <resource key="project_legend_edit">Edit this project</resource>
@@ -67,6 +69,11 @@
   <resource key="client_contact_phone">Contact Phone</resource>
   <resource key="client_contact_email">Contact Email</resource>
 
- 
-  
+  <!-- Address window -->
+  <resource key="address_window_title">Error getting coordinates. Press cancel to edit the address or enter city and country name.</resource>
+  <resource key="address_window_city">City</resource>
+  <resource key="address_window_country">Country</resource>
+  <resource key="address_window_ok">OK</resource>
+  <resource key="address_window_cancel">Cancel</resource>
+
 </resources>

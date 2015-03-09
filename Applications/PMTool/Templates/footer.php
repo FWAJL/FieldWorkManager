@@ -6,7 +6,8 @@
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/bootstrap.min.js<?php echo $version; ?>"></script>
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/bootbox.min.js<?php echo $version; ?>"></script>
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/moment.locales.js<?php echo $version; ?>"></script>  
-    <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/dropzone.js<?php echo $version; ?>"></script>  
+    <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/dropzone.js<?php echo $version; ?>"></script>
+    <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/lightbox.js<?php echo $version; ?>"></script>
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/addons/toastr.js<?php echo $version; ?>"></script>  
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/addons/jquery.parseParams.js<?php echo $version; ?>"></script>  
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/addons/jquery.contextMenu.js<?php echo $version; ?>"></script>  

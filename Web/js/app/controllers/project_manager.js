@@ -26,22 +26,21 @@ $(document).ready(function() {
   });//Manages the context menu
 
   //Auto open prompt when on selecProject view
-  utils.showSelectProjectPrompt(
-          function() {
-            //utils.redirect($("#redirectOnSuccess").val());
-            if ($(".ui-selected").html() !== undefined)
-            {
-              //alert($(".ui-selected").attr("data-project-id"));
-              project_manager.setCurrentProject(parseInt($(".ui-selected").attr("data-project-id")));
-            }
-            else
-            {
-              $("#active-list").focus();
-            }
-          },
-          function() {
-            utils.redirect("project/listAll");
-          }
+  utils.showSelectEntityPrompt(
+	function() {
+	  //utils.redirect($("#redirectOnSuccess").val());
+	  if ($(".ui-selected").html() !== undefined)
+	  {
+	    project_manager.setCurrentProject(parseInt($(".ui-selected").attr("data-project-id")));
+	  }
+	  else
+	  {
+	    $("#active-list").focus();
+	  }
+	},
+	function() {
+	  utils.redirect("project/listAll");
+	}
   );
 
 //// If only one Active Project - auto set to current Project

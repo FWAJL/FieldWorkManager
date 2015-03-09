@@ -27,4 +27,5 @@ $(document).ready(function() {
             load(params);
         }, 1000);
     }
+    $("#document-upload input[name=\"itemCategory\"]").val('location_id');
 });

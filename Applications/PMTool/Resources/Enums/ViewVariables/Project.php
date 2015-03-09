@@ -47,6 +47,7 @@ class Project {
 
   //prompt msg
   const popup_prompt_module = "popup_prompt_module";
+  const popup_address = "popup_address";
   //Data keys
 
   

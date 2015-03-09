@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/addons/toastr.css<?php echo $version; ?>" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/addons/jquery.contextMenu.css<?php echo $version; ?>" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/core/jquery-ui.css<?php echo $version; ?>" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/core/lightbox.css<?php echo $version; ?>" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/core/dropzone.css"<?php echo $version; ?>" />
 
     <?php echo $this->app->globalResources["css_files"]; ?>
     

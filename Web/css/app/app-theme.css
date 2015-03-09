@@ -7,15 +7,6 @@ ol, ul { margin-bottom: 0; }
 .btn-warning { display: none; }
 .btn { width: 100%; }
 
-#document-upload { 
-  width: 100%;
-  margin: 0 auto;
-  height: 200px;
-  border-radius: 5px;
-  border: 1px solid #CCC;
-  padding: 5px;
-}
-
 .header { margin-bottom: 10px; }
 
 h3 { margin-top: 10px; }

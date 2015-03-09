@@ -14,20 +14,21 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="prompt_title"><?php echo $resx['project_window_title']; ?></h4>
+        <h4 class="modal-title" id="project-window-title"><span id="project-window-title-project_name"></span><span class="glyphicon glyphicon-chevron-right"></span><span id="project-window-title-facility_name"></span></h4>
       </div>
 
       <div class="modal-body">
-        <label for="project_name"><?php echo $resx['project_window_project_name']; ?></label>
-        <input class="form-control" type="text" id="project_name-modal" name="project_name">
-        <label for="facility_name"><?php echo $resx['project_window_project_name_facility_name']; ?></label>
-        <input class="form-control" type="text" id="facility_name-modal" name="facility_name">
-        <label for="latitude"><?php echo $resx['project_window_latitude']; ?></label>
-        <input class="form-control" type="text" id="latitude-modal" name="latitude">
-        <label for="longitude"><?php echo $resx['project_window_longitude']; ?></label>
-        <input class="form-control" type="text" id="longitude-modal" name="longitude">
-        <a href="#" id="zoom-modal"><span class="glyphicon glyphicon-zoom-in"></span> <?php echo $resx['project_window_zoom']; ?></a>
-        <a href="#" id="edit-boundary-modal"><span class="glyphicon glyphicon-pencil"></span> <?php echo $resx['project_window_edit_boundary']; ?></a>
+        <label for="project-info-modal-project_name"><?php echo $resx['project_window_project_name']; ?></label>
+        <input class="form-control" type="text" id="project-info-modal-project_name" name="project_name">
+        <label for="project-info-modal-facility_name"><?php echo $resx['project_window_facility_name']; ?></label>
+        <input class="form-control" type="text" id="project-info-modal-facility_name" name="facility_name">
+        <label for="project-info-modal-latitude"><?php echo $resx['project_window_latitude']; ?></label>
+        <input class="form-control" type="text" id="project-info-modal-latitude" name="latitude">
+        <label for="project-info-modal-longitude"><?php echo $resx['project_window_longitude']; ?></label>
+        <input class="form-control" type="text" id="project-info-modal-longitude" name="longitude">
+        <a href="#" id="project-info-modal-update-coordinates"><span class="glyphicon glyphicon-screenshot"></span> <?php echo $resx['project_window_update_coordinates']; ?></a>
+        <a href="#" id="project-info-modal-zoom"><span class="glyphicon glyphicon-zoom-in"></span> <?php echo $resx['project_window_zoom']; ?></a>
+        <a href="#" id="project-info-modal-edit-boundary"><span class="glyphicon glyphicon-pencil"></span> <?php echo $resx['project_window_edit_boundary']; ?></a>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary confirmbuttons modal-update"><?php echo $resx['project_window_edit_update']; ?></button>

@@ -69,14 +69,30 @@ class DirectoryManager {
    * </p>
    * @param string <p>
    * $dir Value of directory to create. </p>
-   * @param string $filePath <p>
-   * The path to check to figure out if the directory exists.</p>
    * @return boolean <p>
    * File exists or not. </p>
    */
-  public static function CreateDirectoryAndReturnFileExists($dir, $filePath) {
-    if (!file_exists($filePath) && !is_dir($filePath)) {
+  public static function CreateDirectory($dir) {
+    if (!file_exists($dir) && !is_dir($dir)) {
       mkdir($dir, 0777, true);
+      return FALSE;
+    } else {
+      return TRUE;
+    }
+  }
+
+  /**
+   * <p>
+   * Check if file exists.
+   * Return True if file exists, otherwise False after creation of directory.
+   * </p>
+   * @param string <p>
+   * $filePath File path </p>
+   * @return boolean <p>
+   * File exists or not. </p>
+   */
+  public static function FileExists($filePath) {
+    if (!file_exists($filePath)) {
       return FALSE;
     } else {
       return TRUE;

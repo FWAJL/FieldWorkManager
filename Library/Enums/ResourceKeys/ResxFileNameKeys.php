@@ -34,6 +34,7 @@ abstract class ResxFileNameKeys {
   const WsDefaults = "ws_defaults";
   const Config = "config";
   const FileUpload = "fileupload";
+  const FileLoad = "fileload";
 }
 
 ?>

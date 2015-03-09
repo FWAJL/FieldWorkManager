@@ -7,8 +7,8 @@ $(document).ready(function() {
  //toolip
  $("li[has-tool-tip]").tooltip({placement: $("li[has-tool-tip]").attr("placement")});
  //file upload
- $("#document-upload input[name=\"itemCategory\"]").val(utils.getDataFromUploadFile("^.*(_id)$", true));
- $("#document-upload input[name=\"itemId\"]").val(utils.getDataFromUploadFile("^.*(_id)$", false));
+ //$("#document-upload input[name=\"itemCategory\"]").val(utils.getDataFromUploadFile("^.*(_id)$", true));
+ //$("#document-upload input[name=\"itemId\"]").val(utils.getDataFromUploadFile("^.*(_id)$", false));
  //Auto focus, prompt box first input
  $('.prompt-modal').on('shown.bs.modal', function () {
    $('#text_input').focus();
@@ -334,10 +334,12 @@ $(document).ready(function() {
    $('.prompt-modal').toggle();
  };
  
- utils.showSelectProjectPrompt = function(clbkOk, clbkCancel){
+ utils.showSelectEntityPrompt = function(clbkOk, clbkCancel){
    if($('.pselector-modal').length !== 0)
    {
-	 $('#prompt_title').html($('#promptmsg-checkCurrentProject').val());
+	 //$('#prompt_title').html($('#promptmsg-checkCurrentProject').val());
+	 $('#prompt_title').html($('[id^="promptmsg-checkCurrent"]').val());
+	 
    	 //disable context menu
    	 $(".select_item").removeClass("select_item");
      $('.pselector-modal').modal('show');
@@ -363,8 +365,8 @@ $(document).ready(function() {
 	 $('.maplegend-modal').modal('hide');
    });
  }
-<<<<<<< HEAD
- utils.showInfoWindow = function(id, callback, callbackOnCancel) {
+ 
+   utils.showInfoWindow = function(id, callback, callbackOnCancel) {
     $(id).modal('show');
     //Events
     $('.modal-update').off('click');
@@ -378,7 +380,6 @@ $(document).ready(function() {
       })
     }
   };
-
   utils.showPromptBoxById = function(id, operation, callback, useThisIdForMsg, callbackOnCancel) {
     if(operation == 'addNullCheck'){
       if($('#prompt_title').html() == '') {
@@ -404,9 +405,6 @@ $(document).ready(function() {
       })
     }
   };
-=======
- 
->>>>>>> dev
  utils.mergeStringsExclusive = function(target, source, delimiter) {
   delimiter = delimiter || "\n";
   if (!utils.endsWith(target, delimiter) && !utils.isNullOrEmpty(target)) {
@@ -425,4 +423,13 @@ $(document).ready(function() {
  utils.endsWith = function(str, suffix) {
   return str.indexOf(suffix, str.length - suffix.length) !== -1;
  };
+ utils.checkLatLng = function(lat,lng) {
+   validLat = /^(-?[1-8]?\d(?:\.\d{1,18})?|90(?:\.0{1,18})?)$/.test(lat);
+   validLng = /^(-?(?:1[0-7]|[1-9])?\d(?:\.\d{1,18})?|180(?:\.0{1,18})?)$/.test(lng);
+   if(validLat && validLng) {
+     return true;
+   } else {
+     return false;
+   }
+ }
 }(window.utils = window.utils || {}));
