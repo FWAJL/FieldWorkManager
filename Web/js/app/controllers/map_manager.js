@@ -209,7 +209,14 @@ var setBoundaryEditEvent = function(e, projectId) {
 var setLoadCoordinatesFromMarkerEvent = function(id) {
   $("#project-info-modal-update-coordinates").on('click',function(ev){
     ev.preventDefault();
-    var marker = markers.find(function(mkr) {return id == mkr.id ? mkr : false;});
+    var marker;
+    $.each(markers, function(key,mrk){
+      if(mrk.id = id) {
+        marker = mrk;
+        return;
+      }
+    });
+    //var marker = markers.find(function(mkr) {return id == mkr.id ? mkr : false;});
     $("#project-info-modal-latitude").val(Number(marker.position.lat()).toFixed(6));
     $("#project-info-modal-longitude").val(Number(marker.position.lng()).toFixed(6));
   });
@@ -517,8 +524,12 @@ function load(params) {
         markers = map.addMarkers(markers);
         $(document).on('mouseover', '.map-info-row', function () {
           var el= $(this);
-          var marker = markers.find(function(mkr) {
-            return el.data('id') === mkr.id ? mkr : false;
+          var marker;
+          $.each(markers, function(key,mrk){
+            if(mrk.id = el.data('id')) {
+              marker = mrk;
+              return;
+            }
           });
           if (typeof marker !== "undefined") {
             highlightMarker(false, marker);
@@ -638,7 +649,14 @@ function load(params) {
         $(document).on('click','.map-info-row',function(e){
           if(!$(this).hasClass("map-info-marker")) {
             var markerId = $(this).data("id");
-            var marker = markers.find(function(mkr) {return markerId == mkr.id ? mkr : false;});
+            var marker;
+            $.each(markers, function(key,mrk){
+              if(mrk.id = markerId) {
+                marker = mrk;
+                return;
+              }
+            });
+            //var marker = markers.find(function(mkr) {return markerId == mkr.id ? mkr : false;});
             if(reply.type == 'location'){
               openLocationInfo(marker,$(this).data("id"));
             } else if (reply.type == 'facility') {
