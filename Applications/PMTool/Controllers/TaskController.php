@@ -73,6 +73,16 @@ class TaskController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+	//Set passed task as current task
+
+	if($rq->getData("task_id") !== '' && !is_null($rq->getData("task_id"))) {
+	  $sessionTask = \Applications\PMTool\Helpers\TaskHelper::SetCurrentSessionTask($this->user(), NULL, $rq->getData("task_id"));
+	  //check if we passed a redirect URL too
+	  if($rq->getData("onSuccess") !== '' && !is_null($rq->getData("onSuccess"))) {
+	  //rediect to it
+	    $this->Redirect($rq->getData("onSuccess"));
+	  }
+	}
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
 
 
@@ -336,11 +346,12 @@ class TaskController extends \Library\BaseController {
     $result['record_count'] = (!$match || empty($match)) ? 0 : 1;
 
     $this->SendResponseWS(
-            $result, array(
+      $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
         "resx_key" => $this->action(),
         "step" => ($result['record_count'] > 0) ? "success" : "error"
-    ));
+      )
+	);
   }
 
 }

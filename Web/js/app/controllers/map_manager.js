@@ -517,8 +517,10 @@ function load(params) {
         markers = map.addMarkers(markers);
         $(document).on('mouseover', '.map-info-row', function () {
           var el= $(this);
-          var marker = markers.find(function(mkr) {return el.data('id') == mkr.id ? mkr : false;});
-          if (typeof marker != "undefined") {
+          var marker = markers.find(function(mkr) {
+            return el.data('id') === mkr.id ? mkr : false;
+          });
+          if (typeof marker !== "undefined") {
             highlightMarker(false, marker);
           } else {
             $("#marker-"+el.data('id')).addClass('map-info-marker-highlighted');
