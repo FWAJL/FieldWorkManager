@@ -132,6 +132,7 @@
             <php_module key="location_form" file_name="location_form.php" />
             <php_module key="upload_file" file_name="upload_file.php" shared="true"/>
 			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
         </php_modules>
     </route>
     <!-- location/showForm -->

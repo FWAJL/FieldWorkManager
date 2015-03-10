@@ -69,6 +69,7 @@
 	<resource uicomponent="alert" targetcontroller="task" targetaction="list" operation="addUniqueCheck" value="Task name is taken. Choose a new Task name" />
 	<resource uicomponent="alert" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="addUniqueCheck" value="Location name is taken. Choose a new Location name" />
 	<resource uicomponent="alert" targetcontroller="analyte" targetaction="list" operation="noAnalyteForProject" value="You do not have any Analytes for your Projects. You can start building your own custom analyte list by clicking Analyte > Upload List" />
+	<resource uicomponent="alert" targetcontroller="location" targetaction="view" operation="addUniqueCheck" value="Location name is taken. Choose a new location name." />
 	
 	<resource uicomponent="prompt" targetcontroller="project" targetaction="list" operation="addNullCheck" value="This will create a copy of Project '{0}'. To continue, you must enter the new project name." />
 	<resource uicomponent="prompt" targetcontroller="project" targetaction="view" operation="addNullCheck" value="This will create a copy of Project '{0}'. To continue, you must enter the new project name." />
@@ -86,6 +87,7 @@
 	<resource uicomponent="prompt" targetcontroller="location" targetaction="listAll" operation="checkCurrentProject" value="To list locations, you must select a project." />
 	<resource uicomponent="prompt" targetcontroller="location" targetaction="showForm" operation="checkCurrentProject" value="To add a location, you must select a project." />
 	<resource uicomponent="prompt" targetcontroller="location" targetaction="uploadList" operation="checkCurrentProject" value="To upload a list of locations, you must select a project." />
+	<resource uicomponent="prompt" targetcontroller="location" targetaction="showForm" operation="promptEnterLocation" value="Please enter a location name." />
 	<resource uicomponent="prompt" targetcontroller="analyte" targetaction="listAll" operation="edit" value="Edit '{0}'." />
 	<resource uicomponent="prompt" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="addNullCheckAddPrompt" value="To continue, you must enter the new Location Name." />
 </resources>
