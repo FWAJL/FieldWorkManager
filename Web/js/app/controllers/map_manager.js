@@ -16,6 +16,13 @@ var polygonSettings = {
   "strokeWeight": 3
 };
 
+//shows map legend popup
+$(document).ready(function(){
+  $('.glyphicon-question-sign').click(function(){
+    utils.showMapLegends();
+  });
+});
+
 /*
  * On marker drag function
  */
