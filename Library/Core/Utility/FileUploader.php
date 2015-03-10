@@ -54,15 +54,19 @@ class FileUploader extends \Library\ApplicationComponent {
       $document = $this->InitDocumentObject();
       //Check if file exist before adding a row in DB
       $this->currentFile->setFilePath($this->uploadDirectory . "/" . $document->document_value());
-      $fileExists = \Library\Core\DirectoryManager::CreateDirectoryAndReturnFileExists($this->uploadDirectory, $this->currentFile->filePath());
+      \Library\Core\DirectoryManager::CreateDirectory($this->uploadDirectory);
+      $fileExists = \Library\Core\DirectoryManager::FileExists($this->currentFile->filePath());
       $this->currentFile->setDoesExist($fileExists);
       //Add document to DB
       if (!$fileExists) {//Don't add the document in DB if already added
         $this->AddDocumentToDatabase($document);
+        //Add document to uploads directory
+        $uploaded = $this->UploadAFile($this->currentFile->tmpFilePath(), $this->currentFile->filePath());
+        $this->currentFile->setIsUploaded($uploaded);
+      } else {
+        $this->currentFile->setIsUploaded(false);
       }
-      //Add document to uploads directory
-      $uploaded = $this->UploadAFile($this->currentFile->tmpFilePath(), $this->currentFile->filePath());
-      $this->currentFile->setIsUploaded($uploaded);
+
       array_push($this->resultJson["fileUploadResults"], $this->currentFile);
     }
     return $this->resultJson;

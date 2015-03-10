@@ -14,6 +14,7 @@
 //            require $form_modules["location_tabs_open"];
             require $form_modules["location_form"];
 			require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg];
+			require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_prompt];
 //            require $form_modules["tabs_close"];
             ?>
           </div>

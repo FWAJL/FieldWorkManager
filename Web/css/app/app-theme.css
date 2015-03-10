@@ -7,15 +7,6 @@ ol, ul { margin-bottom: 0; }
 .btn-warning { display: none; }
 .btn { width: 100%; }
 
-#document-upload { 
-  width: 100%;
-  margin: 0 auto;
-  height: 200px;
-  border-radius: 5px;
-  border: 1px solid #CCC;
-  padding: 5px;
-}
-
 .header { margin-bottom: 10px; }
 
 h3 { margin-top: 10px; }
@@ -204,6 +195,7 @@ li textarea {
   height: 35px;
   padding-left: 0;
   padding-right: 0;
+  overflow-y: hidden;
 }
 
 #map-info > .row {
@@ -260,6 +252,10 @@ li textarea {
   cursor: pointer;
 }
 .map-info-marker-selected {
+  background-color: #EEEEEE;
+}
+
+.map-info-marker-highlighted {
   background-color: #EEEEEE;
 }
 /* END MAP */

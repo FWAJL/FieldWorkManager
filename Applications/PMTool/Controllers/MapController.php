@@ -7,44 +7,49 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class MapController extends \Library\BaseController {
 
-    /**
-     * <p> Method to load the Map view as configured in routes.xml </p>
-     * <p> Set the modules for the route to the page object </p>
-     * @param object $rq <p>
-     * The current HttpRequest.
-     * </p>
-     * @return void
-     */
-    public function executeLoadView($rq) {
-		
-		//Fetch tooltip data from xml and pass to view as an array
-		$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "allProjects", "targetattr": ["map-info-add","map-info-shape","map-info-ruler","question-map-h3"]}', $this->app->name());
-		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
-		
-        $modules = $this->app()->router()->selectedRoute()->phpModules();
-        $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
-    }
+  /**
+   * <p> Method to load the Map view as configured in routes.xml </p>
+   * <p> Set the modules for the route to the page object </p>
+   * @param \Library\HttpRequest $rq <p>
+   * The current HttpRequest.
+   * </p>
+   * @return void
+   */
+  public function executeLoadView($rq) {
 
+    //Fetch tooltip data from xml and pass to view as an array
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "allProjects", "targetattr": ["map-info-add","map-info-shape","map-info-ruler","question-map-h3"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
-    /**
-     * <p> Method to load the Map view as configured in routes.xml </p>
-     * <p> Set the modules for the route to the page object </p>
-     * @param object $rq <p>
-     * The current HttpRequest.
-     * </p>
-     * @return void
-     */
-    public function executeLoadCurrentView($rq) {
-        $modules = $this->app()->router()->selectedRoute()->phpModules();
-        $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-		
-		//Check if a project needs to be selected in order to display this page
-		if (!$sessionProject)
-		  $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::MapCurrentProject);
-		
-		//Fetch tooltip data from xml and pass to view as an array
-		$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "currentProject", "targetattr": ["question-map-h3", "map-info-shape", "map-info-ruler", "map-info-add"]}', $this->app->name());
-		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+    $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"map", "targetaction": "loadMaps", "operation": ["addUniqueCheck","checkCoordinates"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);
+
+    $modules = $this->app()->router()->selectedRoute()->phpModules();
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+    //Fetch prompt box data from xml and pass to view as an array
+    $infoWindow = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"map", "targetaction": "loadProjectInfo", "operation": ["addNullCheckAddPrompt"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Map::popup_project_info, $infoWindow);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Map::default_active_control, $rq->getData('active') ?: 'pan');
+  }
+
+  /**
+   * <p> Method to load the Map view as configured in routes.xml </p>
+   * <p> Set the modules for the route to the page object </p>
+   * @param object $rq <p>
+   * The current HttpRequest.
+   * </p>
+   * @return void
+   */
+  public function executeLoadCurrentView($rq) {
+    $modules = $this->app()->router()->selectedRoute()->phpModules();
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+
+    //Fetch tooltip data from xml and pass to view as an array
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "currentProject", "targetattr": ["question-map-h3", "map-info-shape", "map-info-ruler", "map-info-add"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+
+    $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"map", "targetaction": "loadMaps", "operation": ["addUniqueCheck","checkCoordinates"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);
 
     //refresh locations
     $this->_GetAndStoreLocationsInSession($sessionProject);
@@ -52,6 +57,7 @@ class MapController extends \Library\BaseController {
 
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Map::default_active_control, $rq->getData('active') ?: 'pan');
   }
 
 
@@ -80,26 +86,28 @@ class MapController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
 
     //Fetch alert box data
-    $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"map", "targetaction": "loadCurrentLocationsView", "operation": ["addUniqueCheck"]}', $this->app->name());
+    $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"map", "targetaction": "loadCurrentLocationsView", "operation": ["addUniqueCheck","noPhotos"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);
 
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Map::default_active_control, $rq->getData('active') ?: 'pan');
+
   }
 
-	/**
-	 * <p> Method to load the Map view as configured in routes.xml </p>
-	 * <p> Set the modules for the route to the page object </p>
-	 * @param object $rq <p>
-	 * The current HttpRequest.
-	 * </p>
-	 * @return void
-	 */
-	public function executeLoadCurrentTasksView($rq) {
-		$modules = $this->app()->router()->selectedRoute()->phpModules();
-		$sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-		$sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
-		
+  /**
+   * <p> Method to load the Map view as configured in routes.xml </p>
+   * <p> Set the modules for the route to the page object </p>
+   * @param object $rq <p>
+   * The current HttpRequest.
+   * </p>
+   * @return void
+   */
+  public function executeLoadCurrentTasksView($rq) {
+    $modules = $this->app()->router()->selectedRoute()->phpModules();
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
+
 		//Check if a project needs to be selected in order to display this page
 		if (!$sessionProject)
 		  $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::MapTaskLocations);
@@ -107,16 +115,20 @@ class MapController extends \Library\BaseController {
 		//Next check if a task is selected
 		if(!$sessionTask)
 		  $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskSelectTask . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::MapTaskLocations);
-		
-		//Fetch tooltip data from xml and pass to view as an array
-		$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "taskLocations", "targetattr": ["question-map-h3", "map-info-ruler", "map-info-shape", "map-info-add"]}', $this->app->name());
-		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+    //Fetch tooltip data from xml and pass to view as an array
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "taskLocations", "targetattr": ["question-map-h3", "map-info-ruler", "map-info-shape", "map-info-add"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
-		//add view vars for breadcrumb
-		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
-		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
-	}
+    $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"map", "targetaction": "loadMaps", "operation": ["addUniqueCheck","checkCoordinates"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);
+
+    //add view vars for breadcrumb
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Map::default_active_control, $rq->getData('active') ?: 'pan');
+  }
+
 
   /**
    * <p> Retrieve the markers to display on Google Maps and the center position
@@ -160,23 +172,23 @@ class MapController extends \Library\BaseController {
     $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->relative_path,$this->app()->imageUtil,$this->app()->config());
 
     //create google maps marker items
-    $items = \Applications\PMTool\Helpers\MapHelper::CreateFacilityMarkerItems(\Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->user()),$properties,$icons);
+    $projectLocationMarkers = \Applications\PMTool\Helpers\MapHelper::CreateFacilityMarkerItems(\Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->user()),$properties,$icons);
 
     $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
-    $result["items"] = $items;
+    $result["items"] = $projectLocationMarkers;
     $result["noLatLngIcon"] = $icons["noLatLng"];
+    $result["type"] = "facility";
 
     $result["controls"] = array(
       "markers" => false,
       "shapes" => false,
       "ruler" => true
     );
-
     $this->SendResponseWS(
       $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Map,
       "resx_key" => $this->action(),
-      "step" => (count($items) >= 0) ? "success" : "error"
+      "step" => (count($projectLocationMarkers) >= 0) ? "success" : "error"
     ));
   }
 
@@ -224,24 +236,26 @@ class MapController extends \Library\BaseController {
     $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->relative_path,$this->app()->imageUtil,$this->app()->config());
 
     //create google maps marker items
-    $items = \Applications\PMTool\Helpers\MapHelper::CreateFacilityMarkerItems(array($sessionProject),$properties,$icons);
+    $projectLocationMarkers = \Applications\PMTool\Helpers\MapHelper::CreateFacilityMarkerItems(array($sessionProject),$properties,$icons);
 
     $result["noLatLngIcon"] = $icons["noLatLng"];
-    $result["items"] = $items;
+    $result["items"] = $projectLocationMarkers;
     $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
     $result["boundary"] = \Applications\PMTool\Helpers\MapHelper::GetBoundary($sessionProject);
+    $result["facility_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->facility_id();
+    $result["project_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->project_id();
+    $result["type"] = "facility";
 
     $result["controls"] = array(
       "markers" => false,
       "shapes" => true,
       "ruler" => true
     );
-
     $this->SendResponseWS(
       $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Map,
       "resx_key" => $this->action(),
-      "step" => (count($items) >= 0) ? "success" : "error"
+      "step" => (count($projectLocationMarkers) >= 0) ? "success" : "error"
     ));
   }
 
@@ -295,24 +309,27 @@ class MapController extends \Library\BaseController {
     $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->relative_path,$this->app()->imageUtil,$this->app()->config());
 
     //create google maps marker items
-    $items = \Applications\PMTool\Helpers\MapHelper::CreateLocationMarkerItems($sessionProject,$properties,$icons);
+    $projectLocationMarkers = \Applications\PMTool\Helpers\MapHelper::CreateLocationMarkerItems($sessionProject,$properties,$icons);
 
     $result["noLatLngIcon"] = $icons["noLatLng"];
     $result["activeIcon"] = $icons["locationActive"];
     $result["inactiveIcon"] = $icons["locationInactive"];
-    $result["items"] = $items;
+    $result["items"] = $projectLocationMarkers;
     $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
     $result["boundary"] = \Applications\PMTool\Helpers\MapHelper::GetBoundary($sessionProject);
-
-
+    $result["facility_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->facility_id();
+    $result["project_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->project_id();
+    $result["type"] = "location";
     $result["controls"] = array(
       "markers" => true,
       "shapes" => true,
       "ruler" => true
     );
+    $result["activeControl"] = "pan";
 
+    $noCoordinateMarkers = count(array_filter($projectLocationMarkers,function($marker){return !$marker['noLatLng'];}));
     //if there are no markers try to set default position to facility location
-    if(count($items)==0){
+    if($noCoordinateMarkers==0){
       $defaultLocations = \Applications\PMTool\Helpers\MapHelper::BuildLatAndLongCoordFromGeoObjects(array(\Applications\PMTool\Helpers\CommonHelper::GetValueFromArrayByKey($sessionProject,$defaultLocationProperties['object'])),$defaultLocationProperties['objectLatPropName'],$defaultLocationProperties['objectLngPropName']);
       if(count($defaultLocations)>0){
         $result['defaultPosition'] = $defaultLocations[0];
@@ -323,7 +340,7 @@ class MapController extends \Library\BaseController {
       $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Map,
       "resx_key" => $this->action(),
-      "step" => (count($items) >= 0) ? "success" : "error"
+      "step" => (count($projectLocationMarkers) >= 0) ? "success" : "error"
     ));
   }
 
@@ -384,14 +401,18 @@ class MapController extends \Library\BaseController {
     $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->relative_path,$this->app()->imageUtil,$this->app()->config());
 
     //create google maps marker items
-    $items = \Applications\PMTool\Helpers\MapHelper::CreateTaskLocationMarkerItems($locations, $properties, $icons);
+    $projectLocationMarkers = \Applications\PMTool\Helpers\MapHelper::CreateTaskLocationMarkerItems($locations, $properties, $icons);
 
     $result["noLatLngIcon"] = $icons["noLatLng"];
-    $result["items"] = $items;
+    $result["items"] = $projectLocationMarkers;
     $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
     $result["boundary"] = \Applications\PMTool\Helpers\MapHelper::GetBoundary($sessionProject);
+    $result["facility_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->facility_id();
+    $result["project_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->project_id();
+    $result["type"] = 'task';
+    $noCoordinateMarkers = count(array_filter($projectLocationMarkers,function($item){return !$item['noLatLng'];}));
 
-    if(count($items)==0){
+    if($noCoordinateMarkers==0){
       $defaultLocations = \Applications\PMTool\Helpers\MapHelper::BuildLatAndLongCoordFromGeoObjects(array(\Applications\PMTool\Helpers\CommonHelper::GetValueFromArrayByKey($sessionProject,$defaultLocationProperties['object'])),$defaultLocationProperties['objectLatPropName'],$defaultLocationProperties['objectLngPropName']);
       if(count($defaultLocations)>0){
         $result['defaultPosition'] = $defaultLocations[0];
@@ -403,12 +424,11 @@ class MapController extends \Library\BaseController {
       "shapes" => true,
       "ruler" => true
     );
-
     $this->SendResponseWS(
       $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Map,
       "resx_key" => $this->action(),
-      "step" => (count($items) >= 0) ? "success" : "error"
+      "step" => (count($projectLocationMarkers) >= 0) ? "success" : "error"
     ));
   }
 
