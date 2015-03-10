@@ -18,10 +18,17 @@ class LocationController extends \Library\BaseController {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::LocationShowForm);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 	
-	//Get confirm msg for project deletion from context menu
+	//Get confirm msg for location deletion
     $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"location", "targetaction": "view", "operation": ["delete"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
 	
+	//Fetch prompt box data from xml and pass to view as an array
+    $prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"location", "targetaction": "showForm", "operation": ["promptEnterLocation"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
+	
+	//Fetch alert box data
+    $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"location", "targetaction": "view", "operation": ["addUniqueCheck"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);
 	
     if ($rq->getData("mode") === "edit") {
       $this->page->addVar("location_editing_header", $this->resxData["location_legend_edit"]);
@@ -134,6 +141,9 @@ class LocationController extends \Library\BaseController {
     $location_selected = $this->_GetLocationFromSession($location_id);
 
     $location = $location_selected["object"];
+
+    //save location project id
+    $oldProjectId = $location->project_id();
     if ($location !== NULL) {
       //Init PDO
       $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
@@ -146,8 +156,14 @@ class LocationController extends \Library\BaseController {
 
     //Clear the location and facility list from session for the connect PM
     if ($result_edit) {
+      //check if we have new project id so that we unset location from the current project or to update it if project isn't changed
+      $newProjectId = $location->project_id();
       $locationMatch = $this->_GetLocationFromSession(intval($location->location_id()));
-      $sessionProject[\Library\Enums\SessionKeys::ProjectLocations][$locationMatch["key"]] = $location;
+      if($oldProjectId != $newProjectId){
+        unset($sessionProject[\Library\Enums\SessionKeys::ProjectLocations][$locationMatch["key"]]);
+      } else {
+        $sessionProject[\Library\Enums\SessionKeys::ProjectLocations][$locationMatch["key"]] = $location;
+      }
       \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
     }
 

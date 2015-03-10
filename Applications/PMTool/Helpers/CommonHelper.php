@@ -42,6 +42,16 @@ class CommonHelper {
   public static function CleanString($string) {
     return trim($string);
   }
+  
+  /**
+  * A helper method which print_r's a formatted array nicely
+  * Mainly used for debuging / developing 
+  */
+  public static function pr($arr) {
+	echo '<pre>';
+	print_r($arr);
+	echo '</pre>';
+  }
 
   public static function SetDynamicPropertyNamesForDualList($module, $property_list) {
     $dynamicPropertyNames = array();

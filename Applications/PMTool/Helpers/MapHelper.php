@@ -225,8 +225,10 @@ class MapHelper {
         if (isset($locationObjectType["objectActivePropName"])) {
           if ($locationType == \Library\Enums\SessionKeys::TaskLocations) {
             $marker["marker"]["icon"] = $icons['task'];
+            $marker["task"] = true;
           } else {
             $marker["marker"]["icon"] = ($location->$locationObjectType["objectActivePropName"]()) ? $icons["locationActive"] : $icons["locationInactive"];
+            $marker["task"] = false;
           }
         }
         if (!isset($marker["marker"]["lat"]) && !isset($marker["marker"]["lng"])) {

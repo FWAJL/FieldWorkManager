@@ -59,7 +59,7 @@ class ProjectController extends \Library\BaseController {
    */
   public function executeShowForm(\Library\HttpRequest $rq) {
     //Get confirm msg for Project deletion from showForm screen
-    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"project", "targetaction": "view", "operation": ["delete", "addNullCheck", "addUniqueCheck"]}', $this->app->name());
+    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"project", "targetaction": "view", "operation": ["delete", "addNullCheck", "addUniqueCheck","addAddressCheck","addCoordinatesCheck"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
 
     //Fetch prompt box data from xml and pass to view as an array
@@ -396,6 +396,54 @@ class ProjectController extends \Library\BaseController {
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
         "resx_key" => $this->action(),
         "step" => ($result['record_count'] > 0) ? "success" : "error"
+    ));
+  }
+
+  /**
+   * Method that edits a project and facility from map modal
+   *
+   * @param \Library\HttpRequest $rq
+   * @return JSON
+   */
+  public function executeMapEdit(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+    $dataPost = json_decode($this->dataPost["params"],true);
+    $sessionProjects = \Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->user());
+    if($dataPost["project"]["project_id"]) {
+      $sessionProject = $sessionProjects[\Library\Enums\SessionKeys::ProjectKey . $dataPost["project"]["project_id"]];
+      $facility = $sessionProject[\Library\Enums\SessionKeys::FacilityObject];
+      $project = $sessionProject[\Library\Enums\SessionKeys::ProjectObject];
+    }
+
+    if ($facility !== NULL && $project !== NULL) {
+      //Init PDO
+
+      $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
+      $facility = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($dataPost["facility"], $facility);
+      $project = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($dataPost["project"], $project);
+      $manager = $this->managers->getManagerOf($this->module());
+      $result_edit["facility"] = $manager->edit($facility, "facility_id");
+      $manager = $this->managers->getManagerOf("Project");
+      $result_edit["project"] = $manager->edit($project, "project_id");
+
+      $result["data"]["facility"] = $facility;
+      $result["data"]["project"] = $project;
+    }
+
+    //Update this project in session projects list
+    if ($result_edit) {
+      $sessionProject[\Library\Enums\SessionKeys::ProjectObject] = $project;
+      $sessionProject[\Library\Enums\SessionKeys::FacilityObject] = $facility;
+      $sessionProjects[\Library\Enums\SessionKeys::ProjectKey . $dataPost["project"]["project_id"]] = $sessionProject;
+      \Applications\PMTool\Helpers\ProjectHelper::SetSessionProjects($this->user(),$sessionProjects);
+    }
+
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+      "resx_key" => $this->action(),
+      "step" => $result_edit ? "success" : "error"
     ));
   }
 
