@@ -37,8 +37,14 @@ class FacilityController extends \Library\BaseController {
    */
   public function executeAdd(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS();
+    $dataPost = $this->dataPost();
 
-    $facility = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Facility());
+    if($dataPost['facility_lat'] == "" or $dataPost['facility_long'] == ""){
+      $latLng =  \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
+      $dataPost['facility_lat'] = $latLng['lat'];
+      $dataPost['facility_long'] = $latLng['lng'];
+    }
+    $facility = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($dataPost, new \Applications\PMTool\Models\Dao\Facility());
     $result["data"] = $facility;
     //Load interface to query the database
     $manager = $this->managers->getManagerOf($this->module());
@@ -146,6 +152,27 @@ class FacilityController extends \Library\BaseController {
    */
   public function executeGetList(\Library\HttpRequest $rq, $isNotAjaxCall = FALSE) {
     //The logic is found in ProjectController->executeGetList
+  }
+
+  public function executeGetItem(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS();
+
+    $sessionProjects = \Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->user());
+
+    $facilities = \Applications\PMTool\Helpers\CommonHelper::GetObjectListFromSessionArrayBySessionKey($sessionProjects,\Library\Enums\SessionKeys::FacilityObject);
+    $facility = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue(intval($this->dataPost["facility_id"]),'facility_id',$facilities);
+
+    $projects = \Applications\PMTool\Helpers\CommonHelper::GetObjectListFromSessionArrayBySessionKey($sessionProjects,\Library\Enums\SessionKeys::ProjectObject);
+    $project = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue(intval($facility->project_id()),'project_id',$projects);
+    $result['data'][0]['facility'] = $facility;
+    $result['data'][0]['project'] = $project;
+
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Facility,
+      "resx_key" => $this->action(),
+      "step" => count($result['data'])>0 ? "success" : "error"
+    ));
   }
 
 }
