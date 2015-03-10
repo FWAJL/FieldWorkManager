@@ -7,6 +7,7 @@
   <define key="BaseUrlRelease" value="/" />
   <define key="DefaultLanguage" value="en" />
   <define key="RootImageFolderPath" value="Web/images/" />
+  <define key="RootUploadsFolderPath" value="Web/uploads/" />
   <define key="DalFolderPath" value="\Applications\PMTool\Models\Dal\" />
   <define key="RootDocumentUpload" value="./uploads/" />
 
