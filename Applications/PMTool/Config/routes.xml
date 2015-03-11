@@ -147,6 +147,7 @@
             <css_file use="project" />
         </css_files>
 		<php_modules>
+			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
@@ -653,6 +654,7 @@
   <route url="location/getItem" module="Location" action="getItem" resxfile="location" type="ws" />
   <route url="location/updateItems" module="Location" action="updateItems" resxfile="location" type="ws" />
   <route url="location/ifLocationExists" module="Location" action="ifLocationExists" resxfile="location" type="ws" />
+  <route url="location/ifAllLocationsExist" module="Location" action="ifAllLocationsExist" resxfile="location" type="ws" />
   <route url="location/mapEdit" module="Location" action="mapEdit" resxfile="location" type="ws" />
 
   <route url="technician/add" module="Technician" action="add" resxfile="technician" type="ws" />
