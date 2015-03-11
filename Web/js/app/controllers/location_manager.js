@@ -95,11 +95,28 @@ $(document).ready(function() {
 
 
   $("#btn-add-location-names").click(function() {
-    var data = {
+	var data = {
       "names": $("textarea[name=\"location_names\"]").val(), 
       "active": $("input[name=\"location_active\"]").prop("checked")
     };
-    location_manager.add(data, "location", "add");
+	
+	//Check for uniqueness
+	location_manager.isAllLocationsExisting(data, function(reply){
+	  if(reply.record_count === 0) {
+		//Save the entire lot
+		location_manager.add(data, "location", "add");
+	  } else {
+	    //utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
+		utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){});
+		var errHtml = '<ul style="color:#FF0000; margin:15px 0 15px 10px;">';
+		for(i in reply.duplicate_locations) {
+		  errHtml += '<li>' + reply.duplicate_locations[i] + '</li>';
+		}
+		errHtml += '</ul>';
+		$('.bootbox-body').append(errHtml);
+	  }
+	});
+	
   });//Add many locations
 
   $("#btn-add-location-manual").click(function() {
@@ -285,6 +302,12 @@ $(document).ready(function() {
   location_manager.isLocationForProjectExists = function(locationName, decision) {
     datacx.post("location/ifLocationExists", {location_name: locationName}).then(function(reply) {
 	  decision(reply.record_count);
+	});
+  }
+  
+  location_manager.isAllLocationsExisting = function(data, decision) {
+    datacx.post("location/ifAllLocationsExist", {location_names: data.names}).then(function(reply) {
+	  decision(reply);
 	});
   }
 
