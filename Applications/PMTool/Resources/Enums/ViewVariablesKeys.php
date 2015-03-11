@@ -3,7 +3,7 @@
  *
  * @package		Basic MVC framework
  * @author		FWM DEV Team
- * @copyright	Copyright (c) 2014
+ * @copyright	Copyright (c) 2015
  * @license		
  * @link		
  * @since		
@@ -50,19 +50,25 @@ class ViewVariablesKeys {
   const active_list = "active_list_module";
   const inactive_list = "inactive_list_module";
   
+  const promote_buttons = "promote_buttons_module";
+  const categorized_promote_buttons = "categorized_promote_buttons_module";
+  
   const currentPm = "current_pm";
   const currentProject = "current_project";
   const currentTask = "current_task";
   
   //Project's views variables
   const form_modules = "form_modules"; 
-  const projects = "projects"; 
+  const projects = "projects";
+  const redirect_on_success = "redirect_on_success";
   
   //Location's views variables
   
   //Task's view variabless
   const task_tab_open = "task_tab_open";
-  const task_tab_close = "task_tab_close";
+  const tab_close = "tab_close";
+  
+  //Mapping
+  const map_module = "map_module";
+  const map_info_module = "map_info_module";
 }
-
-?>

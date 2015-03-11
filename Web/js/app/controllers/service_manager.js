@@ -7,26 +7,29 @@
  * jQuery listeners for the service actions
  */
 $(document).ready(function() {
-    var ajaxParams = {
+  var ajaxParams = {
     "ajaxUrl": "service/updateItems",
     "redirectUrl": "service/listAll",
     "action": "",
     "arrayOfValues": "",
     "itemId": ""
   };
+
   $(".btn-warning").hide();
   $.contextMenu({
     selector: '.select_item',
     callback: function(key, options) {
+      var params = {
+        "targetUrl": "service/showForm?mode=edit&service_id=",
+        "element": options.$trigger,
+        "attrName": "data-service-id"
+      };
       if (key === "edit") {
-        service_manager.retrieveResource(options.$trigger);
-      } else if (key === "delete") {
-        service_manager.delete(parseInt(options.$trigger.attr("data-service-id")));
-      }
+        utils.loadItem(params);
+    } 
     },
     items: {
-      "edit": {name: "View Info"},
-      "delete": {name: "Delete"}
+      "edit": {name: "Edit"}
     }
   });//Manages the context menu
 
@@ -36,10 +39,44 @@ $(document).ready(function() {
 
   $("#btn_add_service").click(function() {
     var post_data = {};
-    post_data = utils.retrieveInputs("service_form", ["service_name"]);
-    if (post_data.service_name !== undefined) {
-      service_manager.add(post_data, "service", "add", true);
+    post_data = utils.retrieveInputs("service_form", ["service_name", "service_type"]);
+
+    var msgNullCheck = $('#confirmmsg-addNullCheck').val();
+    var msgUniqueCheck = $('#confirmmsg-addUniqueCheck').val();
+    if (typeof msgNullCheck !== typeof undefined && msgNullCheck !== false &&
+            typeof msgUniqueCheck !== typeof undefined && msgUniqueCheck !== false) {
+      if (post_data.service_name !== undefined && post_data.service_type !== undefined) {
+        //Check uniqueness
+        service_manager.ifServiceProviderExists(post_data.service_name, function(record_count) {
+          if (record_count > 0)
+          {
+            utils.showAlert(msgUniqueCheck.replace("{0}", post_data.service_name));
+          }
+          else
+          {
+            if (post_data.service_name !== undefined) {
+              service_manager.add(post_data, "service", "add", true);
+            }
+          }
+
+        });
+      }
+      else
+      {
+        utils.showAlert(msgNullCheck);
+      }
     }
+    else
+    {
+      //Old code
+      if (post_data.service_name !== undefined) {
+        service_manager.add(post_data, "service", "add", true);
+      }
+    }
+
+    return false;
+
+
   });//Add a service
 
   $("#btn_edit_service").click(function() {
@@ -50,9 +87,24 @@ $(document).ready(function() {
   });//Edit a service
 
   $("#btn_delete_service").click(function() {
+	var msg = $('#confirmmsg-delete').val();
+    if (typeof msg !== typeof undefined && msg !== false) {
+      utils.showConfirmBox(msg, function(result) {
+        if (result)
+        {
+          service_manager.delservice(ajaxParams);
+        }
+      });
+    }
+    else
+    {
+      service_manager.delservice(ajaxParams);
+    }
+	/*  
     ajaxParams.ajaxUrl = "service/delete";
     ajaxParams.itemId = parseInt(parseInt(utils.getQueryVariable("service_id")));
     datacx.delete(ajaxParams);
+	*/
   });
 
   if (utils.getQueryVariable("mode") === "edit") {
@@ -66,28 +118,41 @@ $(document).ready(function() {
 //    service_manager.fillFormWithRandomData();
 //  }
 
-  var alreadyHovered = false;
-  $(".select_item").hover(function() {
-    if (!alreadyHovered)
-      toastr.info("Right-click to edit!");
-    alreadyHovered = true;
-  });//Show a service tip
-
   $("#service_list_all").click(function() {
     utils.clearForm();
     $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
     $(".service_list").fadeIn('2000').removeClass("hide");
     service_manager.getList();
   });//Show "List All" panel
+  
+   // Selection of service
+var selectionParams = {
+    "listLeftId": "categorized-list-left",
+    "listRightId": "categorized-list-right",
+    "dataAttrLeft": "data-service-id",
+    "dataAttrRight": "data-service-id"
+  };
+  utils.dualListSelection(selectionParams);
 
+  $(".from-categorized-list-right").click(function() {
+    ajaxParams.action = "add";
+    ajaxParams.arrayOfValues = utils.getValuesFromList(selectionParams.listRightId, selectionParams.dataAttrRight, true);
+    datacx.updateItems(ajaxParams);
+  });
+  $(".from-categorized-list-left").click(function() {
+    ajaxParams.action = "remove";
+    ajaxParams.arrayOfValues = utils.getValuesFromList(selectionParams.listLeftId, selectionParams.dataAttrLeft, true);
+    datacx.updateItems(ajaxParams);
+  });
 });
+
 /***********
  * service_manager namespace 
  * Responsible to manage services.
  */
 (function(service_manager) {
   service_manager.add = function(data, controller, action) {
- 
+
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Resource/Add WebService
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
@@ -107,6 +172,11 @@ $(document).ready(function() {
       }
     });
   };
+  service_manager.delservice = function(ajaxParams) {
+	ajaxParams.ajaxUrl = "service/delete";
+    ajaxParams.itemId = parseInt(parseInt(utils.getQueryVariable("service_id")));
+    datacx.delete(ajaxParams);
+  }
   service_manager.getList = function() {
     datacx.post("service/getlist", null).then(function(reply) {//call AJAX method to call Resource/GetList WebService
       if (reply === null || reply.result === 0) {//has an error
@@ -180,16 +250,6 @@ $(document).ready(function() {
     });
   };
 
- /** service_manager.fillFormWithRandomData = function() {
-    utils.clearForm();
-    var number = Math.floor((Math.random() * 100) + 1);
-    $(".service_form input[name=\"service_name\"]").val("Resource " + number);
-    $("input[name=\"service_num\"]").val("n-" + number);
-    $("input[name=\"service_desc\"]").val("Description " + number);
-    $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
-    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
-  };
-*/
   service_manager.updateServices = function(action, arrayId) {
     datacx.post("service/updateItems", {"action": action, "service_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
@@ -199,6 +259,13 @@ $(document).ready(function() {
         toastr.success(reply.message);
         utils.redirect("service/listAll");
       }
+    });
+  };
+
+  service_manager.ifServiceProviderExists = function(providerName, decision) {
+    datacx.post("service/ifProviderExists", {service_name: providerName}).then(function(reply) {
+      //alert(reply.record_count);
+      decision(reply.record_count);
     });
   };
 

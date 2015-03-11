@@ -10,11 +10,12 @@ class PMToolApplication extends \Library\Application {
 
     $this->name = 'PMTool';
     $this->context()->setLanguage();
-    $this->logoImageUrl = $this->imageUtil->getImageUrl("logo.png");
+    $this->logoImageUrl = $this->imageUtil->getImageUrl("FWM_logo.jpg");
     
   }
 
   public function run() {
+    \Library\Core\Utility\TimeLogger::StartLog($this, \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
     $this->i8n->loadResources();
     
     $controller = $this->getController();

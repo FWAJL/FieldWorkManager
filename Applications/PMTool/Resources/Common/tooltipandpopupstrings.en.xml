@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<resource uicomponent="tooltip" targetcontroller="project" targetaction="list" targetattr="active-project-header" value="Click on any Project to select : Right click to edit" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="project" targetaction="list" targetattr="inactive-project-header" value="Inactive Projects do not auto-initiate any tasks" placement="bottom" />
+	<resource uicomponent="tooltip" targetcontroller="technician" targetaction="list" targetattr="active-technician-header" value="Click on any Technician to select : Right click to edit" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="technician" targetaction="list" targetattr="inactive-technician-header" value="Tooltip for inactive Technicians go here" placement="top" />
+	<resource uicomponent="tooltip" targetcontroller="location" targetaction="list" targetattr="active-location-header" value="Tooltip for active Locations go here" placement="bottom" />
+	<resource uicomponent="tooltip" targetcontroller="location" targetaction="list" targetattr="inactive-location-header" value="Tooltip for inactive Locations go here" placement="top" />
+	<resource uicomponent="tooltip" targetcontroller="location" targetaction="uploadList" targetattr="question-location-headingH3" value="Tooltip for location upload" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="task" targetaction="list" targetattr="active-task-header" value="Tooltip for active Tasks go here" placement="bottom" />
+	<resource uicomponent="tooltip" targetcontroller="task" targetaction="list" targetattr="inactive-task-header" value="Tooltip for inactive Tasks go here" placement="top" />
+	<resource uicomponent="tooltip" targetcontroller="task" targetaction="showForm" targetattr="question-task-showForm-manual-box" value="Task show form manual" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="task" targetaction="showForm" targetattr="question-task-showForm-external-box" value="Task show form external" placement="right" />
+	
+	<resource uicomponent="tooltip" targetcontroller="taskTechnician" targetaction="list" targetattr="active-taskTechnician-header" value="Tooltip for active Technicians for a Task" placement="bottom" />
+	<resource uicomponent="tooltip" targetcontroller="taskTechnician" targetaction="list" targetattr="inactive-taskTechnician-header" value="Tooltip for inactive Technicians for a Task" placement="bottom" />
+	
+	<resource uicomponent="tooltip" targetcontroller="taskLocation" targetaction="locations" targetattr="active-taskLocation-header" value="Tooltip for active Locations for a Task" placement="bottom" />
+	<resource uicomponent="tooltip" targetcontroller="taskLocation" targetaction="locations" targetattr="inactive-taskLocation-header" value="Tooltip for inactive Locations for a Task" placement="bottom" />
+	
+	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="list" targetattr="active-fieldanalyte-header" value="Tooltip for active Field Analyte" placement="top" />
+	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="list" targetattr="inactive-fieldanalyte-header" value="Tooltip for inactive Field Analyte" placement="top" />
+	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="list" targetattr="active-labanalyte-header" value="Tooltip for active Lab Analyte" placement="top" />
+	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="list" targetattr="inactive-labanalyte-header" value="Tooltip for inactive Lab Analyte" placement="top" />
+	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="uploadList" targetattr="activequestion-fieldanalyte-uploadList-headerH4" value="Upload field analyte active" placement="top" />
+	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="uploadList" targetattr="inactivequestion-fieldanalyte-uploadList-headerH4" value="Upload field analyte inactive" placement="top" />
+	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="uploadList" targetattr="activequestion-labanalyte-uploadList-headerH4" value="Upload lab analyte active" placement="top" />
+	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="uploadList" targetattr="inactivequestion-labanalyte-uploadList-headerH4" value="Upload lab analyte inactive" placement="top" />
+	
+	<resource uicomponent="tooltip" targetcontroller="service" targetaction="list" targetattr="active-service-header" value="Tooltip for active Service providers" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="service" targetaction="list" targetattr="inactive-service-header" value="Tooltip for inactive Service providers" placement="bottom" />
+	
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="question-map-h3" value="Maps for all project H3" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="map-info-add" value="Add map for all projects, this is a big tooltip" placement="top" delayshow="1000" delayhide="100" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="map-info-shape" value="Shape icon for all projects" placement="top" delayshow="1000" delayhide="100" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="map-info-ruler" value="Ruler icon for all projects" placement="top" delayshow="1000" delayhide="100" />
+	
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="question-map-h3" value="Maps for all project H3" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="question-map-h3" value="Maps for current project H3" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="map-info-shape" value="Shape icon for current projects" placement="top" delayshow="1000" delayhide="100" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="map-info-ruler" value="Ruler icon for current projects" placement="top" delayshow="1000" delayhide="100" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="map-info-add" value="Add icon for current projects" placement="top" delayshow="1000" delayhide="100" />
+	
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="question-map-h3" value="Maps for current project location H3" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="map-info-add" value="Add icon for current project location" placement="top" delayshow="1000" delayhide="100"  />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="map-info-shape" value="Shape icon for current project location" placement="top" delayshow="1000" delayhide="100"  />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="map-info-ruler" value="Ruler icon for current project location" placement="top" delayshow="1000" delayhide="100"  />
+	
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="question-map-h3" value="Maps for current project task location H3" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="map-info-ruler" value="Ruler icon for current task location" placement="top" delayshow="1000" delayhide="100"  />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="map-info-shape" value="Shape icon for current task location" placement="top" delayshow="1000" delayhide="100"  />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="map-info-add" value="Add icon for current task location" placement="top" delayshow="1000" delayhide="100"  />
+
+	<resource uicomponent="confirm" targetcontroller="project" targetaction="list" operation="delete" value="Sure to delete this project?" />
+	<resource uicomponent="confirm" targetcontroller="project" targetaction="view" operation="delete" value="Viewing a project, delete it?" />
+	<resource uicomponent="confirm" targetcontroller="technician" targetaction="list" operation="delete" value="Sure to delete this technician?" />
+	<resource uicomponent="confirm" targetcontroller="technician" targetaction="view" operation="delete" value="You are viewing a technician, delete this record?" />
+	<resource uicomponent="confirm" targetcontroller="task" targetaction="list" operation="activate" value="Sure to activate this task?" />
+	<resource uicomponent="confirm" targetcontroller="service" targetaction="view" operation="delete" value="Viewing a service, delete it?" />
+	<resource uicomponent="confirm" targetcontroller="analyte" targetaction="list" operation="deleteField" value="Sure to delete this field analyte?" />
+	<resource uicomponent="confirm" targetcontroller="analyte" targetaction="list" operation="deleteLab" value="Sure to delete this Lab analyte?" />
+	<resource uicomponent="confirm" targetcontroller="location" targetaction="view" operation="delete" value="Viewing a location, delete it?" />
+	
+	<resource uicomponent="alert" targetcontroller="project" targetaction="list" operation="addUniqueCheck" value="Project name is taken. Choose a new project name." />
+	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addNullCheck" value="To open a new Project, you must provide the Project Name and Facility Address" />
+	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addUniqueCheck" value="'{0}' is already used for an existing project as a project name. Please choose another name." />
+	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addAddressCheck" value="Error finding the coordinates for facility address. You can edit them on the project map." />
+	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addCoordinatesCheck" value="Invalid coordinates." />
+	<resource uicomponent="alert" targetcontroller="service" targetaction="view" operation="addNullCheck" value="To add a new Service Provider, you must provide the Company Name and Category." />
+	<resource uicomponent="alert" targetcontroller="service" targetaction="view" operation="addUniqueCheck" value="'{0}' is already used for an existing service provider as the service provider name. Please choose another name." />
+	<resource uicomponent="alert" targetcontroller="task" targetaction="view" operation="addUniqueCheck" value="Task name is taken. Choose a new Task name" />
+	<resource uicomponent="alert" targetcontroller="task" targetaction="list" operation="addUniqueCheck" value="Task name is taken. Choose a new Task name" />
+	<resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="addUniqueCheck" value="Location name is taken. Choose a new Location name" />
+    <resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="checkCoordinates" value="Invalid coordinates" />
+	<resource uicomponent="alert" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="noPhotos" value="No available photos for this location" />
+    <resource uicomponent="alert" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="addUniqueCheck" value="Location name is taken. Choose a new Location name" />
+	<resource uicomponent="alert" targetcontroller="analyte" targetaction="list" operation="noAnalyteForProject" value="You do not have any Analytes for your Projects. You can start building your own custom analyte list by clicking Analyte > Upload List" />
+	<resource uicomponent="alert" targetcontroller="location" targetaction="view" operation="addUniqueCheck" value="Location name is taken. Choose a new location name." />
+	<resource uicomponent="prompt" targetcontroller="project" targetaction="list" operation="addNullCheck" value="This will create a copy of Project '{0}'. To continue, you must enter the new project name." />
+	<resource uicomponent="prompt" targetcontroller="project" targetaction="view" operation="addNullCheck" value="This will create a copy of Project '{0}'. To continue, you must enter the new project name." />
+	<resource uicomponent="prompt" targetcontroller="task" targetaction="view" operation="addNullCheck" value="To continue, you must enter the new Task Name." />
+	<resource uicomponent="prompt" targetcontroller="task" targetaction="view" operation="addNullCheckForCopy" value="This will create a copy of Task '{0}'. To continue, you must enter the new task name." />
+	<resource uicomponent="prompt" targetcontroller="task" targetaction="listAll" operation="checkCurrentProject" value="To list tasks, you must select a project." />
+	<resource uicomponent="prompt" targetcontroller="analyte" targetaction="listAll" operation="checkCurrentProject" value="To list Analytes, you must select a project." />
+	<resource uicomponent="prompt" targetcontroller="map" targetaction="currentProject" operation="checkCurrentProject" value="To see Map for current project, you must select a project." />
+	<resource uicomponent="prompt" targetcontroller="map" targetaction="currentProjectLocations" operation="checkCurrentProject" value="To see Map for current locations, you must select a project." />
+	<resource uicomponent="prompt" targetcontroller="map" targetaction="taskLocations" operation="checkCurrentProject" value="To see Map for Task locations, you must select a project." />
+	
+	<resource uicomponent="prompt" targetcontroller="map" targetaction="taskLocations" operation="checkCurrentTask" value="To see Map for Task locations, you must select a Task as well." />
+	<resource uicomponent="prompt" targetcontroller="task" targetaction="showForm" operation="checkCurrentProject" value="To add a task, you must select a project." />
+	<resource uicomponent="prompt" targetcontroller="task" targetaction="addPrompt" operation="addNullCheckAddPrompt" value="To continue, you must enter the new Task Name." />
+	<resource uicomponent="prompt" targetcontroller="location" targetaction="listAll" operation="checkCurrentProject" value="To list locations, you must select a project." />
+	<resource uicomponent="prompt" targetcontroller="location" targetaction="showForm" operation="checkCurrentProject" value="To add a location, you must select a project." />
+	<resource uicomponent="prompt" targetcontroller="location" targetaction="uploadList" operation="checkCurrentProject" value="To upload a list of locations, you must select a project." />
+	<resource uicomponent="prompt" targetcontroller="location" targetaction="showForm" operation="promptEnterLocation" value="Please enter a location name." />
+	<resource uicomponent="prompt" targetcontroller="analyte" targetaction="listAll" operation="edit" value="Edit '{0}'." />
+	<resource uicomponent="prompt" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="addNullCheckAddPrompt" value="To continue, you must enter the new Location Name." />
+	<resource uicomponent="prompt" targetcontroller="map" targetaction="loadProjectInfo" operation="addNullCheckAddPrompt" value="To continue, you must fill all fields." />
+</resources>

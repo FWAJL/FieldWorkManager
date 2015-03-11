@@ -27,12 +27,21 @@ $(document).ready(function() {
   //manage click events
   $(".tab").click(function() {
     var data_form_id = $(this).attr("data-form-id");
-    $(".data-form, .data-form-2").hide();
+    $(".data-form, .data-form-2, .btn-warning").hide();
     $("#" + data_form_id).fadeIn().removeClass("hide");
     $(this).siblings().removeClass("active");
     $(this).css("display", "").addClass("active");
   });
-  
+
+  $(".tab").each(function(index, element) {
+    if ($(this).hasClass("active")) {
+      var data_form_id = $(this).attr("data-form-id");
+      $(".data-form, .data-form-2").hide();
+      $("#" + data_form_id).fadeIn().removeClass("hide");
+    }
+    ;
+  });
+
 });
 
 $(document).ready(function() {
@@ -46,34 +55,33 @@ $(document).ready(function() {
     }
   });
 
+  $("#tab2").hide();
   $("#tab3").hide();
   $("#tab3a").hide();
   $("#field_data_box").change(function() {
     if ($("#field_data_box").is(":checked")) {
+      $("#tab2").show();
       $("#tab3").show();
       $("#tab3a").show();
     } else {
+      $("#tab2").hide();
       $("#tab3").hide();
       $("#tab3a").hide();
     }
   });
-  if (utils.getPathPart("field_analyte")) {
-    $("#tab3").show();
-    $("#tab3a").show();
-  }
 
   $("#tab4").hide();
   $("#tab5").hide();
-  $("#tab6").hide();
+  $("#tab5a").hide();
   $("#lab_sample_box").change(function() {
     if ($("#lab_sample_box").is(":checked")) {
       $("#tab4").show();
       $("#tab5").show();
-      $("#tab6").show();
+      $("#tab5a").show();
     } else {
       $("#tab4").hide();
       $("#tab5").hide();
-      $("#tab6").hide();
+      $("#tab5a").hide();
     }
   });
 
@@ -86,35 +94,15 @@ $(document).ready(function() {
       $("#tab7").hide()
     }
   });
+  
+    $("#freq_list").hide()
+  $("#freq_list_box").change(function()
+  {
+    if ($("#freq_list_box").is(":checked")) {
+      $("#freq_list").show()
+    } else {
+      $("#freq_list").hide()
+    }
+  });
 
-//  $("#tab8").hide()
-//  $("#waste_box").change(function()
-//  {
-//    if ($("#waste_box").is(":checked")) {
-//      $("#tab8").show()
-//    } else {
-//      $("#tab8").hide()
-//    }
-//  });
-//
-//  $("#tab9").hide()
-//  $("#rental_box").change(function()
-//  {
-//    if ($("#rental_box").is(":checked")) {
-//      $("#tab9").show()
-//    } else {
-//      $("#tab9").hide()
-//    }
-//  });
-//
-//  $("#tab10").hide()
-//  $("#field_test_box").change(function()
-//  {
-//    if ($("#field_test_box").is(":checked")) {
-//      $("#tab10").show()
-//    } else {
-//      $("#tab10").hide()
-//    }
-//  });
-
-});
+ });

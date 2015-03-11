@@ -1,35 +1,25 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 <div class="right-aside main col-lg-10 col-md-10 col-sm-10">
-  <div class="analyte_list">
-    <h3>
-      <?php echo $resx["h3_pm_analytes"] ?>
-    </h3>     
+   <h3>
+      <?php echo $resx["h4_analytes"] ?>
+    </h3>
   <div class="form_sections">
-    <?php
-    foreach ($form_modules as $key => $module_path) {
-      require $module_path;
-    }
-    ?>
-  </div>
-<!--        <div class="col-lg-2 col-md-2">
-          <div class="buttons">
-                            <br/>
-                            <br/>
-                            <br/>
-            <input id="btn-add-location-names" type="button" value="<?php //echo $resx["btn_add_location_names"] ?>" class="btn btn-primary" />
-            <br/> 
-            <ul>
-               <li style="display: none">
-                  <input id="location_upload_list" name="location_active" type="checkbox" checked />
-              </li>
-            </ul>
-              <label for="location_upload_list"><?php //echo $resx["location_active_many"]; ?></label>
+    <!-- open tabs -->
+    <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::analyte_tabs_open]; ?>
 
-          </div>
-        </div>
-        <div  class="col-lg-5 col-md-5">
-            
-        </div>-->
+    <!-- field analyte block -->
+    <div id="field_analyte_info" class="data-form-2">
+      <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Analyte::up_field_analyte_lists]; ?>      
+    </div>
 
+    <!-- lab analyte block -->
+    <div id="lab_analyte_info" class="hide data-form-2">
+      <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Analyte::up_lab_analyte_lists]; ?>
+    </div>
+
+    <!-- close tabs -->
+    <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg] ?>
+    <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::tabs_close]; ?>
   </div>
-</div><!-- END RIGHT ASIDE MAIN -->
+
+</div>

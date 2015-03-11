@@ -4,7 +4,7 @@
  *
  * @package		Basic MVC framework
  * @author		FWM DEV Team
- * @copyright	Copyright (c) 2014
+ * @copyright	Copyright (c) 2015
  * @license
  * @link
  * @since
@@ -58,7 +58,7 @@ class AuthenticateController extends \Library\BaseController {
     $result = $this->InitResponseWS();
 
     //Let's retrieve the inputs from AJAX POST request
-    $data_sent = $rq->retrievePostAjaxData(NULL, FALSE);
+    $data_sent = $rq->retrievePostAjaxData(FALSE);
 
     //Then, retrieve the login and password.
     $user = $this->PrepareUserObject($data_sent);

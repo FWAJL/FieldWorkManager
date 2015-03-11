@@ -13,13 +13,27 @@ $(document).ready(function() {
     callback: function(key, options) {
       if (key === "edit") {
         technician_manager.retrieveTechnician(options.$trigger);
-      } else if (key === "delete") {
-        technician_manager.delete(parseInt(options.$trigger.attr("data-technician-id")));
-      }
+      } 
+//      else if (key === "delete") {
+//				var msg = $('#confirmmsg-delete').val();
+//				if (typeof msg !== typeof undefined && msg !== false) {
+//					utils.showConfirmBox(msg, function(result){
+//						if(result)
+//						{
+//							technician_manager.delete(parseInt(options.$trigger.attr("data-technician-id")));
+//						}
+//					});
+//				}
+//				else
+//				{
+//					technician_manager.delete(parseInt(options.$trigger.attr("data-technician-id")));
+//				}
+//      }
     },
     items: {
-      "edit": {name: "View Info"},
-      "delete": {name: "Delete"}
+      "edit": {name: "Edit"}
+//      ,
+//      "delete": {name: "Delete"}
     }
   });//Manages the context menu
 
@@ -44,7 +58,20 @@ $(document).ready(function() {
     }
   });
   $(".from-inactive-list").click(function() {
-    technician_manager.updateTechnicians("active", technician_ids);
+		var msg = $('#confirmmsg-activate').val();
+		if (typeof msg !== typeof undefined && msg !== false) {
+			utils.showConfirmBox(msg, function(result){
+				if(result)
+				{
+					technician_manager.updateTechnicians("active", technician_ids);
+				}
+			});
+		}
+		else
+		{
+			technician_manager.updateTechnicians("active", technician_ids);
+		}
+    
   });
   $(".from-active-list").click(function() {
     technician_manager.updateTechnicians("inactive", technician_ids);
@@ -76,7 +103,19 @@ $(document).ready(function() {
   });//Edit a technician
 
   $("#btn_delete_technician").click(function() {
-    technician_manager.delete(parseInt(utils.getQueryVariable("technician_id")));
+	var msg = $('#confirmmsg-delete').val();
+	if (typeof msg !== typeof undefined && msg !== false) {
+	  utils.showConfirmBox(msg, function(result){
+		if(result)
+		{
+			technician_manager.delete(parseInt(utils.getQueryVariable("technician_id")));
+		}
+	  });
+	}
+	else
+	{
+	  technician_manager.delete(parseInt(utils.getQueryVariable("technician_id")));
+	}
   });//Delete a technician
 
   if (utils.getQueryVariable("mode") === "edit") {
@@ -90,20 +129,12 @@ $(document).ready(function() {
 //    technician_manager.fillFormWithRandomData();
 //  }
 
-  var alreadyHovered = false;
-  $(".select_item").hover(function() {
-    if (!alreadyHovered)
-      toastr.info("Right-click to edit!");
-    alreadyHovered = true;
-  });//Show a technician tip
-
   $("#technician_list_all").click(function() {
     utils.clearForm();
     $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
     $(".technician_list").fadeIn('2000').removeClass("hide");
     technician_manager.getList();
   });//Show "List All" panel
-
 });
 /***********
  * technician_manager namespace 

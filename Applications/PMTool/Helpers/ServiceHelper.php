@@ -4,7 +4,7 @@
  *
  * @package		Basic MVC framework
  * @author		Jeremie Litzler
- * @copyright	Copyright (c) 2014
+ * @copyright	Copyright (c) 2015
  * @license		
  * @link		
  * @since		
@@ -122,7 +122,7 @@ class ServiceHelper {
     $pm = PmHelper::GetCurrentSessionPm($user);
     $services = $pm[\Library\Enums\SessionKeys::PmServices];
     if ($services !== NULL) {
-      $match = CommonHelper::FindObject($service_id, "service_id", $services);
+      $match = CommonHelper::FindObjectByIntValue($service_id, "service_id", $services);
     }
     return $match;
   }

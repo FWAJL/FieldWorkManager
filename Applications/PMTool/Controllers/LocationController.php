@@ -7,11 +7,29 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class LocationController extends \Library\BaseController {
 
-  public function executeIndex(\Library\HttpRequest $rq) {  }
+  public function executeIndex(\Library\HttpRequest $rq) {
+    
+  }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    //Check if a project needs to be selected in order to display this page
+    if (!$sessionProject)
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::LocationShowForm);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+	
+	//Get confirm msg for location deletion
+    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"location", "targetaction": "view", "operation": ["delete"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
+	
+	//Fetch prompt box data from xml and pass to view as an array
+    $prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"location", "targetaction": "showForm", "operation": ["promptEnterLocation"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
+	
+	//Fetch alert box data
+    $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"location", "targetaction": "view", "operation": ["addUniqueCheck"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);
+	
     if ($rq->getData("mode") === "edit") {
       $this->page->addVar("location_editing_header", $this->resxData["location_legend_edit"]);
     } else {
@@ -21,15 +39,33 @@ class LocationController extends \Library\BaseController {
     $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
-  
-    public function executeUploadList(\Library\HttpRequest $rq) {
+
+  public function executeUploadList(\Library\HttpRequest $rq) {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+    //Check if a project needs to be selected in order to display this page
+    if (!$sessionProject)
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::LocationUploadList);
+	  
+	//Fetch tooltip data from xml and pass to view as an array
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"location", "targetaction": "uploadList", "targetattr": ["question-location-headingH3"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+	
+	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+	$this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
   public function executeListAll(\Library\HttpRequest $rq) {
     //Get list of location stored in session
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    //Check if a project needs to be selected in order to display this page
+    if (!$sessionProject)
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::LocationListAll);
+	  
+	//Fetch tooltip data from xml and pass to view as an array
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"location", "targetaction": "list", "targetattr": ["active-location-header","inactive-location-header"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+    
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 
     $this->_GetAndStoreLocationsInSession($sessionProject);
@@ -47,10 +83,14 @@ class LocationController extends \Library\BaseController {
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
     $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
+    $this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::promote_buttons, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::promote_buttons]);
+	$this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message_module, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]);
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {
-    $result = \Applications\PMTool\Helpers\LocationHelper::AddProjectLocation($this, $this->InitResponseWS());    
+    $result = \Applications\PMTool\Helpers\LocationHelper::AddProjectLocation($this, $this->InitResponseWS());
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
@@ -86,6 +126,55 @@ class LocationController extends \Library\BaseController {
         "step" => $result_edit ? "success" : "error"
     ));
   }
+  /*
+   * Preload location object and edit only fields set in request
+   */
+  public function executeMapEdit(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $db_result = false;
+    //get location id from post
+    $location_id = intval($this->dataPost["location_id"]);
+
+    //load location by id from session
+    $location_selected = $this->_GetLocationFromSession($location_id);
+
+    $location = $location_selected["object"];
+
+    //save location project id
+    $oldProjectId = $location->project_id();
+    if ($location !== NULL) {
+      //Init PDO
+      $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
+      $location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), $location);
+      $result["data"] = $location;
+
+      $manager = $this->managers->getManagerOf($this->module());
+      $result_edit = $manager->edit($location, "location_id");
+    }
+
+    //Clear the location and facility list from session for the connect PM
+    if ($result_edit) {
+      //check if we have new project id so that we unset location from the current project or to update it if project isn't changed
+      $newProjectId = $location->project_id();
+      $locationMatch = $this->_GetLocationFromSession(intval($location->location_id()));
+      if($oldProjectId != $newProjectId){
+        unset($sessionProject[\Library\Enums\SessionKeys::ProjectLocations][$locationMatch["key"]]);
+      } else {
+        $sessionProject[\Library\Enums\SessionKeys::ProjectLocations][$locationMatch["key"]] = $location;
+      }
+      \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+    }
+
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+      "resx_key" => $this->action(),
+      "step" => $result_edit ? "success" : "error"
+    ));
+  }
+
 
   public function executeDelete(\Library\HttpRequest $rq) {
     // Init result
@@ -152,6 +241,31 @@ class LocationController extends \Library\BaseController {
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
         "resx_key" => $this->action(),
         "step" => ($result["rows_affected"] === count($result["location_ids"])) ? "success" : "error"
+    ));
+  }
+
+  public function executeIfLocationExists(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS(); // Init result
+    //get current project
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    //prepare location
+    $location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Location());
+
+    //get locations of the current project
+    $sessionLocations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
+
+    $match = \Applications\PMTool\Helpers\CommonHelper::FindObjectByStringValue(
+      $location->location_name(), "location_name",
+      $sessionLocations
+    );
+
+    $result['record_count'] = (!$match || empty($match)) ? 0 : 1;
+
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+      "resx_key" => $this->action(),
+      "step" => ($result['record_count'] > 0) ? "success" : "error"
     ));
   }
 

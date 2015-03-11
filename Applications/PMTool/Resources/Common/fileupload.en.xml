@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <resource key="message_error">Default error message from WS call.</resource>
+  <resource key="message_success">Default success message from WS call</resource>
+  <resource key="message_error_upload">Generic problem during the upload.</resource>
+  <resource key="message_success_upload">Upload has been completed successfully.</resource>
+</resources>

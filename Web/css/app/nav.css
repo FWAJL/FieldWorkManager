@@ -1,4 +1,5 @@
 .content_left{
+  padding-left: 25px;
 }
 a {color: #333; display: block;}
 a:hover {color: #000;}
@@ -6,7 +7,7 @@ a, a:hover {text-decoration: none; cursor: pointer;}
 
 .content_left > li{
   display: block;
-  padding: 5px;
+  padding: 2px;
   border-bottom: solid 1px #999;
 }
 .content_left > li:last-child{

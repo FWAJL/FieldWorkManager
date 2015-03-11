@@ -13,18 +13,44 @@ $(document).ready(function() {
     callback: function(key, options) {
       if (key === "edit") {
         project_manager.retrieveProject(options.$trigger);
-      } else if (key === "delete") {
-        project_manager.delete(parseInt(options.$trigger.attr("data-project-id")));
+      }
+      else if (key === "set")
+      {
+        project_manager.setCurrentProject(parseInt(options.$trigger.attr("data-project-id")));
       }
     },
     items: {
-      "edit": {name: "View Info"},
-      "delete": {name: "Delete"},
-      "copy": {name: "Copy"}
+      "edit": {name: "Edit"},
+      "set": {name: "Select (as current Project)"}
     }
   });//Manages the context menu
 
-  //************************************************//
+  //Auto open prompt when on selecProject view
+  utils.showSelectEntityPrompt(
+	function() {
+	  //utils.redirect($("#redirectOnSuccess").val());
+	  if ($(".ui-selected").html() !== undefined)
+	  {
+	    project_manager.setCurrentProject(parseInt($(".ui-selected").attr("data-project-id")));
+	  }
+	  else
+	  {
+	    $("#active-list").focus();
+	  }
+	},
+	function() {
+	  utils.redirect("project/listAll");
+	}
+  );
+
+//// If only one Active Project - auto set to current Project
+//   if($("#active-list li").length === 1) {
+//   if ($(".noCP").length ) {
+//   project_manager.setCurrentProject(parseInt($(".select_item").attr("data-project-id")));
+//   }
+//}
+//
+//************************************************//
   // Selection of projects
   var project_ids = [];
   $("#active-list, #inactive-list").selectable({
@@ -46,7 +72,19 @@ $(document).ready(function() {
     }
   });
   $(".from-inactive-list").click(function() {
-    project_manager.updateProjects("active", project_ids);
+    var msg = $('#confirmmsg-activate').val();
+    if (typeof msg !== typeof undefined && msg !== false) {
+      utils.showConfirmBox(msg, function(result) {
+        if (result)
+        {
+          project_manager.updateProjects("active", project_ids);
+        }
+      });
+    }
+    else
+    {
+      project_manager.updateProjects("active", project_ids);
+    }
   });
   $(".from-active-list").click(function() {
     project_manager.updateProjects("inactive", project_ids);
@@ -59,13 +97,45 @@ $(document).ready(function() {
 
 
   $("#btn_add_project").click(function() {
+
     var post_data = {};
     post_data["project"] = utils.retrieveInputs("project_form", ["project_name"]);
     post_data["facility"] = utils.retrieveInputs("facility_form", ["facility_name"]);
     post_data["client"] = utils.retrieveInputs();
-    if (post_data["project"].project_name !== undefined &&
-            post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
-      project_manager.add(post_data, "project", "add");
+
+    var msgNullCheck = $('#confirmmsg-addNullCheck').val();
+    var msgUniqueCheck = $('#confirmmsg-addUniqueCheck').val();
+    if (typeof msgNullCheck !== typeof undefined && msgNullCheck !== false &&
+            typeof msgUniqueCheck !== typeof undefined && msgUniqueCheck !== false) {
+      if (post_data["project"].project_name !== undefined &&
+              post_data["facility"].facility_address !== undefined &&
+              post_data["facility"].facility_address !== "")
+      {
+        project_manager.ifProjectExists(post_data["project"]['project_name'], function(record_count) {
+          if (record_count > 0 || post_data["project"].project_name === undefined)
+          {
+            utils.showAlert(msgUniqueCheck.replace("{0}", post_data["project"].project_name));
+          }
+          else
+          {
+            if (post_data["project"].project_name !== undefined &&
+                    post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
+              project_manager.add(post_data, "project", "add");
+            }
+          }
+        });
+      }
+      else
+      {
+        utils.showAlert(msgNullCheck);
+      }
+    }
+    else
+    {
+      if (post_data["project"].project_name !== undefined &&
+              post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
+        project_manager.add(post_data, "project", "add");
+      }
     }
   });//Add a project
 
@@ -77,8 +147,73 @@ $(document).ready(function() {
   });//Edit a project
 
   $("#btn_delete_project").click(function() {
-    project_manager.delete(parseInt(utils.getQueryVariable("project_id")));
+    var msg = $('#confirmmsg-delete').val();
+    if (typeof msg !== typeof undefined && msg !== false) {
+      utils.showConfirmBox(msg, function(result) {
+        if (result)
+        {
+          project_manager.delete(parseInt(utils.getQueryVariable("project_id")));
+        }
+      });
+    }
+    else
+    {
+      project_manager.delete(parseInt(utils.getQueryVariable("project_id")));
+    }
   });//Delete a project
+
+  $('#btn_copy_project').click(function() {
+    //alert(options.$trigger.html());
+    if (project_manager.prompt_box_msg == null || project_manager.prompt_box_msg == '') {
+      project_manager.prompt_box_msg = $('#promptmsg-addNullCheck').val();
+    }
+
+    $('#promptmsg-addNullCheck').val(project_manager.prompt_box_msg.replace('{0}', $('input[name=project_name]').val()));
+    utils.showPromptBox("addNullCheck", function() {
+      if ($('#text_input').val() !== '')
+      {
+        //Check unique		
+        project_manager.ifProjectExists($('#text_input').val(), function(record_count) {
+          if (record_count == 0)
+          {
+            project_manager.getItemforCopy(parseInt(utils.getQueryVariable("project_id")), function(reply) {
+              var post_data = {};
+              post_data["project"] = reply.sessionProject.project_obj;
+              post_data["facility"] = reply.sessionProject.facility_obj;
+              post_data["client"] = reply.sessionProject.client_obj;
+
+              //Remove some attributes
+              delete(post_data["project"]['project_id']);
+              delete(post_data["facility"]['project_id']);
+              delete(post_data["facility"]['facility_id']);
+              delete(post_data["client"]['project_id']);
+              delete(post_data["client"]['client_id']);
+              //Set some new attributes
+              post_data["project"]['project_name'] = $('#text_input').val();
+              console.log(post_data);
+              //add
+              project_manager.add(post_data, "project", "add", true);
+
+            });
+          }
+          else
+          {
+            utils.togglePromptBox();
+            var confirmMsg = $('#confirmmsg-addUniqueCheck').val().replace('{0}', $('#text_input').val());
+            utils.showAlert(confirmMsg, function() {
+              utils.togglePromptBox();
+            });
+          }
+        });
+
+      }
+      else
+      {
+        $('#text_input').focus();
+      }
+
+    });
+  });//Copy a project
 
   if (utils.getQueryVariable("mode") === "edit") {
     $(".form_sections").fadeIn('2000').addClass("show").removeClass("hide");
@@ -91,45 +226,52 @@ $(document).ready(function() {
     project_manager.fillFormWithRandomData();
   }
 
-  var alreadyHovered = false;
-  $(".select_item").hover(function() {
-    if (!alreadyHovered)
-      toastr.info("Right-click to edit!");
-    alreadyHovered = true;
-  });//Show a project tip
-
   $("#project_list_all").click(function() {
     utils.clearForm();
     $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
     $(".project_list").fadeIn('2000').removeClass("hide");
     project_manager.getList();
   });//Show "List All" panel
-
 });
 /***********
- * project_manager namespace 
+ * project_manager namespace
  * Responsible to manage projects.
  */
 (function(project_manager) {
-  project_manager.add = function(data, controller, action) {
+
+  //To keep the original msg from the hidden intact
+  project_manager.prompt_box_msg;
+
+  project_manager.add = function(data, controller, action, isCopying) {
+    isCopying = isCopying || false;
     datacx.post(controller + "/" + action, data["project"]).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
+        var facility_data = [];
+        var client_data = [];
+        if (!isCopying) {
+           facility_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
+           client_data = utils.retrieveInputs("client_form", []);
+        } else {
+          facility_data = data["facility"];
+          client_data = data["client"];
+        }
 
-        var facility_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
         if (facility_data.facility_name !== undefined && facility_data.facility_address !== undefined) {
           facility_data["project_id"] = reply.dataId;
           facility_manager.send("facility/" + action, facility_data);
         }
-        var client_data = utils.retrieveInputs("client_form", []);
         client_data["project_id"] = reply.dataId;
-        client_manager.send("client/" + action, client_data);
-        project_manager.fillFormWithRandomData();
+        client_manager.send("client/" + action, client_data, isCopying);
+        if (!isCopying) {
+          project_manager.fillFormWithRandomData();
+         }
       }
     });
   };
+
   project_manager.edit = function(project, controller, action) {
     datacx.post(controller + "/" + action, project).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.result === 0) {//has an error
@@ -179,6 +321,9 @@ $(document).ready(function() {
   project_manager.retrieveProject = function(element) {
     utils.redirect("project/showForm?mode=edit&project_id=" + parseInt(element.attr("data-project-id")));
   };
+  project_manager.show_on_map = function(id) {
+    utils.redirect("map/showOne?id=" + id);
+  };
   project_manager.loadEditForm = function(dataWs) {
     utils.clearForm();
     $(".project_form input[name=\"project_id\"]").val(parseInt(dataWs.project_obj.project_id));
@@ -189,6 +334,8 @@ $(document).ready(function() {
     $(".project_form .add-new-item input[name=\"project_visible\"]").val(dataWs.project_obj.project_visible);
     facility_manager.loadEditForm(dataWs);
     client_manager.loadEditForm(dataWs);
+    //breadcrumb
+    $('h3').html('Edit ' + dataWs.project_obj.project_name);
   };
   project_manager.delete = function(project_id) {
     datacx.post("project/delete", {"project_id": project_id}).then(function(reply) {
@@ -214,6 +361,18 @@ $(document).ready(function() {
         $(".project_edit").show().removeClass("hide");
         toastr.success(reply.message);
         project_manager.loadEditForm(reply.sessionProject);
+      }
+    });
+  };
+
+  project_manager.getItemforCopy = function(project_id, executeCopy) {
+    //get project object from cache (PHP WS)
+    datacx.post("project/getItem", {"project_id": project_id}).then(function(reply) {
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+      } else {//success
+        //return reply;
+        executeCopy(reply);
       }
     });
   };
@@ -249,7 +408,13 @@ $(document).ready(function() {
         return undefined;
       } else {//success
         toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
-        utils.redirect("project/listAll");
+
+        if ($("#redirectOnSuccess").val() !== undefined) {
+          utils.redirect($("#redirectOnSuccess").val());
+        }
+        else {
+          utils.redirect("project/listAll");
+        }
       }
     });
   };
@@ -260,6 +425,12 @@ $(document).ready(function() {
       $(".btn_set_current_project").show();
     }
 
+  };
+
+  project_manager.ifProjectExists = function(projectName, decision) {
+    datacx.post("project/ifProjectExists", {project_name: projectName}).then(function(reply) {
+      decision(reply.record_count);
+    });
   };
 
 

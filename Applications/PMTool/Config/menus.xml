@@ -28,23 +28,23 @@
   
   <main_menu name="map" active="true">
     <links>
-      <header href="#" resourcekey="header_map" enablelink="false" />
-      <submenu id="map_project_all" resourcekey="map_project_all" active="true"/>
-      <submenu id="map_project" resourcekey="map_project" active="true"/>
-      <submenu id="map_project_locations" resourcekey="map_project_locations" active="true"/>
-      <submenu id="map_task_locations" resourcekey="map_task_locations" active="true"/>
+      <header href="map" resourcekey="header_map" enablelink="false" />
+      <submenu href="map/allProjects" id="map_project_all" resourcekey="map_project_all" active="true"/>
+      <submenu href="map/currentProject" id="map_project" resourcekey="map_project" active="true"/>
+      <submenu href="map/currentProjectLocations" id="map_project_locations" resourcekey="map_project_locations" active="true"/>
+      <submenu href="map/taskLocations" id="map_task_locations" resourcekey="map_task_locations" active="true"/>
     </links>
   </main_menu><!-- map -->  
   
-   <main_menu name="task" active="true">
+  <main_menu name="task" active="true">
     <links>
       <header href="task" resourcekey="header_task" enablelink="false" />
       <submenu href="task/listAll" id="task_list_all" resourcekey="task_list" active="true"/>
-      <submenu href="task/showForm" id="btn-add-task-manual" resourcekey="task_add" active="true"/>
+      <submenu href="task/addPrompt" id="btn-add-task-manual" resourcekey="task_add" active="true"/>
     </links>
   </main_menu><!-- task -->
   
-     <main_menu name="analyte" active="true">
+  <main_menu name="analyte" active="true">
     <links>
       <header href="analyte" resourcekey="header_analyte" enablelink="false" />
       <submenu href="analyte/listAll" id="analyte_list_all" resourcekey="analyte_list" active="true" />
@@ -52,7 +52,14 @@
     </links>
   </main_menu><!-- analyte -->
   
-
+  <main_menu name="forms" active="true">
+    <links>
+      <header href="form/listAll" id="form_list_all" resourcekey="header_form" active="true" />
+      <submenu href="form/listAll" id="form_list_all" resourcekey="form_list" active="true"/><!--
+      <submenu href="form/showForm?mode=add&amp;test=true" id="btn-add-form-manual" resourcekey="form_add" active="true"/>-->
+    </links>
+  </main_menu><!-- forms -->
+  
   <main_menu name="service" active="true">
     <links>
       <header href="service" resourcekey="header_service" enablelink="false" />

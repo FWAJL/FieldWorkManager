@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <resource key="page_title">Forms</resource>
+  
+  <resource key="form_h1">Welcome to Field Work Manager</resource>
+  <resource key="form_welcome_message">Please, select an option on the left menu.</resource>
+  
+  <resource key="message_error_add">Error inserting the form. Check logs.</resource>
+  <resource key="message_success_add">The Form has been added.</resource>
+  <resource key="message_error_getlist">Error reading Form data. Check logs.</resource>
+  <resource key="message_success_getlist">The Forms have been read.</resource>
+  <resource key="message_error_getItem">This Form doesn't exist or is not one of your Forms. You will be redirected to your list of Forms in 3 seconds.</resource>
+  <resource key="message_success_getItem">The Form data has been read.</resource>
+  <resource key="message_error_edit">Error editing the Form data. Check logs.</resource>
+  <resource key="message_success_edit">The Form data has been edited.</resource>
+  <resource key="message_error_delete">Error deleting the Form. Check logs.</resource>
+  <resource key="message_success_delete">The Form data has been deleted.</resource>
+  <resource key="message_error_updateItems">Error editing the Form data - update items. Check logs.</resource>
+  <resource key="message_success_updateItems">The Form data has been edited.</resource>
+
+  <resource key="form_legend_add">Add a new Form</resource>
+  <resource key="form_legend_edit">Edit this Form</resource>
+  <resource key="form_type">Category</resource>
+  <resource key="form_name">Company Name</resource>
+  <resource key="form_url">Website</resource>
+  <resource key="form_address">Address</resource>
+  <resource key="form_contact_name">Contact Name</resource>
+  <resource key="form_contact_phone">Phone Number</resource>
+  <resource key="form_contact_email">Email</resource>
+<!--  <resource key="form_active">Active</resource>-->
+  <resource key="form_button_add">Add</resource>
+  <resource key="form_button_edit">Save</resource>
+  <resource key="form_button_delete">Delete</resource>
+  <resource key="form_list_all_header">Forms</resource>
+  <resource key="h3_forms_active">All Forms</resource>
+  <resource key="h3_project_forms">Forms for This Project</resource> 
+  <resource key="btn_remove_from_project_list">Remove from Project list</resource> 
+  <resource key="btn_add_to_project_list">Add to Project List</resource> 
+  <resource key="h3_no_project">No Project Selected</resource> 
+  
+</resources>

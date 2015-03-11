@@ -13,14 +13,26 @@
   <resource key="btn_to_active_list">Activate Task</resource> 
   <resource key="btn_to_lead_list">Assign as a Lead Technician</resource>  
   
+    <!-- Tabs -->  
+  
+  <resource key="task_tab_info">Task Info</resource>
+  <resource key="task_tab_technicians">Technicians</resource>
+  <resource key="task_tab_locations">Locations</resource>
+  <resource key="task_tab_map">Map</resource>
+  <resource key="task_tab_forms">Forms</resource>
+  <resource key="task_tab_field_analytes">Field Analytes</resource>
+  <resource key="task_tab_lab_analytes">Lab Analytes</resource>
+  <resource key="task_tab_coc">Chain of Custody</resource>
+  <resource key="task_tab_services">Services</resource>
+  
   <!--  Task Locations Form--> 
   <resource key="task_locations_header">Locations</resource>
   <resource key="h4_task_locations">Task locations</resource>
   <resource key="h4_project_locations">Project locations</resource>
   <resource key="selected_task_locations">Locations for this Task</resource>
   <resource key="not_selected_task_locations">All available locations</resource>
-  <resource key="btn_add_to_task">Add location(s)</resource>
-  <resource key="btn_remove_from_task">Remove location(s)</resource>
+  <resource key="btn_to_pm_list">Add location(s)</resource>
+  <resource key="btn_to_project_list">Remove location(s)</resource>
   <resource key="no_items_to_display_message">There is no active locations. Go to Locations > List all to activate some</resource>
   
 </resources>

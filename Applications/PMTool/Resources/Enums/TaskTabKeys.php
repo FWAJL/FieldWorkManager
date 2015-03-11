@@ -3,7 +3,7 @@
  *
  * @package		Basic MVC framework
  * @author		FWM DEV Team
- * @copyright	Copyright (c) 2014
+ * @copyright	Copyright (c) 2015
  * @license		
  * @link		
  * @since		
@@ -31,9 +31,16 @@ class TaskTabKeys {
   const LocationsTab = "ttk_lt";
   const InspFormsTab = "ttk_itft";
   const FieldAnalytesTab = "ttk_fat";
-  const LabAnalytesTab = "ttk_lat";
   const FieldSampleMatrixTab = "ttk_fsmt";
+  const LabAnalytesTab = "ttk_lat";
   const LabSampleMatrixTab = "ttk_lsmt";
   const CocTab = "ttk_ct";
   const ServicesTab = "ttk_st";
+}
+
+class CompleteTaskTabKeys {
+  const CompleteInfoTab = "cttk_cit";
+  const CompleteTaskMapTab = "cttk_ctmt";
+  const CompleteInspFormsTab = "cttk_cift";
+  const CompleteTaskServicesTab = "cttk_ctst";
 }

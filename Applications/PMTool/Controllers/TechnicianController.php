@@ -10,6 +10,11 @@ class TechnicianController extends \Library\BaseController {
   public function executeIndex(\Library\HttpRequest $rq) {  }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
+		
+	//Get confirm msg for Technician deletion from showForm screen
+	$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"technician", "targetaction": "view", "operation": ["delete"]}', $this->app->name());
+	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
+		
     //Load Modules for view
     $this->page->addVar(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
@@ -19,6 +24,16 @@ class TechnicianController extends \Library\BaseController {
     //Get list of object stored in session
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->app()->user());
     $technicians = \Applications\PMTool\Helpers\TechnicianHelper::GetPmTechnicians($this, $pm);
+	 
+	//Fetch tooltip data from xml and pass to view as an array
+	$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"technician", "targetaction": "list", "targetattr": ["active-technician-header","inactive-technician-header"]}', $this->app->name());
+	
+	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+		
+		//Get confirm msg for Technician deletion from context menu
+		$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"technician", "targetaction": "list", "operation": ["delete","activate"]}', $this->app->name());
+		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
+	
     $data = array(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $technicians,
@@ -31,6 +46,12 @@ class TechnicianController extends \Library\BaseController {
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
     $this->page->addVar(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
+    $this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::promote_buttons, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::promote_buttons]);
+	$this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
+	$this->page->addVar(
+            \Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message_module, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]);
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {
@@ -154,7 +175,7 @@ class TechnicianController extends \Library\BaseController {
     $technician_id = intval($this->dataPost["technician_id"]);
 
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->app()->user());
-    $technician_selected = \Applications\PMTool\Helpers\CommonHelper::FindObject($technician_id, "technician_id", $pm[\Library\Enums\SessionKeys::PmTechnicians]);
+    $technician_selected = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue($technician_id, "technician_id", $pm[\Library\Enums\SessionKeys::PmTechnicians]);
 
     $result["technician"] = $technician_selected;
     $this->SendResponseWS(
@@ -182,9 +203,14 @@ class TechnicianController extends \Library\BaseController {
     foreach ($matchedElements as $technician) {
       //With the line below, you will update the item $pm[\Library\Enums\SessionKeys::PmTechnicians]
       //Therefore, you just need to save the variable $pm at the end of the processing
-      $technician->setTechnician_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
+      $active = ($this->dataPost["action"] === "active") ? TRUE : FALSE;
+      $technician->setTechnician_active($active);
       $manager = $this->managers->getManagerOf($this->module);
       $rows_affected += $manager->edit($technician, "technician_id") ? 1 : 0;
+      $task_technician = new \Applications\PMTool\Models\Dao\Task_technician();
+      $task_technician->setTechnician_id($technician->technician_id());
+      $manager = $this->managers->getManagerOf('TaskTechnician');
+      $manager->delete($task_technician,'technician_id');
     }
     if ($rows_affected === count($technician_ids)) {
       \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->app()->user(), $pm);

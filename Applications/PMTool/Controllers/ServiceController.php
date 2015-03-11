@@ -9,32 +9,81 @@ class ServiceController extends \Library\BaseController {
     
 public function executeIndex(\Library\HttpRequest $rq) {  }
     
-public function executeShowForm(\Library\HttpRequest $rq) {
+  public function executeShowForm(\Library\HttpRequest $rq) {
+	$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"service", "targetaction": "view", "operation": ["delete", "addNullCheck", "addUniqueCheck"]}', $this->app->name());
+	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
+	
+	//Get confirm msg for Project deletion from showForm screen
+    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"service", "targetaction": "view", "operation": ["delete"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
+	
     //Load Modules for view
     $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   } 
   
   public function executeListAll(\Library\HttpRequest $rq) {
-    $sessionPm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-      
-    $list = \Applications\PMTool\Helpers\ServiceHelper::GetServiceList($this, $sessionPm);
-    
+	
+	//Fetch tooltip data from xml and pass to view as an array
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"service", "targetaction": "list", "targetattr": ["active-service-header","inactive-service-header"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+
+    $sessionPm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+    $pm_services = \Applications\PMTool\Helpers\ServiceHelper::GetPmServices($this, $sessionPm, NULL, TRUE);
+    $project_services = \Applications\PMTool\Helpers\ServiceHelper::GetAndStoreProjectServices($this, $sessionProject);
+    // filter the pm services after we retrieve the project services
+    $pm_services = \Applications\PMTool\Helpers\ServiceHelper::FilterServicesToExcludeProjectServices($pm_services, $project_services);
+
+    $project_services = \Applications\PMTool\Helpers\ServiceHelper::CategorizeTheList($project_services, "service_type");
+    $pm_services = \Applications\PMTool\Helpers\ServiceHelper::CategorizeTheList($pm_services, "service_type");
+
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentPm, $sessionPm[\Library\Enums\SessionKeys::PmObject]);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $data = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $list[\Library\Enums\SessionKeys::PmServices],
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => "service",
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_right => $pm_services,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_left => $project_services,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("service")),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("service"))  
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 
-    $modules = $this->app()->router()->selectedRoute()->phpModules();
+    //tab status
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::tabStatus, \Applications\PMTool\Helpers\TaskHelper::GetTabsStatus($this->user()));
+    //form modules
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
+            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+ 
   }
+  
+//  ListAll replaced from ProjectService
+//  public function executeListAll(\Library\HttpRequest $rq) {
+//	
+//	  
+//    $sessionPm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+//    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+//    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+//	  
+//    $list = \Applications\PMTool\Helpers\ServiceHelper::GetServiceList($this, $sessionPm);
+//    
+//    $data = array(
+//        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
+//        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $list[\Library\Enums\SessionKeys::PmServices],
+//        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
+//    );
+//    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
+//	
+//    $modules = $this->app()->router()->selectedRoute()->phpModules();
+//    $this->page->addVar(
+//            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
+//    $this->page->addVar(
+//            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
+//    $this->page->addVar(
+//            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::promote_buttons, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::promote_buttons]);
+//  }
   
    public function executeAdd(\Library\HttpRequest $rq) {
     // Init result
@@ -165,33 +214,75 @@ public function executeGetItem(\Library\HttpRequest $rq) {
   }
   
     public function executeUpdateItems(\Library\HttpRequest $rq) {
-    $result = $this->InitResponseWS(); // Init result
-
-    $rows_affected = 0;
-    //Get the service objects from ids received
-    $service_ids = str_getcsv($this->dataPost["service_ids"], ',');
-    $services = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::PmServices);
-    $matchedElements = $this->FindObjectsFromIds(
-            array(
-                "filter" => "service_id",
-                "ids" => $service_ids,
-                "objects" => $services)
-    );
-
-    //Update the service objects in DB and get result (number of rows affected)
-    //$this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::PmServices);
-    foreach ($matchedElements as $service) {
-      $service->setService_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
-      $manager = $this->managers->getManagerOf($this->module);
-      $rows_affected += $manager->edit($service, "service_id") ? 1 : 0;
-    }
-
+    $result = \Applications\PMTool\Helpers\ServiceHelper::UpdateProjectServices($this);
     $this->SendResponseWS(
             $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+        "resx_key" => $this->action(),
+        "step" => ($result["rows_affected"] === count($result["service_ids"] )) ? "success" : "error"
+    ));
+  }
+ 
+//  Updateitems replaced by method from ProjectService  
+//  public function executeUpdateItems(\Library\HttpRequest $rq) {
+//    $result = $this->InitResponseWS(); // Init result
+//
+//    $rows_affected = 0;
+//    //Get the service objects from ids received
+//    $service_ids = str_getcsv($this->dataPost["service_ids"], ',');
+//    $services = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::PmServices);
+//    $matchedElements = $this->FindObjectsFromIds(
+//            array(
+//                "filter" => "service_id",
+//                "ids" => $service_ids,
+//                "objects" => $services)
+//    );
+//
+//    //Update the service objects in DB and get result (number of rows affected)
+//    //$this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::PmServices);
+//    foreach ($matchedElements as $service) {
+//      $service->setService_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
+//      $manager = $this->managers->getManagerOf($this->module);
+//      $rows_affected += $manager->edit($service, "service_id") ? 1 : 0;
+//    }
+//
+//    $this->SendResponseWS(
+//            $result, array(
+//        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Service,
+//        "resx_key" => $this->action(),
+//        "step" => ($rows_affected === count($service_ids)) ? "success" : "error"
+//    ));
+//  }
+  
+  public function executeIfProviderExists(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS(); // Init result
+	$pmSession = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+	
+	//Check if already list exists in Session
+	$service = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Service());
+	if (!array_key_exists(\Library\Enums\SessionKeys::PmServices, $pmSession)) {
+	  //No, we have to query db and then populate the list into Session
+	  $manager = $this->managers->getManagerOf($this->module());
+	  $allServiceProviders = $manager->selectMany($service, "", true);
+	  
+	  $pmSession[\Library\Enums\SessionKeys::PmServices] = $allServiceProviders;
+	  \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->user(), $pmSession);
+    }
+	
+	//Now check if Service provider already exists
+	$match = \Applications\PMTool\Helpers\CommonHelper::FindObjectByStringValue(
+				$service->service_name(), "service_name",
+				$pmSession[\Library\Enums\SessionKeys::PmServices]
+    		);
+	
+	$result['record_count'] = (!$match || empty($match)) ? 0 : 1;
+	
+	$this->SendResponseWS(
+      $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Service,
         "resx_key" => $this->action(),
-        "step" => ($rows_affected === count($service_ids)) ? "success" : "error"
-    ));
+        "step" => ($result['record_count'] > 0) ? "success" : "error"
+      ));
   }
     
     /**

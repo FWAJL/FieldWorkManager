@@ -26,11 +26,16 @@ class UrlKeys {
   const ProjectsRootUrl = "project";
   const ProjectsListAll = "project/listAll";
   const ProjectsShowForm = "project/showForm";
+  const ProjectsSelectProject = "project/selectProject";
   
   const LocationRootUrl = "location";
   const LocationListAll = "location/listAll";
   const LocationShowForm = "location/showForm";
   const LocationUploadList = "location/uploadList";
+  
+  const MapCurrentProject = "map/currentProject";
+  const MapCurrentProjectLocations = "map/currentProjectLocations";
+  const MapTaskLocations = "map/taskLocations";
   
   const TechnicianRootUrl = "technician";
   const TechnicianListAll = "technician/listAll";
@@ -40,6 +45,7 @@ class UrlKeys {
   const ServiceListAll = "service/listAll";
   const ServiceShowForm = "service/showForm";
   
+  const AnalyteListAll = "analyte/listAll";
   const FieldAnalytes = "field_analyte/listAll";
   const FieldSampleMatrix = "field_analyte/sampleMatrix";
   const LabAnalytes = "lab_analyte/listAll";
@@ -48,12 +54,22 @@ class UrlKeys {
   const TaskRootUrl = "task";
   const TaskListAll = "task/listAll";
   const TaskShowForm = "task/showForm";
+  const TaskAddPrompt = "task/addPrompt";
   const TaskTechnicians = "task/technicians";
   const TaskLocations = "task/locations";
   const TaskServices = "task/services";
   const TaskInspForms = "task/inspForms";
   const TaskCOC = "task/coc";
-
+  const TaskSelectTask = "task/selectTask";
+  
+  const ActiveTaskShowForm = "activetask/showForm";
+  const ActiveTaskMap = "xxx";
+  const ActiveTaskInspForms = "xxx";
+  const ActiveTaskComm = "xxx";
+  
+  const CompleteTaskMap = "xxx";
+  const CompleteTaskInspForms = "xxx";
+  const CompleteTaskServices = "xxx";
   
   const PmRootUrl = "pm";
   const PmListAll = "pm/listAll";

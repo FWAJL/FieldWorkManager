@@ -15,4 +15,6 @@
   <resource key="message_success_delete">The facility has been deleted.</resource>
   <resource key="message_error_updateItems">Error editing the facilities.</resource>
   <resource key="message_success_updateItems">The facilities have been edited</resource>
+  <resource key="message_error_mapEdit">Error editing the facility boundary.</resource>
+  <resource key="message_success_mapEdit">The facility boundary has been edited.</resource>
 </resources>

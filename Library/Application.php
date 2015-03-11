@@ -21,6 +21,8 @@ abstract class Application {
   public $config;
   public $i8n;
   public $imageUtil;
+  public $jsManager;
+  public $cssManager;
 
   public function __construct() {
     $this->HttpRequest = new HttpRequest($this);
@@ -34,6 +36,8 @@ abstract class Application {
     $this->imageUtil = new ImageUtility($this);
     $this->locale = $this->HttpRequest->initLanguage($this, "browser");
     $this->name = '';
+//    $this->jsManager = new Core\Utility\JavascriptManager($this);
+//    $this->cssManager = new Core\Utility\CssManager($this);
   }
 
   public function initConfig() {
@@ -56,7 +60,7 @@ abstract class Application {
     $this->globalResources["js_files_html"] = $this->router()->selectedRoute()->htmlJsScripts();
     $this->globalResources["css_files"] = $this->router()->selectedRoute()->cssFiles();
 
-    if (preg_match("`^ws.*$`",$this->router()->selectedRoute()->type())) {//is the route used for AJAX calls?
+    if (preg_match("`.*ws$`",$this->router()->selectedRoute()->type())) {//is the route used for AJAX calls?
       $this->router()->isWsCall = true;
     }
     // On ajoute les variables de l'URL au tableau $_GET.
@@ -126,7 +130,7 @@ abstract class Application {
    * @return string : the controller class name w/ namespace
    */
   private function BuildControllerClass(\Library\Route $route) {
-    if (preg_match("`^lib$`", $route->type())) {
+    if (preg_match("`^lib.*$`", $route->type())) {
 //AJAX request for the Framework
       return Enums\NameSpaceName::LibFolderName 
         . Enums\NameSpaceName::LibControllersFolderName

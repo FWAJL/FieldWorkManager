@@ -3,7 +3,7 @@
  *
  * @package		Basic MVC framework
  * @author		FWM DEV Team
- * @copyright	Copyright (c) 2014
+ * @copyright	Copyright (c) 2015
  * @license		
  * @link		
  * @since		
@@ -40,6 +40,11 @@ abstract class ResxFileNameKeys {
   const Analyte = "analyte";
   const FieldAnalyte = "field_analyte";
   const LabAnalyte = "lab_analyte";
+  
+  const TaskFieldAnalyte = "task_field_analyte";
+  const TaskLabAnalyte = "task_lab_analyte";
+  
+  const Map = "map";
 }
 
 ?>

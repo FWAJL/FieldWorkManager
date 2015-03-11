@@ -4,7 +4,7 @@
 -- 10-09-14: added location table
 -- 03-10-14: added technician and client tables
 -- 19-11-14: tidy up of database 
--- 04-12-14: ON DELETE CASCADE aded to foreign keys
+-- 04-12-14: ON DELETE CASCADE added to foreign keys
 
 DROP SCHEMA IF EXISTS `baiken_fwm_1`;
 
@@ -153,6 +153,7 @@ CREATE TABLE `field_analyte` (
     `field_analyte_name_unit` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
     `pm_id` int(11) NOT NULL COMMENT 'Foreign key => project_manager',
     PRIMARY KEY (`field_analyte_id`),
+    UNIQUE INDEX `un_fa` (`field_analyte_name_unit` ASC),
     CONSTRAINT `fk_field_analyte_pm` FOREIGN KEY (`pm_id`)
         REFERENCES `project_manager` (`pm_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
@@ -170,23 +171,13 @@ CREATE TABLE `field_sample_matrix` (
         REFERENCES `location` (`location_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
--- Table structure for table `inspection_question`
-CREATE TABLE `inspection_question` (
-    `inspection_question_id` int(11) NOT NULL AUTO_INCREMENT,
-    `inspection_question_form_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-    `inspection_question_data` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-    `pm_id` int(11) NOT NULL COMMENT 'Foreign key => project_manager',
-    PRIMARY KEY (`inspection_question_id`),
-    CONSTRAINT `fk_inspection_question_pm` FOREIGN KEY (`pm_id`)
-        REFERENCES `project_manager` (`pm_id`) ON DELETE CASCADE
-)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
-
 -- Table structure for table `lab_analyte`
 CREATE TABLE `lab_analyte` (
     `lab_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
     `lab_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `pm_id` int(11) NOT NULL COMMENT 'Foreign key => project_manager',
     PRIMARY KEY (`lab_analyte_id`),
+    UNIQUE INDEX `un_la` (`lab_analyte_name` ASC),
     CONSTRAINT `fk_lab_analyte_pm` FOREIGN KEY (`pm_id`)
         REFERENCES `project_manager` (`pm_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
@@ -246,16 +237,6 @@ CREATE TABLE `task_field_data_location` (
         REFERENCES `location` (`location_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
--- Table structure for table `task_insp_form`
-CREATE TABLE `task_insp_form` (
-    `task_id` int(11) NOT NULL,
-    `inspection_question_id` int(11) NOT NULL,
-    CONSTRAINT `fk_tif_task` FOREIGN KEY (`task_id`)
-        REFERENCES `task` (`task_id`) ON DELETE CASCADE,
-    CONSTRAINT `fk_tif_inspection` FOREIGN KEY (`inspection_question_id`)
-        REFERENCES `inspection_question` (`inspection_question_id`) ON DELETE CASCADE
-)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
-
 -- Table structure for table `task_lab_analyte`
 CREATE TABLE `task_lab_analyte` (
     `task_id` int(11) NOT NULL,
@@ -310,15 +291,6 @@ CREATE TABLE `task_technician` (
 	UNIQUE INDEX `un_t_r` (`task_id` ASC, `technician_id` ASC)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
--- Table structure for table `location_document`
-CREATE TABLE `location_document` (
-  `location_id` int(11) NOT NULL,
-  `location_document_value` int(11) NOT NULL COMMENT 'A unique constraint prevent adding the same document as a given location',
-    CONSTRAINT `fk_ld_l` FOREIGN KEY (`location_id`)
-        REFERENCES `location` (`location_id`) ON DELETE CASCADE,
-    UNIQUE INDEX `un_ld_l` (`location_id` ASC, `location_document_value` ASC)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 -- Table structure for table `project_field_analyte`
 CREATE TABLE `project_field_analyte` (
     `project_id` int(11) NOT NULL,
@@ -340,6 +312,67 @@ CREATE TABLE `project_lab_analyte` (
         REFERENCES `lab_analyte` (`lab_analyte_id`) ON DELETE CASCADE,
     UNIQUE INDEX `un_pla_l_la` (`project_id` ASC, `lab_analyte_id` ASC)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
+
+-- Table structure for table `common_lab_analyte`
+CREATE TABLE `common_lab_analyte` (
+    `common_lab_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
+    `common_lab_analyte_category_name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+    `common_lab_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    UNIQUE INDEX `un_cla` (`common_lab_analyte_name` ASC),
+    PRIMARY KEY (`common_lab_analyte_id`)
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
+
+-- Table structure for table `common_field_analyte`
+CREATE TABLE `common_field_analyte` (
+    `common_field_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
+    `common_field_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    UNIQUE INDEX `un_cfa` (`common_field_analyte_name` ASC),
+    PRIMARY KEY (`common_field_analyte_id`)
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
+
+-- Table structure for table `document`
+CREATE TABLE `document` (
+    `document_id` int(11) NOT NULL AUTO_INCREMENT,
+    `document_content_type` varchar(50) NOT NULL COMMENT 'Store the content type of the document',
+    `document_category` varchar(50) NOT NULL COMMENT 'Is the name of the table/class for which we want a document. Possible values(13-01-14): location, technician',
+    `document_value` varchar(100) NOT NULL COMMENT 'A unique constraint prevent adding the same document as a given type',
+    `document_size` int(11) NOT NULL COMMENT 'File size in Kb',
+    PRIMARY KEY (`document_id`),
+    UNIQUE INDEX `un_doc_cat_val` (`document_id` ASC, `document_category` ASC, `document_value` ASC)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Table structure for table `log`
+CREATE TABLE `log` (
+    `log_id` int(11) NOT NULL AUTO_INCREMENT,
+    `log_request_id` varchar(50) NOT NULL,
+    `log_start` varchar(20) NOT NULL,
+    `log_end` varchar(20) NOT NULL COMMENT 'FORMAT: Y-m-d H:i:s',
+    `log_execution_time` float(10,6) NOT NULL COMMENT 'In milliseconds',
+    `log_type` varchar(40) NOT NULL COMMENT 'http_request, controller_method',
+    `log_filter` varchar(100) NOT NULL,
+    PRIMARY KEY (`log_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Table structure for table `project_service`
+CREATE TABLE `project_service` (
+  `project_id` int(11) NOT NULL,
+  `service_id` int(11) NOT NULL,
+    CONSTRAINT `fk_ps_p` FOREIGN KEY (`project_id`)
+        REFERENCES `project` (`project_id`) ON DELETE CASCADE,
+    CONSTRAINT `fk_ps_s` FOREIGN KEY (`service_id`)
+        REFERENCES `service` (`service_id`) ON DELETE CASCADE,
+    UNIQUE INDEX `un_p_s` (`project_id` ASC, `service_id` ASC)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Table structure for table `master_lab_analyte`
+CREATE TABLE `master_lab_analyte` (
+    `master_lab_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
+    `master_lab_analyte_category_name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+    `master_lab_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    UNIQUE INDEX `un_cla` (`master_lab_analyte_name` ASC),
+    PRIMARY KEY (`master_lab_analyte_id`)
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
+
 
 -- Dumping data for table `project_manager`
 INSERT INTO `project_manager` (`pm_id`, `username`, `password`, `hint`, `pm_comp_name`, `pm_name`, `pm_address`, `pm_phone`, `pm_email`) VALUES

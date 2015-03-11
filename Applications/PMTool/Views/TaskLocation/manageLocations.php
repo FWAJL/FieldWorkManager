@@ -7,21 +7,25 @@
     <span class="glyphicon glyphicon-chevron-right"></span>    
     <?php echo $resx["task_locations_header"] ?></h3>  
   <div class="form_sections">
-    <?php require $form_modules["task_tabs_open"]; ?>              
+    <?php require $form_modules["task_tabs_open"]; ?> 
+<div class="content-container container-fluid">
+  <div class="row">
     <div  class="col-lg-5 col-md-5">
-      <h4><?php echo $resx["h4_task_locations"]; ?></h4>
+      <span class="h4"><?php echo $resx["h4_task_locations"]; ?></span>
+      <span class="glyphicon glyphicon-info-sign" id="active-taskLocation-header"></span>
       <?php require $form_modules["group_list_left"]; ?>              
     </div>
-    <div class="col-lg-2 col-md-2">
-      <div class="buttons">
-        <p><input type="button" value="<?php echo $resx["btn_add_to_task"]; ?>" class="btn btn-warning from-group-list-right" /></p>
-        <p><input type="button" value="<?php echo $resx["btn_remove_from_task"]; ?>"  class="btn btn-warning from-group-list-left" /></p>
-      </div>
+    <div class="col-lg-1 col-md-1">
+        <?php require $form_modules["group_list_promote_buttons_module"]; ?>     
     </div>
     <div  class="col-lg-5 col-md-5">
-      <h4><?php echo $resx["h4_project_locations"]; ?></h4>
+      <span class="h4"><?php echo $resx["h4_project_locations"]; ?></span>
+      <span class="glyphicon glyphicon-question-sign" id="inactive-taskLocation-header"></span>
       <?php require $form_modules["group_list_right"]; ?>              
     </div>
-    <?php require $form_modules["task_tabs_close"]; ?>              
-  </div
+    <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; ?>
+    <?php require $form_modules["tabs_close"]; ?>              
+  </div>
+</div>
+</div>
 </div>

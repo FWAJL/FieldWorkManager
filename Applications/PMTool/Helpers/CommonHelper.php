@@ -4,7 +4,7 @@
  *
  * @package		Basic MVC framework
  * @author		Jeremie Litzler
- * @copyright	Copyright (c) 2014
+ * @copyright	Copyright (c) 2015
  * @license		
  * @link		
  * @since		
@@ -42,21 +42,30 @@ class CommonHelper {
   public static function CleanString($string) {
     return trim($string);
   }
+  
+  /**
+  * A helper method which print_r's a formatted array nicely
+  * Mainly used for debuging / developing 
+  */
+  public static function pr($arr) {
+	echo '<pre>';
+	print_r($arr);
+	echo '</pre>';
+  }
 
   public static function SetDynamicPropertyNamesForDualList($module, $property_list) {
     $dynamicPropertyNames = array();
     foreach ($property_list as $key => $value) {
-      $dynamicPropertyNames[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_key . $key] 
-          = $module . "_" . $value;
+      $dynamicPropertyNames[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_key . $key] = $module . "_" . $value;
     }
     return $dynamicPropertyNames;
   }
 
   public static function SetPropertyNamesForDualList($module) {
     return array(
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id => $module . "_id",
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name => $module . "_name",
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active => $module . "_active",
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id => $module . "_id",
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name => $module . "_name",
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active => $module . "_active",
     );
   }
 
@@ -97,14 +106,62 @@ class CommonHelper {
     return $object;
   }
 
-  public static function FindObject($id, $prop_name, $list_of_obj) {
+  /**
+   * Find an object in a list filtering by the id value of  given property name of each object.
+   * 
+   * @param string $idValue <p>
+   * The id value used to compare with the property name given of each object of the list. </p>
+   * @param string $propName <p>
+   * The property name to build the property getter function to perform a comparaison with the id value provided. </p>
+   * @param array (of object) $listOfObjects <p>
+   * The list of objects of type T to look into. T is defined by the caller. </p>
+   * @return mixed{boolean,object} <p>
+   * The object if found or FALSE otherwise. </p>
+   */
+  public static function FindObjectByIntValue($idValue, $propName, $listOfObjects) {
     $match = FALSE;
-    foreach ($list_of_obj as $obj) {
-      if (intval($obj->$prop_name()) === $id) {
+    foreach ($listOfObjects as $obj) {
+      if (intval($obj->$propName()) === $idValue) {
         $match = $obj;
         break;
       }
     }
+    return $match;
+  }
+
+  /**
+   * Find an object in a list filtering by the string value of one property name of each object.
+   * 
+   * @param string $filter <p>
+   * The filter used to compare with the property name of each object of the list. </p>
+   * @param string $propName <p>
+   * The property name to build the property getter function to perform a comparaison with the filter value provided. </p>
+   * @param array (of object) $list_of_obj <p>
+   * The list of objects of type T to look into. </p>
+   * @param string $key <p>
+   * The key to read the value in an associative array if the list of object
+   * is a list of associative arrays.
+   * @return mixed{boolean,object} <p>
+   * The object if found or FALSE otherwise. </p>
+   */
+  public static function FindObjectByStringValue($filter, $propName, $listOfObjects, $key = NULL) {
+    $match = FALSE;
+    if ($key === NULL) {
+      foreach ($listOfObjects as $obj) {
+        if ($obj->$propName() === $filter) {
+          $match = $obj;
+          break;
+        }
+      }
+    } else {
+      foreach ($listOfObjects as $obj) {
+        if ($obj[$key]->$propName() === $filter) {
+          $match = $obj[$key];
+          break;
+        }
+      }
+    }
+
     return $match;
   }
 
@@ -130,6 +187,64 @@ class CommonHelper {
       }
     }
     return $match;
+  }
+
+  public static function FilterObjectsToExcludeRelatedObject($objects, $related_objects, $prop_id) {
+    $matches = array();
+    foreach ($objects as $object) {
+      $to_add = TRUE;
+      foreach ($related_objects as $related_object) {
+        if (intval($object->$prop_id()) === intval($related_object->$prop_id())) {
+          $to_add = FALSE;
+          break;
+        }
+      }
+      if ($to_add) {
+        array_push($matches, $object);
+      }
+    }
+    return $matches;
+  }
+
+  public static function SetActiveTab(\Library\User $user, $tab_name, $sessionKey) {
+    $tabs = $user->getAttribute($sessionKey);
+    foreach ($tabs as $key => $value) {
+      $tabs[$key] = "";
+    }
+    $tabs[$tab_name] = "active";
+    $user->setAttribute($sessionKey, $tabs);
+  }
+
+  //TODO: replace with GetValueInSession
+  public static function GetTabsStatus(\Library\User $user, $sessionKey) {
+    return $user->getAttribute($sessionKey);
+  }
+
+  public static function SetValueInSession($user, $sessionKey, $value) {
+    $user->setAttribute($sessionKey, $value);
+  }
+
+  public static function GetValueInSession($user, $sessionKey) {
+    return $user->getAttribute($sessionKey);
+  }
+
+  public static function GetObjectListFromSessionArrayBySessionKey($sessionArray, $sessionKey) {
+    $list = array();
+    foreach ($sessionArray as $array) {
+      array_push($list, $array[$sessionKey]);
+    }
+    return $list;
+  }
+
+  public static function GetValueFromArrayByKey($array, $key) {
+    return $array[$key];
+  }
+
+  public static function GetPropValueFromObjectByPropName($object, $propName, $isArray = TRUE) {
+    return
+            $isArray ?
+            $object[$propName] :
+            $object->$propName();
   }
 
 }

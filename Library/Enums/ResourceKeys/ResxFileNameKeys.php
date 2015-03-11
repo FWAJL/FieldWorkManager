@@ -3,7 +3,7 @@
  *
  * @package		Basic MVC framework
  * @author		FWM DEV Team
- * @copyright	Copyright (c) 2014
+ * @copyright	Copyright (c) 2015
  * @license		
  * @link		
  * @since		
@@ -33,6 +33,8 @@ abstract class ResxFileNameKeys {
   const MenuLeft = "menu_left";
   const WsDefaults = "ws_defaults";
   const Config = "config";
+  const FileUpload = "fileupload";
+  const FileLoad = "fileload";
 }
 
 ?>

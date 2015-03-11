@@ -4,7 +4,7 @@
  *
  * @package		Basic MVC framework
  * @author		FWM DEV Team
- * @copyright	Copyright (c) 2014
+ * @copyright	Copyright (c) 2015
  * @license		
  * @link		
  * @since		
@@ -67,7 +67,7 @@ class Breadcrumb {
    */
   public function _LoadXml() {
     $xml = new \DOMDocument;
-    $filename = __ROOT__ . \Library\Enums\FolderName::AppsFolderName . $this->app->name() . '/Config/breadcrumbs.xml';
+    $filename = __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . '/Config/breadcrumbs.xml';
     if (file_exists($filename)) {
       $xml->load($filename);
     } else {

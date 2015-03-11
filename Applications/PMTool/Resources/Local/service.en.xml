@@ -17,6 +17,8 @@
   <resource key="message_success_delete">The Service Provider data has been deleted.</resource>
   <resource key="message_error_updateItems">Error editing the Service Provider data - update items. Check logs.</resource>
   <resource key="message_success_updateItems">The Service Provider data has been edited.</resource>
+  <resource key="message_success_ifProviderExists">The Service Provider exists.</resource>
+  <resource key="message_error_ifProviderExists">The Service Provider doesn't exist.</resource>
 
   <resource key="service_legend_add">Add a new Service Provider</resource>
   <resource key="service_legend_edit">Edit this Service Provider</resource>
@@ -28,14 +30,18 @@
   <resource key="service_contact_phone">Phone Number</resource>
   <resource key="service_contact_email">Email</resource>
 <!--  <resource key="service_active">Active</resource>-->
-  <resource key="service_button_add">Add this Service Provider</resource>
-  <resource key="service_button_edit">Edit this Service Provider</resource>
-  <resource key="service_button_delete">Delete this Service Provider</resource>
+  <resource key="service_button_add">Add</resource>
+  <resource key="service_button_edit">Save</resource>
+  <resource key="service_button_delete">Delete</resource>
   <resource key="service_list_all_header">Service Providers</resource>
   <resource key="h3_services_active">All Service Providers</resource>
   <resource key="h3_project_services">Service Providers for This Project</resource> 
   <resource key="btn_remove_from_project_list">Remove from Project list</resource> 
-  <resource key="btn_add_to_project_list">Add to Project List</resource> 
+  <resource key="btn_add_to_project_list">Add to Project List</resource>
+    <resource key="btn_to_active_list">Remove from Project list</resource> 
+  <resource key="btn_to_inactive_list">Add to Project List</resource> 
+  <resource key="btn_to_pm_list">Remove from Project list</resource> 
+  <resource key="btn_to_project_list">Add to Project List</resource>   
   <resource key="h3_no_project">No Project Selected</resource> 
   
 </resources>

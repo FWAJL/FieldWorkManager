@@ -13,13 +13,14 @@ $(document).ready(function() {
     callback: function(key, options) {
       if (key === "edit") {
         location_manager.retrieveLocation(options.$trigger);
-      } else if (key === "delete") {
-        location_manager.delete(parseInt(options.$trigger.attr("data-location-id")));
-      }
+    } //else if (key === "delete") {
+//        location_manager.delete(parseInt(options.$trigger.attr("data-location-id")));
+//      }
     },
     items: {
-      "edit": {name: "View Info"},
-      "delete": {name: "Delete"}
+      "edit": {name: "Edit"}
+//      ,
+//      "delete": {name: "Delete"}
     }
   });//Manages the context menu
 
@@ -50,6 +51,42 @@ $(document).ready(function() {
     location_manager.updateLocations("inactive", location_ids);
   });
   //************************************************//
+  
+  //click on location_name 
+  $('[name="location_name"]').click(function(){
+	$('#text_input').val($(this).val());
+	var data = {};
+    utils.showPromptBox('promptEnterLocation', function(){
+	  if($('#text_input').val() !== '')
+	  {
+	    location_manager.isLocationForProjectExists($('#text_input').val(), function(record_count){
+		  if(record_count == 0)
+		  {
+		    //Ok to add
+			var data = {
+			  "names": $('#text_input').val(),
+			  "active": false 
+			};
+			location_manager.add(data, "location", "add");
+		  }
+		  else
+		  {
+		    //Show alert, that task is already taken, choose new
+		    utils.togglePromptBox();
+		    utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
+			  utils.togglePromptBox();
+		    });
+		  }
+		});
+	  }
+	  else {
+		$('#text_input').focus();
+	  }	  
+	}, 
+	'promptmsg-promptEnterLocation', function(){
+	  utils.redirect("location/listAll");
+	});
+  });
 
 
   $("#btn-add-location-names").click(function() {
@@ -80,7 +117,19 @@ $(document).ready(function() {
   });//Edit a location
 
   $("#btn_delete_location").click(function() {
-    location_manager.delete(parseInt(utils.getQueryVariable("location_id")));
+	var msg = $('#confirmmsg-delete').val();
+    if (typeof msg !== typeof undefined && msg !== false) {
+      utils.showConfirmBox(msg, function(result) {
+        if (result)
+        {
+          location_manager.delete(parseInt(utils.getQueryVariable("location_id")));
+        }
+      });
+    }
+    else
+    {
+      location_manager.delete(parseInt(utils.getQueryVariable("location_id")));
+    }
   });//Delete a location
 
   if (utils.getQueryVariable("mode") === "edit") {
@@ -94,20 +143,12 @@ $(document).ready(function() {
     location_manager.fillFormWithRandomData();
   }
 
-  var alreadyHovered = false;
-  $(".select_item").hover(function() {
-    if (!alreadyHovered)
-      toastr.info("Right-click to edit!");
-    alreadyHovered = true;
-  });//Show a location tip
-
   $("#location_list_all").click(function() {
     utils.clearForm();
     $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");
     $(".location_list").fadeIn('2000').removeClass("hide");
     location_manager.getList();
   });//Show "List All" panel
-
 });
 /***********
  * location_manager namespace 
@@ -230,5 +271,11 @@ $(document).ready(function() {
       }
     });
   };
+  
+  location_manager.isLocationForProjectExists = function(locationName, decision) {
+    datacx.post("location/ifLocationExists", {location_name: locationName}).then(function(reply) {
+	  decision(reply.record_count);
+	});
+  }
 
 }(window.location_manager = window.location_manager || {}));
