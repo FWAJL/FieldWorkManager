@@ -56,6 +56,7 @@
 	<resource uicomponent="confirm" targetcontroller="technician" targetaction="list" operation="delete" value="Sure to delete this technician?" />
 	<resource uicomponent="confirm" targetcontroller="technician" targetaction="view" operation="delete" value="You are viewing a technician, delete this record?" />
 	<resource uicomponent="confirm" targetcontroller="task" targetaction="list" operation="activate" value="Sure to activate this task?" />
+	<resource uicomponent="confirm" targetcontroller="task" targetaction="view" operation="delete" value="Sure to delete this task?" />
 	<resource uicomponent="confirm" targetcontroller="service" targetaction="view" operation="delete" value="Viewing a service, delete it?" />
 	<resource uicomponent="confirm" targetcontroller="analyte" targetaction="list" operation="deleteField" value="Sure to delete this field analyte?" />
 	<resource uicomponent="confirm" targetcontroller="analyte" targetaction="list" operation="deleteLab" value="Sure to delete this Lab analyte?" />
