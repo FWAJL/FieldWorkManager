@@ -21,6 +21,8 @@
   <resource key="message_success_updateItems">The locations have been edited</resource>
   <resource key="message_error_ifLocationExists">The location doesn't exist</resource>
   <resource key="message_success_ifLocationExists">The location exist</resource>
+  <resource key="message_error_ifAllLocationsExist">The locations do not exist</resource>
+  <resource key="message_success_ifAllLocationsExist">some of the locations exist</resource>
   <resource key="message_error_mapEdit">Error editing the location.</resource>
   <resource key="message_success_mapEdit">The location has been edited.</resource>
 

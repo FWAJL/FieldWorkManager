@@ -54,9 +54,14 @@ $(document).ready(function() {
   
   //click on location_name 
   $('[name="location_name"]').click(function(){
+	if (utils.getQueryVariable("mode") === "edit") {
+	  //This feature is not available while editing
+	  return;
+    }
 	$('#text_input').val($(this).val());
 	var data = {};
     utils.showPromptBox('promptEnterLocation', function(){
+	  
 	  if($('#text_input').val() !== '')
 	  {
 	    location_manager.isLocationForProjectExists($('#text_input').val(), function(record_count){
@@ -67,7 +72,7 @@ $(document).ready(function() {
 			  "names": $('#text_input').val(),
 			  "active": false 
 			};
-			location_manager.add(data, "location", "add");
+			location_manager.add(data, "location", "add", true);
 		  }
 		  else
 		  {
@@ -90,11 +95,28 @@ $(document).ready(function() {
 
 
   $("#btn-add-location-names").click(function() {
-    var data = {
+	var data = {
       "names": $("textarea[name=\"location_names\"]").val(), 
       "active": $("input[name=\"location_active\"]").prop("checked")
     };
-    location_manager.add(data, "location", "add");
+	
+	//Check for uniqueness
+	location_manager.isAllLocationsExisting(data, function(reply){
+	  if(reply.record_count === 0) {
+		//Save the entire lot
+		location_manager.add(data, "location", "add");
+	  } else {
+	    //utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
+		utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){});
+		var errHtml = '<ul style="color:#FF0000; margin:15px 0 15px 10px;">';
+		for(i in reply.duplicate_locations) {
+		  errHtml += '<li>' + reply.duplicate_locations[i] + '</li>';
+		}
+		errHtml += '</ul>';
+		$('.bootbox-body').append(errHtml);
+	  }
+	});
+	
   });//Add many locations
 
   $("#btn-add-location-manual").click(function() {
@@ -155,14 +177,18 @@ $(document).ready(function() {
  * Responsible to manage locations.
  */
 (function(location_manager) {
-  location_manager.add = function(data, controller, action, isSingle) {
+  location_manager.add = function(data, controller, action, openEdit) {
 //    var data = isSingle ? userData : {"names": userData};
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Location/Add WebService
       if (reply === null || reply.dataId === undefined || reply.dataId === null || parseInt(reply.dataId) === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        utils.redirect("location/listAll", 1000);
+		if(openEdit === true) {
+		  utils.redirect("location/showForm?mode=edit&location_id=" + reply.dataIn[0].location_id, 1000);
+		} else {
+		  utils.redirect("location/listAll", 1000);
+		}
       }
     });
   };
@@ -210,6 +236,7 @@ $(document).ready(function() {
     utils.redirect("location/showForm?mode=edit&location_id=" + parseInt(element.attr("data-location-id")));
   };
   location_manager.loadEditForm = function(dataWs) {
+	isEditing = true;
     utils.clearForm();
     $("input[name=\"project_id\"]").val(parseInt(dataWs.location.project_id));
     $("input[name=\"location_id\"]").val(parseInt(dataWs.location.location_id));
@@ -275,6 +302,12 @@ $(document).ready(function() {
   location_manager.isLocationForProjectExists = function(locationName, decision) {
     datacx.post("location/ifLocationExists", {location_name: locationName}).then(function(reply) {
 	  decision(reply.record_count);
+	});
+  }
+  
+  location_manager.isAllLocationsExisting = function(data, decision) {
+    datacx.post("location/ifAllLocationsExist", {location_names: data.names}).then(function(reply) {
+	  decision(reply);
 	});
   }
 
