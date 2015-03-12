@@ -15,9 +15,12 @@ $(document).ready(function() {
   };
   
   /* If no analyte available for project, alert */
-  if($('#project-field-analyte-list li').length == 0 && $('#project-lab-analyte-list li').length == 0) {
-	if($('#confirmmsg-noAnalyteForProject').length !== 0) {
-	  utils.showAlert($('#confirmmsg-noAnalyteForProject').val());
+  //if($('#project-field-analyte-list li').length == 0 && $('#project-lab-analyte-list li').length == 0) {
+  if($('#field-analyte-list li').length == 0 && $('#lab-analyte-list li').length == 0) {
+	if($('#confirmmsg-noAnalyteAvailable').length !== 0) {
+	  utils.showAlert($('#confirmmsg-noAnalyteAvailable').val(), function(){
+		utils.redirect("analyte/uploadList");
+	  });
 	}
   }
   /* end of alert

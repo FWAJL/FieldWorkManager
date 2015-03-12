@@ -247,7 +247,18 @@ $(document).ready(function() {
   });//Copy a task
 
   $("#btn_delete_task").click(function() {
-    task_manager.delete(parseInt(utils.getQueryVariable("task_id")));
+	if($('#confirmmsg-delete').length > 0) {
+	  utils.showConfirmBox($('#confirmmsg-delete').val(), function(result) {
+	    if (result)
+	    {
+		  task_manager.delete(parseInt(utils.getQueryVariable("task_id")));
+		}
+	  });
+	}
+	else
+	{
+	  task_manager.delete(parseInt(utils.getQueryVariable("task_id")));
+	}
   });//Delete a task
 
   if (utils.getQueryVariable("mode") === "edit") {
