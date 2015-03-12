@@ -337,6 +337,7 @@ CREATE TABLE `document` (
     `document_category` varchar(50) NOT NULL COMMENT 'Is the name of the table/class for which we want a document. Possible values(13-01-14): location, technician',
     `document_value` varchar(100) NOT NULL COMMENT 'A unique constraint prevent adding the same document as a given type',
     `document_size` int(11) NOT NULL COMMENT 'File size in Kb',
+    `document_title` varchar(250) NULL DEFAULT 'Caption goes here' COMMENT 'This is the value for a document that is displayed in the HTML as a caption',
     PRIMARY KEY (`document_id`),
     UNIQUE INDEX `un_doc_cat_val` (`document_id` ASC, `document_category` ASC, `document_value` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -369,10 +370,17 @@ CREATE TABLE `master_lab_analyte` (
     `master_lab_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
     `master_lab_analyte_category_name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
     `master_lab_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-    UNIQUE INDEX `un_cla` (`master_lab_analyte_name` ASC),
     PRIMARY KEY (`master_lab_analyte_id`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
+-- Table structure for table `form`
+CREATE TABLE `form` (
+    `form_id` int(11) NOT NULL AUTO_INCREMENT,
+    `document_id` int(11) NOT NULL COMMENT 'Cannot set a foreign key as the document cannot be until the form is created so default value tells where it is: -1 -> being created ; any value above 0 -> look at document table',
+    `form_category` varchar(25) NOT NULL DEFAULT 0 COMMENT 'Will store the id column name of the object that relates to the form',
+    `form_category_id_value` int(11) NULL COMMENT 'Will store the id value of the object that relates to the form',
+    PRIMARY KEY (`form_id`)
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Dumping data for table `project_manager`
 INSERT INTO `project_manager` (`pm_id`, `username`, `password`, `hint`, `pm_comp_name`, `pm_name`, `pm_address`, `pm_phone`, `pm_email`) VALUES

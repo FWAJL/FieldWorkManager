@@ -218,7 +218,7 @@ var setLoadCoordinatesFromMarkerEvent = function(id) {
     ev.preventDefault();
     var marker;
     $.each(markers, function(key,mrk){
-      if(mrk.id = id) {
+      if(mrk.id == id) {
         marker = mrk;
         return;
       }
@@ -533,9 +533,8 @@ function load(params) {
           var el= $(this);
           var marker;
           $.each(markers, function(key,mrk){
-            if(mrk.id = el.data('id')) {
-              marker = mrk;
-              return;
+            if(mrk.id == el.data('id')) {
+              return marker = mrk;
             }
           });
           if (typeof marker !== "undefined") {
@@ -658,9 +657,8 @@ function load(params) {
             var markerId = $(this).data("id");
             var marker;
             $.each(markers, function(key,mrk){
-              if(mrk.id = markerId) {
-                marker = mrk;
-                return;
+              if(mrk.id == markerId) {
+                return marker = mrk;
               }
             });
             //var marker = markers.find(function(mkr) {return markerId == mkr.id ? mkr : false;});
