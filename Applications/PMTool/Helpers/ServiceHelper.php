@@ -284,7 +284,7 @@ class ServiceHelper {
     $result = $caller->InitResponseWS(); // Init result
     $dataPost = $caller->dataPost();
     $result["rows_affected"] = 0;
-    $result["service_ids"] = str_getcsv($dataPost["service_ids"], ',');
+    $result["service_ids"] = str_getcsv($dataPost["arrayOfValues"], ',');
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($caller->user());
     $task_services = array();
     foreach ($result["service_ids"] as $id) {

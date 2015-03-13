@@ -1,49 +1,34 @@
 $(document).ready(function() {
   $(".btn-warning").hide();
+  
+  var ajaxParams = {
+    "ajaxUrl": "task/service/updateItems",
+    "redirectUrl": "task/services",
+    "action": "",
+    "arrayOfValues": "",
+    "itemId": ""
+  };
+  
   //************************************************//
   // Selection of task technicians
-  var task_service_ids = "";
-  $("#group-list-left, #group-list-right").selectable({
-    stop: function() {
-      var tmpSelection = "";
-      $(".ui-selected", this).each(function() {
-        tmpSelection += $(this).attr("data-taskservice-id") + ",";
-      });
-      tmpSelection = utils.removeLastChar(tmpSelection);
-      if (tmpSelection.length > 0) {
-        task_service_ids = tmpSelection;
-        //Show the button to appropriate button
-        $(".from-" + $(this).attr("id")).show();
-      } else {
-        task_service_ids = [];
-        $(".from-" + $(this).attr("id")).hide();
-      }
-    }
+  var selectionParams = {
+    "listLeftId": "categorized-list-left",
+    "listRightId": "categorized-list-right",
+    "dataAttrLeft": "data-taskservice-id",
+    "dataAttrRight": "data-taskservice-id"
+  };
+  utils.dualListSelection(selectionParams);
+
+  $(".from-categorized-list-right").click(function() {
+    ajaxParams.action = "add";
+    ajaxParams.arrayOfValues = utils.getValuesFromList(selectionParams.listRightId, selectionParams.dataAttrRight, true);
+    datacx.updateItems(ajaxParams);
   });
-  $(".from-group-list-right").click(function() {
-    task_manager.updateTaskServices("add", task_service_ids);
+  $(".from-categorized-list-left").click(function() {
+    ajaxParams.action = "remove";
+    ajaxParams.arrayOfValues = utils.getValuesFromList(selectionParams.listLeftId, selectionParams.dataAttrLeft, true);
+    datacx.updateItems(ajaxParams);
   });
-  $(".from-group-list-left").click(function() {
-    task_manager.updateTaskServices("remove", task_service_ids);
-  });
+
   //************************************************//
 });
-
-/***********
- * task_manager namespace 
- * Responsible to manage tasks.
- */
-(function(task_manager) {
-  task_manager.updateTaskServices = function(action, arrayId) {
-    datacx.post("task/service/updateItems", {"action": action, "service_ids": arrayId}).then(function(reply) {
-      if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
-        return undefined;
-      } else {//success
-        toastr.success(reply.message);
-        utils.redirect("task/services");
-      }
-    });
-  };
-
-}(window.task_manager = window.task_manager || {}));

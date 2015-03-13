@@ -457,10 +457,13 @@
         </css_files>
         <php_modules>
             <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
-            <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
-            <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
+            <!--<php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
+            <php_module key="categorized_list_right" file_name="categorized_list_right.php" shared="true" />
+			<php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>-->
+			<php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
+            <php_module key="categorized_list_right" file_name="categorized_list_right.php" shared="true" />
+            <php_module key="categorized_promote_buttons_module" file_name="categorized_promote_buttons.php" shared="true"/>
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
-            <php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route><!--  task/services -->
