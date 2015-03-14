@@ -44,6 +44,7 @@ class ViewVariablesKeys {
   const property_id = "prop_id";
   const property_name = "prop_name";
   const property_active = "prop_active";
+  const data_identifier = "data_identifier";
 
   const tabStatus = "tab";
 

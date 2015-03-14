@@ -19,6 +19,8 @@ $(document).ready(function() {
     _default = "task_technicians";
   } else if (utils.getPathPart("field_analyte")) {
     _default = "field_analyte";
+  }  else if (utils.getPathPart("form")) {
+    _default = "form_info";
   }
 
 
