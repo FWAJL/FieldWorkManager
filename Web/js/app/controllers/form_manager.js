@@ -49,7 +49,7 @@ $(document).ready(function() {
 
   //************************************************//
   // Selection of forms
-  var user_form_ids = "";
+  /*var user_form_ids = "";
   var master_form_ids = "";
   $("#group-list-left, #group-list-right").selectable({
     stop: function() {
@@ -82,13 +82,53 @@ $(document).ready(function() {
         $(".from-" + $(this).attr("id")).hide();
       }
     }
+  }); */
+
+  var selectionParams = {
+    "listLeftId": "categorized-list-left",
+    "listRightId": "categorized-list-right",
+    "dataAttrLeft": "data-form-id",
+    "dataAttrRight": "data-form-id",
+    "dataObjAttrLeft": "data-object",
+    "dataObjAttrRight": "data-object"
+  };
+  utils.dualListSelection(selectionParams);
+
+  $(".from-categorized-list-right").click(function() {
+    var ajaxParams = {};
+    ajaxParams.action = "add";
+    ajaxParams.arrayOfValues = utils.getValuesFromListGroupedByObject(selectionParams.listRightId, selectionParams.dataAttrRight, selectionParams.dataObjAttrRight, true);
+    if(typeof(ajaxParams.arrayOfValues.user_form) === 'undefined') {
+      ajaxParams.arrayOfValues.user_form = "";
+    }
+    if(typeof(ajaxParams.arrayOfValues.master_form) === 'undefined') {
+      ajaxParams.arrayOfValues.master_form = "";
+    }
+    form_manager.updateProjectForms(ajaxParams.action, ajaxParams.arrayOfValues.master_form, ajaxParams.arrayOfValues.user_form);
+    //datacx.updateItems(ajaxParams);
   });
+  $(".from-categorized-list-left").click(function() {
+    var ajaxParams = {};
+    ajaxParams.action = "remove";
+    ajaxParams.arrayOfValues = utils.getValuesFromListGroupedByObject(selectionParams.listLeftId, selectionParams.dataAttrLeft, selectionParams.dataObjAttrLeft, true);
+    if(typeof(ajaxParams.arrayOfValues.user_form) === 'undefined') {
+      ajaxParams.arrayOfValues.user_form = "";
+    }
+    if(typeof(ajaxParams.arrayOfValues.master_form) === 'undefined') {
+      ajaxParams.arrayOfValues.master_form = "";
+    }
+    form_manager.updateProjectForms(ajaxParams.action, ajaxParams.arrayOfValues.master_form, ajaxParams.arrayOfValues.user_form);
+    //datacx.updateItems(ajaxParams);
+  });
+
+
+  /*
   $(".from-group-list-right").click(function() {
     form_manager.updateProjectForms("add", master_form_ids, user_form_ids);
   });
   $(".from-group-list-left").click(function() {
     form_manager.updateProjectForms("remove", master_form_ids, user_form_ids);
-  });
+  });*/
   //************************************************//
 
   $("#btn-add-form-manual").click(function() {

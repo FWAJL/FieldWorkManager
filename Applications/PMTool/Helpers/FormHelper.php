@@ -77,10 +77,12 @@ class FormHelper {
 
   public static function GetFormsFromProjectForms(\Library\User $user, $sessionProject) {
     $matches = array();
+    $matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::master_forms] = array();
+    $matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_forms] = array();
     foreach ($sessionProject[\Library\Enums\SessionKeys::ProjectAvailableForms][\Library\Enums\SessionKeys::ProjectMasterForms] as $master_form) {
       foreach ($sessionProject[\Library\Enums\SessionKeys::ProjectForms] as $form) {
         if (intval($form->master_form_id()) === intval($master_form->form_id())) {
-          array_push($matches, $master_form);
+          array_push($matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::master_forms], $master_form);
           break;
         }
       }
@@ -88,10 +90,16 @@ class FormHelper {
     foreach ($sessionProject[\Library\Enums\SessionKeys::ProjectAvailableForms][\Library\Enums\SessionKeys::ProjectUserForms] as $user_form) {
       foreach ($sessionProject[\Library\Enums\SessionKeys::ProjectForms] as $form) {
         if (intval($form->user_form_id()) === intval($user_form->form_id())) {
-          array_push($matches, $user_form);
+          array_push($matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_forms], $user_form);
           break;
         }
       }
+    }
+    if(empty($matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::master_forms])) {
+      unset($matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::master_forms]);
+    }
+    if(empty($matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_forms])) {
+      unset($matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_forms]);
     }
     return $matches;
   }

@@ -37,19 +37,27 @@ class FormController extends \Library\BaseController {
     //form modules
     $this->page->addVar(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+    if(!empty($filteredMasterForms)){
+      $filteredMasterForms  = array(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::master_forms=>$filteredMasterForms);
+    } else {
+      $filteredMasterForms = array();
+    }
 
-    $data_left = array(
+    if(!empty($filteredUserForms)){
+      $filteredUserForms = array(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_forms=>$filteredUserForms);
+    } else {
+      $filteredUserForms = array();
+    }
+    $templateForms = array_merge($filteredMasterForms,$filteredUserForms);
+
+    $data = array(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left => $projectForms,
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_right => $templateForms,
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_left => $projectForms,
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\FormHelper::SetPropertyNamesForDualList(),
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\FormHelper::SetPropertyNamesForDualList()
     );
-    $data_right = array(
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_right => array_merge($filteredMasterForms,$filteredUserForms),
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\FormHelper::SetPropertyNamesForDualList()
-    );
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data_left, $data_left);
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data_right, $data_right);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {

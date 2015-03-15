@@ -72,4 +72,9 @@ class ViewVariablesKeys {
   //Mapping
   const map_module = "map_module";
   const map_info_module = "map_info_module";
+
+  //Forms
+  //keys for categorized list display
+  const user_forms = "User forms";
+  const master_forms = "Master forms";
 }

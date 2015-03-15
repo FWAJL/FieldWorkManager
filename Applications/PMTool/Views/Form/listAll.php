@@ -16,16 +16,16 @@
       <div class="row">
         <div  class="col-lg-5 col-md-5">
           <span class="h4"><?php echo $resx["h3_project_forms"]; ?></span>
-          <?php require $form_modules["group_list_left"]; ?>
+          <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_left]; ?>
         </div>
         <div class="col-lg-1 col-md-1">
-          <?php require $form_modules["group_list_promote_buttons_module"]; ?>
+          <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_promote_buttons]; ?>
           <button id="show-form-form" value="<?php echo $resx["btn_add_user_form"]; ?>" class="btn">
           <?php echo $resx["btn_add_user_form"]; ?></button>
         </div>
         <div  class="col-lg-5 col-md-5">
           <span class="h4"><?php echo $resx["h3_template_forms"]; ?></span>
-          <?php require $form_modules["group_list_right"]; ?>
+          <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_right]; ?>
         </div>
       </div>
     </div>
