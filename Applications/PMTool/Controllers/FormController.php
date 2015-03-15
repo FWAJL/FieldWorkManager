@@ -48,7 +48,7 @@ class FormController extends \Library\BaseController {
     } else {
       $filteredUserForms = array();
     }
-    $templateForms = array_merge($filteredMasterForms,$filteredUserForms);
+    $templateForms = array_merge($filteredUserForms,$filteredMasterForms);
 
     $data = array(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
