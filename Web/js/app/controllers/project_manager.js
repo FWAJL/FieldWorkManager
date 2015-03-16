@@ -120,7 +120,40 @@ $(document).ready(function() {
           {
             if (post_data["project"].project_name !== undefined &&
                     post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
-              project_manager.add(post_data, "project", "add");
+              geocoder = new google.maps.Geocoder();
+              geocoderAddress = post_data.facility.facility_address.replace(/(\r\n|\n|\r)/gm,",");
+              geocoder.geocode({'address': geocoderAddress}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                  post_data.facility.facility_lat = results[0].geometry.location.lat();
+                  post_data.facility.facility_long = results[0].geometry.location.lng();
+                  $("#facility_info input[name='facility_lat']").val(post_data.facility.facility_lat);
+                  $("#facility_info input[name='facility_long']").val(post_data.facility.facility_long);
+                  project_manager.add(post_data, "project", "add");
+                } else {
+                  utils.showPromptBoxById("address-modal",'',function(){
+                    if($("#address-city").val() != '' && $("#address-country") != '') {
+                      geocoderAddress = $("#address-city").val()+','+$("#address-country").val();
+                      geocoder.geocode({'address': geocoderAddress}, function(resultsFallback, statusFallback){
+                        if(statusFallback == google.maps.GeocoderStatus.OK){
+                          post_data.facility.facility_lat = resultsFallback[0].geometry.location.lat();
+                          post_data.facility.facility_long = resultsFallback[0].geometry.location.lng();
+                          $("#facility_info input[name='facility_lat']").val(post_data.facility.facility_lat);
+                          $("#facility_info input[name='facility_long']").val(post_data.facility.facility_long);
+                          project_manager.add(post_data, "project", "add");
+                        } else {
+                          confirmMsg = $("#confirmmsg-addAddressCheck").val();
+                          utils.showAlert(confirmMsg, function() {
+                            utils.togglePromptBox();
+                            project_manager.add(post_data, "project", "add");
+                          });
+                        }
+                      });
+                    } else {
+                      $("#address-city").focus();
+                    }
+                  },'',function(){});
+                }
+              });
             }
           }
         });
