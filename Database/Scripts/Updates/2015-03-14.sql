@@ -1,5 +1,7 @@
 /*Table structure for table `master_form` */
 
+USE baiken_fwm_1;
+
 CREATE TABLE `master_form` (
   `form_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `content_type` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
