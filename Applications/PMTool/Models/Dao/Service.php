@@ -34,10 +34,8 @@ class Service extends \Library\Entity{
     $service_address,
     $service_contact_name,
     $service_contact_phone,
-    $service_contact_email
-          ,
-    $service_active
-          ;
+    $service_contact_email,
+    $service_active;
 
   const 
     SERVICE_ID_ERR = 0,
