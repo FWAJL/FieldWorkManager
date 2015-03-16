@@ -24,7 +24,7 @@
 namespace Applications\PMTool\Models\Dao;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-class User_form extends \Library\Entity implements \Library\IDocument{
+class User_form extends \Library\Entity implements \Library\Interfaces\IDocument{
   public
     $form_id,
     $content_type,

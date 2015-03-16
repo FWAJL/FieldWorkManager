@@ -59,7 +59,7 @@ class DocumentDal extends \Library\DAL\BaseManager {
   }
 
   public function addWithFile($object, $file) {
-    if($object instanceof \Library\IDocument) {
+    if($object instanceof \Library\Interfaces\IDocument) {
       $object->setFilename($this->GetFileNameToSaveInDatabase($file));
       $fileExists = \Library\Core\DirectoryManager::FileExists($this->GetUploadDirectory($object) . "/" . $object->Filename());
       $extensions = $object->ValidExtensions();
@@ -81,7 +81,7 @@ class DocumentDal extends \Library\DAL\BaseManager {
   }
 
   public function deleteWithFile($object, $where_filter_id) {
-    if($object instanceof \Library\IDocument) {
+    if($object instanceof \Library\Interfaces\IDocument) {
       $test = $this->GetUploadDirectory($object) . "/" . $object->Filename();
       $fileExists = \Library\Core\DirectoryManager::FileExists($this->GetUploadDirectory($object) . "/" . $object->Filename());
       if($fileExists) {
