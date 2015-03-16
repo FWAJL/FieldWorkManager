@@ -440,10 +440,10 @@
         </css_files>
         <php_modules>
             <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
-            <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
-            <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
+            <php_module key="task_field_analyte_list" file_name="task_field_analyte_list.php" />
+            <php_module key="project_field_analyte_list" file_name="project_field_analyte_list.php" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
-            <php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>
+            <php_module key="analyte_list_buttons" file_name="analyte_list_buttons.php"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route><!--  task/fieldAnalytes -->
@@ -457,9 +457,6 @@
         </css_files>
         <php_modules>
             <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
-            <!--<php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
-            <php_module key="categorized_list_right" file_name="categorized_list_right.php" shared="true" />
-			<php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>-->
 			<php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
             <php_module key="categorized_list_right" file_name="categorized_list_right.php" shared="true" />
             <php_module key="categorized_promote_buttons_module" file_name="categorized_promote_buttons.php" shared="true"/>
@@ -696,6 +693,7 @@
   <route url="task/location/updateItems" module="TaskLocation" action="updateItems" resxfile="task_location" type="ws" />
   <route url="task/technician/updateItems" module="TaskTechnician" action="updateItems" resxfile="task_technician" type="ws" />
   <route url="task/service/updateItems" module="TaskService" action="updateItems" resxfile="task_service" type="ws" />
+  <route url="task/fieldAnalytes/updateItems" module="TaskFieldAnalyte" action="updateItems" resxfile="task_field_analyte" type="ws" />
   <!--  <route url="service/updateItems" module="ProjectService" action="updateItems" resxfile="service" type="ws" />-->
  
   <route url="service/add" module="Service" action="add" resxfile="service" type="ws" />

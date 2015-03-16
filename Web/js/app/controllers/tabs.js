@@ -53,7 +53,7 @@ $(document).ready(function() {
   });
 
   $("#tab2").hide();
-  $("#tab3").hide();
+  //$("#tab3").hide();
   $("#tab3a").hide();
   $("#field_data_box").change(function() {
     if ($("#field_data_box").is(":checked")) {
@@ -62,7 +62,7 @@ $(document).ready(function() {
       $("#tab3a").show();
     } else {
       $("#tab2").hide();
-      $("#tab3").hide();
+      //$("#tab3").hide();
       $("#tab3a").hide();
     }
   });
