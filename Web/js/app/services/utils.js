@@ -38,9 +38,11 @@ $(document).ready(function() {
    */
   utils.retrieveInputs = function(form_class, inputs_required) {
     var user_inputs = {};
-    $("." + form_class + " input, ." + form_class + " textarea").each(function(i, data) {
+    $("." + form_class + " input, ." + form_class + " textarea, ." + form_class + " select").each(function(i, data) {
       if (utils.checkLiElement($(this), inputs_required)) {
-        if ($(this).attr("type") === "text") {
+        if($(this).prop("type") === "select-one"){
+          user_inputs[$(this).attr("name")] = $(this).val();
+        } else if ($(this).attr("type") === "text") {
           user_inputs[$(this).attr("name")] = $(this).val().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
         } else {//checkbox
           user_inputs[$(this).attr("name")] = ($(this).val() === "1") || ($(this).val() === "true") || $(this).prop("checked");
