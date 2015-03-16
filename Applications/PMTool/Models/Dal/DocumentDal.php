@@ -16,7 +16,7 @@ class DocumentDal extends \Library\DAL\BaseManager {
    */
   public function selectManyByCategoryAndId($document_category, $category_id) {
     $sql = 'SELECT d.* FROM `document` d';
-    $sql .= ' where d.`document_category` = \'' . $document_category . '\' and d.`document_value` LIKE \''.$category_id.'_%\';';
+    $sql .= ' where d.`document_category` = \'' . $document_category . '\' and d.`document_value` LIKE \''.$category_id.'\\_%\';';
     $query = $this->dao->query($sql);
     $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Document');
 
