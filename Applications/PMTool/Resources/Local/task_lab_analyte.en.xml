@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <resource key="page_title">Your task lab_analytes - Field Work Manager</resource>
+  
+  <resource key="message_error_updateItems">Error editing the analytes.</resource>
+  <resource key="message_success_updateItems">The analytes have been edited</resource>
+  
+  <!-- Tabs -->  
+  
+  <resource key="task_tab_info">Task Info</resource>
+  <resource key="task_tab_technicians">Technicians</resource>
+  <resource key="task_tab_locations">Locations</resource>
+  <resource key="task_tab_map">Map</resource>
+  <resource key="task_tab_forms">Forms</resource>
+  <resource key="task_tab_field_analytes">Field Analytes</resource>
+  <resource key="task_tab_lab_analytes">Lab Analytes</resource>
+  <resource key="task_tab_coc">Chain of Custody</resource>
+  <resource key="task_tab_services">Services</resource>
+  
+  <resource key="btn_add_lab_analyte_names">Add the lab analytes</resource> 
+  <resource key="btn_lab_analyte_select_project">See list of project</resource> 
+  <resource key="btn_add_analyte_to_project">Add Analyte(s) to Project</resource>
+  <resource key="btn_add_common_analyte_to_project">Add Common Analyte(s) to Project</resource>
+  <resource key="btn_remove_analyte_to_project">Remove Analyte(s) from Project</resource>
+  <resource key="btn_add_common_analyte">Add</resource>
+    
+  <!--  Task lab Analytes --> 
+  <resource key="task_lab_analytes_header">Lab Analytes</resource>
+  <resource key="h4_task_lab_analytes">Lab Analytes for this Task</resource>
+  <resource key="h4_project_lab_analytes">Available Lab Analytes</resource>
+  <resource key="selected_task_lab_analytes">Lab Analytes for this Task</resource>
+  <resource key="not_selected_task_lab_analytes">All available Lab Analytes</resource>
+  <resource key="btn_add_to_task">Add Lab Analyte(s)</resource>
+  <resource key="btn_remove_from_task">Remove Lab Analyte(s)</resource>
+  <resource key="no_items_to_display_message">There is no active Lab Analytes. Go to Lab Analytes > List all to activate some</resource>
+  
+</resources>
