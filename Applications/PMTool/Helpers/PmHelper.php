@@ -35,7 +35,7 @@ class PmHelper {
     self::SetSessionPms($user, $sessionPms);
   }
   
-    public static function DoesPmHaveActiveTechnicians(\Library\User $user) {
+  public static function DoesPmHaveActiveTechnicians(\Library\User $user) {
     $itDoes = FALSE;
     $currentPm = self::GetCurrentSessionPm($user);
     foreach ($currentPm[\Library\Enums\SessionKeys::PmTechnicians] as $technician) {
@@ -46,6 +46,19 @@ class PmHelper {
     }
     return $itDoes;
   }
+  
+  public static function DoesPmHaveActiveServices(\Library\User $user) {
+    $itDoes = FALSE;
+    $currentPm = self::GetCurrentSessionPm($user);
+    foreach ($currentPm[\Library\Enums\SessionKeys::PmServices] as $service) {
+      if ($service->service_active()) { 
+        $itDoes = TRUE;
+        break;
+      }
+    }
+    return $itDoes;
+  }
+  
 
   public static function AddAProjectIdToList(\Library\User $user, $project_id) {
     $pmSession = self::GetSessionPm($user, 0);
