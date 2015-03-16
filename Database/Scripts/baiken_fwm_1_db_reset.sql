@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `project_manager` (
     `pm_address` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
     `pm_phone` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
     `pm_email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    `project_manager_is_logged` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Specifies if a given user is logged in',
     PRIMARY KEY (`pm_id`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=2;
 

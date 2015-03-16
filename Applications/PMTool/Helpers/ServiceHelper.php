@@ -103,6 +103,24 @@ class ServiceHelper {
     }
     return $filtered_services;
   }
+  
+  public static function FilterServicesToExcludeTaskServices($services, $task_services) {
+    $filtered_services = array();
+    foreach ($services as $service) {
+      $to_add = TRUE;
+      foreach ($task_services as $task_service) {
+        if (intval($service->service_id()) === intval($task_service->service_id())) {
+          $to_add = FALSE;
+          break;
+        }
+      }
+      if ($to_add) {
+        array_push($filtered_services, $service);
+      }
+    }
+    return $filtered_services;
+  }
+  
 
   public static function GetAndStoreProjectServices($caller, $sessionProject) {
     $sessionProjects = $caller->user()->getAttribute(\Library\Enums\SessionKeys::UserSessionProjects);
@@ -115,6 +133,19 @@ class ServiceHelper {
     ProjectHelper::SetUserSessionProject($caller->user(), $sessionProject);
     ProjectHelper::SetCurrentSessionProject($caller->user(), $sessionProject);
     return self::GetServicesFromProjectServices($caller->user(), $sessionProject);
+  }
+  
+  public static function GetAndStoreTaskServices($caller, $sessionTask) {
+    $sessionTasks = $caller->user()->getAttribute(\Library\Enums\SessionKeys::SessionTasks);
+    $taskService = new \Applications\PMTool\Models\Dao\Task_service();
+    $taskService->setTask_id($sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+//    if (!(count($sessionProject[\Library\Enums\SessionKeys::ProjectServices]) > 0)) {
+    $dal = $caller->managers()->getManagerOf("TaskService");
+    $sessionTask[\Library\Enums\SessionKeys::TaskServices] = $dal->selectMany($taskService, "task_id");
+//    }
+    TaskHelper::SetSessionTask($caller->user(), $sessionTask);
+    TaskHelper::SetCurrentSessionTask($caller->user(), $sessionTask);
+    return self::GetServicesFromTaskServices($caller->user(), $sessionTask);
   }
   
   public static function GetAService(\Library\User $user, $service_id) {
@@ -140,6 +171,21 @@ class ServiceHelper {
     }
     return $matches;
   }
+  
+  public static function GetServicesFromTaskServices(\Library\User $user, $sessionTask) {
+    $matches = array();
+    $sessionPm = PmHelper::GetCurrentSessionPm($user);
+    foreach ($sessionTask[\Library\Enums\SessionKeys::TaskServices] as $task_service) {
+      foreach ($sessionPm[\Library\Enums\SessionKeys::PmServices] as $service) {
+        if (intval($service->service_id()) === intval($task_service->service_id())) {
+          array_push($matches, $service);
+          break;
+        }
+      }
+    }
+    return $matches;
+  }
+  
   public static function GetListProperties() {
     return array("name" => "name","id" => "id");
   }
@@ -231,6 +277,30 @@ class ServiceHelper {
     }
     $sessionProject[\Library\Enums\SessionKeys::ProjectServices] = $project_services;
     \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($caller->user(), $sessionProject);
+    return $result;
+  }
+  
+  public static function UpdateTaskServices($caller) {
+    $result = $caller->InitResponseWS(); // Init result
+    $dataPost = $caller->dataPost();
+    $result["rows_affected"] = 0;
+    $result["service_ids"] = str_getcsv($dataPost["arrayOfValues"], ',');
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($caller->user());
+    $task_services = array();
+    foreach ($result["service_ids"] as $id) {
+      $task_service = new \Applications\PMTool\Models\Dao\Task_service();
+      $task_service->setService_id($id);
+      $task_service->setTask_id($sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+      $dal = $caller->managers()->getManagerOf($caller->module());
+      if ($dataPost["action"] === "add") {
+        $result["rows_affected"] += $dal->add($task_service) >= 0 ? 1 : 0;
+      } else {
+        $result["rows_affected"] += $dal->delete($task_service, "service_id") ? 1 : 0;
+      }
+      array_push($task_services, $task_service);
+    }
+    $sessionTask[\Library\Enums\SessionKeys::TaskServices] = $task_services;
+    \Applications\PMTool\Helpers\TaskHelper::SetSessionTask($caller->user(), $sessionTask);
     return $result;
   }
 

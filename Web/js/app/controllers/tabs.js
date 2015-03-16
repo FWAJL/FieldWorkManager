@@ -1,13 +1,12 @@
 $(document).ready(function() {
   //$('#tab-container').easytabs();
   //init tabs
-  var _default = ""
+  var _default = "";
   if (utils.getPathPart("project")) {
     _default = "project_info";
   } else if (utils.getPathPart("task")) {
     _default = "task_info";
-  }
-  else if (utils.getPathPart("location")) {
+  } else if (utils.getPathPart("location")) {
     _default = "location_info";
   } else if (utils.getPathPart("technician")) {
     _default = "technician_info";
@@ -40,14 +39,12 @@ $(document).ready(function() {
       var data_form_id = $(this).attr("data-form-id");
       $(".data-form, .data-form-2").hide();
       $("#" + data_form_id).fadeIn().removeClass("hide");
-    }
-    ;
+    };
   });
 
 });
 
 $(document).ready(function() {
-
   $("#tab2").hide();
   $("#insp_note_box").change(function() {
     if ($("#insp_note_box").is(":checked")) {
@@ -87,19 +84,17 @@ $(document).ready(function() {
     }
   });
 
-  $("#tab7").hide()
-  $("#service_providers_box").change(function()
-  {
+  /*$("#tab7").hide();
+  $("#service_providers_box").change(function(){
     if ($("#service_providers_box").is(":checked")) {
       $("#tab7").show()
     } else {
       $("#tab7").hide()
     }
-  });
+  });*/
   
-    $("#freq_list").hide()
-  $("#freq_list_box").change(function()
-  {
+  $("#freq_list").hide();
+  $("#freq_list_box").change(function(){
     if ($("#freq_list_box").is(":checked")) {
       $("#freq_list").show()
     } else {
@@ -107,4 +102,4 @@ $(document).ready(function() {
     }
   });
 
- });
+});
