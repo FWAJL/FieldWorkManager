@@ -6,66 +6,96 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
 class FormController extends \Library\BaseController {
-    
+
 //    Copied from Service Controller - not fully modified
-    
-public function executeIndex(\Library\HttpRequest $rq) {  }
-    
-public function executeShowForm(\Library\HttpRequest $rq) {
-    //Load Modules for view
-    $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
-  } 
-  
-  public function executeListAll(\Library\HttpRequest $rq) {
-    $sessionPm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+
+  public function executeIndex(\Library\HttpRequest $rq) {  }
+
+  public function executeShowForm(\Library\HttpRequest $rq) {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
-      
-    $list = \Applications\PMTool\Helpers\ServiceHelper::GetServiceList($this, $sessionPm);
-    
+    //Load Modules for view
+    $this->page->addVar(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+  }
+
+  public function executeListAll(\Library\HttpRequest $rq) {
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+
+    $masterForms = \Applications\PMTool\Helpers\FormHelper::GetMasterForms($this,$sessionProject);
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $userForms = \Applications\PMTool\Helpers\FormHelper::GetUserForms($this,$sessionProject);
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $projectForms = \Applications\PMTool\Helpers\FormHelper::GetProjectForms($this,$sessionProject);
+
+    $filteredMasterForms = \Applications\PMTool\Helpers\FormHelper::FilterFormsToExclude($masterForms,$projectForms,'master_form_id');
+    $filteredUserForms = \Applications\PMTool\Helpers\FormHelper::FilterFormsToExclude($userForms,$projectForms,'user_form_id');
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $projectForms = \Applications\PMTool\Helpers\FormHelper::GetFormsFromProjectForms($this->user(),$sessionProject);
+
+    //form modules
+    $this->page->addVar(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+    if(!empty($filteredMasterForms)){
+      $filteredMasterForms  = array(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::master_forms=>$filteredMasterForms);
+    } else {
+      $filteredMasterForms = array();
+    }
+
+    if(!empty($filteredUserForms)){
+      $filteredUserForms = array(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_forms=>$filteredUserForms);
+    } else {
+      $filteredUserForms = array();
+    }
+    $templateForms = array_merge($filteredUserForms,$filteredMasterForms);
+
     $data = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $list[\Library\Enums\SessionKeys::PmServices],
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_right => $templateForms,
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_left => $projectForms,
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\FormHelper::SetPropertyNamesForDualList(),
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\FormHelper::SetPropertyNamesForDualList()
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
-
-    $modules = $this->app()->router()->selectedRoute()->phpModules();
-    $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::active_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
-    $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
   }
-  
-   public function executeAdd(\Library\HttpRequest $rq) {
+
+  public function executeAdd(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
 
     //Init PDO
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     $this->dataPost["pm_id"] = $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
-    $service = $this->_PrepareServiceObject($this->dataPost());
-    $result["dataIn"] = $service;
+    $files = $this->files();
+    if($this->dataPost["title"] == "" or is_null($this->dataPost["title"])) {
+      $this->dataPost["title"] = $files["file"]["name"];
+    }
+    $form = \Applications\PMTool\Helpers\FormHelper::PrepareUserFormObject($this->dataPost());
+    $result["dataIn"] = $form;
 
     //Load interface to query the database
-    $manager = $this->managers->getManagerOf($this->module);
-    $result["dataOut"] = $manager->add($service);
-    
+    $manager = $this->managers->getManagerOf("UserForm");
+    $manager->setRootDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
+    $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
+
+    $result["dataOut"] = $manager->addWithFile($form,$files['file']);
+
     if ($result["dataOut"] > 0) {
-     $service->setService_id($result["dataOut"]);
-     array_push($pm[\Library\Enums\SessionKeys::PmServices], $service);
-     \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->user(), $pm);
-    }    
+      $form->setForm_id($result["dataOut"]);
+      array_push($sessionProject[\Library\Enums\SessionKeys::ProjectAvailableForms][\Library\Enums\SessionKeys::ProjectUserForms], $form);
+      \Applications\PMTool\Helpers\ProjectHelper::SetCurrentSessionProject($this->user(), $sessionProject);
+    }
 
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Service,
-        "resx_key" => $this->action(),
-        "step" => (intval($result["dataOut"])) > 0 ? "success" : "error"
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Form,
+      "resx_key" => $this->action(),
+      "step" => (intval($result["dataOut"])) > 0 ? "success" : "error"
     ));
   }
-  
+
   public function executeEdit(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
@@ -78,7 +108,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
 
     $manager = $this->managers->getManagerOf($this->module);
     $result_edit = $manager->edit($service, "service_id");
-    
+
     if($result_edit){
       $match = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($service->service_id(), "service_id", $pm, \Library\Enums\SessionKeys::PmServices);
       $pm[\Library\Enums\SessionKeys::PmServices][$match["key"]] = $service;
@@ -86,41 +116,58 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     }
 
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Service,
-        "resx_key" => $this->action(),
-        "step" => $result_edit ? "success" : "error"
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Service,
+      "resx_key" => $this->action(),
+      "step" => $result_edit ? "success" : "error"
     ));
   }
-  
-    public function executeDelete(\Library\HttpRequest $rq) {
+
+  public function executeDelete(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $db_result = FALSE;
-    $service_id = intval($this->dataPost["itemId"]);
+    $form_id = intval($this->dataPost["form_id"]);
+    if($this->dataPost["form_type"] == "user_form") {
+      //Check if the service to be deleted is the Project manager's
+      $form_selected = \Applications\PMTool\Helpers\FormHelper::GetAUserForm($this->user(), $form_id);
+      //Load interface to query the database
+      if ($form_selected !== NULL) {
+        $manager = $this->managers->getManagerOf("UserForm");
+        $manager->setRootDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
+        $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
+        $db_result = $manager->deleteWithFile($form_selected, "form_id");
+        if ($db_result) {
+          //since we don't have foreign keys set because this is a relationship between 3 tables we must manually delete all project_form records
 
-    //Check if the service to be deleted is the Project manager's
-    $service_selected = \Applications\PMTool\Helpers\ServiceHelper::GetAService($this->user(), $service_id);
-    //Load interface to query the database
-    if ($service_selected !== NULL) {
-      $manager = $this->managers->getManagerOf($this->module());
-      $db_result = $manager->delete($service_selected, "service_id");
-      if ($db_result) {
-        $match = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($service_selected->service_id(), "service_id", $pm, \Library\Enums\SessionKeys::PmServices);
-        unset($pm[\Library\Enums\SessionKeys::PmServices][$match["key"]]);
-        \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->user(), $pm);
+          //remove project forms from session
+          $relationProjectForms = \Applications\PMTool\Helpers\FormHelper::GetProjectForms($this,$sessionProject);
+          $filteredProjectForms = \Applications\PMTool\Helpers\FormHelper::FilterFormsByGivenId($relationProjectForms,'user_form_id',$form_id);
+          $sessionProject[\Library\Enums\SessionKeys::ProjectForms] = $filteredProjectForms;
+          //delete from db
+          $projectForm = new \Applications\PMTool\Models\Dao\Project_form();
+          $projectForm->setUser_form_id($form_id);
+          $manager = $this->managers->getManagerOf("ProjectForm");
+          $manager->delete($projectForm,"user_form_id");
+
+          //remove user forms from session
+          $match = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($form_selected->form_id(), "form_id", $sessionProject[\Library\Enums\SessionKeys::ProjectAvailableForms], \Library\Enums\SessionKeys::ProjectUserForms);
+          unset($sessionProject[\Library\Enums\SessionKeys::ProjectAvailableForms][\Library\Enums\SessionKeys::ProjectUserForms][$match["key"]]);
+          \Applications\PMTool\Helpers\ProjectHelper::SetCurrentSessionProject($this->user(), $sessionProject);
+        }
       }
     }
 
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Service,
-        "resx_key" => $this->action(),
-        "step" => $db_result !== FALSE ? "success" : "error"
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Form,
+      "resx_key" => $this->action(),
+      "step" => $db_result !== FALSE ? "success" : "error"
     ));
   }
-  
+
   public function executeGetList(\Library\HttpRequest $rq, $isNotAjaxCall = FALSE) {
     // Init result
     $result = $this->InitResponseWS();
@@ -140,17 +187,17 @@ public function executeShowForm(\Library\HttpRequest $rq) {
       return $list;
     } else {
       $step_result =
-             $step_result = $result[\Library\Enums\SessionKeys::PmServices] !== NULL ? "success" : "error";
+      $step_result = $result[\Library\Enums\SessionKeys::PmServices] !== NULL ? "success" : "error";
       $this->SendResponseWS(
-              $result, array(
-          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Service,
-          "resx_key" => $this->action(),
-          "step" => $step_result
+        $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Service,
+        "resx_key" => $this->action(),
+        "step" => $step_result
       ));
     }
   }
-   
-public function executeGetItem(\Library\HttpRequest $rq) {
+
+  public function executeGetItem(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
     $service_id = intval($this->dataPost["service_id"]);
@@ -159,46 +206,75 @@ public function executeGetItem(\Library\HttpRequest $rq) {
 
     $result["service"] = $service_selected;
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Service,
-        "resx_key" => $this->action(),
-        "step" => ($service_selected !== NULL) ? "success" : "error"
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Service,
+      "resx_key" => $this->action(),
+      "step" => ($service_selected !== NULL) ? "success" : "error"
     ));
   }
-  
-    public function executeUpdateItems(\Library\HttpRequest $rq) {
+
+  public function executeUpdateItems(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS(); // Init result
-
-    $rows_affected = 0;
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $result["rows_affected"] = 0;
     //Get the service objects from ids received
-    $service_ids = str_getcsv($this->dataPost["service_ids"], ',');
-    $services = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::PmServices);
-    $matchedElements = $this->FindObjectsFromIds(
-            array(
-                "filter" => "service_id",
-                "ids" => $service_ids,
-                "objects" => $services)
+    $user_form_ids = str_getcsv($this->dataPost["userFormIds"], ',');
+    $master_form_ids = str_getcsv($this->dataPost["masterFormIds"], ',');
+    $masterForms = $sessionProject[\Library\Enums\SessionKeys::ProjectAvailableForms][\Library\Enums\SessionKeys::ProjectMasterForms];
+    $userForms = $sessionProject[\Library\Enums\SessionKeys::ProjectAvailableForms][\Library\Enums\SessionKeys::ProjectUserForms];
+    $matchedMasterFormElements = $this->FindObjectsFromIds(
+      array(
+        "filter" => "form_id",
+        "ids" => $master_form_ids,
+        "objects" => $masterForms)
     );
-
-    //Update the service objects in DB and get result (number of rows affected)
-    //$this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::PmServices);
-    foreach ($matchedElements as $service) {
-      $service->setService_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
-      $manager = $this->managers->getManagerOf($this->module);
-      $rows_affected += $manager->edit($service, "service_id") ? 1 : 0;
+    $matchedUserFormElements = $this->FindObjectsFromIds(
+      array(
+        "filter" => "form_id",
+        "ids" => $user_form_ids,
+        "objects" => $userForms)
+    );
+    $project_id = $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id();
+    foreach ($matchedMasterFormElements as $form) {
+      $manager = $this->managers->getManagerOf("ProjectForm");
+      $projectForm = new \Applications\PMTool\Models\Dao\Project_form();
+      $projectForm->setProject_id($project_id);
+      $projectForm->setMaster_form_id($form->form_id());
+      $projectForm->setUser_form_id(null);
+      if($this->dataPost["action"]=="add") {
+        $manager->add($projectForm);
+        $result["rows_affected"] += 1;
+      } else if($this->dataPost["action"]=="remove") {
+        $returnRemove = $manager->deleteByFilters($projectForm,array("project_id"=>$project_id,"master_form_id"=>$form->form_id()));
+        $result["rows_affected"] += $returnRemove ? 1 : 0;
+      }
     }
 
+    foreach ($matchedUserFormElements as $form) {
+      $manager = $this->managers->getManagerOf("ProjectForm");
+      $projectForm = new \Applications\PMTool\Models\Dao\Project_form();
+      $projectForm->setProject_id($project_id);
+      $projectForm->setMaster_form_id(null);
+      $projectForm->setUser_form_id($form->form_id());
+      if($this->dataPost["action"]=="add") {
+        $returnAdd = $manager->add($projectForm);
+        $result["rows_affected"] += $returnAdd >= 0 ? 1 : 0;
+      } else if($this->dataPost["action"]=="remove") {
+        $returnRemove = $manager->deleteByFilters($projectForm,array("project_id"=>$project_id,"user_form_id"=>$form->form_id()));
+        $result["rows_affected"] += $returnRemove? 1 : 0;
+      }
+    }
     $this->SendResponseWS(
-            $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Service,
-        "resx_key" => $this->action(),
-        "step" => ($rows_affected === count($service_ids)) ? "success" : "error"
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Form,
+      "resx_key" => $this->action(),
+      "step" => ($result["rows_affected"] > 0) ? "success" : "error"
     ));
   }
-    
-    /**
+
+  /**
    * Check if the current pm has services to decide where to send him: stay on the service list or asking him to add a service
-   * 
+   *
    * @param \Applications\PMTool\Models\Dao\Services $pm
    * @return boolean
    */
@@ -212,30 +288,14 @@ public function executeGetItem(\Library\HttpRequest $rq) {
     $count = $manager->countById($pm->pm_id());
     return $count > 0 ? TRUE : FALSE;
   }
-  
-  private function _PrepareServiceObject($data_sent) {
-    $service = new \Applications\PMTool\Models\Dao\Service();
-    $service->setPm_id($data_sent["pm_id"]);
-    $service->setService_id(!array_key_exists('service_id', $data_sent) ? NULL : $data_sent["service_id"]);
-    $service->setService_type(!array_key_exists('service_type', $data_sent) ? NULL : $data_sent["service_type"]);
-    $service->setService_name(!array_key_exists('service_name', $data_sent) ? NULL : $data_sent["service_name"]);
-    $service->setService_url(!array_key_exists('service_url', $data_sent) ? NULL : $data_sent["service_url"]);
-    $service->setService_address(!array_key_exists('service_address', $data_sent) ? "" : $data_sent["service_address"]);
-    $service->setService_contact_name(!array_key_exists('service_contact_name', $data_sent) ? "" : $data_sent["service_contact_name"]);
-    $service->setService_contact_phone(!array_key_exists('service_contact_phone', $data_sent) ? "" : $data_sent["service_contact_phone"]);
-    $service->setService_contact_email(!array_key_exists('service_contact_email', $data_sent) ? "" : $data_sent["service_contact_email"]);
-    $service->setService_active(!array_key_exists('service_active', $data_sent) ? 0 : ($data_sent["service_active"] === "1"));
 
-    return $service;
-  }
-  
   /**
    * Checks if the user services  are not stored in Session.
    * Stores the services and facilities after call to WS to retrieve them
    * Set the data into the session for later use.
-   * 
+   *
    * @param /Library/HttpRequest $rq
-   * @return array $lists : the lists of objects if any 
+   * @return array $lists : the lists of objects if any
    */
   private function _GetAndStoreServicesInSession($rq) {
     $lists = array();
@@ -244,7 +304,7 @@ public function executeGetItem(\Library\HttpRequest $rq) {
       $lists = $this->executeGetList($rq, TRUE);
 
       $this->app()->user->setAttribute(
-              \Library\Enums\SessionKeys::PmServices, $lists[\Library\Enums\SessionKeys::PmServices]
+        \Library\Enums\SessionKeys::PmServices, $lists[\Library\Enums\SessionKeys::PmServices]
       );
     } else {
       $lists[\Library\Enums\SessionKeys::PmServices] = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::PmServices);

@@ -16,10 +16,10 @@ CREATE TABLE `form_usage` (
 -- Table structure for table `form`
 CREATE TABLE `form` (
     `form_id` int(11) NOT NULL AUTO_INCREMENT,
-    `document_id` int(11) NOT NULL COMMENT 'Cannot set a foreign key as the document cannot be until the form is created so default value tells where it is: -1 -> being created ; any value above 0 -> look at document table',
     `form_category` varchar(25) NOT NULL DEFAULT 0 COMMENT 'Will store the id column name of the object that relates to the form',
     `form_category_id_value` int(11) NULL COMMENT 'Will store the id value of the object that relates to the form',
     `form_usage_id` int(11) NOT NULL COMMENT 'Look up the table form_usage for the meaning of id set',
+    `form_complete` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Form complete or incomplete flag',
     CONSTRAINT `fk_form_usage` FOREIGN KEY (`form_usage_id`)
         REFERENCES `form_usage` (`form_usage_id`),
     PRIMARY KEY (`form_id`)
