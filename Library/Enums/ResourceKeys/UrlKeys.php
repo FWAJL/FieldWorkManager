@@ -59,6 +59,7 @@ class UrlKeys {
   const TaskLocations = "task/locations";
   const TaskServices = "task/services";
   const TaskFieldAnalytes = "task/fieldAnalytes";
+  const TaskLabAnalytes = "task/labAnalytes";
   const TaskInspForms = "task/inspForms";
   const TaskCOC = "task/coc";
   const TaskSelectTask = "task/selectTask";

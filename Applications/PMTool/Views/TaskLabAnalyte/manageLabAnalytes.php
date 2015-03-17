@@ -5,23 +5,23 @@
     <span class="glyphicon glyphicon-chevron-right"></span>    
     <?php echo $current_task->task_name(); ?>
     <span class="glyphicon glyphicon-chevron-right"></span>    
-    <?php echo $resx["task_services_header"] ?></h3>  
+    <?php echo $resx["task_lab_analytes_header"] ?></h3>  
   <div class="form_sections">
     <?php require $form_modules["task_tabs_open"]; ?> 
 <div class="content-container container-fluid">
   <div class="row">
     <div  class="col-lg-5 col-md-5">
-      <span class="h4"><?php echo $resx["h4_task_services"]; ?></span>
-      <span class="glyphicon glyphicon-info-sign" id="active-taskService-header"></span>
-      <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_left]; ?>              
+      <span class="h4"><?php echo $resx["h4_task_lab_analytes"]; ?></span>
+      <span class="glyphicon glyphicon-info-sign" id="active-taskFieldAnalyte-header"></span>
+      <?php require $form_modules["task_lab_analyte_list"]; ?>              
     </div>
     <div class="col-lg-1 col-md-1">
-        <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_promote_buttons]; ?> 
+        <?php require $form_modules["analyte_list_buttons"]; ?> 
     </div>
     <div  class="col-lg-5 col-md-5">
-      <span class="h4"><?php echo $resx["h4_project_services"]; ?></span>
-      <span class="glyphicon glyphicon-question-sign" id="inactive-taskService-header"></span>
-      <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_right]; ?>              
+      <span class="h4"><?php echo $resx["h4_project_lab_analytes"]; ?></span>
+      <span class="glyphicon glyphicon-question-sign" id="inactive-taskFieldAnalyte-header"></span>
+      <?php require $form_modules["project_lab_analyte_list"]; ?>              
     </div>
     <?php 
 	require $form_modules["tabs_close"]; 

@@ -367,6 +367,19 @@ $(document).ready(function() {
     $("input[name=\"task_id\"]").val(parseInt(dataWs.task_info_obj.task_id));
     $("input[name=\"task_name\"]").val(dataWs.task_info_obj.task_name);
     $("input[name=\"task_deadline\"]").val(dataWs.task_info_obj.task_deadline);
+    if(dataWs.task_info_obj.task_trigger_cal == 1) {
+      $("input[name=\"task_trigger_cal\"]").attr('checked',true);
+      if ($("input[name=\"task_trigger_cal\"]").is(":checked")) {
+        $("#freq_list").show()
+      }
+    }
+    $("select[name=\"task_trigger_cal_value\"]").val(dataWs.task_info_obj.task_trigger_cal_value)
+    if(dataWs.task_info_obj.task_trigger_pm == 1) {
+    $("input[name=\"task_trigger_pm\"]").attr('checked',true);
+    }
+    if(dataWs.task_info_obj.task_trigger_ext == 1) {
+    $("input[name=\"task_trigger_ext\"]").attr('checked',true);
+    }
     $("textarea[name=\"task_instructions\"]").val(dataWs.task_info_obj.task_instructions);
 //    $("input[name=\"task_trigger_cal\"]").val(dataWs.task_info_obj.task_trigger_cal);
 //    $("input[name=\"task_trigger_pm\"]").val(dataWs.task_info_obj.task_trigger_pm);
