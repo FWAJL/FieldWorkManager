@@ -52,4 +52,9 @@
         <?php echo $resx["task_tab_services"]; ?>
       </a>
     </li>
+    <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::FormsTab]; ?>" id="tab8" data-form-id="task_forms">
+      <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskForms; ?>">
+        <?php echo $resx["task_tab_forms"]; ?>
+      </a>
+    </li>
   </ul>

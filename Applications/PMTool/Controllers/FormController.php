@@ -128,6 +128,7 @@ class FormController extends \Library\BaseController {
     $result = $this->InitResponseWS();
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
     $db_result = FALSE;
     $form_id = intval($this->dataPost["form_id"]);
     if($this->dataPost["form_type"] == "user_form") {
@@ -140,17 +141,29 @@ class FormController extends \Library\BaseController {
         $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
         $db_result = $manager->deleteWithFile($form_selected, "form_id");
         if ($db_result) {
-          //since we don't have foreign keys set because this is a relationship between 3 tables we must manually delete all project_form records
+          //since we don't have foreign keys set because this is a relationship between 3 tables we must manually delete all project_form records, we also need to manually remove task forms
 
           //remove project forms from session
           $relationProjectForms = \Applications\PMTool\Helpers\FormHelper::GetProjectForms($this,$sessionProject);
           $filteredProjectForms = \Applications\PMTool\Helpers\FormHelper::FilterFormsByGivenId($relationProjectForms,'user_form_id',$form_id);
           $sessionProject[\Library\Enums\SessionKeys::ProjectForms] = $filteredProjectForms;
+
+          if($sessionTask !== FALSE) {
+            $relationTaskForms = \Applications\PMTool\Helpers\FormHelper::GetTaskForms($this,$sessionTask);
+            $filteredTaskForms = \Applications\PMTool\Helpers\FormHelper::FilterFormsByGivenId($relationTaskForms,'user_form_id',$form_id);
+            $sessionTask[\Library\Enums\SessionKeys::TaskForms] = $filteredTaskForms;
+            \Applications\PMTool\Helpers\TaskHelper::SetCurrentSessionTask($this->user(),$sessionTask);
+          }
           //delete from db
           $projectForm = new \Applications\PMTool\Models\Dao\Project_form();
           $projectForm->setUser_form_id($form_id);
           $manager = $this->managers->getManagerOf("ProjectForm");
           $manager->delete($projectForm,"user_form_id");
+
+          $taskForm = new \Applications\PMTool\Models\Dao\Task_form();
+          $taskForm->setUser_form_id($form_id);
+          $manager = $this->managers->getManagerOf("TaskForm");
+          $manager->delete($taskForm,"user_form_id");
 
           //remove user forms from session
           $match = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($form_selected->form_id(), "form_id", $sessionProject[\Library\Enums\SessionKeys::ProjectAvailableForms], \Library\Enums\SessionKeys::ProjectUserForms);

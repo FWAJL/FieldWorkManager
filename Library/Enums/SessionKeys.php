@@ -81,6 +81,7 @@ abstract class SessionKeys {
   const TaskLabAnalytes = "task_lab_analytes";
   const TaskFieldLocations = "task_field_locations";
   const TaskLabLocations = "task_lab_locations";
+  const TaskForms = "task_forms";
 
 
 
