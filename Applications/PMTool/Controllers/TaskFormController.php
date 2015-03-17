@@ -82,7 +82,9 @@ class TaskFormController extends \Library\BaseController {
     $userForms = \Applications\PMTool\Helpers\FormHelper::GetUserForms($this,$sessionProject);
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     \Applications\PMTool\Helpers\FormHelper::GetProjectForms($this,$sessionProject);
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $projectForms = \Applications\PMTool\Helpers\FormHelper::GetFormsFromProjectForms($this->user(),$sessionProject);
+
     $taskForms = \Applications\PMTool\Helpers\FormHelper::GetTaskForms($this,$sessionTask);
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
     if(isset($projectForms[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::master_forms]) && !empty($projectForms[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::master_forms])){

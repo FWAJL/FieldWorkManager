@@ -46,7 +46,6 @@ $(document).ready(function() {
 
 $(document).ready(function() {
   $("#tab2").hide();
-  /*
   $("#insp_note_box").change(function() {
     if ($("#insp_note_box").is(":checked")) {
       $("#tab2").show();
@@ -54,11 +53,11 @@ $(document).ready(function() {
       $("#tab2").hide();
     }
   });
-  */
+
   $("#tab2").hide();
   //$("#tab3").hide();
   $("#tab3a").hide();
-  /*
+
   $("#field_data_box").change(function() {
     if ($("#field_data_box").is(":checked")) {
       $("#tab2").show();
@@ -70,11 +69,11 @@ $(document).ready(function() {
       $("#tab3a").hide();
     }
   });
-  */
+
   $("#tab4").hide();
   //$("#tab5").hide();
   $("#tab5a").hide();
-  /*
+
   $("#lab_sample_box").change(function() {
 
     if ($("#lab_sample_box").is(":checked")) {
@@ -88,7 +87,7 @@ $(document).ready(function() {
     }
 
   });
-   */
+
   /*$("#tab7").hide();
   $("#service_providers_box").change(function(){
     if ($("#service_providers_box").is(":checked")) {
