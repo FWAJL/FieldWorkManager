@@ -260,6 +260,13 @@ class FormController extends \Library\BaseController {
       } else if($this->dataPost["action"]=="remove") {
         $returnRemove = $manager->deleteByFilters($projectForm,array("project_id"=>$project_id,"master_form_id"=>$form->form_id()));
         $result["rows_affected"] += $returnRemove ? 1 : 0;
+        //if we remove project form relationship we need to remove all child task form relationships also
+        $manager = $this->managers->getManagerOf("TaskForm");
+        $taskForm = new \Applications\PMTool\Models\Dao\Task_form();
+        $taskForm->setUser_form_id(null);
+        $taskForm->setMaster_form_id($form->form_id());
+        $taskForm->setTask_id(null);
+        $manager->deleteByProjectAndFilters($taskForm,array("master_form_id"=>$form->form_id()),$project_id);
       }
     }
 
@@ -275,6 +282,13 @@ class FormController extends \Library\BaseController {
       } else if($this->dataPost["action"]=="remove") {
         $returnRemove = $manager->deleteByFilters($projectForm,array("project_id"=>$project_id,"user_form_id"=>$form->form_id()));
         $result["rows_affected"] += $returnRemove? 1 : 0;
+        //if we remove project form relationship we need to remove all child task form relationships also
+        $manager = $this->managers->getManagerOf("TaskForm");
+        $taskForm = new \Applications\PMTool\Models\Dao\Task_form();
+        $taskForm->setUser_form_id($form->form_id());
+        $taskForm->setMaster_form_id(null);
+        $taskForm->setTask_id(null);
+        $manager->deleteByProjectAndFilters($taskForm,array("user_form_id"=>$form->form_id()),$project_id);
       }
     }
     $this->SendResponseWS(
