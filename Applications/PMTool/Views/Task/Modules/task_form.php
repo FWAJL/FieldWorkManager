@@ -31,12 +31,12 @@
     
   <div class="task_info_input">
    <h4><?php echo $resx["triggers"];?></h4>
-    <fieldset>
+    <fieldset class="task_form">
         <ol class="task_boxes">
           <li> 
-           <input class="cbox" name="freq_list_box" id="freq_list_box" type="checkbox" />
+           <input class="cbox" name="task_trigger_cal" id="freq_list_box" type="checkbox" />
            <span class="task_box_label"><?php echo $resx["task_trigger_cal"]; ?></span>
-           <select id="freq_list">
+           <select name="task_trigger_cal_value" id="freq_list">
               <option value="" selected='selected'>Select</option>
               <option value="Daily" >Daily</option>
               <option value="Weekly">Weekly</option>
