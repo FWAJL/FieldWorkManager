@@ -70,7 +70,7 @@ $(document).ready(function() {
   });
 
   $("#tab4").hide();
-  $("#tab5").hide();
+  //$("#tab5").hide();
   $("#tab5a").hide();
   $("#lab_sample_box").change(function() {
     if ($("#lab_sample_box").is(":checked")) {
@@ -79,7 +79,7 @@ $(document).ready(function() {
       $("#tab5a").show();
     } else {
       $("#tab4").hide();
-      $("#tab5").hide();
+      //$("#tab5").hide();
       $("#tab5a").hide();
     }
   });

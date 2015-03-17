@@ -33,7 +33,7 @@
       </a>
     </li>  
     <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::LabAnalytesTab]; ?>" id="tab5" data-form-id="lab_analytes">
-      <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LabAnalytes; ?>">
+      <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskLabAnalytes; ?>">
         <?php echo $resx["task_tab_lab_analytes"]; ?>
       </a>
     </li>
