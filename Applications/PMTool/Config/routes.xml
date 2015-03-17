@@ -448,6 +448,23 @@
         </php_modules>
     </route><!--  task/fieldAnalytes -->
 	
+	<route url="task/labAnalytes" module="TaskLabAnalyte" action="manageLabAnalytes" resxfile="task_lab_analyte" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/task_lab_analyte.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
+            <php_module key="task_lab_analyte_list" file_name="task_lab_analyte_list.php" />
+            <php_module key="project_lab_analyte_list" file_name="project_lab_analyte_list.php" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+            <php_module key="analyte_list_buttons" file_name="analyte_list_buttons.php"/>
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+        </php_modules>
+    </route><!--  task/labAnalytes -->
+	
 	<route url="task/services" module="TaskService" action="manageServices" resxfile="task_service" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_service.js" />
@@ -722,6 +739,7 @@
   <route url="task/technician/updateItems" module="TaskTechnician" action="updateItems" resxfile="task_technician" type="ws" />
   <route url="task/service/updateItems" module="TaskService" action="updateItems" resxfile="task_service" type="ws" />
   <route url="task/fieldAnalytes/updateItems" module="TaskFieldAnalyte" action="updateItems" resxfile="task_field_analyte" type="ws" />
+  <route url="task/labAnalytes/updateItems" module="TaskLabAnalyte" action="updateItems" resxfile="task_lab_analyte" type="ws" />
   <!--  <route url="service/updateItems" module="ProjectService" action="updateItems" resxfile="service" type="ws" />-->
  
   <route url="service/add" module="Service" action="add" resxfile="service" type="ws" />
