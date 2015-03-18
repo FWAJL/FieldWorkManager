@@ -141,6 +141,9 @@ $(document).ready(function() {
     $(".welcome").fadeOut('2000').removeClass("show").addClass("hide");
     $(".technician_add").hide();
     technician_manager.getItem(utils.getQueryVariable("technician_id"));
+  } else {
+    $("#document-upload").hide();
+    $("#tech_photo_upload").parent("li").hide();
   }//Load technician
 
 //  if (utils.getQueryVariable("mode") === "add" && utils.getQueryVariable("test") === "true") {
