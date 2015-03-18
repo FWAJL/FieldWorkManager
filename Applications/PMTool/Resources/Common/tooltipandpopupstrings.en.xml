@@ -19,9 +19,9 @@
 	<resource uicomponent="tooltip" targetcontroller="taskLocation" targetaction="locations" targetattr="inactive-taskLocation-header" value="Tooltip for inactive Locations for a Task" placement="bottom" />
 	
 	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="list" targetattr="active-fieldanalyte-header" value="Tooltip for active Field Analyte" placement="top" />
-	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="list" targetattr="inactive-fieldanalyte-header" value="Tooltip for inactive Field Analyte" placement="top" />
+	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="list" targetattr="inactive-fieldanalyte-header" value="If you don't have any Field Analytes for your projects, click Analytes > Upload List to start building your own custom analyte list." placement="top" />
 	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="list" targetattr="active-labanalyte-header" value="Tooltip for active Lab Analyte" placement="top" />
-	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="list" targetattr="inactive-labanalyte-header" value="Tooltip for inactive Lab Analyte" placement="top" />
+	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="list" targetattr="inactive-labanalyte-header" value="If you don't have any Lab Analytes for your projects, click Analytes > Upload List to start building your own custom analyte list." placement="top" />
 	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="uploadList" targetattr="activequestion-fieldanalyte-uploadList-headerH4" value="Upload field analyte active" placement="top" />
 	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="uploadList" targetattr="inactivequestion-fieldanalyte-uploadList-headerH4" value="Upload field analyte inactive" placement="top" />
 	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="uploadList" targetattr="activequestion-labanalyte-uploadList-headerH4" value="Upload lab analyte active" placement="top" />
