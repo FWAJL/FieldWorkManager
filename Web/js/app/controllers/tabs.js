@@ -45,16 +45,16 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-  $("#tab2").hide();
+  //$("#tab2").hide();
   $("#insp_note_box").change(function() {
     if ($("#insp_note_box").is(":checked")) {
       $("#tab2").show();
     } else {
-      $("#tab2").hide();
+      //$("#tab2").hide();
     }
   });
 
-  $("#tab2").hide();
+  //$("#tab2").hide();
   //$("#tab3").hide();
   $("#tab3a").hide();
 
@@ -64,7 +64,7 @@ $(document).ready(function() {
       $("#tab3").show();
       $("#tab3a").show();
     } else {
-      $("#tab2").hide();
+      //$("#tab2").hide();
       //$("#tab3").hide();
       $("#tab3a").hide();
     }
