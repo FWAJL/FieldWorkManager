@@ -8,6 +8,24 @@
  */
 $(document).ready(function() {
   $(".btn-warning").hide();
+  $("#document-upload").hide();
+  Dropzone.autoDiscover = false;
+  if($("#document-upload").length>0){
+    var dropzone = new Dropzone("#document-upload");
+    dropzone.on("success", function(event,res) {
+      if(res.result == 0) {
+        toastr.error(res.message);
+        dropzone.removeAllFiles();
+      } else {
+        toastr.success(res.message);
+        location.reload();
+      }
+    });
+  }
+  $("#tech_photo_upload").on('click',function(e){
+    e.preventDefault();
+    $("#document-upload").show();
+  });
   $.contextMenu({
     selector: '.select_item',
     callback: function(key, options) {
@@ -202,7 +220,10 @@ $(document).ready(function() {
     $("input[name=\"technician_name\"]").val(dataWs.technician.technician_name);
     $("input[name=\"technician_phone\"]").val(dataWs.technician.technician_phone);
     $("input[name=\"technician_email\"]").val(dataWs.technician.technician_email);
-//    $("input[name=\"technician_document\"]").val(dataWs.technician.technician_document);
+    $("input[name=\"itemCategory\"]").val('technician_id');
+    $("input[name=\"itemId\"]").val(parseInt(dataWs.technician.technician_id));
+    $("input[name=\"itemReplace\"]").val(true);
+    technician_manager.loadPhoto('technician_id',parseInt(dataWs.technician.technician_id));
     $("input[name=\"technician_active\"]").prop('checked', utils.setCheckBoxValue(dataWs.technician.technician_active));
   };
   technician_manager.delete = function(technician_id) {
@@ -253,5 +274,22 @@ $(document).ready(function() {
       }
     });
   };
+
+  technician_manager.loadPhoto = function(itemCategory, itemId) {
+    datacx.post("load", {"itemCategory": itemCategory, "itemId": itemId}).then(function(reply){
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+        return undefined;
+      } else {//success
+        toastr.success(reply.message);
+        if(reply.fileResults.length>0){
+          $.each(reply.fileResults, function(key, file){
+            var appendElements = '<a href="'+file.webPath+'" data-lightbox="'+itemId+'" data-title="'+file.title+'"><img class="img-responsive" src="'+file.webPath+'" /></a>';
+            $("#documents").append(appendElements);
+          });
+        }
+      }
+    });
+  }
 
 }(window.technician_manager = window.technician_manager || {}));

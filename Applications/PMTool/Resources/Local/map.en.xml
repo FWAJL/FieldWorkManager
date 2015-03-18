@@ -38,6 +38,8 @@
   <resource key="location_window_photos">View photos</resource>
   <resource key="location_window_edit_update">Update</resource>
   <resource key="location_window_edit_cancel">Cancel</resource>
+  <resource key="form_title">Title</resource>
+  <resource key="form_file">File(s)</resource>
   <!-- Task Info Window -->
   <resource key="task_location_window_title">Task Location Info</resource>
   <resource key="task_location_window_location_name">Location name</resource>

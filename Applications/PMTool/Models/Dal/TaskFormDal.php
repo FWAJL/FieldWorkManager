@@ -38,8 +38,6 @@ class TaskFormDal extends \Library\DAL\BaseManager {
     }
     $query = implode(" AND ",$queryArray);
     try {
-      $rere = "DELETE FROM `$tableName` tf JOIN `task` t ON t.`task_id` = tf.`task_id` WHERE $query AND t.`project_id` = '$projectId';";
-
       $sql = $this->dao->query("DELETE tf.* FROM `$tableName` tf JOIN `task` t ON t.`task_id` = tf.`task_id` WHERE $query AND t.`project_id` = '$projectId';");
       $sql->closeCursor();
       return true;

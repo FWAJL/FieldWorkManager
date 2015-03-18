@@ -198,7 +198,8 @@
         <php_modules>
             <php_module key="technician_form" file_name="technician_form.php" />
             <php_module key="upload_file" file_name="upload_file.php" shared="true"/>
-	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+            <php_module key="load_file" file_name="load_file.php" shared="true"/>
+	        <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
         </php_modules>
     </route>
     <!-- technician/showForm -->

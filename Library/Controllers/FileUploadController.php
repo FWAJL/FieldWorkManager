@@ -31,21 +31,35 @@ class FileUploadController extends \Library\BaseController {
 
   public function executeUpload(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS();
-
-    $uploader = new \Library\Core\Utility\FileUploader(
-        $this->app(), array(
-      "files" => $this->files(),
-      "dataPost" => $this->dataPost(),
-      "resultJson" => $result)
-    );
-    $result = $uploader->UploadFiles();
-
+    $dataPost = $this->dataPost();
+    $files = $this->files();
+    $manager = $this->managers()->getManagerOf("Document");
+    $manager->setRootDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
+    $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
+    $directory = str_replace("_id", "", $dataPost['itemCategory']);
+    $manager->setObjectDirectory($directory);
+    if($dataPost['itemReplace']==="true") {
+      $list = $manager->selectManyByCategoryAndId($dataPost['itemCategory'],$dataPost['itemId']);
+    }
+    $manager->setFilenamePrefix($dataPost['itemId'].'_');
+    $document = new \Applications\PMTool\Models\Dao\Document();
+    $document->setDocument_category($dataPost['itemCategory']);
+    if(isset($dataPost['title']) && $dataPost['title']!="") {
+      $document->setDocument_title($dataPost['title']);
+    } else {
+      $document->setDocument_title($files['file']['name']);
+    }
+    $result["dataOut"] = $manager->addWithFile($document,$files['file']);
+    $test = ($result["dataOut"]!=-1);
+    if($dataPost['itemReplace']==="true" && $result["dataOut"]!=-1) {
+      $manager->DeleteObjectsWithFile($list, 'document_id');
+    }
     $this->SendResponseWS(
         $result, array(
       "directory" => "common",
       "resx_file" => \Library\Enums\ResourceKeys\ResxFileNameKeys::FileUpload,
       "resx_key" => $this->action(),
-      "step" => TRUE ? "success" : "error"
+      "step" => ($result["dataOut"]!=-1) ? "success" : "error"
     ));
   }
 

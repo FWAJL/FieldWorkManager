@@ -5,7 +5,7 @@ namespace Applications\PMTool\Models\Dal;
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class DocumentDal extends \Library\DAL\BaseManager {
+class DocumentDal extends \Library\DAL\Modules\DocumentDal {
 
   /**
    * Returns list of documents by document_category and category id
@@ -22,8 +22,8 @@ class DocumentDal extends \Library\DAL\BaseManager {
 
     $document_list = $query->fetchAll();
     $query->closeCursor();
-
-    return $document_list;
+    $list = $this->AddFilePathToObjectList($document_list);
+    return $list;
   }
 
 }
