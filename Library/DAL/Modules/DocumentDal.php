@@ -82,7 +82,6 @@ class DocumentDal extends \Library\DAL\BaseManager {
 
   public function deleteWithFile($object, $where_filter_id) {
     if($object instanceof \Library\Interfaces\IDocument) {
-      $test = $this->GetUploadDirectory($object) . "/" . $object->Filename();
       $fileExists = \Library\Core\DirectoryManager::FileExists($this->GetUploadDirectory($object) . "/" . $object->Filename());
       if($fileExists) {
         $this->DeleteAFile($this->GetUploadDirectory($object) . "/" . $object->Filename());
@@ -95,7 +94,6 @@ class DocumentDal extends \Library\DAL\BaseManager {
     $return = array();
     foreach($objects as $object){
       if($object instanceof \Library\Interfaces\IDocument) {
-        $test = $this->GetUploadDirectory($object) . "/" . $object->Filename();
         $fileExists = \Library\Core\DirectoryManager::FileExists($this->GetUploadDirectory($object) . "/" . $object->Filename());
         if($fileExists) {
           $this->DeleteAFile($this->GetUploadDirectory($object) . "/" . $object->Filename());
@@ -164,7 +162,6 @@ class DocumentDal extends \Library\DAL\BaseManager {
   }
 
   private function CheckExtension($file, $extensions) {
-    $ff = $this->GetExtension($file);
     return in_array($this->GetExtension($file),$extensions);
   }
 

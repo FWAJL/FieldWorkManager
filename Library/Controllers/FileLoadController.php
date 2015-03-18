@@ -32,13 +32,6 @@ class FileLoadController extends \Library\BaseController {
   public function executeLoad(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS();
     $dataPost = $this->dataPost();
-    /*
-    $uploader = new \Library\Core\Utility\FileLoader(
-      $this->app(), array(
-        "dataPost" => $dataPost,
-        "resultJson" => $result)
-    );
-    $result = $uploader->LoadFiles();*/
 
     $manager = $this->managers()->getManagerOf("Document");
     $manager->setRootDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
@@ -46,15 +39,18 @@ class FileLoadController extends \Library\BaseController {
     $directory = str_replace("_id", "", $dataPost['itemCategory']);
     $manager->setObjectDirectory($directory);
     $list = $manager->selectManyByCategoryAndId($dataPost['itemCategory'],$dataPost['itemId']);
-    $i=0;
+
     $result['fileResults'] = array();
+    $result['fileResults'] = $list;
+    /*
+    $i=0;
     foreach($list as $document) {
       $result['fileResults'][$i]['webPath'] = $document->WebPath();
       $result['fileResults'][$i]['title'] = $document->document_title();
       $result['fileResults'][$i]['id'] = $document->document_id();
       $result['fileResults'][$i]['category'] = $document->document_category();
       $i++;
-    }
+    }*/
 
     $this->SendResponseWS(
       $result, array(
