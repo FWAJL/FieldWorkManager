@@ -19,7 +19,7 @@ class LocationController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
 	
 	//Get confirm msg for location deletion
-    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"location", "targetaction": "view", "operation": ["delete"]}', $this->app->name());
+    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"location", "targetaction": "view", "operation": ["delete", "addUniqueCheck"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
 	
 	//Fetch prompt box data from xml and pass to view as an array
@@ -27,8 +27,8 @@ class LocationController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
 	
 	//Fetch alert box data
-    $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"location", "targetaction": "view", "operation": ["addUniqueCheck"]}', $this->app->name());
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);
+    /*$alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"location", "targetaction": "view", "operation": ["addUniqueCheck"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);*/
 	
     if ($rq->getData("mode") === "edit") {
       $this->page->addVar("location_editing_header", $this->resxData["location_legend_edit"]);

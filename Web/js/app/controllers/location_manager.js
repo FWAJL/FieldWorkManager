@@ -52,48 +52,6 @@ $(document).ready(function() {
   });
   //************************************************//
   
-  //click on location_name 
-  $('[name="location_name"]').click(function(){
-	if (utils.getQueryVariable("mode") === "edit") {
-	  //This feature is not available while editing
-	  return;
-    }
-	$('#text_input').val($(this).val());
-	var data = {};
-    utils.showPromptBox('promptEnterLocation', function(){
-	  
-	  if($('#text_input').val() !== '')
-	  {
-	    location_manager.isLocationForProjectExists($('#text_input').val(), function(record_count){
-		  if(record_count == 0)
-		  {
-		    //Ok to add
-			var data = {
-			  "names": $('#text_input').val(),
-			  "active": false 
-			};
-			location_manager.add(data, "location", "add", true);
-		  }
-		  else
-		  {
-		    //Show alert, that task is already taken, choose new
-		    utils.togglePromptBox();
-		    utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
-			  utils.togglePromptBox();
-		    });
-		  }
-		});
-	  }
-	  else {
-		$('#text_input').focus();
-	  }	  
-	}, 
-	'promptmsg-promptEnterLocation', function(){
-	  utils.redirect("location/listAll");
-	});
-  });
-
-
   $("#btn-add-location-names").click(function() {
 	var data = {
       "names": $("textarea[name=\"location_names\"]").val(), 
@@ -124,11 +82,53 @@ $(document).ready(function() {
   });//Button click "add a location"
 
   $("#btn_add_location").click(function() {
-    var post_data = {};
-    post_data = utils.retrieveInputs("location_form", ["location_name"]);
-    if (post_data.location_name !== undefined) {
-      location_manager.add(post_data, "location", "add", true);
+	  
+	if (utils.getQueryVariable("mode") === "edit") {
+	  //This feature is not available while editing
+	  return;
     }
+	$('#text_input').val($('[name="location_name"]').val());
+	var data = {};
+    utils.showPromptBox('promptEnterLocation', function(){
+	  
+	  if($('#text_input').val() !== '')
+	  {
+	    location_manager.isLocationForProjectExists($('#text_input').val(), function(record_count){
+		  if(record_count == 0)
+		  {
+		    //Ok to add
+			var data = {
+			  "names": $('#text_input').val(),
+			  "active": false 
+			};
+			
+			$('[name="location_name"]').val($('#text_input').val());
+			
+			var post_data = {};
+			post_data = utils.retrieveInputs("location_form", ["location_name"]);
+			if (post_data.location_name !== undefined) {
+			  location_manager.add(post_data, "location", "add", true);
+			}
+			
+		  }
+		  else
+		  {
+		    //Show alert, that location is already taken, choose new
+		    utils.togglePromptBox();
+		    utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
+			  utils.togglePromptBox();
+		    });
+		  }
+		});
+	  }
+	  else {
+		$('#text_input').focus();
+	  }	  
+	}, 
+	'promptmsg-promptEnterLocation', function(){
+	  //Just cancel
+	});
+	
   });//Add a location
 
   $("#btn_edit_location").click(function() {
