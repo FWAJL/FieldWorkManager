@@ -20,12 +20,8 @@
           </div>
         </div>
         <div  class="col-lg-5 col-md-5">
-          <div class="col-lg-5 col-md-5">
             <?php require $form_modules["load_file"]; ?>
-          </div>
-          <div class="col-lg-7 col-md-7">
             <?php require $form_modules["upload_file"]; ?>
-          </div>
         </div>
       </div>
     </div>

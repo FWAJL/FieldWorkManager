@@ -804,6 +804,7 @@
 
   <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
   <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />
-  <route url="upload" module="FileUpload" action="upload" resxfile="fileupload" type="lib ws" />
-  <route url="load" module="FileLoad" action="load" resxfile="fileload" type="lib ws" />
+  <route url="file/upload" module="File" action="upload" resxfile="file" type="lib ws" />
+  <route url="file/load" module="File" action="load" resxfile="file" type="lib ws" />
+  <route url="file/remove" module="File" action="remove" resxfile="file" type="lib ws" />
 </routes>

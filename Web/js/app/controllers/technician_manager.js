@@ -9,6 +9,7 @@
 $(document).ready(function() {
   $(".btn-warning").hide();
   $("#document-upload").hide();
+  $("#documents").hide();
   Dropzone.autoDiscover = false;
   if($("#document-upload").length>0){
     var dropzone = new Dropzone("#document-upload");
@@ -18,13 +19,19 @@ $(document).ready(function() {
         dropzone.removeAllFiles();
       } else {
         toastr.success(res.message);
-        location.reload();
+        $("#document-upload").hide();
+        dropzone.removeAllFiles();
+        technician_manager.loadPhoto('technician_id',parseInt( $("input[name=\"itemId\"]").val()));
       }
     });
   }
   $("#tech_photo_upload").on('click',function(e){
     e.preventDefault();
     $("#document-upload").show();
+  });
+  $(document).on('click','.remove-image',function(e){
+    e.preventDefault();
+    technician_manager.removePhoto($(this).data("id"));
   });
   $.contextMenu({
     selector: '.select_item',
@@ -279,7 +286,7 @@ $(document).ready(function() {
   };
 
   technician_manager.loadPhoto = function(itemCategory, itemId) {
-    datacx.post("load", {"itemCategory": itemCategory, "itemId": itemId}).then(function(reply){
+    datacx.post("file/load", {"itemCategory": itemCategory, "itemId": itemId}).then(function(reply){
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
         return undefined;
@@ -287,10 +294,28 @@ $(document).ready(function() {
         toastr.success(reply.message);
         if(reply.fileResults.length>0){
           $.each(reply.fileResults, function(key, file){
-            var appendElements = '<a href="'+file.webPath+'" data-lightbox="'+itemId+'" data-title="'+file.title+'"><img class="img-responsive" src="'+file.webPath+'" /></a>';
-            $("#documents").append(appendElements);
+            var lightboxImage = utils.createImageLightboxElement(file.webPath, itemId, file.title);
+            var remove = utils.createRemoveFileElement(file.document_id);
+            $("#documents").append('<div id="document-'+file.document_id+'">'+lightboxImage+remove+'</div>');
+            $("#documents").show();
           });
+        } else {
+          $("#document-upload").show();
         }
+      }
+    });
+  }
+
+  technician_manager.removePhoto = function(document_id) {
+    datacx.post("file/remove", {"document_id": document_id, "itemCategory": 'technician_id'}).then(function(reply){
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+        return undefined;
+      } else {//success
+        toastr.success(reply.message);
+        $("#documents").hide();
+        $("#document-"+document_id).remove();
+        $("#document-upload").show();
       }
     });
   }

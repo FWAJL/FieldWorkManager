@@ -26,4 +26,20 @@ class DocumentDal extends \Library\DAL\Modules\DocumentDal {
     return $list;
   }
 
+  public function selectOne($document) {
+    if ($document->document_id() !== "") {//Check if the user is giving his username and that there is a value
+      $tableName = \Applications\PMTool\Helpers\CommonHelper::GetShortClassName($document);
+      $sql = 'SELECT * FROM `'.$tableName.'` where `document_id` = \'' . $document->document_id() . '\' LIMIT 0, 1;';
+    } else {
+      return NULL;
+    }
+    $query = $this->dao->query($sql);
+    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Document');
+
+    $document_out = $query->fetch ();
+    $query->closeCursor();
+
+    return $document_out;
+  }
+
 }

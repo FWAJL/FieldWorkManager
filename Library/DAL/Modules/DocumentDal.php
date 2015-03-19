@@ -105,7 +105,7 @@ class DocumentDal extends \Library\DAL\BaseManager {
   }
 
   private function GetUploadDirectory($object) {
-    if(isset($this->objectDirectory) or $this->objectDirectory!=""){
+    if(isset($this->objectDirectory) and $this->objectDirectory!=""){
       $directory = $this->objectDirectory;
     } else {
       $directory = strtolower($this->GetClassName($object));
@@ -114,7 +114,7 @@ class DocumentDal extends \Library\DAL\BaseManager {
   }
 
   private function GetWebUploadDirectory($object) {
-    if(isset($this->objectDirectory) or $this->objectDirectory!=""){
+    if(isset($this->objectDirectory) and $this->objectDirectory!=""){
       $directory = $this->objectDirectory;
     } else {
       $directory = strtolower($this->GetClassName($object));

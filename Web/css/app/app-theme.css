@@ -343,3 +343,17 @@ ui-widget-content:hover {
 
 }
 /* JS WIDGETS */
+
+/* FILE MODULES */
+.remove-image {
+  position:absolute;
+  top:0;
+  right:0;
+}
+.remove-image {
+  top:2px;
+  right:0px;
+  z-index:100;
+}
+
+/* END FILE MODULES */
