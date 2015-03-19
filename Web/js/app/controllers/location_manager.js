@@ -8,6 +8,28 @@
  */
 $(document).ready(function() {
   $(".btn-warning").hide();
+  $("#document-upload").hide();
+  $("#documents").hide();
+  Dropzone.autoDiscover = false;
+  if($("#document-upload").length>0){
+    var dropzone = new Dropzone("#document-upload");
+    dropzone.on("success", function(event,res) {
+      if(res.result == 0) {
+        toastr.error(res.message);
+        dropzone.removeAllFiles();
+      } else {
+        toastr.success(res.message);
+        dropzone.removeAllFiles();
+        $("#documents").html("");
+        location_manager.loadPhoto('location_id',parseInt( $("input[name=\"itemId\"]").val()));
+      }
+    });
+  }
+  $(document).on('click','.remove-image',function(e){
+    e.preventDefault();
+    location_manager.removePhoto($(this).data("id"));
+  });
+
   $.contextMenu({
     selector: '.select_item',
     callback: function(key, options) {
@@ -247,6 +269,10 @@ $(document).ready(function() {
     $("input[name=\"location_long\"]").val(dataWs.location.location_long);
     $("input[name=\"location_desc\"]").val(dataWs.location.location_desc);
     $("input[name=\"location_active\"]").prop('checked', utils.setCheckBoxValue(dataWs.location.location_active));
+
+    $("input[name=\"itemCategory\"]").val('location_id');
+    $("input[name=\"itemId\"]").val(parseInt(dataWs.location.location_id));
+    location_manager.loadPhoto('location_id',parseInt(dataWs.location.location_id));
 //    $("input[name=\"location_visible\"]").val(dataWs.location.location_visible);
   };
   location_manager.delete = function(location_id) {
@@ -309,6 +335,38 @@ $(document).ready(function() {
     datacx.post("location/ifAllLocationsExist", {location_names: data.names}).then(function(reply) {
 	  decision(reply);
 	});
+  }
+
+  location_manager.loadPhoto = function(itemCategory, itemId) {
+    datacx.post("file/load", {"itemCategory": itemCategory, "itemId": itemId}).then(function(reply){
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+        return undefined;
+      } else {//success
+        toastr.success(reply.message);
+        if(reply.fileResults.length>0){
+          $.each(reply.fileResults, function(key, file){
+            var lightboxImage = utils.createImageLightboxElement(file.webPath, itemId, file.title);
+            var remove = utils.createRemoveFileElement(file.document_id);
+            $("#documents").append('<div class="col-md-4 col-lg-4 document-block" id="document-'+file.document_id+'">'+lightboxImage+remove+'</div>');
+            $("#documents").show();
+          });
+        }
+        $("#document-upload").show();
+      }
+    });
+  }
+
+  location_manager.removePhoto = function(document_id) {
+    datacx.post("file/remove", {"document_id": document_id, "itemCategory": 'location_id'}).then(function(reply){
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+        return undefined;
+      } else {//success
+        toastr.success(reply.message);
+        $("#document-"+document_id).remove();
+      }
+    });
   }
 
 }(window.location_manager = window.location_manager || {}));

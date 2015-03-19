@@ -296,7 +296,7 @@ $(document).ready(function() {
           $.each(reply.fileResults, function(key, file){
             var lightboxImage = utils.createImageLightboxElement(file.webPath, itemId, file.title);
             var remove = utils.createRemoveFileElement(file.document_id);
-            $("#documents").append('<div id="document-'+file.document_id+'">'+lightboxImage+remove+'</div>');
+            $("#documents").append('<div class="document-block" id="document-'+file.document_id+'">'+lightboxImage+remove+'</div>');
             $("#documents").show();
           });
         } else {
