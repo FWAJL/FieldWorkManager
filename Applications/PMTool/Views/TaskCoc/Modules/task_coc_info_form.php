@@ -1,15 +1,22 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 
-<div id="coc_info"  class="data-form">
+<div id="task_coc_info"  class="data-form">
 <fieldset class="task_coc_form">
   <ol class="add-new-item">
     <li style="display: none;">
       <input name="task_id" type="text" />
     </li>
-        <li style="display: none;">
-      <input name="resource_id" type="text" />
+    <li style="display: none;">
+      <input name="task_coc_id" type="text" />
     </li>
+    <!--<li style="display: none;">
+      <input name="resource_id" type="text" />
+    </li>-->
      <li><br /></li>
+    <li>
+      <label><?php echo $resx["coc_service_id"]; ?></label>
+      <input name="service_id" type="text" />
+    </li>
     <li>
       <label><?php echo $resx["po_number"]; ?></label>
       <input name="po_number" type="text" />
@@ -21,25 +28,25 @@
     <li>
       <label><?php echo $resx["lab_sample_type"]; ?></label>
       <select class="coc_list" name="lab_sample_type">
-                                                        <option value="" selected="selected">Groundwater</option>
-                                                        <option value="">Surface Water</option>
-                                                        <option value="">Soil</option>
-                                                        <option value="">Air</option>
-                                                        <option value="">Other</option>
+                                                        <option value="Groundwater" selected="selected">Groundwater</option>
+                                                        <option value="Surface Water">Surface Water</option>
+                                                        <option value="Soil">Soil</option>
+                                                        <option value="Air">Air</option>
+                                                        <option value="Other">Other</option>
                                                     </select>
     </li>
         <li>
-      <label><?php echo $resx["lab_sample_tat"]; ?></label>
+      <label><?php echo $resx["lab_sample_tat"]; ?></label> 
       <select class="coc_list" name="lab_sample_tat">
-                                                        <option value="" selected="selected">Standard</option>
-                                                        <option value="">1 week</option>
-                                                        <option value="">2 day</option>
-                                                        <option value="">see comments</option>
+                                                        <option value="Standard" selected="selected">Standard</option>
+                                                        <option value="1 week">1 week</option>
+                                                        <option value="2 day">2 day</option>
+                                                        <option value="see comments">see comments</option>
                                                     </select>
     </li>
         <li>
       <label><?php echo $resx["project_id_num"]; ?></label>
-      <input name="project_id_num" type="text" />
+      <input name="project_number" type="text" />
     </li>
     <li><br /></li>
     <li><h3>Send Results to:</h3></li>

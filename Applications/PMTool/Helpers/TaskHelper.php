@@ -116,6 +116,15 @@ class TaskHelper {
               . $currentTask->task_id();
     }
   }
+  
+  public static function GetTaskCocTabUrl($currentTask) {
+    
+    return
+              \Library\Enums\ResourceKeys\UrlKeys::TaskCOC
+              . "?mode=edit&task_id="
+              . $currentTask->task_id();
+    
+  }
 
   public static function GetCurrentSessionTask($user) {
     return $user->keyExistInSession(\Library\Enums\SessionKeys::CurrentTask) ?

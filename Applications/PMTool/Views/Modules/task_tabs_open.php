@@ -43,7 +43,7 @@
       </a>
     </li>
         <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::CocTab]; ?>" id="tab4" data-form-id="task_coc_info">
-      <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskCOC; ?>">
+      <a href="<?php /*echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskCOC;*/ echo __BASEURL__ . Applications\PMTool\Helpers\TaskHelper::GetTaskCocTabUrl($current_task); ?>">
         <?php echo $resx["task_tab_coc"]; ?>
       </a>
     </li>  
