@@ -7,6 +7,7 @@
  * jQuery listeners for the location actions
  */
 $(document).ready(function() {
+  var temp;
   $(".btn-warning").hide();
   $("#document-upload").hide();
   $("#documents").hide();
@@ -104,52 +105,79 @@ $(document).ready(function() {
   });//Button click "add a location"
 
   $("#btn_add_location").click(function() {
-	  
-	if (utils.getQueryVariable("mode") === "edit") {
-	  //This feature is not available while editing
-	  return;
+  	
+  	/*
+  	var post_data = utils.retrieveInputs("location_form", ["location_name"]);
+    if (post_data.location_name !== undefined) {
+      location_manager.add(post_data, "location", "add", true);
     }
-	$('#text_input').val($('[name="location_name"]').val());
+    */
+  	
+  	
 	var data = {};
-    utils.showPromptBox('promptEnterLocation', function(){
-	  
-	  if($('#text_input').val() !== '')
-	  {
-	    location_manager.isLocationForProjectExists($('#text_input').val(), function(record_count){
+	var loc_name = $('[name="location_name"]').val();
+	if(loc_name === ''){
+		//Show Prompt to enter location
+		utils.showPromptBox('promptEnterLocation', function(){
+		  if($('#text_input').val() !== '')
+		  {
+		    location_manager.isLocationForProjectExists($('#text_input').val(), function(record_count){
+			  if(record_count == 0)
+			  {
+			  	utils.dissmissModal();
+			    //Add loc
+			    $('[name="location_name"]').val($('#text_input').val());
+			    post_data = utils.retrieveInputs("location_form", ["location_name"]);
+			    if (post_data.location_name !== undefined) {
+			      location_manager.add(post_data, "location", "add", true);
+			    }
+				
+			  }
+			  else
+			  {
+			    //Show alert, that location is already taken, choose new
+			    utils.togglePromptBox();
+			    utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
+				  utils.togglePromptBox();
+			    });
+			  }
+			});
+		  }
+		  else {
+			$('#text_input').focus();
+		  }	  
+		}, 
+		'promptmsg-promptEnterLocation', function(){
+		  //cancel button callback
+		  $('#text_input').val('');
+		  if(temp !== ''){
+		  	$('[name="location_name"]').val(temp);
+		  	temp = '';
+		  }
+		  
+		});
+	}else{
+		//Check if unique
+	  	location_manager.isLocationForProjectExists(loc_name, function(record_count){
 		  if(record_count == 0)
 		  {
-		    //Ok to add
-			var data = {
-			  "names": $('#text_input').val(),
-			  "active": false 
-			};
-			
-			$('[name="location_name"]').val($('#text_input').val());
-			
-			var post_data = {};
-			post_data = utils.retrieveInputs("location_form", ["location_name"]);
-			if (post_data.location_name !== undefined) {
-			  location_manager.add(post_data, "location", "add", true);
-			}
+		    //Add loc
+		    post_data = utils.retrieveInputs("location_form", ["location_name"]);
+		    if (post_data.location_name !== undefined) {
+		      location_manager.add(post_data, "location", "add", true);
+		    }
 			
 		  }
 		  else
 		  {
-		    //Show alert, that location is already taken, choose new
-		    utils.togglePromptBox();
-		    utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
-			  utils.togglePromptBox();
-		    });
+		    $('#text_input').val($('[name="location_name"]').val());
+		    temp = loc_name;
+		    $('[name="location_name"]').val('');
+		    $("#btn_add_location").click();
 		  }
 		});
-	  }
-	  else {
-		$('#text_input').focus();
-	  }	  
-	}, 
-	'promptmsg-promptEnterLocation', function(){
-	  //Just cancel
-	});
+	}
+	
 	
   });//Add a location
 

@@ -70,18 +70,18 @@ $(document).ready(function() {
     }
   });
 
-  $("#tab4").hide();
+  //$("#tab4").hide();
   //$("#tab5").hide();
   $("#tab5a").hide();
 
   $("#lab_sample_box").change(function() {
 
     if ($("#lab_sample_box").is(":checked")) {
-      $("#tab4").show();
+      //$("#tab4").show();
       $("#tab5").show();
       $("#tab5a").show();
     } else {
-      $("#tab4").hide();
+      //$("#tab4").hide();
       //$("#tab5").hide();
       $("#tab5a").hide();
     }

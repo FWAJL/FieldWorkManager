@@ -367,6 +367,10 @@ $(document).ready(function() {
   utils.togglePromptBox = function(){
     $('.prompt-modal').toggle();
   };
+  
+  utils.dissmissModal = function(){
+  	$('.prompt-modal').modal('hide');
+  };
 
   utils.showSelectEntityPrompt = function(clbkOk, clbkCancel){
     if($('.pselector-modal').length !== 0)

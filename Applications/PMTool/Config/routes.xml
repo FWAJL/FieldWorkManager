@@ -367,7 +367,7 @@
         </php_modules>
     </route><!--  task/showAddForm -->
     
-        <route url="activetask/showForm" module="ActiveTask" action="showForm" resxfile="active_task" type="ui">
+    <route url="activetask/showForm" module="ActiveTask" action="showForm" resxfile="active_task" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/active_task.js" />
         </js_files>
@@ -380,7 +380,7 @@
             <php_module key="active_task_info_lists" file_name="active_task_info_lists.php" />
             <php_module key="active_task_form" file_name="active_task_form.php" />
             <php_module key="active_task_buttons" file_name="active_task_buttons.php" />
-	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+	    	<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
             <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
         </php_modules>
     </route><!--  activetask/showAddForm -->
@@ -466,6 +466,23 @@
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route><!--  task/labAnalytes -->
+	
+	<route url="task/coc" module="TaskCoc" action="manageCoc" resxfile="task" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/task_coc.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+			<php_module key="task_cocinfo_lists" file_name="task_cocinfo_lists.php" />
+			<php_module key="task_coc_info_form" file_name="task_coc_info_form.php" />
+			<php_module key="task_buttons" file_name="task_buttons.php" />
+            <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+        </php_modules>
+    </route><!--  task/coc -->
 	
 	<route url="task/services" module="TaskService" action="manageServices" resxfile="task_service" type="ui">
         <js_files>
@@ -753,6 +770,9 @@
   <route url="task/updateItems" module="Task" action="updateItems" resxfile="task" type="ws" />
   <route url="task/ifTaskExists" module="Task" action="ifTaskExists" resxfile="task" type="ws" />
   <route url="task/selectTask" module="Task" action="selectTask" resxfile="task" type="ws" />
+  <route url="task/addCoc" module="TaskCoc" action="addCoc" resxfile="task" type="ws" />
+  <route url="task/editCoc" module="TaskCoc" action="editCoc" resxfile="task" type="ws" />
+  <route url="task/getTaskCoc" module="TaskCoc" action="getTaskCoc" resxfile="task" type="ws" />
   
   <route url="task/location/updateItems" module="TaskLocation" action="updateItems" resxfile="task_location" type="ws" />
   <route url="task/technician/updateItems" module="TaskTechnician" action="updateItems" resxfile="task_technician" type="ws" />
