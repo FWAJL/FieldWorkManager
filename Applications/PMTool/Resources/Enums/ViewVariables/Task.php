@@ -40,6 +40,9 @@ class Task {
 
   const task_buttons = "task_buttons";
   const promote_buttons_module = "promote_buttons_module";
+  
+  const task_cocinfo_lists = "task_cocinfo_lists";
+  const task_coc_info_form = "task_coc_info_form";
 
 
   const popup_msg_module = "popup_msg_module";

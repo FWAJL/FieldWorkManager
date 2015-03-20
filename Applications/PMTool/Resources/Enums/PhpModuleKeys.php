@@ -60,6 +60,8 @@ class PhpModuleKeys {
   const lab_analyte_form = "lab_analyte_form";
   const analyte_buttons = "analyte_buttons";
 
+  const upload_file = "upload_file";
+  const load_file = "load_file";
 }
 
 ?>

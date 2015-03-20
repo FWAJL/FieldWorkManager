@@ -247,7 +247,18 @@ $(document).ready(function() {
   });//Copy a task
 
   $("#btn_delete_task").click(function() {
-    task_manager.delete(parseInt(utils.getQueryVariable("task_id")));
+	if($('#confirmmsg-delete').length > 0) {
+	  utils.showConfirmBox($('#confirmmsg-delete').val(), function(result) {
+	    if (result)
+	    {
+		  task_manager.delete(parseInt(utils.getQueryVariable("task_id")));
+		}
+	  });
+	}
+	else
+	{
+	  task_manager.delete(parseInt(utils.getQueryVariable("task_id")));
+	}
   });//Delete a task
 
   if (utils.getQueryVariable("mode") === "edit") {
@@ -356,6 +367,38 @@ $(document).ready(function() {
     $("input[name=\"task_id\"]").val(parseInt(dataWs.task_info_obj.task_id));
     $("input[name=\"task_name\"]").val(dataWs.task_info_obj.task_name);
     $("input[name=\"task_deadline\"]").val(dataWs.task_info_obj.task_deadline);
+    if(dataWs.task_info_obj.task_trigger_cal == 1) {
+      $("input[name=\"task_trigger_cal\"]").attr('checked',true);
+      if ($("input[name=\"task_trigger_cal\"]").is(":checked")) {
+        $("#freq_list").show()
+      }
+    }
+    $("select[name=\"task_trigger_cal_value\"]").val(dataWs.task_info_obj.task_trigger_cal_value)
+    if(dataWs.task_info_obj.task_trigger_pm == 1) {
+    $("input[name=\"task_trigger_pm\"]").attr('checked',true);
+    }
+    if(dataWs.task_info_obj.task_trigger_ext == 1) {
+    $("input[name=\"task_trigger_ext\"]").attr('checked',true);
+    }
+    if(dataWs.task_info_obj.task_req_form == 1) {
+      $("input[name=\"task_req_form\"]").attr('checked',true);
+      $("#tab2").show();
+    }
+    if(dataWs.task_info_obj.task_req_field_analyte == 1) {
+      $("input[name=\"task_req_field_analyte\"]").attr('checked',true);
+      $("#tab2").show();
+      $("#tab3").show();
+      $("#tab3a").show();
+    }
+    if(dataWs.task_info_obj.task_req_lab_analyte == 1) {
+      $("input[name=\"task_req_lab_analyte\"]").attr('checked',true);
+      $("#tab4").show();
+      $("#tab5").show();
+      $("#tab5a").show();
+    }
+    if(dataWs.task_info_obj.task_req_service == 1) {
+      $("input[name=\"task_req_service\"]").attr('checked',true);
+    }
     $("textarea[name=\"task_instructions\"]").val(dataWs.task_info_obj.task_instructions);
 //    $("input[name=\"task_trigger_cal\"]").val(dataWs.task_info_obj.task_trigger_cal);
 //    $("input[name=\"task_trigger_pm\"]").val(dataWs.task_info_obj.task_trigger_pm);

@@ -36,6 +36,7 @@ class TaskTabKeys {
   const LabSampleMatrixTab = "ttk_lsmt";
   const CocTab = "ttk_ct";
   const ServicesTab = "ttk_st";
+  const FormsTab = "ttk_ft";
 }
 
 class CompleteTaskTabKeys {

@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `project_manager` (
     `pm_address` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
     `pm_phone` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
     `pm_email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    `project_manager_is_logged` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Specifies if a given user is logged in',
     PRIMARY KEY (`pm_id`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=2;
 
@@ -121,10 +122,15 @@ CREATE TABLE `task` (
     `task_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `task_deadline` varchar(50) NOT NULL,
     `task_instructions` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
-    `task_trigger_cal` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
-    `task_trigger_pm` tinyint(1) DEFAULT NULL,
-    `task_trigger_ext` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+    `task_trigger_cal` TINYINT(1) DEFAULT 0 NULL,
+    `task_trigger_cal_value` VARCHAR(50) NULL,
+    `task_trigger_pm` TINYINT(1) DEFAULT 0 NULL,
+    `task_trigger_ext` TINYINT(1) DEFAULT 0 NULL,
     `task_active` tinyint(1) NOT NULL DEFAULT '0',
+    `task_req_form` TINYINT(1) DEFAULT 0 NULL,
+    `task_req_field_analyte` TINYINT(1) DEFAULT 0 NULL,
+    `task_req_lab_analyte` TINYINT(1) DEFAULT 0 NULL,
+    `task_req_service` TINYINT(1) DEFAULT 0 NULL,
     PRIMARY KEY (`task_id`),
     CONSTRAINT `fk_task_project` FOREIGN KEY (`project_id`)
         REFERENCES `project` (`project_id`) ON DELETE CASCADE
@@ -337,6 +343,7 @@ CREATE TABLE `document` (
     `document_category` varchar(50) NOT NULL COMMENT 'Is the name of the table/class for which we want a document. Possible values(13-01-14): location, technician',
     `document_value` varchar(100) NOT NULL COMMENT 'A unique constraint prevent adding the same document as a given type',
     `document_size` int(11) NOT NULL COMMENT 'File size in Kb',
+    `document_title` varchar(250) NULL DEFAULT 'Caption goes here' COMMENT 'This is the value for a document that is displayed in the HTML as a caption',
     PRIMARY KEY (`document_id`),
     UNIQUE INDEX `un_doc_cat_val` (`document_id` ASC, `document_category` ASC, `document_value` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -369,10 +376,71 @@ CREATE TABLE `master_lab_analyte` (
     `master_lab_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
     `master_lab_analyte_category_name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
     `master_lab_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-    UNIQUE INDEX `un_cla` (`master_lab_analyte_name` ASC),
     PRIMARY KEY (`master_lab_analyte_id`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
+CREATE TABLE `master_form` (
+  `form_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `content_type` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `category` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `value` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `size` int(11) DEFAULT NULL,
+  `title` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`form_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Table structure for table `project_form`
+CREATE TABLE `project_form` (
+  `project_id` int(11) NOT NULL,
+  `master_form_id` int(11) DEFAULT NULL,
+  `user_form_id` int(11) DEFAULT NULL,
+  UNIQUE KEY `un_pf_p_uf_mf` (`project_id`,`user_form_id`,`master_form_id`),
+  CONSTRAINT `fk_pf_project` FOREIGN KEY (`project_id`) REFERENCES `project` (`project_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Table structure for table `user_form`
+CREATE TABLE `user_form` (
+  `form_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `content_type` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `category` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `value` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `size` int(10) DEFAULT NULL,
+  `title` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pm_id` int(11) NOT NULL,
+  PRIMARY KEY (`form_id`),
+  KEY `fk_uf_project_manager` (`pm_id`),
+  CONSTRAINT `fk_uf_project_manager` FOREIGN KEY (`pm_id`) REFERENCES `project_manager` (`pm_id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Table structure for table `task_form`
+CREATE TABLE `task_form`(
+`task_id` INT(11) NOT NULL,
+`master_form_id` INT(11),
+`user_form_id` INT(11),
+UNIQUE INDEX `un_tf_t_uf_mf` (`task_id`, `master_form_id`, `user_form_id`),
+CONSTRAINT `fk_tf_task` FOREIGN KEY (`task_id`) REFERENCES `task`(`task_id`) ON DELETE CASCADE );
+
+-- Table structure for `user`
+CREATE TABLE `user` (
+    `user_id` int(11) NOT NULL AUTO_INCREMENT,
+    `user_login` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+    `user_password` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    `user_hint` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+    `user_type` varchar(50) NOT NULL COMMENT 'Possible values: pm_id, technician_id, service_id',
+    `user_value` int(11) NOT NULL COMMENT 'ID value corresponding to the user_type',
+    `user_role_id` smallint(2) NOT NULL COMMENT 'Look up the table user_role for details about the roles',
+    `user_is_logged` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Flag to set to 1 when a user logs in successful. It will prevent multiple connection per single user',
+    CONSTRAINT `fk_ur_user` FOREIGN KEY (`user_role_id`)
+        REFERENCES `user_role` (`user_role_id`),
+    PRIMARY KEY (`user_id`)
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
+
+-- Table structure for `user_role`
+CREATE TABLE `user_role` (
+    `user_role_id` int(11) NOT NULL,
+    `user_role_desc` varchar(100)
+    PRIMARY KEY (`user_role_id`)
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Dumping data for table `project_manager`
 INSERT INTO `project_manager` (`pm_id`, `username`, `password`, `hint`, `pm_comp_name`, `pm_name`, `pm_address`, `pm_phone`, `pm_email`) VALUES
@@ -380,6 +448,16 @@ INSERT INTO `project_manager` (`pm_id`, `username`, `password`, `hint`, `pm_comp
 INSERT INTO `project_manager` (`pm_id`,`username`,`password`,`hint`,`pm_comp_name`,`pm_name`,`pm_address`,`pm_phone`,`pm_email`) VALUES 
 (3,'demo','89e495e7941cf9e40e6980d14a16bf023ccd4c91g496lJL683','','','Demo User','','','');
 
+INSERT INTO `master_form`(`form_id`,`content_type`,`category`,`value`,`size`,`title`) VALUES
+(1,'pdf',NULL,'FWM_T-ChainofCustody.pdf',45,'Chain Of Custody'),
+(2,'pdf',NULL,'FWM_L-WellPurge.pdf',152,'Well Purge'),(3,'pdf',NULL,'FWM_T-FieldSampling.pdf',100,'Field Sampling');
+
+INSERT INTO `user_role` (`user_role_id`,`user_role_desc`) VALUES
+(1,'Administrator'),
+(2,'Project Manager'),
+(3,'Field Technician'),
+(4,'Visitor'),
+(5,'None');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

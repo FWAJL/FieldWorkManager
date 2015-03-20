@@ -7,7 +7,30 @@
  * jQuery listeners for the location actions
  */
 $(document).ready(function() {
+  var temp;
   $(".btn-warning").hide();
+  $("#document-upload").hide();
+  $("#documents").hide();
+  Dropzone.autoDiscover = false;
+  if($("#document-upload").length>0){
+    var dropzone = new Dropzone("#document-upload");
+    dropzone.on("success", function(event,res) {
+      if(res.result == 0) {
+        toastr.error(res.message);
+        dropzone.removeAllFiles();
+      } else {
+        toastr.success(res.message);
+        dropzone.removeAllFiles();
+        $("#documents").html("");
+        location_manager.loadPhoto('location_id',parseInt( $("input[name=\"itemId\"]").val()));
+      }
+    });
+  }
+  $(document).on('click','.remove-image',function(e){
+    e.preventDefault();
+    location_manager.removePhoto($(this).data("id"));
+  });
+
   $.contextMenu({
     selector: '.select_item',
     callback: function(key, options) {
@@ -52,49 +75,29 @@ $(document).ready(function() {
   });
   //************************************************//
   
-  //click on location_name 
-  $('[name="location_name"]').click(function(){
-	$('#text_input').val($(this).val());
-	var data = {};
-    utils.showPromptBox('promptEnterLocation', function(){
-	  if($('#text_input').val() !== '')
-	  {
-	    location_manager.isLocationForProjectExists($('#text_input').val(), function(record_count){
-		  if(record_count == 0)
-		  {
-		    //Ok to add
-			var data = {
-			  "names": $('#text_input').val(),
-			  "active": false 
-			};
-			location_manager.add(data, "location", "add");
-		  }
-		  else
-		  {
-		    //Show alert, that task is already taken, choose new
-		    utils.togglePromptBox();
-		    utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
-			  utils.togglePromptBox();
-		    });
-		  }
-		});
-	  }
-	  else {
-		$('#text_input').focus();
-	  }	  
-	}, 
-	'promptmsg-promptEnterLocation', function(){
-	  utils.redirect("location/listAll");
-	});
-  });
-
-
   $("#btn-add-location-names").click(function() {
-    var data = {
+	var data = {
       "names": $("textarea[name=\"location_names\"]").val(), 
       "active": $("input[name=\"location_active\"]").prop("checked")
     };
-    location_manager.add(data, "location", "add");
+	
+	//Check for uniqueness
+	location_manager.isAllLocationsExisting(data, function(reply){
+	  if(reply.record_count === 0) {
+		//Save the entire lot
+		location_manager.add(data, "location", "add");
+	  } else {
+	    //utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
+		utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){});
+		var errHtml = '<ul style="color:#FF0000; margin:15px 0 15px 10px;">';
+		for(i in reply.duplicate_locations) {
+		  errHtml += '<li>' + reply.duplicate_locations[i] + '</li>';
+		}
+		errHtml += '</ul>';
+		$('.bootbox-body').append(errHtml);
+	  }
+	});
+	
   });//Add many locations
 
   $("#btn-add-location-manual").click(function() {
@@ -102,11 +105,80 @@ $(document).ready(function() {
   });//Button click "add a location"
 
   $("#btn_add_location").click(function() {
-    var post_data = {};
-    post_data = utils.retrieveInputs("location_form", ["location_name"]);
+  	
+  	/*
+  	var post_data = utils.retrieveInputs("location_form", ["location_name"]);
     if (post_data.location_name !== undefined) {
       location_manager.add(post_data, "location", "add", true);
     }
+    */
+  	
+  	
+	var data = {};
+	var loc_name = $('[name="location_name"]').val();
+	if(loc_name === ''){
+		//Show Prompt to enter location
+		utils.showPromptBox('promptEnterLocation', function(){
+		  if($('#text_input').val() !== '')
+		  {
+		    location_manager.isLocationForProjectExists($('#text_input').val(), function(record_count){
+			  if(record_count == 0)
+			  {
+			  	utils.dissmissModal();
+			    //Add loc
+			    $('[name="location_name"]').val($('#text_input').val());
+			    post_data = utils.retrieveInputs("location_form", ["location_name"]);
+			    if (post_data.location_name !== undefined) {
+			      location_manager.add(post_data, "location", "add", true);
+			    }
+				
+			  }
+			  else
+			  {
+			    //Show alert, that location is already taken, choose new
+			    utils.togglePromptBox();
+			    utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
+				  utils.togglePromptBox();
+			    });
+			  }
+			});
+		  }
+		  else {
+			$('#text_input').focus();
+		  }	  
+		}, 
+		'promptmsg-promptEnterLocation', function(){
+		  //cancel button callback
+		  $('#text_input').val('');
+		  if(temp !== ''){
+		  	$('[name="location_name"]').val(temp);
+		  	temp = '';
+		  }
+		  
+		});
+	}else{
+		//Check if unique
+	  	location_manager.isLocationForProjectExists(loc_name, function(record_count){
+		  if(record_count == 0)
+		  {
+		    //Add loc
+		    post_data = utils.retrieveInputs("location_form", ["location_name"]);
+		    if (post_data.location_name !== undefined) {
+		      location_manager.add(post_data, "location", "add", true);
+		    }
+			
+		  }
+		  else
+		  {
+		    $('#text_input').val($('[name="location_name"]').val());
+		    temp = loc_name;
+		    $('[name="location_name"]').val('');
+		    $("#btn_add_location").click();
+		  }
+		});
+	}
+	
+	
   });//Add a location
 
   $("#btn_edit_location").click(function() {
@@ -155,14 +227,18 @@ $(document).ready(function() {
  * Responsible to manage locations.
  */
 (function(location_manager) {
-  location_manager.add = function(data, controller, action, isSingle) {
+  location_manager.add = function(data, controller, action, openEdit) {
 //    var data = isSingle ? userData : {"names": userData};
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Location/Add WebService
       if (reply === null || reply.dataId === undefined || reply.dataId === null || parseInt(reply.dataId) === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        utils.redirect("location/listAll", 1000);
+		if(openEdit === true) {
+		  utils.redirect("location/showForm?mode=edit&location_id=" + reply.dataIn[0].location_id, 1000);
+		} else {
+		  utils.redirect("location/listAll", 1000);
+		}
       }
     });
   };
@@ -210,6 +286,7 @@ $(document).ready(function() {
     utils.redirect("location/showForm?mode=edit&location_id=" + parseInt(element.attr("data-location-id")));
   };
   location_manager.loadEditForm = function(dataWs) {
+	isEditing = true;
     utils.clearForm();
     $("input[name=\"project_id\"]").val(parseInt(dataWs.location.project_id));
     $("input[name=\"location_id\"]").val(parseInt(dataWs.location.location_id));
@@ -220,6 +297,10 @@ $(document).ready(function() {
     $("input[name=\"location_long\"]").val(dataWs.location.location_long);
     $("input[name=\"location_desc\"]").val(dataWs.location.location_desc);
     $("input[name=\"location_active\"]").prop('checked', utils.setCheckBoxValue(dataWs.location.location_active));
+
+    $("input[name=\"itemCategory\"]").val('location_id');
+    $("input[name=\"itemId\"]").val(parseInt(dataWs.location.location_id));
+    location_manager.loadPhoto('location_id',parseInt(dataWs.location.location_id));
 //    $("input[name=\"location_visible\"]").val(dataWs.location.location_visible);
   };
   location_manager.delete = function(location_id) {
@@ -276,6 +357,44 @@ $(document).ready(function() {
     datacx.post("location/ifLocationExists", {location_name: locationName}).then(function(reply) {
 	  decision(reply.record_count);
 	});
+  }
+  
+  location_manager.isAllLocationsExisting = function(data, decision) {
+    datacx.post("location/ifAllLocationsExist", {location_names: data.names}).then(function(reply) {
+	  decision(reply);
+	});
+  }
+
+  location_manager.loadPhoto = function(itemCategory, itemId) {
+    datacx.post("file/load", {"itemCategory": itemCategory, "itemId": itemId}).then(function(reply){
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+        return undefined;
+      } else {//success
+        toastr.success(reply.message);
+        if(reply.fileResults.length>0){
+          $.each(reply.fileResults, function(key, file){
+            var lightboxImage = utils.createImageLightboxElement(file.webPath, itemId, file.title);
+            var remove = utils.createRemoveFileElement(file.document_id);
+            $("#documents").append('<div class="col-md-4 col-lg-4 document-block" id="document-'+file.document_id+'">'+lightboxImage+remove+'</div>');
+            $("#documents").show();
+          });
+        }
+        $("#document-upload").show();
+      }
+    });
+  }
+
+  location_manager.removePhoto = function(document_id) {
+    datacx.post("file/remove", {"document_id": document_id, "itemCategory": 'location_id'}).then(function(reply){
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+        return undefined;
+      } else {//success
+        toastr.success(reply.message);
+        $("#document-"+document_id).remove();
+      }
+    });
   }
 
 }(window.location_manager = window.location_manager || {}));

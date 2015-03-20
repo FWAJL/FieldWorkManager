@@ -48,7 +48,8 @@ class TaskHelper {
         \Applications\PMTool\Resources\Enums\TaskTabKeys::LabAnalytesTab => "",
         \Applications\PMTool\Resources\Enums\TaskTabKeys::ServicesTab => "",
         \Applications\PMTool\Resources\Enums\TaskTabKeys::FieldSampleMatrixTab => "",
-        \Applications\PMTool\Resources\Enums\TaskTabKeys::LabSampleMatrixTab => ""
+        \Applications\PMTool\Resources\Enums\TaskTabKeys::LabSampleMatrixTab => "",
+        \Applications\PMTool\Resources\Enums\TaskTabKeys::FormsTab => "",
     );
     $user->setAttribute(\Library\Enums\SessionKeys::TabsStatus, $tabs);
   }
@@ -115,6 +116,15 @@ class TaskHelper {
               . "?mode=edit&task_id="
               . $currentTask->task_id();
     }
+  }
+  
+  public static function GetTaskCocTabUrl($currentTask) {
+    
+    return
+              \Library\Enums\ResourceKeys\UrlKeys::TaskCOC
+              . "?mode=edit&task_id="
+              . $currentTask->task_id();
+    
   }
 
   public static function GetCurrentSessionTask($user) {

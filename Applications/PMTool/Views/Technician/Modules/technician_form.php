@@ -23,10 +23,6 @@
       <input name="technician_email" type="text" />
     </li>
     <li>
-      <label><?php echo $resx["technician_document"]; ?></label>
-      <input type="button" name="technician_document" value="Click to upload photo" class="doc_upload" id="tech_photo_upload"/>
-    </li>
-    <li>
       <label><?php echo $resx["technician_active"]; ?></label>
       <input name="technician_active" type="checkbox" checked />
     </li>
