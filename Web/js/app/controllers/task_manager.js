@@ -380,6 +380,25 @@ $(document).ready(function() {
     if(dataWs.task_info_obj.task_trigger_ext == 1) {
     $("input[name=\"task_trigger_ext\"]").attr('checked',true);
     }
+    if(dataWs.task_info_obj.task_req_form == 1) {
+      $("input[name=\"task_req_form\"]").attr('checked',true);
+      $("#tab2").show();
+    }
+    if(dataWs.task_info_obj.task_req_field_analyte == 1) {
+      $("input[name=\"task_req_field_analyte\"]").attr('checked',true);
+      $("#tab2").show();
+      $("#tab3").show();
+      $("#tab3a").show();
+    }
+    if(dataWs.task_info_obj.task_req_lab_analyte == 1) {
+      $("input[name=\"task_req_lab_analyte\"]").attr('checked',true);
+      $("#tab4").show();
+      $("#tab5").show();
+      $("#tab5a").show();
+    }
+    if(dataWs.task_info_obj.task_req_service == 1) {
+      $("input[name=\"task_req_service\"]").attr('checked',true);
+    }
     $("textarea[name=\"task_instructions\"]").val(dataWs.task_info_obj.task_instructions);
 //    $("input[name=\"task_trigger_cal\"]").val(dataWs.task_info_obj.task_trigger_cal);
 //    $("input[name=\"task_trigger_pm\"]").val(dataWs.task_info_obj.task_trigger_pm);

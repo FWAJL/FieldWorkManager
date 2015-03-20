@@ -57,6 +57,9 @@
   <resource key="btn_add_location_names">Add</resource> 
   <resource key="btn_add_location_gmap">Using the Map</resource> 
   <resource key="btn_add_location_manual">With the standard form</resource> 
-  <resource key="btn_location_select_project">See list of project</resource> 
+  <resource key="btn_location_select_project">See list of project</resource>
+
+  <resource key="form_title">Title</resource>
+  <resource key="form_file">File(s)</resource>
 
 </resources>

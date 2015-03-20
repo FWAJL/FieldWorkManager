@@ -62,4 +62,17 @@ abstract class Entity implements \ArrayAccess {
         throw new \Exception('Impossible de supprimer une quelconque valeur');
     }
 
+  /* TODO: Implement \JsonSerializable interface
+   public function jsonSerialize() {
+    $serializableArray = array();
+    $reflectionPropertiesArray = (new \ReflectionObject($this))->getProperties(\ReflectionProperty::IS_PUBLIC);
+    foreach($reflectionPropertiesArray as $property) {
+      $propertyName= $property->name;
+      $serializableArray[$propertyName] = $this->$propertyName;
+    }
+    return $serializableArray;
+  }
+   *
+   */
+
 }
