@@ -1,7 +1,6 @@
 <!--Promt box: genrates a general prompt box-->
 <div class="modal fade prompt-modal" tabindex="-1" role="dialog" aria-hidden="true" id="location-prompt">
   <?php
-  $test = $prompt_message;
   if (isset($prompt_message) && !empty($prompt_message)) {
     foreach($prompt_message as $the_msg){
       ?>
@@ -19,7 +18,7 @@
       </div>
 
       <div class="modal-body">
-        <input class="form-control" type="text" id="text_input" name="text_input">
+        <input class="form-control" type="text" id="location-name" name="text_input">
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary confirmbuttons modal-update" id="prompt_ok"><?php echo $resx['location_prompt_ok']; ?></button>
