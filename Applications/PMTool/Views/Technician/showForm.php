@@ -20,8 +20,8 @@
           </div>
         </div>
         <div  class="col-lg-5 col-md-5">
-            <?php require $form_modules["load_file"]; ?>
-            <?php require $form_modules["upload_file"]; ?>
+            <?php require $form_modules[Applications\PMTool\Resources\Enums\PhpModuleKeys::load_file]; ?>
+            <?php require $form_modules[Applications\PMTool\Resources\Enums\PhpModuleKeys::upload_file]; ?>
         </div>
       </div>
     </div>
