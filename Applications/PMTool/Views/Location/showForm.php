@@ -27,7 +27,8 @@
           </div>
         </div>
         <div  class="col-lg-5 col-md-5">
-          Photos here.
+          <?php require $form_modules['load_file']; ?>
+          <?php require $form_modules['upload_file']; ?>
         </div>
       </div>
     </div>

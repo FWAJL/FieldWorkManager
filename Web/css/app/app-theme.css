@@ -343,3 +343,32 @@ ui-widget-content:hover {
 
 }
 /* JS WIDGETS */
+
+/* FILE MODULES */
+.remove-image {
+  position:absolute;
+  top:0;
+  right:0;
+}
+.remove-image {
+  right:0px;
+  z-index:100;
+  opacity: 0.5;
+  font-size:30px;
+  text-shadow:
+    -1px -1px 0 #FFFFFF,
+    1px -1px 0 #FFFFFF,
+    -1px 1px 0 #FFFFFF,
+    1px 1px 0 #FFFFFF;
+  color: red;
+}
+
+.document-block {
+  position: relative;
+  padding-right:0px;
+}
+
+#document-upload {
+  clear:both;
+}
+/* END FILE MODULES */
