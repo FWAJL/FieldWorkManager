@@ -469,5 +469,15 @@ $(document).ready(function() {
     } else {
       return false;
     }
-  }
+  };
+  utils.createRemoveFileElement = function(dataId) {
+    var removeFileElement = '<button type="button" class="remove-image close" data-id="'+dataId+'" aria-hidden="true">&times;</button>';
+    return removeFileElement;
+  };
+  utils.createImageLightboxElement = function(path, lightboxGroup, title) {
+    var imageLightboxElement = '<a href="'+path+'" data-lightbox="'+lightboxGroup+'" data-title="'+title+'"><img class="img-responsive" src="'+path+'" /></a>';
+    return imageLightboxElement;
+  };
+
+
 }(window.utils = window.utils || {}));

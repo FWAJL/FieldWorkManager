@@ -105,6 +105,36 @@ class FormHelper {
     return $matches;
   }
 
+  public static function GetFormsFromTaskForms(\Library\User $user, $sessionProject, $sessionTask) {
+    $matches = array();
+    $matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_forms] = array();
+    $matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::master_forms] = array();
+
+    foreach ($sessionProject[\Library\Enums\SessionKeys::ProjectAvailableForms][\Library\Enums\SessionKeys::ProjectMasterForms] as $master_form) {
+      foreach ($sessionTask[\Library\Enums\SessionKeys::TaskForms] as $form) {
+        if (intval($form->master_form_id()) === intval($master_form->form_id())) {
+          array_push($matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::master_forms], $master_form);
+          break;
+        }
+      }
+    }
+    foreach ($sessionProject[\Library\Enums\SessionKeys::ProjectAvailableForms][\Library\Enums\SessionKeys::ProjectUserForms] as $user_form) {
+      foreach ($sessionTask[\Library\Enums\SessionKeys::TaskForms] as $form) {
+        if (intval($form->user_form_id()) === intval($user_form->form_id())) {
+          array_push($matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_forms], $user_form);
+          break;
+        }
+      }
+    }
+    if(empty($matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::master_forms])) {
+      unset($matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::master_forms]);
+    }
+    if(empty($matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_forms])) {
+      unset($matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_forms]);
+    }
+    return $matches;
+  }
+
   public static function SetPropertyNamesForDualList() {
     return array(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id => "form_id",
@@ -157,6 +187,44 @@ class FormHelper {
       $match = CommonHelper::FindObjectByIntValue($form_id, "form_id", $forms);
     }
     return $match;
+  }
+
+  public static function GetTaskForms($caller,$sessionTask) {
+    $result = array();
+    if ($sessionTask !== NULL) {
+      $taskForm = new \Applications\PMTool\Models\Dao\Task_form();
+      $taskId = $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id();
+      $taskForm->setTask_id($taskId);
+      $manager = $caller->managers()->getManagerOf("TaskForm");
+      $result = $sessionTask[\Library\Enums\SessionKeys::TaskForms] = $manager->selectMany($taskForm, "task_id");
+      \Applications\PMTool\Helpers\TaskHelper::SetCurrentSessionTask($caller->user(),$sessionTask);
+    }
+    return $result;
+  }
+
+
+  public static function UpdateTaskForms($caller) {
+    $result = $caller->InitResponseWS(); // Init result
+    $dataPost = $caller->dataPost();
+    $result["rows_affected"] = 0;
+    $result["forms_ids"] = str_getcsv($dataPost["arrayOfValues"], ',');
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($caller->user());
+    $task_services = array();
+    foreach ($result["service_ids"] as $id) {
+      $task_service = new \Applications\PMTool\Models\Dao\Task_service();
+      $task_service->setService_id($id);
+      $task_service->setTask_id($sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+      $dal = $caller->managers()->getManagerOf($caller->module());
+      if ($dataPost["action"] === "add") {
+        $result["rows_affected"] += $dal->add($task_service) >= 0 ? 1 : 0;
+      } else {
+        $result["rows_affected"] += $dal->delete($task_service, "service_id") ? 1 : 0;
+      }
+      array_push($task_services, $task_service);
+    }
+    $sessionTask[\Library\Enums\SessionKeys::TaskServices] = $task_services;
+    \Applications\PMTool\Helpers\TaskHelper::SetSessionTask($caller->user(), $sessionTask);
+    return $result;
   }
 
 }

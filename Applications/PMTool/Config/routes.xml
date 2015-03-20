@@ -133,8 +133,9 @@
         <php_modules>
             <php_module key="location_form" file_name="location_form.php" />
             <php_module key="upload_file" file_name="upload_file.php" shared="true"/>
-			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-			<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+            <php_module key="load_file" file_name="load_file.php" shared="true"/>
+			      <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+			      <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
         </php_modules>
     </route>
     <!-- location/showForm -->
@@ -198,7 +199,8 @@
         <php_modules>
             <php_module key="technician_form" file_name="technician_form.php" />
             <php_module key="upload_file" file_name="upload_file.php" shared="true"/>
-	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+            <php_module key="load_file" file_name="load_file.php" shared="true"/>
+	        <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
         </php_modules>
     </route>
     <!-- technician/showForm -->
@@ -498,7 +500,24 @@
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route><!--  task/services -->
-	
+
+    <route url="task/forms" module="TaskForm" action="manageForms" resxfile="task_form" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/task_form.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
+            <php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
+            <php_module key="categorized_list_right" file_name="categorized_list_right.php" shared="true" />
+            <php_module key="categorized_promote_buttons_module" file_name="categorized_promote_buttons.php" shared="true"/>
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+            <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+        </php_modules>
+    </route><!--  task/forms -->
+
     <!-- analytes -->
     <route url="analyte/listAll" module="Analyte" action="listAll" resxfile="analyte" type="ui">
         <js_files>
@@ -760,6 +779,7 @@
   <route url="task/service/updateItems" module="TaskService" action="updateItems" resxfile="task_service" type="ws" />
   <route url="task/fieldAnalytes/updateItems" module="TaskFieldAnalyte" action="updateItems" resxfile="task_field_analyte" type="ws" />
   <route url="task/labAnalytes/updateItems" module="TaskLabAnalyte" action="updateItems" resxfile="task_lab_analyte" type="ws" />
+  <route url="task/form/updateItems" module="TaskForm" action="updateItems" resxfile="task_form" type="ws" />
   <!--  <route url="service/updateItems" module="ProjectService" action="updateItems" resxfile="service" type="ws" />-->
  
   <route url="service/add" module="Service" action="add" resxfile="service" type="ws" />
@@ -805,6 +825,7 @@
 
   <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
   <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />
-  <route url="upload" module="FileUpload" action="upload" resxfile="fileupload" type="lib ws" />
-  <route url="load" module="FileLoad" action="load" resxfile="fileload" type="lib ws" />
+  <route url="file/upload" module="File" action="upload" resxfile="file" type="lib ws" />
+  <route url="file/load" module="File" action="load" resxfile="file" type="lib ws" />
+  <route url="file/remove" module="File" action="remove" resxfile="file" type="lib ws" />
 </routes>
