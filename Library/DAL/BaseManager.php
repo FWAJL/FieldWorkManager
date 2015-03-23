@@ -51,8 +51,13 @@ class BaseManager extends \Library\Manager {
     foreach ($object as $key => $value) {
       $select_clause .= $key . ", ";
     }
+    $order_by = "";
+    if($object->getOrderByField() !== FALSE) {
+      $order_by = "ORDER BY ".$object->getOrderByField();
+    }
+
     $select_clause = rtrim($select_clause, ", ");
-    return $this->ExecuteQuery($select_clause . " FROM " . $this->GetTableName($object) . $where_clause, $params);
+    return $this->ExecuteQuery($select_clause . " FROM " . $this->GetTableName($object) . $where_clause." ".$order_by, $params);
   }
 
   /**

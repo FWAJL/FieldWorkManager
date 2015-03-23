@@ -75,4 +75,8 @@ abstract class Entity implements \ArrayAccess {
    *
    */
 
+    public function getOrderByField() {
+      return false;
+    }
+
 }
