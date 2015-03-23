@@ -78,4 +78,7 @@ class ViewVariablesKeys {
   //keys for categorized list display
   const user_forms = "User forms";
   const master_forms = "Master forms";
+  
+  //Task COC
+  const labServices = "lab_services";
 }

@@ -175,6 +175,19 @@ class TaskHelper {
     $user->setAttribute(\Library\Enums\SessionKeys::CurrentTask, $sessionTask);
     self::SetSessionTasks($user, $sessionTasks);
   }
+  
+  public static function getLabServicesForTask(\Library\User $user, $sessionTask) {
+	$labServices = array();
+	if(isset($sessionTask[\Library\Enums\SessionKeys::TaskServices])) {
+	  $taskServices = \Applications\PMTool\Helpers\ServiceHelper::GetServicesFromTaskServices($user, $sessionTask);
+	  foreach($taskServices as $service) {
+	    if($service['service_type'] === 'Labs') {
+		  array_push($labServices, $service);
+	    }
+	  }
+	}
+	return $labServices;
+  }
 
   public static function StoreSessionTask($user, $list) {
     $SessionTasks = array();

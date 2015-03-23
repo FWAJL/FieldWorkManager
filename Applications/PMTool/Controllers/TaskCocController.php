@@ -7,7 +7,6 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class TaskCocController extends \Library\BaseController {
   public function executeManageCoc(\Library\HttpRequest $rq) {
-	//\Applications\PMTool\Helpers\TaskHelper::AddTabsStatus($this->user());
 	\Applications\PMTool\Helpers\TaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\TaskTabKeys::CocTab);
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
 	
@@ -15,6 +14,11 @@ class TaskCocController extends \Library\BaseController {
    	
 	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
+	
+	$labServices = \Applications\PMTool\Helpers\TaskHelper::getLabServicesForTask($this->user(), $sessionTask);
+	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::labServices, $labServices);
+	
+	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentPm, \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user()));
 	
 	if ($rq->getData("mode") === "edit") {
       $this->page->addVar("task_editing_header", $this->resxData["task_legend_edit"]);
