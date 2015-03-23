@@ -442,6 +442,20 @@ CREATE TABLE `user_role` (
     PRIMARY KEY (`user_role_id`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
+-- Table structure for `lab_analyte_location`
+CREATE TABLE `lab_analyte_location` (
+  `task_id` int(11) NOT NULL,
+  `location_id` int(11) NOT NULL,
+  `lab_analyte_id` int(11) NOT NULL,
+    CONSTRAINT `fk_lal_task` FOREIGN KEY (`task_id`)
+        REFERENCES `task` (`task_id`) ON DELETE CASCADE,
+    CONSTRAINT `fk_lal_location` FOREIGN KEY (`location_id`)
+        REFERENCES `location` (`location_id`) ON DELETE CASCADE,
+    CONSTRAINT `fk_lal_lab_analyte` FOREIGN KEY (`lab_analyte_id`)
+        REFERENCES `lab_analyte` (`lab_analyte_id`) ON DELETE CASCADE,
+    UNIQUE INDEX `un_lal` (`task_id` ASC, `location_id` ASC, `lab_analyte_id`ASC)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 -- Dumping data for table `project_manager`
 INSERT INTO `project_manager` (`pm_id`, `username`, `password`, `hint`, `pm_comp_name`, `pm_name`, `pm_address`, `pm_phone`, `pm_email`) VALUES
 (1, 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683', 'hint', 'comp name', 'John', 'Doe', '1234567890', 'test@fwa.net');
