@@ -104,6 +104,7 @@ abstract class SessionKeys {
   
   //Tabs
   const TabsStatus = "tabs_status";
+  const ActiveTaskTabsStatus = "active_task_tabs_status";
   const TabActiveAnalyte = "tab_active_analyte";
 }
 

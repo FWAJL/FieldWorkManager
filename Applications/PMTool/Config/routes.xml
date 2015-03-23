@@ -375,15 +375,61 @@
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" shared="true" />
+            <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
-            <php_module key="active_task_info_lists" file_name="active_task_info_lists.php" />
             <php_module key="active_task_form" file_name="active_task_form.php" />
+			<php_module key="active_task_status" file_name="active_task_status.php" />
+			<php_module key="active_task_progress_details" file_name="active_task_progress_details.php" />
+			<php_module key="active_task_instructions" file_name="active_task_instructions.php" />
             <php_module key="active_task_buttons" file_name="active_task_buttons.php" />
 	    	<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
             <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
         </php_modules>
     </route><!--  activetask/showAddForm -->
+	
+	
+	<route url="activetask/map" module="ActiveTask" action="map" resxfile="active_task" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/active_task.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" />
+			<php_module key="active_task_status" file_name="active_task_status.php" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+        </php_modules>
+    </route><!--  activetask/map -->
+	
+	
+	<route url="activetask/forms" module="ActiveTask" action="forms" resxfile="active_task" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/active_task.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" />
+			<php_module key="active_task_forms" file_name="active_task_forms.php" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+        </php_modules>
+    </route><!--  activetask/forms -->
+	
+	<route url="activetask/communications" module="ActiveTask" action="communications" resxfile="active_task" type="ui">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/active_task.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" />
+			<php_module key="active_task_comm" file_name="active_task_comm.php" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+        </php_modules>
+    </route><!--  activetask/communications -->
 	
 	<route url="task/addPrompt" module="Task" action="addPrompt" resxfile="task" type="ui">
         <js_files>

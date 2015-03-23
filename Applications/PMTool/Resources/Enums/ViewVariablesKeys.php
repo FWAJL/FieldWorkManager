@@ -47,6 +47,7 @@ class ViewVariablesKeys {
   const data_identifier = "data_identifier";
 
   const tabStatus = "tab";
+  const activeTaskTabStatus = "active_task_tab";
 
   const active_list = "active_list_module";
   const inactive_list = "inactive_list_module";
