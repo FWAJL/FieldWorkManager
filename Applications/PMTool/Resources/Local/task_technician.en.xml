@@ -12,7 +12,9 @@
   <resource key="btn_to_inactive_list">De-activate Task</resource> 
   <resource key="btn_to_active_list">Activate Task</resource> 
   <resource key="btn_to_lead_list">Assign as a Lead Technician</resource>  
-  
+  <resource key="btn_to_pm_list">Remove technician(s)</resource>
+  <resource key="btn_to_project_list">Add technician(s)</resource>
+
     <!-- Tabs -->  
   
   <resource key="task_tab_info">Task Info</resource>
