@@ -13,6 +13,8 @@
         <a href="#" id="task-location-info-modal-zoom"><span class="glyphicon glyphicon-zoom-in"></span> <?php echo $resx['task_location_window_zoom']; ?></a>
         <a href="#" id="task-location-info-modal-remove" class="task-location-info-modal-action"><span class="glyphicon glyphicon-remove"></span> <?php echo $resx['task_location_window_remove']; ?></a>
         <a href="#" id="task-location-info-modal-add" class="task-location-info-modal-action"><span class="glyphicon glyphicon-plus"></span> <?php echo $resx['task_location_window_add']; ?></a>
+        <a href="#" id="location-info-modal-photos"><span class="glyphicon glyphicon-camera"></span> <?php echo $resx['location_window_photos']; ?><span id="location-info-modal-photos-count"></span></a>
+        <?php require $form_modules["upload_file"]; ?>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary confirmbuttons modal-update"><?php echo $resx['task_location_window_edit_update']; ?></button>
@@ -22,4 +24,5 @@
     </div>
   </div>
 </div>
+<div class="lightbox-content"></div>
 <!--Promt box-->
