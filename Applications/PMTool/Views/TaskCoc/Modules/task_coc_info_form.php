@@ -60,7 +60,7 @@
     </li>
         <li>
       <label><?php echo $resx["project_id_num"]; ?></label>
-      <input name="project_number" type="text" />
+      <input name="project_id" type="text" />
     </li>
     <li><br /></li>
     <li><h4>Send Results to:</h4></li>
