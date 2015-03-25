@@ -386,6 +386,7 @@
             <php_module key="active_task_buttons" file_name="active_task_buttons.php" />
 	    	<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
             <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route><!--  activetask/showAddForm -->
 	
@@ -416,6 +417,7 @@
             <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" />
 			<php_module key="active_task_forms" file_name="active_task_forms.php" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route><!--  activetask/forms -->
 	
@@ -434,6 +436,7 @@
 			<php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>
 			<php_module key="communications_button_module" file_name="communications_button_module.php" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route><!--  activetask/communications -->
 	

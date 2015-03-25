@@ -35,5 +35,5 @@ if(isset($current_discussion['comm_type'])) {
     <!-- close tabs -->
 	<?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::tabs_close]; ?>
   </div>
-  
+  <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::tooltip_msg_module]; ?>
 </div>
