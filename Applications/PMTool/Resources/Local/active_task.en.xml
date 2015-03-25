@@ -8,6 +8,9 @@
   <resource key="active_task_forms_header">View Task Forms</resource>
   <resource key="active_task_comm_header">Discussions</resource>
   
+  <resource key="message_success_startCommWith">Added to communication successfully</resource>
+  <resource key="message_error_startCommWith">Failed to start communication</resource>
+  
   <resource key="task_tab_info">Task Status</resource>
   <resource key="task_tab_map">Map</resource>
   <resource key="task_tab_forms">Forms</resource>
@@ -19,5 +22,10 @@
   <resource key="h4_taskforms_rightcol">Forms used for this task</resource>
   <resource key="h4_taskcomm_leftcol">Discussion Thread</resource>
   <resource key="h4_taskcomm_rightcol">Who and What</resource>
+  <resource key="h4_taskcomm_services">Service Providers</resource>
+  <resource key="h4_taskcomm_technicians">Technicians</resource>
+  
+  <resource key="activetask_button_sendmsg">Send</resource>
+  <resource key="activetask_button_attach">Attach File</resource>
   
 </resources>

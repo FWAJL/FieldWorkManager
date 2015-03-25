@@ -429,6 +429,10 @@
         <php_modules>
             <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" />
 			<php_module key="active_task_comm" file_name="active_task_comm.php" />
+			<php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
+			<php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
+			<php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>
+			<php_module key="communications_button_module" file_name="communications_button_module.php" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
         </php_modules>
     </route><!--  activetask/communications -->
@@ -821,7 +825,6 @@
   <route url="task/addCoc" module="TaskCoc" action="addCoc" resxfile="task" type="ws" />
   <route url="task/editCoc" module="TaskCoc" action="editCoc" resxfile="task" type="ws" />
   <route url="task/getTaskCoc" module="TaskCoc" action="getTaskCoc" resxfile="task" type="ws" />
-  
   <route url="task/location/updateItems" module="TaskLocation" action="updateItems" resxfile="task_location" type="ws" />
   <route url="task/technician/updateItems" module="TaskTechnician" action="updateItems" resxfile="task_technician" type="ws" />
   <route url="task/service/updateItems" module="TaskService" action="updateItems" resxfile="task_service" type="ws" />
@@ -829,6 +832,8 @@
   <route url="task/labAnalytes/updateItems" module="TaskLabAnalyte" action="updateItems" resxfile="task_lab_analyte" type="ws" />
   <route url="task/form/updateItems" module="TaskForm" action="updateItems" resxfile="task_form" type="ws" />
   <!--  <route url="service/updateItems" module="ProjectService" action="updateItems" resxfile="service" type="ws" />-->
+  
+  <route url="activetask/startCommWith" module="ActiveTask" action="startCommWith" resxfile="active_task" type="ws" />
  
   <route url="service/add" module="Service" action="add" resxfile="service" type="ws" />
   <route url="service/edit" module="Service" action="edit" resxfile="service" type="ws" />
