@@ -252,8 +252,11 @@ class ProjectController extends \Library\BaseController {
     $result = $this->InitResponseWS();
 
     //Init PDO
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
+    if($this->app()->user->getUserType() == 'pm_id'){
+      $pmid = $this->app()->user->getUserTypeId();
+      $this->dataPost["pm_id"] = $pmid === NULL ? NULL : $pmid;
+    }
+
     $project = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Project());
     $result["data"] = $project;
 
