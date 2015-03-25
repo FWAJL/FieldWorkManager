@@ -102,7 +102,7 @@
   <resource key="results_to_phone">Phone</resource>
   <resource key="results_to_email">email</resource>
   <resource key="task_coc_save">Save COC</resource>
-  <resource key="coc_service_id">Service Id</resource>
+  <resource key="coc_service_id">Laboratory</resource>
   <resource key="message_success_addCoc">Task COC Added successfully</resource>
   <resource key="message_error_addCoc">Error adding Task COC</resource>
   <resource key="message_success_editCoc">Task COC updated successfully</resource>

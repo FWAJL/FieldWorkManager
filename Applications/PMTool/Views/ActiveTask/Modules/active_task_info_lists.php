@@ -7,7 +7,7 @@
     </div>
     <div class="col-lg-1 col-md-1">
       <div class="buttons">
-        <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::task_buttons]; ?>
+        <?php //require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::task_buttons]; ?>
       </div>
     </div>
     <div  class="col-lg-5 col-md-5">

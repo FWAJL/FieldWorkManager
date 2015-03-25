@@ -1,6 +1,17 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 
-<div id="task_info"  class="data-form">
- Test
+<div class="content-container container-fluid">
+  <div class="row">
+    <div  class="col-lg-5 col-md-5">
+      <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::active_task_progress_details]; ?>
+    </div>
+    <div class="col-lg-1 col-md-1">
+      <div class="buttons">
+      </div>
+    </div>
+    <div  class="col-lg-5 col-md-5">
+      <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::active_task_instructions]; ?>
+    </div>
+  </div>
 </div>
 
