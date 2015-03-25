@@ -81,4 +81,7 @@ class ViewVariablesKeys {
   
   //Task COC
   const labServices = "lab_services";
+  
+  //Active Task 
+  const currentDiscussions = "current_discussion";
 }
