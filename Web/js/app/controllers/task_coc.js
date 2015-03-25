@@ -71,7 +71,7 @@ $(document).ready(function(){
   task_coc.loadData = function(dataWs) {
   	utils.clearForm();
   	$("input[name=\"task_coc_id\"]").val(parseInt(dataWs.task_coc.task_coc_id));
-  	$("input[name=\"service_id\"]").val(parseInt(dataWs.task_coc.service_id));
+  	$("select[name=\"service_id\"]").val(parseInt(dataWs.task_coc.service_id));
   	$("input[name=\"po_number\"]").val(dataWs.task_coc.po_number);
   	$("textarea[name=\"lab_instructions\"]").val(dataWs.task_coc.lab_instructions);
   	$("select[name=\"lab_sample_type\"]").val(dataWs.task_coc.lab_sample_type);
