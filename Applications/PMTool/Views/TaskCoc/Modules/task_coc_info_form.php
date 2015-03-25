@@ -13,10 +13,10 @@
       <input name="resource_id" type="text" />
     </li>-->
      <li><br /></li>
-    <li>
+    <!--<li>
       <label><?php echo $resx["coc_service_id"]; ?></label>
       <input name="service_id" type="text" />
-    </li>
+    </li>-->
     <li>
       <label><?php echo $resx["po_number"]; ?></label>
       <input name="po_number" type="text" />
@@ -24,6 +24,20 @@
     <li>
       <label><?php echo $resx["lab_instructions"]; ?></label>
       <textarea name="lab_instructions" type="text"></textarea>
+    </li>
+    
+    <li>
+      <label><?php echo $resx["coc_service_id"]; ?></label>
+      <select class="coc_list" name="service_id">
+      	<option value="">Select</option>
+        <?php
+		foreach($lab_services as $service) {
+		  ?>
+          <option value="<?php echo $service['service_id'] ?>"><?php echo $service['service_name'] ?></option>
+          <?php
+		}
+		?>                                    
+	  </select>
     </li>
     <li>
       <label><?php echo $resx["lab_sample_type"]; ?></label>
@@ -46,30 +60,30 @@
     </li>
         <li>
       <label><?php echo $resx["project_id_num"]; ?></label>
-      <input name="project_number" type="text" />
+      <input name="project_id" type="text" />
     </li>
     <li><br /></li>
-    <li><h3>Send Results to:</h3></li>
+    <li><h4>Send Results to:</h4></li>
     <li>
       <label><?php echo $resx["results_to_name"]; ?></label>
-      <input name="results_to_name" type="text" />
+      <input name="results_to_name" type="text" value="<?php echo $current_pm['pm_obj']['pm_name'] ?>" />
     </li>        
     <li>
       <label><?php echo $resx["results_to_company"]; ?></label>
-      <input name="results_to_company" type="text" />
+      <input name="results_to_company" type="text" value="<?php echo $current_pm['pm_obj']['pm_comp_name'] ?>" />
     </li>        
     <li>
       <label><?php echo $resx["results_to_address"]; ?></label>
-      <textarea name="results_to_address" type="text"></textarea>
+      <textarea name="results_to_address" type="text"><?php echo $current_pm['pm_obj']['pm_address'] ?></textarea>
     </li>
     <li>
       <label><?php echo $resx["results_to_phone"]; ?></label>
-      <input name="results_to_phone" type="text" />
+      <input name="results_to_phone" type="text" value="<?php echo $current_pm['pm_obj']['pm_phone'] ?>" />
     </li> 
 
     <li>
       <label><?php echo $resx["results_to_email"]; ?></label>
-      <input name="results_to_email" type="text" />
+      <input name="results_to_email" type="text" value="<?php echo $current_pm['pm_obj']['pm_email'] ?>" />
     </li>        
   </ol>
 </fieldset>

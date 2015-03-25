@@ -4,9 +4,20 @@
    <!-- Labels -->
 
   <resource key="active_task_header">View Task Status</resource>
+  <resource key="active_task_map_header">View Task Map</resource>
+  <resource key="active_task_forms_header">View Task Forms</resource>
+  <resource key="active_task_comm_header">Discussions</resource>
   
   <resource key="task_tab_info">Task Status</resource>
   <resource key="task_tab_map">Map</resource>
   <resource key="task_tab_forms">Forms</resource>
-  <resource key="task_tab_comm">Communications</resource>  
+  <resource key="task_tab_comm">Communications</resource>
+  
+  <resource key="h4_taskstatus_leftcol">Task Progress</resource>
+  <resource key="h4_taskstatus_rightcol">Instructions and Notes</resource>
+  <resource key="h4_taskforms_leftcol">Completed Forms</resource>
+  <resource key="h4_taskforms_rightcol">Forms used for this task</resource>
+  <resource key="h4_taskcomm_leftcol">Discussion Thread</resource>
+  <resource key="h4_taskcomm_rightcol">Who and What</resource>
+  
 </resources>
