@@ -18,7 +18,7 @@ SELECT
 `username`, 
 `password`, 
 `hint`,
-'pm',
+'pm_id',
 pm_id,
 2 'user_role_id',
 NULL 'user_session_id'
