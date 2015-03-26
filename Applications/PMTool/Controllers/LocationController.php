@@ -109,7 +109,6 @@ class LocationController extends \Library\BaseController {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
 
     //Init PDO
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Location());
     $result["data"] = $location;
 
@@ -150,7 +149,6 @@ class LocationController extends \Library\BaseController {
     $oldProjectId = $location->project_id();
     if ($location !== NULL) {
       //Init PDO
-      $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
       $location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), $location);
       $result["data"] = $location;
 

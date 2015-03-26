@@ -89,8 +89,10 @@ class PmHelper {
     if ($pm_id !== 0) {
       $key .= $pm_id;
     } else {
-      $pm = $user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-      $key .= $pm[0]->pm_id();
+      if($user->getUserType()=='pm_id'){
+        $pmid = $user->getUserTypeId();
+        $key .= $pmid;
+      }
     }
     $user->setAttribute(\Library\Enums\SessionKeys::CurrentPm, $sessionPms[$key]);
     return $sessionPms[$key];
