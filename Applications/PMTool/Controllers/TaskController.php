@@ -211,6 +211,7 @@ class TaskController extends \Library\BaseController {
     // Init result
     $result = $this->InitResponseWS();
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetSessionTask($this->app()->user(), $this->dataPost["task_id"]);
+    \Applications\PMTool\Helpers\TaskHelper::FillSessionTask($this, $sessionTask);
     //Init PDO
     $task = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Task());
     $result["data"] = $task;

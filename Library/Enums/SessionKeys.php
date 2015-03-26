@@ -100,6 +100,7 @@ abstract class SessionKeys {
   const CurrentProject = "current_project";
   const CurrentPm = "current_pm";
   const CurrentTask = "current_task";
+  const CurrentDiscussion = "current_discussion";
   
   //Routing
   const SessionRoutes = "app_routes";
