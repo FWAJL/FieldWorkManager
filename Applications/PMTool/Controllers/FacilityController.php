@@ -112,7 +112,6 @@ class FacilityController extends \Library\BaseController {
 
     if ($facility !== NULL) {
       //Init PDO
-      $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
       $facility = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), $facility);
       $result["data"] = $facility;
 

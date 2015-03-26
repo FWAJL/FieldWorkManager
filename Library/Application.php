@@ -2,6 +2,8 @@
 
 namespace Library;
 
+use Library\BL\Core\Security;
+
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
@@ -23,6 +25,7 @@ abstract class Application {
   public $imageUtil;
   public $jsManager;
   public $cssManager;
+  public $auth;
 
   public function __construct() {
     $this->HttpRequest = new HttpRequest($this);
@@ -36,6 +39,7 @@ abstract class Application {
     $this->imageUtil = new ImageUtility($this);
     $this->locale = $this->HttpRequest->initLanguage($this, "browser");
     $this->name = '';
+    $this->auth = new \Library\Security\AuthenticationManager($this);
 //    $this->jsManager = new Core\Utility\JavascriptManager($this);
 //    $this->cssManager = new Core\Utility\CssManager($this);
   }
