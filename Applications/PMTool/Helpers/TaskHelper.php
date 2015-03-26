@@ -53,6 +53,26 @@ class TaskHelper {
     );
     $user->setAttribute(\Library\Enums\SessionKeys::TabsStatus, $tabs);
   }
+  
+  /**
+   * <p>
+   * Sets the data into the task session array when it is selected so that the 
+   * data necessary is available for the different actions.
+   * </p>
+   * @param type $caller <p>
+   * Instance the controller calling the helper class </p>
+   * @param type $sessionTask <p>
+   * The session array of type Task to use. It needs to be refreshed at every
+   * action </p>
+   */
+  public static function FillSessionTask($caller, $sessionTask) {
+    ServiceHelper::GetAndStoreTaskServices($caller, $sessionTask);
+    
+    //Get the refreshed session array value and then update it then
+    $sessionTask = self::GetCurrentSessionTask($caller->user());
+    
+    //Then you can do your logic to update the session array value
+  }
 
   public static function GetAndStoreCurrentTask(\Library\User $user, $task_id) {
     $sessionTasks = NULL;
@@ -176,12 +196,12 @@ class TaskHelper {
     self::SetSessionTasks($user, $sessionTasks);
   }
   
-  public static function getLabServicesForTask(\Library\User $user, $sessionTask) {
+  public static function getLabServicesForTask(\Library\User $user, $sessionTask, $filterCategory) {
 	$labServices = array();
 	if(isset($sessionTask[\Library\Enums\SessionKeys::TaskServices])) {
 	  $taskServices = \Applications\PMTool\Helpers\ServiceHelper::GetServicesFromTaskServices($user, $sessionTask);
 	  foreach($taskServices as $service) {
-	    if($service['service_type'] === 'Labs') {
+	    if($service['service_type'] === $filterCategory) {
 		  array_push($labServices, $service);
 	    }
 	  }

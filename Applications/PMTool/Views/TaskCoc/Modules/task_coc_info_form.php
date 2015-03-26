@@ -9,14 +9,6 @@
     <li style="display: none;">
       <input name="task_coc_id" type="text" />
     </li>
-    <!--<li style="display: none;">
-      <input name="resource_id" type="text" />
-    </li>-->
-     <li><br /></li>
-    <!--<li>
-      <label><?php echo $resx["coc_service_id"]; ?></label>
-      <input name="service_id" type="text" />
-    </li>-->
     <li>
       <label><?php echo $resx["po_number"]; ?></label>
       <input name="po_number" type="text" />
@@ -60,7 +52,7 @@
     </li>
         <li>
       <label><?php echo $resx["project_id_num"]; ?></label>
-      <input name="project_id" type="text" />
+      <input name="project_id" type="text" value="<?php echo $current_project->project_number(); ?>"/>
     </li>
     <li><br /></li>
     <li><h4>Send Results to:</h4></li>

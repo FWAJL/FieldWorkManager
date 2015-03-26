@@ -6,10 +6,6 @@
   <resource key="message_success_updateItems">The tasks have been edited</resource>
 
   <!-- Buttons -->
-  <resource key="task_button_add">Add this task</resource>
-  <resource key="task_button_edit">Edit this task</resource>
-  <resource key="task_button_delete">Delete this task</resource>  
-  <resource key="btn_to_inactive_list">De-activate Task</resource> 
   <resource key="btn_to_active_list">Activate Task</resource> 
   <resource key="btn_to_lead_list">Assign as a Lead Technician</resource>  
   
@@ -31,8 +27,8 @@
   <resource key="h4_project_services">Available Services</resource>
   <resource key="selected_task_services">Services for this Task</resource>
   <resource key="not_selected_task_services">All available services</resource>
-  <resource key="btn_add_to_task">Add service(s)</resource>
-  <resource key="btn_remove_from_task">Remove service(s)</resource>
+  <resource key="btn_to_pm_list">Add service(s)</resource>
+  <resource key="btn_to_project_list">Remove service(s)</resource>
   <resource key="no_items_to_display_message">There is no active services. Go to Service Providers > List all to activate some</resource>
   
 </resources>

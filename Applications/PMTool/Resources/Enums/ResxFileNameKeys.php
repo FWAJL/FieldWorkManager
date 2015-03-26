@@ -35,6 +35,7 @@ abstract class ResxFileNameKeys {
   const Technician = "technician";
   const Service = "service";
   const Task = "task";
+  const ActiveTask = "active_task";
   const Form = "form";
   const Pm = "pm";
   const Analyte = "analyte";
