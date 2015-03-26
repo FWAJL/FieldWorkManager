@@ -7,7 +7,7 @@
       <?php echo $current_task->task_name();
     } ?>
     <span class="glyphicon glyphicon-chevron-right"></span>    
-<?php echo $active_task_header ?></h3>  
+<?php echo $resx["active_task_header"] ?></h3>  
   <div class="form_sections">
     <!-- open tabs -->
 	<?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::active_task_tabs_open]; ?>

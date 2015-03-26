@@ -27,5 +27,7 @@
   
   <resource key="activetask_button_sendmsg">Send</resource>
   <resource key="activetask_button_attach">Attach File</resource>
+  <resource key="btn_to_pm_list">Start discussion</resource>
+  <resource key="btn_to_project_list">Unselect</resource>
   
 </resources>
