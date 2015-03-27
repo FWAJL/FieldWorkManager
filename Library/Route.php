@@ -17,7 +17,7 @@ class Route {
   public $relative_path = "";
   protected $phpModules;
   protected $resxfile = "";
-  protected $role = "";
+  protected $role = [];
 
   public function __construct($config) {
     $this->setUrl($config['route_xml']->getAttribute('url'));
@@ -105,8 +105,8 @@ class Route {
   }
 
 
-  public function setRole($role) {
-    $this->role = $role;
+  public function setRole($roleString) {
+    $this->role = explode(",", $roleString);
   }
   
   public function action() {
