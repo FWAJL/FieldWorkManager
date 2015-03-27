@@ -24,15 +24,11 @@ USE `baiken_fwm_1`;
 -- Table structure for table `project_manager`
 CREATE TABLE IF NOT EXISTS `project_manager` (
     `pm_id` int(11) NOT NULL AUTO_INCREMENT,
-    `username` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-    `password` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-    `hint` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
     `pm_comp_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `pm_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `pm_address` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
     `pm_phone` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
     `pm_email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-    `project_manager_is_logged` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Specifies if a given user is logged in',
     PRIMARY KEY (`pm_id`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=2;
 
@@ -51,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `project` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Table structure for table `technician`
-CREATE TABLE `baiken_fwm_1`.`technician` (
+CREATE TABLE IF NOT EXISTS `technician` (
     `technician_id` INT(11) NOT NULL AUTO_INCREMENT,
     `technician_name` VARCHAR(50) COLLATE utf8_unicode_ci NULL,
     `technician_phone` VARCHAR(12) COLLATE utf8_unicode_ci NULL,
@@ -65,7 +61,7 @@ CREATE TABLE `baiken_fwm_1`.`technician` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Table structure for table `client`
-CREATE TABLE `baiken_fwm_1`.`client` (
+CREATE TABLE IF NOT EXISTS `client` (
     `client_id` INT(11) NOT NULL AUTO_INCREMENT,
     `project_id` int(11) NOT NULL COMMENT 'Foreign key => project',
     `client_company_name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -99,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `facility` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Table structure for table `location`
-CREATE TABLE `baiken_fwm_1`.`location` (
+CREATE TABLE IF NOT EXISTS `location` (
     `location_id` INT(11) COLLATE utf8_unicode_ci NOT NULL AUTO_INCREMENT,
     `location_name` VARCHAR(50) COLLATE utf8_unicode_ci NULL,
     `location_desc` VARCHAR(250) COLLATE utf8_unicode_ci NULL,
@@ -116,7 +112,7 @@ CREATE TABLE `baiken_fwm_1`.`location` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Table structure for table `task`
-CREATE TABLE `task` (
+CREATE TABLE IF NOT EXISTS `task` (
     `task_id` int(11) NOT NULL AUTO_INCREMENT,
     `project_id` int(11) NOT NULL COMMENT 'Foreign key => project',
     `task_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -137,7 +133,7 @@ CREATE TABLE `task` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Table structure for table `service`
-CREATE TABLE `service` (
+CREATE TABLE IF NOT EXISTS `service` (
     `service_id` int(11) NOT NULL AUTO_INCREMENT,
     `pm_id` int(11) NOT NULL COMMENT 'Foreign key => project_manager',
     `service_type` varchar(30) COLLATE utf8_unicode_ci NOT NULL COMMENT 'contractor or equipment',
@@ -154,7 +150,7 @@ CREATE TABLE `service` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Table structure for table `field_analyte`
-CREATE TABLE `field_analyte` (
+CREATE TABLE IF NOT EXISTS `field_analyte` (
     `field_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
     `field_analyte_name_unit` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
     `pm_id` int(11) NOT NULL COMMENT 'Foreign key => project_manager',
@@ -165,7 +161,7 @@ CREATE TABLE `field_analyte` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Table structure for table `field_sample_matrix`
-CREATE TABLE `field_sample_matrix` (
+CREATE TABLE IF NOT EXISTS `field_sample_matrix` (
     `task_id` int(11) NOT NULL,
     `field_analyte_id` int(11) NOT NULL,
     `location_id` int(11) NOT NULL,
@@ -178,7 +174,7 @@ CREATE TABLE `field_sample_matrix` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Table structure for table `lab_analyte`
-CREATE TABLE `lab_analyte` (
+CREATE TABLE IF NOT EXISTS `lab_analyte` (
     `lab_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
     `lab_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `pm_id` int(11) NOT NULL COMMENT 'Foreign key => project_manager',
@@ -189,7 +185,7 @@ CREATE TABLE `lab_analyte` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Table structure for table `lab_sample_matrix`
-CREATE TABLE `lab_sample_matrix` (
+CREATE TABLE IF NOT EXISTS `lab_sample_matrix` (
     `task_id` int(11) NOT NULL,
     `lab_analyte_id` int(11) NOT NULL,
     `location_id` int(11) NOT NULL,
@@ -202,7 +198,7 @@ CREATE TABLE `lab_sample_matrix` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Table structure for table `task_coc_info`
-CREATE TABLE `task_coc_info` (
+CREATE TABLE IF NOT EXISTS `task_coc_info` (
     `task_coc_id` int(11) NOT NULL AUTO_INCREMENT,
     `task_id` int(11) NOT NULL,
     `service_id` int(11) NOT NULL COMMENT 'Lab ID number',
@@ -224,7 +220,7 @@ CREATE TABLE `task_coc_info` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Table structure for table `task_field_analyte
-CREATE TABLE `task_field_analyte` (
+CREATE TABLE IF NOT EXISTS `task_field_analyte` (
     `task_id` int(11) NOT NULL,
     `field_analyte_id` int(11) NOT NULL,
     CONSTRAINT `fk_tfa_task` FOREIGN KEY (`task_id`)
@@ -234,7 +230,7 @@ CREATE TABLE `task_field_analyte` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Table structure for table `task_field_data_location
-CREATE TABLE `task_field_data_location` (
+CREATE TABLE IF NOT EXISTS `task_field_data_location` (
     `task_id` int(11) NOT NULL,
     `location_id` int(11) NOT NULL,
     CONSTRAINT `fk_tfdl_task` FOREIGN KEY (`task_id`)
@@ -244,7 +240,7 @@ CREATE TABLE `task_field_data_location` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Table structure for table `task_lab_analyte`
-CREATE TABLE `task_lab_analyte` (
+CREATE TABLE IF NOT EXISTS `task_lab_analyte` (
     `task_id` int(11) NOT NULL,
     `lab_analyte_id` int(11) NOT NULL,
     CONSTRAINT `fk_tla_task` FOREIGN KEY (`task_id`)
@@ -254,7 +250,7 @@ CREATE TABLE `task_lab_analyte` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Table structure for table `task_lab_data_location`
-CREATE TABLE `task_lab_data_location` (
+CREATE TABLE IF NOT EXISTS `task_lab_data_location` (
     `task_id` int(11) NOT NULL,
     `location_id` int(11) NOT NULL,
     CONSTRAINT `fk_tldl_task` FOREIGN KEY (`task_id`)
@@ -264,7 +260,7 @@ CREATE TABLE `task_lab_data_location` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Table structure for table `task_location
-CREATE TABLE `task_location` (
+CREATE TABLE IF NOT EXISTS `task_location` (
     `task_id` int(11) NOT NULL,
     `location_id` int(11) NOT NULL,
     CONSTRAINT `fk_tl_task` FOREIGN KEY (`task_id`)
@@ -275,7 +271,7 @@ CREATE TABLE `task_location` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Table structure for table `task_service`
-CREATE TABLE `task_service` (
+CREATE TABLE IF NOT EXISTS `task_service` (
     `task_id` int(11) NOT NULL,
     `service_id` int(11) NOT NULL,
     CONSTRAINT `fk_ts_task` FOREIGN KEY (`task_id`)
@@ -286,7 +282,7 @@ CREATE TABLE `task_service` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Table structure for table `task_technician`
-CREATE TABLE `task_technician` (
+CREATE TABLE IF NOT EXISTS `task_technician` (
     `task_id` int(11) NOT NULL,
     `technician_id` int(11) NOT NULL,
     `is_lead_tech` tinyint(1) DEFAULT 0,
@@ -298,7 +294,7 @@ CREATE TABLE `task_technician` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Table structure for table `project_field_analyte`
-CREATE TABLE `project_field_analyte` (
+CREATE TABLE IF NOT EXISTS `project_field_analyte` (
     `project_id` int(11) NOT NULL,
     `field_analyte_id` int(11) NOT NULL,
     CONSTRAINT `fk_pfa_project` FOREIGN KEY (`project_id`)
@@ -309,7 +305,7 @@ CREATE TABLE `project_field_analyte` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Table structure for table `project_lab_analyte`
-CREATE TABLE `project_lab_analyte` (
+CREATE TABLE IF NOT EXISTS `project_lab_analyte` (
     `project_id` int(11) NOT NULL,
     `lab_analyte_id` int(11) NOT NULL,
     CONSTRAINT `fk_pla_project` FOREIGN KEY (`project_id`)
@@ -320,7 +316,7 @@ CREATE TABLE `project_lab_analyte` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Table structure for table `common_lab_analyte`
-CREATE TABLE `common_lab_analyte` (
+CREATE TABLE IF NOT EXISTS `common_lab_analyte` (
     `common_lab_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
     `common_lab_analyte_category_name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
     `common_lab_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -329,7 +325,7 @@ CREATE TABLE `common_lab_analyte` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Table structure for table `common_field_analyte`
-CREATE TABLE `common_field_analyte` (
+CREATE TABLE IF NOT EXISTS `common_field_analyte` (
     `common_field_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
     `common_field_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     UNIQUE INDEX `un_cfa` (`common_field_analyte_name` ASC),
@@ -337,7 +333,7 @@ CREATE TABLE `common_field_analyte` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Table structure for table `document`
-CREATE TABLE `document` (
+CREATE TABLE IF NOT EXISTS `document` (
     `document_id` int(11) NOT NULL AUTO_INCREMENT,
     `document_content_type` varchar(50) NOT NULL COMMENT 'Store the content type of the document',
     `document_category` varchar(50) NOT NULL COMMENT 'Is the name of the table/class for which we want a document. Possible values(13-01-14): location, technician',
@@ -349,7 +345,7 @@ CREATE TABLE `document` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Table structure for table `log`
-CREATE TABLE `log` (
+CREATE TABLE IF NOT EXISTS `log` (
     `log_id` int(11) NOT NULL AUTO_INCREMENT,
     `log_request_id` varchar(50) NOT NULL,
     `log_start` varchar(20) NOT NULL,
@@ -361,7 +357,7 @@ CREATE TABLE `log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Table structure for table `project_service`
-CREATE TABLE `project_service` (
+CREATE TABLE IF NOT EXISTS `project_service` (
   `project_id` int(11) NOT NULL,
   `service_id` int(11) NOT NULL,
     CONSTRAINT `fk_ps_p` FOREIGN KEY (`project_id`)
@@ -372,14 +368,14 @@ CREATE TABLE `project_service` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Table structure for table `master_lab_analyte`
-CREATE TABLE `master_lab_analyte` (
+CREATE TABLE IF NOT EXISTS `master_lab_analyte` (
     `master_lab_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
     `master_lab_analyte_category_name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
     `master_lab_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     PRIMARY KEY (`master_lab_analyte_id`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
-CREATE TABLE `master_form` (
+CREATE TABLE IF NOT EXISTS `master_form` (
   `form_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `content_type` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `category` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -390,7 +386,7 @@ CREATE TABLE `master_form` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Table structure for table `project_form`
-CREATE TABLE `project_form` (
+CREATE TABLE IF NOT EXISTS `project_form` (
   `project_id` int(11) NOT NULL,
   `master_form_id` int(11) DEFAULT NULL,
   `user_form_id` int(11) DEFAULT NULL,
@@ -399,7 +395,7 @@ CREATE TABLE `project_form` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Table structure for table `user_form`
-CREATE TABLE `user_form` (
+CREATE TABLE IF NOT EXISTS `user_form` (
   `form_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `content_type` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `category` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -413,22 +409,23 @@ CREATE TABLE `user_form` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Table structure for table `task_form`
-CREATE TABLE `task_form`(
+CREATE TABLE IF NOT EXISTS `task_form`(
 `task_id` INT(11) NOT NULL,
 `master_form_id` INT(11),
 `user_form_id` INT(11),
 UNIQUE INDEX `un_tf_t_uf_mf` (`task_id`, `master_form_id`, `user_form_id`),
-CONSTRAINT `fk_tf_task` FOREIGN KEY (`task_id`) REFERENCES `task`(`task_id`) ON DELETE CASCADE );
+CONSTRAINT `fk_tf_task` FOREIGN KEY (`task_id`) REFERENCES `task`(`task_id`) ON DELETE CASCADE
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Table structure for `user_role`
-CREATE TABLE `user_role` (
+CREATE TABLE IF NOT EXISTS `user_role` (
     `user_role_id` smallint(2) NOT NULL,
-    `user_role_desc` varchar(100)
+    `user_role_desc` varchar(100),
     PRIMARY KEY (`user_role_id`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Table structure for `user`
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS `user` (
     `user_id` int(11) NOT NULL AUTO_INCREMENT,
     `user_login` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
     `user_password` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -443,7 +440,7 @@ CREATE TABLE `user` (
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Table structure for `lab_analyte_location`
-CREATE TABLE `lab_analyte_location` (
+CREATE TABLE IF NOT EXISTS `lab_analyte_location` (
   `task_id` int(11) NOT NULL,
   `location_id` int(11) NOT NULL,
   `lab_analyte_id` int(11) NOT NULL,
@@ -456,9 +453,20 @@ CREATE TABLE `lab_analyte_location` (
     UNIQUE INDEX `un_lal` (`task_id` ASC, `location_id` ASC, `lab_analyte_id`ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `task_note` (
+  `task_note_id` int(11) NOT NULL AUTO_INCREMENT,
+  `task_id` int(11) NOT NULL,
+  `task_note_category_type` varchar(25) NOT NULL COMMENT 'Possible values: pm_id, technician_id',
+  `task_note_category_value` int(11) NOT NULL COMMENT 'Represents the value of the object property set in the task_note_category_type',
+  `task_note_value`varchar(500) NULL COMMENT 'The value of the note typed by the user',
+    CONSTRAINT `fk_tn_task` FOREIGN KEY (`task_id`)
+        REFERENCES `task` (`task_id`) ON DELETE CASCADE,
+    PRIMARY KEY (`task_note_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
 -- Dumping data for table `project_manager`
 INSERT INTO `project_manager` (`pm_comp_name`, `pm_name`, `pm_address`, `pm_phone`, `pm_email`) VALUES
-('comp name', 'John', 'Doe', '1234567890', 'test@fwa.net');
+('comp name', 'John', 'Doe', '1234567890', 'test@fwa.net'),
 ('','Demo User','','','');
 
 -- Dumping data for table `user_role`
