@@ -23,7 +23,7 @@ $(document).ready(function(){
  * Responsible to manage tasks.
  */
 (function(task_coc) {
-  var editing = false;
+  task_coc.editing = false;
   
   task_coc.getTaskCoc = function(task_id) {
     //get task coc object
