@@ -456,6 +456,17 @@ CREATE TABLE `lab_analyte_location` (
     UNIQUE INDEX `un_lal` (`task_id` ASC, `location_id` ASC, `lab_analyte_id`ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+CREATE TABLE `task_note` (
+  `task_note_id` int(11) NOT NULL AUTO_INCREMENT,
+  `task_id` int(11) NOT NULL,
+  `task_note_category_type` varchar(25) NOT NULL COMMENT 'Possible values: pm_id, technician_id',
+  `task_note_category_value` int(11) NOT NULL COMMENT 'Represents the value of the object property set in the task_note_category_type',
+  `task_note_value`varchar(500) NULL COMMENT 'The value of the note typed by the user',
+    CONSTRAINT `fk_tn_task` FOREIGN KEY (`task_id`)
+        REFERENCES `task` (`task_id`) ON DELETE CASCADE,
+    PRIMARY KEY (`task_note_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
 -- Dumping data for table `project_manager`
 INSERT INTO `project_manager` (`pm_comp_name`, `pm_name`, `pm_address`, `pm_phone`, `pm_email`) VALUES
 ('comp name', 'John', 'Doe', '1234567890', 'test@fwa.net');
