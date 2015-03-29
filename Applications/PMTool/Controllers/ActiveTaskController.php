@@ -29,19 +29,11 @@ class ActiveTaskController extends \Library\BaseController {
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::SetCurrentSessionTask($this->user(), NULL, $rq->getData("task_id"));
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
-
-	/*
-    //Fetch prompt box data from xml and pass to view as an array
-    $prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"task", "targetaction": "view", "operation": ["addNullCheck","addNullCheckForCopy"]}', $this->app->name());
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
-
-    //Fetch alert box data
-    $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"task", "targetaction": "view", "operation": ["addUniqueCheck"]}', $this->app->name());
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);
-	*/
 	
+	//\Applications\PMTool\Helpers\CommonHelper::pr($_SESSION);
+
 	//Fetch tooltip data from xml and pass to view as an array
-    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"activeTask", "targetaction": "showForm", "targetattr": ["h4-taskstatus-leftcol-gi", "h4-taskstatus-rightcol-gi"]}', $this->app->name());
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"activeTask", "targetaction": "showForm", "targetattr": ["h4-taskstatus-leftcol-gi", "h4-taskstatus-rightcol-gi", "h4-taskstatus-notes-gi", "h4-taskstatus-notesrecord-gi"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
     $this->page->addVar(
@@ -179,4 +171,98 @@ class ActiveTaskController extends \Library\BaseController {
       )
 	);
   }
+  
+  public function executePostNote(\Library\HttpRequest $rq) {
+	$result = $this->InitResponseWS(); // Init result
+	
+	$currSessTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+	
+	//Prepare data object
+	$userConnected = \Applications\PMTool\Helpers\UserHelper::GetUserConnectedSession($this->user());
+	$data = array('task_id' => $currSessTask['task_info_obj']->task_id(), 'task_note_category_type' => $userConnected->user_type(), 'task_note_category_value' => $userConnected->user_id(), 'task_note_value' => $this->dataPost['note']);
+	
+	//Init PDO
+    $task_note = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Task_note());
+	
+    $result["data"] = $task_note;
+
+    $manager = $this->managers->getManagerOf($this->module());
+    $result_save = $manager->add($task_note);
+	
+	$this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::ActiveTask,
+        "resx_key" => $this->action(),
+        "step" => ($result_save) ? "success" : "error"
+      )
+	);
+  }
+  
+  public function executeGetNotes(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS(); // Init result
+	//Get current task
+	$currSessTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+	
+	//Init data structure
+	$data['task_id'] = $currSessTask['task_info_obj']->task_id();
+	
+	//Init PDO
+    $task_note = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Task_note());
+	$manager = $this->managers->getManagerOf($this->module());
+    $result_note = $manager->selectMany($task_note, "task_id");
+	
+	$result_get = 0;
+	
+	if(!empty($result_note)) {
+	  $user_arr = array();
+	  foreach($result_note as $note_key => $note_obj) {
+		$datauser = null;
+		//Fetch user details who posted that note
+		if($note_obj->task_note_category_type() == 'pm_id') {
+		  //Project Manager
+		  //Init data structure
+		  $datauser['pm_id'] = $note_obj->task_note_category_value();
+			
+		  //Init PDO
+	      $pm_user = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($datauser, new \Applications\PMTool\Models\Dao\Project_manager());
+		  $manager = $this->managers->getManagerOf($this->module());
+		  $result_pm_user = $manager->selectMany($pm_user, "pm_id");
+		  
+		  //Stuff into main array
+		  array_push($user_arr, $result_pm_user[0]->pm_name());
+		  
+		}
+		else {
+		  //Technician
+		  //Init data structure
+		  $datauser['technician_id'] = $note_obj->task_note_category_value();
+			
+		  //Init PDO
+	      $tech_user = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($datauser, new \Applications\PMTool\Models\Dao\Technician());
+		  $manager = $this->managers->getManagerOf($this->module());
+		  $result_tech_user = $manager->selectMany($tech_user, "technician_id");
+		  
+		  //Stuff into main array
+		  array_push($user_arr, $result_tech_user[0]->technician_name());
+		}
+	  }
+	  $result_get = 1;
+	}
+	
+	//cleanup into a nice array
+	$result['notes'] = $result_note;
+	$result['users'] = $user_arr;
+	
+		
+	//\Applications\PMTool\Helpers\CommonHelper::pr($user_arr);
+	
+	$this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::ActiveTask,
+        "resx_key" => $this->action(),
+        "step" => ($result_get) ? "success" : "error"
+      )
+	);
+  }
+  
 }

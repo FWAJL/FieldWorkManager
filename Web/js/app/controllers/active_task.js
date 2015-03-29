@@ -12,6 +12,34 @@
 var task_technician_ids = "";
 
 $(document).ready(function(){
+	
+  //active task sub module specific UI cleanups
+  if($('#modforjs').length > 0) {
+	switch($('#modforjs').val()) {
+      case 'taskstatus':
+        $('.at').hide();
+		$('#btn_refreshnotes').show();
+		$('#task_status_notes').css('height', '150px');
+		
+		//load task notes
+		activetask_manager.getNotes('activetask', 'getNotes', function(reply){
+		  if(reply.notes.length > 0) {
+			for(i in reply.notes) {
+			  var classStr = (i % 2 == 0) ? 'note-user1' : 'note-user2';
+ 			  var str = '<div class="msg-row"><div class="' + classStr + '">' + reply.users[i] + ': </div><div class="user-msg">' + reply.notes[i].task_note_value + '</div></div>';
+			  $('#messages').append(str);
+			}
+		  }
+		});
+		
+		
+		
+        break;
+      default:
+        //nothing
+	}	 
+  }
+  
   
   if($('#categorized-list-left').length > 0) {
     $('#categorized-list-left').css('height', '200');
@@ -69,6 +97,40 @@ $(document).ready(function(){
 	
 	activetask_manager.updateTaskTechnicians(selection_type, id);
   });
+  
+  //at status note onfocus
+  $('#task_status_notes').focus(function(){
+	$('#btn_savenotes').show();
+  });
+  
+  $('#task_status_notes').blur(function(){
+	if($('#task_status_notes').val() == ''){
+		$('#btn_savenotes').hide();
+	}
+  });
+  
+  $('#btn_savenotes').click(function(){
+	activetask_manager.postNote($('#task_status_notes').val(), 'activetask', 'postNote', function(){
+	  $('#task_status_notes').val('');
+	  $('#task_status_notes').focus();
+	});
+  });
+  
+  //refresh notes
+  $('#btn_refreshnotes').click(function(){
+	//load task notes
+	activetask_manager.getNotes('activetask', 'getNotes', function(reply){
+	  if(reply.notes.length > 0) {
+		$('#messages').html('');
+		for(i in reply.notes) {
+		  var classStr = (i % 2 == 0) ? 'note-user1' : 'note-user2';
+		  var str = '<div class="msg-row"><div class="' + classStr + '">' + reply.users[i] + ': </div><div class="user-msg">' + reply.notes[i].task_note_value + '</div></div>';
+		  $('#messages').append(str);
+		}
+	  }
+	});
+  });
+  
 });  
 
 
@@ -135,6 +197,28 @@ $(document).ready(function(){
       } else {//success
         toastr.success(reply.message);
         utils.redirect("activetask/communications?task_id=" + utils.getQueryVariable("task_id"));
+      }
+    });
+  };
+  
+  activetask_manager.postNote = function(note, controller, action, clbk){
+	datacx.post(controller + "/" + action, {"note": note}).then(function(reply) {
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+      } else {//success
+        toastr.success(reply.message);
+        clbk();
+      }
+    });
+  };
+  
+  activetask_manager.getNotes = function(controller, action, clbk){
+    datacx.post(controller + "/" + action, {/*empty JSON*/}).then(function(reply) {
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+      } else {//success
+        toastr.success(reply.message);
+        clbk(reply);
       }
     });
   };
