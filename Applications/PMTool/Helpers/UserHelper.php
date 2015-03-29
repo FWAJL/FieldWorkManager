@@ -28,4 +28,9 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
 class UserHelper {
+
+  public static function SaveRoutes($user, $routes) {
+    $user->setAttribute(\Library\Enums\SessionKeys::UserRoutes, $routes);
+  }
+
 }

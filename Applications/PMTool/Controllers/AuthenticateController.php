@@ -25,6 +25,7 @@
 namespace Applications\PMTool\Controllers;
 
 use Applications\PMTool\AuthProvider;
+use Library\Interfaces\IUser;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
@@ -63,20 +64,27 @@ class AuthenticateController extends \Library\BaseController {
     $data_sent = $rq->retrievePostAjaxData(FALSE);
 
     $authProvider = new AuthProvider($this->app->config->get("encryption_key"), $this->managers->getManagerOf('Login'));
-    $authProvider->createUser($data_sent);
-    $this->app->auth->authenticate($authProvider->getUser());
+    $authProvider->prepareUser($data_sent);
+    if($authProvider->getUser() instanceof \Library\Interfaces\IUser) {
+      $this->app->auth->authenticate($authProvider->getUser());
 
-    //If user_db is null or not matching, set error message
-    if ($authProvider->getUser()) {
-      switch ($authProvider->getUser()->getType()) {
-        case 'technician_id':
-          break;
-        case 'pm_id':
-          \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this->app()->user(), $authProvider->getUserType(), true);
-          break;
+      if ($authProvider->getUser()) {
+        $user = $this->app->user;
+        $routes = array_filter($this->app->router->routes(), function ($route) use ($user) {
+          return (count($route->role()) == 0) || in_array($user->getRole(), $route->role());
+        });
+        \Applications\PMTool\Helpers\UserHelper::SaveRoutes($user, $routes);
+        switch ($authProvider->getUser()->getType()) {
+          case 'technician_id':
+            break;
+          case 'pm_id':
+            \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this->app()->user(), $authProvider->getUserType(), true);
+            break;
+        }
+        $result = $this->InitResponseWS("success");
       }
-      $result = $this->InitResponseWS("success");
     }
+
     //return the JSON data
     echo \Library\HttpResponse::encodeJson($result);
   }
