@@ -251,7 +251,7 @@ class ActiveTaskController extends \Library\BaseController {
 	
 	//cleanup into a nice array
 	$result['notes'] = $result_note;
-	$result['users'] = $user_arr;
+	$result['users'] = (!empty($user_arr)) ? $user_arr : array();
 	
 		
 	//\Applications\PMTool\Helpers\CommonHelper::pr($user_arr);
