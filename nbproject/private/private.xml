@@ -3,16 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Applications/PMTool/Views/Modules/popup_prompt.php</file>
-            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Web/js/app/controllers/map/mapAllProjects.js</file>
-            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Applications/PMTool/Resources/Local/map.en.xml</file>
-            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Web/js/app/controllers/map_manager.js</file>
-            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Applications/PMTool/Views/Map/Modules/popup_prompt.php</file>
-            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Applications/PMTool/Resources/Common/tooltipandpopupstrings.en.xml</file>
-            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Applications/PMTool/Views/Modules/popup_selector.php</file>
-            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Web/js/app/services/maps.js</file>
-            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Applications/PMTool/Config/appsettings.xml</file>
-            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Applications/PMTool/Views/Modules/popup_msg.php</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Applications/PMTool/Views/Task/showForm.php</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Applications/PMTool/Views/TaskForm/manageForms.php</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Applications/PMTool/Views/ActiveTask/Modules/active_task_buttons.php</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Applications/PMTool/Views/Location/listAll.php</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Web/js/app/controllers/task_form.js</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Applications/PMTool/Views/Modules/categorized_promote_buttons.php</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Applications/PMTool/Views/Modules/promote_buttons.php</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Applications/PMTool/Views/Task/Modules/task_buttons.php</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Applications/PMTool/Views/Task/listAll.php</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Applications/PMTool/Views/Modules/task_tabs_open.php</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Web/js/app/controllers/technician_manager.js</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Web/js/app/controllers/tabs.js</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkAssistantMVC/Applications/PMTool/Views/Modules/group_list_promote_buttons.php</file>
         </group>
     </open-files>
 </project-private>
