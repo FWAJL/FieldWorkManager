@@ -32,4 +32,23 @@ class UserHelper {
 	return $user->keyExistInSession(\Library\Enums\SessionKeys::UserConnected) ?
 				$user->getAttribute(\Library\Enums\SessionKeys::UserConnected) : FALSE;
   }
+  
+  public static function GetRoleFromType($userType) {
+    $roleId = 1;
+    switch ($userType) {
+      case "administrator_id":
+        $roleId = 1;
+        break;
+      case "pm_id":
+        $roleId = 2;
+        break;
+      case "technician_id":
+        $roleId = 3;
+        break;
+      default:
+        $roleId = 0;
+        break;
+    }
+    return $roleId;
+  }
 }
