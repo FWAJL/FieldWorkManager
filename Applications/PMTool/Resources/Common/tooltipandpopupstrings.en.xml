@@ -53,6 +53,8 @@
 	
 	<resource uicomponent="tooltip" targetcontroller="activeTask" targetaction="showForm" targetattr="h4-taskstatus-leftcol-gi" value="Active Task Status Left column header" placement="top" />
 	<resource uicomponent="tooltip" targetcontroller="activeTask" targetaction="showForm" targetattr="h4-taskstatus-rightcol-gi" value="Active Task Status Left column header" placement="top" />
+	<resource uicomponent="tooltip" targetcontroller="activeTask" targetaction="showForm" targetattr="h4-taskstatus-notes-gi" value="Active Task Notes column header" placement="top" />
+	<resource uicomponent="tooltip" targetcontroller="activeTask" targetaction="showForm" targetattr="h4-taskstatus-notesrecord-gi" value="Active Task Notes record header" placement="top" />
 	<resource uicomponent="tooltip" targetcontroller="activeTask" targetaction="forms" targetattr="h4-taskforms-leftcol-gi" value="Active Task forms Left column header" placement="top" />
 	<resource uicomponent="tooltip" targetcontroller="activeTask" targetaction="forms" targetattr="h4-taskforms-rightcol-gi" value="Active Task forms Right column header" placement="top" />
 	<resource uicomponent="tooltip" targetcontroller="activeTask" targetaction="communications" targetattr="h4-taskcomm-leftcol-gi" value="Active Task Comm Left Column" placement="top" />

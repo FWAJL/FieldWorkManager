@@ -45,6 +45,7 @@ class ActiveTask {
   const active_task_instructions = "active_task_instructions";
 
   const task_buttons = "task_buttons";
+  const active_task_buttons = "active_task_buttons";
   const promote_buttons_module = "promote_buttons_module";
 
 
