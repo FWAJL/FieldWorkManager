@@ -28,6 +28,11 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
 class UserHelper {
+  public static function GetUserConnectedSession($user) {
+	return $user->keyExistInSession(\Library\Enums\SessionKeys::UserConnected) ?
+				$user->getAttribute(\Library\Enums\SessionKeys::UserConnected) : FALSE;
+  }
+  
   public static function GetRoleFromType($userType) {
     $roleId = 1;
     switch ($userType) {

@@ -10,6 +10,10 @@
   
   <resource key="message_success_startCommWith">Added to communication successfully</resource>
   <resource key="message_error_startCommWith">Failed to start communication</resource>
+  <resource key="message_success_postNote">Note saved successfully</resource>
+  <resource key="message_error_postNote">Failed to save Note</resource>
+  <resource key="message_success_getNotes">Notes for this task populated</resource>
+  <resource key="message_error_getNotes">No Note available yet.</resource>
   
   <resource key="task_tab_info">Task Status</resource>
   <resource key="task_tab_map">Map</resource>
@@ -17,7 +21,9 @@
   <resource key="task_tab_comm">Communications</resource>
   
   <resource key="h4_taskstatus_leftcol">Task Progress</resource>
-  <resource key="h4_taskstatus_rightcol">Instructions and Notes</resource>
+  <resource key="h4_taskstatus_instruction_label">Instructions</resource>
+  <resource key="h4_taskstatus_notes_label">Notes</resource>
+  <resource key="h4_taskstatus_noteshistory">Notes for this Task</resource>
   <resource key="h4_taskforms_leftcol">Completed Forms</resource>
   <resource key="h4_taskforms_rightcol">Forms used for this task</resource>
   <resource key="h4_taskcomm_leftcol">Discussion Thread</resource>
@@ -29,5 +35,13 @@
   <resource key="activetask_button_attach">Attach File</resource>
   <resource key="btn_to_pm_list">Start discussion</resource>
   <resource key="btn_to_project_list">Unselect</resource>
+  <resource key="at_status_savenote">Save</resource>
+  <resource key="at_status_reloadnotes">Refresh</resource>
   
+  <resource key="taskstatus_deadline_label">Task Deadline</resource>
+  <resource key="taskstatus_daysremaining_label">Days Remaining</resource>
+  <resource key="taskstatus_percentcomplete_label">Percent Complete</resource>
+  <resource key="taskstatus_recurrence_label">Recurrence</resource>
+  <resource key="taskstatus_manualtrigger_label">Manual Trigger</resource>
+  <resource key="taskstatus_externaltrigger_label">External Trigger</resource>
 </resources>
