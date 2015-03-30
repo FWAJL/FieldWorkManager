@@ -61,7 +61,7 @@ class AuthenticateController extends \Library\BaseController {
     $result = $this->InitResponseWS();
 
     //Let's retrieve the inputs from AJAX POST request
-    $data_sent = $rq->retrievePostAjaxData(FALSE);
+    $data_sent = $this->dataPost();
 
     $authProvider = new AuthProvider($this->app->config->get("encryption_key"), $this->managers->getManagerOf('Login'));
     $authProvider->prepareUser($data_sent);
@@ -107,12 +107,14 @@ class AuthenticateController extends \Library\BaseController {
   public function executeCreate(\Library\HttpRequest $rq) {
     $protect = new \Library\BL\Core\Encryption();
     $data = array(
-      "username" => $rq->getData("login"),
-      "password" => $rq->getData("pwd"),
-      "pm_name" => "Demo User"
+      "user_login" => $rq->getData("login"),
+      "user_password" => $rq->getData("password"),
+      "user_type" => $rq->getData("type"),
+      "user_role" => \Applications\PMTool\Helpers\UserHelper::GetRoleFromType($rq->getData("type"))
     );
-    $pm = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Project_manager());
-    $pm->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $pm->password()));
+    $user = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($data, new Applications\PMTool\Models\Dao\User());
+    
+    $user->setUser_password($protect->Encrypt($this->app->config->get("encryption_key"), $user->user_password()));
 
     $loginDal = $this->managers->getManagerOf("Login");
     $id = $loginDal->add($pm);

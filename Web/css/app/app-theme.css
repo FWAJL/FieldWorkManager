@@ -371,4 +371,49 @@ ui-widget-content:hover {
 #document-upload {
   clear:both;
 }
+
+/* Active task related CSS */
+.p-desc {
+	font-size: 20px;
+    margin-top: 45px;
+}
+
+.notes-container {
+	font-size: 16px;
+    margin-top: 20px;
+	height:200px;
+	overflow-y : scroll;
+}
+
+#messages div {
+	margin-bottom:5px;
+	margin-top:5px;
+}
+
+.msg-row {
+	width:100%;
+	height:auto;
+	float:left;
+}
+
+.note-user1 {
+	float:left;
+	font-weight:bold;
+	width:28%;
+	min-width:150px;
+}
+.note-user2 {
+	font-weight:bold;
+	color:#A1A1A1;
+	float:left;
+	width:28%;
+	min-width:150px;
+}
+
+.user-msg {
+	float: right;
+    margin-right: 10px;
+    min-width: 320px;
+    width: 70%;
+}
 /* END FILE MODULES */

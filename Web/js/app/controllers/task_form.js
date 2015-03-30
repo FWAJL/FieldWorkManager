@@ -1,4 +1,17 @@
 $(document).ready(function() {
+    
+    $.contextMenu({
+    selector: '.select_item',
+    callback: function(key, options) {
+      if (key === "view") {
+        location_manager.retrieveLocation(options.$trigger);
+    } 
+    },
+    items: {
+      "view": {name: "View"}
+    }
+      });//Manages the context menu
+    
   $(".btn-warning").hide();
 
 
