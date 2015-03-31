@@ -408,8 +408,8 @@ CREATE TABLE IF NOT EXISTS `user_form` (
   CONSTRAINT `fk_uf_project_manager` FOREIGN KEY (`pm_id`) REFERENCES `project_manager` (`pm_id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Table structure for table `task_form`
-CREATE TABLE IF NOT EXISTS `task_form`(
+-- Table structure for table `task_template_form`
+CREATE TABLE IF NOT EXISTS `task_template_form`(
 `task_id` INT(11) NOT NULL,
 `master_form_id` INT(11),
 `user_form_id` INT(11),
