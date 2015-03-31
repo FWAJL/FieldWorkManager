@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <routes version="1.6.15.1">
     <!-- UI routes -->
-    <route url="login" module="Authenticate" action="loadLoginView" resxfile="login" type="ui" role="all">
+    <route url="login" module="Authenticate" action="loadLoginView" resxfile="login" type="ui">
         <js_files>
             <js_file use="html" value="Web/js/app/validator.js" />
             <js_file use="html" value="Web/js/app/controllers/auth.js" />
@@ -13,7 +13,7 @@
     </route>
     
     <!-- login -->
-    <route url="logout" module="Authenticate" action="disconnect" resxfile="login" type="ui" role="all" />
+    <route url="logout" module="Authenticate" action="disconnect" resxfile="login" type="ui"/>
     <route url="project" module="Project" action="index" resxfile="project" type="ui">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/facility_manager.js" />
@@ -30,7 +30,7 @@
     </route>
     
     <!-- project/index -->
-    <route url="project/showForm" module="Project" action="showForm" resxfile="project" type="ui" role="5">
+    <route url="project/showForm" module="Project" action="showForm" resxfile="project" type="ui">
         <js_files>
             <!-- This uses the same scripts as the project route, e.g. use attribute => route value -->
             <js_file use="project" />
@@ -58,7 +58,7 @@
     </route>
     <!-- project/showAddForm -->
     
-    <route url="project/listAll" module="Project" action="listAll" resxfile="project" type="ui" role="212">
+    <route url="project/listAll" module="Project" action="listAll" resxfile="project" type="ui">
         <js_files>
             <js_file use="project" />
         </js_files>
