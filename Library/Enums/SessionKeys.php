@@ -33,6 +33,7 @@ abstract class SessionKeys {
   const UserRole = "user_role";
   const UserTypeId = "user_value";
   const UserType = "user_type";
+  const UserRoutes = "user_routes";
 
   const UserProjects= "user_projects";
   const UserProjectFacilityList= "user_project_facility_list";
