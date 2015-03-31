@@ -48,6 +48,10 @@ class Route {
     }
   }
 
+  public function url() {
+    return $this->url;
+  }
+
   public function setAction($action) {
     if (is_string($action)) {
       $this->action = $action;
@@ -106,7 +110,11 @@ class Route {
 
 
   public function setRole($roleString) {
-    $this->role = explode(",", $roleString);
+    if ($roleString == '' || strtolower($roleString) == 'all') {
+      $this->role = array();
+    } else {
+      $this->role = explode(",", $roleString);
+    }
   }
   
   public function action() {
