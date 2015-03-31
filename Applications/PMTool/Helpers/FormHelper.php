@@ -192,7 +192,7 @@ class FormHelper {
   public static function GetTaskForms($caller,$sessionTask) {
     $result = array();
     if ($sessionTask !== NULL) {
-      $taskForm = new \Applications\PMTool\Models\Dao\Task_form();
+      $taskForm = new \Applications\PMTool\Models\Dao\Task_template_form();
       $taskId = $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id();
       $taskForm->setTask_id($taskId);
       $manager = $caller->managers()->getManagerOf("TaskForm");

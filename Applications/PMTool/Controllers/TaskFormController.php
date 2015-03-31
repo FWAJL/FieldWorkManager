@@ -32,7 +32,7 @@ class TaskFormController extends \Library\BaseController {
     $task_id = $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id();
     foreach ($matchedMasterFormElements as $form) {
       $manager = $this->managers->getManagerOf("TaskForm");
-      $taskForm = new \Applications\PMTool\Models\Dao\Task_form();
+      $taskForm = new \Applications\PMTool\Models\Dao\Task_template_form();
       $taskForm->setTask_id($task_id);
       $taskForm->setMaster_form_id($form->form_id());
       $taskForm->setUser_form_id(null);
@@ -47,7 +47,7 @@ class TaskFormController extends \Library\BaseController {
 
     foreach ($matchedUserFormElements as $form) {
       $manager = $this->managers->getManagerOf("ProjectForm");
-      $taskForm = new \Applications\PMTool\Models\Dao\Task_form();
+      $taskForm = new \Applications\PMTool\Models\Dao\Task_template_form();
       $taskForm->setTask_id($task_id);
       $taskForm->setMaster_form_id(null);
       $taskForm->setUser_form_id($form->form_id());
