@@ -14,7 +14,7 @@
     
     <!-- login -->
     <route url="logout" module="Authenticate" action="disconnect" resxfile="login" type="ui"/>
-    <route url="project" module="Project" action="index" resxfile="project" type="ui">
+    <route url="project" module="Project" action="index" resxfile="project" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/facility_manager.js" />
             <js_file use="head" value="Web/js/app/controllers/project_manager.js" />
@@ -30,7 +30,7 @@
     </route>
     
     <!-- project/index -->
-    <route url="project/showForm" module="Project" action="showForm" resxfile="project" type="ui">
+    <route url="project/showForm" module="Project" action="showForm" resxfile="project" type="ui" role="2">
         <js_files>
             <!-- This uses the same scripts as the project route, e.g. use attribute => route value -->
             <js_file use="project" />
@@ -58,7 +58,7 @@
     </route>
     <!-- project/showAddForm -->
     
-    <route url="project/listAll" module="Project" action="listAll" resxfile="project" type="ui">
+    <route url="project/listAll" module="Project" action="listAll" resxfile="project" type="ui" role="2">
         <js_files>
             <js_file use="project" />
         </js_files>
@@ -76,7 +76,7 @@
     </route>
     <!-- project/listAll -->
 	
-	<route url="project/selectProject" module="Project" action="selectProject" resxfile="project" type="ui">
+	<route url="project/selectProject" module="Project" action="selectProject" resxfile="project" type="ui" role="2">
         <js_files>
             <js_file use="project" />
         </js_files>
@@ -93,7 +93,7 @@
 	
     
     <!-- locations -->
-    <route url="location" module="Location" action="index" resxfile="location" type="ui">
+    <route url="location" module="Location" action="index" resxfile="location" type="ui" role="2">
         <js_files></js_files>
         <css_files>
             <css_file value="Web/css/app/nav.css" />
@@ -104,7 +104,7 @@
     </route>
     <!-- location/index -->
 
-    <route url="location/listAll" module="Location" action="listAll" resxfile="location" type="ui">
+    <route url="location/listAll" module="Location" action="listAll" resxfile="location" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/location_manager.js"/>
         </js_files>
@@ -120,7 +120,7 @@
     </route>
     <!-- location/listAll -->
     
-    <route url="location/showForm" module="Location" action="showForm" resxfile="location" type="ui">
+    <route url="location/showForm" module="Location" action="showForm" resxfile="location" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/location_manager.js" />
         </js_files>
@@ -140,7 +140,7 @@
     </route>
     <!-- location/showForm -->
     
-     <route url="location/uploadList" module="Location" action="uploadList" resxfile="location" type="ui">
+     <route url="location/uploadList" module="Location" action="uploadList" resxfile="location" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/location_manager.js" />
         </js_files>
@@ -155,7 +155,7 @@
     <!-- location/uploadList -->
     
     <!-- technicians -->
-    <route url="technician" module="Technician" action="index" resxfile="technician" type="ui">
+    <route url="technician" module="Technician" action="index" resxfile="technician" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/technician_manager.js" />
             <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js" />
@@ -169,7 +169,7 @@
     </route>
     <!-- technician/index -->
     
-    <route url="technician/listAll" module="Technician" action="listAll" resxfile="technician" type="ui">
+    <route url="technician/listAll" module="Technician" action="listAll" resxfile="technician" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/technician_manager.js" />
         </js_files>
@@ -186,7 +186,7 @@
     </route>
     <!-- technician/listAll -->
     
-    <route url="technician/showForm" module="Technician" action="showForm" resxfile="technician" type="ui">
+    <route url="technician/showForm" module="Technician" action="showForm" resxfile="technician" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/technician_manager.js" />
         </js_files>
@@ -207,7 +207,7 @@
 
 
     <!--Maps -->
-    <route url="map/allProjects" module="Map" action="loadView" resxfile="map" type="ui">
+    <route url="map/allProjects" module="Map" action="loadView" resxfile="map" type="ui" role="2">
         <js_files>
             <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
@@ -229,7 +229,7 @@
     </route>
     <!--Map all projects-->
 
-    <route url="map/currentProject" module="Map" action="loadCurrentView" resxfile="map" type="ui">
+    <route url="map/currentProject" module="Map" action="loadCurrentView" resxfile="map" type="ui" role="2">
         <js_files>
             <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
@@ -251,7 +251,7 @@
     </route>
     <!--Map current project-->
 
-    <route url="map/currentProjectLocations" module="Map" action="loadCurrentLocationsView" resxfile="map" type="ui">
+    <route url="map/currentProjectLocations" module="Map" action="loadCurrentLocationsView" resxfile="map" type="ui" role="2">
         <js_files>
             <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
@@ -277,7 +277,7 @@
     </route>
     <!--Map current project locations-->
 
-    <route url="map/taskLocations" module="Map" action="loadCurrentTasksView" resxfile="map" type="ui">
+    <route url="map/taskLocations" module="Map" action="loadCurrentTasksView" resxfile="map" type="ui" role="2">
         <js_files>
             <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
@@ -302,7 +302,7 @@
     <!--Map current project-->
 
     <!--Tasks  -->
-    <route url="task" module="Task" action="index" resxfile="task" type="ui">
+    <route url="task" module="Task" action="index" resxfile="task" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
             <!--      <js_file use="head" value="Web/js/app/controllers/task_technicians_manager.js"/>
@@ -319,7 +319,7 @@
     </route>
     <!--   task/index  -->
     
-    <route url="task/listAll" module="Task" action="listAll" resxfile="task" type="ui">
+    <route url="task/listAll" module="Task" action="listAll" resxfile="task" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
         </js_files>
@@ -336,7 +336,7 @@
         </php_modules>
     </route><!--   task/listAll -->
 	
-	<route url="task/selectTask" module="Task" action="selectTask" resxfile="task" type="ui">
+	<route url="task/selectTask" module="Task" action="selectTask" resxfile="task" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
         </js_files>
@@ -350,7 +350,7 @@
         </php_modules>
     </route><!--   task/listAll -->
     
-    <route url="task/showForm" module="Task" action="showForm" resxfile="task" type="ui">
+    <route url="task/showForm" module="Task" action="showForm" resxfile="task" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
         </js_files>
@@ -369,7 +369,7 @@
         </php_modules>
     </route><!--  task/showAddForm -->
     
-    <route url="activetask/showForm" module="ActiveTask" action="showForm" resxfile="active_task" type="ui">
+    <route url="activetask/showForm" module="ActiveTask" action="showForm" resxfile="active_task" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/active_task.js" />
         </js_files>
@@ -391,7 +391,7 @@
     </route><!--  activetask/showAddForm -->
 	
 	
-	<route url="activetask/map" module="ActiveTask" action="map" resxfile="active_task" type="ui">
+	<route url="activetask/map" module="ActiveTask" action="map" resxfile="active_task" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/active_task.js" />
         </js_files>
@@ -406,7 +406,7 @@
     </route><!--  activetask/map -->
 	
 	
-	<route url="activetask/forms" module="ActiveTask" action="forms" resxfile="active_task" type="ui">
+	<route url="activetask/forms" module="ActiveTask" action="forms" resxfile="active_task" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/active_task.js" />
         </js_files>
@@ -421,7 +421,7 @@
         </php_modules>
     </route><!--  activetask/forms -->
 	
-	<route url="activetask/communications" module="ActiveTask" action="communications" resxfile="active_task" type="ui">
+	<route url="activetask/communications" module="ActiveTask" action="communications" resxfile="active_task" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/active_task.js" />
         </js_files>
@@ -440,7 +440,7 @@
         </php_modules>
     </route><!--  activetask/communications -->
 	
-	<route url="task/addPrompt" module="Task" action="addPrompt" resxfile="task" type="ui">
+	<route url="task/addPrompt" module="Task" action="addPrompt" resxfile="task" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
         </js_files>
@@ -454,7 +454,7 @@
     </route>
 	<!-- task/addPrompt -->
     
-    <route url="task/locations" module="TaskLocation" action="manageLocations" resxfile="task_location" type="ui">
+    <route url="task/locations" module="TaskLocation" action="manageLocations" resxfile="task_location" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_location.js" />
         </js_files>
@@ -471,7 +471,7 @@
         </php_modules>
     </route><!--  task/locations --> 
     
-    <route url="task/technicians" module="TaskTechnician" action="manageTechnicians" resxfile="task_technician" type="ui">
+    <route url="task/technicians" module="TaskTechnician" action="manageTechnicians" resxfile="task_technician" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_technician.js" />
         </js_files>
@@ -488,7 +488,7 @@
         </php_modules>
     </route><!--  task/technicians -->
     
-    <route url="task/fieldAnalytes" module="TaskFieldAnalyte" action="manageFieldAnalytes" resxfile="task_field_analyte" type="ui">
+    <route url="task/fieldAnalytes" module="TaskFieldAnalyte" action="manageFieldAnalytes" resxfile="task_field_analyte" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_field_analyte.js" />
         </js_files>
@@ -505,7 +505,7 @@
         </php_modules>
     </route><!--  task/fieldAnalytes -->
 	
-	<route url="task/labAnalytes" module="TaskLabAnalyte" action="manageLabAnalytes" resxfile="task_lab_analyte" type="ui">
+	<route url="task/labAnalytes" module="TaskLabAnalyte" action="manageLabAnalytes" resxfile="task_lab_analyte" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_lab_analyte.js" />
         </js_files>
@@ -522,7 +522,7 @@
         </php_modules>
     </route><!--  task/labAnalytes -->
 	
-	<route url="task/coc" module="TaskCoc" action="manageCoc" resxfile="task" type="ui">
+	<route url="task/coc" module="TaskCoc" action="manageCoc" resxfile="task" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_coc.js" />
         </js_files>
@@ -539,7 +539,7 @@
         </php_modules>
     </route><!--  task/coc -->
 	
-	<route url="task/services" module="TaskService" action="manageServices" resxfile="task_service" type="ui">
+	<route url="task/services" module="TaskService" action="manageServices" resxfile="task_service" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_service.js" />
         </js_files>
@@ -556,7 +556,7 @@
         </php_modules>
     </route><!--  task/services -->
 
-    <route url="task/forms" module="TaskForm" action="manageForms" resxfile="task_form" type="ui">
+    <route url="task/forms" module="TaskForm" action="manageForms" resxfile="task_form" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_form.js" />
         </js_files>
@@ -574,7 +574,7 @@
     </route><!--  task/forms -->
 
     <!-- analytes -->
-    <route url="analyte/listAll" module="Analyte" action="listAll" resxfile="analyte" type="ui">
+    <route url="analyte/listAll" module="Analyte" action="listAll" resxfile="analyte" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/analyte_manager.js" />
         </js_files>
@@ -600,7 +600,7 @@
     </route>
     <!--  analyte/ListAll -->
     
-    <route url="analyte/uploadList" module="Analyte" action="uploadList" resxfile="analyte" type="ui">
+    <route url="analyte/uploadList" module="Analyte" action="uploadList" resxfile="analyte" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/analyte_manager.js" />
         </js_files>
@@ -623,7 +623,7 @@
         </php_modules>
     </route>
     <!-- analyte/uploadList -->
-    <route url="analyte/uploadCommons" module="Analyte" action="uploadCommonAnalytes" resxfile="analyte" type="ui">
+    <route url="analyte/uploadCommons" module="Analyte" action="uploadCommonAnalytes" resxfile="analyte" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/analyte_manager.js" />
         </js_files>
@@ -638,7 +638,7 @@
     </route>
     <!-- analyte/uploadCommons -->
     
-    <route url="form" module="Form" action="showForm" resxfile="form" type="ui">
+    <route url="form" module="Form" action="showForm" resxfile="form" type="ui" role="2">
         <js_files>
         <js_file use="head" value="Web/js/app/controllers/form.js" /> 
         </js_files>
@@ -651,7 +651,7 @@
     </route>
     <!-- service provider/listAll -->   
     
-    <route url="service/listAll" module="Service" action="listAll" resxfile="service" type="ui">
+    <route url="service/listAll" module="Service" action="listAll" resxfile="service" type="ui" role="2">
         <js_files>
         <js_file use="head" value="Web/js/app/controllers/service_manager.js" /> 
         </js_files>
@@ -667,7 +667,7 @@
     </route>
     <!-- service provider/listAll -->
     
-    <route url="service/showForm" module="Service" action="showForm" resxfile="service" type="ui">
+    <route url="service/showForm" module="Service" action="showForm" resxfile="service" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/service_manager.js" />
         </js_files>
@@ -685,7 +685,7 @@
     <!-- service provider/showForm -->
     
     <!-- pms -->
-    <route url="pm" module="Pm" action="index" resxfile="pm" type="ui">
+    <route url="pm" module="Pm" action="index" resxfile="pm" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/pm_manager.js" />
             <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js" />
@@ -699,7 +699,7 @@
     </route>
     <!-- pm/index -->
     
-    <route url="pm/listAll" module="Pm" action="listAll" resxfile="pm" type="ui">
+    <route url="pm/listAll" module="Pm" action="listAll" resxfile="pm" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/pm_manager.js" />
         </js_files>
@@ -713,7 +713,7 @@
     </route>
     <!-- pm/listAll -->
     
-    <route url="pm/showForm" module="Pm" action="showForm" resxfile="pm" type="ui">
+    <route url="pm/showForm" module="Pm" action="showForm" resxfile="pm" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/pm_manager.js" />
         </js_files>
@@ -733,7 +733,7 @@
     <!-- pm/showForm -->
 
     <!-- Forms -->
-    <route url="form/listAll" module="Form" action="listAll" resxfile="form" type="ui">
+    <route url="form/listAll" module="Form" action="listAll" resxfile="form" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/form_manager.js" />
         </js_files>
@@ -748,7 +748,7 @@
     </route>
     <!-- form/listAll -->
 
-    <route url="form/showForm" module="Form" action="showForm" resxfile="form" type="ui">
+    <route url="form/showForm" module="Form" action="showForm" resxfile="form" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/form_manager.js" />
         </js_files>
