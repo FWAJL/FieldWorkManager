@@ -160,7 +160,7 @@ class FormController extends \Library\BaseController {
           $manager = $this->managers->getManagerOf("ProjectForm");
           $manager->delete($projectForm,"user_form_id");
 
-          $taskForm = new \Applications\PMTool\Models\Dao\Task_form();
+          $taskForm = new \Applications\PMTool\Models\Dao\Task_template_form();
           $taskForm->setUser_form_id($form_id);
           $manager = $this->managers->getManagerOf("TaskForm");
           $manager->delete($taskForm,"user_form_id");
@@ -262,7 +262,7 @@ class FormController extends \Library\BaseController {
         $result["rows_affected"] += $returnRemove ? 1 : 0;
         //if we remove project form relationship we need to remove all child task form relationships also
         $manager = $this->managers->getManagerOf("TaskForm");
-        $taskForm = new \Applications\PMTool\Models\Dao\Task_form();
+        $taskForm = new \Applications\PMTool\Models\Dao\Task_template_form();
         $taskForm->setUser_form_id(null);
         $taskForm->setMaster_form_id($form->form_id());
         $taskForm->setTask_id(null);
@@ -284,7 +284,7 @@ class FormController extends \Library\BaseController {
         $result["rows_affected"] += $returnRemove? 1 : 0;
         //if we remove project form relationship we need to remove all child task form relationships also
         $manager = $this->managers->getManagerOf("TaskForm");
-        $taskForm = new \Applications\PMTool\Models\Dao\Task_form();
+        $taskForm = new \Applications\PMTool\Models\Dao\Task_template_form();
         $taskForm->setUser_form_id($form->form_id());
         $taskForm->setMaster_form_id(null);
         $taskForm->setTask_id(null);

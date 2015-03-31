@@ -18,7 +18,7 @@ class AuthProvider implements IAuthProvider
     $this->loginManager = $loginManager;
   }
 
-  public function createUser($data)
+  public function prepareUser($data)
   {
     $protect = new \Library\BL\Core\Encryption();
 
@@ -38,12 +38,13 @@ class AuthProvider implements IAuthProvider
         $this->loginManager->update($user);
       }
       $this->user = $user_db[0];
+      //Search for user in DB and return him
+      $user_type = $this->loginManager->selectUserType($this->user);
+      if (count($user_type) === 1) {
+        $this->userType = $user_type[0];
+      }
     }
-    //Search for user in DB and return him
-    $user_type = $this->loginManager->selectUserType($this->user);
-    if (count($user_type) === 1) {
-      $this->userType = $user_type[0];
-    }
+
   }
 
   /**
