@@ -51,7 +51,10 @@ abstract class Application {
   public function getController() {
     $this->router()->setRoutesXmlPath(__ROOT__ . 'Applications/' . $this->name . '/Config/routes.xml');
 
-    if ($this->router()->hasRoutesXmlChanged($this->user()) || !$this->user->keyExistInSession(Enums\SessionKeys::SessionRoutes)) {
+    $routes = $this->user->getAttribute(Enums\SessionKeys::UserRoutes);
+    if ($routes) {
+      $this->router()->setRoutes($routes);
+    } elseif ($this->router()->hasRoutesXmlChanged($this->user()) || !$this->user->keyExistInSession(Enums\SessionKeys::SessionRoutes)) {
       $this->router->LoadAvailableRoutes($this);
       //Store routes in session
       $this->user->setAttribute(Enums\SessionKeys::SessionRoutes, $this->router()->routes());
