@@ -24,7 +24,10 @@ $(document).ready(function() {
       $('#' + hidd_parts[1]).tooltip({placement: $(this).attr('placement'), title: $(this).val()});
     }
   });
-
+  $("#view_pm_info").click(function() {
+    var pm_id = $(this).attr("data-pm-id");
+    utils.redirect("pm/showForm?mode=edit&pm_id="+pm_id);
+  });//Show pm info
 });
 /**
  * JavaScript Module to do JavaScript actions common to several views

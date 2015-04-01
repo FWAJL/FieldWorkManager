@@ -400,7 +400,7 @@ class MapController extends \Library\BaseController {
     $taskLocations = \Applications\PMTool\Helpers\LocationHelper::GetAndStoreTaskLocations($this, $sessionTask);
 
     $projectLocations = \Applications\PMTool\Helpers\LocationHelper::GetProjectLocations($this,$sessionProject,$taskLocations);
-    $locations = array(\Library\Enums\SessionKeys::ProjectLocations=>$projectLocations,\Library\Enums\SessionKeys::TaskLocations=>$taskLocations);
+    $locations = array(\Library\Enums\SessionKeys::TaskLocations=>$taskLocations,\Library\Enums\SessionKeys::ProjectLocations=>$projectLocations);
 
     //load marker icons from config
     $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->relative_path,$this->app()->imageUtil,$this->app()->config());
