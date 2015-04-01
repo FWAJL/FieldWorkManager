@@ -96,8 +96,9 @@ class LocationHelper {
   public static function GetLocationsFromTaskLocations(\Library\User $user, $sessionTask) {
     $matches = array();
     $sessionProject = ProjectHelper::GetCurrentSessionProject($user);
-    foreach ($sessionTask[\Library\Enums\SessionKeys::TaskLocations] as $task_location) {
-      foreach ($sessionProject[\Library\Enums\SessionKeys::ProjectLocations] as $location) {
+
+    foreach ($sessionProject[\Library\Enums\SessionKeys::ProjectLocations] as $location) {
+      foreach ($sessionTask[\Library\Enums\SessionKeys::TaskLocations] as $task_location) {
         if (intval($location->location_id()) === intval($task_location->location_id())) {
           array_push($matches, $location);
           break;
