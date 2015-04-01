@@ -51,8 +51,8 @@
                                                     </select>
     </li>
         <li>
-      <label><?php echo $resx["project_id_num"]; ?></label>
-      <input name="project_id" type="text" value="<?php echo $current_project->project_number(); ?>"/>
+      <label><?php echo $resx["project_number"]; ?></label>
+      <input name="project_number" type="text" value="<?php echo $current_project->project_number(); ?>"/>
     </li>
     <li><br /></li>
     <li><h4>Send Results to:</h4></li>

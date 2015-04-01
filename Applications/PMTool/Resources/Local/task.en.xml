@@ -95,7 +95,7 @@
   <resource key="lab_instructions">Instructions</resource>
   <resource key="lab_sample_type">Sample Type</resource>
   <resource key="lab_sample_tat">Turnaround Time</resource>
-  <resource key="project_id_num">Project ID Number</resource>
+  <resource key="project_number">Project ID Number</resource>
   <resource key="results_to_name">Name</resource>
   <resource key="results_to_company">Company</resource>
   <resource key="results_to_address">Address</resource>
