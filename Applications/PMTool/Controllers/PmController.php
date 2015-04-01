@@ -70,11 +70,9 @@ public function executeShowForm(\Library\HttpRequest $rq) {
 
     $manager = $this->managers->getManagerOf($this->module);
     $result_insert = $manager->edit($pm, "pm_id");
-    
-    //Clear the pm list from session for the connect PM
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::AllUsers);
-    $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::UserPmList);
-
+    if($result_insert) {
+      \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this->app->user(),$pm,true);
+    }
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Pm,
@@ -161,15 +159,8 @@ public function executeGetItem(\Library\HttpRequest $rq) {
   private function _GetPmFromSession($pm_id) {
     $pms = array();
     $pmMatch = NULL;
-    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::AllUsers)) {
-      $pms = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::AllUsers);
-    }
-    foreach ($pms as $pm) {
-      if (intval($pm->pm_id()) === $pm_id) {
-        $pmMatch = $pm;
-        break;
-      }
-    }
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetSessionPm($this->app->user(),$pm_id);
+    $pmMatch = $pm[\Library\Enums\SessionKeys::PmObject];
     return $pmMatch;
   }
   
@@ -193,9 +184,7 @@ public function executeGetItem(\Library\HttpRequest $rq) {
   private function _PreparePmObject($data_sent) {
     $pm = new \Applications\PMTool\Models\Dao\Project_manager();
     $pm->setPm_id($data_sent["pm_id"]);
-    $pm->setUsername(!array_key_exists('username', $data_sent) ? NULL : $data_sent["username"]);
-    $pm->setPassword(!array_key_exists('password', $data_sent) ? NULL : $data_sent["password"]);
-    $pm->setHint(!array_key_exists('pm_name', $data_sent) ? NULL : $data_sent["pm_name"]);
+    $pm->setPm_name($data_sent["pm_name"]);
     $pm->setPm_address(!array_key_exists('pm_address', $data_sent) ? "" : $data_sent["pm_address"]);
     $pm->setPm_comp_name(!array_key_exists('pm_comp_name', $data_sent) ? "" : $data_sent["pm_comp_name"]);
     $pm->setPm_phone(!array_key_exists('pm_phone', $data_sent) ? "" : $data_sent["pm_phone"]);

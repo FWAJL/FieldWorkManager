@@ -6,7 +6,21 @@ $(document).ready(function(){
 
   $('#btn_save_taskcoc').click(function(){
   	$('[name="task_id"]').val(task_id);
-	var post_data = utils.retrieveInputs("task_coc_form", ["po_number","lab_instructions","lab_sample_type","lab_sample_tat","$project_number","results_to_name","results_to_company","results_to_address","results_to_phone","results_to_email"]);
+	var post_data = utils.retrieveInputs(
+      "task_coc_form", 
+      [
+        "po_number",
+        "lab_instructions",
+        "lab_sample_type",
+        "lab_sample_tat",
+        "project_number",
+        "results_to_name",
+        "results_to_company",
+        "results_to_address",
+        "results_to_phone",
+        "results_to_email"
+      ]
+    );
     if (post_data.po_number !== undefined) {
       if(task_coc.editing) {
   		task_coc.editCoc(post_data, "task", "editCoc");

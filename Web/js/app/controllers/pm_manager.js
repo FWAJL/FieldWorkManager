@@ -61,10 +61,7 @@ $(document).ready(function() {
 //    pm_manager.fillFormWithRandomData();
 //  }
 
-  $("#view_pm_info").click(function() {
-    var pm_id = $(this).attr("data-pm-id");
-    utils.redirect("pm?mode=edit&pm_id="+pm_id);
-  });//Show pm info
+
 
   $("#pm_list_all").click(function() {
     utils.clearForm();
@@ -96,7 +93,7 @@ $(document).ready(function() {
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        utils.redirect("pm/listAll", 1000);
+        location.reload();
       }
     });
   };
@@ -136,9 +133,7 @@ $(document).ready(function() {
   pm_manager.loadEditForm = function(dataWs) {
     utils.clearForm();
     $("input[name=\"pm_id\"]").val(parseInt(dataWs.pm.pm_id));
-    $("input[name=\"username\"]").val(dataWs.pm.username);
-    $("input[name=\"password\"]").val(dataWs.pm.password);
-    $("input[name=\"hint\"]").val(dataWs.pm.hint);
+    $("input[name=\"pm_name\"]").val(dataWs.pm.pm_name);
     $("input[name=\"pm_address\"]").val(dataWs.pm.pm_address);
     $("input[name=\"pm_comp_name\"]").val(dataWs.pm.pm_comp_name);
     $("input[name=\"pm_phone\"]").val(dataWs.pm.pm_phone);
