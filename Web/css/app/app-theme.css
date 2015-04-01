@@ -412,8 +412,47 @@ ui-widget-content:hover {
 
 .user-msg {
 	float: right;
-    margin-right: 10px;
-    min-width: 320px;
-    width: 70%;
+  margin-right: 10px;
+  min-width: 320px;
+  width: 70%;
+}
+
+/* Task: Lab Matrix, Field Matrix; */
+.matrix-container {
+  width: 100%;
+  margin-top: 20px;
+}
+.matrix-row {
+  height: 40px;
+  margin-top: 3px;
+}
+.matrix-cell {
+  width: 120px;
+  background-color: #F7F7F7;
+  float: left;
+  height: 90%;
+  margin: 3px;
+  text-align: center;
+}
+.matrix-alalyte-header {
+  width: calc(100% - 135px);
+  font-size: 18px;
+  padding-top: 5px;
+}
+.matrix-location-header {
+  font-size: 18px;
+  padding-top: 5px;
+}
+.matrix-cell-data {
+  padding-top: 7px;
+  font-size: 14px;
+}
+.matrix-footer {
+  width: 150px;
+  text-align: left;
+  padding-top: 5px;
+  margin-top: 10px;
+  background-color: #fff;
+  padding-left: 3px;
 }
 /* END FILE MODULES */

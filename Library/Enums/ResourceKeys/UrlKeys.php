@@ -49,7 +49,7 @@ class UrlKeys {
   const FieldAnalytes = "field_analyte/listAll";
   const FieldSampleMatrix = "field_analyte/sampleMatrix";
   const LabAnalytes = "lab_analyte/listAll";
-  const LabSampleMatrix = "lab_analyte/sampleMatrix";
+  const LabSampleMatrix = "task/labMatrix";
 
   const TaskRootUrl = "task";
   const TaskListAll = "task/listAll";

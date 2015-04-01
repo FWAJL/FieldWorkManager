@@ -69,6 +69,9 @@ class ViewVariablesKeys {
   //Task's view variabless
   const task_tab_open = "task_tab_open";
   const tab_close = "tab_close";
+  const task_locations = "task_locations";
+  const task_lab_analytes = "task_lab_analytes";
+  const task_lab_analytes_idmap = "task_lab_analytes_idmap";
   
   //Mapping
   const map_module = "map_module";
@@ -84,4 +87,5 @@ class ViewVariablesKeys {
   
   //Active Task 
   const currentDiscussions = "current_discussion";
+
 }
