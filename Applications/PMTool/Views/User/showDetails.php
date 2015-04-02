@@ -2,11 +2,11 @@
 <div class="right-aside main col-lg-10 col-md-10 col-sm-10">
   <h3><?php echo $resx["button_edit"]; ?></h3>
   <div class="form_sections">
-      <?php
-      foreach ($form_modules as $key => $module_path) {
-        require $module_path;
-      }
-      ?>
+    <?php
+    foreach ($form_modules as $key => $module_path) {
+      require $module_path;
+    }
+    ?>
   </div>
 
 </div>

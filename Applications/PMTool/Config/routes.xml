@@ -732,6 +732,24 @@
     </route>
     <!-- pm/showForm -->
 
+    <!-- User -->
+    <route url="user/showDetails" module="User" action="showDetails" resxfile="user" type="ui">
+      <js_files>
+        <js_file use="head" value="Web/js/app/controllers/user_manager.js" />
+      </js_files>
+      <css_files>
+        <css_file value="Web/css/app/nav.css" />
+        <css_file value="Web/css/app/app-style.css" />
+        <css_file value="Web/css/app/app-theme.css" />
+        <css_file value="Web/css/app/tabs.css" />
+      </css_files>
+      <php_modules>
+        <php_module key="pm_form" file_name="pm_form.php" />
+        <php_module key="pm_buttons" file_name="pm_buttons.php" />
+      </php_modules>
+    </route>
+    <!-- user/showDetails -->
+
     <!-- Forms -->
     <route url="form/listAll" module="Form" action="listAll" resxfile="form" type="ui" role="2">
         <js_files>
@@ -880,6 +898,9 @@
   <route url="map/listCurrentProject" module="Map" action="listCurrentProject" resxfile="map" type="ws" />
   <route url="map/listCurrentProjectLocations" module="Map" action="listCurrentProjectLocations" resxfile="map" type="ws" />
   <route url="map/listCurrentProjectTasks" module="Map" action="listCurrentProjectTasks" resxfile="map" type="ws" />
+
+  <route url="user/getCurrent" module="User" action="getCurrent" resxfile="user" type="ws" />
+  <route url="user/editCurrent" module="User" action="editCurrent" resxfile="user" type="ws" />
 
   <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
   <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />
