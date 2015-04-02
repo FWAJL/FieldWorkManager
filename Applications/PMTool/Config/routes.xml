@@ -535,6 +535,20 @@
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route><!--  task/labMatrix -->
+
+    <route url="task/fieldMatrix" module="TaskFieldAnalyte" action="fieldMatrix" resxfile="task_lab_analyte" type="ui" role="2">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/task_field_analyte.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+            <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+        </php_modules>
+    </route><!--  task/fieldMatrix -->
 	
 	<route url="task/coc" module="TaskCoc" action="manageCoc" resxfile="task" type="ui" role="2">
         <js_files>
@@ -849,6 +863,7 @@
   <route url="task/labAnalytes/updateItems" module="TaskLabAnalyte" action="updateItems" resxfile="task_lab_analyte" type="ws" />
   <route url="task/form/updateItems" module="TaskForm" action="updateItems" resxfile="task_form" type="ws" />
   <route url="task/saveLabMatrix" module="TaskLabAnalyte" action="saveLabMatrix" resxfile="task_lab_analyte" type="ws" />
+  <route url="task/saveFieldMatrix" module="TaskFieldAnalyte" action="saveFieldMatrix" resxfile="task_lab_analyte" type="ws" />
   <!--  <route url="service/updateItems" module="ProjectService" action="updateItems" resxfile="service" type="ws" />-->
   
   <route url="activetask/startCommWith" module="ActiveTask" action="startCommWith" resxfile="active_task" type="ws" />

@@ -61,7 +61,6 @@ $(document).ready(function() {
   });
 
   $('#btn_save_labmatrix').click(function(){
-    console.log($('.matrix-checkbox').serialize());
     //get task coc object
     datacx.post("task/saveLabMatrix", {'lab_matrix': $('.matrix-checkbox').serialize()}).then(function(reply) {
       console.log(reply);

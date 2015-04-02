@@ -66,12 +66,14 @@ class ViewVariablesKeys {
   
   //Location's views variables
   
-  //Task's view variabless
+  //Task's view variables
   const task_tab_open = "task_tab_open";
   const tab_close = "tab_close";
   const task_locations = "task_locations";
   const task_lab_analytes = "task_lab_analytes";
   const task_lab_analytes_idmap = "task_lab_analytes_idmap";
+  const task_field_analytes = "task_field_analytes";
+  const task_field_analytes_idmap = "task_field_analytes_idmap";
   
   //Mapping
   const map_module = "map_module";

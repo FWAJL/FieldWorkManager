@@ -43,14 +43,20 @@ class TaskAnalyteMatrixHelper {
   	  $relation_data = $dal->selectMany($matrixDAO, "task_id");
   	} else {
   	  //FIELD Analyte
+      $matrixDAO = new \Applications\PMTool\Models\Dao\Field_analyte_location();
+      $matrixDAO->setTask_id($task_id);
+      $dal = $caller->managers()->getManagerOf("FieldLabAnalyte");
+      $relation_data = $dal->selectMany($matrixDAO, "task_id");
   	}
 
   	if(!empty($relation_data)){
   	  foreach($relation_data as $relation){
   	  	if($analyte_type === 'Lab'){
   	  	  $id_str = $relation->location_id() . '_' . $relation->lab_analyte_id();
-  	  	  array_push($id_map, $id_str);
-  	  	}
+  	  	} else {
+          $id_str = $relation->location_id() . '_' . $relation->field_analyte_id();
+        }
+        array_push($id_map, $id_str);
   	  }
   	}
 
@@ -62,10 +68,14 @@ class TaskAnalyteMatrixHelper {
   * for the passed in task_id
   */
   public static function SaveAnalyteMatrixForTask($caller, $task_id, $matrix_data, $analyte_type = 'Lab') {
-		if($analyte_type === 'Lab') {
+		
+    //create data for deletion
+    $data = array('task_id' => $task_id);
+
+    if($analyte_type === 'Lab') {
   	  //FOR LAB ANALYTE
 	  	//First delete the existing relationship
-      //create data
+      
       $data = array('task_id' => $task_id);
       //Init PDO
       $lab_analyte_location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Lab_analyte_location());
@@ -74,6 +84,12 @@ class TaskAnalyteMatrixHelper {
 
   	} else {
   	  //FOR FIELD ANALYTE
+      //First delete the existing relationship
+      
+      //Init PDO
+      $field_analyte_location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Field_analyte_location());
+      $manager = $caller->managers()->getManagerOf('TaskFieldAnalyte');
+      $result_del_relation = $manager->delete($field_analyte_location, 'task_id');      
   	}
 
   	$ret_val = true;
@@ -103,7 +119,11 @@ class TaskAnalyteMatrixHelper {
 	        $manager = $caller->managers()->getManagerOf('TaskLabAnalyte');
 	        $result_save_relation = $manager->add($lab_analyte_location);
         } else {
-
+          $data = array('task_id' => $task_id, 'location_id' => $location_id, 'field_analyte_id' => $analyte_id); 
+          //Init PDO
+          $field_analyte_location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Field_analyte_location());
+          $manager = $caller->managers()->getManagerOf('TaskFieldAnalyte');
+          $result_save_relation = $manager->add($field_analyte_location);
         }    
       }
     }
