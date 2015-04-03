@@ -91,8 +91,9 @@ class AnalyteHelper {
     $sessionKey = $getFieldType ? \Library\Enums\SessionKeys::PmFieldAnalytes : \Library\Enums\SessionKeys::PmLabAnalytes;
     $analytePropId = $getFieldType ? "field_analyte_id" : "lab_analyte_id";
     $matches = array();
-    foreach ($project_analytes as $project_analyte) {
-      foreach ($pm[$sessionKey] as $analyte) {
+
+    foreach ($pm[$sessionKey] as $analyte) {
+      foreach ($project_analytes as $project_analyte) {
         if (intval($analyte->$analytePropId()) === intval($project_analyte->$analytePropId())) {
           array_push($matches, $analyte);
           break;
@@ -158,8 +159,8 @@ class AnalyteHelper {
   public static function GetFieldAnalytesFromTaskFieldAnalytes(\Library\User $user, $sessionTask) {
     $matches = array();
     $sessionPm = PmHelper::GetCurrentSessionPm($user);
-    foreach ($sessionTask[\Library\Enums\SessionKeys::TaskFieldAnalytes] as $task_field_analyte) {
-      foreach ($sessionPm[\Library\Enums\SessionKeys::PmFieldAnalytes] as $field_analyte) {
+    foreach ($sessionPm[\Library\Enums\SessionKeys::PmFieldAnalytes] as $field_analyte) {
+      foreach ($sessionTask[\Library\Enums\SessionKeys::TaskFieldAnalytes] as $task_field_analyte) {
         if (intval($field_analyte->field_analyte_id()) === intval($task_field_analyte->field_analyte_id())) {
           array_push($matches, $field_analyte);
           break;
@@ -172,8 +173,8 @@ class AnalyteHelper {
   public static function GetLabAnalytesFromTaskLabAnalytes(\Library\User $user, $sessionTask) {
     $matches = array();
     $sessionPm = PmHelper::GetCurrentSessionPm($user);
-    foreach ($sessionTask[\Library\Enums\SessionKeys::TaskLabAnalytes] as $task_lab_analyte) {
-      foreach ($sessionPm[\Library\Enums\SessionKeys::PmLabAnalytes] as $lab_analyte) {
+    foreach ($sessionPm[\Library\Enums\SessionKeys::PmLabAnalytes] as $lab_analyte) {
+      foreach ($sessionTask[\Library\Enums\SessionKeys::TaskLabAnalytes] as $task_lab_analyte) {
         if (intval($lab_analyte->lab_analyte_id()) === intval($task_lab_analyte->lab_analyte_id())) {
           array_push($matches, $lab_analyte);
           break;
