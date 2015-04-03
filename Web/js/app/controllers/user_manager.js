@@ -9,9 +9,8 @@
 $(document).ready(function() {
   $(".btn-warning").hide();
 
-  $("#btn_edit_pm").click(function() {
+  $("#btn_edit_user").click(function() {
     var post_data = utils.retrieveInputs("user_form", ["user_type"]);
-    console.log(post_data);
     user_manager.edit(post_data, "user", "editCurrent");
   });//Edit a user
 

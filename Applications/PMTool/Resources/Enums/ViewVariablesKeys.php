@@ -84,4 +84,9 @@ class ViewVariablesKeys {
   
   //Active Task 
   const currentDiscussions = "current_discussion";
+
+  //user details form
+  const user_details = "user_details";
+  const user_details_buttons = "user_details_buttons";
+  const pm_form = "pm_form";
 }

@@ -11,8 +11,12 @@ class UserController extends \Library\BaseController {
 
   public function executeShowDetails(\Library\HttpRequest $rq) {
     //Load Modules for view
-    $this->page->addVar(
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+    if($this->app->user()->getUserType()=="pm_id") {
+      $modules = $this->app()->router()->selectedRoute()->phpModules();
+      $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_details, $modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::pm_form]);
+    }
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_details_buttons, $modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_details_buttons]);
+
   }
 
   public function executeEditCurrent(\Library\HttpRequest $rq) {

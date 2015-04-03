@@ -745,7 +745,7 @@
       </css_files>
       <php_modules>
         <php_module key="pm_form" file_name="pm_form.php" />
-        <php_module key="pm_buttons" file_name="pm_buttons.php" />
+        <php_module key="user_details_buttons" file_name="user_details_buttons.php" />
       </php_modules>
     </route>
     <!-- user/showDetails -->
