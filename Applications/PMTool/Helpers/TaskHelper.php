@@ -213,7 +213,6 @@ class TaskHelper {
     $SessionTasks = array();
     $currentProject = ProjectHelper::GetCurrentSessionProject($user);
     $countActiveTask = 0;
-    $currentSessionTask;
     foreach ($list as $task) {
       $key = \Library\Enums\SessionKeys::TaskKey . $task->task_id();
       $sessionTask = self::MakeSessionTask($task);
