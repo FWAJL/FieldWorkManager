@@ -149,4 +149,8 @@ class Master_form extends \Library\Entity implements \Library\Interfaces\IDocume
     return array("pdf");
   }
 
+  public function getOrderByField() {
+    return "title";
+  }
+
 }
