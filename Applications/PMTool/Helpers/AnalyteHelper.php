@@ -59,6 +59,11 @@ class AnalyteHelper {
     }
   }
 
+  public static function StoreCommonListData($caller) {
+    self::_StoreCommonAnalytes($caller, \Library\Enums\SessionKeys::CommonFieldAnalytes, new \Applications\PMTool\Models\Dao\Common_field_analyte);
+    self::_StoreCommonAnalytes($caller, \Library\Enums\SessionKeys::CommonLabAnalytes, new \Applications\PMTool\Models\Dao\Common_lab_analyte);
+  }
+
   private static function _StoreAnalytes($caller, $sessionPm, $sessionKey, $analyteObj) {
     if (count($sessionPm[$sessionKey]) === 0) {
       $analyteObj->setPm_id($sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_id());
@@ -186,12 +191,13 @@ class AnalyteHelper {
  
 
   public static function AddAnalyte($caller, $result, $isFieldType, $isCommon) {
-    $pm = PmHelper::GetCurrentSessionPm($caller->user());
 
     $manager = $caller->managers()->getManagerOf($caller->module());
     $dataPost = $caller->dataPost();
-    $dataPost["pm_id"] = $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
-
+    if(!$isCommon) {
+      $pm = PmHelper::GetCurrentSessionPm($caller->user());
+      $dataPost["pm_id"] = $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
+    }
     $analytes = array();
     $analyteObj = null;
     if ($isCommon) {
@@ -276,6 +282,7 @@ class AnalyteHelper {
         $analyte->setCommon_field_analyte_name($name);
       } else {
         $analyte->setCommon_lab_analyte_name($name);
+        $analyte->setCommon_lab_analyte_category_name($name);
       }
       array_push($analytes, $analyte);
     }

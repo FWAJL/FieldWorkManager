@@ -185,6 +185,14 @@ class FormHelper {
     return $form;
   }
 
+  public static function PrepareMasterFormObject($dataPost) {
+    $form = new \Applications\PMTool\Models\Dao\Master_form();
+    $form->setTitle($dataPost['title']);
+    $form->setCategory(null);
+    return $form;
+  }
+
+
   public static function GetAUserForm(\Library\User $user, $form_id) {
     $match = NULL;
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($user);

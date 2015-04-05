@@ -623,7 +623,7 @@
         </php_modules>
     </route>
     <!-- analyte/uploadList -->
-    <route url="analyte/uploadCommons" module="Analyte" action="uploadCommonAnalytes" resxfile="analyte" type="ui" role="2">
+    <route url="analyte/uploadCommons" module="Analyte" action="uploadCommonAnalytes" resxfile="analyte" type="ui" role="1">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/analyte_manager.js" />
         </js_files>
@@ -634,6 +634,8 @@
             <php_module key="field_analyte_form" file_name="common_field_analyte_form.php" />
             <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
             <php_module key="lab_analyte_form" file_name="common_lab_analyte_form.php" />
+            <php_module key="common_field_analyte_list" file_name="common_field_analyte_list.php" />
+            <php_module key="common_lab_analyte_list" file_name="common_lab_analyte_list.php" />
         </php_modules>
     </route>
     <!-- analyte/uploadCommons -->
@@ -649,8 +651,8 @@
             <php_module key="form_form" file_name="form_form.php" shared="true" />
         </php_modules>
     </route>
-    <!-- service provider/listAll -->   
-    
+    <!-- form form/showForm -->
+
     <route url="service/listAll" module="Service" action="listAll" resxfile="service" type="ui" role="2">
         <js_files>
         <js_file use="head" value="Web/js/app/controllers/service_manager.js" /> 
@@ -777,7 +779,20 @@
             <php_module key="form_form" file_name="form_form.php"/>
         </php_modules>
     </route>
+    <!-- form/showForm -->
 
+    <route url="form/masterForm" module="Form" action="showFormMaster" resxfile="form" type="ui" role="1">
+      <js_files>
+        <js_file use="head" value="Web/js/app/controllers/form_manager.js" />
+      </js_files>
+      <css_files>
+        <css_file use="project" />
+      </css_files>
+      <php_modules>
+        <php_module key="form_form_master" file_name="form_form_master.php"/>
+      </php_modules>
+    </route>
+    <!-- form/masterForm -->
 
     <!-- WebService AJAX routes -->
     <!-- INSTRUCTIONS
@@ -869,6 +884,7 @@
   <route url="form/getlist" module="Form" action="getList" resxfile="form" type="ws" />
   <route url="form/updateItems" module="Form" action="updateItems" resxfile="form" type="ws" />
   <route url="form/add" module="Form" action="add" resxfile="form" type="ws" />
+  <route url="form/addMaster" module="Form" action="addMaster" resxfile="form" type="ws" />
   <route url="form/delete" module="Form" action="delete" resxfile="form" type="ws" />
 
   <route url="pm/add" module="Pm" action="add" resxfile="pm" type="ws" />

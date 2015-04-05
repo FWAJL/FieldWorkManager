@@ -34,10 +34,12 @@
   <resource key="header_analyte">Analytes</resource>
   <resource key="analyte_upload_list">Upload List</resource>
   <resource key="analyte_list">List All</resource>
-  
+  <resource key="analyte_upload_commons">Upload common analytes</resource>
+
   <resource key="header_form">Field Forms</resource>
-  <resource key="form_list">List All</resource>-->
-  
+  <resource key="form_list">List All</resource>
+  <resource key="form_show_form_master">Add master form</resource>
+
   <resource key="header_service">Service Providers</resource>
   <resource key="service_add">Add</resource>
   <resource key="service_list">List All</resource>

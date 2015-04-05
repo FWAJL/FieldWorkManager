@@ -32,7 +32,12 @@ $(document).ready(function() {
    } else {//success
     toastr.success(reply.message);
     //Now redirect to project page
-    window.location.replace("project");
+     if(reply.role == '2'){
+       window.location.replace("project");
+     }
+     else if(reply.role == '1') {
+        utils.redirect("analyte/uploadCommons");
+     }
    }
   });
  };

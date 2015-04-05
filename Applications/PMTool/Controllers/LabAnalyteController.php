@@ -29,7 +29,7 @@ class LabAnalyteController extends \Library\BaseController {
 
     $this->SendResponseWS(
             $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
         "resx_key" => $this->action(),
         "step" => $result["dataId"] > 0 ? "success" : "error"
     ));

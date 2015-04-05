@@ -28,6 +28,19 @@ $(document).ready(function() {
     });
   }
 
+  if($("#document-upload-master").length>0){
+    var dropzone = new Dropzone("#document-upload-master");
+    dropzone.on("success", function(event,res) {
+      if(res.result == 0) {
+        toastr.error(res.message);
+        dropzone.removeAllFiles();
+      } else {
+        toastr.success(res.message);
+        dropzone.removeAllFiles();
+      }
+    });
+  }
+
   $(".btn-warning").hide();
   $.contextMenu({
     selector: 'li[data-object="user_form"]',

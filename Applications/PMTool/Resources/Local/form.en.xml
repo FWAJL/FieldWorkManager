@@ -7,6 +7,8 @@
   
   <resource key="message_error_add">Error inserting the form. Check logs.</resource>
   <resource key="message_success_add">The Form has been added.</resource>
+  <resource key="message_error_addMaster">Error inserting the form. Check logs.</resource>
+  <resource key="message_success_addMaster">The Form has been added.</resource>
   <resource key="message_error_getlist">Error reading Form data. Check logs.</resource>
   <resource key="message_success_getlist">The Forms have been read.</resource>
   <resource key="message_error_getItem">This Form doesn't exist or is not one of your Forms. You will be redirected to your list of Forms in 3 seconds.</resource>
