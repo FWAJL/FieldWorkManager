@@ -59,7 +59,7 @@ class AnalyteController extends \Library\BaseController {
     $this->page()->addVar(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
 
-    \Applications\PMTool\Helpers\AnalyteHelper::StoreListsData($this, TRUE);
+    \Applications\PMTool\Helpers\AnalyteHelper::StoreCommonListData($this);
 
     $data_common_field_analyte = array(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => "common_field_analyte",

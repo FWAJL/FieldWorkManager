@@ -7,7 +7,7 @@
     <span id="pm_name" class="top-right-option">
       <?php echo $resx_menu_left["p_user_name_label"]; ?><?php echo $pm['pm_name']; ?>
     </span>
-    <span id="view_pm_info" class="top-right-option" data-pm-id="<?php echo $pm['pm_id']; ?>">
+    <span id="view_info" class="top-right-option">
       <a class="glyphicon glyphicon-user" title="<?php echo $resx_menu_left["pm_view_info"]; ?>"></a>
     </span>
     <span id="pm_logout" class="top-right-option">

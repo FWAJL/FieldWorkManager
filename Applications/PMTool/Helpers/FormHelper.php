@@ -109,9 +109,12 @@ class FormHelper {
     $matches = array();
     $matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_forms] = array();
     $matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::master_forms] = array();
-
+    $sessionForms = $sessionTask[\Library\Enums\SessionKeys::TaskForms];
+    if(!is_array($sessionForms)) {
+      $sessionForms = array();
+    }
     foreach ($sessionProject[\Library\Enums\SessionKeys::ProjectAvailableForms][\Library\Enums\SessionKeys::ProjectMasterForms] as $master_form) {
-      foreach ($sessionTask[\Library\Enums\SessionKeys::TaskForms] as $form) {
+      foreach ($sessionForms as $form) {
         if (intval($form->master_form_id()) === intval($master_form->form_id())) {
           array_push($matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::master_forms], $master_form);
           break;
@@ -119,7 +122,7 @@ class FormHelper {
       }
     }
     foreach ($sessionProject[\Library\Enums\SessionKeys::ProjectAvailableForms][\Library\Enums\SessionKeys::ProjectUserForms] as $user_form) {
-      foreach ($sessionTask[\Library\Enums\SessionKeys::TaskForms] as $form) {
+      foreach ($sessionForms as $form) {
         if (intval($form->user_form_id()) === intval($user_form->form_id())) {
           array_push($matches[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_forms], $user_form);
           break;
@@ -146,6 +149,9 @@ class FormHelper {
 
   public static function FilterFormsToExclude($forms, $filterForms, $form_id) {
     $filtered_forms = array();
+    if(!is_array($filterForms)) {
+      $filterForms = array();
+    }
     foreach ($forms as $form) {
       $to_add = TRUE;
       foreach ($filterForms as $filterForm) {
@@ -178,6 +184,14 @@ class FormHelper {
     $form->setCategory(null);
     return $form;
   }
+
+  public static function PrepareMasterFormObject($dataPost) {
+    $form = new \Applications\PMTool\Models\Dao\Master_form();
+    $form->setTitle($dataPost['title']);
+    $form->setCategory(null);
+    return $form;
+  }
+
 
   public static function GetAUserForm(\Library\User $user, $form_id) {
     $match = NULL;

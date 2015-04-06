@@ -20,6 +20,7 @@
 Web/js/app/controllers/pm_manager.js"></script>-->
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/jquery.js<?php echo $version; ?>"></script>
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/jquery-ui.js<?php echo $version; ?>"></script>
+    <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/app/controllers/top_menu.actions.js<?php echo $version; ?>"></script>
     <?php echo $this->app->globalResources["js_files_head"]; ?>
     <!--<script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/app/controllers/pm_manager.js"></script>-->
 

@@ -482,7 +482,8 @@ INSERT INTO `user_role` (`user_role_id`,`user_role_desc`) VALUES
 -- Dumping data for table `user`
 INSERT INTO `user` (`user_login`, `user_password`, `user_hint`, `user_type`, `user_value`, `user_role_id`) VALUES
 ('test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683', 'hint', 'pm_id', 1, 2),
-('demo', '89e495e7941cf9e40e6980d14a16bf023ccd4c91g496lJL683', '', 'pm_id', 2, 2);
+('demo', '89e495e7941cf9e40e6980d14a16bf023ccd4c91g496lJL683', '', 'pm_id', 2, 2),
+('admintest','a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683','','administrator_id',0,1,NULL);
 
 INSERT INTO `master_form`(`form_id`,`content_type`,`category`,`value`,`size`,`title`) VALUES
 (1,'pdf',NULL,'FWM_T-ChainofCustody.pdf',45,'Chain Of Custody'),
