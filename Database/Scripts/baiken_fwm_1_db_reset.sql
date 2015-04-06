@@ -261,13 +261,15 @@ CREATE TABLE IF NOT EXISTS `task_lab_data_location` (
 
 -- Table structure for table `task_location
 CREATE TABLE IF NOT EXISTS `task_location` (
+    `task_location_id` INT(11) NOT NULL AUTO_INCREMENT,
     `task_id` int(11) NOT NULL,
     `location_id` int(11) NOT NULL,
     CONSTRAINT `fk_tl_task` FOREIGN KEY (`task_id`)
         REFERENCES `task` (`task_id`) ON DELETE CASCADE,
     CONSTRAINT `fk_tl_location` FOREIGN KEY (`location_id`)
         REFERENCES `location` (`location_id`) ON DELETE CASCADE,
-	UNIQUE INDEX `un_t_l` (`task_id` ASC, `location_id` ASC)
+	UNIQUE INDEX `un_t_l` (`task_id` ASC, `location_id` ASC),
+    PRIMARY KEY (`task_location_id`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci;
 
 -- Table structure for table `task_service`

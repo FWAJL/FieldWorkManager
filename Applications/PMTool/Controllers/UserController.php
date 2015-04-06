@@ -33,7 +33,8 @@ class UserController extends \Library\BaseController {
       $manager = $this->managers->getManagerOf($this->module);
       $result_insert = $manager->edit($pm, "pm_id");
       if($result_insert) {
-        \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this->app->user(),$pm,true);
+        $pmSession[\Library\Enums\SessionKeys::PmObject] = $pm;
+        \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this->app->user(),$pmSession,true);
       }
     }
     $this->SendResponseWS(
