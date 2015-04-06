@@ -82,6 +82,7 @@ class AuthenticateController extends \Library\BaseController {
             break;
         }
         $result = $this->InitResponseWS("success");
+        $result['role'] = $user->getRole();
       }
     }
 

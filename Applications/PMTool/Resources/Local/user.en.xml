@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <resource key="page_title">User details - Field Work Manager</resource>
+
+  <resource key="pm_h1">Welcome to Field Work Manager</resource>
+  <resource key="pm_welcome_message">Please update your contact details</resource>
+
+  <resource key="message_error_add">Error inserting the data.</resource>
+  <resource key="message_success_add">The data has been inserted.</resource>
+  <resource key="message_error_getlist">Error reading the data.</resource>
+  <resource key="message_success_getlist">The data have been read.</resource>
+  <resource key="message_error_getItem">The user doesn't exist. You will be redirected to the login page in 3 seconds.</resource>
+  <resource key="message_success_getItem">The data has been read.</resource>
+  <resource key="message_error_getCurrent">The user doesn't exist. You will be redirected to the login page in 3 seconds.</resource>
+  <resource key="message_success_getCurrent">The data has been read.</resource>
+  <resource key="message_error_editCurrent">Error editing the data.</resource>
+  <resource key="message_success_editCurrent">The data has been edited.</resource>
+  <resource key="message_error_edit">Error editing the data.</resource>
+  <resource key="message_success_edit">The data has been edited.</resource>
+  <resource key="message_error_delete">Error deleting the data.</resource>
+  <resource key="message_success_delete">The user  has been deleted.</resource>
+  <resource key="message_error_updateItems">Error editing the data.</resource>
+  <resource key="message_success_updateItems">The data have been edited</resource>
+
+  <resource key="pm_comp_name">Your Company Name</resource>
+  <resource key="pm_name">Your Name</resource>
+  <resource key="pm_address">Your Address</resource>
+  <resource key="pm_phone">Your Phone Number</resource>
+  <resource key="pm_email">Your email</resource>
+
+  <resource key="button_edit">Edit your info</resource>
+  <resource key="user_button_edit">Save</resource>
+  <resource key="pm_button_edit">Edit your info</resource>
+  <resource key="pm_button_delete">Delete this project manager</resource>
+  <resource key="pm_list_all_header">All Project Managers</resource>
+  <resource key="h3_pms_active">Active project managers</resource>
+  <resource key="h3_pms_inactive">Inactive project managers</resource>
+  <resource key="btn_to_inactive_list">De-activate</resource>
+  <resource key="btn_to_active_list">Activate</resource>
+
+</resources>

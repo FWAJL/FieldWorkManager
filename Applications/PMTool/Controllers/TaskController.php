@@ -255,6 +255,10 @@ class TaskController extends \Library\BaseController {
         $db_result = $index === NULL ? FALSE : TRUE;
         unset($sessionProject[\Library\Enums\SessionKeys::ProjectTasks][$index]);
         \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+        $currentSessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
+        if($currentSessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id() == $task_id){
+          \Applications\PMTool\Helpers\TaskHelper::UnsetCurrentSessionTask($this->app()->user());
+        }
       }
     }
 

@@ -11,7 +11,7 @@
           <h4>
             <?php echo $resx["h4_of_field_type"] ?>
           </h4>
-          <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Analyte::field_analyte_form]; ?>      
+          <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Analyte::field_analyte_form]; ?>
         </div>
         <div class="col-lg-1 col-md-1">
           <div class="buttons">
