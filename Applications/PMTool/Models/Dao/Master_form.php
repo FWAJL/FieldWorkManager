@@ -90,7 +90,7 @@ class Master_form extends \Library\Entity implements \Library\Interfaces\IDocume
   }
 
   public function setContentSize($contentSize) {
-    $this->content_size = $contentSize;
+    $this->size = $contentSize;
   }
 
   // GETTERS //
@@ -147,6 +147,10 @@ class Master_form extends \Library\Entity implements \Library\Interfaces\IDocume
 
   public function ValidExtensions() {
     return array("pdf");
+  }
+
+  public function getOrderByField() {
+    return "title";
   }
 
 }

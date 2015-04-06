@@ -19,6 +19,11 @@ class FormController extends \Library\BaseController {
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
+  public function executeShowFormMaster(\Library\HttpRequest $rq) {
+    $this->page->addVar(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+  }
+
   public function executeListAll(\Library\HttpRequest $rq) {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
@@ -94,6 +99,30 @@ class FormController extends \Library\BaseController {
       "resx_key" => $this->action(),
       "step" => (intval($result["dataOut"])) > 0 ? "success" : "error"
     ));
+  }
+
+  public function executeAddMaster(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+    $files = $this->files();
+    if($this->dataPost["title"] == "" or is_null($this->dataPost["title"])) {
+      $this->dataPost["title"] = $files["file"]["name"];
+    }
+
+    $form = \Applications\PMTool\Helpers\FormHelper::PrepareMasterFormObject($this->dataPost());
+    $result["dataIn"] = $form;
+    $manager = $this->managers->getManagerOf("MasterForm");
+    $manager->setRootDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
+    $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
+
+    $result["dataOut"] = $manager->addWithFile($form,$files['file']);
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Form,
+      "resx_key" => $this->action(),
+      "step" => (intval($result["dataOut"])) > 0 ? "success" : "error"
+    ));
+
   }
 
   public function executeEdit(\Library\HttpRequest $rq) {
