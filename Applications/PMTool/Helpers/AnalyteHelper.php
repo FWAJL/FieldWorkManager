@@ -34,6 +34,22 @@ class AnalyteHelper {
     $COMMON = "common_";
     $FIELD = "field";
     $LAB = "lab";
+    /*
+     * creates an array depending on the value of $processCommonAnalytes
+     * 
+     * array(
+     *  "common_field",
+     *  "common_lab"
+     * )
+     * 
+     * or 
+     * 
+     * array(
+     *  "field",
+     *  "lab"
+     * )
+     * 
+     */
     $loopParams = array($processCommonAnalytes ? $COMMON . $FIELD : $FIELD, $processCommonAnalytes ? $COMMON . $LAB : $LAB);
     for ($index = 0; $index < count($loopParams); $index++) {
       switch ($loopParams[$index]) {
@@ -67,7 +83,7 @@ class AnalyteHelper {
   private static function _StoreAnalytes($caller, $sessionPm, $sessionKey, $analyteObj) {
     if (count($sessionPm[$sessionKey]) === 0) {
       $analyteObj->setPm_id($sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_id());
-      $dal = $caller->managers()->getManagerOf($caller->module());
+      $dal = $caller->managers()->getManagerOf("Analyte");
       $analytes = $dal->selectMany($analyteObj, "pm_id");
       $sessionPm[$sessionKey] = $analytes;
     }

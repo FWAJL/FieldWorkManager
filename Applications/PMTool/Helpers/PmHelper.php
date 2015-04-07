@@ -110,9 +110,16 @@ class PmHelper {
   public static function FillSessionPm($caller, $sessionPm) {
     $sessionPm[\Library\Enums\SessionKeys::PmTechnicians] = TechnicianHelper::GetPmTechnicians($caller, $sessionPm);
     $sessionPm[\Library\Enums\SessionKeys::PmServices] = ServiceHelper::GetPmServices($caller, $sessionPm);
-    $sessionPm[\Library\Enums\SessionKeys::PmFieldAnalytes] = array();
-    $sessionPm[\Library\Enums\SessionKeys::PmLabAnalytes] = array();
-    self::SetSessionPm($caller->user(), $sessionPm);
+    
+    /*
+     * Sets
+     *  $sessionPm[\Library\Enums\SessionKeys::PmFieldAnalytes]
+     *  $sessionPm[\Library\Enums\SessionKeys::PmLabAnalytes]
+     * 
+     * And also saves the data filled above.
+     */
+    AnalyteHelper::StoreListsData($caller, FALSE);
+    
     self::GetAndStoreCurrentPm($caller->user(), $sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_id());
   }
   public static function MakeSessionPm(\Applications\PMTool\Models\Dao\Project_manager $pm) {
@@ -159,16 +166,21 @@ class PmHelper {
   }
 
   public static function StoreSessionPm($caller, \Applications\PMTool\Models\Dao\Project_manager $pm, $setCurrentPm) {
-    $PmsSession = array();
-    $PmsSession[\Library\Enums\SessionKeys::PmKey . $pm->pm_id()] = self::MakeSessionPm($pm);
+    $sessionPms = self::GetSessionPms($caller->user());
+    //Init $sessionPms if unset
+    if (!isset($sessionPms)) $sessionPms = array();
+    //Init PmKey to store the session PM
+    $pmKey = \Library\Enums\SessionKeys::PmKey . $pm->pm_id();
+    //Store the session Pm only if it is not present in the array
+    if (!array_key_exists($pmKey, $sessionPms)) $sessionPms[$pmKey] = self::MakeSessionPm($pm);
         
-    self::SetSessionPms($caller->user(), $PmsSession);
+    self::SetSessionPms($caller->user(), $sessionPms);
     if ($setCurrentPm) {
       self::GetAndStoreCurrentPm($caller->user(), $pm->pm_id());
       $sessionPm = self::GetCurrentSessionPm($caller->user());
       self::FillSessionPm($caller, $sessionPm);
     }
-    return $PmsSession;
+    return $sessionPms;
   }
 
   public static function UnsetSessionPm($user, $pm_id) {
