@@ -1,13 +1,10 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 
-<div id="pm_edit_info"  class="pm_edit data-form">
-<fieldset class="user_form pm_form">
+<div id="pm_edit_info"  class="pm_edit data-form user-type-form">
+<fieldset class="pm_form">
   <ol class="add-new-item">
     <li style="display: none;">
       <input name="pm_id" type="text" />
-    </li>
-    <li style="display: none;">
-      <input name="user_type" type="text" />
     </li>
     <li>
       <label><?php echo $resx["pm_name"]; ?></label>

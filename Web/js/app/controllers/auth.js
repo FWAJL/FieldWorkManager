@@ -36,7 +36,7 @@ $(document).ready(function() {
        window.location.replace("project");
      }
      else if(reply.role == '1') {
-        utils.redirect("analyte/uploadCommons");
+        utils.redirect("user/listAll");
      }
    }
   });

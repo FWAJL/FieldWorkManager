@@ -45,7 +45,10 @@
   <resource key="service_list">List All</resource>
   
   <resource key="header_user_results">Completed Tasks</resource>
-  
-  
+
+  <resource key="header_users">Users</resource>
+  <resource key="user_list_all">List All</resource>
+  <resource key="user_add">Add</resource>
+
   
 </resources>

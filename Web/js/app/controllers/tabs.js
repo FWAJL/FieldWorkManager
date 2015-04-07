@@ -20,6 +20,8 @@ $(document).ready(function() {
     _default = "field_analyte";
   }  else if (utils.getPathPart("form")) {
     _default = "form_info";
+  } else if (utils.getPathPart("user")) {
+    _default = "user_info"
   }
 
 
