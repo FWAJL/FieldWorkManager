@@ -32,6 +32,7 @@
   <resource key="user_password">Password</resource>
   <resource key="user_hint">Hint</resource>
   <resource key="user_type_option">Admin</resource>
+  <resource key="user_password_tip">Type your new password here</resource>
 
   <resource key="button_edit">Edit your info</resource>
   <resource key="users_list">User list</resource>
