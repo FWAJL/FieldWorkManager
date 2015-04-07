@@ -107,6 +107,14 @@ class PmHelper {
             $user->getAttribute(\Library\Enums\SessionKeys::CurrentPm) : FALSE;
   }
 
+  public static function FillSessionPm($caller, $sessionPm) {
+    $sessionPm[\Library\Enums\SessionKeys::PmTechnicians] = TechnicianHelper::GetPmTechnicians($caller, $sessionPm);
+    $sessionPm[\Library\Enums\SessionKeys::PmServices] = ServiceHelper::GetPmServices($caller, $sessionPm);
+    $sessionPm[\Library\Enums\SessionKeys::PmFieldAnalytes] = array();
+    $sessionPm[\Library\Enums\SessionKeys::PmLabAnalytes] = array();
+    self::SetSessionPm($caller->user(), $sessionPm);
+    self::GetAndStoreCurrentPm($caller->user(), $sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_id());
+  }
   public static function MakeSessionPm(\Applications\PMTool\Models\Dao\Project_manager $pm) {
     $sessionPm = array(
         \Library\Enums\SessionKeys::PmObject => $pm,
@@ -150,13 +158,15 @@ class PmHelper {
     }
   }
 
-  public static function StoreSessionPm($user, \Applications\PMTool\Models\Dao\Project_manager $pm, $setCurrentPm) {
+  public static function StoreSessionPm($caller, \Applications\PMTool\Models\Dao\Project_manager $pm, $setCurrentPm) {
     $PmsSession = array();
     $PmsSession[\Library\Enums\SessionKeys::PmKey . $pm->pm_id()] = self::MakeSessionPm($pm);
-
-    self::SetSessionPms($user, $PmsSession);
+        
+    self::SetSessionPms($caller->user(), $PmsSession);
     if ($setCurrentPm) {
-      self::GetAndStoreCurrentPm($user, $pm->pm_id());
+      self::GetAndStoreCurrentPm($caller->user(), $pm->pm_id());
+      $sessionPm = self::GetCurrentSessionPm($caller->user());
+      self::FillSessionPm($caller, $sessionPm);
     }
     return $PmsSession;
   }

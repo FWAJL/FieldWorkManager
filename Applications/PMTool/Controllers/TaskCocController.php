@@ -15,7 +15,7 @@ class TaskCocController extends \Library\BaseController {
 	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
 	
-	$labServices = \Applications\PMTool\Helpers\TaskHelper::getLabServicesForTask($this->user(), $sessionTask, "Laboratory");
+	$labServices = \Applications\PMTool\Helpers\TaskHelper::getLabServicesForTask($this, $sessionTask, "Laboratory");
 	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::labServices, $labServices);
 	
 	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentPm, \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user()));
