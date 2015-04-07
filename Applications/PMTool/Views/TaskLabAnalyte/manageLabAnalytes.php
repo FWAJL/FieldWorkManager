@@ -24,9 +24,10 @@
       <?php require $form_modules["project_lab_analyte_list"]; ?>              
     </div>
     <?php 
-	require $form_modules["tabs_close"]; 
-	require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; 
-	?>          
+  	require $form_modules["tabs_close"]; 
+  	require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg];
+    require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::task_analyte_matrix_switch]; 
+  	?>          
   </div>
 </div>
 </div>

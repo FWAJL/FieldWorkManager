@@ -24,7 +24,8 @@
       <?php require $form_modules["group_list_right"]; ?>              
     </div>
     <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; ?>
-    <?php require $form_modules["tabs_close"]; ?>              
+    <?php require $form_modules["tabs_close"]; ?> 
+    <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::task_analyte_matrix_switch]; ?>
   </div>
 </div>
 </div>
