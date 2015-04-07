@@ -33,7 +33,7 @@
 	    	  </div>
 	    	  <?php
 	    		if(!empty($task_locations)){
-	    	  		foreach ($task_locations as $location) {
+	    	  	foreach ($task_locations as $location) {
     		  		?>
     		    	<div class="matrix-row">
     		  	  		<div class="matrix-cell matrix-cell-data"><?php echo $location->location_name(); ?></div>
@@ -49,7 +49,7 @@
 					    ?>
     		  		</div>
     		  		<?php
-	    	  		}	
+	    	  	}	
 	    		}
 	    	  ?>
 	    	  <div class="matrix-row">
@@ -64,6 +64,7 @@
 	  <?php 
 		require $form_modules["tabs_close"]; 
 		require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; 
+		require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::task_analyte_matrix_switch]; 
 	  ?>
 	</div>
   </div>
