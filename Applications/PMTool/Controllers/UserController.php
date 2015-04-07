@@ -2,6 +2,8 @@
 
 namespace Applications\PMTool\Controllers;
 
+use Applications\PMTool\Models\Dao\User;
+
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
@@ -19,6 +21,21 @@ class UserController extends \Library\BaseController {
 
   }
 
+  public function executeListAll(\Library\HttpRequest $rq) {
+    //Get list of pms stored in session
+    $users = \Applications\PMTool\Helpers\UserHelper::GetAndStoreUsersInSession($this);
+    $categorizedUsers = \Applications\PMTool\Helpers\UserHelper::CategorizeUsersList($users);
+    $data = array(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_left => $categorizedUsers,
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\UserHelper::SetPropertyNamesForDualList()
+    );
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
+    //Load Modules for view
+    $this->page->addVar(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+  }
+
   public function executeEditCurrent(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
@@ -27,14 +44,14 @@ class UserController extends \Library\BaseController {
     if($this->app->user()->getUserType()=="pm_id") {
       $pmSession = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
       $this->dataPost["pm_id"] = $pmSession === NULL ? NULL : $pmSession[\Library\Enums\SessionKeys::PmObject]->pm_id();
-      $pm = $this->_PreparePmObject($this->dataPost());
+      $pm = \Applications\PMTool\Helpers\UserHelper::PreparePmObject($this->dataPost());
       $result["data"] = $pm;
 
       $manager = $this->managers->getManagerOf($this->module);
       $result_insert = $manager->edit($pm, "pm_id");
       if($result_insert) {
         $pmSession[\Library\Enums\SessionKeys::PmObject] = $pm;
-        \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this->app->user(),$pmSession,true);
+        \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this->app->user(),$pm,true);
       }
     }
     $this->SendResponseWS(
@@ -45,14 +62,120 @@ class UserController extends \Library\BaseController {
     ));
   }
 
+  public function executeEdit(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+    $dataPost = $this->dataPost();
+    $userId = $dataPost['user_id'];
+    $result_type = true;
+    $result_user = false;
+    //Init PDO
+    if($this->app->user()->getRole()==1) {
+      $users = \Applications\PMTool\Helpers\UserHelper::GetAndStoreUsersInSession($this);
+      $user = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue(intval($userId),'user_id',$users);
+      $user->setUser_login($dataPost['user_login']);
+      $user->setUser_hint($dataPost['user_hint']);
+      if($dataPost['user_password']!="") {
+        $protect = new \Library\BL\Core\Encryption();
+        $user->setUser_password($protect->Encrypt($this->app->config->get("encryption_key"), $dataPost['user_password']));
+      }
+      $manager = $this->managers->getManagerOf($this->module);
+      $result['user'] = $result_user = $manager->edit($user, "user_id");
+      if($result_user) {
+        $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::AllUsers);
+        if($user->user_type()=='pm_id'){
+          $pm =  \Applications\PMTool\Helpers\UserHelper::PreparePmObject($dataPost);
+          $manager = $this->managers->getManagerOf('Pm');
+          $result['user_type'] = $result_type = $manager->edit($pm,'pm_id');
+        }
+      }
+    }
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::User,
+      "resx_key" => $this->action(),
+      "step" => ($result_user&&$result_type) ? "success" : "error"
+    ));
+  }
+
+  public function executeShowForm(\Library\HttpRequest $rq) {
+    //set user types for dropdown menu selection
+    $userTypes = array('pm_id');
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_types,$userTypes);
+    //Load Modules for view
+    $this->page->addVar(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+  }
+
+  public function executeAdd(\Library\HttpRequest $rq) {
+    // Init result sent to client (e.g. browser)
+    $result = $this->InitResponseWS();
+    $dataPost = $this->dataPost();
+    //.. and build the object to query the DB
+    $user = \Applications\PMTool\Helpers\UserHelper::PrepareUserObject($dataPost,$this->app->config, true);
+    $result["dataIn"]['user'] = $user;
+    if(isset($dataPost['user_type']) && $dataPost['user_type']!="") {
+      if($dataPost['user_type']=="pm_id") {
+        $pm = \Applications\PMTool\Helpers\UserHelper::PreparePmObject($dataPost);
+        $manager = $this->managers->getManagerOf('Pm');
+        $pmId = $manager->add($pm);
+        if((intval($pmId)) > 0) {
+          $result['dataOut']['pm']=$this->_StoreUserInDb($user, $dataPost['user_type'], $pmId);
+        }
+      }
+    } else {
+      $user = $this->_StoreUserInDb($user, "", "");
+    }
+    if(($user instanceof \Applications\PMTool\Models\Dao\User) && intval($user->user_id())>0) {
+      //add to list of users only if new user isn't admin
+      if($user->user_role_id()!=1) {
+        \Applications\PMTool\Helpers\UserHelper::AddNewUserToSession($this, $user);
+      }
+      $result['dataOut']['user'] = $user;
+    }
+    //Send the response to browser
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::User,
+      "resx_key" => $this->action(),
+      "step" => (($user instanceof \Applications\PMTool\Models\Dao\User) && intval($user->user_id())>0) ? "success" : "error"
+    ));
+  }
+
+  public function executeGetItem(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS();
+    $userId = $this->dataPost["user_id"];
+
+    $users = \Applications\PMTool\Helpers\UserHelper::GetAndStoreUsersInSession($this);
+    $user = $result['user'] = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue(intval($userId),'user_id',$users);
+    if($user instanceof \Applications\PMTool\Models\Dao\User){
+      if($user->user_type()=="pm_id") {
+        $pm = new \Applications\PMTool\Models\Dao\Project_manager();
+        $pm->setPm_id($user->user_value());
+        $manager = $this->managers->getManagerOf('Pm');
+        $pms = $manager->selectMany($pm, 'pm_id');
+        $pm = $pms[0];
+        $result['pm'] = $pm;
+      }
+    } else {
+      $result['user'] = array();
+    }
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::User,
+      "resx_key" => $this->action(),
+      "step" => count($result['user']) ? "success" : "error"
+    ));
+  }
+
   public function executeGetCurrent(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
     $user_id = $this->app->user()->getAttribute(\Library\Enums\SessionKeys::UserAuthenticated);
-    $result["user"] = NULL;
+    $result["pm"] = NULL;
     if($this->app->user()->getUserType()=="pm_id") {
       $pm_selected = $this->_GetPmFromSession($this->app->user()->getUserTypeId());
-      $result["user"] = $pm_selected;
+      $result["pm"] = $pm_selected;
       $result["user_type"] = $this->app->user()->getUserType();
     }
 
@@ -60,7 +183,41 @@ class UserController extends \Library\BaseController {
       $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::User,
       "resx_key" => $this->action(),
-      "step" => ( $result["user"] !== NULL) ? "success" : "error"
+      "step" => ( $result["pm"] !== NULL) ? "success" : "error"
+    ));
+  }
+
+  public function executeDelete(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+    $db_result = FALSE;
+    $db_result2 = TRUE;
+    $userId = intval($this->dataPost["user_id"]);
+    $isAdmin = $this->app()->user()->getRole();
+    //Load interface to query the database
+    if ($isAdmin == 1) {
+      $users = \Applications\PMTool\Helpers\UserHelper::GetAndStoreUsersInSession($this);
+      $user = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue(intval($userId),'user_id',$users);
+      $manager = $this->managers->getManagerOf($this->module);
+      $db_result = $manager->delete($user, "user_id");
+      if($db_result !== FALSE) {
+        if($user->user_type()=='pm_id') {
+          $db_result2 = FALSE;
+          $pm = new \Applications\PMTool\Models\Dao\Project_manager();
+          $pm->setPm_id($user->user_value());
+          $manager = $this->managers->getManagerOf('Pm');
+          $db_result2 = $manager->delete($pm, 'pm_id');
+        }
+        $this->app()->user->unsetAttribute(\Library\Enums\SessionKeys::AllUsers);
+      }
+
+    }
+
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::User,
+      "resx_key" => $this->action(),
+      "step" => ($db_result !== FALSE && $db_result2 !== FALSE) ? "success" : "error"
     ));
   }
 
@@ -78,57 +235,25 @@ class UserController extends \Library\BaseController {
     return $pmMatch;
   }
 
-  /**
-   * Check if the current pm has pms to decide where to send him: stay on the pm list or asking him to add a pm
-   *
-   * @param \Applications\PMTool\Models\Dao\Pms $pm
-   * @return boolean
-   */
-  private function _CheckIfPmHasPms(\Applications\PMTool\Models\Dao\Pms $pm) {
-
-    if ($this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::AllUsers)) {
-      $pms = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::AllUsers);
-      return count($pms) > 0 ? TRUE : FALSE;
+  private function _StoreUserInDb($user, $userType, $userTypeId) {
+    $role = \Applications\PMTool\Helpers\UserHelper::GetRoleFromType($userType);
+    $user->setUser_role_id($role);
+    if($userType!="") {
+      $user->setUser_type($userType);
+      $user->setUser_value($userTypeId);
+    } else {
+      $user->setUser_type("");
+      $user->setUser_value("");
+      $user->setUser_role_id(1);
     }
     $manager = $this->managers->getManagerOf($this->module);
-    $count = $manager->countById($pm->pm_id());
-    return $count > 0 ? TRUE : FALSE;
-  }
-
-  private function _PreparePmObject($data_sent) {
-    $pm = new \Applications\PMTool\Models\Dao\Project_manager();
-    $pm->setPm_id($data_sent["pm_id"]);
-    $pm->setPm_name($data_sent["pm_name"]);
-    $pm->setPm_address(!array_key_exists('pm_address', $data_sent) ? "" : $data_sent["pm_address"]);
-    $pm->setPm_comp_name(!array_key_exists('pm_comp_name', $data_sent) ? "" : $data_sent["pm_comp_name"]);
-    $pm->setPm_phone(!array_key_exists('pm_phone', $data_sent) ? "" : $data_sent["pm_phone"]);
-    $pm->setPm_email(!array_key_exists('pm_email', $data_sent) ? "" : $data_sent["pm_email"]);
-//    $pm->setPm_active(!array_key_exists('pm_active', $data_sent) ? 0 : ($data_sent["pm_active"] === "1"));
-
-    return $pm;
-  }
-
-  /**
-   * Checks if the user pms  are not stored in Session.
-   * Stores the pms and facilities after call to WS to retrieve them
-   * Set the data into the session for later use.
-   *
-   * @param /Library/HttpRequest $rq
-   * @return array $lists : the lists of objects if any
-   */
-  private function _GetAndStorePmsInSession($rq) {
-    $lists = array();
-    if (!$this->app()->user->keyExistInSession(\Library\Enums\SessionKeys::AllUsers)) {
-
-      $lists = $this->executeGetList($rq, TRUE);
-
-      $this->app()->user->setAttribute(
-        \Library\Enums\SessionKeys::AllUsers, $lists[\Library\Enums\SessionKeys::AllUsers]
-      );
+    $res = $manager->add($user);
+    if(intval($res)>0) {
+      $user->setUser_id($res);
+      return $user;
     } else {
-      $lists[\Library\Enums\SessionKeys::AllUsers] = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::AllUsers);
+      return $res;
     }
-    return $lists;
   }
 
 }
