@@ -53,7 +53,7 @@ class TaskHelper {
     );
     $user->setAttribute(\Library\Enums\SessionKeys::TabsStatus, $tabs);
   }
-  
+
   /**
    * <p>
    * Sets the data into the task session array when it is selected so that the 
@@ -67,10 +67,10 @@ class TaskHelper {
    */
   public static function FillSessionTask($caller, $sessionTask) {
     ServiceHelper::GetAndStoreTaskServices($caller, $sessionTask);
-    
+
     //Get the refreshed session array value and then update it then
     $sessionTask = self::GetCurrentSessionTask($caller->user());
-    
+
     //Then you can do your logic to update the session array value
   }
 
@@ -137,14 +137,13 @@ class TaskHelper {
               . $currentTask->task_id();
     }
   }
-  
+
   public static function GetTaskCocTabUrl($currentTask) {
-    
+
     return
-              \Library\Enums\ResourceKeys\UrlKeys::TaskCOC
-              . "?mode=edit&task_id="
-              . $currentTask->task_id();
-    
+            \Library\Enums\ResourceKeys\UrlKeys::TaskCOC
+            . "?mode=edit&task_id="
+            . $currentTask->task_id();
   }
 
   public static function GetCurrentSessionTask($user) {
@@ -195,18 +194,22 @@ class TaskHelper {
     $user->setAttribute(\Library\Enums\SessionKeys::CurrentTask, $sessionTask);
     self::SetSessionTasks($user, $sessionTasks);
   }
-  
-  public static function getLabServicesForTask(\Library\User $user, $sessionTask, $filterCategory) {
-	$labServices = array();
-	if(isset($sessionTask[\Library\Enums\SessionKeys::TaskServices])) {
-	  $taskServices = \Applications\PMTool\Helpers\ServiceHelper::GetServicesFromTaskServices($user, $sessionTask);
-	  foreach($taskServices as $service) {
-	    if($service['service_type'] === $filterCategory) {
-		  array_push($labServices, $service);
-	    }
-	  }
-	}
-	return $labServices;
+
+  public static function getLabServicesForTask($caller, $sessionTask, $filterCategory) {
+    $labServices = $taskServices = array();
+    if (isset($sessionTask[\Library\Enums\SessionKeys::TaskServices]) && count($sessionTask[\Library\Enums\SessionKeys::TaskServices]) > 0) {
+      $taskServices = \Applications\PMTool\Helpers\ServiceHelper::GetServicesFromTaskServices($caller->user(), $sessionTask);
+    } else {
+      $taskServices = ServiceHelper::GetAndStoreTaskServices($caller, $sessionTask);
+      $sessionTask[\Library\Enums\SessionKeys::TaskServices] = $taskServices;
+      TaskHelper::SetSessionTask($caller->user(), $sessionTask);
+    }
+    foreach ($taskServices as $service) {
+      if ($service['service_type'] === $filterCategory) {
+        array_push($labServices, $service);
+      }
+    }
+    return $labServices;
   }
 
   public static function StoreSessionTask($user, $list) {
@@ -219,8 +222,8 @@ class TaskHelper {
       $SessionTasks[$key] = $sessionTask;
       array_push($currentProject[\Library\Enums\SessionKeys::ProjectTasks], $key);
       if ($task->task_active()) {
-        $countActiveTask += 1; 
-        $currentSessionTask = $sessionTask;//Get sessin task object
+        $countActiveTask += 1;
+        $currentSessionTask = $sessionTask; //Get sessin task object
       }
     }
     ProjectHelper::SetUserSessionProject($user, $currentProject);
