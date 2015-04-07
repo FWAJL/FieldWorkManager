@@ -49,6 +49,7 @@ $(document).ready(function() {
         }
       } else {
         toastr.error("The field " + $(this).attr("name") + " is empty. Please fill out all fields.");
+        user_inputs.required_field_missing = true;
       }
     });
     return user_inputs;
