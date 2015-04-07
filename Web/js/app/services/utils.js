@@ -68,6 +68,9 @@ $(document).ready(function() {
     for (var i = 0; i <= inputs_required.length; i++) {
       if (element.attr("name") === inputs_required[i]) {
         result = element.val() !== "" ? true : false;
+        if (!result) {
+          result = element.find(":selected").text() !== "" ? true : false;
+        }
         if (!result)
           break;
       } else {

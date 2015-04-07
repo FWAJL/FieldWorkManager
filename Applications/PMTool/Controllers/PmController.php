@@ -71,7 +71,7 @@ public function executeShowForm(\Library\HttpRequest $rq) {
     $manager = $this->managers->getManagerOf($this->module);
     $result_insert = $manager->edit($pm, "pm_id");
     if($result_insert) {
-      \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this->app->user(),$pm,true);
+      \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this,$pm,true);
     }
     $this->SendResponseWS(
             $result, array(
