@@ -20,7 +20,7 @@
       </li>
       <li>
         <label><?php echo $resx["user_password"]; ?></label>
-        <input name="user_password" type="text" />
+        <input name="user_password" type="text" placeholder="<?php echo $resx["user_password_tip"]; ?>" />
       </li>
       <li>
         <label><?php echo $resx["user_hint"]; ?></label>
