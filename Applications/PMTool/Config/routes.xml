@@ -773,7 +773,7 @@
     <!-- pm/showForm -->
 
     <!-- User -->
-    <route url="user/showDetails" module="User" action="showDetails" resxfile="user" type="ui">
+    <route url="user/showDetails" module="User" action="showDetails" resxfile="user" type="ui" role="2">
       <js_files>
         <js_file use="head" value="Web/js/app/controllers/user_manager.js" />
       </js_files>
@@ -789,6 +789,37 @@
       </php_modules>
     </route>
     <!-- user/showDetails -->
+    <route url="user/listAll" module="User" action="listAll" resxfile="user" type="ui" role="1">
+      <js_files>
+        <js_file use="head" value="Web/js/app/controllers/user_manager.js" />
+      </js_files>
+      <css_files>
+        <css_file value="Web/css/app/nav.css" />
+        <css_file value="Web/css/app/app-style.css" />
+        <css_file value="Web/css/app/app-theme.css" />
+        <css_file value="Web/css/app/tabs.css" />
+      </css_files>
+      <php_modules>
+        <php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
+      </php_modules>
+    </route>
+    <!-- user/listAll -->
+    <route url="user/showForm" module="User" action="showForm" resxfile="user" type="ui" role="1">
+      <js_files>
+        <js_file use="head" value="Web/js/app/controllers/user_manager.js" />
+      </js_files>
+      <css_files>
+        <css_file value="Web/css/app/nav.css" />
+        <css_file value="Web/css/app/app-style.css" />
+        <css_file value="Web/css/app/app-theme.css" />
+        <css_file value="Web/css/app/tabs.css" />
+      </css_files>
+      <php_modules>
+        <php_module key="pm_form" file_name="pm_form.php" />
+        <php_module key="user_form" file_name="user_form.php" />
+      </php_modules>
+    </route>
+    <!-- user/showForm -->
 
     <!-- Forms -->
     <route url="form/listAll" module="Form" action="listAll" resxfile="form" type="ui" role="2">
@@ -957,6 +988,10 @@
 
   <route url="user/getCurrent" module="User" action="getCurrent" resxfile="user" type="ws" />
   <route url="user/editCurrent" module="User" action="editCurrent" resxfile="user" type="ws" />
+  <route url="user/add" module="User" action="add" resxfile="user" type="ws" />
+  <route url="user/delete" module="User" action="delete" resxfile="user" type="ws" />
+  <route url="user/getItem" module="User" action="getItem" resxfile="user" type="ws" />
+  <route url="user/edit" module="User" action="edit" resxfile="user" type="ws" />
 
   <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
   <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />

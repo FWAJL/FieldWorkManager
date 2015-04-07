@@ -34,6 +34,7 @@ abstract class SessionKeys {
   const UserTypeId = "user_value";
   const UserType = "user_type";
   const UserRoutes = "user_routes";
+  const AllUsers = "all_users";
 
   const UserProjects= "user_projects";
   const UserProjectFacilityList= "user_project_facility_list";
