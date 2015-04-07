@@ -363,9 +363,10 @@
             <php_module key="task_info_lists" file_name="task_info_lists.php" />
             <php_module key="task_form" file_name="task_form.php" />
             <php_module key="task_buttons" file_name="task_buttons.php" />
-	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+            <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
             <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/showAddForm -->
     
@@ -468,6 +469,7 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/locations --> 
     
@@ -485,6 +487,7 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/technicians -->
     
@@ -502,6 +505,7 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="analyte_list_buttons" file_name="analyte_list_buttons.php"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/fieldAnalytes -->
 	
@@ -519,6 +523,7 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="analyte_list_buttons" file_name="analyte_list_buttons.php"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/labAnalytes -->
 
@@ -533,6 +538,7 @@
             <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/labMatrix -->
 
@@ -547,6 +553,7 @@
             <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/fieldMatrix -->
 	
@@ -564,6 +571,7 @@
 			<php_module key="task_coc_info_form" file_name="task_coc_info_form.php" />
 			<php_module key="task_buttons" file_name="task_buttons.php" />
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/coc -->
 	
@@ -581,6 +589,7 @@
             <php_module key="categorized_promote_buttons_module" file_name="categorized_promote_buttons.php" shared="true"/>
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/services -->
 
@@ -598,6 +607,7 @@
             <php_module key="categorized_promote_buttons_module" file_name="categorized_promote_buttons.php" shared="true"/>
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/forms -->
 
@@ -763,7 +773,7 @@
     <!-- pm/showForm -->
 
     <!-- User -->
-    <route url="user/showDetails" module="User" action="showDetails" resxfile="user" type="ui">
+    <route url="user/showDetails" module="User" action="showDetails" resxfile="user" type="ui" role="2">
       <js_files>
         <js_file use="head" value="Web/js/app/controllers/user_manager.js" />
       </js_files>
@@ -779,6 +789,37 @@
       </php_modules>
     </route>
     <!-- user/showDetails -->
+    <route url="user/listAll" module="User" action="listAll" resxfile="user" type="ui" role="1">
+      <js_files>
+        <js_file use="head" value="Web/js/app/controllers/user_manager.js" />
+      </js_files>
+      <css_files>
+        <css_file value="Web/css/app/nav.css" />
+        <css_file value="Web/css/app/app-style.css" />
+        <css_file value="Web/css/app/app-theme.css" />
+        <css_file value="Web/css/app/tabs.css" />
+      </css_files>
+      <php_modules>
+        <php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
+      </php_modules>
+    </route>
+    <!-- user/listAll -->
+    <route url="user/showForm" module="User" action="showForm" resxfile="user" type="ui" role="1">
+      <js_files>
+        <js_file use="head" value="Web/js/app/controllers/user_manager.js" />
+      </js_files>
+      <css_files>
+        <css_file value="Web/css/app/nav.css" />
+        <css_file value="Web/css/app/app-style.css" />
+        <css_file value="Web/css/app/app-theme.css" />
+        <css_file value="Web/css/app/tabs.css" />
+      </css_files>
+      <php_modules>
+        <php_module key="pm_form" file_name="pm_form.php" />
+        <php_module key="user_form" file_name="user_form.php" />
+      </php_modules>
+    </route>
+    <!-- user/showForm -->
 
     <!-- Forms -->
     <route url="form/listAll" module="Form" action="listAll" resxfile="form" type="ui" role="2">
@@ -947,6 +988,10 @@
 
   <route url="user/getCurrent" module="User" action="getCurrent" resxfile="user" type="ws" />
   <route url="user/editCurrent" module="User" action="editCurrent" resxfile="user" type="ws" />
+  <route url="user/add" module="User" action="add" resxfile="user" type="ws" />
+  <route url="user/delete" module="User" action="delete" resxfile="user" type="ws" />
+  <route url="user/getItem" module="User" action="getItem" resxfile="user" type="ws" />
+  <route url="user/edit" module="User" action="edit" resxfile="user" type="ws" />
 
   <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
   <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />

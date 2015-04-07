@@ -94,4 +94,6 @@ class ViewVariablesKeys {
   const user_details = "user_details";
   const user_details_buttons = "user_details_buttons";
   const pm_form = "pm_form";
+  //user showform
+  const user_types = "user_types";
 }

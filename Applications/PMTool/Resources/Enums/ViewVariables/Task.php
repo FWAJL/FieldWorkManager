@@ -48,6 +48,11 @@ class Task {
   const popup_msg_module = "popup_msg_module";
 
   const popup_prompt_module = "popup_prompt_module";
+  //module for analyte matrix
+  const task_analyte_matrix_switch = "task_analyte_matrix_switch";
+  //view variable for analyte matrix
+  const task_show_lab_matrix = "task_show_lab_matrix";
+  const task_show_field_matrix = "task_show_field_matrix";
   //Data keys
 
   

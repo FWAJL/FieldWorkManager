@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <main_menus>
   <version>1</version>
+  <main_menu name="user" active="true">
+    <links>
+      <header href="user" resourcekey="header_users" enablelink="false" />
+      <submenu href="user/listAll" id="user_list_all" resourcekey="user_list_all" active="true"/>
+      <submenu href="user/showForm" id="user_add" resourcekey="user_add" active="true"/>
+    </links>
+  </main_menu><!-- user -->
+
   <main_menu name="project" active="true">
     <links>
       <header href="project" resourcekey="header_projects" enablelink="false" />
