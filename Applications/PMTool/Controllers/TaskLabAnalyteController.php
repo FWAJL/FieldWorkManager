@@ -23,6 +23,13 @@ class TaskLabAnalyteController extends \Library\BaseController {
   	$sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
   	//All analytes for this PM, we would be assigning task specific analytes from list
   	$pm_lab_analytes = $pm[\Library\Enums\SessionKeys::PmLabAnalytes];
+
+    //Analyte Matrix tab status
+    $showLabMatrixTabs = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::DoesAnalytesAndLocationsExistsFor($sessionTask, $this, 'Lab');
+    $showFieldMatrixTabs = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::DoesAnalytesAndLocationsExistsFor($sessionTask, $this, 'Field');
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_show_lab_matrix, $showLabMatrixTabs);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_show_field_matrix, $showFieldMatrixTabs);
+    //Analyte Matrix tab status
       
   	\Applications\PMTool\Helpers\TaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\TaskTabKeys::LabAnalytesTab);
   	
@@ -58,6 +65,14 @@ class TaskLabAnalyteController extends \Library\BaseController {
     \Applications\PMTool\Helpers\AnalyteHelper::StoreListsData($this);  
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+
+    //Analyte Matrix tab status
+    $showLabMatrixTabs = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::DoesAnalytesAndLocationsExistsFor($sessionTask, $this, 'Lab');
+    $showFieldMatrixTabs = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::DoesAnalytesAndLocationsExistsFor($sessionTask, $this, 'Field');
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_show_lab_matrix, $showLabMatrixTabs);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_show_field_matrix, $showFieldMatrixTabs);
+    //Analyte Matrix tab status
+
     //Get task specific lab analytes
     $task_lab_analytes = \Applications\PMTool\Helpers\AnalyteHelper::GetAndStoreTaskLabAnalytes($this, $sessionTask);
     //Task specific locations

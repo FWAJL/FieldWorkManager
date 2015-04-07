@@ -363,9 +363,10 @@
             <php_module key="task_info_lists" file_name="task_info_lists.php" />
             <php_module key="task_form" file_name="task_form.php" />
             <php_module key="task_buttons" file_name="task_buttons.php" />
-	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+            <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
             <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/showAddForm -->
     
@@ -468,6 +469,7 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/locations --> 
     
@@ -485,6 +487,7 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/technicians -->
     
@@ -502,6 +505,7 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="analyte_list_buttons" file_name="analyte_list_buttons.php"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/fieldAnalytes -->
 	
@@ -519,6 +523,7 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="analyte_list_buttons" file_name="analyte_list_buttons.php"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/labAnalytes -->
 
@@ -533,6 +538,7 @@
             <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/labMatrix -->
 
@@ -547,6 +553,7 @@
             <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/fieldMatrix -->
 	
@@ -564,6 +571,7 @@
 			<php_module key="task_coc_info_form" file_name="task_coc_info_form.php" />
 			<php_module key="task_buttons" file_name="task_buttons.php" />
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/coc -->
 	
@@ -581,6 +589,7 @@
             <php_module key="categorized_promote_buttons_module" file_name="categorized_promote_buttons.php" shared="true"/>
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/services -->
 
@@ -598,6 +607,7 @@
             <php_module key="categorized_promote_buttons_module" file_name="categorized_promote_buttons.php" shared="true"/>
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/forms -->
 

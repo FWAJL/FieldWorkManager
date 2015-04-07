@@ -75,7 +75,6 @@ class TaskAnalyteMatrixHelper {
     if($analyte_type === 'Lab') {
   	  //FOR LAB ANALYTE
 	  	//First delete the existing relationship
-      
       $data = array('task_id' => $task_id);
       //Init PDO
       $lab_analyte_location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Lab_analyte_location());
@@ -85,7 +84,6 @@ class TaskAnalyteMatrixHelper {
   	} else {
   	  //FOR FIELD ANALYTE
       //First delete the existing relationship
-      
       //Init PDO
       $field_analyte_location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Field_analyte_location());
       $manager = $caller->managers()->getManagerOf('TaskFieldAnalyte');
@@ -132,4 +130,39 @@ class TaskAnalyteMatrixHelper {
     }
     return $ret_val;
   }
+
+  /**
+  * Checks if any analyte (based on analyte type)
+  * and location exists for the passed task.
+  *
+  * Returns true if both are present, false if
+  * either doesn't.
+  */
+  public static function DoesAnalytesAndLocationsExistsFor($sessionTask, $caller, $analyte_type = 'Lab') {
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($caller->app()->user());
+    //Store all analytes for this task
+    \Applications\PMTool\Helpers\AnalyteHelper::StoreListsData($caller);
+
+    //Task specific locations
+    $project_locations = \Applications\PMTool\Helpers\LocationHelper::GetProjectLocations($caller, $sessionProject);
+    $task_locations = \Applications\PMTool\Helpers\LocationHelper::GetAndStoreTaskLocations($caller, $sessionTask);
+    $analyte_count = 0;
+    if($analyte_type === 'Lab'){
+      //check for LAB analytes
+      //Get task specific lab analytes
+      $task_lab_analytes = \Applications\PMTool\Helpers\AnalyteHelper::GetAndStoreTaskLabAnalytes($caller, $sessionTask);
+      //\Applications\PMTool\Helpers\CommonHelper::pr($task_locations);
+      $analyte_count = count($task_lab_analytes);
+      
+    }
+    else {
+      //check for FIELD analytes
+      $task_field_analytes = \Applications\PMTool\Helpers\AnalyteHelper::GetAndStoreTaskFieldAnalytes($caller, $sessionTask);
+      $analyte_count = count($task_field_analytes);
+    }
+
+    if($analyte_count > 0 && count($task_locations) > 0){
+      return true;
+    } else { return false; }
+  } 
 }
