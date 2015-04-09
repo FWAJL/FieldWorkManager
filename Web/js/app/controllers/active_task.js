@@ -31,9 +31,6 @@ $(document).ready(function(){
 			}
 		  }
 		});
-		
-		
-		
         break;
       default:
         //nothing
