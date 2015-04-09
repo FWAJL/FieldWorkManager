@@ -31,10 +31,16 @@
   <resource key="task_list">List All</resource>
   
   
-  <resource key="header_analyte">Analytes</resource>
+  <resource key="header_analyte">Field Analytes</resource>
   <resource key="analyte_upload_list">Upload List</resource>
   <resource key="analyte_list">List All</resource>
-  <resource key="analyte_upload_commons">Upload common analytes</resource>
+  <resource key="analyte_upload_commons">Upload</resource>
+  
+    <resource key="header_lab_analyte">Lab Analytes</resource>
+  <resource key="lab_analyte_upload_list">Upload List</resource>
+  <resource key="lab_analyte_list">List All</resource>
+  <resource key="lab_analyte_upload_commons">Upload</resource>
+
 
   <resource key="header_form">Field Forms</resource>
   <resource key="form_list">List All</resource>

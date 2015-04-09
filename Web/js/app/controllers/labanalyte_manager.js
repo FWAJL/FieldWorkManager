@@ -6,7 +6,7 @@ $(document).ready(function() {
   var prompt_box_msg;
   var ajaxParams = {
     "ajaxUrl": "",
-    "redirectUrl": "analyte/listAll",
+    "redirectUrl": "labanalyte/listAll",
     "action": "",
     "arrayOfValues": [],
     "itemId": 0,
@@ -44,6 +44,7 @@ $(document).ready(function() {
                   utils.redirect("analyte/listAll");
                 }
               });
+
             });
 
           } else {

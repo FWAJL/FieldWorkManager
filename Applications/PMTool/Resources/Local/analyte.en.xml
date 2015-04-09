@@ -20,18 +20,19 @@
  
 <!--  Added Reource Keys -->
   <resource key="field_analyte_name_unit">Analyte and Units</resource>
-  <resource key="lab_analyte_name">Analyte</resource>
+  <resource key="lab_analyte_name">Lab Analyte</resource>
   <resource key="field_analyte_info_tab">Field analytes</resource>
   <resource key="lab_analyte_info_tab">Lab analytes</resource>
-  <resource key="analyte_button_add">Add analytes</resource>
+  <resource key="analyte_button_add">Add</resource>
   <resource key="analyte_button_edit">Edit analyte</resource>
   <resource key="analyte_button_delete">Delete analyte</resource>
   <resource key="field_analytes_header">Field analytes</resource>
   <resource key="h4_project_analytes">Analytes for this Project</resource>
-  <resource key="h4_analytes">Analytes</resource>
+  <resource key="h4_analytes">Field Analytes</resource>
+  <resource key="h4_lab_analytes">Lab Analytes</resource>  
   <resource key="btn_add_to_project">Add to Project Analytes</resource> 
   <resource key="btn_remove_from_project">Remove from Project Analytes</resource> 
-  <resource key="lab_analytes_header">Lab analytes</resource>  
+  <resource key="lab_analytes_header">Lab Analytes</resource>  
   
   <resource key="h3_field_analytes_inactive">Inactive field analytes</resource> 
   <resource key="h3_field_analyte_names_form">Add field analyte names</resource> 
@@ -45,12 +46,16 @@
   <resource key="btn_remove_analyte_to_project">Remove Analyte(s) from Project</resource>
   <resource key="btn_add_common_analyte">Add</resource>
   
-  <resource key="h4_project_analytes">Analytes to be used for this Project</resource>
-  <resource key="h4_your_analytes">All your analytes (available for all projects)</resource>
-  <resource key="h4_analyte_form">Enter or paste a list of analytes here...</resource>
+  <resource key="h4_project_analytes">Field analytes to be used for this Project</resource>
+  <resource key="h4_project_lab_analytes">Lab analytes to be used for this Project</resource>
+  <resource key="h4_your_analytes">All your field analytes (available for all projects)</resource>
+  <resource key="h4_your_lab_analytes">All your lab analytes (available for all projects)</resource>  
+  <resource key="h4_analyte_form">Enter or paste a list of field analytes here...</resource>
+  <resource key="h4_lab_analyte_form">Enter or paste a list of lab analytes here...</resource>
   <resource key="h4_common_lab_analytes">...or select from these common lab analytes</resource>
   <resource key="h4_common_field_analytes">...or select from these common field analytes</resource>
-  <resource key="h3_common_analytes">Common Analytes Upload</resource>
+  <resource key="h3_common_lab_analytes">Upload Common Lab Analytes</resource>
+  <resource key="h3_common_field_analytes">Upload Common Field Analytes</resource>
   <resource key="h4_of_field_type">Field analyte type</resource>
   <resource key="h4_of_lab_type">Lab analyte type</resource>
   
