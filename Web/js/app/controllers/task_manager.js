@@ -388,13 +388,23 @@ $(document).ready(function() {
       $("input[name=\"task_req_field_analyte\"]").attr('checked',true);
       $("#tab2").show();
       $("#tab3").show();
-      $("#tab3a").show();
+      //$("#tab3a").show();
+      if($('#show_field_matrix_tab').length > 0) {
+        if($('#show_field_matrix_tab').val() === '1') {
+          $("#tab3a").show();
+        }
+      }
     }
     if(dataWs.task_info_obj.task_req_lab_analyte == 1) {
       $("input[name=\"task_req_lab_analyte\"]").attr('checked',true);
       $("#tab4").show();
       $("#tab5").show();
-      $("#tab5a").show();
+      //$("#tab5a").show();
+      if($('#show_lab_matrix_tab').length > 0) {
+        if($('#show_lab_matrix_tab').val() === '1') {
+          $("#tab5a").show();
+        }
+      }
     }
     if(dataWs.task_info_obj.task_req_service == 1) {
       $("input[name=\"task_req_service\"]").attr('checked',true);
