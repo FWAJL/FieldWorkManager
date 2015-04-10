@@ -49,17 +49,20 @@ $(document).ready(function() {
 $(document).ready(function() {
   //$("#tab2").hide();
   $("#insp_note_box").change(function() {
-    if ($("#insp_note_box").is(":checked")) {
+    $('#btn_edit_task').click();
+    /*if ($("#insp_note_box").is(":checked")) {
       //$("#tab2").show();
     } else {
       //$("#tab2").hide();
-    }
+    }*/
   });
 
   //$("#tab2").hide();
   //$("#tab3").hide();
   
   $("#field_data_box").change(function() {
+    $('#btn_edit_task').click();
+    /*
     if ($("#field_data_box").is(":checked")) {
       //$("#tab2").show();
       //$("#tab3").show();
@@ -69,6 +72,7 @@ $(document).ready(function() {
       //$("#tab3").hide();
       //$("#tab3a").hide();
     }
+    */
   });
 
   if($('#tab2_status').length > 0){
@@ -125,7 +129,8 @@ $(document).ready(function() {
 
 
   $("#lab_sample_box").change(function() {
-
+    $('#btn_edit_task').click();
+    /*
     if ($("#lab_sample_box").is(":checked")) {
       //$("#tab4").show();
       //$("#tab5").show();
@@ -135,17 +140,20 @@ $(document).ready(function() {
       //$("#tab5").hide();
       //$("#tab5a").hide();
     }
-
+    */
   });
 
-  /*$("#tab7").hide();
+  //$("#tab7").hide();
   $("#service_providers_box").change(function(){
+    $('#btn_edit_task').click();
+    /*
     if ($("#service_providers_box").is(":checked")) {
       $("#tab7").show()
     } else {
       $("#tab7").hide()
     }
-  });*/
+    */
+  });
   if($('#tab7_status').length > 0){
     if($('#tab7_status').val() == 1){
       $("#tab7").show();
