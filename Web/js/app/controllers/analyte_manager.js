@@ -78,7 +78,7 @@ $(document).ready(function() {
   });//The context menu
 
   //get item for field/lab analyte
-  getAnalyteItem = function(analyteType, analyteId, executeWithData) {
+  getAnalyteItem = function(analyteId, executeWithData) {
     var actionPath = "field_analyte/getItem";
 //    if ((analyteType === "field"))
 //    {
@@ -103,7 +103,7 @@ $(document).ready(function() {
 //      });
 //    }
 
-  }
+  };
   
   //delete analyte, contextual menu
   delAnalyte = function(ajaxParams, options) {
@@ -143,36 +143,36 @@ $(document).ready(function() {
   /* End dual selection */
 
   $(".from-field-analyte-list").click(function() {
-//    var isFieldAnalyte = ajaxParams.isFieldType = $(".active").attr("data-form-id") === "field_analyte_info";
+    var isFieldAnalyte = ajaxParams.isFieldType = $(".form_sections").attr("data-form-id") === "field_analyte_info";
     ajaxParams.ajaxUrl = "field_analyte/updateItems";
     ajaxParams.action = "add";
 //    if (isFieldAnalyte) {
-//      ajaxParams.arrayOfValues =
-//              utils.getValuesFromList(
-//              selectionParamsFieldAnalytes.listLeftId,
-//              selectionParamsFieldAnalytes.dataAttrLeft, true);
-//    } else {
       ajaxParams.arrayOfValues =
               utils.getValuesFromList(
-              selectionParamsLabAnalytes.listLeftId,
-              selectionParamsLabAnalytes.dataAttrLeft, true);
+              selectionParamsFieldAnalytes.listLeftId,
+              selectionParamsFieldAnalytes.dataAttrLeft, true);
+//    } else {
+//      ajaxParams.arrayOfValues =
+//              utils.getValuesFromList(
+//              selectionParamsLabAnalytes.listLeftId,
+//              selectionParamsLabAnalytes.dataAttrLeft, true);
 //    }
     datacx.updateItems(ajaxParams);
   });
   $(".from-project-field-analyte-list").click(function() {
-//    var isFieldAnalyte = ajaxParams.isFieldType = $(".active").attr("data-form-id") === "field_analyte_info";
+    var isFieldAnalyte = ajaxParams.isFieldType = $(".form_sections").attr("data-form-id") === "field_analyte_info";
     ajaxParams.action = "remove";
     ajaxParams.ajaxUrl = "field_analyte/updateItems";
 //    if (isFieldAnalyte) {
-//      ajaxParams.arrayOfValues =
-//              utils.getValuesFromList(
-//              selectionParamsFieldAnalytes.listRightId,
-//              selectionParamsFieldAnalytes.dataAttrRight, true);
-//    } else {
       ajaxParams.arrayOfValues =
               utils.getValuesFromList(
-              selectionParamsLabAnalytes.listRightId,
-              selectionParamsLabAnalytes.dataAttrRight, true);
+              selectionParamsFieldAnalytes.listRightId,
+              selectionParamsFieldAnalytes.dataAttrRight, true);
+//    } else {
+//      ajaxParams.arrayOfValues =
+//              utils.getValuesFromList(
+//              selectionParamsLabAnalytes.listRightId,
+//              selectionParamsLabAnalytes.dataAttrRight, true);
 //    }
     datacx.updateItems(ajaxParams);
   });

@@ -152,24 +152,24 @@ $(document).ready(function() {
 
   /* End dual selection */
 
-  $(".from-field-analyte-list, .from-lab-analyte-list").click(function() {
+  $(".from-lab-analyte-list").click(function() {
     var isFieldAnalyte = ajaxParams.isFieldType = $(".active").attr("data-form-id") === "field_analyte_info";
-    ajaxParams.ajaxUrl = isFieldAnalyte ? "field_analyte/updateItems" : "lab_analyte/updateItems";
+    ajaxParams.ajaxUrl = "lab_analyte/updateItems";
     ajaxParams.action = "add";
-    if (isFieldAnalyte) {
-      ajaxParams.arrayOfValues =
-              utils.getValuesFromList(
-              selectionParamsFieldAnalytes.listLeftId,
-              selectionParamsFieldAnalytes.dataAttrLeft, true);
-    } else {
+//    if (isFieldAnalyte) {
+////      ajaxParams.arrayOfValues =
+////              utils.getValuesFromList(
+////              selectionParamsFieldAnalytes.listLeftId,
+////              selectionParamsFieldAnalytes.dataAttrLeft, true);
+//    } else {
       ajaxParams.arrayOfValues =
               utils.getValuesFromList(
               selectionParamsLabAnalytes.listLeftId,
               selectionParamsLabAnalytes.dataAttrLeft, true);
-    }
+//    }
     datacx.updateItems(ajaxParams);
   });
-  $(".from-project-field-analyte-list, .from-project-lab-analyte-list").click(function() {
+  $(".from-project-lab-analyte-list").click(function() {
     var isFieldAnalyte = ajaxParams.isFieldType = $(".active").attr("data-form-id") === "field_analyte_info";
     ajaxParams.action = "remove";
     ajaxParams.ajaxUrl = isFieldAnalyte ? "field_analyte/updateItems" : "lab_analyte/updateItems";
@@ -219,7 +219,7 @@ $(document).ready(function() {
     }
   });
   //************************************************//
-  // Selection of service technicians
+  // Selection of analytes
   var selectionParams = {
     "fieldListId": "common-field-analyte-list",
     "labListId": "common-lab-analyte-list",
