@@ -58,7 +58,7 @@ $(document).ready(function() {
                   toastr.error(reply.message);
                 } else {//success
                   toastr.success(reply.message.replace("lab_analyte", "lab_analyte (ID:" + reply.dataId + ")"));
-                  utils.redirect("analyte/listAll");
+                  utils.redirect("labanalyte/listAll");
                 }
               });
 

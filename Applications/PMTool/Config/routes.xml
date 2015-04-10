@@ -620,20 +620,14 @@
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php" />
-            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="field_analyte_lists" file_name="field_analyte_lists.php" />
-            <php_module key="lab_analyte_lists" file_name="lab_analyte_lists.php" />
             <php_module key="project_field_analyte_list" file_name="project_field_analyte_list.php" />
             <php_module key="field_analyte_list" file_name="field_analyte_list.php" />
-            <php_module key="project_lab_analyte_list" file_name="project_lab_analyte_list.php" />
-            <php_module key="lab_analyte_list" file_name="lab_analyte_list.php" />
-            <php_module key="field_analyte_buttons" file_name="analyte_list_buttons.php" />
-            <php_module key="lab_analyte_buttons" file_name="analyte_list_buttons.php" />
+            <php_module key="field_analyte_buttons" file_name="field_analyte_list_buttons.php" />
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
-	    	<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
-			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
-			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
         </php_modules>
     </route>
     <!--  analyte/ListAll -->
@@ -646,18 +640,13 @@
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php" />
             <php_module key="up_field_analyte_lists" file_name="up_field_analyte_lists.php" />
-            <php_module key="up_lab_analyte_lists" file_name="up_lab_analyte_lists.php" />
             <php_module key="field_analyte_form" file_name="field_analyte_form.php" />
             <php_module key="common_field_analyte_list" file_name="common_field_analyte_list.php" />
-            <php_module key="lab_analyte_form" file_name="lab_analyte_form.php" />
-            <php_module key="common_lab_analyte_list" file_name="common_lab_analyte_list.php" />
             <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
             <php_module key="common_analyte_buttons" file_name="common_analyte_buttons.php" />
-            <php_module key="tabs_close" file_name="tabs_close.php" shared="true"/>
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
-			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
     <!-- analyte/uploadList -->
@@ -672,7 +661,6 @@
             <php_module key="field_analyte_form" file_name="common_field_analyte_form.php" />
             <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
             <php_module key="common_field_analyte_list" file_name="common_field_analyte_list.php" />
-            <php_module key="common_lab_analyte_list" file_name="common_lab_analyte_list.php" />
         </php_modules>
     </route>
     <!-- analyte/uploadCommons -->
@@ -686,16 +674,10 @@
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php" />
-            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
-            <php_module key="field_analyte_lists" file_name="field_analyte_lists.php" />
             <php_module key="lab_analyte_lists" file_name="lab_analyte_lists.php" />
-            <php_module key="project_field_analyte_list" file_name="project_field_analyte_list.php" />
-            <php_module key="field_analyte_list" file_name="field_analyte_list.php" />
             <php_module key="project_lab_analyte_list" file_name="project_lab_analyte_list.php" />
             <php_module key="lab_analyte_list" file_name="lab_analyte_list.php" />
-            <php_module key="field_analyte_buttons" file_name="analyte_list_buttons.php" />
-            <php_module key="lab_analyte_buttons" file_name="analyte_list_buttons.php" />
+            <php_module key="lab_analyte_buttons" file_name="lab_analyte_list_buttons.php" />
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
 	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
 	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
@@ -712,16 +694,11 @@
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php" />
-            <php_module key="up_field_analyte_lists" file_name="up_field_analyte_lists.php" />
             <php_module key="up_lab_analyte_lists" file_name="up_lab_analyte_lists.php" />
-            <php_module key="field_analyte_form" file_name="field_analyte_form.php" />
-            <php_module key="common_field_analyte_list" file_name="common_field_analyte_list.php" />
             <php_module key="lab_analyte_form" file_name="lab_analyte_form.php" />
             <php_module key="common_lab_analyte_list" file_name="common_lab_analyte_list.php" />
             <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
             <php_module key="common_analyte_buttons" file_name="common_analyte_buttons.php" />
-            <php_module key="tabs_close" file_name="tabs_close.php" shared="true"/>
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
@@ -737,8 +714,6 @@
         <php_modules>
             <php_module key="lab_analyte_form" file_name="common_lab_analyte_form.php" />
             <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
-            
-            <php_module key="common_field_analyte_list" file_name="common_field_analyte_list.php" />
             <php_module key="common_lab_analyte_list" file_name="common_lab_analyte_list.php" />
         </php_modules>
     </route>
