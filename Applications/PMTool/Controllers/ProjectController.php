@@ -272,7 +272,7 @@ class ProjectController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf('Client');
     $lists[\Library\Enums\SessionKeys::UserProjectClientList] = $manager->selectMany($project, "pm_id");
 
-    $ProjectsSession = \Applications\PMTool\Helpers\ProjectHelper::StoreSessionProjects($this->app()->user(), $lists);
+    $ProjectsSession = \Applications\PMTool\Helpers\ProjectHelper::StoreSessionProjects($this, $lists);
 
     $result["lists"] = $lists;
     if (!$isNotAjaxCall) {
