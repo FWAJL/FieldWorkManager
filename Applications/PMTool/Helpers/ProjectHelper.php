@@ -47,6 +47,17 @@ class ProjectHelper {
     return $itDoes;
   }
 
+  public static function FillProjectSessionWithDataList($caller, $sessionProject) {
+    $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = LocationHelper::GetProjectLocations($caller, $sessionProject);
+    $sessionProject[\Library\Enums\SessionKeys::ProjectTasks] = array();
+    $sessionProject[\Library\Enums\SessionKeys::ProjectFieldAnalytes] = AnalyteHelper::GetProjectAnalytes($caller, TRUE, $sessionProject);
+    $sessionProject[\Library\Enums\SessionKeys::ProjectLabAnalytes] = AnalyteHelper::GetProjectAnalytes($caller, FALSE, $sessionProject);
+    $sessionProject[\Library\Enums\SessionKeys::ProjectForms] = FormHelper::GetProjectForms($caller, $sessionProject);
+    $sessionProject[\Library\Enums\SessionKeys::ProjectServices] = array();
+    
+    return $sessionProject;
+    
+  }
   public static function GetAndStoreCurrentProject(\Library\User $user, $project_id) {
     $userSessionProjects = NULL;
     if ($user->keyExistInSession(\Library\Enums\SessionKeys::UserSessionProjects)) {
@@ -88,7 +99,9 @@ class ProjectHelper {
       \Library\Enums\SessionKeys::ProjectLocations => array(),
       \Library\Enums\SessionKeys::ProjectTasks => array(),
       \Library\Enums\SessionKeys::ProjectFieldAnalytes => array(),
-      \Library\Enums\SessionKeys::ProjectLabAnalytes => array()
+      \Library\Enums\SessionKeys::ProjectLabAnalytes => array(),
+      \Library\Enums\SessionKeys::ProjectForms => array(),
+      \Library\Enums\SessionKeys::ProjectServices => array()
         //Add a line for data linked to a project, e.g. results/reports?
     );
     return $arrayToReturn;
@@ -134,15 +147,19 @@ class ProjectHelper {
     return $sessionProject;
   }
 
-  public static function StoreSessionProjects($user, $lists) {
-    $ProjectsSession = array();
+  public static function StoreSessionProjects($caller, $lists) {
+    $sessionProjects = self::GetSessionProjects($caller->user());
+    //Init $sessionProjects if unset
+    if (!isset($sessionProjects)) $sessionProjects = array();
+    
     foreach ($lists[\Library\Enums\SessionKeys::UserProjects] as $project) {
-      $ProjectsSession[\Library\Enums\SessionKeys::ProjectKey . $project->project_id()] = self::MakeSessionProject($project);
-      PmHelper::AddAProjectIdToList($user, $project->project_id());
+      $sessionProjects[\Library\Enums\SessionKeys::ProjectKey . $project->project_id()] = self::MakeSessionProject($project);
+      PmHelper::AddAProjectIdToList($caller->user(), $project->project_id());
     }
 
+    self::SetSessionProjects($caller->user(), $sessionProjects);
 
-    foreach ($ProjectsSession as $sessionProject) {
+    foreach ($sessionProjects as $sessionProject) {
       $project_id = intval($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
 
       $facility = CommonHelper::FindObjectByIntValue($project_id, "project_id", $lists[\Library\Enums\SessionKeys::UserProjectFacilityList]);
@@ -151,11 +168,13 @@ class ProjectHelper {
       $client = CommonHelper::FindObjectByIntValue($project_id, "project_id", $lists[\Library\Enums\SessionKeys::UserProjectClientList]);
       $sessionProject[\Library\Enums\SessionKeys::ClientObject] = $client;
 
-      $ProjectsSession[\Library\Enums\SessionKeys::ProjectKey . $project_id] = $sessionProject;
+      self::FillProjectSessionWithDataList($caller, $sessionProject);
+
+      $sessionProjects[\Library\Enums\SessionKeys::ProjectKey . $project_id] = $sessionProject;
     }
 
-    self::SetSessionProjects($user, $ProjectsSession);
-    return $ProjectsSession;
+    self::SetSessionProjects($caller->user(), $sessionProjects);
+    return $sessionProjects;
   }
 
   public static function UnsetUserSessionProject($user, $project_id) {

@@ -24,6 +24,11 @@ class TaskLabAnalyteController extends \Library\BaseController {
   	//All analytes for this PM, we would be assigning task specific analytes from list
   	$pm_lab_analytes = $pm[\Library\Enums\SessionKeys::PmLabAnalytes];
 
+    //Task tab status 
+    $tab_status_arr = \Applications\PMTool\Helpers\TaskHelper::TabStatusFor($sessionTask);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_tab_status_keys, $tab_status_arr);
+    //Task tab status 
+
     //Analyte Matrix tab status
     $showLabMatrixTabs = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::DoesAnalytesAndLocationsExistsFor($sessionTask, $this, 'Lab');
     $showFieldMatrixTabs = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::DoesAnalytesAndLocationsExistsFor($sessionTask, $this, 'Field');
@@ -65,6 +70,11 @@ class TaskLabAnalyteController extends \Library\BaseController {
     \Applications\PMTool\Helpers\AnalyteHelper::StoreListsData($this);  
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+
+    //Task tab status 
+    $tab_status_arr = \Applications\PMTool\Helpers\TaskHelper::TabStatusFor($sessionTask);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_tab_status_keys, $tab_status_arr);
+    //Task tab status 
 
     //Analyte Matrix tab status
     $showLabMatrixTabs = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::DoesAnalytesAndLocationsExistsFor($sessionTask, $this, 'Lab');
