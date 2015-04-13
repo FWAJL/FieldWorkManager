@@ -48,4 +48,30 @@ $(document).ready(function() {
     
     datacx.updateItems(ajaxParams);
   });
+
+  //Lab Matrix
+  $('#toggle_all').click(function(){
+    if($(this).is(":checked")){
+      //Check all
+      $('.matrix-checkbox').prop('checked', true);
+    }
+    else {
+      $('.matrix-checkbox').prop('checked', false);
+    }
+  });
+
+  $('#btn_save_labmatrix').click(function(){
+    //get task coc object
+    datacx.post("task/saveLabMatrix", {'lab_matrix': $('.matrix-checkbox').serialize()}).then(function(reply) {
+      console.log(reply);
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+      } else {//success
+        
+        toastr.success(reply.message);
+        
+      }
+    });
+  });
+
 });

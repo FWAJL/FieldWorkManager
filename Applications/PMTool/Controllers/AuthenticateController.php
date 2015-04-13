@@ -78,10 +78,11 @@ class AuthenticateController extends \Library\BaseController {
           case 'technician_id':
             break;
           case 'pm_id':
-            \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this->app()->user(), $authProvider->getUserType(), true);
+            \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this, $authProvider->getUserType(), true);
             break;
         }
         $result = $this->InitResponseWS("success");
+        $result['role'] = $user->getRole();
       }
     }
 

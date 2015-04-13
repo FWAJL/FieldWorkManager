@@ -24,10 +24,7 @@ $(document).ready(function() {
       $('#' + hidd_parts[1]).tooltip({placement: $(this).attr('placement'), title: $(this).val()});
     }
   });
-  $("#view_pm_info").click(function() {
-    var pm_id = $(this).attr("data-pm-id");
-    utils.redirect("pm/showForm?mode=edit&pm_id="+pm_id);
-  });//Show pm info
+
 });
 /**
  * JavaScript Module to do JavaScript actions common to several views
@@ -52,6 +49,7 @@ $(document).ready(function() {
         }
       } else {
         toastr.error("The field " + $(this).attr("name") + " is empty. Please fill out all fields.");
+        user_inputs.required_field_missing = true;
       }
     });
     return user_inputs;
@@ -70,6 +68,9 @@ $(document).ready(function() {
     for (var i = 0; i <= inputs_required.length; i++) {
       if (element.attr("name") === inputs_required[i]) {
         result = element.val() !== "" ? true : false;
+        if (!result) {
+          result = element.find(":selected").text() !== "" ? true : false;
+        }
         if (!result)
           break;
       } else {

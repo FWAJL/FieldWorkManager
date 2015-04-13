@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <main_menus>
   <version>1</version>
+  <main_menu name="user" active="true">
+    <links>
+      <header href="user" resourcekey="header_users" enablelink="false" />
+      <submenu href="user/listAll" id="user_list_all" resourcekey="user_list_all" active="true"/>
+      <submenu href="user/showForm" id="user_add" resourcekey="user_add" active="true"/>
+    </links>
+  </main_menu><!-- user -->
+
   <main_menu name="project" active="true">
     <links>
       <header href="project" resourcekey="header_projects" enablelink="false" />
@@ -49,13 +57,16 @@
       <header href="analyte" resourcekey="header_analyte" enablelink="false" />
       <submenu href="analyte/listAll" id="analyte_list_all" resourcekey="analyte_list" active="true" />
       <submenu href="analyte/uploadList" id="analyte_upload_list_button" resourcekey="analyte_upload_list" active="true"/>
+      <submenu href="analyte/uploadCommons" id="analyte_upload_commons_button" resourcekey="analyte_upload_commons" active="true"/>
     </links>
   </main_menu><!-- analyte -->
   
   <main_menu name="forms" active="true">
     <links>
       <header href="form/listAll" id="form_list_all" resourcekey="header_form" active="true" />
-      <submenu href="form/listAll" id="form_list_all" resourcekey="form_list" active="true"/><!--
+      <submenu href="form/listAll" id="form_list_all" resourcekey="form_list" active="true"/>
+      <submenu href="form/masterForm" id="form_show_form_master" resourcekey="form_show_form_master" active="true"/>
+      <!--
       <submenu href="form/showForm?mode=add&amp;test=true" id="btn-add-form-manual" resourcekey="form_add" active="true"/>-->
     </links>
   </main_menu><!-- forms -->

@@ -159,4 +159,8 @@ class User_form extends \Library\Entity implements \Library\Interfaces\IDocument
   public function ValidExtensions() {
     return array("pdf");
   }
+
+  public function getOrderByField() {
+    return "title";
+  }
 }

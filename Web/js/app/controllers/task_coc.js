@@ -11,6 +11,7 @@ $(document).ready(function(){
       [
         "po_number",
         "lab_instructions",
+        "service_id",
         "lab_sample_type",
         "lab_sample_tat",
         "project_number",
@@ -85,9 +86,11 @@ $(document).ready(function(){
   task_coc.loadData = function(dataWs) {
   	utils.clearForm();
   	$("input[name=\"task_coc_id\"]").val(parseInt(dataWs.task_coc.task_coc_id));
-  	$("select[name=\"service_id\"]").val(parseInt(dataWs.task_coc.service_id));
   	$("input[name=\"po_number\"]").val(dataWs.task_coc.po_number);
   	$("textarea[name=\"lab_instructions\"]").val(dataWs.task_coc.lab_instructions);
+  	$(".coc_list_services option:eq(" + dataWs.task_coc.service_id + ")").prop('selected', true)
+  	//$("select[name=\"lab_sample_type\"] option:eq(" + dataWs.task_coc.lab_sample_type + ")").prop('selected', true)
+  	//$("select[name=\"lab_sample_tat\"] option:eq(" + dataWs.task_coc.lab_sample_tat + ")").prop('selected', true)
   	$("select[name=\"lab_sample_type\"]").val(dataWs.task_coc.lab_sample_type);
   	$("select[name=\"lab_sample_tat\"]").val(dataWs.task_coc.lab_sample_tat);
   	$("input[name=\"project_number\"]").val(dataWs.task_coc.project_number);
