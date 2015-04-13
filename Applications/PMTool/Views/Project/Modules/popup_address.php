@@ -20,8 +20,8 @@
       <div class="modal-body">
         <label for="address-city"><?php echo $resx["address_window_city"];?></label>
         <input class="form-control" type="text" id="address-city" name="city">
-        <label for="address-country"><?php echo $resx["address_window_country"];?></label>
-        <input class="form-control" type="text" id="address-country" name="country">
+        <label for="address-state"><?php echo $resx["address_window_state"];?></label>
+        <input class="form-control" type="text" id="address-state" name="state">
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary confirmbuttons modal-update"><?php echo $resx["address_window_ok"];?></button>

@@ -28,7 +28,6 @@ $(document).ready(function() {
   //Auto open prompt when on selecProject view
   utils.showSelectEntityPrompt(
 	function() {
-	  //utils.redirect($("#redirectOnSuccess").val());
 	  if ($(".ui-selected").html() !== undefined)
 	  {
 	    project_manager.setCurrentProject(parseInt($(".ui-selected").attr("data-project-id")));
@@ -42,14 +41,6 @@ $(document).ready(function() {
 	  utils.redirect("project/listAll");
 	}
   );
-
-//// If only one Active Project - auto set to current Project
-//   if($("#active-list li").length === 1) {
-//   if ($(".noCP").length ) {
-//   project_manager.setCurrentProject(parseInt($(".select_item").attr("data-project-id")));
-//   }
-//}
-//
 //************************************************//
   // Selection of projects
   var project_ids = [];
@@ -131,8 +122,8 @@ $(document).ready(function() {
                   project_manager.add(post_data, "project", "add");
                 } else {
                   utils.showPromptBoxById("address-modal",'',function(){
-                    if($("#address-city").val() != '' && $("#address-country") != '') {
-                      geocoderAddress = $("#address-city").val()+','+$("#address-country").val();
+                    if($("#address-city").val() != '' && $("#address-state") != '') {
+                      geocoderAddress = $("#address-city").val()+','+$("#address-state").val();
                       geocoder.geocode({'address': geocoderAddress}, function(resultsFallback, statusFallback){
                         if(statusFallback == google.maps.GeocoderStatus.OK){
                           post_data.facility.facility_lat = resultsFallback[0].geometry.location.lat();
@@ -417,9 +408,9 @@ $(document).ready(function() {
     $(".project_form .add-new-item input[name=\"project_number\"]").val("n-" + number);
     $(".project_form .add-new-item input[name=\"project_desc\"]").val("Description " + number);
     $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
-    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
+    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val("USA");
     $(".client_form .add-new-item input[name=\"client_company_name\"]").val("Client " + number);
-    $(".client_form .add-new-item textarea[name=\"client_address\"]").val(number + " Av of There\nCity\nCountry");
+    $(".client_form .add-new-item textarea[name=\"client_address\"]").val(number + " Somewhere");
     $(".client_form .add-new-item input[name=\"client_contact_phone\"]").val(Math.floor(Math.random() * 1000000000));
   };
 

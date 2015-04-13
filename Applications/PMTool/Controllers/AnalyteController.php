@@ -38,15 +38,6 @@ class AnalyteController extends \Library\BaseController {
     );
     $this->page()->addVar(
             "data_common_field_analyte", $data_common_field_analyte);
-
-    $data_common_lab_analyte = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => "common_lab_analyte",
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\CommonHelper::GetValueInSession(
-                $this->user(), \Library\Enums\SessionKeys::CommonLabAnalytes),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList("common_lab_analyte")
-    );
-    $this->page()->addVar(
-            "data_common_lab_analyte", $data_common_lab_analyte);
   }
 
   public function executeUploadCommonAnalytes(\Library\HttpRequest $rq) {
@@ -70,15 +61,6 @@ class AnalyteController extends \Library\BaseController {
     );
     $this->page()->addVar(
             "data_common_field_analyte", $data_common_field_analyte);
-
-    $data_common_lab_analyte = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => "common_lab_analyte",
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\CommonHelper::GetValueInSession(
-                $this->user(), \Library\Enums\SessionKeys::CommonLabAnalytes),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList("common_lab_analyte")
-    );
-    $this->page()->addVar(
-            "data_common_lab_analyte", $data_common_lab_analyte);
   }
 
   public function executeListAll(\Library\HttpRequest $rq) {
@@ -108,9 +90,7 @@ class AnalyteController extends \Library\BaseController {
 
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     if (!isset($pm[\Library\Enums\SessionKeys::PmFieldAnalytes]) &&
-            !isset($pm[\Library\Enums\SessionKeys::PmLabAnalytes]) &&
-            count($pm[\Library\Enums\SessionKeys::PmFieldAnalytes]) > 0 &&
-            count($pm[\Library\Enums\SessionKeys::PmLabAnalytes]) > 0) {
+            count($pm[\Library\Enums\SessionKeys::PmFieldAnalytes]) > 0) {
       \Applications\PMTool\Helpers\AnalyteHelper::StoreListsData($this);
     }
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
@@ -135,28 +115,23 @@ class AnalyteController extends \Library\BaseController {
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Analyte::data_field_analyte, $data_field_analyte);
 
-    //variable for the lab analyte module
-    $lab_object_properties = \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList("lab_analyte");
-    $lab_analytes = $pm[\Library\Enums\SessionKeys::PmLabAnalytes];
-    $project_lab_analytes = \Applications\PMTool\Helpers\AnalyteHelper::FilterAnalytesByProjectAnalytesList($this, FALSE);
-    $lab_analytes = \Applications\PMTool\Helpers\CommonHelper::FilterObjectsToExcludeRelatedObject($lab_analytes, $project_lab_analytes, "lab_analyte_id");
-
-    $data_lab_analyte = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => "labanalyte",
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_right => $lab_analytes,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left => $project_lab_analytes,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => $lab_object_properties,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => $lab_object_properties
-    );
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Analyte::data_lab_analyte, $data_lab_analyte);
-
-
     $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
   public function executeUpdateItems(\Library\HttpRequest $rq) {
-    
-  }
+    $result = \Applications\PMTool\Helpers\AnalyteHelper::UpdateProjectAnalytes($this);
 
-}
+    $tabsStatus = \Applications\PMTool\Helpers\CommonHelper::GetTabsStatus($this->user(), \Library\Enums\SessionKeys::TabActiveAnalyte);
+
+    \Applications\PMTool\Helpers\CommonHelper::SetActiveTab(
+            $this->user(), \Applications\PMTool\Resources\Enums\AnalyteTabKeys::FieldTab, \Library\Enums\SessionKeys::TabActiveAnalyte);
+
+    $this->SendResponseWS(
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
+        "resx_key" => $this->action(),
+        "step" => ($result["rows_affected"] === count($result["arrayOfValues"])) ? "success" : "error"
+    ));
+  }
+  }
