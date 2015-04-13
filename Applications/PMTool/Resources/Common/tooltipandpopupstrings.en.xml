@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 	<resource uicomponent="tooltip" targetcontroller="project" targetaction="list" targetattr="active-project-header" value="Click on any Project to select : Right click to edit" placement="right" />
-	<resource uicomponent="tooltip" targetcontroller="project" targetaction="list" targetattr="inactive-project-header" value="Inactive Projects do not auto-initiate any tasks" placement="bottom" />
+	<resource uicomponent="tooltip" targetcontroller="project" targetaction="list" targetattr="inactive-project-header" value="Inactive Projects: This places all associated Tasks on hold.  No work will be able to continue for any task.  This is useful if you have a temporary stop work order." placement="bottom" />
 	<resource uicomponent="tooltip" targetcontroller="technician" targetaction="list" targetattr="active-technician-header" value="Click on any Technician to select : Right click to edit" placement="right" />
-	<resource uicomponent="tooltip" targetcontroller="technician" targetaction="list" targetattr="inactive-technician-header" value="Tooltip for inactive Technicians go here" placement="top" />
-	<resource uicomponent="tooltip" targetcontroller="location" targetaction="list" targetattr="active-location-header" value="Tooltip for active Locations go here" placement="bottom" />
-	<resource uicomponent="tooltip" targetcontroller="location" targetaction="list" targetattr="inactive-location-header" value="Tooltip for inactive Locations go here" placement="top" />
-	<resource uicomponent="tooltip" targetcontroller="location" targetaction="uploadList" targetattr="question-location-headingH3" value="Tooltip for location upload" placement="right" />
-	<resource uicomponent="tooltip" targetcontroller="task" targetaction="list" targetattr="active-task-header" value="Tooltip for active Tasks go here" placement="bottom" />
-	<resource uicomponent="tooltip" targetcontroller="task" targetaction="list" targetattr="inactive-task-header" value="Tooltip for inactive Tasks go here" placement="top" />
-	<resource uicomponent="tooltip" targetcontroller="task" targetaction="showForm" targetattr="question-task-showForm-manual-box" value="Task show form manual" placement="right" />
-	<resource uicomponent="tooltip" targetcontroller="task" targetaction="showForm" targetattr="question-task-showForm-external-box" value="Task show form external" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="technician" targetaction="list" targetattr="inactive-technician-header" value="Technicians listed here are temporarily unavailable for work.  For example, they may be on vacation." placement="top" />
+	<resource uicomponent="tooltip" targetcontroller="location" targetaction="list" targetattr="active-location-header" value="Click on any Location to select : Right click to edit" placement="bottom" />
+	<resource uicomponent="tooltip" targetcontroller="location" targetaction="list" targetattr="inactive-location-header" value="Locations listed here cannot be used in Tasks.  However, it may be helpful to continue to track their coordinates.  There may also be data collected at the Location, but the Location is out of service, for example, an abandoned well." placement="bottom" />
+	<resource uicomponent="tooltip" targetcontroller="location" targetaction="uploadList" targetattr="question-location-headingH3" value="Add Locations here.  Type in Location names, separated by a carriage return.  A list of Locations can also be copied from files like Word or Excel.  If the coordinates are known, include the latitue and longitude on the same line as the Location name, separated by commas." placement="bottom" />
+	<resource uicomponent="tooltip" targetcontroller="task" targetaction="list" targetattr="active-task-header" value="Right click on an Active Task to view the Task progress.  You can also communicate with Technicians and Service Providers once the Task has been activated." placement="bottom" />
+	<resource uicomponent="tooltip" targetcontroller="task" targetaction="list" targetattr="inactive-task-header" value="This column is for Tasks that are 'Under Construction'.  Do not activate Tasks until they are completely prepared.  Once Tasks are activated, they cannot be edited, and inactivating a Task stops all work in progress." placement="bottom" />
+	<resource uicomponent="tooltip" targetcontroller="task" targetaction="showForm" targetattr="question-task-showForm-manual-box" value="The Task will not start unless you click the 'Begin Work' button in the active Task view." placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="task" targetaction="showForm" targetattr="question-task-showForm-external-box" value="This allows Tasks to be initiated by an external trigger, like and alarm.  Not currently functional." placement="right" />
 	
 	<resource uicomponent="tooltip" targetcontroller="taskTechnician" targetaction="list" targetattr="active-taskTechnician-header" value="Tooltip for active Technicians for a Task" placement="bottom" />
 	<resource uicomponent="tooltip" targetcontroller="taskTechnician" targetaction="list" targetattr="inactive-taskTechnician-header" value="Tooltip for inactive Technicians for a Task" placement="bottom" />
@@ -27,26 +27,25 @@
 	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="uploadList" targetattr="activequestion-labanalyte-uploadList-headerH4" value="Upload lab analyte active" placement="top" />
 	<resource uicomponent="tooltip" targetcontroller="analyte" targetaction="uploadList" targetattr="inactivequestion-labanalyte-uploadList-headerH4" value="Upload lab analyte inactive" placement="top" />
 	
-	<resource uicomponent="tooltip" targetcontroller="service" targetaction="list" targetattr="active-service-header" value="Tooltip for active Service providers" placement="right" />
-	<resource uicomponent="tooltip" targetcontroller="service" targetaction="list" targetattr="inactive-service-header" value="Tooltip for inactive Service providers" placement="bottom" />
+	<resource uicomponent="tooltip" targetcontroller="service" targetaction="list" targetattr="active-service-header" value="Service providers in this column can be used for the current Project.  This allows you to narrow the list of Services and assign Service Providers to specific Projects." placement="bottom" />
+	<resource uicomponent="tooltip" targetcontroller="service" targetaction="list" targetattr="inactive-service-header" value="This area is to build a master list of all Service Providers you may use on any Project.     Use the category 'Labs' for all analytical laboratories." placement="bottom" />
 	
-	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="question-map-h3" value="Maps for all project H3" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="question-map-h3" value="Right click to see MaClick here to see legend" placement="right" />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="map-info-add" value="Add map for all projects, this is a big tooltip" placement="top" delayshow="1000" delayhide="100" />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="map-info-shape" value="Shape icon for all projects" placement="top" delayshow="1000" delayhide="100" />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="map-info-ruler" value="Ruler icon for all projects" placement="top" delayshow="1000" delayhide="100" />
 	
-	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="question-map-h3" value="Maps for all project H3" placement="right" />
-	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="question-map-h3" value="Maps for current project H3" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="question-map-h3" value="Right click to see MaClick here to see legend" placement="right" />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="map-info-shape" value="Shape icon for current projects" placement="top" delayshow="1000" delayhide="100" />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="map-info-ruler" value="Ruler icon for current projects" placement="top" delayshow="1000" delayhide="100" />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="map-info-add" value="Add icon for current projects" placement="top" delayshow="1000" delayhide="100" />
 	
-	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="question-map-h3" value="Maps for current project location H3" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="question-map-h3" value="Right click to see MaClick here to see legend" placement="right" />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="map-info-add" value="Add icon for current project location" placement="top" delayshow="1000" delayhide="100"  />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="map-info-shape" value="Shape icon for current project location" placement="top" delayshow="1000" delayhide="100"  />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="map-info-ruler" value="Ruler icon for current project location" placement="top" delayshow="1000" delayhide="100"  />
 	
-	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="question-map-h3" value="Maps for current project task location H3" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="question-map-h3" value="Right click to see MaClick here to see legend" placement="right" />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="map-info-ruler" value="Ruler icon for current task location" placement="top" delayshow="1000" delayhide="100"  />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="map-info-shape" value="Shape icon for current task location" placement="top" delayshow="1000" delayhide="100"  />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="map-info-add" value="Add icon for current task location" placement="top" delayshow="1000" delayhide="100"  />
@@ -62,16 +61,16 @@
 	<resource uicomponent="tooltip" targetcontroller="activeTask" targetaction="communications" targetattr="h4-taskcomm-services-gi" value="Active Task services" placement="top" />
 	<resource uicomponent="tooltip" targetcontroller="activeTask" targetaction="communications" targetattr="h4-taskcomm-technicians-gi" value="Active Task technicians" placement="top" />
 
-	<resource uicomponent="confirm" targetcontroller="project" targetaction="list" operation="delete" value="Sure to delete this project?" />
-	<resource uicomponent="confirm" targetcontroller="project" targetaction="view" operation="delete" value="Viewing a project, delete it?" />
-	<resource uicomponent="confirm" targetcontroller="technician" targetaction="list" operation="delete" value="Sure to delete this technician?" />
-	<resource uicomponent="confirm" targetcontroller="technician" targetaction="view" operation="delete" value="You are viewing a technician, delete this record?" />
-	<resource uicomponent="confirm" targetcontroller="task" targetaction="list" operation="activate" value="Sure to activate this task?" />
-	<resource uicomponent="confirm" targetcontroller="task" targetaction="view" operation="delete" value="Sure to delete this task?" />
-	<resource uicomponent="confirm" targetcontroller="service" targetaction="view" operation="delete" value="Viewing a service, delete it?" />
-	<resource uicomponent="confirm" targetcontroller="analyte" targetaction="list" operation="deleteField" value="Sure to delete this field analyte?" />
-	<resource uicomponent="confirm" targetcontroller="analyte" targetaction="list" operation="deleteLab" value="Sure to delete this Lab analyte?" />
-	<resource uicomponent="confirm" targetcontroller="location" targetaction="view" operation="delete" value="Viewing a location, delete it?" />
+	<resource uicomponent="confirm" targetcontroller="project" targetaction="list" operation="delete" value="Are you sure you want to delete this project?  This will delete the Project and all associated Tasks." />
+	<resource uicomponent="confirm" targetcontroller="project" targetaction="view" operation="delete" value="Are you sure you want to delete this project?  This will delete the Project and all associated Tasks." />
+	<resource uicomponent="confirm" targetcontroller="technician" targetaction="list" operation="delete" value="Are you sure you want to permanently remove this technician?" />
+	<resource uicomponent="confirm" targetcontroller="technician" targetaction="view" operation="delete" value="Are you sure you want to permanently remove this technician?" />
+	<resource uicomponent="confirm" targetcontroller="task" targetaction="list" operation="activate" value="Are you sure you want to activate this task?  Active Tasks must be move to the inactive column in order to be modified or edited." />
+	<resource uicomponent="confirm" targetcontroller="task" targetaction="view" operation="delete" value="Are you Sure to delete this task?" />
+	<resource uicomponent="confirm" targetcontroller="service" targetaction="view" operation="delete" value="Are you sure you want to delete this Service Provider?" />
+	<resource uicomponent="confirm" targetcontroller="analyte" targetaction="list" operation="deleteField" value="Are you sure?" />
+	<resource uicomponent="confirm" targetcontroller="analyte" targetaction="list" operation="deleteLab" value="Are you sure?" />
+	<resource uicomponent="confirm" targetcontroller="location" targetaction="view" operation="delete" value="Are you sure you want to permanently remove this Location?  If you place it in inactive status no further work can be done there, but the coordinatesa re not lost." />
 	
 	<resource uicomponent="alert" targetcontroller="project" targetaction="list" operation="addUniqueCheck" value="Project name is taken. Choose a new project name." />
 	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addNullCheck" value="To open a new Project, you must provide the Project Name and Facility Address" />
