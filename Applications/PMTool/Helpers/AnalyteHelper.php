@@ -124,9 +124,9 @@ class AnalyteHelper {
     return $matches;
   }
 
-  public static function GetProjectAnalytes($caller, $getFieldType = TRUE) {
+  public static function GetProjectAnalytes($caller, $getFieldType = TRUE, $sessionProject = NULL) {
     $pm = PmHelper::GetCurrentSessionPm($caller->user());
-    $project = ProjectHelper::GetCurrentSessionProject($caller->user());
+    $project = $sessionProject == NULL ? ProjectHelper::GetCurrentSessionProject($caller->user()) : $sessionProject;
     $sessionKey = $getFieldType ? \Library\Enums\SessionKeys::ProjectFieldAnalytes : \Library\Enums\SessionKeys::ProjectLabAnalytes;
     if (count($project[$sessionKey]) === 0) {
       \Library\Utility\DebugHelper::LogAsHtmlComment($getFieldType);
