@@ -22,8 +22,8 @@ class PMToolApplication extends \Library\Application {
 
     //Get add the Project Manager object to the page
     //The variable PM will be available accross the application
-    $pm = $controller->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $controller->page()->addVar('pm', $pm[0]);  
+    $pmSession = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+    $controller->page()->addVar('pm', $pmSession[\Library\Enums\SessionKeys::PmObject]);  
     
     $controller->execute();
     

@@ -26,6 +26,30 @@ class User extends ApplicationComponent {
     return isset($_SESSION[Enums\SessionKeys::UserAuthenticated]) && $_SESSION[Enums\SessionKeys::UserAuthenticated] === true;
   }
 
+  public function setRole($role) {
+    $_SESSION[Enums\SessionKeys::UserRole] = $role;
+  }
+
+  public function getRole() {
+    return isset($_SESSION[Enums\SessionKeys::UserRole])?$_SESSION[Enums\SessionKeys::UserRole]:null;
+  }
+
+  public function setUserType($type) {
+    $_SESSION[Enums\SessionKeys::UserType] = $type;
+  }
+
+  public function getUserType() {
+    return isset($_SESSION[Enums\SessionKeys::UserType])?$_SESSION[Enums\SessionKeys::UserType]:null;
+  }
+
+  public function setUserTypeId($userTypeId) {
+    $_SESSION[Enums\SessionKeys::UserTypeId] = $userTypeId;
+  }
+
+  public function getUserTypeId() {
+    return isset($_SESSION[Enums\SessionKeys::UserTypeId])?$_SESSION[Enums\SessionKeys::UserTypeId]:null;
+  }
+
   public function setAttribute($attr, $value) {
     $_SESSION[$attr] = $value;
   }

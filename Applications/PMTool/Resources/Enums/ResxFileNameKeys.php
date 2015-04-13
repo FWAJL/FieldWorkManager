@@ -35,11 +35,16 @@ abstract class ResxFileNameKeys {
   const Technician = "technician";
   const Service = "service";
   const Task = "task";
-//  const FieldForm = "field_form";
+  const ActiveTask = "active_task";
+  const Form = "form";
   const Pm = "pm";
+  const User = "user";
   const Analyte = "analyte";
   const FieldAnalyte = "field_analyte";
   const LabAnalyte = "lab_analyte";
+  
+  const TaskFieldAnalyte = "task_field_analyte";
+  const TaskLabAnalyte = "task_lab_analyte";
   
   const Map = "map";
 }

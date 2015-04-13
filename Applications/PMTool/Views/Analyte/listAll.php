@@ -23,6 +23,14 @@
     <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::tabs_close]; ?>
     <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::popup_prompt_module]; ?>
     <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; ?>
+    <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]; ?>
+    <?php
+	//If no alalyte for this project, alert it
+	if(empty($data_field_analyte['objects_list_left']) && empty($data_lab_analyte['objects_list_left'])) {
+	  ?>
+      <?php
+	}
+	?>
   </div>
 
 </div>

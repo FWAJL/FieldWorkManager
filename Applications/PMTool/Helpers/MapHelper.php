@@ -141,6 +141,9 @@ class MapHelper {
       }
       $markers[] = $marker;
     }
+    usort($markers, function($elem1,$elem2){
+      return strcmp($elem1['name'],$elem2['name']);
+    });
     return $markers;
   }
 
@@ -225,8 +228,10 @@ class MapHelper {
         if (isset($locationObjectType["objectActivePropName"])) {
           if ($locationType == \Library\Enums\SessionKeys::TaskLocations) {
             $marker["marker"]["icon"] = $icons['task'];
+            $marker["task"] = true;
           } else {
             $marker["marker"]["icon"] = ($location->$locationObjectType["objectActivePropName"]()) ? $icons["locationActive"] : $icons["locationInactive"];
+            $marker["task"] = false;
           }
         }
         if (!isset($marker["marker"]["lat"]) && !isset($marker["marker"]["lng"])) {
@@ -251,7 +256,7 @@ class MapHelper {
   }
 
   private static function CheckCoordinateValue($value) {
-    return $value !== "" && $value !== "0.000000";
+    return isset($value) && $value !== "" && $value !== "0.000000";
   }
 
 }

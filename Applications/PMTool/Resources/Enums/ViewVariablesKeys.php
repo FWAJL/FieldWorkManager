@@ -44,8 +44,10 @@ class ViewVariablesKeys {
   const property_id = "prop_id";
   const property_name = "prop_name";
   const property_active = "prop_active";
+  const data_identifier = "data_identifier";
 
   const tabStatus = "tab";
+  const activeTaskTabStatus = "active_task_tab";
 
   const active_list = "active_list_module";
   const inactive_list = "inactive_list_module";
@@ -64,11 +66,34 @@ class ViewVariablesKeys {
   
   //Location's views variables
   
-  //Task's view variabless
+  //Task's view variables
   const task_tab_open = "task_tab_open";
   const tab_close = "tab_close";
+  const task_locations = "task_locations";
+  const task_lab_analytes = "task_lab_analytes";
+  const task_lab_analytes_idmap = "task_lab_analytes_idmap";
+  const task_field_analytes = "task_field_analytes";
+  const task_field_analytes_idmap = "task_field_analytes_idmap";
   
   //Mapping
   const map_module = "map_module";
   const map_info_module = "map_info_module";
+
+  //Forms
+  //keys for categorized list display
+  const user_forms = "User forms";
+  const master_forms = "Master forms";
+  
+  //Task COC
+  const labServices = "lab_services";
+  
+  //Active Task 
+  const currentDiscussions = "current_discussion";
+
+  //user details form
+  const user_details = "user_details";
+  const user_details_buttons = "user_details_buttons";
+  const pm_form = "pm_form";
+  //user showform
+  const user_types = "user_types";
 }

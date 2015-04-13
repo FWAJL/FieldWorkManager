@@ -21,6 +21,8 @@
   <resource key="message_success_updateItems">The locations have been edited</resource>
   <resource key="message_error_ifLocationExists">The location doesn't exist</resource>
   <resource key="message_success_ifLocationExists">The location exist</resource>
+  <resource key="message_error_ifAllLocationsExist">The locations do not exist</resource>
+  <resource key="message_success_ifAllLocationsExist">some of the locations exist</resource>
   <resource key="message_error_mapEdit">Error editing the location.</resource>
   <resource key="message_success_mapEdit">The location has been edited.</resource>
 
@@ -38,7 +40,7 @@
   <resource key="location_active_many">Set list of locations as Active</resource>
   <resource key="location_visible">Visible</resource>
   <resource key="location_button_add">Add</resource>
-  <resource key="location_button_edit">Edit</resource>
+  <resource key="location_button_edit">Save</resource>
   <resource key="location_button_delete">Delete</resource>
   <resource key="location_list_all_header">Locations</resource>
   <resource key="h3_locations_active">Active locations</resource>
@@ -55,6 +57,9 @@
   <resource key="btn_add_location_names">Add</resource> 
   <resource key="btn_add_location_gmap">Using the Map</resource> 
   <resource key="btn_add_location_manual">With the standard form</resource> 
-  <resource key="btn_location_select_project">See list of project</resource> 
+  <resource key="btn_location_select_project">See list of project</resource>
+
+  <resource key="form_title">Title</resource>
+  <resource key="form_file">File(s)</resource>
 
 </resources>

@@ -26,7 +26,7 @@
   <!-- Buttons -->
 
   <resource key="task_button_add">Add</resource>
-  <resource key="task_button_edit">Edit</resource>
+  <resource key="task_button_edit">Save</resource>
   <resource key="task_button_delete">Delete</resource> 
   <resource key="task_button_copy">Copy</resource>  
   <resource key="btn_to_inactive_list">De-activate Task</resource> 
@@ -85,21 +85,35 @@
 
   <!--  <resource key="">TBD</resource>-->
 
-  <!--  Field Sample Matrix Form--> 
+  <!--  Field Analyte Matrix --> 
+  <resource key="message_error_saveFieldMatrix">No Field Analyte Matrix available to Save</resource>
+  <resource key="message_success_saveFieldMatrix">Field Analyte Matrix saved successfully</resource>
+
+  <!-- Lab Analyte Matrix -->
+  <resource key="message_error_saveLabMatrix">No Lab Analyte Matrix available to Save</resource>
+  <resource key="message_success_saveLabMatrix">Lab Analyte Matrix saved successfully</resource>
 
   <!--  <resource key="">TBD</resource>-->
 
-  <!--  Chain of Custody Form--> 
+  <!--  Chain of Custody Form-->
 
   <resource key="po_number">Purchase Order Number</resource>
   <resource key="lab_instructions">Instructions</resource>
   <resource key="lab_sample_type">Sample Type</resource>
   <resource key="lab_sample_tat">Turnaround Time</resource>
-  <resource key="project_id_num">Project ID Number</resource>
+  <resource key="project_number">Project ID Number</resource>
   <resource key="results_to_name">Name</resource>
   <resource key="results_to_company">Company</resource>
   <resource key="results_to_address">Address</resource>
   <resource key="results_to_phone">Phone</resource>
   <resource key="results_to_email">email</resource>
+  <resource key="task_coc_save">Save COC</resource>
+  <resource key="coc_service_id">Laboratory</resource>
+  <resource key="message_success_addCoc">Task COC Added successfully</resource>
+  <resource key="message_error_addCoc">Error adding Task COC</resource>
+  <resource key="message_success_editCoc">Task COC updated successfully</resource>
+  <resource key="message_error_editCoc">Error updating the Task COC</resource>
+  <resource key="message_success_getTaskCoc">Task COC was read</resource>
+  <resource key="message_error_getTaskCoc">Error reading the Task COC</resource>
   
 </resources>

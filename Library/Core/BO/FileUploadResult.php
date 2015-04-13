@@ -30,6 +30,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class FileUploadResult {
   public 
           $filePath = "",
+          $webPath = "",
           $tmpFilePath = "",
           $doesExist = FALSE,
           $isUploaded = FALSE;
@@ -63,4 +64,12 @@ class FileUploadResult {
   public function setIsUploaded($uploaded) {
     $this->isUploaded = $uploaded;
   }
+  public function setWebPath($webPath){
+    $this->webPath = $webPath;
+  }
+  public function getWebPath() {
+    return $this->webPath;
+  }
+
+
 }

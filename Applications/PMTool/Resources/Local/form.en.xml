@@ -7,6 +7,8 @@
   
   <resource key="message_error_add">Error inserting the form. Check logs.</resource>
   <resource key="message_success_add">The Form has been added.</resource>
+  <resource key="message_error_addMaster">Error inserting the form. Check logs.</resource>
+  <resource key="message_success_addMaster">The Form has been added.</resource>
   <resource key="message_error_getlist">Error reading Form data. Check logs.</resource>
   <resource key="message_success_getlist">The Forms have been read.</resource>
   <resource key="message_error_getItem">This Form doesn't exist or is not one of your Forms. You will be redirected to your list of Forms in 3 seconds.</resource>
@@ -20,22 +22,22 @@
 
   <resource key="form_legend_add">Add a new Form</resource>
   <resource key="form_legend_edit">Edit this Form</resource>
-  <resource key="form_type">Category</resource>
-  <resource key="form_name">Company Name</resource>
-  <resource key="form_url">Website</resource>
-  <resource key="form_address">Address</resource>
-  <resource key="form_contact_name">Contact Name</resource>
-  <resource key="form_contact_phone">Phone Number</resource>
-  <resource key="form_contact_email">Email</resource>
+  <resource key="form_title">Form title</resource>
+  <resource key="form_file">Form file</resource>
 <!--  <resource key="form_active">Active</resource>-->
   <resource key="form_button_add">Add</resource>
-  <resource key="form_button_edit">Edit</resource>
+  <resource key="form_button_edit">Save</resource>
   <resource key="form_button_delete">Delete</resource>
   <resource key="form_list_all_header">Forms</resource>
   <resource key="h3_forms_active">All Forms</resource>
   <resource key="h3_project_forms">Forms for This Project</resource> 
-  <resource key="btn_remove_from_project_list">Remove from Project list</resource> 
-  <resource key="btn_add_to_project_list">Add to Project List</resource> 
-  <resource key="h3_no_project">No Project Selected</resource> 
+  <resource key="h3_template_forms">Available Forms</resource>
+  <resource key="h3_no_project">No Project Selected</resource>
+  <resource key="h3_new_form">Add template</resource>
+  <resource key="btn_to_pm_list">Add form(s)</resource>
+  <resource key="btn_to_project_list">Remove form(s)</resource>
+  <resource key="btn_add_user_form">Add template</resource>
+
+
   
 </resources>

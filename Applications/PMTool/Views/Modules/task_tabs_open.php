@@ -17,13 +17,13 @@
         <?php echo $resx["task_tab_locations"]; ?>
       </a>
     </li>
-    <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::InspFormsTab]; ?>" id="tab2" data-form-id="task_insp_info">
-      <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskInspForms; ?>">
+    <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::FormsTab]; ?>" id="tab2" data-form-id="task_insp_info">
+      <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskForms; ?>">
         <?php echo $resx["task_tab_forms"]; ?>
       </a>
     </li>
     <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::FieldAnalytesTab]; ?>" id="tab3" data-form-id="field_analytes">
-      <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::FieldAnalytes; ?>">
+      <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskFieldAnalytes; ?>">
         <?php echo $resx["task_tab_field_analytes"]; ?>
       </a>
     </li>
@@ -33,7 +33,7 @@
       </a>
     </li>  
     <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::LabAnalytesTab]; ?>" id="tab5" data-form-id="lab_analytes">
-      <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LabAnalytes; ?>">
+      <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskLabAnalytes; ?>">
         <?php echo $resx["task_tab_lab_analytes"]; ?>
       </a>
     </li>
@@ -43,7 +43,7 @@
       </a>
     </li>
         <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::CocTab]; ?>" id="tab4" data-form-id="task_coc_info">
-      <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskCOC; ?>">
+      <a href="<?php /*echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::TaskCOC;*/ echo __BASEURL__ . Applications\PMTool\Helpers\TaskHelper::GetTaskCocTabUrl($current_task); ?>">
         <?php echo $resx["task_tab_coc"]; ?>
       </a>
     </li>  

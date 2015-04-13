@@ -35,6 +35,7 @@ class PhpModuleKeys {
   const popup_prompt = "popup_prompt_module";
   const promote_buttons = "promote_buttons_module";
   const popup_selector_module = "popup_selector_module";
+  const popup_maplegends_module = "popup_maplegends_module";
   const tooltip_msg = "tooltip_msg_module";
   
   const group_list_left = "group_list_left";
@@ -59,6 +60,8 @@ class PhpModuleKeys {
   const lab_analyte_form = "lab_analyte_form";
   const analyte_buttons = "analyte_buttons";
 
+  const upload_file = "upload_file";
+  const load_file = "load_file";
 }
 
 ?>

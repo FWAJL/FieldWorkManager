@@ -30,7 +30,12 @@ abstract class SessionKeys {
   const UserAuthenticated = "user_auth";
   const UserFlash = 'user_flash';
   const UserConnected = "user_connected";
-  
+  const UserRole = "user_role";
+  const UserTypeId = "user_value";
+  const UserType = "user_type";
+  const UserRoutes = "user_routes";
+  const AllUsers = "all_users";
+
   const UserProjects= "user_projects";
   const UserProjectFacilityList= "user_project_facility_list";
   const UserProjectClientList= "user_project_client_list";
@@ -62,7 +67,11 @@ abstract class SessionKeys {
   const ProjectLocations = "project_locations";
   const ProjectFieldAnalytes = "pfa";
   const ProjectLabAnalytes = "pla";
-  
+  const ProjectForms = "project_forms";
+  const ProjectUserForms = "project_user_forms";
+  const ProjectMasterForms = "project_master_forms";
+  const ProjectAvailableForms = "project_available_forms";
+
   /* Task session array */
   const SessionTasks = "session_tasks";
   const TaskKey =  "task_";
@@ -77,6 +86,7 @@ abstract class SessionKeys {
   const TaskLabAnalytes = "task_lab_analytes";
   const TaskFieldLocations = "task_field_locations";
   const TaskLabLocations = "task_lab_locations";
+  const TaskForms = "task_forms";
 
 
 
@@ -92,6 +102,7 @@ abstract class SessionKeys {
   const CurrentProject = "current_project";
   const CurrentPm = "current_pm";
   const CurrentTask = "current_task";
+  const CurrentDiscussion = "current_discussion";
   
   //Routing
   const SessionRoutes = "app_routes";
@@ -99,6 +110,7 @@ abstract class SessionKeys {
   
   //Tabs
   const TabsStatus = "tabs_status";
+  const ActiveTaskTabsStatus = "active_task_tabs_status";
   const TabActiveAnalyte = "tab_active_analyte";
 }
 

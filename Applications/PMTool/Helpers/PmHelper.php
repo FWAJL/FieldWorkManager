@@ -35,7 +35,7 @@ class PmHelper {
     self::SetSessionPms($user, $sessionPms);
   }
   
-    public static function DoesPmHaveActiveTechnicians(\Library\User $user) {
+  public static function DoesPmHaveActiveTechnicians(\Library\User $user) {
     $itDoes = FALSE;
     $currentPm = self::GetCurrentSessionPm($user);
     foreach ($currentPm[\Library\Enums\SessionKeys::PmTechnicians] as $technician) {
@@ -46,6 +46,19 @@ class PmHelper {
     }
     return $itDoes;
   }
+  
+  public static function DoesPmHaveActiveServices(\Library\User $user) {
+    $itDoes = FALSE;
+    $currentPm = self::GetCurrentSessionPm($user);
+    foreach ($currentPm[\Library\Enums\SessionKeys::PmServices] as $service) {
+      if ($service->service_active()) { 
+        $itDoes = TRUE;
+        break;
+      }
+    }
+    return $itDoes;
+  }
+  
 
   public static function AddAProjectIdToList(\Library\User $user, $project_id) {
     $pmSession = self::GetSessionPm($user, 0);
@@ -76,8 +89,10 @@ class PmHelper {
     if ($pm_id !== 0) {
       $key .= $pm_id;
     } else {
-      $pm = $user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-      $key .= $pm[0]->pm_id();
+      if($user->getUserType()=='pm_id'){
+        $pmid = $user->getUserTypeId();
+        $key .= $pmid;
+      }
     }
     $user->setAttribute(\Library\Enums\SessionKeys::CurrentPm, $sessionPms[$key]);
     return $sessionPms[$key];
@@ -92,6 +107,21 @@ class PmHelper {
             $user->getAttribute(\Library\Enums\SessionKeys::CurrentPm) : FALSE;
   }
 
+  public static function FillSessionPm($caller, $sessionPm) {
+    $sessionPm[\Library\Enums\SessionKeys::PmTechnicians] = TechnicianHelper::GetPmTechnicians($caller, $sessionPm);
+    $sessionPm[\Library\Enums\SessionKeys::PmServices] = ServiceHelper::GetPmServices($caller, $sessionPm);
+    
+    /*
+     * Sets
+     *  $sessionPm[\Library\Enums\SessionKeys::PmFieldAnalytes]
+     *  $sessionPm[\Library\Enums\SessionKeys::PmLabAnalytes]
+     * 
+     * And also saves the data filled above.
+     */
+    AnalyteHelper::StoreListsData($caller, FALSE);
+    
+    self::GetAndStoreCurrentPm($caller->user(), $sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_id());
+  }
   public static function MakeSessionPm(\Applications\PMTool\Models\Dao\Project_manager $pm) {
     $sessionPm = array(
         \Library\Enums\SessionKeys::PmObject => $pm,
@@ -135,15 +165,22 @@ class PmHelper {
     }
   }
 
-  public static function StoreSessionPm($user, \Applications\PMTool\Models\Dao\Project_manager $pm, $setCurrentPm) {
-    $PmsSession = array();
-    $PmsSession[\Library\Enums\SessionKeys::PmKey . $pm->pm_id()] = self::MakeSessionPm($pm);
-
-    self::SetSessionPms($user, $PmsSession);
+  public static function StoreSessionPm($caller, \Applications\PMTool\Models\Dao\Project_manager $pm, $setCurrentPm) {
+    $sessionPms = self::GetSessionPms($caller->user());
+    //Init $sessionPms if unset
+    if (!isset($sessionPms)) $sessionPms = array();
+    //Init PmKey to store the session PM
+    $pmKey = \Library\Enums\SessionKeys::PmKey . $pm->pm_id();
+    //Store the session Pm only if it is not present in the array
+    if (!array_key_exists($pmKey, $sessionPms)) $sessionPms[$pmKey] = self::MakeSessionPm($pm);
+        
+    self::SetSessionPms($caller->user(), $sessionPms);
     if ($setCurrentPm) {
-      self::GetAndStoreCurrentPm($user, $pm->pm_id());
+      self::GetAndStoreCurrentPm($caller->user(), $pm->pm_id());
+      $sessionPm = self::GetCurrentSessionPm($caller->user());
+      self::FillSessionPm($caller, $sessionPm);
     }
-    return $PmsSession;
+    return $sessionPms;
   }
 
   public static function UnsetSessionPm($user, $pm_id) {

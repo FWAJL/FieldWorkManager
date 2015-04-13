@@ -34,6 +34,22 @@ class AnalyteHelper {
     $COMMON = "common_";
     $FIELD = "field";
     $LAB = "lab";
+    /*
+     * creates an array depending on the value of $processCommonAnalytes
+     * 
+     * array(
+     *  "common_field",
+     *  "common_lab"
+     * )
+     * 
+     * or 
+     * 
+     * array(
+     *  "field",
+     *  "lab"
+     * )
+     * 
+     */
     $loopParams = array($processCommonAnalytes ? $COMMON . $FIELD : $FIELD, $processCommonAnalytes ? $COMMON . $LAB : $LAB);
     for ($index = 0; $index < count($loopParams); $index++) {
       switch ($loopParams[$index]) {
@@ -59,10 +75,15 @@ class AnalyteHelper {
     }
   }
 
+  public static function StoreCommonListData($caller) {
+    self::_StoreCommonAnalytes($caller, \Library\Enums\SessionKeys::CommonFieldAnalytes, new \Applications\PMTool\Models\Dao\Common_field_analyte);
+    self::_StoreCommonAnalytes($caller, \Library\Enums\SessionKeys::CommonLabAnalytes, new \Applications\PMTool\Models\Dao\Common_lab_analyte);
+  }
+
   private static function _StoreAnalytes($caller, $sessionPm, $sessionKey, $analyteObj) {
     if (count($sessionPm[$sessionKey]) === 0) {
       $analyteObj->setPm_id($sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_id());
-      $dal = $caller->managers()->getManagerOf($caller->module());
+      $dal = $caller->managers()->getManagerOf("Analyte");
       $analytes = $dal->selectMany($analyteObj, "pm_id");
       $sessionPm[$sessionKey] = $analytes;
     }
@@ -80,6 +101,10 @@ class AnalyteHelper {
   public static function GetListPropertiesForFieldAnalyte() {
     return array("name" => "name_unit", "id" => "id");
   }
+  
+  public static function GetListPropertiesForLabAnalyte() {
+    return array("name" => "name", "id" => "id");
+  }
 
   public static function FilterAnalytesByProjectAnalytesList($caller, $getFieldType = TRUE) {
     $pm = PmHelper::GetCurrentSessionPm($caller->user());
@@ -87,8 +112,9 @@ class AnalyteHelper {
     $sessionKey = $getFieldType ? \Library\Enums\SessionKeys::PmFieldAnalytes : \Library\Enums\SessionKeys::PmLabAnalytes;
     $analytePropId = $getFieldType ? "field_analyte_id" : "lab_analyte_id";
     $matches = array();
-    foreach ($project_analytes as $project_analyte) {
-      foreach ($pm[$sessionKey] as $analyte) {
+
+    foreach ($pm[$sessionKey] as $analyte) {
+      foreach ($project_analytes as $project_analyte) {
         if (intval($analyte->$analytePropId()) === intval($project_analyte->$analytePropId())) {
           array_push($matches, $analyte);
           break;
@@ -116,14 +142,78 @@ class AnalyteHelper {
     }
     return $project[$sessionKey];
   }
+  
+  /**
+  * Gets all TaskFieldAnalytes from the relevant table 
+  * and sets the same to Session
+  */
+  public static function GetAndStoreTaskFieldAnalytes($caller, $sessionTask) {
+    $sessionTasks = $caller->user()->getAttribute(\Library\Enums\SessionKeys::SessionTasks);
+    $taskFieldAnalyte = new \Applications\PMTool\Models\Dao\Task_field_analyte();
+    $taskFieldAnalyte->setTask_id($sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+//    if (!(count($sessionProject[\Library\Enums\SessionKeys::ProjectServices]) > 0)) {
+    $dal = $caller->managers()->getManagerOf("TaskFieldAnalyte");
+    $sessionTask[\Library\Enums\SessionKeys::TaskFieldAnalytes] = $dal->selectMany($taskFieldAnalyte, "task_id");
+//    }
+    TaskHelper::SetSessionTask($caller->user(), $sessionTask);
+    TaskHelper::SetCurrentSessionTask($caller->user(), $sessionTask);
+    return self::GetFieldAnalytesFromTaskFieldAnalytes($caller->user(), $sessionTask);
+  }
+  
+  /**
+  * Gets all TaskLabAnalytes from the relevant table 
+  * and sets the same to Session
+  */
+  public static function GetAndStoreTaskLabAnalytes($caller, $sessionTask) {
+    $sessionTasks = $caller->user()->getAttribute(\Library\Enums\SessionKeys::SessionTasks);
+    $taskLabAnalyte = new \Applications\PMTool\Models\Dao\Task_lab_analyte();
+    $taskLabAnalyte->setTask_id($sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+//    if (!(count($sessionProject[\Library\Enums\SessionKeys::ProjectServices]) > 0)) {
+    $dal = $caller->managers()->getManagerOf("TaskLabAnalyte");
+    $sessionTask[\Library\Enums\SessionKeys::TaskLabAnalytes] = $dal->selectMany($taskLabAnalyte, "task_id");
+//    }
+    TaskHelper::SetSessionTask($caller->user(), $sessionTask);
+    TaskHelper::SetCurrentSessionTask($caller->user(), $sessionTask);
+    return self::GetLabAnalytesFromTaskLabAnalytes($caller->user(), $sessionTask);
+  }
+  
+  public static function GetFieldAnalytesFromTaskFieldAnalytes(\Library\User $user, $sessionTask) {
+    $matches = array();
+    $sessionPm = PmHelper::GetCurrentSessionPm($user);
+    foreach ($sessionPm[\Library\Enums\SessionKeys::PmFieldAnalytes] as $field_analyte) {
+      foreach ($sessionTask[\Library\Enums\SessionKeys::TaskFieldAnalytes] as $task_field_analyte) {
+        if (intval($field_analyte->field_analyte_id()) === intval($task_field_analyte->field_analyte_id())) {
+          array_push($matches, $field_analyte);
+          break;
+        }
+      }
+    }
+    return $matches;
+  }
+  
+  public static function GetLabAnalytesFromTaskLabAnalytes(\Library\User $user, $sessionTask) {
+    $matches = array();
+    $sessionPm = PmHelper::GetCurrentSessionPm($user);
+    foreach ($sessionPm[\Library\Enums\SessionKeys::PmLabAnalytes] as $lab_analyte) {
+      foreach ($sessionTask[\Library\Enums\SessionKeys::TaskLabAnalytes] as $task_lab_analyte) {
+        if (intval($lab_analyte->lab_analyte_id()) === intval($task_lab_analyte->lab_analyte_id())) {
+          array_push($matches, $lab_analyte);
+          break;
+        }
+      }
+    }
+    return $matches;
+  }
+ 
 
   public static function AddAnalyte($caller, $result, $isFieldType, $isCommon) {
-    $pm = PmHelper::GetCurrentSessionPm($caller->user());
 
     $manager = $caller->managers()->getManagerOf($caller->module());
     $dataPost = $caller->dataPost();
-    $dataPost["pm_id"] = $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
-
+    if(!$isCommon) {
+      $pm = PmHelper::GetCurrentSessionPm($caller->user());
+      $dataPost["pm_id"] = $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
+    }
     $analytes = array();
     $analyteObj = null;
     if ($isCommon) {
@@ -208,6 +298,7 @@ class AnalyteHelper {
         $analyte->setCommon_field_analyte_name($name);
       } else {
         $analyte->setCommon_lab_analyte_name($name);
+        $analyte->setCommon_lab_analyte_category_name($name);
       }
       array_push($analytes, $analyte);
     }
@@ -231,6 +322,31 @@ class AnalyteHelper {
                   "sessionKey" => \Library\Enums\SessionKeys::ProjectLabAnalytes,
                   "dataPost" => $dataPost,
                   "object" => new \Applications\PMTool\Models\Dao\Project_lab_analyte(),
+                  "objPropId" => "lab_analyte_id"));
+    }
+    return $result;
+  }
+  
+  /**
+  *	Update method for Task specific analytes
+  */
+  public static function UpdateTaskAnalytes($caller) {
+    $result = $caller->InitResponseWS(); // Init result
+    $dataPost = $caller->dataPost();
+    $result["rows_affected"] = 0;
+    if ($dataPost["isFieldType"]) {
+      $result = self::ProcessListAnalytesTasks(
+                      $caller, $result, array(
+                  "sessionKey" => \Library\Enums\SessionKeys::TaskFieldAnalytes,
+                  "dataPost" => $dataPost,
+                  "object" => new \Applications\PMTool\Models\Dao\Task_field_analyte(),
+                  "objPropId" => "field_analyte_id"));
+    } else {
+      $result = self::ProcessListAnalytesTasks(
+                      $caller, $result, array(
+                  "sessionKey" => \Library\Enums\SessionKeys::TaskLabAnalytes,
+                  "dataPost" => $dataPost,
+                  "object" => new \Applications\PMTool\Models\Dao\Task_lab_analyte(),
                   "objPropId" => "lab_analyte_id"));
     }
     return $result;
@@ -266,6 +382,41 @@ class AnalyteHelper {
     \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($caller->user(), $sessionProject);
     return $result;
   }
+  
+  
+  private static function ProcessListAnalytesTasks($caller, $result, $params) {
+    $result["arrayOfValues"] = str_getcsv($params["dataPost"]["arrayOfValues"], ',');
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($caller->user());
+    foreach ($result["arrayOfValues"] as $id) {
+      $setMethodObjId = "set" . ucfirst($params["objPropId"]);
+      $params["object"]->$setMethodObjId($id);
+      $params["object"]->setTask_id($sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+      $dal = $caller->managers()->getManagerOf($caller->module());
+      if ($params["dataPost"]["action"] === "add") {
+        $analyte = $params["objPropId"] === "field_analyte_id" ?
+                new \Applications\PMTool\Models\Dao\Task_field_analyte() : new \Applications\PMTool\Models\Dao\Task_lab_analyte();
+        $analyte->setTask_id($sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+        $setMethodObjId = "set" . ucfirst($params["objPropId"]);
+        $analyte->$setMethodObjId($id);
+        $newId = $dal->add($analyte);
+        $result["rows_affected"] += 1;
+        $sessionTaskAnalytes = $sessionTask[$params["sessionKey"]];
+        array_push($sessionTaskAnalytes, $analyte);
+        $sessionTask[$params["sessionKey"]] = $sessionTaskAnalytes;
+      } else {
+        $result["rows_affected"] += $dal->delete($params["object"], $params["objPropId"]) ? 1 : 0;
+        //TODO: remove object deleted from array list
+        $propId = $params["objPropId"];
+        $match = CommonHelper::FindIndexInObjectListById($params["object"]->$propId(), $params["objPropId"], $sessionTask, $params["sessionKey"]);
+        unset($sessionTask[$params["sessionKey"]][$match["key"]]);
+      }
+    }
+    //\Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($caller->user(), $sessionProject);
+    return $result;
+  }
+  
+  
+  
 
   public static function AddTabsStatus(\Library\User $user) {
     $tabs = array(

@@ -5,9 +5,9 @@
  * @package		Basic MVC framework
  * @author		Jeremie Litzler
  * @copyright	Copyright (c) 2015
- * @license		
- * @link		
- * @since		
+ * @license
+ * @link
+ * @since
  * @filesource
  */
 // ------------------------------------------------------------------------
@@ -19,7 +19,7 @@
  * @subpackage	Helpers
  * @category	TechnicianHelper
  * @author		FWM DEV Team
- * @link		
+ * @link
  */
 
 namespace Applications\PMTool\Helpers;
@@ -55,9 +55,9 @@ class TechnicianHelper {
     }
     return $result;
   }
-  
+
   public static function DeactivateTechnician($caller, $params) {
-    
+
   }
 
   public static function DeleteTechnician($caller, $dal_name, $obj, $where_filter_id) {
@@ -96,8 +96,8 @@ class TechnicianHelper {
   public static function GetTechniciansFromTaskTechnicians(\Library\User $user, $sessionTask) {
     $matches = array();
     $sessionPm = PmHelper::GetCurrentSessionPm($user);
-    foreach ($sessionTask[\Library\Enums\SessionKeys::TaskTechnicians] as $task_technician) {
-      foreach ($sessionPm[\Library\Enums\SessionKeys::PmTechnicians] as $technician) {
+    foreach ($sessionPm[\Library\Enums\SessionKeys::PmTechnicians] as $technician) {
+      foreach ($sessionTask[\Library\Enums\SessionKeys::TaskTechnicians] as $task_technician) {
         if (intval($technician->technician_id()) === intval($task_technician->technician_id())) {
           array_push($matches, $technician);
           break;
@@ -115,8 +115,8 @@ class TechnicianHelper {
       $technician->setPm_id($sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_id());
       $manager = $caller->managers()->getManagerOf("Technician");
       $result[\Library\Enums\SessionKeys::PmTechnicians] =
-              $sessionPm[\Library\Enums\SessionKeys::PmTechnicians] =
-              $manager->selectMany($technician, "pm_id");
+      $sessionPm[\Library\Enums\SessionKeys::PmTechnicians] =
+        $manager->selectMany($technician, "pm_id");
       \Applications\PMTool\Helpers\PmHelper::SetSessionPm($caller->user(), $sessionPm);
     }
     return $result;
@@ -148,7 +148,7 @@ class TechnicianHelper {
     }
     return $technicians;
   }
-  
+
   public static function UpdateTechnicians($caller) {
     $result = $caller->InitResponseWS(); // Init result
     $dataPost = $caller->dataPost();
@@ -158,10 +158,10 @@ class TechnicianHelper {
     $sessionPm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($caller->user());
     $technicians = $sessionPm[\Library\Enums\SessionKeys::PmTechnicians];
     $matchedElements = $caller->FindObjectsFromIds(
-            array(
-                "filter" => "technician_id",
-                "ids" => $result["technician_ids"],
-                "objects" => $technicians)
+      array(
+        "filter" => "technician_id",
+        "ids" => $result["technician_ids"],
+        "objects" => $technicians)
     );
     $result["rows_affected"] = 0;
     foreach ($matchedElements as $technician) {
@@ -169,11 +169,11 @@ class TechnicianHelper {
       $manager = $caller->managers()->getManagerOf($caller->module());
       $result["rows_affected"] += $manager->edit($technician, "technician_id") ? 1 : 0;
       self::DeleteTechnician($caller, "TaskTechnician", $technician, "technician_id");
-      }
+    }
     \Applications\PMTool\Helpers\PmHelper::SetSessionPm($caller->user(), $sessionPm);
     return $result;
   }
-  
+
   public static function UpdateTaskTechnicians($caller) {
     $result = $caller->InitResponseWS(); // Init result
     $dataPost = $caller->dataPost();

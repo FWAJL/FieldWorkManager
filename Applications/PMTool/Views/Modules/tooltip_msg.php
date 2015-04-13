@@ -10,8 +10,8 @@ if(isset($tooltip_message) && !empty($tooltip_message))
 			$delay_str = ' delayshow="' . $the_tt['tooltipmsg']['delayshow'] . '" delayhide="' . $the_tt['tooltipmsg']['delayhide'] . '"';
 		}
 		?>
-        <input type="hidden" id="tooltipmsg_<?php echo $the_tt['tooltipmsg']['targetattr'] ?>" value="<?php echo $the_tt['tooltipmsg']['value'] ?>" placement="<?php echo $the_tt['tooltipmsg']['placement'] ?>"<?php echo $delay_str ?> >
-        <?php
+    <input type="hidden" id="tooltipmsg_<?php echo $the_tt['tooltipmsg']['targetattr'] ?>" value="<?php echo $the_tt['tooltipmsg']['value'] ?>" placement="<?php echo $the_tt['tooltipmsg']['placement'] ?>"<?php echo $delay_str ?> >
+    <?php
 	}
 }
 ?>

@@ -82,23 +82,31 @@ class LeftMenu {
         $li .= $this->_AddLinkHeader($link);
       }
     }
-    $li .= $this->_AddSubMenus($main_menu);
+    $tmpSubMenu = $this->_AddSubMenus($main_menu);
+    $li .= $tmpSubMenu;
     $li .= "</li>";
-    return $li;
+    return $tmpSubMenu ? $li : '';
   }
 
   private function _AddSubMenus($main_menu) {
     $li = "<ul>";
     $sub_menus = $main_menu->getElementsByTagName("submenu");
+    $tmp = '';
     if ($sub_menus !== NULL) {
       foreach ($sub_menus as $sub_menu) {
-        if ($sub_menu->getAttribute('active') === "true") {
-          $li .= $this->_AddLinkSubMenus($sub_menu);
+        $href = $this->base_url . current(explode('?', $sub_menu->getAttribute('href')));
+        $routes = $this->app->user->getAttribute(\Library\Enums\SessionKeys::UserRoutes);
+        $isAvailable = $routes ? array_reduce($routes, function ($carry, $route) use ($href) {
+          return $carry || ($href == $route->url());
+        }, false) : false;
+        if ($sub_menu->getAttribute('active') === "true" && $isAvailable) {
+          $tmp .= $this->_AddLinkSubMenus($sub_menu);
         }
       }
-      $li .= "</ul>";
     }
-    return $li;
+    $li .= $tmp;
+    $li .= "</ul>";
+    return $tmp ? $li : '';
   }
 
   private function _AddLinkHeader($link) {

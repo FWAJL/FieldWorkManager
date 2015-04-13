@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/addons/toastr.css<?php echo $version; ?>" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/addons/jquery.contextMenu.css<?php echo $version; ?>" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/core/jquery-ui.css<?php echo $version; ?>" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/core/lightbox.css<?php echo $version; ?>" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/core/dropzone.css<?php echo $version; ?>" />
 
     <?php echo $this->app->globalResources["css_files"]; ?>
     
@@ -18,6 +20,7 @@
 Web/js/app/controllers/pm_manager.js"></script>-->
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/jquery.js<?php echo $version; ?>"></script>
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/jquery-ui.js<?php echo $version; ?>"></script>
+    <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/app/controllers/top_menu.actions.js<?php echo $version; ?>"></script>
     <?php echo $this->app->globalResources["js_files_head"]; ?>
     <!--<script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/app/controllers/pm_manager.js"></script>-->
 

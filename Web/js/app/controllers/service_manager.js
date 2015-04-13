@@ -87,9 +87,24 @@ $(document).ready(function() {
   });//Edit a service
 
   $("#btn_delete_service").click(function() {
+	var msg = $('#confirmmsg-delete').val();
+    if (typeof msg !== typeof undefined && msg !== false) {
+      utils.showConfirmBox(msg, function(result) {
+        if (result)
+        {
+          service_manager.delservice(ajaxParams);
+        }
+      });
+    }
+    else
+    {
+      service_manager.delservice(ajaxParams);
+    }
+	/*  
     ajaxParams.ajaxUrl = "service/delete";
     ajaxParams.itemId = parseInt(parseInt(utils.getQueryVariable("service_id")));
     datacx.delete(ajaxParams);
+	*/
   });
 
   if (utils.getQueryVariable("mode") === "edit") {
@@ -129,11 +144,6 @@ var selectionParams = {
     ajaxParams.arrayOfValues = utils.getValuesFromList(selectionParams.listLeftId, selectionParams.dataAttrLeft, true);
     datacx.updateItems(ajaxParams);
   });
-  $("#btn_delete_service").click(function() {
-    ajaxParams.ajaxUrl = "service/delete";
-    ajaxParams.itemId = parseInt(parseInt(utils.getQueryVariable("service_id")));
-    datacx.delete(ajaxParams);
-  });
 });
 
 /***********
@@ -162,6 +172,11 @@ var selectionParams = {
       }
     });
   };
+  service_manager.delservice = function(ajaxParams) {
+	ajaxParams.ajaxUrl = "service/delete";
+    ajaxParams.itemId = parseInt(parseInt(utils.getQueryVariable("service_id")));
+    datacx.delete(ajaxParams);
+  }
   service_manager.getList = function() {
     datacx.post("service/getlist", null).then(function(reply) {//call AJAX method to call Resource/GetList WebService
       if (reply === null || reply.result === 0) {//has an error
