@@ -55,6 +55,14 @@ class Task {
   const task_show_field_matrix = "task_show_field_matrix";
   //Data keys
 
+  //View variables for Task tab visibility
+  const task_req_service          = "task_req_service";
+  const task_req_form             = "task_req_form";
+  const task_req_field_analyte    = "task_req_field_analyte";
+  const task_req_lab_analyte      = "task_req_lab_analyte";
+
+  //The main array variable name which would hold the above keys
+  const task_tab_status_keys = "task_tab_status_keys"; 
   
 }
 
