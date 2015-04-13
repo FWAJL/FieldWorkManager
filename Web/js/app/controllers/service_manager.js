@@ -114,10 +114,6 @@ $(document).ready(function() {
     service_manager.getItem(utils.getQueryVariable("service_id"));
   }//Load service
 
-//  if (utils.getQueryVariable("mode") === "add" && utils.getQueryVariable("test") === "true") {
-//    service_manager.fillFormWithRandomData();
-//  }
-
   $("#service_list_all").click(function() {
     utils.clearForm();
     $(".right-aside section").fadeOut('2000').removeClass("active").removeClass("show");

@@ -52,6 +52,15 @@
     </links>
   </main_menu><!-- task -->
   
+      <main_menu name="labanalyte" active="true">
+    <links>
+      <header href="labanalyte" resourcekey="header_lab_analyte" enablelink="false" />
+      <submenu href="labanalyte/listAll" id="analyte_list_all" resourcekey="lab_analyte_list" active="true" />
+      <submenu href="labanalyte/uploadList" id="analyte_upload_list_button" resourcekey="lab_analyte_upload_list" active="true"/>
+      <submenu href="labanalyte/uploadCommons" id="analyte_upload_commons_button" resourcekey="lab_analyte_upload_commons" active="true"/>
+    </links>
+  </main_menu><!-- lab analyte -->
+  
   <main_menu name="analyte" active="true">
     <links>
       <header href="analyte" resourcekey="header_analyte" enablelink="false" />
@@ -60,7 +69,7 @@
       <submenu href="analyte/uploadCommons" id="analyte_upload_commons_button" resourcekey="analyte_upload_commons" active="true"/>
     </links>
   </main_menu><!-- analyte -->
-  
+    
   <main_menu name="forms" active="true">
     <links>
       <header href="form/listAll" id="form_list_all" resourcekey="header_form" active="true" />
