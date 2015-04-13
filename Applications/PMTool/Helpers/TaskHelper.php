@@ -255,4 +255,18 @@ class TaskHelper {
     }
   }
 
+  /**
+  * Returns which tabs are to be shown
+  * for the passed task
+  */
+  public static function TabStatusFor($sessionTask) {
+    $ret_val = array(
+                \Applications\PMTool\Resources\Enums\ViewVariables\Task::task_req_service => $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_req_service(),
+                \Applications\PMTool\Resources\Enums\ViewVariables\Task::task_req_form    => $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_req_form(),
+                \Applications\PMTool\Resources\Enums\ViewVariables\Task::task_req_field_analyte => $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_req_field_analyte(),
+                \Applications\PMTool\Resources\Enums\ViewVariables\Task::task_req_lab_analyte => $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_req_lab_analyte(),
+              );
+    return $ret_val;
+  }
+
 }
