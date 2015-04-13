@@ -70,9 +70,9 @@
   <resource key="client_contact_email">Contact Email</resource>
 
   <!-- Address window -->
-  <resource key="address_window_title">Error getting coordinates. Press cancel to edit the address or enter city and country name.</resource>
+  <resource key="address_window_title">Error getting coordinates. Press cancel to edit the address or enter city and state here.</resource>
   <resource key="address_window_city">City</resource>
-  <resource key="address_window_country">Country</resource>
+  <resource key="address_window_state">State</resource>
   <resource key="address_window_ok">OK</resource>
   <resource key="address_window_cancel">Cancel</resource>
 

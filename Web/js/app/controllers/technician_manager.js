@@ -39,26 +39,9 @@ $(document).ready(function() {
       if (key === "edit") {
         technician_manager.retrieveTechnician(options.$trigger);
       } 
-//      else if (key === "delete") {
-//				var msg = $('#confirmmsg-delete').val();
-//				if (typeof msg !== typeof undefined && msg !== false) {
-//					utils.showConfirmBox(msg, function(result){
-//						if(result)
-//						{
-//							technician_manager.delete(parseInt(options.$trigger.attr("data-technician-id")));
-//						}
-//					});
-//				}
-//				else
-//				{
-//					technician_manager.delete(parseInt(options.$trigger.attr("data-technician-id")));
-//				}
-//      }
     },
     items: {
       "edit": {name: "Edit"}
-//      ,
-//      "delete": {name: "Delete"}
     }
   });//Manages the context menu
 
@@ -263,16 +246,6 @@ $(document).ready(function() {
     });
   };
 
- /** technician_manager.fillFormWithRandomData = function() {
-    utils.clearForm();
-    var number = Math.floor((Math.random() * 100) + 1);
-    $(".technician_form input[name=\"technician_name\"]").val("Technician " + number);
-    $("input[name=\"technician_num\"]").val("n-" + number);
-    $("input[name=\"technician_desc\"]").val("Description " + number);
-    $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
-    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
-  };
-*/
   technician_manager.updateTechnicians = function(action, arrayId) {
     datacx.post("technician/updateItems", {"action": action, "technician_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error

@@ -166,17 +166,7 @@ $(document).ready(function() {
       }
     });
   };
-
- /** pm_manager.fillFormWithRandomData = function() {
-    utils.clearForm();
-    var number = Math.floor((Math.random() * 100) + 1);
-    $(".pm_form input[name=\"pm_name\"]").val("Pm " + number);
-    $("input[name=\"pm_num\"]").val("n-" + number);
-    $("input[name=\"pm_desc\"]").val("Description " + number);
-    $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
-    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
-  };
-*/
+  
   pm_manager.updatePms = function(action, arrayId) {
     datacx.post("pm/updateItems", {"action": action, "pm_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
