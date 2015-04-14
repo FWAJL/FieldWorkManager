@@ -2,7 +2,7 @@
 <resources>
   <resource key="brand">Field Work Manager</resource>
   <resource key="pm_info_edit">Edit Info</resource>
-  <resource key="pm_view_info">View your details</resource>
+  <resource key="pm_view_info">View and edit your details</resource>
   <resource key="logout_link_text">Logout</resource>
   <resource key="p_user_name_label">Hello </resource>
 
@@ -31,10 +31,16 @@
   <resource key="task_list">List All</resource>
   
   
-  <resource key="header_analyte">Analytes</resource>
+  <resource key="header_analyte">Field Analytes</resource>
   <resource key="analyte_upload_list">Upload List</resource>
   <resource key="analyte_list">List All</resource>
-  <resource key="analyte_upload_commons">Upload common analytes</resource>
+  <resource key="analyte_upload_commons">Upload</resource>
+  
+    <resource key="header_lab_analyte">Lab Analytes</resource>
+  <resource key="lab_analyte_upload_list">Upload List</resource>
+  <resource key="lab_analyte_list">List All</resource>
+  <resource key="lab_analyte_upload_commons">Upload</resource>
+
 
   <resource key="header_form">Field Forms</resource>
   <resource key="form_list">List All</resource>

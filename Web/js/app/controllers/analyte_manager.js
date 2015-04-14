@@ -10,21 +10,9 @@ $(document).ready(function() {
     "action": "",
     "arrayOfValues": [],
     "itemId": 0,
-    "isFieldType": true,
+//    "isFieldType": true,
     "isCommon": true
   };
-  
-  /* If no analyte available for project, alert */
-  //if($('#project-field-analyte-list li').length == 0 && $('#project-lab-analyte-list li').length == 0) {
-  /* Switching off as per instruction in issue #689
-  if($('#field-analyte-list li').length == 0 && $('#lab-analyte-list li').length == 0) {
-	if($('#confirmmsg-noAnalyteAvailable').length !== 0) {
-	  utils.showAlert($('#confirmmsg-noAnalyteAvailable').val(), function(){
-		utils.redirect("analyte/uploadList");
-	  });
-	}
-  }*/
-  /* end of alert
 
   /* Context menu */
   $.contextMenu({
@@ -39,10 +27,12 @@ $(document).ready(function() {
         $('#text_input').val(options.$trigger.html());
         utils.showPromptBox("edit", function() {
 
-          var isFieldAnalyte = ajaxParams.isFieldType = $(".active").attr("data-form-id") === "field_analyte_info";
-
-          var actionPath = isFieldAnalyte ? "field_analyte/edit" : "lab_analyte/edit";
-          if (isFieldAnalyte) {
+//          var isFieldAnalyte = ajaxParams.isFieldType = $(".active").attr("data-form-id") === "field_analyte_info";
+//
+          var actionPath = "field_analyte/edit" 
+//          : "lab_analyte/edit"
+          ;
+//          if (isFieldAnalyte) {
             getAnalyteItem("field", parseInt(options.$trigger.attr("data-fieldanalyte-id")), function(data) {
               var post_data = {};
               post_data["field_analyte"] = data.field_analyte;
@@ -56,30 +46,17 @@ $(document).ready(function() {
                   utils.redirect("analyte/listAll");
                 }
               });
-
             });
 
-          } else {
-            getAnalyteItem("lab", parseInt(options.$trigger.attr("data-labanalyte-id")), function(data) {
-              var post_data = {};
-              post_data["lab_analyte"] = data.field_analyte;
-              post_data["lab_analyte"]["lab_analyte_name"] = $('#text_input').val();
-
-              datacx.post(actionPath, post_data["lab_analyte"]).then(function(reply) {//call AJAX method to call Project/Add WebService
-                if (reply === null || reply.result === 0) {//has an error
-                  toastr.error(reply.message);
-                } else {//success
-                  toastr.success(reply.message.replace("lab_analyte", "lab_analyte (ID:" + reply.dataId + ")"));
-                  utils.redirect("analyte/listAll");
-                }
-              });
-
-            });
-          }
+//          } 
         }, 'promptmsg-edit');
       } else if (key === "delete") {
 		var isFieldAnalyte = $(".active").attr("data-form-id") === "field_analyte_info";
-		var msg = (isFieldAnalyte) ? $('#confirmmsg-deleteField').val() : $('#confirmmsg-deleteLab').val();
+		var msg = 
+//                        (isFieldAnalyte) ? 
+                $('#confirmmsg-deleteField').val() 
+//                : $('#confirmmsg-deleteLab').val()
+                ;
 		if (typeof msg !== typeof undefined && msg !== false) {
 		  utils.showConfirmBox(msg, function(result) {
 			if (result)
@@ -101,10 +78,10 @@ $(document).ready(function() {
   });//The context menu
 
   //get item for field/lab analyte
-  getAnalyteItem = function(analyteType, analyteId, executeWithData) {
-    var actionPath = (analyteType === "field") ? "field_analyte/getItem" : "lab_analyte/getItem";
-    if ((analyteType === "field"))
-    {
+  getAnalyteItem = function(analyteId, executeWithData) {
+    var actionPath = "field_analyte/getItem";
+//    if ((analyteType === "field"))
+//    {
       datacx.post(actionPath, {field_analyte_id: analyteId}).then(function(reply) {
         if (reply === null || reply.result === 0) {//has an error
           toastr.error(reply.message);
@@ -113,29 +90,30 @@ $(document).ready(function() {
           executeWithData(reply);
         }
       });
-    }
-    else
-    {
-      datacx.post(actionPath, {lab_analyte_id: analyteId}).then(function(reply) {
-        if (reply === null || reply.result === 0) {//has an error
-          toastr.error(reply.message);
-        } else {//success
-          //return reply;
-          executeWithData(reply);
-        }
-      });
-    }
+//    }
+//    else
+//    {
+//      datacx.post(actionPath, {lab_analyte_id: analyteId}).then(function(reply) {
+//        if (reply === null || reply.result === 0) {//has an error
+//          toastr.error(reply.message);
+//        } else {//success
+//          //return reply;
+//          executeWithData(reply);
+//        }
+//      });
+//    }
 
-  }
+  };
   
   //delete analyte, contextual menu
   delAnalyte = function(ajaxParams, options) {
-	var isFieldAnalyte = ajaxParams.isFieldType = $(".active").attr("data-form-id") === "field_analyte_info";
+//	var isFieldAnalyte = ajaxParams.isFieldType = $(".active").attr("data-form-id") === "field_analyte_info";
 	ajaxParams.itemId =
-			isFieldAnalyte ?
-			parseInt(options.$trigger.attr("data-fieldanalyte-id")) :
-			parseInt(options.$trigger.attr("data-labanalyte-id"));
-	ajaxParams.ajaxUrl = isFieldAnalyte ? "field_analyte/delete" : "lab_analyte/delete";
+//			isFieldAnalyte ?
+			parseInt(options.$trigger.attr("data-fieldanalyte-id")) 
+//                        : parseInt(options.$trigger.attr("data-labanalyte-id"))
+                ;
+	ajaxParams.ajaxUrl = "field_analyte/delete";
 	datacx.delete(ajaxParams);
   }
 
@@ -164,38 +142,38 @@ $(document).ready(function() {
 
   /* End dual selection */
 
-  $(".from-field-analyte-list, .from-lab-analyte-list").click(function() {
-    var isFieldAnalyte = ajaxParams.isFieldType = $(".active").attr("data-form-id") === "field_analyte_info";
-    ajaxParams.ajaxUrl = isFieldAnalyte ? "field_analyte/updateItems" : "lab_analyte/updateItems";
+  $(".from-field-analyte-list").click(function() {
+    var isFieldAnalyte = ajaxParams.isFieldType = $(".form_sections").attr("data-form-id") === "field_analyte_info";
+    ajaxParams.ajaxUrl = "field_analyte/updateItems";
     ajaxParams.action = "add";
-    if (isFieldAnalyte) {
+//    if (isFieldAnalyte) {
       ajaxParams.arrayOfValues =
               utils.getValuesFromList(
               selectionParamsFieldAnalytes.listLeftId,
               selectionParamsFieldAnalytes.dataAttrLeft, true);
-    } else {
-      ajaxParams.arrayOfValues =
-              utils.getValuesFromList(
-              selectionParamsLabAnalytes.listLeftId,
-              selectionParamsLabAnalytes.dataAttrLeft, true);
-    }
+//    } else {
+//      ajaxParams.arrayOfValues =
+//              utils.getValuesFromList(
+//              selectionParamsLabAnalytes.listLeftId,
+//              selectionParamsLabAnalytes.dataAttrLeft, true);
+//    }
     datacx.updateItems(ajaxParams);
   });
-  $(".from-project-field-analyte-list, .from-project-lab-analyte-list").click(function() {
-    var isFieldAnalyte = ajaxParams.isFieldType = $(".active").attr("data-form-id") === "field_analyte_info";
+  $(".from-project-field-analyte-list").click(function() {
+    var isFieldAnalyte = ajaxParams.isFieldType = $(".form_sections").attr("data-form-id") === "field_analyte_info";
     ajaxParams.action = "remove";
-    ajaxParams.ajaxUrl = isFieldAnalyte ? "field_analyte/updateItems" : "lab_analyte/updateItems";
-    if (isFieldAnalyte) {
+    ajaxParams.ajaxUrl = "field_analyte/updateItems";
+//    if (isFieldAnalyte) {
       ajaxParams.arrayOfValues =
               utils.getValuesFromList(
               selectionParamsFieldAnalytes.listRightId,
               selectionParamsFieldAnalytes.dataAttrRight, true);
-    } else {
-      ajaxParams.arrayOfValues =
-              utils.getValuesFromList(
-              selectionParamsLabAnalytes.listRightId,
-              selectionParamsLabAnalytes.dataAttrRight, true);
-    }
+//    } else {
+//      ajaxParams.arrayOfValues =
+//              utils.getValuesFromList(
+//              selectionParamsLabAnalytes.listRightId,
+//              selectionParamsLabAnalytes.dataAttrRight, true);
+//    }
     datacx.updateItems(ajaxParams);
   });
 
