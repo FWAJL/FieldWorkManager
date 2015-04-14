@@ -30,7 +30,12 @@ abstract class SessionKeys {
   const UserAuthenticated = "user_auth";
   const UserFlash = 'user_flash';
   const UserConnected = "user_connected";
-  
+  const UserRole = "user_role";
+  const UserTypeId = "user_value";
+  const UserType = "user_type";
+  const UserRoutes = "user_routes";
+  const AllUsers = "all_users";
+
   const UserProjects= "user_projects";
   const UserProjectFacilityList= "user_project_facility_list";
   const UserProjectClientList= "user_project_client_list";
@@ -97,6 +102,7 @@ abstract class SessionKeys {
   const CurrentProject = "current_project";
   const CurrentPm = "current_pm";
   const CurrentTask = "current_task";
+  const CurrentDiscussion = "current_discussion";
   
   //Routing
   const SessionRoutes = "app_routes";
@@ -104,6 +110,7 @@ abstract class SessionKeys {
   
   //Tabs
   const TabsStatus = "tabs_status";
+  const ActiveTaskTabsStatus = "active_task_tabs_status";
   const TabActiveAnalyte = "tab_active_analyte";
 }
 

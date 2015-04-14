@@ -173,8 +173,8 @@ public function executeIndex(\Library\HttpRequest $rq) {  }
     $result = $this->InitResponseWS();
 
     //Init PDO
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
+    $pmSession = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+    $this->dataPost["pm_id"] = $pmSession === NULL ? NULL : $pmSession[\Library\Enums\SessionKeys::PmObject]->pm_id();
     $service = $this->_PrepareServiceObject($this->dataPost());
     $result["data"] = $service;
 

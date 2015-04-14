@@ -141,6 +141,9 @@ class MapHelper {
       }
       $markers[] = $marker;
     }
+    usort($markers, function($elem1,$elem2){
+      return strcmp($elem1['name'],$elem2['name']);
+    });
     return $markers;
   }
 

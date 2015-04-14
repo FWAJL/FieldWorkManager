@@ -54,6 +54,26 @@ class TaskHelper {
     $user->setAttribute(\Library\Enums\SessionKeys::TabsStatus, $tabs);
   }
 
+  /**
+   * <p>
+   * Sets the data into the task session array when it is selected so that the 
+   * data necessary is available for the different actions.
+   * </p>
+   * @param type $caller <p>
+   * Instance the controller calling the helper class </p>
+   * @param type $sessionTask <p>
+   * The session array of type Task to use. It needs to be refreshed at every
+   * action </p>
+   */
+  public static function FillSessionTask($caller, $sessionTask) {
+    ServiceHelper::GetAndStoreTaskServices($caller, $sessionTask);
+
+    //Get the refreshed session array value and then update it then
+    $sessionTask = self::GetCurrentSessionTask($caller->user());
+
+    //Then you can do your logic to update the session array value
+  }
+
   public static function GetAndStoreCurrentTask(\Library\User $user, $task_id) {
     $sessionTasks = NULL;
     if ($user->keyExistInSession(\Library\Enums\SessionKeys::SessionTasks)) {
@@ -117,14 +137,13 @@ class TaskHelper {
               . $currentTask->task_id();
     }
   }
-  
+
   public static function GetTaskCocTabUrl($currentTask) {
-    
+
     return
-              \Library\Enums\ResourceKeys\UrlKeys::TaskCOC
-              . "?mode=edit&task_id="
-              . $currentTask->task_id();
-    
+            \Library\Enums\ResourceKeys\UrlKeys::TaskCOC
+            . "?mode=edit&task_id="
+            . $currentTask->task_id();
   }
 
   public static function GetCurrentSessionTask($user) {
@@ -176,19 +195,35 @@ class TaskHelper {
     self::SetSessionTasks($user, $sessionTasks);
   }
 
+  public static function getLabServicesForTask($caller, $sessionTask, $filterCategory) {
+    $labServices = $taskServices = array();
+    if (isset($sessionTask[\Library\Enums\SessionKeys::TaskServices]) && count($sessionTask[\Library\Enums\SessionKeys::TaskServices]) > 0) {
+      $taskServices = \Applications\PMTool\Helpers\ServiceHelper::GetServicesFromTaskServices($caller->user(), $sessionTask);
+    } else {
+      $taskServices = ServiceHelper::GetAndStoreTaskServices($caller, $sessionTask);
+      $sessionTask[\Library\Enums\SessionKeys::TaskServices] = $taskServices;
+      TaskHelper::SetSessionTask($caller->user(), $sessionTask);
+    }
+    foreach ($taskServices as $service) {
+      if ($service['service_type'] === $filterCategory) {
+        array_push($labServices, $service);
+      }
+    }
+    return $labServices;
+  }
+
   public static function StoreSessionTask($user, $list) {
     $SessionTasks = array();
     $currentProject = ProjectHelper::GetCurrentSessionProject($user);
     $countActiveTask = 0;
-    $currentSessionTask;
     foreach ($list as $task) {
       $key = \Library\Enums\SessionKeys::TaskKey . $task->task_id();
       $sessionTask = self::MakeSessionTask($task);
       $SessionTasks[$key] = $sessionTask;
       array_push($currentProject[\Library\Enums\SessionKeys::ProjectTasks], $key);
       if ($task->task_active()) {
-        $countActiveTask += 1; 
-        $currentSessionTask = $sessionTask;//Get sessin task object
+        $countActiveTask += 1;
+        $currentSessionTask = $sessionTask; //Get sessin task object
       }
     }
     ProjectHelper::SetUserSessionProject($user, $currentProject);
@@ -218,6 +253,20 @@ class TaskHelper {
       self::SetSessionTask($user, $currentSessionTask);
       self::SetSessionTasks($user, $sessionTasks);
     }
+  }
+
+  /**
+  * Returns which tabs are to be shown
+  * for the passed task
+  */
+  public static function TabStatusFor($sessionTask) {
+    $ret_val = array(
+                \Applications\PMTool\Resources\Enums\ViewVariables\Task::task_req_service => $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_req_service(),
+                \Applications\PMTool\Resources\Enums\ViewVariables\Task::task_req_form    => $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_req_form(),
+                \Applications\PMTool\Resources\Enums\ViewVariables\Task::task_req_field_analyte => $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_req_field_analyte(),
+                \Applications\PMTool\Resources\Enums\ViewVariables\Task::task_req_lab_analyte => $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_req_lab_analyte(),
+              );
+    return $ret_val;
   }
 
 }

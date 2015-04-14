@@ -19,6 +19,11 @@ class FormController extends \Library\BaseController {
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
+  public function executeShowFormMaster(\Library\HttpRequest $rq) {
+    $this->page->addVar(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+  }
+
   public function executeListAll(\Library\HttpRequest $rq) {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
@@ -96,6 +101,30 @@ class FormController extends \Library\BaseController {
     ));
   }
 
+  public function executeAddMaster(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+    $files = $this->files();
+    if($this->dataPost["title"] == "" or is_null($this->dataPost["title"])) {
+      $this->dataPost["title"] = $files["file"]["name"];
+    }
+
+    $form = \Applications\PMTool\Helpers\FormHelper::PrepareMasterFormObject($this->dataPost());
+    $result["dataIn"] = $form;
+    $manager = $this->managers->getManagerOf("MasterForm");
+    $manager->setRootDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
+    $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
+
+    $result["dataOut"] = $manager->addWithFile($form,$files['file']);
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Form,
+      "resx_key" => $this->action(),
+      "step" => (intval($result["dataOut"])) > 0 ? "success" : "error"
+    ));
+
+  }
+
   public function executeEdit(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
@@ -160,7 +189,7 @@ class FormController extends \Library\BaseController {
           $manager = $this->managers->getManagerOf("ProjectForm");
           $manager->delete($projectForm,"user_form_id");
 
-          $taskForm = new \Applications\PMTool\Models\Dao\Task_form();
+          $taskForm = new \Applications\PMTool\Models\Dao\Task_template_form();
           $taskForm->setUser_form_id($form_id);
           $manager = $this->managers->getManagerOf("TaskForm");
           $manager->delete($taskForm,"user_form_id");
@@ -186,8 +215,8 @@ class FormController extends \Library\BaseController {
     $result = $this->InitResponseWS();
 
     //Init PDO
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
     $service = $this->_PrepareServiceObject($this->dataPost());
     $result["data"] = $service;
 
@@ -262,7 +291,7 @@ class FormController extends \Library\BaseController {
         $result["rows_affected"] += $returnRemove ? 1 : 0;
         //if we remove project form relationship we need to remove all child task form relationships also
         $manager = $this->managers->getManagerOf("TaskForm");
-        $taskForm = new \Applications\PMTool\Models\Dao\Task_form();
+        $taskForm = new \Applications\PMTool\Models\Dao\Task_template_form();
         $taskForm->setUser_form_id(null);
         $taskForm->setMaster_form_id($form->form_id());
         $taskForm->setTask_id(null);
@@ -284,7 +313,7 @@ class FormController extends \Library\BaseController {
         $result["rows_affected"] += $returnRemove? 1 : 0;
         //if we remove project form relationship we need to remove all child task form relationships also
         $manager = $this->managers->getManagerOf("TaskForm");
-        $taskForm = new \Applications\PMTool\Models\Dao\Task_form();
+        $taskForm = new \Applications\PMTool\Models\Dao\Task_template_form();
         $taskForm->setUser_form_id($form->form_id());
         $taskForm->setMaster_form_id(null);
         $taskForm->setTask_id(null);

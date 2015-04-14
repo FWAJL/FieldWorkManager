@@ -48,8 +48,21 @@ class Task {
   const popup_msg_module = "popup_msg_module";
 
   const popup_prompt_module = "popup_prompt_module";
+  //module for analyte matrix
+  const task_analyte_matrix_switch = "task_analyte_matrix_switch";
+  //view variable for analyte matrix
+  const task_show_lab_matrix = "task_show_lab_matrix";
+  const task_show_field_matrix = "task_show_field_matrix";
   //Data keys
 
+  //View variables for Task tab visibility
+  const task_req_service          = "task_req_service";
+  const task_req_form             = "task_req_form";
+  const task_req_field_analyte    = "task_req_field_analyte";
+  const task_req_lab_analyte      = "task_req_lab_analyte";
+
+  //The main array variable name which would hold the above keys
+  const task_tab_status_keys = "task_tab_status_keys"; 
   
 }
 

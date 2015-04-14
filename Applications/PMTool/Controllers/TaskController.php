@@ -27,6 +27,19 @@ class TaskController extends \Library\BaseController {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::TaskAddPrompt);
     }
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::SetCurrentSessionTask($this->user(), NULL, $rq->getData("task_id"));
+
+    //Task tab status 
+    $tab_status_arr = \Applications\PMTool\Helpers\TaskHelper::TabStatusFor($sessionTask);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_tab_status_keys, $tab_status_arr);
+    //Task tab status 
+
+    //Analyte Matrix tab status
+    $showLabMatrixTabs = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::DoesAnalytesAndLocationsExistsFor($sessionTask, $this, 'Lab');
+    $showFieldMatrixTabs = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::DoesAnalytesAndLocationsExistsFor($sessionTask, $this, 'Field');
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_show_lab_matrix, $showLabMatrixTabs);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_show_field_matrix, $showFieldMatrixTabs);
+    //Analyte Matrix tab status
+
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
 
@@ -211,6 +224,7 @@ class TaskController extends \Library\BaseController {
     // Init result
     $result = $this->InitResponseWS();
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetSessionTask($this->app()->user(), $this->dataPost["task_id"]);
+    \Applications\PMTool\Helpers\TaskHelper::FillSessionTask($this, $sessionTask);
     //Init PDO
     $task = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Task());
     $result["data"] = $task;
@@ -254,6 +268,10 @@ class TaskController extends \Library\BaseController {
         $db_result = $index === NULL ? FALSE : TRUE;
         unset($sessionProject[\Library\Enums\SessionKeys::ProjectTasks][$index]);
         \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+        $currentSessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
+        if($currentSessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id() == $task_id){
+          \Applications\PMTool\Helpers\TaskHelper::UnsetCurrentSessionTask($this->app()->user());
+        }
       }
     }
 

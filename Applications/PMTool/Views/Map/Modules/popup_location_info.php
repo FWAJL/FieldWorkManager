@@ -17,7 +17,7 @@
         <label for="location-info-modal-location_long"><?php echo $resx['location_window_location_long']; ?></label>
         <input class="form-control" type="text" id="location-info-modal-location_long" name="location_long">
         <a href="#" id="location-info-modal-zoom"><span class="glyphicon glyphicon-zoom-in"></span> <?php echo $resx['location_window_zoom']; ?></a>
-        <a href="#" id="location-info-modal-photos"><span class="glyphicon glyphicon-camera"></span> <?php echo $resx['location_window_photos']; ?></a>
+        <a href="#" id="location-info-modal-photos"><span class="glyphicon glyphicon-camera"></span> <?php echo $resx['location_window_photos']; ?><span id="location-info-modal-photos-count"></span></a>
         <?php require $form_modules["upload_file"]; ?>
       </div>
       <div class="modal-footer">

@@ -162,8 +162,8 @@ class ProjectController extends \Library\BaseController {
     $result = $this->InitResponseWS();
 
     //Init PDO
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
     $project = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Project());
     $result["dataIn"] = $project;
 
@@ -192,8 +192,8 @@ class ProjectController extends \Library\BaseController {
     $result = $this->InitResponseWS();
 
     //Init PDO
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
+    $pmSession = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+    $this->dataPost["pm_id"] = $pmSession === NULL ? NULL : $pmSession[\Library\Enums\SessionKeys::PmObject]->pm_id();
     $project = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Project());
     $result["data"] = $project;
     $result["dataId"] = $project->project_id();
@@ -252,8 +252,11 @@ class ProjectController extends \Library\BaseController {
     $result = $this->InitResponseWS();
 
     //Init PDO
-    $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[0]->pm_id();
+    if($this->app()->user->getUserType() == 'pm_id'){
+      $pmid = $this->app()->user->getUserTypeId();
+      $this->dataPost["pm_id"] = $pmid === NULL ? NULL : $pmid;
+    }
+
     $project = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Project());
     $result["data"] = $project;
 
@@ -269,7 +272,7 @@ class ProjectController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf('Client');
     $lists[\Library\Enums\SessionKeys::UserProjectClientList] = $manager->selectMany($project, "pm_id");
 
-    $ProjectsSession = \Applications\PMTool\Helpers\ProjectHelper::StoreSessionProjects($this->app()->user(), $lists);
+    $ProjectsSession = \Applications\PMTool\Helpers\ProjectHelper::StoreSessionProjects($this, $lists);
 
     $result["lists"] = $lists;
     if (!$isNotAjaxCall) {
@@ -418,8 +421,6 @@ class ProjectController extends \Library\BaseController {
 
     if ($facility !== NULL && $project !== NULL) {
       //Init PDO
-
-      $pm = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
       $facility = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($dataPost["facility"], $facility);
       $project = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($dataPost["project"], $project);
       $manager = $this->managers->getManagerOf($this->module());

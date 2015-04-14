@@ -36,14 +36,10 @@ $(document).ready(function() {
     callback: function(key, options) {
       if (key === "edit") {
         location_manager.retrieveLocation(options.$trigger);
-    } //else if (key === "delete") {
-//        location_manager.delete(parseInt(options.$trigger.attr("data-location-id")));
-//      }
+    } 
     },
     items: {
       "edit": {name: "Edit"}
-//      ,
-//      "delete": {name: "Delete"}
     }
   });//Manages the context menu
 
@@ -105,15 +101,6 @@ $(document).ready(function() {
   });//Button click "add a location"
 
   $("#btn_add_location").click(function() {
-  	
-  	/*
-  	var post_data = utils.retrieveInputs("location_form", ["location_name"]);
-    if (post_data.location_name !== undefined) {
-      location_manager.add(post_data, "location", "add", true);
-    }
-    */
-  	
-  	
 	var data = {};
 	var loc_name = $('[name="location_name"]').val();
 	if(loc_name === ''){
@@ -338,7 +325,7 @@ $(document).ready(function() {
     $("input[name=\"location_num\"]").val("n-" + number);
     $("input[name=\"location_desc\"]").val("Description " + number);
     $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
-    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " St of Somewhere\nCity\nCountry");
+    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val(number + " Somewhere");
   };
 
   location_manager.updateLocations = function(action, arrayId) {

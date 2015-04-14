@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<routes>
+<routes version="1.6.16">
     <!-- UI routes -->
     <route url="login" module="Authenticate" action="loadLoginView" resxfile="login" type="ui">
         <js_files>
@@ -13,8 +13,8 @@
     </route>
     
     <!-- login -->
-    <route url="logout" module="Authenticate" action="disconnect" resxfile="login" type="ui" />
-    <route url="project" module="Project" action="index" resxfile="project" type="ui">
+    <route url="logout" module="Authenticate" action="disconnect" resxfile="login" type="ui"/>
+    <route url="project" module="Project" action="index" resxfile="project" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/facility_manager.js" />
             <js_file use="head" value="Web/js/app/controllers/project_manager.js" />
@@ -30,7 +30,7 @@
     </route>
     
     <!-- project/index -->
-    <route url="project/showForm" module="Project" action="showForm" resxfile="project" type="ui">
+    <route url="project/showForm" module="Project" action="showForm" resxfile="project" type="ui" role="2">
         <js_files>
             <!-- This uses the same scripts as the project route, e.g. use attribute => route value -->
             <js_file use="project" />
@@ -58,7 +58,7 @@
     </route>
     <!-- project/showAddForm -->
     
-    <route url="project/listAll" module="Project" action="listAll" resxfile="project" type="ui">
+    <route url="project/listAll" module="Project" action="listAll" resxfile="project" type="ui" role="2">
         <js_files>
             <js_file use="project" />
         </js_files>
@@ -76,7 +76,7 @@
     </route>
     <!-- project/listAll -->
 	
-	<route url="project/selectProject" module="Project" action="selectProject" resxfile="project" type="ui">
+	<route url="project/selectProject" module="Project" action="selectProject" resxfile="project" type="ui" role="2">
         <js_files>
             <js_file use="project" />
         </js_files>
@@ -93,7 +93,7 @@
 	
     
     <!-- locations -->
-    <route url="location" module="Location" action="index" resxfile="location" type="ui">
+    <route url="location" module="Location" action="index" resxfile="location" type="ui" role="2">
         <js_files></js_files>
         <css_files>
             <css_file value="Web/css/app/nav.css" />
@@ -104,7 +104,7 @@
     </route>
     <!-- location/index -->
 
-    <route url="location/listAll" module="Location" action="listAll" resxfile="location" type="ui">
+    <route url="location/listAll" module="Location" action="listAll" resxfile="location" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/location_manager.js"/>
         </js_files>
@@ -120,7 +120,7 @@
     </route>
     <!-- location/listAll -->
     
-    <route url="location/showForm" module="Location" action="showForm" resxfile="location" type="ui">
+    <route url="location/showForm" module="Location" action="showForm" resxfile="location" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/location_manager.js" />
         </js_files>
@@ -140,7 +140,7 @@
     </route>
     <!-- location/showForm -->
     
-     <route url="location/uploadList" module="Location" action="uploadList" resxfile="location" type="ui">
+     <route url="location/uploadList" module="Location" action="uploadList" resxfile="location" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/location_manager.js" />
         </js_files>
@@ -155,7 +155,7 @@
     <!-- location/uploadList -->
     
     <!-- technicians -->
-    <route url="technician" module="Technician" action="index" resxfile="technician" type="ui">
+    <route url="technician" module="Technician" action="index" resxfile="technician" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/technician_manager.js" />
             <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js" />
@@ -169,7 +169,7 @@
     </route>
     <!-- technician/index -->
     
-    <route url="technician/listAll" module="Technician" action="listAll" resxfile="technician" type="ui">
+    <route url="technician/listAll" module="Technician" action="listAll" resxfile="technician" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/technician_manager.js" />
         </js_files>
@@ -186,7 +186,7 @@
     </route>
     <!-- technician/listAll -->
     
-    <route url="technician/showForm" module="Technician" action="showForm" resxfile="technician" type="ui">
+    <route url="technician/showForm" module="Technician" action="showForm" resxfile="technician" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/technician_manager.js" />
         </js_files>
@@ -207,7 +207,7 @@
 
 
     <!--Maps -->
-    <route url="map/allProjects" module="Map" action="loadView" resxfile="map" type="ui">
+    <route url="map/allProjects" module="Map" action="loadView" resxfile="map" type="ui" role="2">
         <js_files>
             <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
@@ -229,7 +229,7 @@
     </route>
     <!--Map all projects-->
 
-    <route url="map/currentProject" module="Map" action="loadCurrentView" resxfile="map" type="ui">
+    <route url="map/currentProject" module="Map" action="loadCurrentView" resxfile="map" type="ui" role="2">
         <js_files>
             <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
@@ -251,7 +251,7 @@
     </route>
     <!--Map current project-->
 
-    <route url="map/currentProjectLocations" module="Map" action="loadCurrentLocationsView" resxfile="map" type="ui">
+    <route url="map/currentProjectLocations" module="Map" action="loadCurrentLocationsView" resxfile="map" type="ui" role="2">
         <js_files>
             <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
@@ -267,6 +267,7 @@
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
             <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+            <php_module key="popup_location_prompt_module" file_name="popup_prompt.php" />
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
             <php_module key="popup_project_info" file_name="popup_project_info.php" />
             <php_module key="popup_location_info" file_name="popup_location_info.php" />
@@ -276,7 +277,7 @@
     </route>
     <!--Map current project locations-->
 
-    <route url="map/taskLocations" module="Map" action="loadCurrentTasksView" resxfile="map" type="ui">
+    <route url="map/taskLocations" module="Map" action="loadCurrentTasksView" resxfile="map" type="ui" role="2">
         <js_files>
             <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
@@ -290,17 +291,18 @@
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
-			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+			      <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
             <php_module key="popup_project_info" file_name="popup_project_info.php" />
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
             <php_module key="popup_task_location_info" file_name="popup_task_location_info.php" />
-	    	<php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
+	    	    <php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
+            <php_module key="upload_file" file_name="upload_file.php" shared="true" />
         </php_modules>
     </route>
     <!--Map current project-->
 
     <!--Tasks  -->
-    <route url="task" module="Task" action="index" resxfile="task" type="ui">
+    <route url="task" module="Task" action="index" resxfile="task" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
             <!--      <js_file use="head" value="Web/js/app/controllers/task_technicians_manager.js"/>
@@ -317,7 +319,7 @@
     </route>
     <!--   task/index  -->
     
-    <route url="task/listAll" module="Task" action="listAll" resxfile="task" type="ui">
+    <route url="task/listAll" module="Task" action="listAll" resxfile="task" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
         </js_files>
@@ -334,7 +336,7 @@
         </php_modules>
     </route><!--   task/listAll -->
 	
-	<route url="task/selectTask" module="Task" action="selectTask" resxfile="task" type="ui">
+	<route url="task/selectTask" module="Task" action="selectTask" resxfile="task" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
         </js_files>
@@ -348,7 +350,7 @@
         </php_modules>
     </route><!--   task/listAll -->
     
-    <route url="task/showForm" module="Task" action="showForm" resxfile="task" type="ui">
+    <route url="task/showForm" module="Task" action="showForm" resxfile="task" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
         </js_files>
@@ -361,13 +363,14 @@
             <php_module key="task_info_lists" file_name="task_info_lists.php" />
             <php_module key="task_form" file_name="task_form.php" />
             <php_module key="task_buttons" file_name="task_buttons.php" />
-	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+            <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
             <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/showAddForm -->
     
-    <route url="activetask/showForm" module="ActiveTask" action="showForm" resxfile="active_task" type="ui">
+    <route url="activetask/showForm" module="ActiveTask" action="showForm" resxfile="active_task" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/active_task.js" />
         </js_files>
@@ -375,17 +378,70 @@
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" shared="true" />
+            <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
-            <php_module key="active_task_info_lists" file_name="active_task_info_lists.php" />
             <php_module key="active_task_form" file_name="active_task_form.php" />
+			<php_module key="active_task_status" file_name="active_task_status.php" />
+			<php_module key="active_task_progress_details" file_name="active_task_progress_details.php" />
+			<php_module key="active_task_instructions" file_name="active_task_instructions.php" />
             <php_module key="active_task_buttons" file_name="active_task_buttons.php" />
 	    	<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
             <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route><!--  activetask/showAddForm -->
 	
-	<route url="task/addPrompt" module="Task" action="addPrompt" resxfile="task" type="ui">
+	
+	<route url="activetask/map" module="ActiveTask" action="map" resxfile="active_task" type="ui" role="2">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/active_task.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" />
+			<php_module key="active_task_status" file_name="active_task_status.php" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+        </php_modules>
+    </route><!--  activetask/map -->
+	
+	
+	<route url="activetask/forms" module="ActiveTask" action="forms" resxfile="active_task" type="ui" role="2">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/active_task.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" />
+			<php_module key="active_task_forms" file_name="active_task_forms.php" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+        </php_modules>
+    </route><!--  activetask/forms -->
+	
+	<route url="activetask/communications" module="ActiveTask" action="communications" resxfile="active_task" type="ui" role="2">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/active_task.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" />
+			<php_module key="active_task_comm" file_name="active_task_comm.php" />
+			<php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
+			<php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
+			<php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>
+			<php_module key="communications_button_module" file_name="communications_button_module.php" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+        </php_modules>
+    </route><!--  activetask/communications -->
+	
+	<route url="task/addPrompt" module="Task" action="addPrompt" resxfile="task" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
         </js_files>
@@ -399,7 +455,7 @@
     </route>
 	<!-- task/addPrompt -->
     
-    <route url="task/locations" module="TaskLocation" action="manageLocations" resxfile="task_location" type="ui">
+    <route url="task/locations" module="TaskLocation" action="manageLocations" resxfile="task_location" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_location.js" />
         </js_files>
@@ -413,10 +469,11 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/locations --> 
     
-    <route url="task/technicians" module="TaskTechnician" action="manageTechnicians" resxfile="task_technician" type="ui">
+    <route url="task/technicians" module="TaskTechnician" action="manageTechnicians" resxfile="task_technician" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_technician.js" />
         </js_files>
@@ -430,10 +487,11 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/technicians -->
     
-    <route url="task/fieldAnalytes" module="TaskFieldAnalyte" action="manageFieldAnalytes" resxfile="task_field_analyte" type="ui">
+    <route url="task/fieldAnalytes" module="TaskFieldAnalyte" action="manageFieldAnalytes" resxfile="task_field_analyte" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_field_analyte.js" />
         </js_files>
@@ -447,10 +505,11 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="analyte_list_buttons" file_name="analyte_list_buttons.php"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/fieldAnalytes -->
 	
-	<route url="task/labAnalytes" module="TaskLabAnalyte" action="manageLabAnalytes" resxfile="task_lab_analyte" type="ui">
+	<route url="task/labAnalytes" module="TaskLabAnalyte" action="manageLabAnalytes" resxfile="task_lab_analyte" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_lab_analyte.js" />
         </js_files>
@@ -464,10 +523,41 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="analyte_list_buttons" file_name="analyte_list_buttons.php"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/labAnalytes -->
+
+    <route url="task/labMatrix" module="TaskLabAnalyte" action="labMatrix" resxfile="task_lab_analyte" type="ui" role="2">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/task_lab_analyte.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+            <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
+        </php_modules>
+    </route><!--  task/labMatrix -->
+
+    <route url="task/fieldMatrix" module="TaskFieldAnalyte" action="fieldMatrix" resxfile="task_lab_analyte" type="ui" role="2">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/task_field_analyte.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+            <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
+        </php_modules>
+    </route><!--  task/fieldMatrix -->
 	
-	<route url="task/coc" module="TaskCoc" action="manageCoc" resxfile="task" type="ui">
+	<route url="task/coc" module="TaskCoc" action="manageCoc" resxfile="task" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_coc.js" />
         </js_files>
@@ -481,10 +571,11 @@
 			<php_module key="task_coc_info_form" file_name="task_coc_info_form.php" />
 			<php_module key="task_buttons" file_name="task_buttons.php" />
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/coc -->
 	
-	<route url="task/services" module="TaskService" action="manageServices" resxfile="task_service" type="ui">
+	<route url="task/services" module="TaskService" action="manageServices" resxfile="task_service" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_service.js" />
         </js_files>
@@ -498,10 +589,11 @@
             <php_module key="categorized_promote_buttons_module" file_name="categorized_promote_buttons.php" shared="true"/>
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/services -->
 
-    <route url="task/forms" module="TaskForm" action="manageForms" resxfile="task_form" type="ui">
+    <route url="task/forms" module="TaskForm" action="manageForms" resxfile="task_form" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_form.js" />
         </js_files>
@@ -515,11 +607,12 @@
             <php_module key="categorized_promote_buttons_module" file_name="categorized_promote_buttons.php" shared="true"/>
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />
         </php_modules>
     </route><!--  task/forms -->
 
     <!-- analytes -->
-    <route url="analyte/listAll" module="Analyte" action="listAll" resxfile="analyte" type="ui">
+    <route url="analyte/listAll" module="Analyte" action="listAll" resxfile="analyte" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/analyte_manager.js" />
         </js_files>
@@ -527,25 +620,19 @@
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php" />
-            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="field_analyte_lists" file_name="field_analyte_lists.php" />
-            <php_module key="lab_analyte_lists" file_name="lab_analyte_lists.php" />
             <php_module key="project_field_analyte_list" file_name="project_field_analyte_list.php" />
             <php_module key="field_analyte_list" file_name="field_analyte_list.php" />
-            <php_module key="project_lab_analyte_list" file_name="project_lab_analyte_list.php" />
-            <php_module key="lab_analyte_list" file_name="lab_analyte_list.php" />
-            <php_module key="field_analyte_buttons" file_name="analyte_list_buttons.php" />
-            <php_module key="lab_analyte_buttons" file_name="analyte_list_buttons.php" />
+            <php_module key="field_analyte_buttons" file_name="field_analyte_list_buttons.php" />
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
-	    	<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
-			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
-			<php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
         </php_modules>
     </route>
     <!--  analyte/ListAll -->
     
-    <route url="analyte/uploadList" module="Analyte" action="uploadList" resxfile="analyte" type="ui">
+    <route url="analyte/uploadList" module="Analyte" action="uploadList" resxfile="analyte" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/analyte_manager.js" />
         </js_files>
@@ -553,22 +640,17 @@
             <css_file use="project" />
         </css_files>
         <php_modules>
-            <php_module key="analyte_tabs_open" file_name="analyte_tabs_open.php" />
             <php_module key="up_field_analyte_lists" file_name="up_field_analyte_lists.php" />
-            <php_module key="up_lab_analyte_lists" file_name="up_lab_analyte_lists.php" />
             <php_module key="field_analyte_form" file_name="field_analyte_form.php" />
             <php_module key="common_field_analyte_list" file_name="common_field_analyte_list.php" />
-            <php_module key="lab_analyte_form" file_name="lab_analyte_form.php" />
-            <php_module key="common_lab_analyte_list" file_name="common_lab_analyte_list.php" />
             <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
             <php_module key="common_analyte_buttons" file_name="common_analyte_buttons.php" />
-            <php_module key="tabs_close" file_name="tabs_close.php" shared="true"/>
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
-			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
     <!-- analyte/uploadList -->
-    <route url="analyte/uploadCommons" module="Analyte" action="uploadCommonAnalytes" resxfile="analyte" type="ui">
+    <route url="analyte/uploadCommons" module="Analyte" action="uploadCommonAnalytes" resxfile="analyte" type="ui" role="1">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/analyte_manager.js" />
         </js_files>
@@ -578,12 +660,66 @@
         <php_modules>
             <php_module key="field_analyte_form" file_name="common_field_analyte_form.php" />
             <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
-            <php_module key="lab_analyte_form" file_name="common_lab_analyte_form.php" />
+            <php_module key="common_field_analyte_list" file_name="common_field_analyte_list.php" />
         </php_modules>
     </route>
     <!-- analyte/uploadCommons -->
     
-    <route url="form" module="Form" action="showForm" resxfile="form" type="ui">
+    <!-- lab analytes -->
+    <route url="labanalyte/listAll" module="LabAnalyte" action="listAll" resxfile="analyte" type="ui" role="2">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/labanalyte_manager.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="lab_analyte_lists" file_name="lab_analyte_lists.php" />
+            <php_module key="project_lab_analyte_list" file_name="project_lab_analyte_list.php" />
+            <php_module key="lab_analyte_list" file_name="lab_analyte_list.php" />
+            <php_module key="lab_analyte_buttons" file_name="lab_analyte_list_buttons.php" />
+            <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
+	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+        </php_modules>
+    </route>
+    <!--  labanalyte/ListAll -->
+    
+    <route url="labanalyte/uploadList" module="LabAnalyte" action="uploadList" resxfile="analyte" type="ui" role="2">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/labanalyte_manager.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="up_lab_analyte_lists" file_name="up_lab_analyte_lists.php" />
+            <php_module key="lab_analyte_form" file_name="lab_analyte_form.php" />
+            <php_module key="common_lab_analyte_list" file_name="common_lab_analyte_list.php" />
+            <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
+            <php_module key="common_analyte_buttons" file_name="common_analyte_buttons.php" />
+            <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
+            <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+        </php_modules>
+    </route>
+    <!-- labanalyte/uploadList -->
+    <route url="labanalyte/uploadCommons" module="LabAnalyte" action="uploadCommonAnalytes" resxfile="analyte" type="ui" role="1">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/analyte_manager.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="lab_analyte_form" file_name="common_lab_analyte_form.php" />
+            <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
+            <php_module key="common_lab_analyte_list" file_name="common_lab_analyte_list.php" />
+        </php_modules>
+    </route>
+    <!-- labanalyte/uploadCommons -->
+    
+    <route url="form" module="Form" action="showForm" resxfile="form" type="ui" role="2">
         <js_files>
         <js_file use="head" value="Web/js/app/controllers/form.js" /> 
         </js_files>
@@ -594,9 +730,9 @@
             <php_module key="form_form" file_name="form_form.php" shared="true" />
         </php_modules>
     </route>
-    <!-- service provider/listAll -->   
-    
-    <route url="service/listAll" module="Service" action="listAll" resxfile="service" type="ui">
+    <!-- form form/showForm -->
+
+    <route url="service/listAll" module="Service" action="listAll" resxfile="service" type="ui" role="2">
         <js_files>
         <js_file use="head" value="Web/js/app/controllers/service_manager.js" /> 
         </js_files>
@@ -612,7 +748,7 @@
     </route>
     <!-- service provider/listAll -->
     
-    <route url="service/showForm" module="Service" action="showForm" resxfile="service" type="ui">
+    <route url="service/showForm" module="Service" action="showForm" resxfile="service" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/service_manager.js" />
         </js_files>
@@ -630,7 +766,7 @@
     <!-- service provider/showForm -->
     
     <!-- pms -->
-    <route url="pm" module="Pm" action="index" resxfile="pm" type="ui">
+    <route url="pm" module="Pm" action="index" resxfile="pm" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/pm_manager.js" />
             <js_file use="head" value="Web/js/app/controllers/left_menu_behaviour.js" />
@@ -644,7 +780,7 @@
     </route>
     <!-- pm/index -->
     
-    <route url="pm/listAll" module="Pm" action="listAll" resxfile="pm" type="ui">
+    <route url="pm/listAll" module="Pm" action="listAll" resxfile="pm" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/pm_manager.js" />
         </js_files>
@@ -658,7 +794,7 @@
     </route>
     <!-- pm/listAll -->
     
-    <route url="pm/showForm" module="Pm" action="showForm" resxfile="pm" type="ui">
+    <route url="pm/showForm" module="Pm" action="showForm" resxfile="pm" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/pm_manager.js" />
         </js_files>
@@ -677,8 +813,57 @@
     </route>
     <!-- pm/showForm -->
 
+    <!-- User -->
+    <route url="user/showDetails" module="User" action="showDetails" resxfile="user" type="ui" role="2">
+      <js_files>
+        <js_file use="head" value="Web/js/app/controllers/user_manager.js" />
+      </js_files>
+      <css_files>
+        <css_file value="Web/css/app/nav.css" />
+        <css_file value="Web/css/app/app-style.css" />
+        <css_file value="Web/css/app/app-theme.css" />
+        <css_file value="Web/css/app/tabs.css" />
+      </css_files>
+      <php_modules>
+        <php_module key="pm_form" file_name="pm_form.php" />
+        <php_module key="user_details_buttons" file_name="user_details_buttons.php" />
+      </php_modules>
+    </route>
+    <!-- user/showDetails -->
+    <route url="user/listAll" module="User" action="listAll" resxfile="user" type="ui" role="1">
+      <js_files>
+        <js_file use="head" value="Web/js/app/controllers/user_manager.js" />
+      </js_files>
+      <css_files>
+        <css_file value="Web/css/app/nav.css" />
+        <css_file value="Web/css/app/app-style.css" />
+        <css_file value="Web/css/app/app-theme.css" />
+        <css_file value="Web/css/app/tabs.css" />
+      </css_files>
+      <php_modules>
+        <php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
+      </php_modules>
+    </route>
+    <!-- user/listAll -->
+    <route url="user/showForm" module="User" action="showForm" resxfile="user" type="ui" role="1">
+      <js_files>
+        <js_file use="head" value="Web/js/app/controllers/user_manager.js" />
+      </js_files>
+      <css_files>
+        <css_file value="Web/css/app/nav.css" />
+        <css_file value="Web/css/app/app-style.css" />
+        <css_file value="Web/css/app/app-theme.css" />
+        <css_file value="Web/css/app/tabs.css" />
+      </css_files>
+      <php_modules>
+        <php_module key="pm_form" file_name="pm_form.php" />
+        <php_module key="user_form" file_name="user_form.php" />
+      </php_modules>
+    </route>
+    <!-- user/showForm -->
+
     <!-- Forms -->
-    <route url="form/listAll" module="Form" action="listAll" resxfile="form" type="ui">
+    <route url="form/listAll" module="Form" action="listAll" resxfile="form" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/form_manager.js" />
         </js_files>
@@ -693,7 +878,7 @@
     </route>
     <!-- form/listAll -->
 
-    <route url="form/showForm" module="Form" action="showForm" resxfile="form" type="ui">
+    <route url="form/showForm" module="Form" action="showForm" resxfile="form" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/form_manager.js" />
         </js_files>
@@ -704,7 +889,20 @@
             <php_module key="form_form" file_name="form_form.php"/>
         </php_modules>
     </route>
+    <!-- form/showForm -->
 
+    <route url="form/masterForm" module="Form" action="showFormMaster" resxfile="form" type="ui" role="1">
+      <js_files>
+        <js_file use="head" value="Web/js/app/controllers/form_manager.js" />
+      </js_files>
+      <css_files>
+        <css_file use="project" />
+      </css_files>
+      <php_modules>
+        <php_module key="form_form_master" file_name="form_form_master.php"/>
+      </php_modules>
+    </route>
+    <!-- form/masterForm -->
 
     <!-- WebService AJAX routes -->
     <!-- INSTRUCTIONS
@@ -773,14 +971,19 @@
   <route url="task/addCoc" module="TaskCoc" action="addCoc" resxfile="task" type="ws" />
   <route url="task/editCoc" module="TaskCoc" action="editCoc" resxfile="task" type="ws" />
   <route url="task/getTaskCoc" module="TaskCoc" action="getTaskCoc" resxfile="task" type="ws" />
-  
   <route url="task/location/updateItems" module="TaskLocation" action="updateItems" resxfile="task_location" type="ws" />
   <route url="task/technician/updateItems" module="TaskTechnician" action="updateItems" resxfile="task_technician" type="ws" />
   <route url="task/service/updateItems" module="TaskService" action="updateItems" resxfile="task_service" type="ws" />
   <route url="task/fieldAnalytes/updateItems" module="TaskFieldAnalyte" action="updateItems" resxfile="task_field_analyte" type="ws" />
   <route url="task/labAnalytes/updateItems" module="TaskLabAnalyte" action="updateItems" resxfile="task_lab_analyte" type="ws" />
   <route url="task/form/updateItems" module="TaskForm" action="updateItems" resxfile="task_form" type="ws" />
+  <route url="task/saveLabMatrix" module="TaskLabAnalyte" action="saveLabMatrix" resxfile="task_lab_analyte" type="ws" />
+  <route url="task/saveFieldMatrix" module="TaskFieldAnalyte" action="saveFieldMatrix" resxfile="task_lab_analyte" type="ws" />
   <!--  <route url="service/updateItems" module="ProjectService" action="updateItems" resxfile="service" type="ws" />-->
+  
+  <route url="activetask/startCommWith" module="ActiveTask" action="startCommWith" resxfile="active_task" type="ws" />
+  <route url="activetask/postNote" module="ActiveTask" action="postNote" resxfile="active_task" type="ws" />
+  <route url="activetask/getNotes" module="ActiveTask" action="getNotes" resxfile="active_task" type="ws" />
  
   <route url="service/add" module="Service" action="add" resxfile="service" type="ws" />
   <route url="service/edit" module="Service" action="edit" resxfile="service" type="ws" />
@@ -793,6 +996,7 @@
   <route url="form/getlist" module="Form" action="getList" resxfile="form" type="ws" />
   <route url="form/updateItems" module="Form" action="updateItems" resxfile="form" type="ws" />
   <route url="form/add" module="Form" action="add" resxfile="form" type="ws" />
+  <route url="form/addMaster" module="Form" action="addMaster" resxfile="form" type="ws" />
   <route url="form/delete" module="Form" action="delete" resxfile="form" type="ws" />
 
   <route url="pm/add" module="Pm" action="add" resxfile="pm" type="ws" />
@@ -822,6 +1026,13 @@
   <route url="map/listCurrentProject" module="Map" action="listCurrentProject" resxfile="map" type="ws" />
   <route url="map/listCurrentProjectLocations" module="Map" action="listCurrentProjectLocations" resxfile="map" type="ws" />
   <route url="map/listCurrentProjectTasks" module="Map" action="listCurrentProjectTasks" resxfile="map" type="ws" />
+
+  <route url="user/getCurrent" module="User" action="getCurrent" resxfile="user" type="ws" />
+  <route url="user/editCurrent" module="User" action="editCurrent" resxfile="user" type="ws" />
+  <route url="user/add" module="User" action="add" resxfile="user" type="ws" />
+  <route url="user/delete" module="User" action="delete" resxfile="user" type="ws" />
+  <route url="user/getItem" module="User" action="getItem" resxfile="user" type="ws" />
+  <route url="user/edit" module="User" action="edit" resxfile="user" type="ws" />
 
   <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
   <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />

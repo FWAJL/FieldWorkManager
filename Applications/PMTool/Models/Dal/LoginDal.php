@@ -8,27 +8,26 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class LoginDal extends \Library\DAL\BaseManager {
 
   /**
-   * Select a PM from its username or password
+   * Select User from its username or password
    * 
-   * @param ProjectManager $pm
+   * @param User $user
    * @return array the selected row in the db
    */
-  public function selectOne($pm_in) {
-    if ($pm_in->username() !== "") {//Check if the user is giving his username and that there is a value
-      $sql = 'SELECT * FROM project_manager where `username` = \'' . $pm_in->username() . '\' AND `password` = \'' . $pm_in->password() . '\' LIMIT 0, 1;';
-    } else if ($pm_in->pm_email() !== "") {//Check if the user is giving an email
-      $sql = 'SELECT * FROM project_manager where `email` = \'' . $pm_in->pm_email() . '\' AND `password` = \'' . $pm_in->password() . '\' LIMIT 0, 1;';
-    } else {
+  public function selectOne($user) {
+    if ($user->user_login() !== "") {//Check if the user is giving his username and that there is a value
+      $sql = 'SELECT * FROM user where `user_login` = \'' . $user->user_login() . '\' AND `user_password` = \'' . $user->user_password() . '\' LIMIT 0, 1;';
+    }else {
       return NULL;
     }
     $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Project_manager');
+    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\User');
 
-    $pm_out = $query->fetchAll();
+    $user_out = $query->fetchAll();
     $query->closeCursor();
 
-    return $pm_out;
+    return $user_out;
   }
+
 
   /**
    * Select a PM from its username or password
@@ -58,4 +57,34 @@ class LoginDal extends \Library\DAL\BaseManager {
 
 //  public function delete($object, $where_filter_id) {  }
 
+  public function selectUserType($user) {
+    $table = null;
+    switch ($user->user_type()){
+      case 'technician_id':
+        $table = 'technician';
+        $field = 'technician_id';
+        $sql = "SELECT * FROM `$table` WHERE `$field` = '".$user->user_value()."' LIMIT 0,1";
+        $dao = '\Applications\PMTool\Models\Dao\Technician';
+      break;
+      case 'pm_id':
+        $table = 'project_manager';
+        $field = 'pm_id';
+        $sql = "SELECT * FROM `$table` WHERE `$field`  ='".$user->user_value()."' LIMIT 0,1";
+        $dao = '\Applications\PMTool\Models\Dao\Project_manager';
+      break;
+      default:
+        $table = null;
+    }
+
+    if($table !== null) {
+      $query = $this->dao->query($sql);
+      $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $dao);
+      $user_type_out = $query->fetchAll();
+      $query->closeCursor();
+      return $user_type_out;
+    } else {
+      return null;
+    }
+
+  }
 }

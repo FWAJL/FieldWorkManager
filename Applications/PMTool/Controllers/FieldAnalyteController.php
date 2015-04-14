@@ -125,11 +125,11 @@ class FieldAnalyteController extends \Library\BaseController {
 
   public function executeUpdateItems(\Library\HttpRequest $rq) {
     $result = \Applications\PMTool\Helpers\AnalyteHelper::UpdateProjectAnalytes($this);
-
-    $tabsStatus = \Applications\PMTool\Helpers\CommonHelper::GetTabsStatus($this->user(), \Library\Enums\SessionKeys::TabActiveAnalyte);
-
-    \Applications\PMTool\Helpers\CommonHelper::SetActiveTab(
-            $this->user(), \Applications\PMTool\Resources\Enums\AnalyteTabKeys::FieldTab, \Library\Enums\SessionKeys::TabActiveAnalyte);
+//
+//    $tabsStatus = \Applications\PMTool\Helpers\CommonHelper::GetTabsStatus($this->user(), \Library\Enums\SessionKeys::TabActiveAnalyte);
+//
+//    \Applications\PMTool\Helpers\CommonHelper::SetActiveTab(
+//            $this->user(), \Applications\PMTool\Resources\Enums\AnalyteTabKeys::FieldTab, \Library\Enums\SessionKeys::TabActiveAnalyte);
 
     $this->SendResponseWS(
             $result, array(

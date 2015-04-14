@@ -17,12 +17,14 @@ class Route {
   public $relative_path = "";
   protected $phpModules;
   protected $resxfile = "";
+  protected $role = [];
 
   public function __construct($config) {
     $this->setUrl($config['route_xml']->getAttribute('url'));
     $this->setModule($config['route_xml']->getAttribute('module'));
     $this->setAction($config['route_xml']->getAttribute('action'));
     $this->setType($config['route_xml']->getAttribute('type'));
+    $this->setRole($config['route_xml']->getAttribute('role'));
 
     $this->setVarsNames($config['vars']);
     
@@ -44,6 +46,10 @@ class Route {
     } else {
       return false;
     }
+  }
+
+  public function url() {
+    return $this->url;
   }
 
   public function setAction($action) {
@@ -77,7 +83,7 @@ class Route {
       $this->type = $type;
     }
   }
-  
+
   public function setJsScripts($js_scripts, $forHead) {
     if ($forHead) {
      return $this->headJsScripts = $js_scripts; 
@@ -100,6 +106,15 @@ class Route {
 
   public function setResxFile($resxfile) {
     return $this->resxfile = $resxfile;
+  }
+
+
+  public function setRole($roleString) {
+    if ($roleString == '' || strtolower($roleString) == 'all') {
+      $this->role = array();
+    } else {
+      $this->role = explode(",", $roleString);
+    }
   }
   
   public function action() {
@@ -138,6 +153,10 @@ class Route {
   }
   public function resxfile() {
     return $this->resxfile;
+  }
+
+  public function role(){
+    return $this->role;
   }
   
 }

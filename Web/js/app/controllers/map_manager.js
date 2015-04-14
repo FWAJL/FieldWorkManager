@@ -10,6 +10,7 @@ var activeIcon = inactiveIcon = selectedMarkerIcon = "default";
 var facilityId;
 var projectId;
 var highlightCircle;
+var setCurrentProjectFlag = false;
 var polygonSettings = {
   "fillColor": "#FF0000",
   "fillOpacity": .3,
@@ -21,6 +22,7 @@ $(document).ready(function(){
   $('.glyphicon-question-sign').click(function(){
     utils.showMapLegends();
   });
+  $("#location-info-modal-photos").hide();
 });
 
 /*
@@ -118,18 +120,19 @@ var saveMarkerData = function (marker){
   $("#prompt_ok").off('click');
   $('#text_input').val("");
   var post_data = {};
+
   utils.showPromptBoxById("location-prompt","addNullCheckAddPrompt", function(){
-    if($('#text_input').val() !== '')
+    if($('#location-name').val() !== '')
     {
       //Check unique
-      map_manager.ifLocationExists($('#text_input').val(), function(record_count) {
+      map_manager.ifLocationExists($('#location-name').val(), function(record_count) {
         if(record_count == 0)
         {
           //Ok to add
           $("#prompt_ok").off('click');
           $(".prompt-modal").off('hidden.bs.modal');
           post_data["location"] = {};
-          post_data["location"]["location_name"] = $('#text_input').val();
+          post_data["location"]["location_name"] = $('#location-name').val();
           post_data["location"]["location_active"] = 1;
           post_data["location"]["location_lat"] = marker.getPosition().lat();
           post_data["location"]["location_long"] = marker.getPosition().lng();
@@ -229,12 +232,25 @@ var setLoadCoordinatesFromMarkerEvent = function(id) {
   });
 }
 
+var setCurrentProject = function(id) {
+  datacx.post("project/setCurrentProject", {"project_id": id}).then(function(reply) {
+    if (reply === null || reply.result === 0) {//has an error
+      toastr.error(reply.message);
+      return undefined;
+    } else {//success
+      toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
+    }
+  });
+};
 
 var openProjectInfo = function(e,id) {
   datacx.post('facility/getItem',{'facility_id':id}).then(function(reply){
     if(reply.data.length > 0) {
       toastr.success(reply.message);
       item = reply.data[0];
+      if(setCurrentProjectFlag) {
+        setCurrentProject(item.project.project_id);
+      }
       $("#project-info-modal-project_name").val(item.project.project_name);
       $("#project-window-title-project_name").html(item.project.project_name);
       $("#project-info-modal-facility_name").val(item.facility.facility_name);
@@ -287,17 +303,24 @@ var setLocationZoomEvent = function(e) {
 
 var setViewPhotosEvent = function(photosCount) {
   $("#location-info-modal-photos").off('click');
-  $("#location-info-modal-photos").on('click',function(ev){
-    ev.preventDefault();
-    if(photosCount == 0){
-      utils.showAlert($('#confirmmsg-noPhotos').val(), function(){});
-    } else {
-      $(".lightbox-content a").first().trigger("click");
-    }
-  });
+  if(photosCount == 0){
+    $("#location-info-modal-photos").hide();
+  } else {
+    $("#location-info-modal-photos-count").html('('+photosCount+')');
+    $("#location-info-modal-photos").on('click',function(ev){
+      ev.preventDefault();
+      if(photosCount == 0){
+        //utils.showAlert($('#confirmmsg-noPhotos').val(), function(){});
+      } else {
+        $(".lightbox-content a").first().trigger("click");
+      }
+    });
+    $("#location-info-modal-photos").show();
+  }
 }
 
 var openLocationInfo = function(e,id) {
+    $("#document-upload input[name=\"title\"]").val("");
     Dropzone.forElement("#document-upload").removeAllFiles();
     datacx.post('location/getItem',{location_id: id}).then(function(reply){
       toastr.success(reply.message);
@@ -312,7 +335,7 @@ var openLocationInfo = function(e,id) {
         $("#document-upload input[name=\"itemId\"]").val(id);
         $(".lightbox-content").html("");
         $.each(replyPhotos.fileResults, function(key,photo){
-          $(".lightbox-content").append('<a href="'+photo.webPath+'" data-lightbox="modal-images"></a>');
+          $(".lightbox-content").append('<a href="'+photo.webPath+'" data-title="'+photo.title+'" data-lightbox="modal-images"></a>');
         });
         setViewPhotosEvent(replyPhotos.fileResults.length);
         setLocationZoomEvent(e);
@@ -361,27 +384,38 @@ var setAddRemoveFromTaskEvent = function(e,id,action) {
 }
 
 var openTaskLocationInfo = function(e,id,action) {
+  $("#document-upload input[name=\"title\"]").val("");
+  Dropzone.forElement("#document-upload").removeAllFiles();
   datacx.post('location/getItem',{location_id: id}).then(function(reply){
     toastr.success(reply.message);
-    item = reply.location;
-    $("#task-location-info-modal-location_name").val(item.location_name);
-    $("#task-location-window-title-task_location_name").html(item.location_name);
-    setTaskLocationZoomEvent(e);
-    $(".task-location-info-modal-action").hide()
-    $("#task-location-info-modal-"+action).show();
-    setAddRemoveFromTaskEvent(e,id,action);
-    utils.showInfoWindow('#task-location-info-modal',function(){
-      if($("#task-location-info-modal-location_name").val() !== '') {
-        post_data = {};
-        post_data.location_id = id;
-        post_data.location_name = $("#task-location-info-modal-location_name").val();
-        map_manager.edit(post_data,'location','mapEdit',function(r){
-          location.reload();
-        });
-      } else {
-        $('#location-info-modal-location_name').focus();
-      }
-    },function(){});
+    var category = $("#document-upload input[name=\"itemCategory\"]").val();
+    datacx.post('file/load',{itemId: id, itemCategory: category}).then(function(replyPhotos){
+      item = reply.location;
+      $("#document-upload input[name=\"itemId\"]").val(id);
+      $("#task-location-info-modal-location_name").val(item.location_name);
+      $("#task-location-window-title-task_location_name").html(item.location_name);
+      $(".lightbox-content").html("");
+      $.each(replyPhotos.fileResults, function(key,photo){
+        $(".lightbox-content").append('<a href="'+photo.webPath+'" data-title="'+photo.title+'" data-lightbox="modal-images"></a>');
+      });
+      setViewPhotosEvent(replyPhotos.fileResults.length);
+      setTaskLocationZoomEvent(e);
+      $(".task-location-info-modal-action").hide();
+      $("#task-location-info-modal-"+action).show();
+      setAddRemoveFromTaskEvent(e,id,action);
+      utils.showInfoWindow('#task-location-info-modal',function(){
+        if($("#task-location-info-modal-location_name").val() !== '') {
+          post_data = {};
+          post_data.location_id = id;
+          post_data.location_name = $("#task-location-info-modal-location_name").val();
+          map_manager.edit(post_data,'location','mapEdit',function(r){
+            location.reload();
+          });
+        } else {
+          $('#location-info-modal-location_name').focus();
+        }
+      },function(){});
+    });
   });
 }
 
@@ -431,6 +465,9 @@ function load(params) {
         }
         if(typeof(reply.project_id) !== 'undefined') {
           projectId = reply.project_id;
+          setCurrentProjectFlag = false;
+        } else {
+          setCurrentProjectFlag = true;
         }
 
         if(reply.controls.markers !== true){

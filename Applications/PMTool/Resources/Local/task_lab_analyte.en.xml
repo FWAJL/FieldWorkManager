@@ -33,5 +33,11 @@
   <resource key="btn_add_to_task">Add Lab Analyte(s)</resource>
   <resource key="btn_remove_from_task">Remove Lab Analyte(s)</resource>
   <resource key="no_items_to_display_message">There is no active Lab Analytes. Go to Lab Analytes > List all to activate some</resource>
-  
+
+  <!-- Task Lab Matrix -->
+  <resource key="task_lab_matrix_label">Analyte and Location Table</resource>
+  <resource key="tlm_analyte_label">Analytes</resource>
+  <resource key="tlm_locationhead_label">Location</resource>
+  <resource key="tlm_checkboxtoggle_label">Check/Uncheck All</resource>
+  <resource key="tlm_savebtn_label">Save</resource>
 </resources>

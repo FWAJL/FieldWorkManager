@@ -24,6 +24,9 @@
 
 namespace Applications\PMTool\Controllers;
 
+use Applications\PMTool\AuthProvider;
+use Library\Interfaces\IUser;
+
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
@@ -58,27 +61,31 @@ class AuthenticateController extends \Library\BaseController {
     $result = $this->InitResponseWS();
 
     //Let's retrieve the inputs from AJAX POST request
-    $data_sent = $rq->retrievePostAjaxData(FALSE);
+    $data_sent = $this->dataPost();
 
-    //Then, retrieve the login and password.
-    $user = $this->PrepareUserObject($data_sent);
+    $authProvider = new AuthProvider($this->app->config->get("encryption_key"), $this->managers->getManagerOf('Login'));
+    $authProvider->prepareUser($data_sent);
+    if($authProvider->getUser() instanceof \Library\Interfaces\IUser) {
+      $this->app->auth->authenticate($authProvider->getUser());
 
-    //Load interface to query the database
-    $manager = $this->managers->getManagerOf('Login');
-    //Search for user in DB and return him
-    $user_db = $manager->selectOne($user);
-
-    //If user_db is null or not matching, set error message
-    if (count($user_db) === 0) {
-      //TODO: redirect after 3 sec
-      //$this->Redirect("login");
-    } else {
-      if (!isset($data_sent["encrypt_pwd"])) {
-        $this->EncryptUserPassword($manager, $user, $user_db);
+      if ($authProvider->getUser()) {
+        $user = $this->app->user;
+        $routes = array_filter($this->app->router->routes(), function ($route) use ($user) {
+          return (count($route->role()) == 0) || in_array($user->getRole(), $route->role());
+        });
+        \Applications\PMTool\Helpers\UserHelper::SaveRoutes($user, $routes);
+        switch ($authProvider->getUser()->getType()) {
+          case 'technician_id':
+            break;
+          case 'pm_id':
+            \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this, $authProvider->getUserType(), true);
+            break;
+        }
+        $result = $this->InitResponseWS("success");
+        $result['role'] = $user->getRole();
       }
-      //User is correct so log him in and set result to success
-      $result = $this->InitResponseWS("success", $user_db);
     }
+
     //return the JSON data
     echo \Library\HttpResponse::encodeJson($result);
   }
@@ -89,9 +96,7 @@ class AuthenticateController extends \Library\BaseController {
    * @param \Library\HttpRequest $rq
    */
   public function executeDisconnect(\Library\HttpRequest $rq, $redirect = TRUE) {
-    $this->app->user->setAuthenticated(FALSE);
-    $this->app->user->unsetAttribute(\Library\Enums\SessionKeys::UserConnected);
-    session_destroy();
+    $this->app->auth->deauthenticate();
     if ($redirect) { $this->Redirect("login"); }
   }
   
@@ -103,67 +108,20 @@ class AuthenticateController extends \Library\BaseController {
   public function executeCreate(\Library\HttpRequest $rq) {
     $protect = new \Library\BL\Core\Encryption();
     $data = array(
-      "username" => $rq->getData("login"),
-      "password" => $rq->getData("pwd"),
-      "pm_name" => "Demo User"
+      "user_login" => $rq->getData("login"),
+      "user_password" => $rq->getData("password"),
+      "user_type" => $rq->getData("type"),
+      "user_role" => \Applications\PMTool\Helpers\UserHelper::GetRoleFromType($rq->getData("type"))
     );
-    $pm = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Project_manager());
-    $pm->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $pm->password()));
+    $user = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($data, new Applications\PMTool\Models\Dao\User());
+    
+    $user->setUser_password($protect->Encrypt($this->app->config->get("encryption_key"), $user->user_password()));
 
     $loginDal = $this->managers->getManagerOf("Login");
     $id = $loginDal->add($pm);
     $redirect = intval($id) > 0 ? TRUE : FALSE;
     
     if ($redirect) { $this->Redirect("login"); }
-  }
-
-  /**
-   * Prepare the User Object before calling the DB.
-   * 
-   * @param array $data_sent from POST request
-   * @return \Applications\PMTool\Models\Dao\Project_manager
-   */
-  private function PrepareUserObject($data_sent) {
-    $protect = new \Library\BL\Core\Encryption();
-
-    $user = new \Applications\PMTool\Models\Dao\Project_manager();
-    $user->setPm_email($data_sent["email"]);
-    $user->setUsername($data_sent["username"]);
-    if (!isset($data_sent["encrypt_pwd"])) {
-      $user->setPassword($data_sent["pwd"]);
-    } else {
-      $user->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $data_sent["pwd"]));
-    }
-    
-    return $user;
-  }
-
-  /**
-   * Method that logs in a user in the session.
-   *
-   */
-  private function LoginUser($pm_user) {
-    //set authenticated flag
-    $this->app->user->setAuthenticated();
-    //store user in session
-    $this->app->user->setAttribute(\Library\Enums\SessionKeys::UserConnected, $pm_user);
-    //Brian
-    \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this->app()->user(), $pm_user[0], true);
-    //Test
-  }
-
-  /**
-   * Encrypt the user password
-   * 
-   * @param DAL\BaseManager $manager
-   * @param BO\ProjectManager $user_in
-   * @param array(BO\ProjectManager) $user_db
-   */
-  private function EncryptUserPassword($manager, $user_in, $user_db) {
-    $protect = new \Library\BL\Core\Encryption();
-    $user_in->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $user_in->password()));
-    $user_in->pm_id = $user_db[0]->pm_id;
-    $manager->update($user_in);
   }
 
   /**
@@ -174,7 +132,6 @@ class AuthenticateController extends \Library\BaseController {
   public function InitResponseWS($step = "init", $user = NULL) {
     $resourceFileKey = "login";
     if ($step === "success") {
-      $this->LoginUser($user);
       return array(
         "result" => 1,
         "message" => $this->app->i8n->getLocalResource($resourceFileKey, "message_success")

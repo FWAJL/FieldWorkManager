@@ -6,7 +6,22 @@ $(document).ready(function(){
 
   $('#btn_save_taskcoc').click(function(){
   	$('[name="task_id"]').val(task_id);
-	var post_data = utils.retrieveInputs("task_coc_form", ["po_number","lab_instructions","lab_sample_type","lab_sample_tat","$project_number","results_to_name","results_to_company","results_to_address","results_to_phone","results_to_email"]);
+	var post_data = utils.retrieveInputs(
+      "task_coc_form", 
+      [
+        "po_number",
+        "lab_instructions",
+        "service_id",
+        "lab_sample_type",
+        "lab_sample_tat",
+        "project_number",
+        "results_to_name",
+        "results_to_company",
+        "results_to_address",
+        "results_to_phone",
+        "results_to_email"
+      ]
+    );
     if (post_data.po_number !== undefined) {
       if(task_coc.editing) {
   		task_coc.editCoc(post_data, "task", "editCoc");
@@ -23,17 +38,13 @@ $(document).ready(function(){
  * Responsible to manage tasks.
  */
 (function(task_coc) {
-  var editing = false;
+  task_coc.editing = false;
   
   task_coc.getTaskCoc = function(task_id) {
     //get task coc object
     datacx.post("task/getTaskCoc", {"task_id": task_id}).then(function(reply) {
-      if (reply === null || reply.result === 0) {//has an error
-        //toastr.error(reply.message);
-        //$(".form_sections").hide();
-        //utils.redirect("task/listAll", 3000)
-      } else {//success
-        //$(".task_edit").show().removeClass("hide");
+      if (reply === null || reply.result === 0) {
+      } else {
         toastr.success(reply.message);
         if(reply.task_coc === '') {
           task_coc.editing = false;	
@@ -71,9 +82,9 @@ $(document).ready(function(){
   task_coc.loadData = function(dataWs) {
   	utils.clearForm();
   	$("input[name=\"task_coc_id\"]").val(parseInt(dataWs.task_coc.task_coc_id));
-  	$("input[name=\"service_id\"]").val(parseInt(dataWs.task_coc.service_id));
   	$("input[name=\"po_number\"]").val(dataWs.task_coc.po_number);
   	$("textarea[name=\"lab_instructions\"]").val(dataWs.task_coc.lab_instructions);
+  	$(".coc_list_services option:eq(" + dataWs.task_coc.service_id + ")").prop('selected', true)
   	$("select[name=\"lab_sample_type\"]").val(dataWs.task_coc.lab_sample_type);
   	$("select[name=\"lab_sample_tat\"]").val(dataWs.task_coc.lab_sample_tat);
   	$("input[name=\"project_number\"]").val(dataWs.task_coc.project_number);

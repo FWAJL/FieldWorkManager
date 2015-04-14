@@ -36,14 +36,21 @@ class ActiveTask {
   const active_task_info_lists = "active_task_info_lists";
 
   const task_form = "task_form";
-  const active_task_form = "active_task_form"; 
+  const active_task_form = "active_task_form";
+  
+  const active_task_status = "active_task_status";
+  const active_task_forms = "active_task_forms";
+  const active_task_comm = "active_task_comm";
+  const active_task_progress_details = "active_task_progress_details";
+  const active_task_instructions = "active_task_instructions";
 
   const task_buttons = "task_buttons";
+  const active_task_buttons = "active_task_buttons";
   const promote_buttons_module = "promote_buttons_module";
 
 
   const popup_msg_module = "popup_msg_module";
-
+  const tooltip_msg_module = "tooltip_msg_module";
   const popup_prompt_module = "popup_prompt_module";
   //Data keys
 

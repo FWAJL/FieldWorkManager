@@ -1,24 +1,16 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 
-<div id="pm_edit_info"  class="data-form">
+<div id="pm_edit_info"  class="pm_edit data-form">
 <fieldset class="pm_form">
   <ol class="add-new-item">
     <li style="display: none;">
       <input name="pm_id" type="text" />
     </li>
-       <li>
-      <label><?php echo $resx["username"]; ?></label>
-      <input name="username" type="text" />
+    <li>
+      <label><?php echo $resx["pm_name"]; ?></label>
+      <input name="pm_name" type="text" />
     </li>
-           <li>
-      <label><?php echo $resx["password"]; ?></label>
-      <input name="password" type="text" />
-    </li>
-           <li>
-      <label><?php echo $resx["hint"]; ?></label>
-      <input name="hint" type="text" />
-    </li>
-           <li>
+    <li>
       <label><?php echo $resx["pm_comp_name"]; ?></label>
       <input name="pm_comp_name" type="text" />
     </li>

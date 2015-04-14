@@ -371,4 +371,88 @@ ui-widget-content:hover {
 #document-upload {
   clear:both;
 }
+
+/* Active task related CSS */
+.p-desc {
+	font-size: 20px;
+    margin-top: 45px;
+}
+
+.notes-container {
+	font-size: 16px;
+    margin-top: 20px;
+	height:200px;
+	overflow-y : scroll;
+}
+
+#messages div {
+	margin-bottom:5px;
+	margin-top:5px;
+}
+
+.msg-row {
+	width:100%;
+	height:auto;
+	float:left;
+}
+
+.note-user1 {
+	float:left;
+	font-weight:bold;
+	width:28%;
+	min-width:150px;
+}
+.note-user2 {
+	font-weight:bold;
+	color:#A1A1A1;
+	float:left;
+	width:28%;
+	min-width:150px;
+}
+
+.user-msg {
+	float: right;
+  margin-right: 10px;
+  min-width: 320px;
+  width: 70%;
+}
+
+/* Task: Lab Matrix, Field Matrix; */
+.matrix-container {
+  width: 100%;
+  margin-top: 20px;
+}
+.matrix-row {
+  height: 40px;
+  margin-top: 3px;
+}
+.matrix-cell {
+  width: 120px;
+  background-color: #F7F7F7;
+  float: left;
+  height: 90%;
+  margin: 3px;
+  text-align: center;
+}
+.matrix-alalyte-header {
+  width: calc(100% - 135px);
+  font-size: 18px;
+  padding-top: 5px;
+}
+.matrix-location-header {
+  font-size: 18px;
+  padding-top: 5px;
+}
+.matrix-cell-data {
+  padding-top: 7px;
+  font-size: 14px;
+}
+.matrix-footer {
+  width: 150px;
+  text-align: left;
+  padding-top: 5px;
+  margin-top: 10px;
+  background-color: #fff;
+  padding-left: 3px;
+}
 /* END FILE MODULES */

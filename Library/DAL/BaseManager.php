@@ -30,8 +30,16 @@ class BaseManager extends \Library\Manager {
 
   /**
    * Select method for many items
-   *
-   * @param array $item array containing the data to use to build the SQL statement
+   * 
+   * @param object <p> 
+   * $object: Dao object
+   * @param mixed <p>
+   * $where_filter_id: a string or integer value
+   * representing the column name to filter the data on. It is used in the WHERE clause.
+   * @param bool <p>
+   * $filter_as_string: TRUE or FALSE to know if a where filter is a string or a integer </p>
+   * @return mixed <p>
+   * Can be a bool (TRUE,FALSE), a integer or a list of Dao objects (of type  $dao_class) </p>
    */
   public function selectMany($object, $where_filter_id, $filter_as_string = false) {
     $params = array("type" => "SELECT", "dao_class" => \Applications\PMTool\Helpers\CommonHelper::GetFullClassName($object));
@@ -51,8 +59,43 @@ class BaseManager extends \Library\Manager {
     foreach ($object as $key => $value) {
       $select_clause .= $key . ", ";
     }
+    $order_by = "";
+    if($object->getOrderByField() !== FALSE) {
+      $order_by = "ORDER BY ".$object->getOrderByField();
+    }
+
     $select_clause = rtrim($select_clause, ", ");
-    return $this->ExecuteQuery($select_clause . " FROM " . $this->GetTableName($object) . $where_clause, $params);
+    return $this->ExecuteQuery($select_clause . " FROM " . $this->GetTableName($object) . $where_clause." ".$order_by, $params);
+  }
+  /**
+   * Select method for many items
+   * 
+   * @param object <p> 
+   * $object: Dao object
+   * @param array <p>
+   * $where_filters: an array following structure:
+   * 
+   * representing the column name to filter the data on. It is used in the WHERE clause.
+   * @param bool <p>
+   * $filter_as_string: TRUE or FALSE to know if a where filter is a string or a integer </p>
+   * @return mixed <p>
+   * Can be a bool (TRUE,FALSE), a integer or a list of Dao objects (of type  $dao_class) </p>
+   */
+  public function selectManyComplex($object, $where_filters) {
+    $params = array("type" => "SELECT", "dao_class" => \Applications\PMTool\Helpers\CommonHelper::GetFullClassName($object));
+    $select_clause = "SELECT ";
+    //TODO: implement building the where clause with one or many filters
+    $where_clause = "";//$this->BuildWhereClause($where_filters);
+    foreach ($object as $key => $value) {
+      $select_clause .= $key . ", ";
+    }
+    $order_by = "";
+    if($object->getOrderByField() !== FALSE) {
+      $order_by = "ORDER BY ".$object->getOrderByField();
+    }
+
+    $select_clause = rtrim($select_clause, ", ");
+    return $this->ExecuteQuery($select_clause . " FROM " . $this->GetTableName($object) . $where_clause." ".$order_by, $params);
   }
 
   /**

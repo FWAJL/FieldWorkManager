@@ -34,6 +34,22 @@ class AnalyteHelper {
     $COMMON = "common_";
     $FIELD = "field";
     $LAB = "lab";
+    /*
+     * creates an array depending on the value of $processCommonAnalytes
+     * 
+     * array(
+     *  "common_field",
+     *  "common_lab"
+     * )
+     * 
+     * or 
+     * 
+     * array(
+     *  "field",
+     *  "lab"
+     * )
+     * 
+     */
     $loopParams = array($processCommonAnalytes ? $COMMON . $FIELD : $FIELD, $processCommonAnalytes ? $COMMON . $LAB : $LAB);
     for ($index = 0; $index < count($loopParams); $index++) {
       switch ($loopParams[$index]) {
@@ -59,10 +75,15 @@ class AnalyteHelper {
     }
   }
 
+  public static function StoreCommonListData($caller) {
+    self::_StoreCommonAnalytes($caller, \Library\Enums\SessionKeys::CommonFieldAnalytes, new \Applications\PMTool\Models\Dao\Common_field_analyte);
+    self::_StoreCommonAnalytes($caller, \Library\Enums\SessionKeys::CommonLabAnalytes, new \Applications\PMTool\Models\Dao\Common_lab_analyte);
+  }
+
   private static function _StoreAnalytes($caller, $sessionPm, $sessionKey, $analyteObj) {
     if (count($sessionPm[$sessionKey]) === 0) {
       $analyteObj->setPm_id($sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_id());
-      $dal = $caller->managers()->getManagerOf($caller->module());
+      $dal = $caller->managers()->getManagerOf("Analyte");
       $analytes = $dal->selectMany($analyteObj, "pm_id");
       $sessionPm[$sessionKey] = $analytes;
     }
@@ -91,8 +112,9 @@ class AnalyteHelper {
     $sessionKey = $getFieldType ? \Library\Enums\SessionKeys::PmFieldAnalytes : \Library\Enums\SessionKeys::PmLabAnalytes;
     $analytePropId = $getFieldType ? "field_analyte_id" : "lab_analyte_id";
     $matches = array();
-    foreach ($project_analytes as $project_analyte) {
-      foreach ($pm[$sessionKey] as $analyte) {
+
+    foreach ($pm[$sessionKey] as $analyte) {
+      foreach ($project_analytes as $project_analyte) {
         if (intval($analyte->$analytePropId()) === intval($project_analyte->$analytePropId())) {
           array_push($matches, $analyte);
           break;
@@ -102,9 +124,9 @@ class AnalyteHelper {
     return $matches;
   }
 
-  public static function GetProjectAnalytes($caller, $getFieldType = TRUE) {
+  public static function GetProjectAnalytes($caller, $getFieldType = TRUE, $sessionProject = NULL) {
     $pm = PmHelper::GetCurrentSessionPm($caller->user());
-    $project = ProjectHelper::GetCurrentSessionProject($caller->user());
+    $project = $sessionProject == NULL ? ProjectHelper::GetCurrentSessionProject($caller->user()) : $sessionProject;
     $sessionKey = $getFieldType ? \Library\Enums\SessionKeys::ProjectFieldAnalytes : \Library\Enums\SessionKeys::ProjectLabAnalytes;
     if (count($project[$sessionKey]) === 0) {
       \Library\Utility\DebugHelper::LogAsHtmlComment($getFieldType);
@@ -158,8 +180,8 @@ class AnalyteHelper {
   public static function GetFieldAnalytesFromTaskFieldAnalytes(\Library\User $user, $sessionTask) {
     $matches = array();
     $sessionPm = PmHelper::GetCurrentSessionPm($user);
-    foreach ($sessionTask[\Library\Enums\SessionKeys::TaskFieldAnalytes] as $task_field_analyte) {
-      foreach ($sessionPm[\Library\Enums\SessionKeys::PmFieldAnalytes] as $field_analyte) {
+    foreach ($sessionPm[\Library\Enums\SessionKeys::PmFieldAnalytes] as $field_analyte) {
+      foreach ($sessionTask[\Library\Enums\SessionKeys::TaskFieldAnalytes] as $task_field_analyte) {
         if (intval($field_analyte->field_analyte_id()) === intval($task_field_analyte->field_analyte_id())) {
           array_push($matches, $field_analyte);
           break;
@@ -172,8 +194,8 @@ class AnalyteHelper {
   public static function GetLabAnalytesFromTaskLabAnalytes(\Library\User $user, $sessionTask) {
     $matches = array();
     $sessionPm = PmHelper::GetCurrentSessionPm($user);
-    foreach ($sessionTask[\Library\Enums\SessionKeys::TaskLabAnalytes] as $task_lab_analyte) {
-      foreach ($sessionPm[\Library\Enums\SessionKeys::PmLabAnalytes] as $lab_analyte) {
+    foreach ($sessionPm[\Library\Enums\SessionKeys::PmLabAnalytes] as $lab_analyte) {
+      foreach ($sessionTask[\Library\Enums\SessionKeys::TaskLabAnalytes] as $task_lab_analyte) {
         if (intval($lab_analyte->lab_analyte_id()) === intval($task_lab_analyte->lab_analyte_id())) {
           array_push($matches, $lab_analyte);
           break;
@@ -185,12 +207,13 @@ class AnalyteHelper {
  
 
   public static function AddAnalyte($caller, $result, $isFieldType, $isCommon) {
-    $pm = PmHelper::GetCurrentSessionPm($caller->user());
 
     $manager = $caller->managers()->getManagerOf($caller->module());
     $dataPost = $caller->dataPost();
-    $dataPost["pm_id"] = $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
-
+    if(!$isCommon) {
+      $pm = PmHelper::GetCurrentSessionPm($caller->user());
+      $dataPost["pm_id"] = $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
+    }
     $analytes = array();
     $analyteObj = null;
     if ($isCommon) {
@@ -275,6 +298,7 @@ class AnalyteHelper {
         $analyte->setCommon_field_analyte_name($name);
       } else {
         $analyte->setCommon_lab_analyte_name($name);
+        $analyte->setCommon_lab_analyte_category_name($name);
       }
       array_push($analytes, $analyte);
     }

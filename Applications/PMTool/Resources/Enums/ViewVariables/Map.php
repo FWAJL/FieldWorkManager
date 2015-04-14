@@ -31,6 +31,7 @@ class Map {
   const popup_location_info = "popup_location_info";
   const popup_task_location_info = "popup_task_location_info";
   const default_active_control = "default_active_control";
+  const popup_location_prompt_module = "popup_location_prompt_module";
 }
 
 ?>

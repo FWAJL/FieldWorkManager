@@ -85,7 +85,13 @@
 
   <!--  <resource key="">TBD</resource>-->
 
-  <!--  Field Sample Matrix Form--> 
+  <!--  Field Analyte Matrix --> 
+  <resource key="message_error_saveFieldMatrix">No Field Analyte Matrix available to Save</resource>
+  <resource key="message_success_saveFieldMatrix">Field Analyte Matrix saved successfully</resource>
+
+  <!-- Lab Analyte Matrix -->
+  <resource key="message_error_saveLabMatrix">No Lab Analyte Matrix available to Save</resource>
+  <resource key="message_success_saveLabMatrix">Lab Analyte Matrix saved successfully</resource>
 
   <!--  <resource key="">TBD</resource>-->
 
@@ -95,14 +101,14 @@
   <resource key="lab_instructions">Instructions</resource>
   <resource key="lab_sample_type">Sample Type</resource>
   <resource key="lab_sample_tat">Turnaround Time</resource>
-  <resource key="project_id_num">Project ID Number</resource>
+  <resource key="project_number">Project ID Number</resource>
   <resource key="results_to_name">Name</resource>
   <resource key="results_to_company">Company</resource>
   <resource key="results_to_address">Address</resource>
   <resource key="results_to_phone">Phone</resource>
   <resource key="results_to_email">email</resource>
   <resource key="task_coc_save">Save COC</resource>
-  <resource key="coc_service_id">Service Id</resource>
+  <resource key="coc_service_id">Laboratory</resource>
   <resource key="message_success_addCoc">Task COC Added successfully</resource>
   <resource key="message_error_addCoc">Error adding Task COC</resource>
   <resource key="message_success_editCoc">Task COC updated successfully</resource>

@@ -47,9 +47,9 @@ class UrlKeys {
   
   const AnalyteListAll = "analyte/listAll";
   const FieldAnalytes = "field_analyte/listAll";
-  const FieldSampleMatrix = "field_analyte/sampleMatrix";
+  const FieldSampleMatrix = "task/fieldMatrix";
   const LabAnalytes = "lab_analyte/listAll";
-  const LabSampleMatrix = "lab_analyte/sampleMatrix";
+  const LabSampleMatrix = "task/labMatrix";
 
   const TaskRootUrl = "task";
   const TaskListAll = "task/listAll";
@@ -66,9 +66,9 @@ class UrlKeys {
   const TaskForms = "task/forms";
 
   const ActiveTaskShowForm = "activetask/showForm";
-  const ActiveTaskMap = "xxx";
-  const ActiveTaskInspForms = "xxx";
-  const ActiveTaskComm = "xxx";
+  const ActiveTaskMap = "activetask/map";
+  const ActiveTaskInspForms = "activetask/forms";
+  const ActiveTaskComm = "activetask/communications";
   
   const CompleteTaskMap = "xxx";
   const CompleteTaskInspForms = "xxx";
