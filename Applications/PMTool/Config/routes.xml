@@ -815,7 +815,7 @@
     <!-- pm/showForm -->
 
     <!-- User -->
-    <route url="user/showDetails" module="User" action="showDetails" resxfile="user" type="ui" role="2">
+    <route url="user/showDetails" module="User" action="showDetails" resxfile="user" type="ui" role="1,2,3">
       <js_files>
         <js_file use="head" value="Web/js/app/controllers/user_manager.js" />
       </js_files>

@@ -46,8 +46,12 @@ class UserController extends \Library\BaseController {
     $user = $this->app->user()->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $dataPost['user_login'] = $user->user_login();
     $changePassword = ($dataPost['user_password']!='')?true:false;
-    $user = \Applications\PMTool\Helpers\UserHelper::PrepareUserObject($dataPost,$this->app->config,$changePassword);
-    $manager = $this->managers->getManagerOf($this->module);
+    $user->setUser_hint($dataPost['user_hint']);
+    if($changePassword) {
+      $protect = new \Library\BL\Core\Encryption();
+      $user->setUser_password($protect->Encrypt($this->app->config->get("encryption_key"), $dataPost['user_password']));
+    }
+    $manager = $this->managers->getManagerOf('User');
     $result_insert = $manager->edit($user, "user_id");
     //Init PDO
     if($result_insert){

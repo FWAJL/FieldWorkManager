@@ -97,8 +97,8 @@ $(document).ready(function() {
 
   $("#btn_add_technician").click(function() {
     var post_data = {};
-    post_data = utils.retrieveInputs("technician_form", ["technician_name"]);
-    if (post_data.technician_name !== undefined) {
+    post_data = utils.retrieveInputs("technician_form", ["technician_name","technician_email"]);
+    if (post_data.technician_name !== undefined || post_data.required_field_missing != true) {
       technician_manager.add(post_data, "technician", "add", true);
     }
   });//Add a technician
