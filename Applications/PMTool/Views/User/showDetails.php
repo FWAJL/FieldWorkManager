@@ -3,6 +3,7 @@
   <h3><?php echo $resx["button_edit"]; ?></h3>
   <div class="form_sections user_details">
     <div class="col-lg-5 col-md-5 col-sm-5">
+      <?php require $user_form; ?>
       <?php require $user_details; ?>
     </div>
     <div class="col-lg-1 col-md-1 col-sm-1">
