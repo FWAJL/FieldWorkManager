@@ -8,6 +8,7 @@
       <div class="row">
         <div  class="col-lg-5 col-md-5">
           <div class="form_sections">
+            <?php require $form_modules["user_form"]; ?>
             <?php require $form_modules["technician_form"]; ?>
             <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]; ?>
           </div>

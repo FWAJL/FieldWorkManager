@@ -2,6 +2,7 @@
 
 namespace Applications\PMTool\Controllers;
 
+use Applications\PMTool\Helpers\UserHelper;
 use Applications\PMTool\Models\Dao\User;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
@@ -13,8 +14,10 @@ class UserController extends \Library\BaseController {
 
   public function executeShowDetails(\Library\HttpRequest $rq) {
     //Load Modules for view
+    $modules = $this->app()->router()->selectedRoute()->phpModules();
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_form, $modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_form]);
     if($this->app->user()->getUserType()=="pm_id") {
-      $modules = $this->app()->router()->selectedRoute()->phpModules();
+
       $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_details, $modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::pm_form]);
     }
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_details_buttons, $modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_details_buttons]);
@@ -39,21 +42,35 @@ class UserController extends \Library\BaseController {
   public function executeEditCurrent(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
-
+    $dataPost = $this->dataPost();
+    $user = $this->app->user()->getAttribute(\Library\Enums\SessionKeys::UserConnected);
+    $dataPost['user_login'] = $user->user_login();
+    $changePassword = ($dataPost['user_password']!='')?true:false;
+    $user->setUser_hint($dataPost['user_hint']);
+    if($changePassword) {
+      $protect = new \Library\BL\Core\Encryption();
+      $user->setUser_password($protect->Encrypt($this->app->config->get("encryption_key"), $dataPost['user_password']));
+    }
+    $manager = $this->managers->getManagerOf('User');
+    $result_insert = $manager->edit($user, "user_id");
     //Init PDO
-    if($this->app->user()->getUserType()=="pm_id") {
-      $pmSession = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
-      $this->dataPost["pm_id"] = $pmSession === NULL ? NULL : $pmSession[\Library\Enums\SessionKeys::PmObject]->pm_id();
-      $pm = \Applications\PMTool\Helpers\UserHelper::PreparePmObject($this->dataPost());
-      $result["data"] = $pm;
+    if($result_insert){
+      $this->app->user()->setAttribute(\Library\Enums\SessionKeys::UserConnected,$user);
+      if($this->app->user()->getUserType()=="pm_id") {
+        $pmSession = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+        $this->dataPost["pm_id"] = ($pmSession === NULL) ? NULL : $pmSession[\Library\Enums\SessionKeys::PmObject]->pm_id();
+        $pm = \Applications\PMTool\Helpers\UserHelper::PreparePmObject($this->dataPost());
+        $result["data"] = $pm;
 
-      $manager = $this->managers->getManagerOf($this->module);
-      $result_insert = $manager->edit($pm, "pm_id");
-      if($result_insert) {
-        $pmSession[\Library\Enums\SessionKeys::PmObject] = $pm;
-        \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this,$pmSession,true);
+        $manager = $this->managers->getManagerOf($this->module);
+        $result_insert = $manager->edit($pm, "pm_id");
+        if($result_insert) {
+          $pmSession[\Library\Enums\SessionKeys::PmObject] = $pm;
+          \Applications\PMTool\Helpers\PmHelper::UpdateSessionPm($this->app->user(),$pmSession,true);
+        }
       }
     }
+
     $this->SendResponseWS(
       $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::User,
@@ -95,6 +112,30 @@ class UserController extends \Library\BaseController {
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::User,
       "resx_key" => $this->action(),
       "step" => ($result_user&&$result_type) ? "success" : "error"
+    ));
+  }
+
+  public function executeEditTechnician(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+    $dataPost = $this->dataPost();
+    $technicianId = $dataPost['technician_id'];
+    $result_user = false;
+    //Init PDO
+    $manager = $this->managers->getManagerOf('User');
+    $technician = $manager->selectUserByTypeId('technician_id',$technicianId);
+    $technician->setUser_hint($dataPost['user_hint']);
+    if($dataPost['user_password']!="") {
+      $protect = new \Library\BL\Core\Encryption();
+      $technician->setUser_password($protect->Encrypt($this->app->config->get("encryption_key"), $dataPost['user_password']));
+    }
+    $manager = $this->managers->getManagerOf($this->module);
+    $result['user'] = $result_user = $manager->edit($technician, "user_id");
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::User,
+      "resx_key" => $this->action(),
+      "step" => ($result_user) ? "success" : "error"
     ));
   }
 
@@ -168,11 +209,32 @@ class UserController extends \Library\BaseController {
     ));
   }
 
+  public function executeGetTechnicianItem(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS();
+    $technicianId = $this->dataPost["technician_id"];
+
+    $manager = $this->managers->getManagerOf('User');
+    $technician = $manager->selectUserByTypeId('technician_id',$technicianId);
+
+    if($technician instanceof \Applications\PMTool\Models\Dao\User){
+      $result['user'] = $technician;
+    } else {
+      $result['user'] = array();
+    }
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::User,
+      "resx_key" => $this->action(),
+      "step" => count($result['user']) ? "success" : "error"
+    ));
+  }
+
   public function executeGetCurrent(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
-    $user_id = $this->app->user()->getAttribute(\Library\Enums\SessionKeys::UserAuthenticated);
+    $user = $this->app->user()->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $result["pm"] = NULL;
+    $result['user'] = $user;
     if($this->app->user()->getUserType()=="pm_id") {
       $pm_selected = $this->_GetPmFromSession($this->app->user()->getUserTypeId());
       $result["pm"] = $pm_selected;
@@ -183,7 +245,7 @@ class UserController extends \Library\BaseController {
       $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::User,
       "resx_key" => $this->action(),
-      "step" => ( $result["pm"] !== NULL) ? "success" : "error"
+      "step" => ( $result["user"] !== NULL) ? "success" : "error"
     ));
   }
 

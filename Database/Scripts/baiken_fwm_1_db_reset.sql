@@ -429,7 +429,7 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 -- Table structure for `user`
 CREATE TABLE IF NOT EXISTS `user` (
     `user_id` int(11) NOT NULL AUTO_INCREMENT,
-    `user_login` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+    `user_login` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `user_password` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `user_hint` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
     `user_type` varchar(50) NOT NULL COMMENT 'Possible values: pm_id, technician_id, service_id',
