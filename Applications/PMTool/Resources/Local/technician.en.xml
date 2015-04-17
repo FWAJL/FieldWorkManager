@@ -36,5 +36,9 @@
 
   <resource key="form_title">Title</resource>
   <resource key="form_file">File(s)</resource>
-  
+
+  <resource key="user_login">Login</resource>
+  <resource key="user_password">Password</resource>
+  <resource key="user_hint">Hint</resource>
+
 </resources>

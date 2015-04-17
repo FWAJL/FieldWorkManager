@@ -97,13 +97,15 @@ $(document).ready(function() {
 
   $("#btn_add_technician").click(function() {
     var post_data = {};
-    post_data = utils.retrieveInputs("technician_form", ["technician_name"]);
-    if (post_data.technician_name !== undefined) {
+    post_data = utils.retrieveInputs("technician_form", ["technician_name","technician_email"]);
+    if (post_data.technician_name !== undefined || post_data.required_field_missing != true) {
       technician_manager.add(post_data, "technician", "add", true);
     }
   });//Add a technician
 
   $("#btn_edit_technician").click(function() {
+    var user_post_data = {technician_id:parseInt(utils.getQueryVariable("technician_id")),user_password:$("input[name=\"user_password\"]").val(),user_hint:$("input[name=\"user_hint\"]").val()};
+    technician_manager.editUser(user_post_data,"user","editTechnician");
     var post_data = utils.retrieveInputs("technician_form", ["technician_name"]);
     if (post_data.technician_name !== undefined) {
       technician_manager.edit(post_data, "technician", "edit");
@@ -169,7 +171,17 @@ $(document).ready(function() {
         toastr.error(reply.message);
       } else {//success
         toastr.success(reply.message);
-        utils.redirect("technician/listAll", 1000);
+        //utils.redirect("technician/listAll", 1000);
+      }
+    });
+  };
+  technician_manager.editUser = function(technician, controller, action) {
+    datacx.post(controller + "/" + action, technician).then(function(reply) {//call AJAX method to call Technician/Add WebService
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+      } else {//success
+        toastr.success(reply.message);
+        //utils.redirect("technician/listAll", 1000);
       }
     });
   };
@@ -242,6 +254,7 @@ $(document).ready(function() {
         $(".technician_edit").show().removeClass("hide");
         toastr.success(reply.message);
         technician_manager.loadEditForm(reply);
+        technician_manager.getUserItem(technician_id);
       }
     });
   };
@@ -292,5 +305,22 @@ $(document).ready(function() {
       }
     });
   }
+
+  technician_manager.getUserItem = function(technician_id) {
+    datacx.post("user/getTechnicianItem",{technician_id:technician_id}).then(function(reply) {
+      if(reply == null || reply.result === 0) {
+        toastr.error(reply.message);
+      } else {
+        toastr.success(reply.message);
+        technician_manager.loadUserEditForm(reply);
+        $("#user_info").show();
+      }
+
+    });
+  };
+
+  technician_manager.loadUserEditForm = function(dataWs) {
+    $("input[name=\"user_hint\"]").val(dataWs.user.user_hint);
+  };
 
 }(window.technician_manager = window.technician_manager || {}));

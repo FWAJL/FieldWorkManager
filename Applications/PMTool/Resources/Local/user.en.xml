@@ -21,6 +21,10 @@
   <resource key="message_success_delete">The user has been deleted.</resource>
   <resource key="message_error_updateItems">Error editing the data.</resource>
   <resource key="message_success_updateItems">The data have been edited</resource>
+  <resource key="message_success_getTechnicianItem">The technician user data has been read.</resource>
+  <resource key="message_error_getTechnicianItem">The technician user data doesn't exist.</resource>
+  <resource key="message_success_editTechnician">The technician user data has been edited.</resource>
+  <resource key="message_error_editTechnician">Error editing the technician user data.</resource>
 
   <resource key="pm_comp_name">Company Name</resource>
   <resource key="pm_name">Name</resource>
