@@ -201,6 +201,7 @@
             <php_module key="upload_file" file_name="upload_file.php" shared="true"/>
             <php_module key="load_file" file_name="load_file.php" shared="true"/>
 	        <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+	        <php_module key="user_form" file_name="user_form.php" shared="true" />
         </php_modules>
     </route>
     <!-- technician/showForm -->
@@ -814,7 +815,7 @@
     <!-- pm/showForm -->
 
     <!-- User -->
-    <route url="user/showDetails" module="User" action="showDetails" resxfile="user" type="ui" role="2">
+    <route url="user/showDetails" module="User" action="showDetails" resxfile="user" type="ui" role="1,2,3">
       <js_files>
         <js_file use="head" value="Web/js/app/controllers/user_manager.js" />
       </js_files>
@@ -826,6 +827,7 @@
       </css_files>
       <php_modules>
         <php_module key="pm_form" file_name="pm_form.php" />
+        <php_module key="user_form" file_name="user_form.php" shared="true"/>
         <php_module key="user_details_buttons" file_name="user_details_buttons.php" />
       </php_modules>
     </route>
@@ -1033,6 +1035,8 @@
   <route url="user/delete" module="User" action="delete" resxfile="user" type="ws" />
   <route url="user/getItem" module="User" action="getItem" resxfile="user" type="ws" />
   <route url="user/edit" module="User" action="edit" resxfile="user" type="ws" />
+  <route url="user/getTechnicianItem" module="User" action="getTechnicianItem" resxfile="user" type="ws" />
+  <route url="user/editTechnician" module="User" action="editTechnician" resxfile="user" type="ws" />
 
   <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
   <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />

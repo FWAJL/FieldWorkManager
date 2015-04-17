@@ -37,6 +37,8 @@ $(document).ready(function() {
      }
      else if(reply.role == '1') {
         utils.redirect("user/listAll");
+     } else if (reply.role == '3') {
+       utils.redirect("user/showDetails");
      }
    }
   });

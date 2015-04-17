@@ -83,6 +83,8 @@ $(document).ready(function() {
   } else {
     $("#btn_edit_user").click(function() {
       var post_data = utils.retrieveInputs("pm_form", ["pm_name"]);
+      post_data.user_password=$("input[name=\"user_password\"]").val();
+      post_data.user_hint=$("input[name=\"user_hint\"]").val();
       if(!post_data.required_field_missing) {
         user_manager.edit(post_data, "user", "editCurrent");
       }
@@ -143,6 +145,7 @@ $(document).ready(function() {
       } else {//success
         utils.clearForm();
         toastr.success(reply.message);
+        user_manager.loadUserEditForm(reply);
         if(reply.user_type=="pm_id") {
           user_manager.loadPMEditForm(reply);
           $(".pm_edit").show().removeClass("hide");
