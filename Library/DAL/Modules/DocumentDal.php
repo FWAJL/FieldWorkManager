@@ -99,7 +99,6 @@ class DocumentDal extends \Library\DAL\BaseManager {
         \Library\Core\DirectoryManager::CreateDirectory($this->GetUploadDirectory($object));
         $object->setContentSize($this->GetSizeInKb($file));
         $object->setContentType($this->GetExtension($file));
-        
 
         //LEt's copy the file
         if(copy($file['tmp_name'], $this->GetUploadDirectory($object) . '/' . $object->Filename())){

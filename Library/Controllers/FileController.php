@@ -118,10 +118,7 @@ class FileController extends \Library\BaseController {
   * $file is having the master file details in pseudo format
   */
   public static function copyFile($files, $dataPost, $caller) {
-    //\Applications\PMTool\Helpers\CommonHelper::pr($file);
-    //\Applications\PMTool\Helpers\CommonHelper::pr($document);
-
-
+    
     $manager = $caller->managers()->getManagerOf("Document");
     $manager->setRootDirectory($caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
     $manager->setWebDirectory($caller->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
@@ -140,9 +137,6 @@ class FileController extends \Library\BaseController {
     }
     
     $result["dataOut"] = $manager->copyWithFile($document, $files['file']);
-
-    
-    //\Applications\PMTool\Helpers\CommonHelper::pr($file_name);
   }
 
   
