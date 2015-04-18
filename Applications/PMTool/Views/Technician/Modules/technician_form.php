@@ -20,7 +20,7 @@
     </li>
         <li>
       <label><?php echo $resx["technician_email"]; ?></label>
-      <input name="technician_email" type="text" />
+      <input name="technician_email" type="text" maxlength="50"/>
     </li>
     <li>
       <label><?php echo $resx["technician_active"]; ?></label>
