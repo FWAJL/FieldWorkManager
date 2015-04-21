@@ -86,18 +86,17 @@ class TaskController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
-	//Set passed task as current task
+  	//Set passed task as current task
 
-	if($rq->getData("task_id") !== '' && !is_null($rq->getData("task_id"))) {
-	  $sessionTask = \Applications\PMTool\Helpers\TaskHelper::SetCurrentSessionTask($this->user(), NULL, $rq->getData("task_id"));
-	  //check if we passed a redirect URL too
-	  if($rq->getData("onSuccess") !== '' && !is_null($rq->getData("onSuccess"))) {
-	  //rediect to it
-	    $this->Redirect($rq->getData("onSuccess"));
-	  }
-	}
+  	if($rq->getData("task_id") !== '' && !is_null($rq->getData("task_id"))) {
+  	  $sessionTask = \Applications\PMTool\Helpers\TaskHelper::SetCurrentSessionTask($this->user(), NULL, $rq->getData("task_id"));
+  	  //check if we passed a redirect URL too
+  	  if($rq->getData("onSuccess") !== '' && !is_null($rq->getData("onSuccess"))) {
+  	  //rediect to it
+  	    $this->Redirect($rq->getData("onSuccess"));
+  	  }
+  	}
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
-
 
     //Fetch tooltip data from xml and pass to view as an array
     $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"task", "targetaction": "list", "targetattr": ["active-task-header","inactive-task-header"]}', $this->app->name());
@@ -333,12 +332,17 @@ class TaskController extends \Library\BaseController {
     //Get the task objects from ids received
     $task_ids = str_getcsv($this->dataPost["task_ids"], ',');
     $sessionTasks = \Applications\PMTool\Helpers\TaskHelper::GetSessionTasks($this->app()->user());
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
 
     foreach ($task_ids as $id) {
-      $task = $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $id][\Library\Enums\SessionKeys::TaskObj];
+      $task = $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $id][\Library\Enums\SessionKeys::TaskObj];      
       $task->setTask_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
       $manager = $this->managers->getManagerOf($this->module);
       $rows_affected += $manager->edit($task, "task_id") ? 1 : 0;
+      //Create Location specific PDFs for this task
+      if($this->dataPost["action"] === "active") {
+        \Applications\PMTool\Helpers\TaskHelper::CreateLocationSpecificPDF($id, $sessionProject, $this);
+      }
     }
     \Applications\PMTool\Helpers\TaskHelper::SetSessionTasks($this->app()->user(), $sessionTasks);
 
