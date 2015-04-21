@@ -80,6 +80,36 @@ class DocumentDal extends \Library\DAL\BaseManager {
     }
   }
 
+  /**
+  * Location specific PDF document requirement
+  * Copies the file which is passed to it, with 
+  * the generated name
+  */
+  public function copyWithFile($object, $file) {
+    if($object instanceof \Library\Interfaces\IDocument) {
+      $object->setFilename($this->GetFileNameToSaveInDatabase($file));
+      $fileExists = \Library\Core\DirectoryManager::FileExists($this->GetUploadDirectory($object) . "/" . $object->Filename());
+      $extensions = $object->ValidExtensions();
+      if(is_array($extensions)) {
+        $validExtension = $this->CheckExtension($file, $extensions);
+      } else {
+        $validExtension = true;
+      }
+      if(!$fileExists && $validExtension) {
+        \Library\Core\DirectoryManager::CreateDirectory($this->GetUploadDirectory($object));
+        $object->setContentSize($this->GetSizeInKb($file));
+        $object->setContentType($this->GetExtension($file));
+
+        //LEt's copy the file
+        if(copy($file['tmp_name'], $this->GetUploadDirectory($object) . '/' . $object->Filename())){
+          return parent::add($object);  
+        }
+      } else {
+        return -1;
+      }
+    }
+  }
+
   public function deleteWithFile($object, $where_filter_id) {
     if($object instanceof \Library\Interfaces\IDocument) {
       $fileExists = \Library\Core\DirectoryManager::FileExists($this->GetUploadDirectory($object) . "/" . $object->Filename());

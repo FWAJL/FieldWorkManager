@@ -129,10 +129,8 @@ class AnalyteHelper {
     $project = $sessionProject == NULL ? ProjectHelper::GetCurrentSessionProject($caller->user()) : $sessionProject;
     $sessionKey = $getFieldType ? \Library\Enums\SessionKeys::ProjectFieldAnalytes : \Library\Enums\SessionKeys::ProjectLabAnalytes;
     if (count($project[$sessionKey]) === 0) {
-      \Library\Utility\DebugHelper::LogAsHtmlComment($getFieldType);
       $type = $getFieldType ? "field" : "lab";
       $className = "\Applications\PMTool\Models\Dao\Project_" . $type . "_analyte";
-      \Library\Utility\DebugHelper::LogAsHtmlComment($className);
       $project_analyte = new $className();
       $project_analyte->setProject_id($project[\Library\Enums\SessionKeys::ProjectObject]->project_id());
       $dal = $caller->managers()->getManagerOf($caller->module());

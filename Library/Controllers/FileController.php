@@ -112,4 +112,32 @@ class FileController extends \Library\BaseController {
 
   }
 
+  /**
+  * PDF copy method
+  * $dataPost is actually having the Document model
+  * $file is having the master file details in pseudo format
+  */
+  public static function copyFile($files, $dataPost, $caller) {
+    
+    $manager = $caller->managers()->getManagerOf("Document");
+    $manager->setRootDirectory($caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
+    $manager->setWebDirectory($caller->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
+    $directory = str_replace("_id", "", $dataPost['itemCategory']);
+    $manager->setObjectDirectory($directory);
+    if($dataPost['itemReplace']==="true") {
+      $list = $manager->selectManyByCategoryAndId($dataPost['itemCategory'],$dataPost['itemId']);
+    }
+    $manager->setFilenamePrefix($dataPost['itemId'].'_');
+    $document = new \Applications\PMTool\Models\Dao\Document();
+    $document->setDocument_category($dataPost['itemCategory']);
+    if(isset($dataPost['title']) && $dataPost['title']!="") {
+      $document->setDocument_title($dataPost['title']);
+    } else {
+      $document->setDocument_title($files['file']['name']);
+    }
+    
+    $result["dataOut"] = $manager->copyWithFile($document, $files['file']);
+  }
+
+  
 }
