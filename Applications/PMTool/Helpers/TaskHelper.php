@@ -269,4 +269,58 @@ class TaskHelper {
     return $ret_val;
   }
 
+  /**
+  * For the passed task ID, creates location specific 
+  * PDF forms from PDF template
+  */
+  public static function CreateLocationSpecificPDF($task_id, $sessionProject, $caller) {
+    //Fetch the locations for this task
+    $taskLocationDAO = new \Applications\PMTool\Models\Dao\Task_location();
+    $taskLocationDAO->setTask_id($task_id);
+    $dal = $caller->managers()->getManagerOf("Task");
+    $location_data = $dal->selectMany($taskLocationDAO, "task_id");
+
+    //Fetch the template file relation for this task
+    $templateDAO = new \Applications\PMTool\Models\Dao\Task_template_form();
+    $templateDAO->setTask_id($task_id);
+    $template_data = $dal->selectMany($templateDAO, "task_id");
+    
+    //Loop on all the template files
+    foreach($template_data as $template){
+      //And finally the file itself, which needs to be copied
+      $masterformDAO = new \Applications\PMTool\Models\Dao\Master_form();
+      $masterformDAO->setForm_id($template->master_form_id());
+      $masterform_data = $dal->selectMany($masterformDAO, "form_id");
+
+      //Pseudo array for file based on the master file
+      $files['file'] = array(
+                              'name'      => $masterform_data[0]->value(),
+                              'type'      => $masterform_data[0]->content_type(),
+                              'tmp_name'  => './uploads/master_form/' . $masterform_data[0]->value(),
+                              'error'     => 0,
+                              'size'      => $masterform_data[0]->size() * 1000
+                            );
+
+      //So now we have to loop over the locations and create multiple files
+      foreach($location_data as $loc_key => $loc_val) {
+
+        //We have to get the Location names too
+        $location_record = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($loc_val->location_id(), 
+                "location_id", $sessionProject, \Library\Enums\SessionKeys::ProjectLocations);
+        $location_object = null;
+        foreach($location_record as $elem){
+          $location_object = $elem; break;
+        }
+
+        $dataPost = null;
+        //Create the 'Document' specific array
+        $dataPost['itemCategory'] = 'task_location';
+        $dataPost['itemId']       = $loc_val->task_location_id();
+        $dataPost['title']        = $masterform_data[0]->title() . '_' . $location_object->location_name();
+        $dataPost['itemReplace']  = false;
+
+        \Library\Controllers\FileController::copyFile($files, $dataPost, $caller);
+      }
+    }
+  }
 }
