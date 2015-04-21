@@ -307,11 +307,8 @@ class TaskHelper {
         //We have to get the Location names too
         $location_record = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($loc_val->location_id(), 
                 "location_id", $sessionProject, \Library\Enums\SessionKeys::ProjectLocations);
-        $location_object = null;
-        foreach($location_record as $elem){
-          $location_object = $elem; break;
-        }
-
+        $location_object = $location_record['object'];
+        
         $dataPost = null;
         //Create the 'Document' specific array
         $dataPost['itemCategory'] = 'task_location';

@@ -1,4 +1,4 @@
-<?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
+<?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');?>
 <div class="right-aside main col-lg-10 col-md-10 col-sm-10">
   <h3>
     <?php echo $current_project->project_name(); ?>
@@ -19,4 +19,5 @@
 	<?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::tabs_close]; ?>
   </div>
   <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::tooltip_msg_module]; ?>
+  <input type="hidden" id="modforjs" name="modforjs" value="taskforms" />
 </div>

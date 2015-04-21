@@ -45,14 +45,14 @@ class BaseManager extends \Library\Manager {
     $params = array("type" => "SELECT", "dao_class" => \Applications\PMTool\Helpers\CommonHelper::GetFullClassName($object));
     $select_clause = "SELECT ";
     if ($where_filter_id !== "") {
-	  if($filter_as_string)
-	  {
-		$where_clause = " WHERE " . $where_filter_id . " = '" . $object->$where_filter_id() . "'";
-	  }
-	  else
-	  {
+  	  if($filter_as_string)
+  	  {
+  		  $where_clause = " WHERE " . $where_filter_id . " = '" . $object->$where_filter_id() . "'";
+  	  }
+  	  else
+  	  {
         $where_clause = " WHERE " . $where_filter_id . " = " . $object->$where_filter_id();
-	  }
+  	  }
     } else {
       $where_clause = "";
     }

@@ -173,7 +173,7 @@ class DocumentDal extends \Library\DAL\BaseManager {
   }
 
   private function GetFileNameToSaveInDatabase($file) {
-    return $this->filenamePrefix.\Library\Core\Utility\UUID::v4(). "." . $this->GetExtension($file);
+    return $this->filenamePrefix . \Library\Core\Utility\UUID::v4() . "." . $this->GetExtension($file);
   }
 
   private function GetSizeInKb($file) {
