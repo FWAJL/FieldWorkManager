@@ -273,7 +273,11 @@ class TaskHelper {
   * For the passed task ID, creates location specific 
   * PDF forms from PDF template
   */
-  public static function CreateLocationSpecificPDF($task_id, $sessionProject, $caller) {
+  public static function CreateLocationSpecificPDF($task_id, $caller) {
+
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($caller->user());
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($caller->user());
+
     //Fetch the locations for this task
     $taskLocationDAO = new \Applications\PMTool\Models\Dao\Task_location();
     $taskLocationDAO->setTask_id($task_id);
@@ -305,18 +309,35 @@ class TaskHelper {
       foreach($location_data as $loc_key => $loc_val) {
 
         //We have to get the Location names too
+        //Check if exists in Session
+        if(empty($sessionProject[\Library\Enums\SessionKeys::ProjectLocations])) {
+          //No location data is avialbel in Session yet, let's populate it
+          
+          $project_locations = \Applications\PMTool\Helpers\LocationHelper::GetProjectLocations($caller, $sessionProject);
+          $task_locations = \Applications\PMTool\Helpers\LocationHelper::GetAndStoreTaskLocations($caller, $sessionTask);
+          //filter the project locations after we retrieve the task locations
+          $project_locations = \Applications\PMTool\Helpers\LocationHelper::FilterLocationsToExcludeTaskLocations($project_locations, $task_locations);
+          
+        }
+
+        //Recall session projects
+        $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($caller->user());
         $location_record = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($loc_val->location_id(), 
                 "location_id", $sessionProject, \Library\Enums\SessionKeys::ProjectLocations);
-        $location_object = $location_record['object'];
         
-        $dataPost = null;
-        //Create the 'Document' specific array
-        $dataPost['itemCategory'] = 'task_location';
-        $dataPost['itemId']       = $loc_val->task_location_id();
-        $dataPost['title']        = $masterform_data[0]->title() . '_' . $location_object->location_name();
-        $dataPost['itemReplace']  = false;
+        if(!empty($location_record)){
+          $location_object = $location_record['object'];
+        
+          $dataPost = null;
+          //Create the 'Document' specific array
+          $dataPost['itemCategory'] = 'task_location';
+          $dataPost['itemId']       = $loc_val->task_location_id();
+          $dataPost['title']        = $masterform_data[0]->title() . '_' . $location_object->location_name();
+          $dataPost['itemReplace']  = false;
 
-        \Library\Controllers\FileController::copyFile($files, $dataPost, $caller);
+          \Library\Controllers\FileController::copyFile($files, $dataPost, $caller);  
+        }
+        
       }
     }
   }
