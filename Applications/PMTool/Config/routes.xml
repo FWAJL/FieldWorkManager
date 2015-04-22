@@ -835,6 +835,7 @@
     <route url="user/listAll" module="User" action="listAll" resxfile="user" type="ui" role="1">
       <js_files>
         <js_file use="head" value="Web/js/app/controllers/user_manager.js" />
+        <js_file use="head" value="Web/js/app/controllers/auth.js" />
       </js_files>
       <css_files>
         <css_file value="Web/css/app/nav.css" />
