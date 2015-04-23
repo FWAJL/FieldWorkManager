@@ -275,7 +275,7 @@ class TaskHelper {
   */
   public static function CreateLocationSpecificPDF($task_id, $caller) {
 
-    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($caller->user());
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::SetCurrentSessionTask($caller->user(), NULL, $task_id);
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($caller->user());
 
     //Fetch the locations for this task
