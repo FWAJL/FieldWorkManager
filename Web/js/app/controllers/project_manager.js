@@ -193,7 +193,7 @@ $(document).ready(function() {
     }
 
     $('#promptmsg-addNullCheck').val(project_manager.prompt_box_msg.replace('{0}', $('input[name=project_name]').val()));
-    utils.showPromptBox("addNullCheck", function() {
+    utils.showPromptBoxById("copy-prompt","addNullCheck", function() {
       if ($('#text_input').val() !== '')
       {
         //Check unique		

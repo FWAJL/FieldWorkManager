@@ -52,7 +52,7 @@
             <php_module key="client_form" file_name="client_form.php" />
             <php_module key="project_buttons" file_name="project_buttons.php" />
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-	        <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+	        <php_module key="popup_prompt_module" file_name="popup_prompt.php" />
 	        <php_module key="popup_address" file_name="popup_address.php" />
         </php_modules>
     </route>
