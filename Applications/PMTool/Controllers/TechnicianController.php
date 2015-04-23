@@ -64,6 +64,7 @@ class TechnicianController extends \Library\BaseController {
     $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
     //.. and build the object to query the DB
     $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Technician());
+    $technician->setTechnician_document("");
     $result["dataIn"] = $technician;
 
     //Load interface to query the database
