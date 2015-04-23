@@ -147,6 +147,8 @@ class BaseManager extends \Library\Manager {
     foreach ($object as $key => $value) {
       if ($key === $where_filter_id) {
         $where_clause = "$key = :$key";
+      } else if($value=== null){
+
       } else {
         $set_clause .= "`$key` = :$key,";
       }
@@ -155,7 +157,9 @@ class BaseManager extends \Library\Manager {
     $update_clause = "UPDATE `" . $this->GetTableName($object) . "` SET $set_clause  WHERE $where_clause;";
     $sth = $this->dao->prepare($update_clause);
     foreach ($object as $key => $value) {
-      $sth->bindValue("$key",$value,\PDO::PARAM_STR);
+      if($value!==null){
+        $sth->bindValue(":$key",$value,\PDO::PARAM_STR);
+      }
     }
     return $this->ExecuteQuery($sth, $params);
   }

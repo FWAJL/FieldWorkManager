@@ -200,6 +200,12 @@ class ProjectHelper {
     $project_ids = count($pm[\Library\Enums\SessionKeys::PmProjectIds]) > 0 ? $pm[\Library\Enums\SessionKeys::PmProjectIds] : FALSE;
     if (count($projects) === 1 && $project_ids !== FALSE) {
       \Applications\PMTool\Helpers\ProjectHelper::SetCurrentSessionProject($user, $projects[\Library\Enums\SessionKeys::ProjectKey . $project_ids[0]]);
+    } else if(count($projects)>1 && $project_ids !== FALSE) {
+      $project_objects = \Applications\PMTool\Helpers\CommonHelper::GetListObjectsInSessionByKey($user, \Library\Enums\SessionKeys::ProjectObject);
+      $project = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue(1, 'project_is_default', $project_objects);
+      if($project !==false) {
+        \Applications\PMTool\Helpers\ProjectHelper::SetCurrentSessionProject($user, $projects[\Library\Enums\SessionKeys::ProjectKey . $project->project_id()]);
+      }
     }
     return $projects;
   }
