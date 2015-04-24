@@ -1,0 +1,24 @@
+/* Starting CSS For Mobile Pages....... */
+.welcome
+{
+  font-family: cursive;
+  padding: 1%;
+  background: #999;
+  border-radius: 6px;
+  transition-property: width;
+  transition-duration: 2s;
+  transition-timing-function: linear;
+}
+
+.row.mobile_main
+{
+    margin-left:0px!important;
+    margin-right:0px!important;
+}
+
+/*CSS For Container Class */
+
+.mobile_view
+{
+  width: 100%;  
+}
