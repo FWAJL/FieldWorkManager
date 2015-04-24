@@ -342,7 +342,7 @@ class TaskController extends \Library\BaseController {
       $rows_affected += $manager->edit($task, "task_id") ? 1 : 0;
       //Create Location specific PDFs for this task
       if($this->dataPost["action"] === "active") {
-        \Applications\PMTool\Helpers\TaskHelper::CreateLocationSpecificPDF($id, $sessionProject, $this);
+        \Applications\PMTool\Helpers\TaskHelper::CreateLocationSpecificPDF($id, $this);
       }
     }
     \Applications\PMTool\Helpers\TaskHelper::SetSessionTasks($this->app()->user(), $sessionTasks);

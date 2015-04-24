@@ -44,7 +44,7 @@ class BaseManager extends \Library\Manager {
   public function selectMany($object, $where_filter_id, $filter_as_string = false) {
     $params = array("type" => "SELECT", "dao_class" => \Applications\PMTool\Helpers\CommonHelper::GetFullClassName($object));
     if ($where_filter_id !== "") {
-        $where_clause = " WHERE " . $where_filter_id . " = :where_filter_id";
+      $where_clause = " WHERE " . $where_filter_id . " = :where_filter_id";
     } else {
       $where_clause = "";
     }
