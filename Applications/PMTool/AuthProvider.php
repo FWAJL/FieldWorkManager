@@ -32,11 +32,6 @@ class AuthProvider implements IAuthProvider
     //Search for user in DB and return him
     $user_db =  $this->loginManager->selectOne($user);
     if (count($user_db) === 1) {
-      if (!isset($data["encrypt_pwd"])) {
-        $user->setUser_password($protect->Encrypt($this->encryptionKey, $user->password()));
-        $user->user_id = $user_db[0]->user_id;
-        $this->loginManager->update($user);
-      }
       $this->user = $user_db[0];
       //Search for user in DB and return him
       $user_type = $this->loginManager->selectUserType($this->user);

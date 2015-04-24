@@ -357,11 +357,13 @@ $(document).ready(function() {
 
     $('.prompt-modal').modal('show');
     //Events
+    $("#prompt_ok").unbind('click');
     $('#prompt_ok').on('click', function(){
       callback();
     });
     if(callbackOnCancel !== undefined)
     {
+      $('.prompt-modal').unbind('hidden.bs.modal');
       $('.prompt-modal').on('hidden.bs.modal', function (e) {
         callbackOnCancel();
       })
@@ -437,11 +439,13 @@ $(document).ready(function() {
 
     $('#'+id).modal('show');
     //Events
+    $('#'+id+" .modal-update").unbind("click");
     $('#'+id+" .modal-update").on('click', function(){
       callback();
     });
     if(callbackOnCancel !== undefined)
     {
+      $('#'+id).unbind('hidden.bs.modal');
       $('#'+id).on('hidden.bs.modal', function (e) {
         callbackOnCancel();
       })

@@ -43,29 +43,32 @@ class BaseManager extends \Library\Manager {
    */
   public function selectMany($object, $where_filter_id, $filter_as_string = false) {
     $params = array("type" => "SELECT", "dao_class" => \Applications\PMTool\Helpers\CommonHelper::GetFullClassName($object));
-    $select_clause = "SELECT ";
     if ($where_filter_id !== "") {
-	  if($filter_as_string)
-	  {
-		$where_clause = " WHERE " . $where_filter_id . " = '" . $object->$where_filter_id() . "'";
-	  }
-	  else
-	  {
-        $where_clause = " WHERE " . $where_filter_id . " = " . $object->$where_filter_id();
-	  }
+        $where_clause = " WHERE " . $where_filter_id . " = :where_filter_id";
     } else {
       $where_clause = "";
     }
-    foreach ($object as $key => $value) {
-      $select_clause .= $key . ", ";
-    }
+
     $order_by = "";
     if($object->getOrderByField() !== FALSE) {
       $order_by = "ORDER BY ".$object->getOrderByField();
     }
-
+    $select_clause = "SELECT ";
+    foreach ($object as $key => $value) {
+      $select_clause .= $key . ", ";
+    }
     $select_clause = rtrim($select_clause, ", ");
-    return $this->ExecuteQuery($select_clause . " FROM " . $this->GetTableName($object) . $where_clause." ".$order_by, $params);
+    $select_clause .= " FROM ".$this->GetTableName($object).$where_clause." ".$order_by;
+    $sth = $this->dao->prepare($select_clause);
+    if($where_filter_id !== "") {
+      if($filter_as_string) {
+        $sth->bindValue(':where_filter_id',$object->$where_filter_id(),\PDO::PARAM_STR);
+      } else {
+        $sth->bindValue(':where_filter_id',$object->$where_filter_id(),\PDO::PARAM_INT);
+      }
+    }
+
+    return $this->ExecuteQuery($sth, $params);
   }
   /**
    * Select method for many items
@@ -89,13 +92,16 @@ class BaseManager extends \Library\Manager {
     foreach ($object as $key => $value) {
       $select_clause .= $key . ", ";
     }
+    $select_clause = rtrim($select_clause, ", ");
+    $select_clause.=" FROM ".$this->GetTableName($object);
     $order_by = "";
     if($object->getOrderByField() !== FALSE) {
       $order_by = "ORDER BY ".$object->getOrderByField();
     }
+    $select_clause .= $where_clause." ".$order_by;
 
-    $select_clause = rtrim($select_clause, ", ");
-    return $this->ExecuteQuery($select_clause . " FROM " . $this->GetTableName($object) . $where_clause." ".$order_by, $params);
+    $sth = $this->dao->prepare($select_clause);
+    return $this->ExecuteQuery($sth, $params);
   }
 
   /**
@@ -118,11 +124,16 @@ class BaseManager extends \Library\Manager {
     $values = "";
     foreach ($object as $key => $value) {
       $columns .= "`" . $key . "`,";
-      $values .= "'" . $value . "',";
+      $values .= ":$key,";
     }
     $columns = rtrim($columns, ", ");
     $values = rtrim($values, ", ");
-    return $this->ExecuteQuery("INSERT INTO `" . $this->GetTableName($object) . "` ($columns) VALUES ($values);", $params);
+    $insert_clause = "INSERT INTO `".$this->GetTableName($object)."` ($columns) VALUES ($values);";
+    $sth = $this->dao->prepare($insert_clause);
+    foreach($object as $key=>$value) {
+      $sth->bindValue(":$key",$value,\PDO::PARAM_STR);
+    }
+    return $this->ExecuteQuery($sth, $params);
   }
 
   /**
@@ -132,18 +143,25 @@ class BaseManager extends \Library\Manager {
    */
   public function edit($object, $where_filter_id) {
     $params = array("type" => "UPDATE");
-    $set_clause = "";
-    $where_clause = "";
+    $where_clause = $set_clause = "";
     foreach ($object as $key => $value) {
       if ($key === $where_filter_id) {
-        $where_clause = "$key = $value";
+        $where_clause = "$key = :$key";
+      } else if($value=== null){
+
       } else {
-        $set_clause .= "`$key` = '$value',";
+        $set_clause .= "`$key` = :$key,";
       }
     }
     $set_clause = rtrim($set_clause, ",");
-    return $this->ExecuteQuery(
-                    "UPDATE `" . $this->GetTableName($object) . "` SET $set_clause  WHERE $where_clause;", $params);
+    $update_clause = "UPDATE `" . $this->GetTableName($object) . "` SET $set_clause  WHERE $where_clause;";
+    $sth = $this->dao->prepare($update_clause);
+    foreach ($object as $key => $value) {
+      if($value!==null){
+        $sth->bindValue(":$key",$value,\PDO::PARAM_STR);
+      }
+    }
+    return $this->ExecuteQuery($sth, $params);
   }
 
   /**
@@ -153,27 +171,28 @@ class BaseManager extends \Library\Manager {
    */
   public function delete($object, $where_filter_id) {
     $params = array("type" => "DELETE");
-    return $this->ExecuteQuery(
-                    "DELETE from `" . $this->GetTableName($object) . "` WHERE $where_filter_id = " . $object->$where_filter_id() . ";", $params);
+    $delete_clause = "DELETE from `" . $this->GetTableName($object) . "` WHERE $where_filter_id = " . $object->$where_filter_id() . ";";
+    $sth = $this->dao->prepare($delete_clause);
+    return $this->ExecuteQuery($sth, $params);
   }
 
   private function GetTableName($object) {
     return \Applications\PMTool\Helpers\CommonHelper::GetShortClassName($object);
   }
 
-  private function ExecuteQuery($sql_query, $params) {
+  private function ExecuteQuery($sth, $params) {
     $result = -1;
     try {
       //\Library\Utility\DebugHelper::LogAsHtmlComment($sql_query);
-      $query = $this->dao->query($sql_query);
+      $query = $sth->execute();
       if (!$query) {
         $result = $query->errorCode();
       } else {
         switch ($params["type"]) {
           case "SELECT":
-            $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $params["dao_class"]);
-            $list = $query->fetchAll();
-            $query->closeCursor();
+            $sth->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $params["dao_class"]);
+            $list = $sth->fetchAll();
+            $sth->closeCursor();
             return count($list) > 0 ? $list : array();
             break;
           case "UPDATE":
@@ -188,7 +207,7 @@ class BaseManager extends \Library\Manager {
         }
         
       }
-      $query->closeCursor();
+      $sth->closeCursor();
     } catch (\PDOException $pdo_ex) {
       json_encode($pdo_ex);
       //echo "<!--" . $pdo_ex->getMessage() . "-->";
