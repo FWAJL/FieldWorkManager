@@ -134,4 +134,16 @@ class UserHelper {
     return $pm;
   }
 
+  public static function FindUserTypeFromObject($object) {
+    if($object instanceof \Applications\PMTool\Models\Dao\Technician) {
+      return 'technician_id';
+    } else if($object instanceof \Applications\PMTool\Models\Dao\Service) {
+      return 'service_id';
+    } else if($object instanceof \Applications\PMTool\Models\Dao\Project_manager) {
+      return 'pm_id';
+    } else {
+      return '';
+    }
+  }
+
 }

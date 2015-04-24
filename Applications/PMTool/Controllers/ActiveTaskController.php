@@ -114,8 +114,18 @@ class ActiveTaskController extends \Library\BaseController {
 	\Applications\PMTool\Helpers\ActiveTaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\ActiveTaskTabKeys::ActiveTaskCommTab);
 	
 	//Get current Discussion from session and set for view
-	if(isset($_SESSION[\Library\Enums\SessionKeys::CurrentDiscussion]))
-		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentDiscussions, $_SESSION[\Library\Enums\SessionKeys::CurrentDiscussion]);
+  $currentDiscussion = \Applications\PMTool\Helpers\DiscussionHelper::GetCurrentDiscussion($this->user);
+	if($currentDiscussion){
+    $manager = $this->managers()->getManagerOf('User');
+    $discussion_person = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue(0,'discussion_person_is_author',$currentDiscussion[\Library\Enums\SessionKeys::DiscussionPeople]);
+    $discussion_user_type = $manager->selectUserTypeObjectByUserId($discussion_person->user_id());
+    if($discussion_user_type) {
+      $currentDiscussion['comm_with'] = $discussion_user_type;
+      $currentDiscussion['comm_type'] = \Applications\PMTool\Helpers\UserHelper::FindUserTypeFromObject($discussion_user_type);
+    }
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentDiscussion, $currentDiscussion);
+  }
+
 	
 	//Let's get this task specific services
 	$sessionPm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
@@ -161,26 +171,48 @@ class ActiveTaskController extends \Library\BaseController {
     $result = $this->InitResponseWS(); // Init result
 
     $result['success'] = false;
-	if($this->dataPost['selection_type'] == 'technician') {
-	  foreach($_SESSION[\Library\Enums\SessionKeys::CurrentPm][\Library\Enums\SessionKeys::PmTechnicians] as $technician) {
-		if($technician['technician_id'] == $this->dataPost['id']) {
-		  $_SESSION[\Library\Enums\SessionKeys::CurrentDiscussion]['comm_with'] = $technician;
-		  $_SESSION[\Library\Enums\SessionKeys::CurrentDiscussion]['comm_type'] = $this->dataPost['selection_type'];
-		  $result['success'] = true;
-		  break;
-		}
-	  }
-	} else {
-	  foreach($_SESSION[\Library\Enums\SessionKeys::CurrentPm][\Library\Enums\SessionKeys::PmServices] as $service) {
-		if($service['service_id'] == $this->dataPost['id']) {
-		  $_SESSION[\Library\Enums\SessionKeys::CurrentDiscussion]['comm_with'] = $service;
-		  $_SESSION[\Library\Enums\SessionKeys::CurrentDiscussion]['comm_type'] = $this->dataPost['selection_type'];
-		  $result['success'] = true;
-		  break;
-		}
-	  }
-	}
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user);
+    $taskDiscussions = \Applications\PMTool\Helpers\DiscussionHelper::GetAllTaskDiscussions($this,$sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
 
+
+	  if($this->dataPost['selection_type'] == 'technician_id') {
+      $technicians = \Applications\PMTool\Helpers\TechnicianHelper::GetAndStoreTaskTechnicians($this,$sessionTask);
+      foreach($technicians as $technician) {
+        if($technician->technician_id() == $this->dataPost['id']) {
+          $manager = $this->managers()->getManagerOf('User');
+          $user = $manager->selectUserByTypeId('technician_id',$technician->technician_id());
+          break;
+        }
+      }
+	  } else {
+      $services = \Applications\PMTool\Helpers\ServiceHelper::GetAndStoreTaskServices($this,$sessionTask);
+      foreach($services as $service) {
+        if($service->service_id() == $this->dataPost['id']) {
+          $manager = $this->managers()->getManagerOf('User');
+          $user = $manager->selectUserByTypeId('service_id',$service->service_id());
+          break;
+        }
+	    }
+	  }
+    //we can add more users later if we choose to add more people in same discussion
+    $discussionUsers = array($this->user->getAttribute(\Library\Enums\SessionKeys::UserConnected),$user);
+
+    $discussion = \Applications\PMTool\Helpers\DiscussionHelper::CheckIfDiscussionExistsByUsers($this, $this->user->getAttribute(\Library\Enums\SessionKeys::UserConnected), $user, $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+    if($discussion === false) {
+      $discussion = \Applications\PMTool\Helpers\DiscussionHelper::CreateNewDiscussion($this,$discussionUsers,$sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+    }
+    //in case create discussion returned false we will check if discussion is false again
+    if($discussion !== false) {
+      $manager = $this->managers()->getManagerOf('DiscussionPerson');
+      $discussion_person = new \Applications\PMTool\Models\Dao\Discussion_person();
+      $discussion_person->setDiscussion_id($discussion->discussion_id());
+      //select all connected people so we can store them in session
+      $discussion_people = $manager->selectMany($discussion_person,'discussion_id');
+      \Applications\PMTool\Helpers\DiscussionHelper::SetCurrentDiscussion($this->user,$discussion,$discussion_people);
+      $result['success'] = true;
+    } else {
+      $result['success'] = false;
+    }
     $this->SendResponseWS(
       $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::ActiveTask,
@@ -281,6 +313,44 @@ class ActiveTaskController extends \Library\BaseController {
         "step" => ($result_get) ? "success" : "error"
       )
 	);
+  }
+
+  public function executeSendMessage(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS(); // Init result
+
+    $currentSessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+
+    //Prepare data object
+    $userConnected = \Applications\PMTool\Helpers\UserHelper::GetUserConnectedSession($this->user());
+
+
+    $currentDiscussion = \Applications\PMTool\Helpers\DiscussionHelper::GetCurrentDiscussion($this->user);
+    if($currentDiscussion) {
+      $manager = $this->managers()->getManagerOf('DiscussionContent');
+      $discussion_person = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue(intval($userConnected->user_id()),'user_id',$currentDiscussion[\Library\Enums\SessionKeys::DiscussionPeople]);
+      $discussion_content = new \Applications\PMTool\Models\Dao\Discussion_content();
+      $discussion_content->setDiscussion_person_id($discussion_person->discussion_person_id());
+      $discussion_content->setDiscussion_content_message($this->dataPost['discussion_content_message']);
+      $discussion_content_id = $manager->add($discussion_content);
+      //here goes mail sending...
+      if($discussion_content_id>0) {
+        $result['success'] = true;
+        $result['data'] = $discussion_content_id;
+      } else {
+        $result['succes'] = false;
+      }
+    } else {
+      $result['success'] = false;
+      $result['data'] = '';
+    }
+
+    $this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::ActiveTask,
+        "resx_key" => $this->action(),
+        "step" => ($result['success']) ? "success" : "error"
+      )
+    );
   }
   
 }

@@ -112,6 +112,13 @@ abstract class SessionKeys {
   const TabsStatus = "tabs_status";
   const ActiveTaskTabsStatus = "active_task_tabs_status";
   const TabActiveAnalyte = "tab_active_analyte";
+
+  //Discussion
+  const TaskDiscussions = "task_discussions";
+  const DiscussionUser = "discussion_user";
+  const DiscussionUserType = "discussion_user_type";
+  const DiscussionPeople = "discussion_people";
+  const DiscussionObj = "discussion_obj";
 }
 
 ?>

@@ -120,11 +120,11 @@ $(document).ready(function(){
   	var id = utils.getValuesFromList(selectionParams.listLeftId, selectionParams.dataAttrLeft, true);
   	var selection_type = '';
       if(id !== '') {
-  	  selection_type = 'service';
+  	  selection_type = 'service_id';
   	}
   	else {
   	  id = task_technician_ids;
-  	  selection_type = 'technician';
+  	  selection_type = 'technician_id';
   	}
   	
   	activetask_manager.updateTaskTechnicians(selection_type, id);
@@ -162,7 +162,12 @@ $(document).ready(function(){
       }
     });
   });
-  
+  $("#btn_send_message").on('click',function() {
+    var msg = $("textarea[name=\"task_comm_message\"]").val();
+    if(msg.trim() != '') {
+      activetask_manager.sendMessage(msg.trim());
+    }
+  });
 });  
 
 
@@ -251,6 +256,16 @@ $(document).ready(function(){
       } else {//success
         toastr.success(reply.message);
         clbk(reply);
+      }
+    });
+  };
+
+  activetask_manager.sendMessage = function(msg) {
+    datacx.post('activetask/sendMessage',{discussion_content_message:msg}).then(function(reply){
+      if(reply === null || reply.result === 0) {
+        toastr.error(reply.message);
+      } else {
+        toastr.success(reply.message);
       }
     });
   };
