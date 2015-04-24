@@ -125,7 +125,7 @@ class TechnicianHelper {
   public static function GetPmTechnicians($caller, $sessionPm = NULL, $task_technicians = NULL) {
     $technicians = $sessionPm[\Library\Enums\SessionKeys::PmTechnicians];
 
-    if (count($technicians) === 0) {
+    if (count($technicians) === 0 or !is_array($technicians)) {
       $dataOut = self::GetTechnicianList($caller, $sessionPm);
       $technicians = $dataOut[\Library\Enums\SessionKeys::PmTechnicians];
     }

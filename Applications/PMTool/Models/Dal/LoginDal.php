@@ -15,15 +15,18 @@ class LoginDal extends \Library\DAL\BaseManager {
    */
   public function selectOne($user) {
     if ($user->user_login() !== "") {//Check if the user is giving his username and that there is a value
-      $sql = 'SELECT * FROM user where `user_login` = \'' . $user->user_login() . '\' AND `user_password` = \'' . $user->user_password() . '\' LIMIT 0, 1;';
+      $sql = 'SELECT * FROM user where `user_login` = :user_login AND `user_password` = :user_password LIMIT 0, 1;';
     }else {
       return NULL;
     }
-    $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\User');
+    $sth = $this->dao->prepare($sql);
+    $sth->bindValue(':user_login',$user->user_login(),\PDO::PARAM_STR);
+    $sth->bindValue(':user_password',$user->user_password(),\PDO::PARAM_STR);
+    $sth->execute();
+    $sth->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\User');
 
-    $user_out = $query->fetchAll();
-    $query->closeCursor();
+    $user_out = $sth->fetchAll();
+    $sth->closeCursor();
 
     return $user_out;
   }

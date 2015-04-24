@@ -38,4 +38,45 @@ class ActiveTaskHelper {
     $tabs[$tab_name] = "active";
     $user->setAttribute(\Library\Enums\SessionKeys::ActiveTaskTabsStatus, $tabs);
   }
+
+  public static function SetPropertyNamesOfDocumentsForDualList() {
+    return array(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id => "document_id",
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name => "document_title",
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active => "document_id",
+    );
+  }
+
+  /**
+  * Returns the task specific documents from the 
+  * Document table for this task
+  */
+  public static function GetDocumentsForActiveTask($activeTask, $caller) {
+    //First thing, let's get the task location id's for this active task
+    $taskLocationDAO = new \Applications\PMTool\Models\Dao\Task_location();
+    $taskLocationDAO->setTask_id($activeTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+    $dal = $caller->managers()->getManagerOf("Task");
+    $location_data = $dal->selectMany($taskLocationDAO, "task_id");
+
+    //Fetch all documents
+    //Ideally we need a method in BaseManager which would let us
+    //query a db field with "LIKE operator" or selectMany should 
+    //be modified to do the same
+    $documentDAO = new \Applications\PMTool\Models\Dao\Document();
+    $dal = $caller->managers()->getManagerOf("Task");
+    $documents = $dal->selectMany($documentDAO, "");
+
+    $docData = array();
+    //Loop on the location data
+    foreach($location_data as $location) {
+      foreach($documents as $doc){
+        if(strpos($doc->document_value(), $location->task_location_id() . '_') === 0){
+          array_push($docData, $doc);
+        }
+      }
+    }
+
+    //Return the doc array
+    return $docData;
+  }
 }

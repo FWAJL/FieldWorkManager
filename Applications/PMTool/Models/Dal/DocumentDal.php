@@ -15,13 +15,17 @@ class DocumentDal extends \Library\DAL\Modules\DocumentDal {
    * @return array of \Applications\PMTool\Models\Dao\Document
    */
   public function selectManyByCategoryAndId($document_category, $category_id) {
+    $category_id .= '_%';
     $sql = 'SELECT d.* FROM `document` d';
-    $sql .= ' where d.`document_category` = \'' . $document_category . '\' and d.`document_value` LIKE \''.$category_id.'\\_%\';';
-    $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Document');
+    $sql .= ' where d.`document_category` = :document_category and d.`document_value` LIKE :category_id;';
+    $sth = $this->dao->prepare($sql);
+    $sth->bindValue(':document_category',$document_category,\PDO::PARAM_STR);
+    $sth->bindValue(':category_id',$category_id,\PDO::PARAM_STR);
+    $sth->execute();
+    $sth->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Document');
 
-    $document_list = $query->fetchAll();
-    $query->closeCursor();
+    $document_list = $sth->fetchAll();
+    $sth->closeCursor();
     $list = $this->AddFilePathToObjectList($document_list);
     return $list;
   }
@@ -29,15 +33,18 @@ class DocumentDal extends \Library\DAL\Modules\DocumentDal {
   public function selectOne($document) {
     if ($document->document_id() !== "") {//Check if the user is giving his username and that there is a value
       $tableName = \Applications\PMTool\Helpers\CommonHelper::GetShortClassName($document);
-      $sql = 'SELECT * FROM `'.$tableName.'` where `document_id` = \'' . $document->document_id() . '\' LIMIT 0, 1;';
+      $sql = 'SELECT * FROM `'.$tableName.'` where `document_id` = :document_id LIMIT 0, 1;';
     } else {
       return NULL;
     }
-    $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Document');
 
-    $document_out = $query->fetch ();
-    $query->closeCursor();
+    $sth = $this->dao->prepare($sql);
+    $sth->bindValue(':document_id',$document->document_id(),\PDO::PARAM_INT);
+    $sth->execute();
+    $sth->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Document');
+
+    $document_out = $sth->fetch ();
+    $sth->closeCursor();
 
     return $document_out;
   }

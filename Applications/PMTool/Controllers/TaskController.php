@@ -197,7 +197,8 @@ class TaskController extends \Library\BaseController {
     //Load interface to query the database
     $manager = $this->managers->getManagerOf($this->module);
     $this->dataPost["project_id"] = $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id();
-
+    $this->dataPost["task_deadline"] = (isset($this->dataPost["task_deadline"]))?$this->dataPost["task_deadline"]:"";
+    $this->dataPost["task_active"] = (isset($this->dataPost["task_active"]))?$this->dataPost["task_active"]:"";
     $task = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Task());
 
     $result["dataIn"] = $task;
@@ -341,7 +342,7 @@ class TaskController extends \Library\BaseController {
       $rows_affected += $manager->edit($task, "task_id") ? 1 : 0;
       //Create Location specific PDFs for this task
       if($this->dataPost["action"] === "active") {
-        \Applications\PMTool\Helpers\TaskHelper::CreateLocationSpecificPDF($id, $sessionProject, $this);
+        \Applications\PMTool\Helpers\TaskHelper::CreateLocationSpecificPDF($id, $this);
       }
     }
     \Applications\PMTool\Helpers\TaskHelper::SetSessionTasks($this->app()->user(), $sessionTasks);
