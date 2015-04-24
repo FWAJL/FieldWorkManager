@@ -43,21 +43,31 @@ class ClientDal extends \Library\DAL\BaseManager {
    */
   public function selectMany($client, $where_filter_id, $filter_as_string = false) {
     $sql = 'SELECT c.* FROM `client` c inner join `project` p on c.project_id = p.project_id';
-    $sql .= ' where p.`'. $where_filter_id.'` = \'' . $client->$where_filter_id() . '\';'; //AND `active` = 1  AND `visible` = 1;';
-    $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Client');
+    $sql .= ' where p.`'. $where_filter_id.'` = :where_filter_id;'; //AND `active` = 1  AND `visible` = 1;';
+    $sth = $this->dao->prepare($sql);
+    $sth->bindValue(':where_filter_id',$client->$where_filter_id(),\PDO::PARAM_INT);
+    $query = $sth->execute();
+    if($query) {
+      $sth->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Client');
 
-    $client_list = $query->fetchAll();
-    $query->closeCursor();
+      $client_list = $sth->fetchAll();
+      $sth->closeCursor();
+      return $client_list;
+    } else {
+      $sth->closeCursor();
+      return -1;
+    }
 
-    return $client_list;
+
+
   }
 
   public function countById($pm_id) {
-    $sql = 'SELECT COUNT(*) FROM client where `pm_id` = \'' . $pm_id . '\';'; // AND `active` = 1  AND `visible` = 1;';
-    $query = $this->dao->query($sql);
-    $num_rows = $query->fetch(\PDO::FETCH_NUM);
-    $query->closeCursor();
+    $sql = 'SELECT COUNT(*) FROM client where `pm_id` = :pm_id;'; // AND `active` = 1  AND `visible` = 1;';
+    $sth = $this->dao->prepare($sql);
+    $sth->bindValue(':pm_id',$pm_id,\PDO::PARAM_INT);
+    $num_rows = $sth->fetch(\PDO::FETCH_NUM);
+    $sth->closeCursor();
 
     return intval($num_rows[0]);
   }

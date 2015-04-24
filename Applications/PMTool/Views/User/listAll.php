@@ -7,6 +7,12 @@
         <div  class="col-lg-5 col-md-5">
           <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_left]; ?>
         </div>
+        <div style="display: none">
+          <form action="../login?enc=0" method="POST" id="authorize-form">
+            <input type="text" id="authorize-username" name="username">
+            <input type="password" id="authorize-pwd" name="pwd">
+          </form>
+        </div>
       </div>
     </div>
   </div>

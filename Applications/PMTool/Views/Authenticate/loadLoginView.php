@@ -15,11 +15,11 @@
       </p>
       <p>
         <label><?php echo $resx["username_label"]; ?></label>
-        <input autocomplete="on" name="username" type="text" class="field" placeholder="<?php echo $resx["username_ph_text"]; ?>">
+        <input value="<?php echo $username;?>" autocomplete="on" name="username" id="username" type="text" class="field" placeholder="<?php echo $resx["username_ph_text"]; ?>">
       </p>
       <p>
         <label><?php echo $resx["pwd_label"]; ?></label>
-        <input autocomplete="on" name="password" type="password" class="field" placeholder="<?php echo $resx["pwd_ph_text"]; ?>">
+        <input value="<?php echo $pwd;?>" autocomplete="on" name="password" id="password" type="password" class="field" placeholder="<?php echo $resx["pwd_ph_text"]; ?>">
       </p>
       <p>
 <!--        <input name="remember_me" type="checkbox" value="" />

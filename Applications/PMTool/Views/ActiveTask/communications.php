@@ -30,11 +30,12 @@ if (isset($current_discussion['comm_type'])) {
     <!-- open tabs -->
 <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::active_task_tabs_open]; ?>
 
-    <!-- task map block -->
-<?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::active_task_comm]; ?>      
+    <!-- task communication block -->
+    <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::active_task_comm]; ?>      
 
     <!-- close tabs -->
   <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::tabs_close]; ?>
   </div>
-<?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::tooltip_msg_module]; ?>
+  <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::tooltip_msg_module]; ?>
+  <input type="hidden" id="modforjs" name="modforjs" value="taskcomm" />
 </div>

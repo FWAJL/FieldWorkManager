@@ -19,11 +19,14 @@ class UserDal extends \Library\DAL\BaseManager {
   }
 
   public function selectUserByTypeId($type,$id) {
-    $sql = "SELECT u.* FROM `user` u WHERE u.`user_type` = '$type' AND u.`user_value` = '$id'";
-    $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\User');
-    $user_out = $query->fetch ();
-    $query->closeCursor();
+    $sql = "SELECT u.* FROM `user` u WHERE u.`user_type` = :utype AND u.`user_value` = :uid";
+    $sth = $this->dao->prepare($sql);
+    $sth->bindValue(':utype',$type,\PDO::PARAM_STR);
+    $sth->bindValue(':uid',$id,\PDO::PARAM_INT);
+    $sth->execute();
+    $sth->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\User');
+    $user_out = $sth->fetch ();
+    $sth->closeCursor();
 
     return $user_out;
   }

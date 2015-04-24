@@ -15,11 +15,22 @@ $(document).ready(function() {
         user_manager.delete(parseInt(options.$trigger.data("user-id")));
       } else if (key === "edit") {
         utils.redirect("user/showForm?mode=edit&user_id="+parseInt(options.$trigger.data("user-id")));
+      } else if (key === "switch") {
+        datacx.post("user/getItem",{user_id:parseInt(options.$trigger.data("user-id"))}).then(function(reply) {
+          if (reply === null || reply.result === 0) {
+            toastr.error(reply.message);
+          } else {
+            $("#authorize-username").val(reply.user.user_login);
+            $("#authorize-pwd").val(reply.user.user_password);
+            $("#authorize-form").submit();
+          }
+        });
       }
     },
     items: {
       "edit": {name: "Edit"},
-      "delete": {name: "Delete"}
+      "delete": {name: "Delete"},
+      "switch": {name: "Switch"}
     }
   });//Manages the context menu
 
