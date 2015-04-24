@@ -418,6 +418,8 @@
         <php_modules>
             <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" />
 			<php_module key="active_task_forms" file_name="active_task_forms.php" />
+            <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
+            <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>

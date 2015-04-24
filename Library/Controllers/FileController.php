@@ -127,7 +127,7 @@ class FileController extends \Library\BaseController {
     if($dataPost['itemReplace']==="true") {
       $list = $manager->selectManyByCategoryAndId($dataPost['itemCategory'],$dataPost['itemId']);
     }
-    $manager->setFilenamePrefix($dataPost['itemId'].'_');
+    $manager->setFilenamePrefix($dataPost['itemId'] . '_');
     $document = new \Applications\PMTool\Models\Dao\Document();
     $document->setDocument_category($dataPost['itemCategory']);
     if(isset($dataPost['title']) && $dataPost['title']!="") {
