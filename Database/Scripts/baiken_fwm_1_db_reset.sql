@@ -9,7 +9,7 @@
 DROP SCHEMA IF EXISTS `baiken_fwm_1`;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+SET time_zonef = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `project` (
     `project_active` tinyint(1) DEFAULT NULL,
     `project_visible` tinyint(1) DEFAULT NULL,
     `pm_id` int(11) NOT NULL COMMENT 'Foreign key => project_manager',
+    `project_is_default` TINYINT(1) DEFAULT 0 NULL,
     PRIMARY KEY (`project_id`),
     CONSTRAINT `fk_project_pm` FOREIGN KEY (`pm_id`)
         REFERENCES `project_manager` (`pm_id`) ON DELETE CASCADE
@@ -471,20 +472,33 @@ CREATE TABLE IF NOT EXISTS `task_note` (
 CREATE TABLE IF NOT EXISTS `discussion` (
   `discussion_id` int(11) NOT NULL AUTO_INCREMENT,
   `task_id` int(11) NOT NULL,
+  `discussion_start_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT `fk_discussion_task` FOREIGN KEY (`task_id`)
         REFERENCES `task` (`task_id`) ON DELETE CASCADE,
     PRIMARY KEY (`discussion_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
+-- Table structure for `discussion_person`
+CREATE TABLE IF NOT EXISTS `discussion_person` (
+    `discussion_person_id` int(11) NOT NULL AUTO_INCREMENT,
+    `discussion_id` int(11) NOT NULL,
+    `user_id` int(11) NOT NULL,
+    `discussion_person_is_author` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Set to 1 when the person is the one who created the discussion',
+    CONSTRAINT `fk_dp_discussion` FOREIGN KEY (`discussion_id`)
+        REFERENCES `discussion` (`discussion_id`) ON DELETE CASCADE,
+    CONSTRAINT `fk_dp_user` FOREIGN KEY (`user_id`)
+        REFERENCES `user` (`user_id`) ON DELETE CASCADE,
+    PRIMARY KEY (`discussion_person_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
 -- Table structure for `discussion_content`
 CREATE TABLE IF NOT EXISTS `discussion_content` (
   `discussion_content_id` int(11) NOT NULL AUTO_INCREMENT,
-  `discussion_id` int(11) NOT NULL,
-  `discussion_content_category_type` varchar(25) NOT NULL COMMENT 'Values: pm_id or technician_id or service_id or client_id',
-  `discussion_content_category_value` int(11) NOT NULL COMMENT 'Integer value of the set discussion_content_category_type',
-  `discussion_content_value` varchar(500) NOT NULL COMMENT 'The message sent',
-    CONSTRAINT `fk_dc_discussion` FOREIGN KEY (`discussion_id`)
-        REFERENCES `discussion` (`discussion_id`) ON DELETE CASCADE,
+  `discussion_person_id` int(11) NOT NULL,
+  `discussion_content_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `discussion_content_message` varchar(500) NOT NULL COMMENT 'The message sent',
+    CONSTRAINT `fk_dc_discussion_person` FOREIGN KEY (`discussion_person_id`)
+        REFERENCES `discussion_person` (`discussion_person_id`) ON DELETE CASCADE,
     PRIMARY KEY (`discussion_content_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -505,7 +519,7 @@ INSERT INTO `user_role` (`user_role_id`,`user_role_desc`) VALUES
 INSERT INTO `user` (`user_login`, `user_password`, `user_hint`, `user_type`, `user_value`, `user_role_id`) VALUES
 ('test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683', 'hint', 'pm_id', 1, 2),
 ('demo', '89e495e7941cf9e40e6980d14a16bf023ccd4c91g496lJL683', '', 'pm_id', 2, 2),
-('admin','a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683','','administrator_id',0,1,NULL);
+('admin','a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683','','administrator_id',0,1);
 
 INSERT INTO `master_form`(`form_id`,`content_type`,`category`,`value`,`size`,`title`) VALUES
 (1,'pdf',NULL,'FWM_T-ChainofCustody.pdf',45,'Chain Of Custody'),

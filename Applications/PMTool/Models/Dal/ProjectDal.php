@@ -16,10 +16,12 @@ class ProjectDal extends \Library\DAL\BaseManager {
   }
 
   public function countById($pm_id) {
-    $sql = 'SELECT COUNT(*) FROM project where `pm_id` = \'' . $pm_id . '\';'; // AND `project_active` = 1  AND `visible` = 1;';
-    $query = $this->dao->query($sql);
-    $num_rows = $query->fetch(\PDO::FETCH_NUM);
-    $query->closeCursor();
+    $sql = 'SELECT COUNT(*) FROM project where `pm_id` = :pm_id;'; // AND `project_active` = 1  AND `visible` = 1;';
+    $sth = $this->dao->prepare($sql);
+    $sth->bindValue(':pm_id',$pm_id,\PDO::PARAM_INT);
+    $sth->execute();
+    $num_rows = $sth->fetch(\PDO::FETCH_NUM);
+    $sth->closeCursor();
 
     return intval($num_rows[0]);
   }

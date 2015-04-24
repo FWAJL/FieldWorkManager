@@ -386,7 +386,18 @@ class ProjectController extends \Library\BaseController {
    */
   public function executeSetCurrentProject(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS(); // Init result
-
+    $manager = $this->managers()->getManagerOf('Project');
+    $projectEdit = new \Applications\PMTool\Models\Dao\Project();
+    $pm = $this->user->getAttribute(\Library\Enums\SessionKeys::CurrentPm);
+    $pm = $pm[\Library\Enums\SessionKeys::PmObject];
+    $pm_id = $pm->pm_id();
+    $projectEdit->setPm_id($pm_id);
+    $projectEdit->setProject_is_default(0);
+    $manager->edit($projectEdit,'pm_id');
+    $projectEdit->setProject_id($this->dataPost["project_id"]);
+    $projectEdit->setProject_is_default(1);
+    $manager->edit($projectEdit,'project_id');
+    $this->executeGetList($rq,true);
     $project = \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->user(), $this->dataPost["project_id"]);
     $result["dataId"] = $project->project_id();
 

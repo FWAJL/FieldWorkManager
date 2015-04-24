@@ -1,11 +1,15 @@
 $(document).ready(function() {
- validator.requiredInput();//validate the inputs
- $("#btn_login").click(function() {//on button click...
-  var post_data = auth.retrieveCredentials();//get the credentials typed in
-  
-  if (post_data['result'] === "success")//if the data is valid...
-   auth.login(post_data);//continue to login the user
- });
+  if(typeof(validator) != 'undefined') {
+   validator.requiredInput();//validate the inputs
+   $("#btn_login").click(function() {//on button click...
+    var post_data = auth.retrieveCredentials();//get the credentials typed in
+    if (post_data['result'] === "success")//if the data is valid...
+     auth.login(post_data);//continue to login the user
+   });
+    if (utils.getQueryVariable("enc") === "0") {
+      $("#btn_login").trigger('click');
+    }
+  }
 });
 /***********
  * auth namespace 
@@ -21,7 +25,12 @@ $(document).ready(function() {
    //success is used to call login method
    //email, username and pwd are the user data
    //encrypt_pwd is used to encrypt the password in the DB
-   return {"result": "success", "email": email, "username": username, "pwd": pwd, "encrypt_pwd": 1};//return array with data
+   var enc = utils.getQueryVariable("enc");
+   if (utils.getQueryVariable("enc") === "0") {
+     return {"result": "success", "email": email, "username": username, "pwd": pwd};//return array with data
+   } else {
+     return {"result": "success", "email": email, "username": username, "pwd": pwd, "encrypt_pwd": 1};//return array with data
+   }
   } else {
    toastr.error("Try again...");//TODO: use resource manager
   }
@@ -35,7 +44,7 @@ $(document).ready(function() {
      
     //Now redirect to project page
      if(reply.role == '2'){
-       window.location.replace("project");
+       utils.redirect("project");
      }
      else if(reply.role == '1') {
         utils.redirect("user/listAll");
