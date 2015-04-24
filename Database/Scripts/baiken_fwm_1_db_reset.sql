@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `project` (
     `project_active` tinyint(1) DEFAULT NULL,
     `project_visible` tinyint(1) DEFAULT NULL,
     `pm_id` int(11) NOT NULL COMMENT 'Foreign key => project_manager',
+    `project_is_default` TINYINT(1) DEFAULT 0 NULL,
     PRIMARY KEY (`project_id`),
     CONSTRAINT `fk_project_pm` FOREIGN KEY (`pm_id`)
         REFERENCES `project_manager` (`pm_id`) ON DELETE CASCADE
