@@ -175,9 +175,14 @@ class TaskHelper {
   }
 
   public static function SetCurrentSessionTask(\Library\User $user, $sessionTask = NULL, $task_id = 0) {
+    $currentSessionTask = $user->getAttribute(\Library\Enums\SessionKeys::CurrentTask);
+
     if ($task_id > 0 && $sessionTask === NULL) {
       $sessionTasks = self::GetSessionTasks($user);
       $sessionTask = $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $task_id];
+      if($sessionTask !== NULL && $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id() != $currentSessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id()) {
+        $user->unsetAttribute(\Library\Enums\SessionKeys::CurrentDiscussion);
+      }
     }
     $user->setAttribute(\Library\Enums\SessionKeys::CurrentTask, $sessionTask);
     return $sessionTask;
