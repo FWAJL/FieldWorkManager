@@ -17,7 +17,7 @@ class Route {
   public $relative_path = "";
   protected $phpModules;
   protected $resxfile = "";
-  protected $role = [];
+  protected $role = array();
 
   public function __construct($config) {
     $this->setUrl($config['route_xml']->getAttribute('url'));
