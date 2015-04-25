@@ -990,6 +990,7 @@
   <route url="activetask/postNote" module="ActiveTask" action="postNote" resxfile="active_task" type="ws" />
   <route url="activetask/getNotes" module="ActiveTask" action="getNotes" resxfile="active_task" type="ws" />
   <route url="activetask/sendMessage" module="ActiveTask" action="sendMessage" resxfile="active_task" type="ws" />
+  <route url="activetask/getDiscussionThread" module="ActiveTask" action="getDiscussionThread" resxfile="active_task" type="ws" />
 
   <route url="service/add" module="Service" action="add" resxfile="service" type="ws" />
   <route url="service/edit" module="Service" action="edit" resxfile="service" type="ws" />

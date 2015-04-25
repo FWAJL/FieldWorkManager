@@ -100,4 +100,18 @@ class DiscussionHelper {
 
   }
 
+  public static function GetDiscussionThread($caller, $discussion) {
+    $manager = $caller->managers()->getManagerOf('DiscussionContent');
+    $personArray = array();
+    foreach($discussion[\Library\Enums\SessionKeys::DiscussionPeople] as $person) {
+      $personArray[] = $person->discussion_person_id();
+    }
+    $thread = $manager->selectDiscussionThread($personArray);
+    if($thread) {
+      return $thread;
+    } else {
+      return false;
+    }
+  }
+
 }

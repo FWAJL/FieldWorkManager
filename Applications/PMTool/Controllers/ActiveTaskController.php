@@ -335,7 +335,19 @@ class ActiveTaskController extends \Library\BaseController {
       //here goes mail sending...
       if($discussion_content_id>0) {
         $result['success'] = true;
-        $result['data'] = $discussion_content_id;
+        $discussion_content = new \Applications\PMTool\Models\Dao\Discussion_content();
+        $discussion_content->setDiscussion_content_id($discussion_content_id);
+        $discussion_content = $manager->selectMany($discussion_content,'discussion_content_id');
+        $userTypeObject = $this->user->getAttribute(\Library\Enums\SessionKeys::UserTypeObject);
+        if($this->user->getUserType() == 'pm_id') {
+          $discussion_content[0]->user_name = $userTypeObject->pm_name();
+        } else if($this->user->getUserType() == 'technician_id') {
+          $discussion_content[0]->user_name = $userTypeObject->technician_name();
+        } else if($this->user->getUserType() == 'service_id') {
+          $discussion_content[0]->user_name = $userTypeObject->service_name();
+        }
+
+        $result['data'] = $discussion_content[0];
       } else {
         $result['succes'] = false;
       }
@@ -352,5 +364,56 @@ class ActiveTaskController extends \Library\BaseController {
       )
     );
   }
-  
+
+  public function executeGetDiscussionThread(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS();
+
+    $currentSessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+
+    $currentDiscussion = \Applications\PMTool\Helpers\DiscussionHelper::GetCurrentDiscussion($this->user);
+    $discussionNames = array();
+
+    if($currentDiscussion) {
+      foreach($currentDiscussion[\Library\Enums\SessionKeys::DiscussionPeople] as $person) {
+        $manager = $this->managers()->getManagerOf('User');
+        $userTypeObject = $manager->selectUserTypeObjectByUserId($person->user_id());
+        $userType = \Applications\PMTool\Helpers\UserHelper::FindUserTypeFromObject($userTypeObject);
+        if($userType == 'pm_id') {
+          $discussionNames[$person->discussion_person_id()] = $userTypeObject->pm_name();
+        } else if($userType == 'technician_id') {
+          $discussionNames[$person->discussion_person_id()] = $userTypeObject->technician_name();
+        } else if($userType == 'service_id') {
+          $discussionNames[$person->discussion_person_id()] = $userTypeObject->service_name();
+        }
+      }
+      $thread = \Applications\PMTool\Helpers\DiscussionHelper::GetDiscussionThread($this,$currentDiscussion);
+      if($thread) {
+        foreach($thread as &$content) {
+          foreach($discussionNames as $id=>$name) {
+            if($id==$content->discussion_person_id()) {
+              $content->user_name = $name;
+              break;
+            }
+          }
+        }
+        $result['thread'] = $thread;
+        $result['success'] = true;
+      } else {
+        $result['success'] = false;
+      }
+    } else {
+      $result['success'] = false;
+    }
+
+    $this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::ActiveTask,
+        "resx_key" => $this->action(),
+        "step" => ($result['success']) ? "success" : "error"
+      )
+    );
+
+
+  }
+
 }

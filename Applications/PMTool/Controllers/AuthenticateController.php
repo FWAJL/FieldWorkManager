@@ -74,7 +74,7 @@ class AuthenticateController extends \Library\BaseController {
     $authProvider->prepareUser($data_sent);
     if($authProvider->getUser() instanceof \Library\Interfaces\IUser) {
       $this->app->auth->authenticate($authProvider->getUser());
-
+      $this->user->setAttribute(\Library\Enums\SessionKeys::UserTypeObject,$authProvider->getUserType());
       if ($authProvider->getUser()) {
         $user = $this->app->user;
         $routes = array_filter($this->app->router->routes(), function ($route) use ($user) {
