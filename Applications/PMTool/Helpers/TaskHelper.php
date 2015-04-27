@@ -180,7 +180,7 @@ class TaskHelper {
     if ($task_id > 0 && $sessionTask === NULL) {
       $sessionTasks = self::GetSessionTasks($user);
       $sessionTask = $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $task_id];
-      if($sessionTask !== NULL && $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id() != $currentSessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id()) {
+      if($currentSessionTask != NULL && $sessionTask !== NULL && $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id() != $currentSessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id()) {
         $user->unsetAttribute(\Library\Enums\SessionKeys::CurrentDiscussion);
       }
     }
