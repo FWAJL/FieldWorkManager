@@ -80,16 +80,8 @@ class TechnicianController extends \Library\BaseController {
     }
     //add user record for FT
     if(intval($result["dataId"])>0) {
-      $manager = $this->managers->getManagerOf('User');
-      $username = $this->dataPost['technician_email'];
-      $password = $this->dataPost['technician_email'];
-      $hint = '';
-      $generatedDataPost = array('user_login'=>$username,'user_password'=>$password,'user_hint'=>$hint);
-      $user = \Applications\PMTool\Helpers\UserHelper::PrepareUserObject($generatedDataPost,$this->app->config(),true);
-      $user->setUser_role_id(3);
-      $user->setUser_type('technician_id');
-      $user->setUser_value($result['dataId']);
-      $manager->add($user);
+      $this->dataPost['user_email'] = $this->dataPost['technician_email'];
+      $userId = \Applications\PMTool\Helpers\UserHelper::AddUser($this, $result["dataId"], \Library\Enums\UserRole::Technician);
     }
 
 
@@ -98,7 +90,7 @@ class TechnicianController extends \Library\BaseController {
         $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
       "resx_key" => $this->action(),
-      "step" => (intval($result["dataId"])) > 0 ? "success" : "error"
+      "step" => (intval($result["dataId"])) > 0 && $userId > 0 ? "success" : "error"
     ));
   }
 
