@@ -37,10 +37,9 @@ class MobileController extends \Library\BaseController {
    * 
    * @param \Library\HttpRequest $rq: the request
    */
-  public function executeWelcome(\Library\HttpRequest $rq) {
+ public function executeloadView(\Library\HttpRequest $rq) {
   
-  
-  
+  $this->page->addVar( \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules,$this->app()->router()->selectedRoute()->phpModules());
  
   }
 

@@ -1,11 +1,11 @@
 <?php
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
     
-	
+<div class="welcome_content_box">	
 <div class="right-aside main col-lg-10 col-md-10 col-sm-10">
-  <h2><?php echo $resx["h2_welcome"]; ?> </h2>
+  <h2 class="welcome_tagline"><?php echo $resx["h2_welcome"]; ?> </h2>
       <div class="container mobile_view">
-	     <a id="modal_trigger" href="#modal" class="btn">Click here</a>
+	     <a id="modal_trigger" href="#modal" class="btn click_button">Click here</a>
      
 	     <div id="modal" class="popupContainer" style="display:none;">
 		     <header class="popupHeader">
@@ -18,9 +18,10 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access 
 			     <div class="social_login">
 				      
 				     <div class="centeredText">
-					     <span>Hello User <br>
-					     Thank you For Visiting Our Site <br>
-					      Have a nice Day.
+					     <span>
+					     <?php echo $resx["user_welcome"]; ?><br>
+					     <?php echo $resx["user_message1"]; ?><br>
+					     <?php echo $resx["user_message2"]; ?>
 					     </span>
 				     </div>
      
@@ -34,5 +35,5 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access 
 	     </div>
      </div>
 </div>
- 
+</div>
 

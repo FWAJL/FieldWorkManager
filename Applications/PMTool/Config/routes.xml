@@ -52,7 +52,7 @@
             <php_module key="client_form" file_name="client_form.php" />
             <php_module key="project_buttons" file_name="project_buttons.php" />
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-	        <php_module key="popup_prompt_module" file_name="popup_prompt.php" />
+	        <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
 	        <php_module key="popup_address" file_name="popup_address.php" />
         </php_modules>
     </route>
@@ -423,8 +423,6 @@
         <php_modules>
             <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" />
 			<php_module key="active_task_forms" file_name="active_task_forms.php" />
-            <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
-            <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
@@ -663,18 +661,19 @@
     
     
     <!-- Mobile/Welcome -->
-    <route url="mobile/welcome" module="Mobile" action="welcome" resxfile="mobile" type="ui" role="3">
+   <route url="mobile/welcome" module="Mobile" action="loadView" resxfile="mobile" type="ui" role="3">
 	<js_files>
 	    <js_file use="head" value="Web/js/app/controllers/jquery-1.11.0.min.js" />
 	    <js_file use="head" value="Web/js/app/controllers/jquery.leanModal.min.js" />
 	    <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
 	</js_files>
 	<css_files>
-	    <css_file value="Web/css/app/nav.css" />
-	    <css_file value="Web/css/app/app-theme.css" />
 	    <css_file value="Web/css/app/mobile.css" />
 	    <css_file value="Web/css/app/style.css" />
 	</css_files>
+	<php_modules>
+	    <php_module key="welcome" file_name="welcome.php" />
+	</php_modules>
     </route>
     
        <!--  All Control For User ROLE 3  --> 
@@ -901,7 +900,6 @@
     <route url="user/listAll" module="User" action="listAll" resxfile="user" type="ui" role="1">
       <js_files>
         <js_file use="head" value="Web/js/app/controllers/user_manager.js" />
-        <js_file use="head" value="Web/js/app/controllers/auth.js" />
       </js_files>
       <css_files>
         <css_file value="Web/css/app/nav.css" />
