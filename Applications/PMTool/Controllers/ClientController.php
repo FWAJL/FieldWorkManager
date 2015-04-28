@@ -82,6 +82,7 @@ class ClientController extends \Library\BaseController {
         );
     $result["dataId"] = $this->dataPost["client_id"];
     if ($result_edit) {
+      \Applications\PMTool\Helpers\UserHelper::EditUser(this);
       $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $this->dataPost["project_id"]);
       $sessionProject[\Library\Enums\SessionKeys::ClientObject] = 
               \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Client());

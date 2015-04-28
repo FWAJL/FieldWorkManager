@@ -181,4 +181,19 @@ class UserHelper {
         return "";
     }
   }
+  
+  public static function EditUser($caller, $type) {
+    $dataPost = $caller->dataPost();
+    //Get user from Session
+    //
+    //
+    //Then update email from given value
+    //$user = new \Applications\PMTool\Models\Dao\User();
+    //
+    //$user->setUser_email($dataPost[$type + "_email"]);
+  }
+  
+  public static function GetGeneratedPostArray($originalPost) {
+    
+  }
 }
