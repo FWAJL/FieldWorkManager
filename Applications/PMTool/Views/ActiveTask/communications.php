@@ -3,7 +3,7 @@
 //check if discussion started
 $comm_with_name = '';
 if (isset($current_discussion['comm_type'])) {
-  if ($current_discussion['comm_type'] == 'technician') {
+  if ($current_discussion['comm_type'] == 'technician_id') {
     $comm_with_name = $current_discussion['comm_with']->technician_name();
   } else {
     $comm_with_name = $current_discussion['comm_with']->service_name();
