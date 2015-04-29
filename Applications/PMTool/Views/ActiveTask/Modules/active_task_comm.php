@@ -4,7 +4,8 @@
       <span class="h4"><?php echo $resx['h4_taskcomm_leftcol'] ?></span>
       <span id="h4-taskcomm-leftcol-gi" class="glyphicon glyphicon-info-sign"></span>
       <div>
-      	<textarea  class="list-panel upload_list" name="task_comm_message" type="text"></textarea>
+      	<textarea  class="upload_list" name="task_comm_message" type="text"></textarea>
+        <div class="list-panel upload_list chatbox" name="task_comm_chatbox" id="task-comm-chatbox"></div>
       </div>
     </div>
     <div class="col-lg-1 col-md-1">

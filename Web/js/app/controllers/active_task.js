@@ -73,6 +73,7 @@ $(document).ready(function(){
         if($('#group-list-left').length > 0) {
           $('#group-list-left').css('height', '200');
         }
+        activetask_manager.getThread();
         break;
       default:
         //nothing
@@ -120,11 +121,11 @@ $(document).ready(function(){
   	var id = utils.getValuesFromList(selectionParams.listLeftId, selectionParams.dataAttrLeft, true);
   	var selection_type = '';
       if(id !== '') {
-  	  selection_type = 'service';
+  	  selection_type = 'service_id';
   	}
   	else {
   	  id = task_technician_ids;
-  	  selection_type = 'technician';
+  	  selection_type = 'technician_id';
   	}
   	
   	activetask_manager.updateTaskTechnicians(selection_type, id);
@@ -162,7 +163,12 @@ $(document).ready(function(){
       }
     });
   });
-  
+  $("#btn_send_message").on('click',function() {
+    var msg = $("textarea[name=\"task_comm_message\"]").val();
+    if(msg.trim() != '') {
+      activetask_manager.sendMessage(msg.trim());
+    }
+  });
 });  
 
 
@@ -254,5 +260,36 @@ $(document).ready(function(){
       }
     });
   };
+
+  activetask_manager.sendMessage = function(msg) {
+    datacx.post('activetask/sendMessage',{discussion_content_message:msg}).then(function(reply){
+      if(reply === null || reply.result === 0) {
+        toastr.error(reply.message);
+      } else {
+        toastr.success(reply.message);
+        $("#task-comm-chatbox").prepend(activetask_manager.formatChatMessage(reply.data.user_name,reply.data.discussion_content_message,reply.data.discussion_content_time)+"<br/>");
+        $("textarea[name=\"task_comm_message\"]").val('');
+      }
+    });
+  };
+
+  activetask_manager.getThread = function() {
+    datacx.post('activetask/getDiscussionThread',{}).then(function(reply){
+      if(reply === null || reply.result === 0) {
+        toastr.error(reply.message);
+      } else {
+        toastr.success(reply.message);
+        $.each(reply.thread, function(index, value) {
+
+          $("#task-comm-chatbox").append(activetask_manager.formatChatMessage(value.user_name,value.discussion_content_message,value.discussion_content_time)+"<br/>");
+        });
+      }
+    });
+  };
+
+  activetask_manager.formatChatMessage = function(name,message,time) {
+    var messageFormatted = '<strong>'+name+'</strong>: '+message+' <small>@'+time+'</small>';
+    return messageFormatted;
+  }
 
 }(window.activetask_manager = window.activetask_manager || {}));
