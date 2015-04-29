@@ -99,17 +99,20 @@ public function executeIndex(\Library\HttpRequest $rq) {  }
     $manager = $this->managers->getManagerOf($this->module);
     $result["dataOut"] = $manager->add($service);
     
-    if ($result["dataOut"] > 0) {
+    if (intval($result["dataOut"]) > 0) {
      $service->setService_id($result["dataOut"]);
      array_push($pm[\Library\Enums\SessionKeys::PmServices], $service);
      \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->user(), $pm);
-    }    
+     
+     $this->dataPost['user_email'] = $this->dataPost['service_contact_email'];
+     $userId = \Applications\PMTool\Helpers\UserHelper::AddUser($this, $result["dataOut"], \Library\Enums\UserRole::Visitor, "service_id");
+    }
 
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Service,
         "resx_key" => $this->action(),
-        "step" => (intval($result["dataOut"])) > 0 ? "success" : "error"
+        "step" => (intval($result["dataOut"])) > 0 && $userId > 0 ? "success" : "error"
     ));
   }
   

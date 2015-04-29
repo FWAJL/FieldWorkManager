@@ -48,6 +48,11 @@ class ClientController extends \Library\BaseController {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $client->project_id());
     $sessionProject[\Library\Enums\SessionKeys::ClientObject] = $client;
     \Applications\PMTool\Helpers\ProjectHelper::UpdateUserSessionProject($this->app()->user(), $sessionProject);
+    
+    if(intval($result["dataId"])>0) {
+      $this->dataPost['user_email'] = $this->dataPost['client_contact_email'];
+      $userId = \Applications\PMTool\Helpers\UserHelper::AddUser($this, $result["dataId"], \Library\Enums\UserRole::Visitor, "client_id");
+    }
 
     //Process DB result and send result
     if ($result["dataId"] > 0) {
@@ -55,7 +60,7 @@ class ClientController extends \Library\BaseController {
               $result,
               array(
                   "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Client, 
-                  "resx_key" => $this->action(), "step" => $result["dataId"] > 0 ? "success" : "error"));
+                  "resx_key" => $this->action(), "step" => $result["dataId"] > 0 && $userId > 0 ? "success" : "error"));
     }
   }
 
@@ -77,6 +82,7 @@ class ClientController extends \Library\BaseController {
         );
     $result["dataId"] = $this->dataPost["client_id"];
     if ($result_edit) {
+      \Applications\PMTool\Helpers\UserHelper::EditUser(this);
       $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $this->dataPost["project_id"]);
       $sessionProject[\Library\Enums\SessionKeys::ClientObject] = 
               \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Client());

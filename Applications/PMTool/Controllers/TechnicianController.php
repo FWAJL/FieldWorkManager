@@ -7,14 +7,16 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class TechnicianController extends \Library\BaseController {
 
-  public function executeIndex(\Library\HttpRequest $rq) {  }
+  public function executeIndex(\Library\HttpRequest $rq) {
+    
+  }
 
   public function executeShowForm(\Library\HttpRequest $rq) {
-		
-	//Get confirm msg for Technician deletion from showForm screen
-	$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"technician", "targetaction": "view", "operation": ["delete"]}', $this->app->name());
-	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
-		
+
+    //Get confirm msg for Technician deletion from showForm screen
+    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"technician", "targetaction": "view", "operation": ["delete"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
+
     //Load Modules for view
     $this->page->addVar(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
@@ -24,16 +26,16 @@ class TechnicianController extends \Library\BaseController {
     //Get list of object stored in session
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->app()->user());
     $technicians = \Applications\PMTool\Helpers\TechnicianHelper::GetPmTechnicians($this, $pm);
-	 
-	//Fetch tooltip data from xml and pass to view as an array
-	$tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"technician", "targetaction": "list", "targetattr": ["active-technician-header","inactive-technician-header"]}', $this->app->name());
-	
-	$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
-		
-		//Get confirm msg for Technician deletion from context menu
-		$confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"technician", "targetaction": "list", "operation": ["delete","activate"]}', $this->app->name());
-		$this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
-	
+
+    //Fetch tooltip data from xml and pass to view as an array
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"technician", "targetaction": "list", "targetattr": ["active-technician-header","inactive-technician-header"]}', $this->app->name());
+
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+
+    //Get confirm msg for Technician deletion from context menu
+    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"technician", "targetaction": "list", "operation": ["delete","activate"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
+
     $data = array(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $technicians,
@@ -48,10 +50,10 @@ class TechnicianController extends \Library\BaseController {
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::inactive_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::inactive_list]);
     $this->page->addVar(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::promote_buttons, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::promote_buttons]);
-	$this->page->addVar(
+    $this->page->addVar(
         \Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
-	$this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message_module, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]);
+    $this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message_module, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]);
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {
@@ -79,26 +81,17 @@ class TechnicianController extends \Library\BaseController {
       \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->app()->user(), $pm);
     }
     //add user record for FT
-    if(intval($result["dataId"])>0) {
-      $manager = $this->managers->getManagerOf('User');
-      $username = $this->dataPost['technician_email'];
-      $password = $this->dataPost['technician_email'];
-      $hint = '';
-      $generatedDataPost = array('user_login'=>$username,'user_password'=>$password,'user_hint'=>$hint);
-      $user = \Applications\PMTool\Helpers\UserHelper::PrepareUserObject($generatedDataPost,$this->app->config(),true);
-      $user->setUser_role_id(3);
-      $user->setUser_type('technician_id');
-      $user->setUser_value($result['dataId']);
-      $manager->add($user);
+    if (intval($result["dataId"]) > 0) {
+      $this->dataPost['user_email'] = $this->dataPost['technician_email'];
+      $userId = \Applications\PMTool\Helpers\UserHelper::AddUser($this, $result["dataId"], \Library\Enums\UserRole::Technician);
     }
-
 
     //Send the response to browser
     $this->SendResponseWS(
         $result, array(
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Technician,
       "resx_key" => $this->action(),
-      "step" => (intval($result["dataId"])) > 0 ? "success" : "error"
+      "step" => (intval($result["dataId"])) > 0 && $userId > 0 ? "success" : "error"
     ));
   }
 
@@ -162,7 +155,7 @@ class TechnicianController extends \Library\BaseController {
     //Init PDO
     $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
     $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject(
-        $this->dataPost(), new \Applications\PMTool\Models\Dao\Technician()
+            $this->dataPost(), new \Applications\PMTool\Models\Dao\Technician()
     );
     $result["data"] = $technician;
 
@@ -173,7 +166,7 @@ class TechnicianController extends \Library\BaseController {
       \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->app()->user(), $pm);
     }
 
-    $result["technicians"] = $pm[\Library\Enums\SessionKeys::PmTechnicians];//Can be used for an AJAX call
+    $result["technicians"] = $pm[\Library\Enums\SessionKeys::PmTechnicians]; //Can be used for an AJAX call
     if (!$isNotAjaxCall) {
       $step_result = $step_result = $result[\Library\Enums\SessionKeys::UserTechnicianList] !== NULL ? "success" : "error";
       $this->SendResponseWS(
@@ -226,7 +219,7 @@ class TechnicianController extends \Library\BaseController {
       $task_technician = new \Applications\PMTool\Models\Dao\Task_technician();
       $task_technician->setTechnician_id($technician->technician_id());
       $manager = $this->managers->getManagerOf('TaskTechnician');
-      $manager->delete($task_technician,'technician_id');
+      $manager->delete($task_technician, 'technician_id');
     }
     if ($rows_affected === count($technician_ids)) {
       \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->app()->user(), $pm);
