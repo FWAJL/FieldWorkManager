@@ -35,20 +35,20 @@ class UserHelper {
 
   public static function GetUserConnectedSession($user) {
     return $user->keyExistInSession(\Library\Enums\SessionKeys::UserConnected) ?
-            $user->getAttribute(\Library\Enums\SessionKeys::UserConnected) : FALSE;
+        $user->getAttribute(\Library\Enums\SessionKeys::UserConnected) : FALSE;
   }
 
   public static function GetRoleFromType($userType) {
     $roleId = 1;
     switch ($userType) {
-      case "administrator_id":
-        $roleId = 1;
+      case \Library\Enums\UserRoleType::Admin:
+        $roleId = \Library\Enums\UserRole::Admin;
         break;
-      case "pm_id":
-        $roleId = 2;
+      case \Library\Enums\UserRoleType::ProjectManager:
+        $roleId = \Library\Enums\UserRole::ProjectManager;
         break;
-      case "technician_id":
-        $roleId = 3;
+      case \Library\Enums\UserRoleType::Technician:
+        $roleId = \Library\Enums\UserRole::ProjectManager;
         break;
       default:
         $roleId = 0;
@@ -72,31 +72,32 @@ class UserHelper {
       $users = $manager->selectAllUsers();
 
       $caller->app()->user->setAttribute(
-        \Library\Enums\SessionKeys::AllUsers, $users
+          \Library\Enums\SessionKeys::AllUsers, $users
       );
     } else {
       $users = $caller->app()->user->getAttribute(\Library\Enums\SessionKeys::AllUsers);
     }
     return $users;
   }
-  /*
+
+  /**
    * Add new user in session
    */
-  public static function AddNewUserToSession($caller,$user) {
+  public static function AddNewUserToSession($caller, $user) {
     $users = self::GetAndStoreUsersInSession($caller);
     $users[] = $user;
     $caller->app()->user->setAttribute(
-      \Library\Enums\SessionKeys::AllUsers, $users
+        \Library\Enums\SessionKeys::AllUsers, $users
     );
   }
 
-  /*
+  /**
    * Categorize user list by type
    */
   public static function CategorizeUsersList($users) {
     $list = array();
-    if(is_array($users) && count($users)>0) {
-      foreach($users as $user) {
+    if (is_array($users) && count($users) > 0) {
+      foreach ($users as $user) {
         $userType = $user->user_type();
         $list[$userType][] = $user;
       }
@@ -116,6 +117,7 @@ class UserHelper {
     $protect = new \Library\BL\Core\Encryption();
     $user->setUser_hint($dataPost['user_hint']);
     $user->setUser_login($dataPost['user_login']);
+    $user->setUser_email($dataPost['pm_email']);
     if($setPass==TRUE) {
       $user->setUser_password($protect->Encrypt($config->get("encryption_key"), $dataPost['user_password']));
     }
@@ -134,4 +136,64 @@ class UserHelper {
     return $pm;
   }
 
+  public static function FindUserTypeFromObject($object) {
+    if ($object instanceof \Applications\PMTool\Models\Dao\Technician) {
+      return 'technician_id';
+    } else if ($object instanceof \Applications\PMTool\Models\Dao\Service) {
+      return 'service_id';
+    } else if ($object instanceof \Applications\PMTool\Models\Dao\Project_manager) {
+      return 'pm_id';
+    } else {
+      return '';
+    }
+  }
+
+  public static function AddUser($caller, $user_value, $user_role_id, $user_type = NULL) {
+    if ($user_type == NULL) {
+      $user_type = self::GetTypeFromRoleId($user_role_id);
+    }
+    $dataPost = $caller->dataPost();
+    $manager = $caller->managers()->getManagerOf('User');
+    $generatedDataPost = array(
+      'user_login' => $dataPost['user_email'],
+      'user_password' => $dataPost['user_email'],
+      'user_email' => $dataPost['user_email'],
+      'user_hint' => '',
+      'user_role_id'=> $user_role_id,
+      'user_type' => $user_type,
+      'user_value' => $user_value
+    );
+    $user = CommonHelper::PrepareUserObject($generatedDataPost, new \Applications\PMTool\Models\Dao\User());
+    $protect = new \Library\BL\Core\Encryption();
+    $user->setUser_password($protect->Encrypt($caller->app()->config()->get("encryption_key"), $user->user_password()));
+    return $manager->add($user);
+  }
+  
+  public static function GetTypeFromRoleId($role_id) {
+    switch ($role_id) {
+      case \Library\Enums\UserRole::Admin:
+        return \Library\Enums\UserRoleType::Admin;
+      case \Library\Enums\UserRole::ProjectManager:
+        return \Library\Enums\UserRoleType::ProjectManager;
+      case \Library\Enums\UserRole::Technician:
+        return \Library\Enums\UserRoleType::Technician;
+      default://role = 4 and others
+        return "";
+    }
+  }
+  
+  public static function EditUser($caller, $type) {
+    $dataPost = $caller->dataPost();
+    //Get user from Session
+    //
+    //
+    //Then update email from given value
+    //$user = new \Applications\PMTool\Models\Dao\User();
+    //
+    //$user->setUser_email($dataPost[$type + "_email"]);
+  }
+  
+  public static function GetGeneratedPostArray($originalPost) {
+    
+  }
 }
