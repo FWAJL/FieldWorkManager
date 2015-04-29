@@ -50,7 +50,7 @@ $(document).ready(function() {
         utils.redirect("user/listAll");
      }
      if(reply.role == '3'){
-       window.location.replace("project/welcome");
+       window.location.replace("mobile/welcome");
      }
    }
   });
