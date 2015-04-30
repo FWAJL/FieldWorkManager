@@ -293,19 +293,36 @@ class TaskHelper {
     $templateDAO = new \Applications\PMTool\Models\Dao\Task_template_form();
     $templateDAO->setTask_id($task_id);
     $template_data = $dal->selectMany($templateDAO, "task_id");
-    
+
     //Loop on all the template files
     foreach($template_data as $template){
       //And finally the file itself, which needs to be copied
-      $masterformDAO = new \Applications\PMTool\Models\Dao\Master_form();
-      $masterformDAO->setForm_id($template->master_form_id());
-      $masterform_data = $dal->selectMany($masterformDAO, "form_id");
+      //It could be a master form or a uer forms, check
+      if(is_null($template->master_form_id()) || $template->master_form_id() == '0') {
+        //master form id doesn't exist, it must be an user form
+        $userformDAO = new \Applications\PMTool\Models\Dao\User_form();
+        $userformDAO->setForm_id($template->user_form_id());
+        $masterform_data = $dal->selectMany($userformDAO, "form_id");
+
+        $tmp_name = './uploads/user_form/' . $masterform_data[0]->value();
+
+      } else {
+        //mster form
+        $masterformDAO = new \Applications\PMTool\Models\Dao\Master_form();
+        $masterformDAO->setForm_id($template->master_form_id());
+        $masterform_data = $dal->selectMany($masterformDAO, "form_id");
+
+        $tmp_name = './uploads/master_form/' . $masterform_data[0]->value();
+      }
+      
+
+
 
       //Pseudo array for file based on the master file
       $files['file'] = array(
                               'name'      => $masterform_data[0]->value(),
                               'type'      => $masterform_data[0]->content_type(),
-                              'tmp_name'  => './uploads/master_form/' . $masterform_data[0]->value(),
+                              'tmp_name'  => $tmp_name,
                               'error'     => 0,
                               'size'      => $masterform_data[0]->size() * 1000
                             );
