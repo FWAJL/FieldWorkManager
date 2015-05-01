@@ -73,7 +73,10 @@ class HttpRequest {
     $post_cleaned = array();
     if (file_get_contents('php://input') != "") {
       // Create an array from the JSON object in the POST request
-      $post_raw = get_object_vars(json_decode(file_get_contents('php://input')));
+      $json_decode = json_decode(file_get_contents('php://input'));
+      if(!is_null($json_decode)) {
+        $post_raw = get_object_vars($json_decode);
+      }
       // Check if a field has been provided
       if (! empty($post_raw)) {
         foreach (array_keys($post_raw) as $key) {

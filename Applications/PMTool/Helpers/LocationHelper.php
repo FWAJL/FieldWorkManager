@@ -149,6 +149,12 @@ class LocationHelper {
       $location->setProject_id($dataPost["project_id"]);
       $location->setLocation_name($name);
       $location->setLocation_active($dataPost["active"]);
+      if(isset($dataPost["visible"])) {
+        $location->setLocation_visible($dataPost["visible"]);
+      } else {
+        $location->setLocation_visible("");
+      }
+
       array_push($locations, $location);
     }
     return $locations;

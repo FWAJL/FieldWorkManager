@@ -33,6 +33,7 @@ abstract class SessionKeys {
   const UserRole = "user_role";
   const UserTypeId = "user_value";
   const UserType = "user_type";
+  const UserTypeObject = "user_type_object";
   const UserRoutes = "user_routes";
   const AllUsers = "all_users";
 
@@ -112,6 +113,13 @@ abstract class SessionKeys {
   const TabsStatus = "tabs_status";
   const ActiveTaskTabsStatus = "active_task_tabs_status";
   const TabActiveAnalyte = "tab_active_analyte";
+
+  //Discussion
+  const TaskDiscussions = "task_discussions";
+  const DiscussionUser = "discussion_user";
+  const DiscussionUserType = "discussion_user_type";
+  const DiscussionPeople = "discussion_people";
+  const DiscussionObj = "discussion_obj";
 }
 
 ?>

@@ -15,11 +15,22 @@ $(document).ready(function() {
         user_manager.delete(parseInt(options.$trigger.data("user-id")));
       } else if (key === "edit") {
         utils.redirect("user/showForm?mode=edit&user_id="+parseInt(options.$trigger.data("user-id")));
+      } else if (key === "switch") {
+        datacx.post("user/getItem",{user_id:parseInt(options.$trigger.data("user-id"))}).then(function(reply) {
+          if (reply === null || reply.result === 0) {
+            toastr.error(reply.message);
+          } else {
+            $("#authorize-username").val(reply.user.user_login);
+            $("#authorize-pwd").val(reply.user.user_password);
+            $("#authorize-form").submit();
+          }
+        });
       }
     },
     items: {
       "edit": {name: "Edit"},
-      "delete": {name: "Delete"}
+      "delete": {name: "Delete"},
+      "switch": {name: "Switch"}
     }
   });//Manages the context menu
 
@@ -83,6 +94,8 @@ $(document).ready(function() {
   } else {
     $("#btn_edit_user").click(function() {
       var post_data = utils.retrieveInputs("pm_form", ["pm_name"]);
+      post_data.user_password=$("input[name=\"user_password\"]").val();
+      post_data.user_hint=$("input[name=\"user_hint\"]").val();
       if(!post_data.required_field_missing) {
         user_manager.edit(post_data, "user", "editCurrent");
       }
@@ -143,6 +156,7 @@ $(document).ready(function() {
       } else {//success
         utils.clearForm();
         toastr.success(reply.message);
+        user_manager.loadUserEditForm(reply);
         if(reply.user_type=="pm_id") {
           user_manager.loadPMEditForm(reply);
           $(".pm_edit").show().removeClass("hide");

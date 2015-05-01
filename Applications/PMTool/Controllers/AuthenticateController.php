@@ -46,7 +46,13 @@ class AuthenticateController extends \Library\BaseController {
 
     $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
-    
+    $username = $pwd = '';
+    if(isset($this->dataPost['username']) && isset($this->dataPost['pwd'])){
+      $username = $this->dataPost['username'];
+      $pwd = $this->dataPost['pwd'];
+    }
+    $this->page->addVar('username', $username);
+    $this->page->addVar('pwd', $pwd);
     $this->executeDisconnect($rq,FALSE);
   }
 
@@ -57,6 +63,7 @@ class AuthenticateController extends \Library\BaseController {
    * @return json object A JSON object with the result bool value and success/error message
    */
   public function executeAuthenticate(\Library\HttpRequest $rq) {
+
     //Initialize the response to error.
     $result = $this->InitResponseWS();
 
@@ -67,7 +74,7 @@ class AuthenticateController extends \Library\BaseController {
     $authProvider->prepareUser($data_sent);
     if($authProvider->getUser() instanceof \Library\Interfaces\IUser) {
       $this->app->auth->authenticate($authProvider->getUser());
-
+      $this->user->setAttribute(\Library\Enums\SessionKeys::UserTypeObject,$authProvider->getUserType());
       if ($authProvider->getUser()) {
         $user = $this->app->user;
         $routes = array_filter($this->app->router->routes(), function ($route) use ($user) {

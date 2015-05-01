@@ -14,7 +14,11 @@
   <resource key="message_error_postNote">Failed to save Note</resource>
   <resource key="message_success_getNotes">Notes for this task populated</resource>
   <resource key="message_error_getNotes">No Note available yet.</resource>
-  
+  <resource key="message_success_sendMessage">Message was sent</resource>
+  <resource key="message_error_sendMessage">Failed to send the message.</resource>
+  <resource key="message_success_getDiscussionThread">Discussion thread has been read</resource>
+  <resource key="message_error_getDiscussionThread">Error reading discussion thread.</resource>
+
   <resource key="task_tab_info">Task Status</resource>
   <resource key="task_tab_map">Map</resource>
   <resource key="task_tab_forms">Forms</resource>
