@@ -291,12 +291,7 @@ class TaskController extends \Library\BaseController {
     $list = array();
     $project = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
     if ($sessionTask === NULL) {
-      //Load interface to query the database for tasks
-      $task = new \Applications\PMTool\Models\Dao\Task();
-      $task->setProject_id($project[\Library\Enums\SessionKeys::ProjectObject]->project_id());
-      $manager = $this->managers->getManagerOf($this->module);
-      \Applications\PMTool\Helpers\TaskHelper::StoreSessionTask(
-              $this->app()->user(), $manager->selectMany($task, "project_id"));
+      \Applications\PMTool\Helpers\TaskHelper::GetTaskListFromDb($this);
     }
     if ($isAjaxCall) {
       $step_result = $result[\Library\Enums\SessionKeys::ProjectTasks] !== NULL ? "success" : "error";
