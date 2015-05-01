@@ -331,13 +331,14 @@ class TaskController extends \Library\BaseController {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
 
     foreach ($task_ids as $id) {
-      $task = $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $id][\Library\Enums\SessionKeys::TaskObj];      
+      $sessionTask = $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $id];
+      $task = $sessionTask[\Library\Enums\SessionKeys::TaskObj];      
       $task->setTask_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
       $manager = $this->managers->getManagerOf($this->module);
       $rows_affected += $manager->edit($task, "task_id") ? 1 : 0;
       //Create Location specific PDFs for this task
-      if($this->dataPost["action"] === "active") {
-        \Applications\PMTool\Helpers\TaskHelper::CreateLocationSpecificPDF($id, $this);
+      if($this->dataPost["action"] === "active" && $rows_affected > 0) {
+        \Applications\PMTool\Helpers\TaskHelper::CreateLocationSpecificPDF($sessionTask, $this);
       }
     }
     \Applications\PMTool\Helpers\TaskHelper::SetSessionTasks($this->app()->user(), $sessionTasks);
