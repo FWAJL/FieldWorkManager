@@ -52,8 +52,6 @@ class ProjectController extends \Library\BaseController {
     }
   }
 
-  
-  
   /**
    * Method that loads the add or edit view for controller
    * 
@@ -71,11 +69,6 @@ class ProjectController extends \Library\BaseController {
     $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
-  
-  
-  
-  
- 
 
   /**
    * Method that loads the list all project view for controller

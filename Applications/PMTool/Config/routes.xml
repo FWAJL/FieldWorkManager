@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<routes version="1.6.19">
+<routes version="1.6.20.1">
     <!-- UI routes -->
     <route url="login" module="Authenticate" action="loadLoginView" resxfile="login" type="ui">
         <js_files>
@@ -52,14 +52,13 @@
             <php_module key="client_form" file_name="client_form.php" />
             <php_module key="project_buttons" file_name="project_buttons.php" />
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-	        <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+	        <php_module key="popup_prompt_module" file_name="popup_prompt.php" />
 	        <php_module key="popup_address" file_name="popup_address.php" />
         </php_modules>
     </route>
     <!-- project/showAddForm -->
     
     <route url="project/listAll" module="Project" action="listAll" resxfile="project" type="ui" role="2">
-	
         <js_files>
             <js_file use="project" />
         </js_files>
@@ -75,12 +74,7 @@
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
         </php_modules>
     </route>
-    
-    
-    
-    
     <!-- project/listAll -->
-    
 	
 	<route url="project/selectProject" module="Project" action="selectProject" resxfile="project" type="ui" role="2">
         <js_files>
@@ -207,6 +201,7 @@
             <php_module key="upload_file" file_name="upload_file.php" shared="true"/>
             <php_module key="load_file" file_name="load_file.php" shared="true"/>
 	        <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+	        <php_module key="user_form" file_name="user_form.php" shared="true" />
         </php_modules>
     </route>
     <!-- technician/showForm -->
@@ -436,6 +431,8 @@
         <php_modules>
             <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" />
 			<php_module key="active_task_forms" file_name="active_task_forms.php" />
+            <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
+            <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
@@ -668,16 +665,10 @@
 	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
-    
-    
     <!--  All Control For User ROLE 3  -->
-    
-    
     <!-- Mobile/Welcome -->
    <route url="mobile/welcome" module="Mobile" action="loadView" resxfile="mobile" type="ui" role="3">
 	<js_files>
-	    <js_file use="head" value="Web/js/app/controllers/jquery-1.11.0.min.js" />
-	    <js_file use="head" value="Web/js/app/controllers/jquery.leanModal.min.js" />
 	    <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
 	</js_files>
 	<css_files>
@@ -688,44 +679,7 @@
 	    <php_module key="welcome" file_name="welcome.php" />
 	</php_modules>
     </route>
-    
        <!--  All Control For User ROLE 3  --> 
- 
-    
-    
-    
-    
- 
-	
-    
- 
- 
- 
-    
- 
-
- 
- 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <!-- analyte/uploadList -->
     <route url="analyte/uploadCommons" module="Analyte" action="uploadCommonAnalytes" resxfile="analyte" type="ui" role="1">
         <js_files>
@@ -780,9 +734,6 @@
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
-    
-    
-    
     <!-- labanalyte/uploadList -->
     <route url="labanalyte/uploadCommons" module="LabAnalyte" action="uploadCommonAnalytes" resxfile="analyte" type="ui" role="1">
         <js_files>
@@ -894,7 +845,7 @@
     <!-- pm/showForm -->
 
     <!-- User -->
-    <route url="user/showDetails" module="User" action="showDetails" resxfile="user" type="ui" role="2">
+    <route url="user/showDetails" module="User" action="showDetails" resxfile="user" type="ui" role="1,2,3">
       <js_files>
         <js_file use="head" value="Web/js/app/controllers/user_manager.js" />
       </js_files>
@@ -906,6 +857,7 @@
       </css_files>
       <php_modules>
         <php_module key="pm_form" file_name="pm_form.php" />
+        <php_module key="user_form" file_name="user_form.php" shared="true"/>
         <php_module key="user_details_buttons" file_name="user_details_buttons.php" />
       </php_modules>
     </route>
@@ -913,6 +865,7 @@
     <route url="user/listAll" module="User" action="listAll" resxfile="user" type="ui" role="1">
       <js_files>
         <js_file use="head" value="Web/js/app/controllers/user_manager.js" />
+        <js_file use="head" value="Web/js/app/controllers/auth.js" />
       </js_files>
       <css_files>
         <css_file value="Web/css/app/nav.css" />
@@ -1115,6 +1068,8 @@
   <route url="user/delete" module="User" action="delete" resxfile="user" type="ws" />
   <route url="user/getItem" module="User" action="getItem" resxfile="user" type="ws" />
   <route url="user/edit" module="User" action="edit" resxfile="user" type="ws" />
+  <route url="user/getTechnicianItem" module="User" action="getTechnicianItem" resxfile="user" type="ws" />
+  <route url="user/editTechnician" module="User" action="editTechnician" resxfile="user" type="ws" />
 
   <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
   <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />

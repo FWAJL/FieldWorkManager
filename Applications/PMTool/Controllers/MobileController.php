@@ -23,12 +23,14 @@
  */
 
 namespace Applications\PMTool\Controllers;
+
 use Applications\PMTool\Helpers\UserHelper;
 use Applications\PMTool\Models\Dao\User;
+
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
-  
-/********  Mobile Controller   ************/
+
+/* * ******  Mobile Controller   *********** */
 
 class MobileController extends \Library\BaseController {
 
@@ -37,13 +39,9 @@ class MobileController extends \Library\BaseController {
    * 
    * @param \Library\HttpRequest $rq: the request
    */
- public function executeloadView(\Library\HttpRequest $rq) {
-  
-  $this->page->addVar( \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules,$this->app()->router()->selectedRoute()->phpModules());
- 
+  public function executeloadView(\Library\HttpRequest $rq) {
+
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
-  
-  
-  
 }
