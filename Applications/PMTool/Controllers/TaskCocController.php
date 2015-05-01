@@ -95,15 +95,18 @@ class TaskCocController extends \Library\BaseController {
 	$manager = $this->managers->getManagerOf($this->module());
     $result_coc = $manager->selectMany($task_coc_info, "task_id");
 		
-	$task_coc_info = (count($result_coc) > 0) ? $result_coc[0] : NULL;
-//    $services = 
-//            \Applications\PMTool\Helpers\ServiceHelper::GetServicesFromTaskServices(
-//                    $this->user(), 
-//                    \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user())
-//                    );
-//    $service = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue($task_coc_info->service_id(), "service_id", $services);
-//    
-//    $task_coc_info->setService_object($service);
+	$task_coc_info = (count($result_coc) > 0) ? $result_coc[0] : new \Applications\PMTool\Models\Dao\Task_coc_info();
+    
+    $sessionPm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
+    
+    $task_coc_info->setProject_number($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
+    $task_coc_info->setResults_to_name($sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_name());
+    $task_coc_info->setResults_to_company($sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_comp_name());
+    $task_coc_info->setResults_to_address($sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_address());
+    $task_coc_info->setResults_to_phone($sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_phone());
+    $task_coc_info->setResults_to_email($sessionPm[\Library\Enums\SessionKeys::PmObject]->pm_email());
+    
     $result["task_coc"] = $task_coc_info;
     
     $this->SendResponseWS(

@@ -92,7 +92,7 @@ $(document).ready(function() {
     var post_data = {};
     post_data["project"] = utils.retrieveInputs("project_form", ["project_name"]);
     post_data["facility"] = utils.retrieveInputs("facility_form", ["facility_name"]);
-    post_data["client"] = utils.retrieveInputs();
+    post_data["client"] = utils.retrieveInputs("client_form", ["client_contact_email"]);
 
     var msgNullCheck = $('#confirmmsg-addNullCheck').val();
     var msgUniqueCheck = $('#confirmmsg-addUniqueCheck').val();
@@ -100,7 +100,9 @@ $(document).ready(function() {
             typeof msgUniqueCheck !== typeof undefined && msgUniqueCheck !== false) {
       if (post_data["project"].project_name !== undefined &&
               post_data["facility"].facility_address !== undefined &&
-              post_data["facility"].facility_address !== "")
+              post_data["facility"].facility_address !== "" &&
+              post_data["client"].client_contact_email !== undefined &&
+              post_data["client"].client_contact_email !== "")
       {
         project_manager.ifProjectExists(post_data["project"]['project_name'], function(record_count) {
           if (record_count > 0 || post_data["project"].project_name === undefined)
@@ -110,7 +112,9 @@ $(document).ready(function() {
           else
           {
             if (post_data["project"].project_name !== undefined &&
-                    post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
+                    post_data["facility"].facility_name !== undefined && 
+                    post_data["facility"].facility_address !== undefined &&
+                    post_data["client"].client_contact_email !== undefined) {
               geocoder = new google.maps.Geocoder();
               geocoderAddress = post_data.facility.facility_address.replace(/(\r\n|\n|\r)/gm,",");
               geocoder.geocode({'address': geocoderAddress}, function(results, status) {
@@ -157,7 +161,9 @@ $(document).ready(function() {
     else
     {
       if (post_data["project"].project_name !== undefined &&
-              post_data["facility"].facility_name !== undefined && post_data["facility"].facility_address !== undefined) {
+              post_data["facility"].facility_name !== undefined && 
+              post_data["facility"].facility_address !== undefined &&
+              post_data["client"].client_contact_email !== undefined) {
         project_manager.add(post_data, "project", "add");
       }
     }
@@ -193,7 +199,7 @@ $(document).ready(function() {
     }
 
     $('#promptmsg-addNullCheck').val(project_manager.prompt_box_msg.replace('{0}', $('input[name=project_name]').val()));
-    utils.showPromptBox("addNullCheck", function() {
+    utils.showPromptBoxById("copy-prompt","addNullCheck", function() {
       if ($('#text_input').val() !== '')
       {
         //Check unique		
@@ -277,7 +283,7 @@ $(document).ready(function() {
         var client_data = [];
         if (!isCopying) {
            facility_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
-           client_data = utils.retrieveInputs("client_form", []);
+           client_data = utils.retrieveInputs("client_form", ["client_contact_email"]);
         } else {
           facility_data = data["facility"];
           client_data = data["client"];

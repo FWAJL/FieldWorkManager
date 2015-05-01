@@ -15,35 +15,71 @@ $(document).ready(function(){
 	
   //active task sub module specific UI cleanups
   if($('#modforjs').length > 0) {
-	switch($('#modforjs').val()) {
+    switch($('#modforjs').val()) {
       case 'taskstatus':
         $('.at').hide();
-		$('#btn_refreshnotes').show();
-		$('#task_status_notes').css('height', '150px');
+		    $('#btn_refreshnotes').show();
+		    $('#task_status_notes').css('height', '150px');
 		
-		//load task notes
-		activetask_manager.getNotes('activetask', 'getNotes', function(reply){
-		  if(reply.notes.length > 0) {
-			for(i in reply.notes) {
-			  var classStr = (i % 2 == 0) ? 'note-user1' : 'note-user2';
- 			  var str = '<div class="msg-row"><div class="' + classStr + '">' + reply.users[i] + ': </div><div class="user-msg">' + reply.notes[i].task_note_value + '</div></div>';
-			  $('#messages').append(str);
-			}
-		  }
-		});
+    		//load task notes
+    		activetask_manager.getNotes('activetask', 'getNotes', function(reply){
+    		  if(reply.notes.length > 0) {
+      			for(i in reply.notes) {
+      			  var classStr = (i % 2 == 0) ? 'note-user1' : 'note-user2';
+       			  var str = '<div class="msg-row"><div class="' + classStr + '">' + reply.users[i] + ': </div><div class="user-msg">' + reply.notes[i].task_note_value + '</div></div>';
+      			  $('#messages').append(str);
+      			}
+    		  }
+    		});
+        break;
+      case 'taskforms':
+        //Item selection for documents
+        $("#group-list-left, #group-list-right").selectable({
+          stop: function() {
+            var tmpSelection = "";
+            $(".ui-selected", this).each(function() {
+              tmpSelection += $(this).attr("data-tasklocation-id") + ",";
+            });
+            tmpSelection = utils.removeLastChar(tmpSelection);
+            if (tmpSelection.length > 0) {
+              task_location_ids = tmpSelection;
+              //Show the button to appropriate button
+              $(".from-" + $(this).attr("id")).show();
+            } else {
+              task_location_ids = [];
+              $(".from-" + $(this).attr("id")).hide();
+            }
+          }
+        });
+
+        //Setup contextual menu
+        $.contextMenu({
+          selector: '.select_item',
+          callback: function(key, options) {
+            if (key === "view") {
+              //TBD
+            } 
+          },
+          items: {
+            "view": {name: "View"}
+          }
+        });//Manages the context menu
+
+        break;
+      case 'taskcomm':
+        if($('#categorized-list-left').length > 0) {
+          $('#categorized-list-left').css('height', '200');
+        }
+        if($('#group-list-left').length > 0) {
+          $('#group-list-left').css('height', '200');
+        }
+        activetask_manager.getThread();
         break;
       default:
         //nothing
-	}	 
+    }	 
   }
   
-  
-  if($('#categorized-list-left').length > 0) {
-    $('#categorized-list-left').css('height', '200');
-  }
-  if($('#group-list-left').length > 0) {
-    $('#group-list-left').css('height', '200');
-  }
   
   //************************************************//
   // Selection of task services
@@ -82,52 +118,57 @@ $(document).ready(function(){
   //************************************************//
   
   $('.from-group-list-right').click(function(){
-	var id = utils.getValuesFromList(selectionParams.listLeftId, selectionParams.dataAttrLeft, true);
-	var selection_type = '';
-    if(id !== '') {
-	  selection_type = 'service';
-	}
-	else {
-	  id = task_technician_ids;
-	  selection_type = 'technician';
-	}
-	
-	activetask_manager.updateTaskTechnicians(selection_type, id);
+  	var id = utils.getValuesFromList(selectionParams.listLeftId, selectionParams.dataAttrLeft, true);
+  	var selection_type = '';
+      if(id !== '') {
+  	  selection_type = 'service_id';
+  	}
+  	else {
+  	  id = task_technician_ids;
+  	  selection_type = 'technician_id';
+  	}
+  	
+  	activetask_manager.updateTaskTechnicians(selection_type, id);
   });
   
   //at status note onfocus
   $('#task_status_notes').focus(function(){
-	$('#btn_savenotes').show();
+    $('#btn_savenotes').show();
   });
   
   $('#task_status_notes').blur(function(){
-	if($('#task_status_notes').val() == ''){
-		$('#btn_savenotes').hide();
-	}
+  	if($('#task_status_notes').val() == ''){
+  		$('#btn_savenotes').hide();
+  	}
   });
   
   $('#btn_savenotes').click(function(){
-	activetask_manager.postNote($('#task_status_notes').val(), 'activetask', 'postNote', function(){
-	  $('#task_status_notes').val('');
-	  $('#task_status_notes').focus();
-	});
+  	activetask_manager.postNote($('#task_status_notes').val(), 'activetask', 'postNote', function(){
+  	  $('#task_status_notes').val('');
+  	  $('#task_status_notes').focus();
+  	});
   });
   
   //refresh notes
   $('#btn_refreshnotes').click(function(){
-	//load task notes
-	activetask_manager.getNotes('activetask', 'getNotes', function(reply){
-	  if(reply.notes.length > 0) {
-		$('#messages').html('');
-		for(i in reply.notes) {
-		  var classStr = (i % 2 == 0) ? 'note-user1' : 'note-user2';
-		  var str = '<div class="msg-row"><div class="' + classStr + '">' + reply.users[i] + ': </div><div class="user-msg">' + reply.notes[i].task_note_value + '</div></div>';
-		  $('#messages').append(str);
-		}
-	  }
-	});
+    //load task notes
+    activetask_manager.getNotes('activetask', 'getNotes', function(reply){
+      if(reply.notes.length > 0) {
+        $('#messages').html('');
+        for(i in reply.notes) {
+          var classStr = (i % 2 == 0) ? 'note-user1' : 'note-user2';
+          var str = '<div class="msg-row"><div class="' + classStr + '">' + reply.users[i] + ': </div><div class="user-msg">' + reply.notes[i].task_note_value + '</div></div>';
+		      $('#messages').append(str);
+		    }
+      }
+    });
   });
-  
+  $("#btn_send_message").on('click',function() {
+    var msg = $("textarea[name=\"task_comm_message\"]").val();
+    if(msg.trim() != '') {
+      activetask_manager.sendMessage(msg.trim());
+    }
+  });
 });  
 
 
@@ -219,5 +260,36 @@ $(document).ready(function(){
       }
     });
   };
+
+  activetask_manager.sendMessage = function(msg) {
+    datacx.post('activetask/sendMessage',{discussion_content_message:msg}).then(function(reply){
+      if(reply === null || reply.result === 0) {
+        toastr.error(reply.message);
+      } else {
+        toastr.success(reply.message);
+        $("#task-comm-chatbox").prepend(activetask_manager.formatChatMessage(reply.data.user_name,reply.data.discussion_content_message,reply.data.discussion_content_time)+"<br/>");
+        $("textarea[name=\"task_comm_message\"]").val('');
+      }
+    });
+  };
+
+  activetask_manager.getThread = function() {
+    datacx.post('activetask/getDiscussionThread',{}).then(function(reply){
+      if(reply === null || reply.result === 0) {
+        toastr.error(reply.message);
+      } else {
+        toastr.success(reply.message);
+        $.each(reply.thread, function(index, value) {
+
+          $("#task-comm-chatbox").append(activetask_manager.formatChatMessage(value.user_name,value.discussion_content_message,value.discussion_content_time)+"<br/>");
+        });
+      }
+    });
+  };
+
+  activetask_manager.formatChatMessage = function(name,message,time) {
+    var messageFormatted = '<strong>'+name+'</strong>: '+message+' <small>@'+time+'</small>';
+    return messageFormatted;
+  }
 
 }(window.activetask_manager = window.activetask_manager || {}));

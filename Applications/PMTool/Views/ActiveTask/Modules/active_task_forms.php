@@ -3,6 +3,7 @@
     <div  class="col-lg-5 col-md-5">
       <span class="h4"><?php echo $resx['h4_taskforms_leftcol'] ?></span>
       <span id="h4-taskforms-leftcol-gi" class="glyphicon glyphicon-info-sign"></span>
+      <?php require $form_modules["group_list_left"]; ?>
     </div>
     <div class="col-lg-1 col-md-1">
       <div class="buttons">
@@ -11,6 +12,7 @@
     <div  class="col-lg-5 col-md-5">
       <span class="h4"><?php echo $resx['h4_taskforms_rightcol'] ?></span>
       <span id="h4-taskforms-rightcol-gi" class="glyphicon glyphicon-question-sign"></span>
+      <?php require $form_modules["group_list_right"]; ?>
     </div>
   </div>
 </div>
