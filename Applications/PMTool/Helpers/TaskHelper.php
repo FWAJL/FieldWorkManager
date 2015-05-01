@@ -180,7 +180,7 @@ class TaskHelper {
     if ($task_id > 0 && $sessionTask === NULL) {
       $sessionTasks = self::GetSessionTasks($user);
       $sessionTask = $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $task_id];
-      if($currentSessionTask != NULL && $sessionTask !== NULL && $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id() != $currentSessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id()) {
+      if ($currentSessionTask != NULL && $sessionTask !== NULL && $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id() != $currentSessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id()) {
         $user->unsetAttribute(\Library\Enums\SessionKeys::CurrentDiscussion);
       }
     }
@@ -264,88 +264,105 @@ class TaskHelper {
   }
 
   /**
-  * Returns which tabs are to be shown
-  * for the passed task
-  */
+   * Returns which tabs are to be shown
+   * for the passed task
+   */
   public static function TabStatusFor($sessionTask) {
     $ret_val = array(
-                \Applications\PMTool\Resources\Enums\ViewVariables\Task::task_req_service => $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_req_service(),
-                \Applications\PMTool\Resources\Enums\ViewVariables\Task::task_req_form    => $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_req_form(),
-                \Applications\PMTool\Resources\Enums\ViewVariables\Task::task_req_field_analyte => $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_req_field_analyte(),
-                \Applications\PMTool\Resources\Enums\ViewVariables\Task::task_req_lab_analyte => $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_req_lab_analyte(),
-              );
+        \Applications\PMTool\Resources\Enums\ViewVariables\Task::task_req_service => $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_req_service(),
+        \Applications\PMTool\Resources\Enums\ViewVariables\Task::task_req_form => $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_req_form(),
+        \Applications\PMTool\Resources\Enums\ViewVariables\Task::task_req_field_analyte => $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_req_field_analyte(),
+        \Applications\PMTool\Resources\Enums\ViewVariables\Task::task_req_lab_analyte => $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_req_lab_analyte(),
+    );
     return $ret_val;
   }
 
   /**
-  * For the passed task ID, creates location specific 
-  * PDF forms from PDF template
-  */
-  public static function CreateLocationSpecificPDF($task_id, $caller) {
+   * For the passed task ID, creates location specific 
+   * PDF forms from PDF template
+   */
+  public static function CreateLocationSpecificPDF($sessionTask, $caller) {
 
-    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::SetCurrentSessionTask($caller->user(), NULL, $task_id);
+    $task_id = $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id();
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($caller->user());
 
     //Fetch the locations for this task
-    $taskLocationDAO = new \Applications\PMTool\Models\Dao\Task_location();
-    $taskLocationDAO->setTask_id($task_id);
-    $dal = $caller->managers()->getManagerOf("Task");
-    $location_data = $dal->selectMany($taskLocationDAO, "task_id");
+    $taskLocations = self::GetTaskLocationsForTask($sessionTask, $caller);
 
     //Fetch the template file relation for this task
-    $templateDAO = new \Applications\PMTool\Models\Dao\Task_template_form();
-    $templateDAO->setTask_id($task_id);
-    $template_data = $dal->selectMany($templateDAO, "task_id");
-    
-    //Loop on all the template files
-    foreach($template_data as $template){
-      //And finally the file itself, which needs to be copied
-      $masterformDAO = new \Applications\PMTool\Models\Dao\Master_form();
-      $masterformDAO->setForm_id($template->master_form_id());
-      $masterform_data = $dal->selectMany($masterformDAO, "form_id");
+    $taskTemplateForms = self::GetTaskTemplateFormForTask($sessionTask, $caller);
 
+    self::ProcessTemplateForms($caller, $sessionTask, $taskLocations, $taskTemplateForms);
+  }
+
+  public static function GetTaskLocationsForTask($sessionTask, $caller) {
+    $taskLocationDAO = new \Applications\PMTool\Models\Dao\Task_location();
+    $taskLocationDAO->setTask_id($sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+    $dal = $caller->managers()->getManagerOf("Task");
+    return $dal->selectMany($taskLocationDAO, "task_id");
+  }
+
+  public static function GetTaskTemplateFormForTask($sessionTask, $caller) {
+    $templateDAO = new \Applications\PMTool\Models\Dao\Task_template_form();
+    $templateDAO->setTask_id($sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+    $dal = $caller->managers()->getManagerOf("Task");
+    return $dal->selectMany($templateDAO, "task_id");
+  }
+
+  public static function ProcessTemplateForms($caller, $sessionTask, $taskLocations, $taskTemplateForms) {
+    foreach ($taskTemplateForms as $template) {
+      //And finally the file itself, which needs to be copied
+      //It could be a master form or a user forms, check
+      if (is_null($template->master_form_id()) || $template->master_form_id() == '0') {
+        //master form id doesn't exist, it must be an user form
+        $formData = UserFormHelper::GetFormFromTaskTemplateFrom($caller, $template);
+        $tmp_name = './uploads/user_form/' . $formData[0]->value();
+      } else {
+        //mster form
+        $formData = MasterFormHelper::GetFormFromTaskTemplateFrom($caller, $template);
+        $tmp_name = './uploads/master_form/' . $formData[0]->value();
+      }
       //Pseudo array for file based on the master file
-      $files['file'] = array(
-                              'name'      => $masterform_data[0]->value(),
-                              'type'      => $masterform_data[0]->content_type(),
-                              'tmp_name'  => './uploads/master_form/' . $masterform_data[0]->value(),
-                              'error'     => 0,
-                              'size'      => $masterform_data[0]->size() * 1000
-                            );
+      $file['file'] = array(
+          'name' => $formData[0]->value(),
+          'type' => $formData[0]->content_type(),
+          'tmp_name' => $tmp_name,
+          'error' => 0,
+          'size' => $formData[0]->size() * 1000
+      );
 
       //So now we have to loop over the locations and create multiple files
-      foreach($location_data as $loc_key => $loc_val) {
+      self::ProcessTaskLocations($caller, $sessionTask, $taskLocations, $file, $formData);
+    }
+  }
 
-        //We have to get the Location names too
-        //Check if exists in Session
-        if(empty($sessionProject[\Library\Enums\SessionKeys::ProjectLocations])) {
-          //No location data is avialbel in Session yet, let's populate it
-          
-          $project_locations = \Applications\PMTool\Helpers\LocationHelper::GetProjectLocations($caller, $sessionProject);
-          $task_locations = \Applications\PMTool\Helpers\LocationHelper::GetAndStoreTaskLocations($caller, $sessionTask);
-          //filter the project locations after we retrieve the task locations
-          $project_locations = \Applications\PMTool\Helpers\LocationHelper::FilterLocationsToExcludeTaskLocations($project_locations, $task_locations);
-          
-        }
+  public static function ProcessTaskLocations($caller, $sessionTask, $taskLocations, $file, $formData) {
+    foreach ($taskLocations as $loc_key => $taskLocationObj) {
+      //We have to get the Location names too
+      //Check if exists in Session
+      $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($caller->user());
+      //Recall session projects
+      $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($caller->user());
+      $locationRecord = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($taskLocationObj->location_id(), "location_id", $sessionProject, \Library\Enums\SessionKeys::ProjectLocations);
 
-        //Recall session projects
-        $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($caller->user());
-        $location_record = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($loc_val->location_id(), "location_id", $sessionProject, \Library\Enums\SessionKeys::ProjectLocations);
-
-        if (!empty($location_record)) {
-          $location_object = $location_record['object'];
-        
-          $dataPost = null;
-          //Create the 'Document' specific array
-          $dataPost['itemCategory'] = 'task_location';
-          $dataPost['itemId']       = $loc_val->task_location_id();
-          $dataPost['title']        = $masterform_data[0]->title() . '_' . $location_object->location_name();
-          $dataPost['itemReplace']  = false;
-
-          \Library\Controllers\FileController::copyFile($files, $dataPost, $caller);  
-        }
+      if (!empty($locationRecord)) {
+        $locationObject = $locationRecord['object'];
+        self::CopyFileForTaskLocation($caller, $taskLocationObj, $locationObject, $file, $formData);
+      } else {
+        throw new \Exception("TaskHelper::ProcessTaskLocations ==> No location object found in ProjectLocations for location_id=" . $loc_val->location_id());
       }
     }
+  }
+
+  public static function CopyFileForTaskLocation($caller, $taskLocationObj, $locationObj, $file, $formData) {
+    $dataPost = array(
+        'itemCategory' => 'task_location',
+        'itemId' => $taskLocationObj->task_location_id(),
+        'title' => $formData[0]->title() . '_' . $locationObj->location_name(),
+        'itemReplace' => false
+    );
+
+    \Library\Controllers\FileController::copyFile($file, $dataPost, $caller);
   }
 
   public static function GetTaskListFromDb($caller, $sessionProjet = NULL) {
@@ -363,4 +380,5 @@ class TaskHelper {
     }
     TaskHelper::SetCurrentSessionTask($caller->user(), NULL);
   }
+
 }
