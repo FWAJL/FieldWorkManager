@@ -346,7 +346,7 @@
         </css_files>
         <php_modules>
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-			<php_module key="active_list_module" file_name="active_list.php" shared="true" />
+			<php_module key="active_list_module" file_name="active_list.php" />
 			<php_module key="popup_selector_module" file_name="popup_selector.php" shared="true" />
         </php_modules>
     </route><!--   task/listAll -->
