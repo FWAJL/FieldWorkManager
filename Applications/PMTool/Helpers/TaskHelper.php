@@ -217,21 +217,24 @@ class TaskHelper {
     return $labServices;
   }
 
-  public static function StoreSessionTask($user, $list) {
+  public static function StoreSessionTask($user, $list, $sessionProject = NULL) {
     $SessionTasks = array();
-    $currentProject = ProjectHelper::GetCurrentSessionProject($user);
+    $project =
+            $sessionProject === NULL ?
+            ProjectHelper::GetCurrentSessionProject($user) :
+            $sessionProject;
     $countActiveTask = 0;
     foreach ($list as $task) {
       $key = \Library\Enums\SessionKeys::TaskKey . $task->task_id();
       $sessionTask = self::MakeSessionTask($task);
       $SessionTasks[$key] = $sessionTask;
-      array_push($currentProject[\Library\Enums\SessionKeys::ProjectTasks], $key);
+      array_push($project[\Library\Enums\SessionKeys::ProjectTasks], $key);
       if ($task->task_active()) {
         $countActiveTask += 1;
         $currentSessionTask = $sessionTask; //Get sessin task object
       }
     }
-    ProjectHelper::SetUserSessionProject($user, $currentProject);
+    ProjectHelper::SetUserSessionProject($user, $project);
     self::SetSessionTasks($user, $SessionTasks);
     if ($countActiveTask === 1) {//Set current task if there is only one active
       self::SetCurrentSessionTask($user, $currentSessionTask);
@@ -344,10 +347,9 @@ class TaskHelper {
 
         //Recall session projects
         $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($caller->user());
-        $location_record = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($loc_val->location_id(), 
-                "location_id", $sessionProject, \Library\Enums\SessionKeys::ProjectLocations);
-        
-        if(!empty($location_record)){
+        $location_record = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($loc_val->location_id(), "location_id", $sessionProject, \Library\Enums\SessionKeys::ProjectLocations);
+
+        if (!empty($location_record)) {
           $location_object = $location_record['object'];
         
           $dataPost = null;
@@ -359,8 +361,23 @@ class TaskHelper {
 
           \Library\Controllers\FileController::copyFile($files, $dataPost, $caller);  
         }
-        
       }
     }
+  }
+
+  public static function GetTaskListFromDb($caller, $sessionProjet = NULL) {
+    $project =
+            $sessionProjet === NULL ?
+            \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($caller->user()) :
+            $sessionProjet;
+    //Load interface to query the database for tasks
+    $task = new \Applications\PMTool\Models\Dao\Task();
+    $task->setProject_id($project[\Library\Enums\SessionKeys::ProjectObject]->project_id());
+    $manager = $caller->managers()->getManagerOf("Task");
+    $sessionTasks = \Applications\PMTool\Helpers\TaskHelper::StoreSessionTask($caller->user(), $manager->selectMany($task, "project_id"));
+    foreach ($sessionTasks as $sessionTask) {
+      TaskHelper::FillSessionTask($caller, $sessionTask);
+    }
+    TaskHelper::SetCurrentSessionTask($caller->user(), NULL);
   }
 }
