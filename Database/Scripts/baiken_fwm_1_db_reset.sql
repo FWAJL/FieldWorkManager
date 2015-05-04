@@ -214,9 +214,9 @@ CREATE TABLE IF NOT EXISTS `task_coc_info` (
     `results_to_email` varchar(35) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Is pm.pm_email by DEFAULT but can changed',
     PRIMARY KEY (`task_coc_id`),
     CONSTRAINT `fk_tci_task` FOREIGN KEY (`task_id`)
-        REFERENCES `task` (`task_id`) ON DELETE CASCADE,
-    CONSTRAINT `fk_tci_service` FOREIGN KEY (`service_id`)
-        REFERENCES `service` (`service_id`) ON DELETE CASCADE
+        REFERENCES `task` (`task_id`) ON DELETE CASCADE
+--    CONSTRAINT `fk_tci_service` FOREIGN KEY (`service_id`)
+--        REFERENCES `service` (`service_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Table structure for table `task_field_analyte
