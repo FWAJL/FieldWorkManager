@@ -57,7 +57,23 @@ $(document).ready(function(){
           selector: '.select_item',
           callback: function(key, options) {
             if (key === "view") {
-              //TBD
+              datacx.post("form/getPdfFileFor", {"form_id": parseInt(options.$trigger.attr("data-activetask-id")), "form_type": options.$trigger.attr("data-object")}).then(function(reply) {
+                
+                if (reply === null || reply.result === 0) {//has an error
+                  toastr.error(reply.message);
+                  
+                } else {//success
+                  toastr.success(reply.message);
+                  $.fancybox({ 
+                    href: reply.form_path,
+                    type: 'iframe', 
+                    openEffect : 'none', 
+                    closeEffect : 'none', 
+                    iframe : { preload: false } 
+                  });
+                }
+                
+              });
             } 
           },
           items: {

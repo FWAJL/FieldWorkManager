@@ -3,7 +3,7 @@
 /**
  *
  * @package		Basic MVC framework
- * @author		Jeremie Litzler
+ * @author		Souvik Ghosh
  * @copyright	Copyright (c) 2015
  * @license		
  * @link		
@@ -13,11 +13,11 @@
 // ------------------------------------------------------------------------
 
 /**
- *  MasterFormHelper Class
+ *  DocumentFormHelper Class
  *
  * @package		Applications\PMTool
  * @subpackage	Helpers
- * @author		Jeremie Litzler
+ * @author		Souvik Ghosh
  * @link		
  */
 
@@ -26,27 +26,22 @@ namespace Applications\PMTool\Helpers;
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class MasterFormHelper extends \Library\ApplicationComponent {
+class DocumentFormHelper extends \Library\ApplicationComponent {
 
 	/**
-	* Returns the master form record
+	* Returns the user form record
 	* This method could accept a template object
-	* or simply master form ID. Both of this is
+	* or simply a user form ID. Both of this is
 	* passed through the variable $template.
 	*
 	* The flag $for_id decides what is passed
 	*/
-  public static function GetFormFromTaskTemplateFrom($caller, $template, $for_id = false) {
-    $masterformDAO = new \Applications\PMTool\Models\Dao\Master_form();
-    if($for_id) {
-    	$masterformDAO->setForm_id($template);
-    } else {
-    	$masterformDAO->setForm_id($template->master_form_id());	
-    }
+  public static function GetFormFromDocumentID($caller, $document_id) {
+    $documentformDAO = new \Applications\PMTool\Models\Dao\Document();
+    $documentformDAO->setDocument_id($document_id);
     
     $dal = $caller->managers()->getManagerOf("Task");
-    return $dal->selectMany($masterformDAO, "form_id");
+    return $dal->selectMany($documentformDAO, "document_id");
   }
- 
 
 }

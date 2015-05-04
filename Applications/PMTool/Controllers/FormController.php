@@ -328,6 +328,28 @@ class FormController extends \Library\BaseController {
     ));
   }
 
+  public function executeGetPdfFileFor(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+    $form_id = intval($this->dataPost["form_id"]);
+    $form_type = $this->dataPost["form_type"];
+
+    $pdfPathForFancyBox = \Applications\PMTool\Helpers\FormHelper::getPDFFormForFancyBox($this, $form_type, $form_id);
+
+    $form_found = false;
+    if(trim($pdfPathForFancyBox) != '') {
+      $form_found = true;
+      $result["form_path"] = $pdfPathForFancyBox;
+    }
+    
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Form,
+      "resx_key" => $this->action(),
+      "step" => ($form_found) ? "success" : "error"
+    ));
+  }
+
   /**
    * Check if the current pm has services to decide where to send him: stay on the service list or asking him to add a service
    *
