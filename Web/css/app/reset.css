@@ -25,3 +25,23 @@ var{
     padding: 0;
     list-style-type: none;
     vertical-align: baseline; }
+
+.version {
+  text-align: right;
+  font-size: smaller;
+  color: #CCC;
+}
+.col-no-pad{
+  padding: 0 !important;
+
+}
+.col-no-margin {
+  margin: 0 !important;
+}
+.col-no-right-pad{
+  padding-right: 0 !important;
+
+}
+.col-no-right-margin {
+  margin-right: 0 !important;
+}

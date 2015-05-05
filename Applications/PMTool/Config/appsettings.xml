@@ -30,4 +30,5 @@
   <define key="GoogleMapsTaskIcon" value="red-circle_maps.png" />
   <define key="GoogleMapsNoLatLngIcon" value="ltblu-blank_maps.png" />
 
+  <define key="DefaultEmailDomainValue" value="fieldworkmanager.com" />
 </definitions>

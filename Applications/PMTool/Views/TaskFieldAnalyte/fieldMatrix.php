@@ -1,5 +1,5 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
-<div class="right-aside main col-lg-10 col-md-10 col-sm-10">
+<div class="right-aside col-no-right-pad main col-lg-10 col-md-10 col-sm-10">
   <h3>
     <?php echo $current_project->project_name(); ?>
     <span class="glyphicon glyphicon-chevron-right"></span>    
@@ -9,11 +9,11 @@
   	<div class="form_sections">
       <?php require $form_modules["task_tabs_open"]; ?> 
 	  <div class="content-container container-fluid">
-  		<div class="row">
+  		<div class="row col-no-right-margin">
 		  <span class="h4"><?php echo $resx["task_lab_matrix_label"] ?></span>
 			<span id="active-taskFieldAnalyte-header" class="glyphicon glyphicon-info-sign"></span>
 		</div>
-	  	<div class="row">
+	  	<div class="row col-no-right-margin">
 	      <div class="col-lg-10 col-md-10">
 	      	<div class="matrix-container">
 	    	  <div class="matrix-row">
