@@ -1,16 +1,33 @@
 $(document).ready(function() {
     
     $.contextMenu({
-    selector: '.select_item',
-    callback: function(key, options) {
-      if (key === "view") {
-        location_manager.retrieveLocation(options.$trigger);
-    } 
-    },
-    items: {
-      "view": {name: "View"}
-    }
-      });//Manages the context menu
+      selector: '.select_item',
+      callback: function(key, options) {
+        if (key === "view") {
+          datacx.post("form/getPdfFileFor", {"form_id": parseInt(options.$trigger.attr("data-taskform-id")), "form_type": options.$trigger.attr("data-object")}).then(function(reply) {
+            console.log(reply);
+            
+            if (reply === null || reply.result === 0) {//has an error
+              toastr.error(reply.message);
+              
+            } else {//success
+              toastr.success(reply.message);
+              $.fancybox({ 
+                href: reply.form_path,
+                type: 'iframe', 
+                openEffect : 'none', 
+                closeEffect : 'none', 
+                iframe : { preload: false } 
+              });
+            }
+            
+          });
+        } 
+      },
+      items: {
+        "view": {name: "View"}
+      }
+    });//Manages the context menu
     
   $(".btn-warning").hide();
 
