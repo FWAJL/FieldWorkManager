@@ -28,11 +28,25 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class MasterFormHelper extends \Library\ApplicationComponent {
 
-  public static function GetFormFromTaskTemplateFrom($caller, $template) {
+	/**
+	* Returns the master form record
+	* This method could accept a template object
+	* or simply master form ID. Both of this is
+	* passed through the variable $template.
+	*
+	* The flag $templateIsId decides what is passed
+	*/
+  public static function GetFormFromTaskTemplateFrom($caller, $template, $templateIsId = false) {
     $masterformDAO = new \Applications\PMTool\Models\Dao\Master_form();
-    $masterformDAO->setForm_id($template->master_form_id());
+    if($templateIsId) {
+    	$masterformDAO->setForm_id($template);
+    } else {
+    	$masterformDAO->setForm_id($template->master_form_id());	
+    }
+    
     $dal = $caller->managers()->getManagerOf("Task");
     return $dal->selectMany($masterformDAO, "form_id");
   }
+ 
 
 }
