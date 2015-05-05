@@ -34,11 +34,11 @@ class UserFormHelper extends \Library\ApplicationComponent {
 	* or simply a user form ID. Both of this is
 	* passed through the variable $template.
 	*
-	* The flag $for_id decides what is passed
+	* The flag $templateIsId decides what is passed
 	*/
-  public static function GetFormFromTaskTemplateFrom($caller, $template, $for_id = false) {
+  public static function GetFormFromTaskTemplateFrom($caller, $template, $templateIsId = false) {
     $userformDAO = new \Applications\PMTool\Models\Dao\User_form();
-    if($for_id) {
+    if($templateIsId) {
     	$userformDAO->setForm_id($template);
     } else {
     	$userformDAO->setForm_id($template->user_form_id());
