@@ -89,6 +89,9 @@ $(document).ready(function(){
         if($('#group-list-left').length > 0) {
           $('#group-list-left').css('height', '200');
         }
+        Dropzone.autoDiscover = false;
+        $("input[name=\"itemCategory\"]").val('discussion_id');
+        $("#document-upload").hide();
         activetask_manager.getThread();
         break;
       default:
@@ -295,9 +298,27 @@ $(document).ready(function(){
         toastr.error(reply.message);
       } else {
         toastr.success(reply.message);
+        $("input[name=\"itemId\"]").val(reply.discussion.discussion_id);
+        if(reply.user_type == 'technician_id') {
+          $("#btn_attach_file").hide();
+        }
+        var dropzone = new Dropzone("#document-upload");
+        dropzone.on("success", function(event,res) {
+          if(res.result == 0) {
+            toastr.error(res.message);
+            dropzone.removeAllFiles();
+          } else {
+            toastr.success(res.message);
+            $("#document-upload").hide();
+            dropzone.removeAllFiles();
+            $("textarea[name=\"task_comm_message\"]").val($("textarea[name=\"task_comm_message\"]").val()+"\n"+res.filepath);
+          }
+        });
         $.each(reply.thread, function(index, value) {
-
           $("#task-comm-chatbox").append(activetask_manager.formatChatMessage(value.user_name,value.discussion_content_message,value.discussion_content_time)+"<br/>");
+        });
+        $("#btn_attach_file").on('click',function(e){
+          $("#document-upload").show();
         });
       }
     });

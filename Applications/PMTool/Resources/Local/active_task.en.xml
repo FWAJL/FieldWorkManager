@@ -48,4 +48,6 @@
   <resource key="taskstatus_recurrence_label">Recurrence</resource>
   <resource key="taskstatus_manualtrigger_label">Manual Trigger</resource>
   <resource key="taskstatus_externaltrigger_label">External Trigger</resource>
+
+  <resource key="form_title">Title</resource>
 </resources>

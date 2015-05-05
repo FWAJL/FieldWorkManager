@@ -71,7 +71,9 @@ class FileController extends \Library\BaseController {
       $document->setDocument_title($files['file']['name']);
     }
     $result["dataOut"] = $manager->addWithFile($document,$files['file']);
-
+    $document->setDocument_id($result['dataOut']);
+    $result["document"] = $document;
+    $result["filepath"] = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$manager->webDirectory.$directory.'/'.$document->document_value();
     if($dataPost['itemReplace']==="true" && $result["dataOut"]!=-1) {
       $manager->DeleteObjectsWithFile($list, 'document_id');
     }

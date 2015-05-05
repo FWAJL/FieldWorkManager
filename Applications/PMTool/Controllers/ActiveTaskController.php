@@ -387,6 +387,9 @@ class ActiveTaskController extends \Library\BaseController {
         } else if($userType == 'service_id') {
           $discussionNames[$person->discussion_person_id()] = $userTypeObject->service_name();
         }
+        if($person->discussion_person_is_author()!=1) {
+          $result['user_type'] = $userType;
+        }
       }
       $thread = \Applications\PMTool\Helpers\DiscussionHelper::GetDiscussionThread($this,$currentDiscussion);
       if($thread) {
@@ -398,6 +401,7 @@ class ActiveTaskController extends \Library\BaseController {
             }
           }
         }
+        $result['discussion'] = $currentDiscussion[\Library\Enums\SessionKeys::DiscussionObj];
         $result['thread'] = $thread;
         $result['success'] = true;
       } else {
