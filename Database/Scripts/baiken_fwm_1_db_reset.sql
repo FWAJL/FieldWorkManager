@@ -201,7 +201,7 @@ CREATE TABLE IF NOT EXISTS `lab_sample_matrix` (
 CREATE TABLE IF NOT EXISTS `task_coc_info` (
     `task_coc_id` int(11) NOT NULL AUTO_INCREMENT,
     `task_id` int(11) NOT NULL,
-    `service_id` int(11) NOT NULL COMMENT 'Lab ID number',
+    `service_id` int(11) NULL COMMENT 'Lab ID number',
     `po_number` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
     `lab_instructions` varchar(1000) COLLATE utf8_unicode_ci NOT NULL,
     `lab_sample_type` varchar(15) COLLATE utf8_unicode_ci NOT NULL,

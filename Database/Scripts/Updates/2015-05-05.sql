@@ -4,5 +4,4 @@
 USE `baiken_fwm_1`;
 
 ALTER TABLE `task_coc_info`
-DROP FOREIGN KEY `fk_tci_service`,
-DROP INDEX `fk_tci_service`;
+MODIFY COLUMN `service_id` int(11) NULL COMMENT 'Lab ID number';
