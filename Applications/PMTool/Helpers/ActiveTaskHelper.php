@@ -44,6 +44,7 @@ class ActiveTaskHelper {
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id => "document_id",
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name => "document_title",
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active => "document_id",
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::data_identifier => "document_category",
     );
   }
 

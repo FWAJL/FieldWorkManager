@@ -9,7 +9,6 @@
 DROP SCHEMA IF EXISTS `baiken_fwm_1`;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zonef = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -202,7 +201,7 @@ CREATE TABLE IF NOT EXISTS `lab_sample_matrix` (
 CREATE TABLE IF NOT EXISTS `task_coc_info` (
     `task_coc_id` int(11) NOT NULL AUTO_INCREMENT,
     `task_id` int(11) NOT NULL,
-    `service_id` int(11) NOT NULL COMMENT 'Lab ID number',
+    `service_id` int(11) NULL COMMENT 'Lab ID number',
     `po_number` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
     `lab_instructions` varchar(1000) COLLATE utf8_unicode_ci NOT NULL,
     `lab_sample_type` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
@@ -215,9 +214,9 @@ CREATE TABLE IF NOT EXISTS `task_coc_info` (
     `results_to_email` varchar(35) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Is pm.pm_email by DEFAULT but can changed',
     PRIMARY KEY (`task_coc_id`),
     CONSTRAINT `fk_tci_task` FOREIGN KEY (`task_id`)
-        REFERENCES `task` (`task_id`) ON DELETE CASCADE,
-    CONSTRAINT `fk_tci_service` FOREIGN KEY (`service_id`)
-        REFERENCES `service` (`service_id`) ON DELETE CASCADE
+        REFERENCES `task` (`task_id`) ON DELETE CASCADE
+--    CONSTRAINT `fk_tci_service` FOREIGN KEY (`service_id`)
+--        REFERENCES `service` (`service_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Table structure for table `task_field_analyte
@@ -433,11 +432,13 @@ CREATE TABLE IF NOT EXISTS `user` (
     `user_login` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `user_password` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `user_hint` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+    `user_email` VARCHAR(50) NOT NULL COMMENT 'User email that is unique and must be set',
     `user_type` varchar(50) NOT NULL COMMENT 'Possible values: pm_id, technician_id, service_id',
     `user_value` int(11) NOT NULL COMMENT 'ID value corresponding to the user_type',
     `user_role_id` smallint(2) NOT NULL COMMENT 'Look up the table user_role for details about the roles',
     `user_session_id` VARCHAR(50) NULL COMMENT 'Hashed session ID',
     UNIQUE INDEX `un_user_login` (`user_login` ASC),
+    UNIQUE INDEX `un_user_email` (`user_email` ASC),
     CONSTRAINT `fk_user_role_user` FOREIGN KEY (`user_role_id`)
         REFERENCES `user_role` (`user_role_id`),
     PRIMARY KEY (`user_id`)
@@ -516,10 +517,10 @@ INSERT INTO `user_role` (`user_role_id`,`user_role_desc`) VALUES
 (5,'None');
 
 -- Dumping data for table `user`
-INSERT INTO `user` (`user_login`, `user_password`, `user_hint`, `user_type`, `user_value`, `user_role_id`) VALUES
-('test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683', 'hint', 'pm_id', 1, 2),
-('demo', '89e495e7941cf9e40e6980d14a16bf023ccd4c91g496lJL683', '', 'pm_id', 2, 2),
-('admin','a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683','','administrator_id',0,1);
+INSERT INTO `user` (`user_login`, `user_password`, `user_hint`, `user_email`, `user_type`, `user_value`, `user_role_id`) VALUES
+('test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683', 'hint', 'test@fielworkmanager.com', 'pm_id', 1, 2),
+('demo', '89e495e7941cf9e40e6980d14a16bf023ccd4c91g496lJL683', '', 'demo@fielworkmanager.com', 'pm_id', 2, 2),
+('admin','a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683','','admin@fielworkmanager.com','administrator_id',0,1);
 
 INSERT INTO `master_form`(`form_id`,`content_type`,`category`,`value`,`size`,`title`) VALUES
 (1,'pdf',NULL,'FWM_T-ChainofCustody.pdf',45,'Chain Of Custody'),

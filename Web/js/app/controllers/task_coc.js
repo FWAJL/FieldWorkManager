@@ -9,8 +9,6 @@ $(document).ready(function() {
     var post_data = utils.retrieveInputs(
             "task_coc_form",
             [
-              "po_number",
-              "lab_instructions",
               "service_id",
               "lab_sample_type",
               "lab_sample_tat",

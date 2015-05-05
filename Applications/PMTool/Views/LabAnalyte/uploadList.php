@@ -1,5 +1,5 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
-<div class="right-aside main col-lg-10 col-md-10 col-sm-10">
+<div class="right-aside col-no-right-pad main col-lg-10 col-md-10 col-sm-10">
   <div class="lab_analyte_list">
 <h3>
       <?php //echo $current_project->project_name(); ?>
@@ -7,7 +7,7 @@
       <?php echo $resx["lab_analytes_header"] ?>
     </h3>
 <div class="content-container container-fluid">
-  <div class="row">
+  <div class="row col-no-right-margin">
     <div  class="col-lg-5 col-md-5">
       <span class="h4"><?php echo $resx["h4_lab_analyte_form"]; ?></span>
       <span class="glyphicon glyphicon-question-sign" id="activequestion-labanalyte-uploadList-headerH4"></span>
