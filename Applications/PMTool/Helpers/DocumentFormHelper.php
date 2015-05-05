@@ -3,7 +3,7 @@
 /**
  *
  * @package		Basic MVC framework
- * @author		Jeremie Litzler
+ * @author		Souvik Ghosh
  * @copyright	Copyright (c) 2015
  * @license		
  * @link		
@@ -13,11 +13,11 @@
 // ------------------------------------------------------------------------
 
 /**
- *  UserFormHelper Class
+ *  DocumentFormHelper Class
  *
  * @package		Applications\PMTool
  * @subpackage	Helpers
- * @author		Jeremie Litzler
+ * @author		Souvik Ghosh
  * @link		
  */
 
@@ -26,7 +26,7 @@ namespace Applications\PMTool\Helpers;
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class UserFormHelper extends \Library\ApplicationComponent {
+class DocumentFormHelper extends \Library\ApplicationComponent {
 
 	/**
 	* Returns the user form record
@@ -34,18 +34,14 @@ class UserFormHelper extends \Library\ApplicationComponent {
 	* or simply a user form ID. Both of this is
 	* passed through the variable $template.
 	*
-	* The flag $templateIsId decides what is passed
+	* The flag $for_id decides what is passed
 	*/
-  public static function GetFormFromTaskTemplateFrom($caller, $template, $templateIsId = false) {
-    $userformDAO = new \Applications\PMTool\Models\Dao\User_form();
-    if($templateIsId) {
-    	$userformDAO->setForm_id($template);
-    } else {
-    	$userformDAO->setForm_id($template->user_form_id());
-    }
+  public static function GetFormFromDocumentID($caller, $document_id) {
+    $documentformDAO = new \Applications\PMTool\Models\Dao\Document();
+    $documentformDAO->setDocument_id($document_id);
     
     $dal = $caller->managers()->getManagerOf("Task");
-    return $dal->selectMany($userformDAO, "form_id");
+    return $dal->selectMany($documentformDAO, "document_id");
   }
 
 }

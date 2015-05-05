@@ -2,7 +2,7 @@
 <div class="location-list">
   <h3><?php echo $resx["h3_location_names_form"]; ?></h3>
   <div class="content-container">
-    <div class="row">  
+    <div class="row col-no-right-margin">  
       <div  class="col-lg-5 col-md-5">    
         <div id="location_info">
           <fieldset class="location_form form">

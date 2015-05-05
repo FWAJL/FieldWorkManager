@@ -92,7 +92,7 @@ $(document).ready(function() {
     var post_data = {};
     post_data["project"] = utils.retrieveInputs("project_form", ["project_name"]);
     post_data["facility"] = utils.retrieveInputs("facility_form", ["facility_name"]);
-    post_data["client"] = utils.retrieveInputs("client_form", ["client_contact_email"]);
+    post_data["client"] = utils.retrieveInputs("client_form", []);
 
     var msgNullCheck = $('#confirmmsg-addNullCheck').val();
     var msgUniqueCheck = $('#confirmmsg-addUniqueCheck').val();
@@ -100,9 +100,7 @@ $(document).ready(function() {
             typeof msgUniqueCheck !== typeof undefined && msgUniqueCheck !== false) {
       if (post_data["project"].project_name !== undefined &&
               post_data["facility"].facility_address !== undefined &&
-              post_data["facility"].facility_address !== "" &&
-              post_data["client"].client_contact_email !== undefined &&
-              post_data["client"].client_contact_email !== "")
+              post_data["facility"].facility_address !== "")
       {
         project_manager.ifProjectExists(post_data["project"]['project_name'], function(record_count) {
           if (record_count > 0 || post_data["project"].project_name === undefined)
@@ -113,8 +111,7 @@ $(document).ready(function() {
           {
             if (post_data["project"].project_name !== undefined &&
                     post_data["facility"].facility_name !== undefined && 
-                    post_data["facility"].facility_address !== undefined &&
-                    post_data["client"].client_contact_email !== undefined) {
+                    post_data["facility"].facility_address !== undefined) {
               geocoder = new google.maps.Geocoder();
               geocoderAddress = post_data.facility.facility_address.replace(/(\r\n|\n|\r)/gm,",");
               geocoder.geocode({'address': geocoderAddress}, function(results, status) {
@@ -162,8 +159,7 @@ $(document).ready(function() {
     {
       if (post_data["project"].project_name !== undefined &&
               post_data["facility"].facility_name !== undefined && 
-              post_data["facility"].facility_address !== undefined &&
-              post_data["client"].client_contact_email !== undefined) {
+              post_data["facility"].facility_address !== undefined) {
         project_manager.add(post_data, "project", "add");
       }
     }
@@ -283,7 +279,7 @@ $(document).ready(function() {
         var client_data = [];
         if (!isCopying) {
            facility_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
-           client_data = utils.retrieveInputs("client_form", ["client_contact_email"]);
+           client_data = utils.retrieveInputs("client_form", []);
         } else {
           facility_data = data["facility"];
           client_data = data["client"];

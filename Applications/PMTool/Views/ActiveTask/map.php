@@ -1,7 +1,7 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); 
   //\Applications\PMTool\Helpers\CommonHelper::pr($form_modules);
 ?>
-<div class="right-aside main col-lg-10 col-md-10 col-sm-10">
+<div class="right-aside col-no-right-pad main col-lg-10 col-md-10 col-sm-10">
   <h3>
     <?php echo $current_project->project_name(); ?>
     <?php if ($current_task !== NULL) { ?>
@@ -16,7 +16,7 @@
 
       <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::active_task_tabs_open]; ?>
 
-      <div class="row">
+      <div class="row col-no-right-margin">
         <div class="col-lg-10 col-md-10">
           <p>
             <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_module]; ?>  

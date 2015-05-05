@@ -3,7 +3,7 @@
 //print_r($form_modules);
 ?>
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
-<div class="right-aside main col-lg-10 col-md-10 col-sm-10">
+<div class="right-aside col-no-right-pad main col-lg-10 col-md-10 col-sm-10">
   <div class="service_list">
           <h3>
       Current Project
@@ -18,7 +18,7 @@
     </h3>
 
     <div class="content-container container-fluid">
-      <div class="row">
+      <div class="row col-no-right-margin">
         <div  class="col-lg-5 col-md-5">
           <span class="h4"><?php echo $resx["h3_project_services"]; ?></span>
           <span class="glyphicon glyphicon-info-sign" id="active-service-header"></span>

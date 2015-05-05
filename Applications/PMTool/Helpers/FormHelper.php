@@ -241,5 +241,36 @@ class FormHelper {
     return $result;
   }
 
+  /**
+  * Accepts form type and record id to return
+  * the actual physical file name along with
+  * the path. Used for Fancybox PDF viewer.
+  */
+  public static function getPDFFormForFancyBox($caller, $form_type, $form_id){
+    $applicationDirectory = 
+            '../' . $caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath);
+    $finalPath = '';
+    if($form_type === 'master_form') {
+      //Master form, we have to fetch from Master_form
+      $formData = MasterFormHelper::GetFormFromTaskTemplateFrom($caller, $form_id, true);
+      $finalPath = $applicationDirectory. $form_type  . '/' . $formData[0]->value();
+    }
+    elseif($form_type === 'user_form') {
+      $formData = UserFormHelper::GetFormFromTaskTemplateFrom($caller, $form_id, true);
+      $finalPath = $applicationDirectory. $form_type  . '/' . $formData[0]->value(); 
+    }
+    elseif($form_type === 'task_location') {
+      $formData = DocumentFormHelper::GetFormFromDocumentID($caller, $form_id, true);
+      $finalPath = $applicationDirectory. $form_type  . '/' . $formData[0]->document_value();  
+    }
+
+    //Check if actually the physical file exists
+    if(!file_exists($finalPath)) {
+      $finalPath = ''; 
+    }
+
+    return $finalPath;
+  }
+
 }
 
