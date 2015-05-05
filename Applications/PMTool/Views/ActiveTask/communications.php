@@ -10,7 +10,7 @@ if (isset($current_discussion['comm_type'])) {
   }
 }
 ?>
-<div class="right-aside main col-lg-10 col-md-10 col-sm-10">
+<div class="right-aside col-no-right-pad main col-lg-10 col-md-10 col-sm-10">
   <h3>
     <?php echo $current_project->project_name(); ?>
     <?php if ($current_task !== NULL) { ?>

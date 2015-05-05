@@ -1,5 +1,10 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 </div><!-- END ROW DIV -->
+<div class="row  col-no-right-margin">
+  <div class="col-xs-12 col-no-right-pad">
+    <p class="version"><?php echo 'Current version: ' . str_replace('?', '', $version); ?></p>
+  </div>
+</div>
 </div><!-- END CONTENT CONTAINER -->
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/parsexml.js<?php echo $version; ?>"></script>
 <!--    <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/ko.js"></script>-->
