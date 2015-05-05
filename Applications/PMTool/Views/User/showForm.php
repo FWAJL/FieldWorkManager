@@ -1,10 +1,10 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
-<div class="right-aside main col-lg-10 col-md-10 col-sm-10">
+<div class="right-aside col-no-right-pad main col-lg-10 col-md-10 col-sm-10">
   <h3>
     <?php echo $resx["user_form"] ?>
   </h3>
   <div class="content-container container-fluid">
-    <div class="row">
+    <div class="row col-no-right-margin">
       <div  class="col-lg-5 col-md-5">
         <div class="form_sections add_delete_user">
           <?php require $form_modules["user_form"]; ?>

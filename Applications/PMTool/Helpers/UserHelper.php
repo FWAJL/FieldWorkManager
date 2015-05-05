@@ -149,15 +149,16 @@ class UserHelper {
   }
 
   public static function AddUser($caller, $user_value, $user_role_id, $user_type = NULL) {
-    if ($user_type == NULL) {
+    if ($user_type === NULL) {
       $user_type = self::GetTypeFromRoleId($user_role_id);
     }
     $dataPost = $caller->dataPost();
+    $userEmail = self::GetEMailForUser($caller, $dataPost, $user_type, $user_value);
     $manager = $caller->managers()->getManagerOf('User');
     $generatedDataPost = array(
-      'user_login' => $dataPost['user_email'],
-      'user_password' => $dataPost['user_email'],
-      'user_email' => $dataPost['user_email'],
+      'user_login' => $userEmail,
+      'user_password' => $userEmail,
+      'user_email' => $userEmail,
       'user_hint' => '',
       'user_role_id'=> $user_role_id,
       'user_type' => $user_type,
@@ -167,6 +168,13 @@ class UserHelper {
     $protect = new \Library\BL\Core\Encryption();
     $user->setUser_password($protect->Encrypt($caller->app()->config()->get("encryption_key"), $user->user_password()));
     return $manager->add($user);
+  }
+  public static function GetEmailForUser($caller, $dataPost, $user_type, $user_value) {
+    if (is_null($dataPost['user_email']) || $dataPost['user_email'] == '') {
+      return ($user_type . '_' . $user_value . '@' . $caller->app()->config()->get(\Library\Enums\AppSettingKeys::DefaultEmailDomainValue)); 
+    } else {
+      return $dataPost['user_email'];
+    }
   }
   
   public static function GetTypeFromRoleId($role_id) {

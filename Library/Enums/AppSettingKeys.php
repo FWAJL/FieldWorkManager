@@ -40,6 +40,7 @@ abstract class AppSettingKeys {
   const GoogleMapsTaskIcon = "GoogleMapsTaskIcon";
   const GoogleMapsNoLatLngIcon = "GoogleMapsNoLatLngIcon";
 
+  const DefaultEmailDomainValue = "DefaultEmailDomainValue";
 }
 
 ?>
