@@ -255,9 +255,9 @@ class Router extends ApplicationComponent {
   }
   private function _GetCss($route, $path_to_add, $app) {
     if ($app->config()->get(Enums\AppSettingKeys::ApplicationMode) == "DEV") {
-      $this->_LoadCssFiles($route, $path_to_add);
+      return $this->_LoadCssFiles($route, $path_to_add);
     } elseif ($app->config()->get(Enums\AppSettingKeys::ApplicationMode) == "RELEASE") {
-      $this->_LoadCssFilesIntoOne($route, $path_to_add, $app);
+      return $this->_LoadCssFilesIntoOne($route, $path_to_add, $app);
     }
   }
 
