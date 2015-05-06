@@ -1,12 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files>
-  <!-- DEFINITION FOR JS FILES -->
-  <js_files>
-    <js_file file_path="app/services/utils.js" version="" />
-  </js_files>
+<applications>
+  <application mode="dev">
+    <!-- DEFINITION FOR JS FILES -->
+    <jsfiles>
+      <jsfile file_path="core/jquery.js" />
+      <jsfile file_path="core/jquery-ui.js" />
+      <jsfile file_path="core/parsexml.js" />
+      <jsfile file_path="core/bootstrap.min.js" />
+      <jsfile file_path="core/bootbox.min.js" />
+      <jsfile file_path="core/moment.locales.js" />
+      <jsfile file_path="core/dropzone.js" />
+      <jsfile file_path="core/lightbox.js" />
+      <jsfile file_path="addons/toastr.js" />
+      <jsfile file_path="addons/jquery.parseParams.js" />
+      <jsfile file_path="addons/jquery.contextMenu.js" />
+      <jsfile file_path="addons/jquery.ui.position.js" />
+      <jsfile file_path="addons/spin.min.js" />
+      <jsfile file_path="app/services/config.js" />
+      <jsfile file_path="app/services/dataservice.js" />
+      <jsfile file_path="app/services/utils.js" />
+      <jsfile file_path="app/controllers/tabs.js" />
+      <jsfile file_path="app/controllers/top_menu.actions.js" />
+    </jsfiles>
   
-  <!-- DEFINITION FOR CSS FILES -->
-  <css_files>
-    <css_file file_path="app/app-style.css" version="" />
-  </css_files>
-</files>
+    <!-- DEFINITION FOR CSS FILES -->
+    <cssfiles>
+      <cssfile file_path="app/reset.css" />
+      <cssfile file_path="core/bootstrap.css" />
+      <cssfile file_path="addons/toastr.css" />
+      <cssfile file_path="addons/jquery.contextMenu.css" />
+      <cssfile file_path="core/jquery-ui.css" />
+      <cssfile file_path="core/dropzone.css" />
+      <cssfile file_path="core/lightbox.css" />
+    </cssfiles>
+
+  </application>
+  <application mode="release">
+    
+  </application>
+</applications>
