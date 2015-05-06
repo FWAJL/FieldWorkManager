@@ -769,7 +769,7 @@ DROP TABLE IF EXISTS `task_coc_info`;
 CREATE TABLE `task_coc_info` (
   `task_coc_id` int(11) NOT NULL AUTO_INCREMENT,
   `task_id` int(11) NOT NULL,
-  `service_id` int(11) NOT NULL COMMENT 'Lab ID number',
+  `service_id` int(11) DEFAULT NULL COMMENT 'Lab ID number',
   `po_number` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   `lab_instructions` varchar(1000) COLLATE utf8_unicode_ci NOT NULL,
   `lab_sample_type` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
@@ -1168,4 +1168,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-06  4:05:46
+-- Dump completed on 2015-05-06  4:27:12
