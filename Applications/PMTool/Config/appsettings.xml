@@ -31,4 +31,8 @@
   <define key="GoogleMapsNoLatLngIcon" value="ltblu-blank_maps.png" />
 
   <define key="DefaultEmailDomainValue" value="fieldworkmanager.com" />
+
+  <!--Field/Lab Analyte Pagination related configuartion-->
+  <define key="AnalytesPerPage" value="7" />
+
 </definitions>

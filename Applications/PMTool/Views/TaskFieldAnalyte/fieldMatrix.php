@@ -58,7 +58,24 @@
 	    	  		<input type="button" value="<?php echo $resx["tlm_savebtn_label"] ?>" class="btn btn-default" id="btn_save_fieldmatrix" style="display: inline-block;">
 	    	  	</div>
 	    	  </div>
-	      	</div>
+	    	  <div class="matrix-row pg-container">
+		    		<?php
+		    		if($task_analytes_pages > 1) {
+		    			for($pgno = 1; $pgno <= $task_analytes_pages; $pgno++) {
+			    			if($pgno == $current_page) {
+			    				?>
+			    				<div class="pg currpg"><?php echo $pgno ?></div>
+			    				<?php
+			    			} else {
+			    				?>
+				    			<div class="pg"><a href="?pg=<?php echo $pgno ?>"><?php echo $pgno ?></a></div>
+				    			<?php
+			    			}
+			    		}
+		    		}
+		    		?>
+		    	</div>
+	      </div>
 	    </div>
 	  </div>
 	  <?php 
