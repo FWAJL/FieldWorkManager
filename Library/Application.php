@@ -41,7 +41,7 @@ abstract class Application {
     $this->name = '';
     $this->auth = new \Library\Security\AuthenticationManager($this);
 //    $this->jsManager = new Core\Utility\JavascriptManager($this);
-//    $this->cssManager = new Core\Utility\CssManager($this);
+    $this->cssManager = new Core\Utility\CssManager($this);
   }
 
   public function initConfig() {
@@ -116,6 +116,14 @@ abstract class Application {
 
   public function name() {
     return $this->name;
+  }
+  
+  public function css() {
+    return $this->cssManager;
+  }
+  
+  public function js() {
+    return $this->jsManager;
   }
 
   private function FindRouteMatch() {
