@@ -300,7 +300,7 @@ $(document).ready(function(){
         toastr.success(reply.message);
         $("input[name=\"itemId\"]").val(reply.discussion.discussion_id);
         if(reply.user_type == 'technician_id') {
-          $("#btn_attach_file").hide();
+          $("#file-attach").hide();
         }
         var dropzone = new Dropzone("#document-upload");
         dropzone.on("success", function(event,res) {
@@ -314,11 +314,31 @@ $(document).ready(function(){
             $("textarea[name=\"task_comm_message\"]").val($("textarea[name=\"task_comm_message\"]").val()+"\n"+res.filepath);
           }
         });
-        $.each(reply.thread, function(index, value) {
-          $("#task-comm-chatbox").append(activetask_manager.formatChatMessage(value.user_name,value.discussion_content_message,value.discussion_content_time)+"<br/>");
+        if(reply.thread !== undefined) {
+          $.each(reply.thread, function(index, value) {
+            $("#task-comm-chatbox").append(activetask_manager.formatChatMessage(value.user_name,value.discussion_content_message,value.discussion_content_time)+"<br/>");
+          });
+        }
+        $("#group-list-right").selectable({
+          stop: function() {
+            var tmpSelection = "";
+            $(".ui-selected", this).each(function() {
+              tmpSelection += $(this).attr("data-document-id") + ",";
+            });
+            tmpSelection = utils.removeLastChar(tmpSelection);
+          }
         });
         $("#btn_attach_file").on('click',function(e){
-          $("#document-upload").show();
+          if($("input[name=\"local-server\"]:checked").val()=='local') {
+            $("#document-upload").show();
+          } else {
+            $("#document-upload").hide();
+            utils.showSelectEntityPrompt(function(){
+              if($("#group-list-right .ui-selected")!==undefined) {
+                activetask_manager.loadPhoto($("#group-list-right .ui-selected").data('document-id'));
+              }
+            }, function(){});
+          }
         });
       }
     });
@@ -327,6 +347,22 @@ $(document).ready(function(){
   activetask_manager.formatChatMessage = function(name,message,time) {
     var messageFormatted = '<strong>'+name+'</strong>: '+message+' <small>@'+time+'</small>';
     return messageFormatted;
+  };
+
+  activetask_manager.loadPhoto = function(id) {
+    datacx.post("file/loadOne", {"id": id}).then(function(reply){
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+        return undefined;
+      } else {//success
+        toastr.success(reply.message);
+        console.log(reply.filepath.length);
+        if(reply.filepath.length>0){
+          $("textarea[name=\"task_comm_message\"]").val($("textarea[name=\"task_comm_message\"]").val()+"\n"+reply.filepath);
+        }
+      }
+      $('.pselector-modal').modal('hide');
+    });
   }
 
 }(window.activetask_manager = window.activetask_manager || {}));

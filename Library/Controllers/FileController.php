@@ -29,6 +29,35 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class FileController extends \Library\BaseController {
 
+
+  public function executeLoadOne(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS();
+    $dataPost = $this->dataPost();
+    $manager = $this->managers()->getManagerOf("Document");
+    $manager->setRootDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
+    $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
+    $document = new \Applications\PMTool\Models\Dao\Document();
+    $document->setDocument_id($dataPost['id']);
+    $document = $manager->selectOne($document);
+    if(!is_null($document)) {
+      $directory = str_replace("_id", "", $document->document_category());
+      $result['document'] = $document;
+      $result["filepath"] = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$manager->webDirectory.$directory.'/'.$document->document_value();
+      $result['success'] = true;
+    } else {
+      $result['success'] = false;
+    }
+
+    $this->SendResponseWS(
+      $result, array(
+      "directory" => "common",
+      "resx_file" => \Library\Enums\ResourceKeys\ResxFileNameKeys::File,
+      "resx_key" => $this->action(),
+      "step" => $result['success'] ? "success" : "error"
+    ));
+  }
+
+
   public function executeLoad(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS();
     $dataPost = $this->dataPost();

@@ -452,11 +452,13 @@
           <php_module key="active_task_comm" file_name="active_task_comm.php" />
           <php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
           <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
+          <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
           <php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>
           <php_module key="communications_button_module" file_name="communications_button_module.php" />
           <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
           <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
           <php_module key="upload_file" file_name="upload_file.php" shared="true"/>
+          <php_module key="popup_selector" file_name="popup_selector.php" shared="true"/>
         </php_modules>
     </route><!--  activetask/communications -->
 	
@@ -1067,4 +1069,5 @@
   <route url="file/upload" module="File" action="upload" resxfile="file" type="lib ws" />
   <route url="file/load" module="File" action="load" resxfile="file" type="lib ws" />
   <route url="file/remove" module="File" action="remove" resxfile="file" type="lib ws" />
+  <route url="file/loadOne" module="File" action="loadOne" resxfile="file" type="lib ws" />
 </routes>
