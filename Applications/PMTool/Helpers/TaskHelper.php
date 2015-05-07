@@ -349,7 +349,7 @@ class TaskHelper {
         $locationObject = $locationRecord['object'];
         self::CopyFileForTaskLocation($caller, $taskLocationObj, $locationObject, $file, $formData);
       } else {
-        throw new \Exception("TaskHelper::ProcessTaskLocations ==> No location object found in ProjectLocations for location_id=" . $loc_val->location_id());
+        throw new \Exception("TaskHelper::ProcessTaskLocations ==> No location object found in ProjectLocations for location_id=" . $taskLocationObj->location_id());
       }
     }
   }
