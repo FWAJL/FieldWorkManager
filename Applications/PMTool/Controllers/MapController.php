@@ -57,8 +57,7 @@ class MapController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);
 
     //refresh locations
-    $this->_GetAndStoreLocationsInSession($sessionProject);
-    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = $this->_GetAndStoreLocationsInSession($sessionProject);
 
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
@@ -307,8 +306,7 @@ class MapController extends \Library\BaseController {
 
     //get current sesion project and refresh project's locations
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-    $this->_GetAndStoreLocationsInSession($sessionProject);
-    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = $this->_GetAndStoreLocationsInSession($sessionProject);
 
     //load marker icons from config
     $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->relative_path,$this->app()->imageUtil,$this->app()->config());
@@ -392,8 +390,7 @@ class MapController extends \Library\BaseController {
 
     //get current sesion project and refresh project's locations then get current session task
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-    $this->_GetAndStoreLocationsInSession($sessionProject);
-    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = $this->_GetAndStoreLocationsInSession($sessionProject);
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
 
     //create two arrays with current project's locations, one for locations linked with the task and other unlinked
@@ -438,11 +435,11 @@ class MapController extends \Library\BaseController {
   }
 
   private function _GetAndStoreLocationsInSession($sessionProject) {
-    $lists = array();
     if (count($sessionProject[\Library\Enums\SessionKeys::ProjectLocations]) === 0 || !$sessionProject[\Library\Enums\SessionKeys::ProjectLocations]) {
-      \Applications\PMTool\Helpers\LocationHelper::GetLocationList($this, $sessionProject);
+      $result = \Applications\PMTool\Helpers\LocationHelper::GetLocationList($this, $sessionProject);
+      $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = $result[\Library\Enums\SessionKeys::ProjectLocations];
     } else {
-      //The locations are already in Session
+      return $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
     }
   }
 

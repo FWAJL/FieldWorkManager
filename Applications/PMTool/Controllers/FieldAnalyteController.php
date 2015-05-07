@@ -90,20 +90,6 @@ class FieldAnalyteController extends \Library\BaseController {
     ));
   }
 
-  public function executeGetList(\Library\HttpRequest $rq = NULL, $sessionProject = NULL, $isAjaxCall = FALSE) {
-    // Init result
-    $result = \Applications\PMTool\Helpers\LocationHelper::GetLocationList($this, $sessionProject);
-    if ($isAjaxCall) {
-      $step_result = $result[\Library\Enums\SessionKeys::ProjectLocations] !== NULL ? "success" : "error";
-      $this->SendResponseWS(
-              $result, array(
-          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
-          "resx_key" => $this->action(),
-          "step" => $step_result
-      ));
-    }
-  }
-
   public function executeGetItem(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
