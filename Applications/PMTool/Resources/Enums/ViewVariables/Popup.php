@@ -29,7 +29,8 @@ class Popup {
   //Modules keys
   const popup_prompt_module = "popup_prompt_module";
     //For tooltip
-  const tooltip_message = "tooltip_message"; 
+  const tooltip_message = "tooltip_message";
+  const ellipsis_tooltip_settings = "ellipsis_tooltip_settings";
   //The module for populating the tooltip hiddens
   const tooltip_message_module = "tooltip_message_module"; 
   //For messages in confirm boxes

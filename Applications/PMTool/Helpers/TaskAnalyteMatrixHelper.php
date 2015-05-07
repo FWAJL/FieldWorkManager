@@ -192,7 +192,7 @@ class TaskAnalyteMatrixHelper {
   }
 
   /**
-  * Return the number of pages possible
+  * Returns the number of pages possible
   * based on the number of pages in the 
   * config file
   */

@@ -25,7 +25,12 @@
 			  		if(!empty($task_field_analytes)){
 							foreach($task_field_analytes as $analyte){
 					  		?>
-					  		<div class="matrix-cell matrix-cell-data"><?php echo $analyte->field_analyte_name_unit(); ?></div>
+					  		<div class="matrix-cell matrix-cell-data">
+					  			<?php 
+					  			\Applications\PMTool\Helpers\CommonHelper::generateEllipsisAndTooltipMarkupFor($analyte->field_analyte_name_unit(), 
+							  								$ellipsis_tooltip_settings['charlimit'], $ellipsis_tooltip_settings['placement']);
+					  			?>
+					  		</div>
 					  		<?php
 							}	
 			  		}
@@ -36,7 +41,12 @@
 	    	  		foreach ($task_locations as $location) {
     		  		?>
     		    	<div class="matrix-row">
-    		  	  	<div class="matrix-cell matrix-cell-data"><?php echo $location->location_name(); ?></div>
+    		  	  	<div class="matrix-cell matrix-cell-data">
+    		  	  		<?php 
+    		  	  		\Applications\PMTool\Helpers\CommonHelper::generateEllipsisAndTooltipMarkupFor($location->location_name(), 
+							  								$ellipsis_tooltip_settings['charlimit'], $ellipsis_tooltip_settings['placement']);
+    		  	  		?>
+    		  	  	</div>
 		    		  		<?php
 					  			foreach($task_field_analytes as $analyte){
 					  				$id_pair = $location->location_id() . '_' . $analyte->field_analyte_id();

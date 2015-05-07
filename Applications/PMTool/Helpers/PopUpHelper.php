@@ -110,6 +110,28 @@ class PopUpHelper {
     return $msg_array;
   }
 
+  /**
+  * Gets the settings for a module on the basis of which a 
+  * tooltip would be shown where the text is truncated due
+  * to insufficient space
+  */
+  public static function getTooltipEllipsisSettings($param, $appname) {
+    PopUpHelper::$appname = $appname;
+    $param_arr = json_decode($param, true);
+    $msg_array = array();
+    $resourcesFromXml = self::loadToolTipMessagefromXML();
+    foreach ($resourcesFromXml as $msg) {
+      if ($msg->getAttribute('uicomponent') == 'tooltip_ellipsis' &&
+              $msg->getAttribute('targetcontroller') == $param_arr['targetcontroller'] &&
+              $msg->getAttribute('targetaction') == $param_arr['targetaction']
+      ) {
+        $msgconfig_arr = array('charlimit' => $msg->getAttribute('charlimit'), 'placement' => $msg->getAttribute('placement'));
+      }
+    }
+
+    return $msgconfig_arr;
+  }
+
   public static function loadToolTipMessagefromXML() {
     $xml = new \DOMDocument;
     $filename = __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . PopUpHelper::$appname . '/Resources/Common/tooltipandpopupstrings.en.xml';

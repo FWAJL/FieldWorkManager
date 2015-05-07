@@ -23,11 +23,19 @@
 		    	  	<div class="matrix-location-header matrix-cell"><?php echo $resx["tlm_locationhead_label"] ?></div>
 					  	<?php
 					  		if(!empty($task_lab_analytes)){
-								foreach($task_lab_analytes as $analyte){
-						  		?>
-						  		<div class="matrix-cell matrix-cell-data"><?php echo $analyte->lab_analyte_name(); ?></div>
-						  		<?php
-								}	
+					  			//At this point fetch the char limit we have for the matrix cells
+					  			$charLimit = $this->app->config->get('MaxCharInCell');
+    							//Loop over the analytes
+									foreach($task_lab_analytes as $analyte){
+							  		?>
+							  		<div class="matrix-cell matrix-cell-data">
+							  			<?php
+							  				\Applications\PMTool\Helpers\CommonHelper::generateEllipsisAndTooltipMarkupFor($analyte->lab_analyte_name(), 
+							  								$ellipsis_tooltip_settings['charlimit'], $ellipsis_tooltip_settings['placement']);
+							  			?>
+							  		</div>
+							  		<?php
+									}	
 					  		}
 					  	?>
 		    	  </div>
@@ -36,7 +44,13 @@
 		    	  	foreach ($task_locations as $location) {
 	    		  		?>
 	    		    	<div class="matrix-row">
-	    		  	  	<div class="matrix-cell matrix-cell-data"><?php echo $location->location_name(); ?></div>
+	    		  	  	<div class="matrix-cell matrix-cell-data">
+	    		  	  		<?php 
+	    		  	  		//echo $location->location_name(); 
+	    		  	  		\Applications\PMTool\Helpers\CommonHelper::generateEllipsisAndTooltipMarkupFor($location->location_name(), 
+						  								$ellipsis_tooltip_settings['charlimit'], $ellipsis_tooltip_settings['placement']);
+	    		  	  		?>
+	    		  	  	</div>
 			    		  	<?php
 							  	foreach($task_lab_analytes as $analyte){
 							  		$id_pair = $location->location_id() . '_' . $analyte->lab_analyte_id();
