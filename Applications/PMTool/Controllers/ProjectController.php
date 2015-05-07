@@ -43,7 +43,7 @@ class ProjectController extends \Library\BaseController {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
     } else {
       $this->executeGetList($rq, true); //Get and store projects to session (even if there is none)
-      
+
       if (count(\Applications\PMTool\Helpers\ProjectHelper::SetCurrentProjectIfPmHasOnlyOneAndReturnProjects($this->user())) > 0) {
         $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsListAll);
       } else {
@@ -111,7 +111,7 @@ class ProjectController extends \Library\BaseController {
             \Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
     $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_prompt]);
-	$this->page->addVar(
+    $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message_module, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]);
   }
 
@@ -252,7 +252,7 @@ class ProjectController extends \Library\BaseController {
     $result = $this->InitResponseWS();
 
     //Init PDO
-    if($this->app()->user->getUserType() == 'pm_id'){
+    if ($this->app()->user->getUserType() == 'pm_id') {
       $pmid = $this->app()->user->getUserTypeId();
       $this->dataPost["pm_id"] = $pmid === NULL ? NULL : $pmid;
     }
@@ -373,12 +373,21 @@ class ProjectController extends \Library\BaseController {
     $pm_id = $pm->pm_id();
     $projectEdit->setPm_id($pm_id);
     $projectEdit->setProject_is_default(0);
-    $manager->edit($projectEdit,'pm_id');
-    $projectEdit->setProject_id($this->dataPost["project_id"]);
+    if (!$manager->edit($projectEdit, 'pm_id')) {
+      throw new \Exception(__CLASS__ . "->" . __METHOD__ . " => Project Edit failed for PM ID=" . $pm_id);
+    }
+    
+    $project_id = $this->dataPost["project_id"];
+    $projectEdit->setProject_id($project_id);
     $projectEdit->setProject_is_default(1);
-    $manager->edit($projectEdit,'project_id');
-    $this->executeGetList($rq,true);
-    $project = \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->user(), $this->dataPost["project_id"]);
+       
+    if (!$manager->edit($projectEdit, 'project_id')){
+      throw new \Exception(__CLASS__ . "->" . __METHOD__ . " => Project Edit failed for Project ID=" . $project_id);
+    } else {
+      \Applications\PMTool\Helpers\ProjectHelper::RefreshProjectObjectsForCurrentPm($this);
+    }
+    
+    $project = \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->user(), $project_id);
     $result["dataId"] = $project->project_id();
 
     \Applications\PMTool\Helpers\TaskHelper::UnsetCurrentSessionTask($this->user());
@@ -422,9 +431,9 @@ class ProjectController extends \Library\BaseController {
   public function executeMapEdit(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
-    $dataPost = json_decode($this->dataPost["params"],true);
+    $dataPost = json_decode($this->dataPost["params"], true);
     $sessionProjects = \Applications\PMTool\Helpers\ProjectHelper::GetSessionProjects($this->user());
-    if($dataPost["project"]["project_id"]) {
+    if ($dataPost["project"]["project_id"]) {
       $sessionProject = $sessionProjects[\Library\Enums\SessionKeys::ProjectKey . $dataPost["project"]["project_id"]];
       $facility = $sessionProject[\Library\Enums\SessionKeys::FacilityObject];
       $project = $sessionProject[\Library\Enums\SessionKeys::ProjectObject];
@@ -448,14 +457,14 @@ class ProjectController extends \Library\BaseController {
       $sessionProject[\Library\Enums\SessionKeys::ProjectObject] = $project;
       $sessionProject[\Library\Enums\SessionKeys::FacilityObject] = $facility;
       $sessionProjects[\Library\Enums\SessionKeys::ProjectKey . $dataPost["project"]["project_id"]] = $sessionProject;
-      \Applications\PMTool\Helpers\ProjectHelper::SetSessionProjects($this->user(),$sessionProjects);
+      \Applications\PMTool\Helpers\ProjectHelper::SetSessionProjects($this->user(), $sessionProjects);
     }
 
     $this->SendResponseWS(
-      $result, array(
-      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
-      "resx_key" => $this->action(),
-      "step" => $result_edit ? "success" : "error"
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
+        "resx_key" => $this->action(),
+        "step" => $result_edit ? "success" : "error"
     ));
   }
 
