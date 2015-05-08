@@ -27,8 +27,10 @@
 					  		?>
 					  		<div class="matrix-cell matrix-cell-data">
 					  			<?php 
-					  			\Applications\PMTool\Helpers\CommonHelper::generateEllipsisAndTooltipMarkupFor($analyte->field_analyte_name_unit(), 
-							  								$ellipsis_tooltip_settings['charlimit'], $ellipsis_tooltip_settings['placement']);
+					  			\Applications\PMTool\Helpers\CommonHelper::generateEllipsisAndTooltipMarkupFor(
+                                        $analyte->field_analyte_name_unit(), 
+                                        $toolTips[Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings]['charlimit'], 
+                                        $toolTips[Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings]['placement']);
 					  			?>
 					  		</div>
 					  		<?php
@@ -43,8 +45,10 @@
     		    	<div class="matrix-row">
     		  	  	<div class="matrix-cell matrix-cell-data">
     		  	  		<?php 
-    		  	  		\Applications\PMTool\Helpers\CommonHelper::generateEllipsisAndTooltipMarkupFor($location->location_name(), 
-							  								$ellipsis_tooltip_settings['charlimit'], $ellipsis_tooltip_settings['placement']);
+    		  	  		\Applications\PMTool\Helpers\CommonHelper::generateEllipsisAndTooltipMarkupFor(
+                                $location->location_name(),
+                                $toolTips[Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings]['charlimit'], 
+                                $toolTips[Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings]['placement']);
     		  	  		?>
     		  	  	</div>
 		    		  		<?php

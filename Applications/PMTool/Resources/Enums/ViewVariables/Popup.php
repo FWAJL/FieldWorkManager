@@ -40,6 +40,6 @@ class Popup {
   const popup_msg = "popup_msg_module";
   const prompt_msg = "prompt_msg_module";
   const prompt_projectselect = "prompt_projectselect_module";
-  
+  const toolTips = "toolTips";
 }
 

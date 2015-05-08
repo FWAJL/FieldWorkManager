@@ -125,11 +125,11 @@ class PopUpHelper {
               $msg->getAttribute('targetcontroller') == $param_arr['targetcontroller'] &&
               $msg->getAttribute('targetaction') == $param_arr['targetaction']
       ) {
-        $msgconfig_arr = array('charlimit' => $msg->getAttribute('charlimit'), 'placement' => $msg->getAttribute('placement'));
+        $msg_array = array('charlimit' => $msg->getAttribute('charlimit'), 'placement' => $msg->getAttribute('placement'));
       }
     }
 
-    return $msgconfig_arr;
+    return $msg_array;
   }
 
   public static function loadToolTipMessagefromXML() {
