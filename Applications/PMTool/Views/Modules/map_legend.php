@@ -36,6 +36,14 @@
             <?php echo $resx["inactive_location"]; ?>
        </span>
      </li>
+              <li>
+       <span class="map-info-icon-image">
+           <img src="../Web/images/ltblu-blank_maps.png">
+       </span>
+       <span>
+            <?php echo $resx["inactive_location"]; ?>
+       </span>
+     </li>
           <li>
        <span class="map-info-icon-image">
            <img src="../Web/images/red-circle_maps.png">
