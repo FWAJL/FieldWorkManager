@@ -13,10 +13,11 @@
                <img src="../Web/images/red-circle_maps.png">
            </span>
            <span>
-                <?php echo $resx["task_location_start"]; ?>
+                <?php echo $resx["task_location_start_active"]; ?>
            </span>
          </li>   
-                                <li>
+         <li>
+                                             <li>
        <span class="map-info-icon-image">
            <img src="../Web/images/red_maps.png">
        </span>
@@ -24,23 +25,21 @@
             <?php echo $resx["no_coords_location"]; ?>
        </span>
      </li>
-         		 <li>
            <span class="map-info-icon-image">
-               <img src="../Web/images/blu-circle_maps.png">
+               <img src="../Web/images/yellow-dot_maps.png">
            </span>
            <span>
-                <?php echo $resx["project_location"]; ?>
+                <?php echo $resx["task_location_inprocess"]; ?>
            </span>
          </li>
          <li>
            <span class="map-info-icon-image">
-               <img src="../Web/images/measle_blue.png">
+               <img src="../Web/images/green-dot_maps.png">
            </span>
            <span>
-                <?php echo $resx["inactive_location"]; ?>
+                <?php echo $resx["task_location_complete"]; ?>
            </span>
          </li>
-
              <li>
            <span class="map-info-icon-image1">
 <!--               <div id="map-info-ruler-icon"></div>-->
