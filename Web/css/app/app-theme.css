@@ -371,6 +371,7 @@ ui-widget-content:hover {
 #document-upload {
   clear:both;
 }
+/* END FILE MODULES */
 
 /* Active task related CSS */
 .p-desc {
@@ -416,10 +417,11 @@ ui-widget-content:hover {
   min-width: 320px;
   width: 70%;
 }
+/* END Active task related CSS */
 
 /* Task: Lab Matrix, Field Matrix; */
 .matrix-container {
-  width: 100%;
+  width: 1012px;
   margin-top: 20px;
 }
 .matrix-row {
@@ -455,4 +457,23 @@ ui-widget-content:hover {
   background-color: #fff;
   padding-left: 3px;
 }
-/* END FILE MODULES */
+.pg-container {
+  padding-left: 150px;
+  text-align: center;
+}
+.pg {
+  background-color: #f7f7f7;
+  display: inline-block;
+  height: 30px;
+  margin-top: 20px;
+  padding: 5px;
+  text-align: center;
+  width: 30px;
+}
+.currpg {
+  background-color: #fff;
+  border: 1px solid #f7f7f7;
+  padding: 4px;
+}
+
+/* END Task: Lab Matrix, Field Matrix; */

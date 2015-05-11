@@ -48,9 +48,9 @@ class CommonHelper {
   * Mainly used for debuging / developing 
   */
   public static function pr($arr) {
-	echo '<pre>';
-	print_r($arr);
-	echo '</pre>';
+  	echo '<pre>';
+  	print_r($arr);
+  	echo '</pre>';
   }
 
   public static function SetDynamicPropertyNamesForDualList($module, $property_list) {
@@ -245,6 +245,36 @@ class CommonHelper {
             $isArray ?
             $object[$propName] :
             $object->$propName();
+  }
+
+  /**
+  * Returns the truncated text based on the passed
+  * parameters, at present the method generates the
+  * HTML markup as well which is needed for the tooltip
+  * to work properly.
+  */
+  public static function generateEllipsisAndTooltipMarkupFor($textToTruncate, $charLimit, $placement) {
+    $truncatedData = null;
+    if(strlen($textToTruncate) > intval($charLimit)) {
+      //We would have to truncate
+      $truncatedData = array(
+                        'source'    => $textToTruncate,
+                        'truncated' => substr($textToTruncate, 0, $charLimit - 3) . '...'
+                      );
+    } else {
+      //Return the string as it is
+      $truncatedData = array(
+                        'source'    => $textToTruncate,
+                        'truncated' => ''
+                      );
+    }
+
+    if(trim($truncatedData['truncated']) !== '') {
+      echo $truncatedData['truncated'];
+      echo '<input type="hidden" class="ellipsis-tooltip" value="' . $truncatedData['source'] . '" placement="' . $placement . '" >';
+    } else {
+      echo $truncatedData['source'];
+    }
   }
 
 }

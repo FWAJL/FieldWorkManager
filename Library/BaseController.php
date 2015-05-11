@@ -18,6 +18,7 @@ abstract class BaseController extends ApplicationComponent {
   //shortcut from $app->user() also used as $this->app()->user() in controllers
   protected $user = null;
   protected $files = array();
+  protected $toolTips = array();
 
   public function __construct(Application $app, $module, $action, $resxfile) {
     parent::__construct($app);
@@ -31,6 +32,10 @@ abstract class BaseController extends ApplicationComponent {
     $this->setDataPost($this->app->HttpRequest()->retrievePostAjaxData(FALSE));
     $this->resxData = $this->app->i8n->getLocalResourceArray($this->resxfile);
     $this->setUploadingFiles();
+    $this->toolTips[\Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings] =
+            \Applications\PMTool\Helpers\PopUpHelper::getTooltipEllipsisSettings(
+                    '{"targetcontroller":"'. $this->module .'","targetaction": "'. $this->action .'"}', 
+                    $app->name());
   }
 
   public function execute() {
@@ -93,6 +98,10 @@ abstract class BaseController extends ApplicationComponent {
 
   public function files() {
     return $this->files;
+  }
+  
+  public function toolTips() {
+    return $this->toolTips;
   }
 
   public function setModule($module) {
@@ -240,6 +249,7 @@ abstract class BaseController extends ApplicationComponent {
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($this->resxfile));
     $this->app->pageTitle = $this->app->i8n->getLocalResource($this->resxfile, "page_title");
     $this->page->addVar("logout_url", __BASEURL__ . Enums\ResourceKeys\UrlKeys::LogoutUrl);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::toolTips, $this->toolTips);
   }
 
   protected function Redirect($urlPart) {
