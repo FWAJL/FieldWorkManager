@@ -4,7 +4,15 @@ define('__VERSION_NUMBER__', '1.6.21');
 
 require '../Applications/autoload.php';
 
-error_reporting(E_ALL);
+set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontext) {
+    // error was suppressed with the @-operator
+    if (0 === error_reporting()) {
+        return false;
+    }
+
+    throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+});
+
 ini_set("display_errors", 1);
 try {
   $app = new Applications\PMTool\PMToolApplication;
