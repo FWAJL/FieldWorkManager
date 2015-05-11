@@ -74,6 +74,8 @@ class ViewVariablesKeys {
   const task_lab_analytes_idmap = "task_lab_analytes_idmap";
   const task_field_analytes = "task_field_analytes";
   const task_field_analytes_idmap = "task_field_analytes_idmap";
+  const task_analytes_pages = "task_analytes_pages";
+  const current_page = "current_page";
   
   //Mapping
   const map_module = "map_module";

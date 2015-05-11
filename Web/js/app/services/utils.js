@@ -25,6 +25,11 @@ $(document).ready(function() {
     }
   });
 
+  //Ellipsis Tooltip
+  $('.ellipsis-tooltip').each(function(){
+    $(this).parent().tooltip({placement: $(this).attr('placement'), title: $(this).val()});
+  });
+
 });
 /**
  * JavaScript Module to do JavaScript actions common to several views

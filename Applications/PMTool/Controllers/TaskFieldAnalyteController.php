@@ -77,6 +77,13 @@ class TaskFieldAnalyteController extends \Library\BaseController {
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
     //Get task specific lab analytes
     $task_field_analytes = \Applications\PMTool\Helpers\AnalyteHelper::GetAndStoreTaskFieldAnalytes($this, $sessionTask);
+    //Check which page to render
+    $pg = (is_null($rq->getData('pg'))) ? 1 : (intval($rq->getData('pg')) == 0) ? 1 : intval($rq->getData('pg'));
+    //Calculate pages
+    $pages = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::returnTotalPagesOfAnalytes($task_field_analytes, $this->app);
+    //Filter paged result set of analytes
+    $task_field_analytes = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::returnPagedAnalyteObjects($task_field_analytes, $pg, $this->app);
+
     //Task specific locations
     $project_locations = \Applications\PMTool\Helpers\LocationHelper::GetProjectLocations($this, $sessionProject);
     $task_locations = \Applications\PMTool\Helpers\LocationHelper::GetAndStoreTaskLocations($this, $sessionTask);
@@ -102,6 +109,8 @@ class TaskFieldAnalyteController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_locations, $task_locations);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_field_analytes, $task_field_analytes);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_analytes_pages, $pages);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::current_page, $pg);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_field_analytes_idmap, $id_map);
 
     //tab status
