@@ -33,7 +33,7 @@ $(document).ready(function() {
 //          : "lab_analyte/edit"
           ;
 //          if (isFieldAnalyte) {
-            getAnalyteItem("field", parseInt(options.$trigger.attr("data-fieldanalyte-id")), function(data) {
+            getAnalyteItem(parseInt(options.$trigger.attr("data-fieldanalyte-id")), function(data) {
               var post_data = {};
               post_data["field_analyte"] = data.field_analyte;
               post_data["field_analyte"]["field_analyte_name_unit"] = $('#text_input').val();
