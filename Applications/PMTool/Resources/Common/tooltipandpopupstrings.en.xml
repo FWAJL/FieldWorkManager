@@ -30,22 +30,22 @@
 	<resource uicomponent="tooltip" targetcontroller="service" targetaction="list" targetattr="active-service-header" value="Service providers in this column can be used for the current Project.  This allows you to narrow the list of Services and assign Service Providers to specific Projects." placement="bottom" />
 	<resource uicomponent="tooltip" targetcontroller="service" targetaction="list" targetattr="inactive-service-header" value="This area is to build a master list of all Service Providers you may use on any Project.     Use the category 'Labs' for all analytical laboratories." placement="bottom" />
 	
-	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="question-map-h3" value="Right click to see MaClick here to see legend" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="question-map-h3" value="Click here to see legend" placement="right" />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="map-info-add" value="Add map for all projects, this is a big tooltip" placement="top" delayshow="1000" delayhide="100" />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="map-info-shape" value="Shape icon for all projects" placement="top" delayshow="1000" delayhide="100" />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="allProjects" targetattr="map-info-ruler" value="Ruler icon for all projects" placement="top" delayshow="1000" delayhide="100" />
 	
-	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="question-map-h3" value="Right click to see MaClick here to see legend" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="question-map-h3" value="Click here to see legend" placement="right" />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="map-info-shape" value="Shape icon for current projects" placement="top" delayshow="1000" delayhide="100" />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="map-info-ruler" value="Ruler icon for current projects" placement="top" delayshow="1000" delayhide="100" />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProject" targetattr="map-info-add" value="Add icon for current projects" placement="top" delayshow="1000" delayhide="100" />
 	
-	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="question-map-h3" value="Right click to see MaClick here to see legend" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="question-map-h3" value="Click here to see legend" placement="right" />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="map-info-add" value="Add icon for current project location" placement="top" delayshow="1000" delayhide="100"  />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="map-info-shape" value="Shape icon for current project location" placement="top" delayshow="1000" delayhide="100"  />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="currentProjectLocations" targetattr="map-info-ruler" value="Ruler icon for current project location" placement="top" delayshow="1000" delayhide="100"  />
 	
-	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="question-map-h3" value="Right click to see MaClick here to see legend" placement="right" />
+	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="question-map-h3" value="Click here to see legend" placement="right" />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="map-info-ruler" value="Ruler icon for current task location" placement="top" delayshow="1000" delayhide="100"  />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="map-info-shape" value="Shape icon for current task location" placement="top" delayshow="1000" delayhide="100"  />
 	<resource uicomponent="tooltip" targetcontroller="map" targetaction="taskLocations" targetattr="map-info-add" value="Add icon for current task location" placement="top" delayshow="1000" delayhide="100"  />
