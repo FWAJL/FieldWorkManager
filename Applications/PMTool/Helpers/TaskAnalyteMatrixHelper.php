@@ -164,5 +164,44 @@ class TaskAnalyteMatrixHelper {
     if($analyte_count > 0 && count($task_locations) > 0){
       return true;
     } else { return false; }
-  } 
+  }
+
+  /**
+  * Returns a page of objects based
+  * on config like records per page
+  * and current page number
+  */
+  public static function returnPagedAnalyteObjects($analytes, $pg_no, $app) {
+    //CommonHelper::pr($analytes);
+    $rec_per_pg = $app->config->get('AnalytesPerPage');
+    $end_index = $pg_no * $rec_per_pg;
+    $start_index = $end_index - $rec_per_pg;
+    
+    $paged_objects = array();
+    //Loop within the boundary we defined
+    for($i = $start_index; $i < $end_index; $i++) {
+      //Check if the analyte exists at that poition
+      if(isset($analytes[$i])) {
+        //Push to return var
+        array_push($paged_objects, $analytes[$i]);
+      }
+    }
+
+    //Return
+    return $paged_objects;
+  }
+
+  /**
+  * Returns the number of pages possible
+  * based on the number of pages in the 
+  * config file
+  */
+  public static function returnTotalPagesOfAnalytes($analytes, $app) {
+    $rec_per_pg = $app->config->get('AnalytesPerPage');
+    $total_records = count($analytes);
+
+    $pages = ($total_records % $rec_per_pg == 0) ? ($total_records / $rec_per_pg) : (($total_records - ($total_records % $rec_per_pg)) / $rec_per_pg) + 1;
+
+    return $pages;
+  }
 }

@@ -85,6 +85,17 @@ class TaskLabAnalyteController extends \Library\BaseController {
 
     //Get task specific lab analytes
     $task_lab_analytes = \Applications\PMTool\Helpers\AnalyteHelper::GetAndStoreTaskLabAnalytes($this, $sessionTask);
+    //Check which page to render
+    $pg = (is_null($rq->getData('pg'))) ? 1 : (intval($rq->getData('pg')) == 0) ? 1 : intval($rq->getData('pg'));
+    //Calculate pages
+    $pages = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::returnTotalPagesOfAnalytes($task_lab_analytes, $this->app);
+    //Filter paged result set of analytes
+    $task_lab_analytes = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::returnPagedAnalyteObjects($task_lab_analytes, $pg, $this->app);
+
+    //Fetch ELLIPSIS tooltip settings from xml and pass to view as an array
+    $ellipsis_tooltip_settings = \Applications\PMTool\Helpers\PopUpHelper::getTooltipEllipsisSettings('{"targetcontroller":"taskLabAnalyte", "targetaction": "labMatrix"}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings, $ellipsis_tooltip_settings);
+    
     //Task specific locations
     $project_locations = \Applications\PMTool\Helpers\LocationHelper::GetProjectLocations($this, $sessionProject);
     $task_locations = \Applications\PMTool\Helpers\LocationHelper::GetAndStoreTaskLocations($this, $sessionTask);
@@ -98,6 +109,8 @@ class TaskLabAnalyteController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_locations, $task_locations);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_lab_analytes, $task_lab_analytes);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_analytes_pages, $pages);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::current_page, $pg);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_lab_analytes_idmap, $id_map);
 
     //tab status

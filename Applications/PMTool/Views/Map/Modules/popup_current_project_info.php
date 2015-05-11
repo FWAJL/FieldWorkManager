@@ -27,8 +27,8 @@
           <li><label for="project-info-modal-longitude"><?php echo $resx['project_window_longitude']; ?></label>
               <input class="" type="text" id="project-info-modal-longitude" name="longitude"></li>
           <li><a href="#" id="project-info-modal-update-coordinates"><span class="glyphicon glyphicon-screenshot"></span> <?php echo $resx['project_window_update_coordinates']; ?></a></li>
-          <li><a href="#" id="project-info-modal-zoom"><span class="glyphicon glyphicon-zoom-in"></span> <?php echo $resx['project_window_zoom']; ?></a></li>
-<!--          <li><a href="#" id="project-info-modal-edit-boundary"><span class="glyphicon glyphicon-pencil"></span> <?php //echo $resx['project_window_edit_boundary']; ?></a></li>-->
+<!--          <li><a href="#" id="project-info-modal-zoom"><span class="glyphicon glyphicon-zoom-in"></span> <?php //echo $resx['project_window_zoom']; ?></a></li>-->
+          <li><a href="#" id="project-info-modal-edit-boundary"><span class="glyphicon glyphicon-pencil"></span> <?php echo $resx['project_window_edit_boundary']; ?></a></li>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary confirmbuttons modal-update"><?php echo $resx['project_window_edit_update']; ?></button>
