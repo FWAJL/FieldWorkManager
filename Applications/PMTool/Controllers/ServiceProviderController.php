@@ -32,23 +32,31 @@ class ServiceProviderController extends \Library\BaseController {
   public function executeServiceDiscussion(\Library\HttpRequest $rq) {
     $discussionId = $rq->getData("discussion_id");
     $discussionArray = \Applications\PMTool\Helpers\DiscussionHelper::GetDiscussionByIdFromDB($this, $discussionId);
-    \Applications\PMTool\Helpers\DiscussionHelper::SetCurrentDiscussion($this->user, $discussionArray[\Library\Enums\SessionKeys::DiscussionObj], $discussionArray[\Library\Enums\SessionKeys::DiscussionPeople]);
-    $currentDiscussion = $discussionArray;
-    if($currentDiscussion){
-      $manager = $this->managers()->getManagerOf('User');
-      $discussion_person = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue(1,'discussion_person_is_author',$currentDiscussion[\Library\Enums\SessionKeys::DiscussionPeople]);
-      $discussion_user_type = $manager->selectUserTypeObjectByUserId($discussion_person->user_id());
-      if($discussion_user_type) {
-        $currentDiscussion['comm_with'] = $discussion_user_type;
-        $currentDiscussion['comm_type'] = \Applications\PMTool\Helpers\UserHelper::FindUserTypeFromObject($discussion_user_type);
-      }
-      $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentDiscussion, $currentDiscussion);
-    }
+    $currentUserObject = $this->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
+    $user = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue(intval($currentUserObject->user_id()),'user_id',$discussionArray[\Library\Enums\SessionKeys::DiscussionPeople]);
+    //check if logged in user is the part of this discussion
+    if($user) {
+      \Applications\PMTool\Helpers\DiscussionHelper::SetCurrentDiscussion($this->user, $discussionArray[\Library\Enums\SessionKeys::DiscussionObj], $discussionArray[\Library\Enums\SessionKeys::DiscussionPeople]);
+      $currentDiscussion = $discussionArray;
 
+      if($currentDiscussion){
+        $manager = $this->managers()->getManagerOf('User');
+        $discussion_person = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue(1,'discussion_person_is_author',$currentDiscussion[\Library\Enums\SessionKeys::DiscussionPeople]);
+        $discussion_user_type = $manager->selectUserTypeObjectByUserId($discussion_person->user_id());
+        if($discussion_user_type) {
+          $currentDiscussion['comm_with'] = $discussion_user_type;
+          $currentDiscussion['comm_type'] = \Applications\PMTool\Helpers\UserHelper::FindUserTypeFromObject($discussion_user_type);
+        }
+        $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentDiscussion, $currentDiscussion);
+      }
+
+
+    } else {
+      \Applications\PMTool\Helpers\DiscussionHelper::UnsetCurrentDiscussion($this->user);
+    }
     $modules = $this->app()->router()->selectedRoute()->phpModules();
     $this->page->addVar(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
-
 
   }
 

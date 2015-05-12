@@ -57,6 +57,11 @@ class DiscussionHelper {
     return true;
   }
 
+  public static function UnsetCurrentDiscussion($user) {
+    $user->unsetAttribute(\Library\Enums\SessionKeys::CurrentDiscussion);
+    return true;
+  }
+
   public static function GetCurrentDiscussion($user) {
     $currentDiscussion = $user->getAttribute(\Library\Enums\SessionKeys::CurrentDiscussion);
     if(isset($currentDiscussion)) {
