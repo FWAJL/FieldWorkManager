@@ -929,7 +929,7 @@
     </route>
     <!-- form/masterForm -->
 
-    <route url="serviceprovider/discussion" module="ServiceProvider" action="serviceDiscussion" resxfile="serviceprovider" type="ui" role="6">
+    <route url="serviceprovider/discussion" module="ServiceProvider" action="serviceDiscussion" resxfile="serviceprovider" type="ui">
       <js_files>
         <js_file use="head" value="Web/js/app/controllers/serviceprovider_manager.js" />
       </js_files>
