@@ -299,6 +299,8 @@ li textarea {
 .checkbox_text { margin-left: 20px; }
 
 .client_form { padding: 10px; }
+
+#task-comm-chatbox { overflow-y: scroll; }
 /* END TASK */
 
 /* LOCATION */

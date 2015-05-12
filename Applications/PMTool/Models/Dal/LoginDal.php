@@ -75,6 +75,12 @@ class LoginDal extends \Library\DAL\BaseManager {
         $sql = "SELECT * FROM `$table` WHERE `$field`  ='".$user->user_value()."' LIMIT 0,1";
         $dao = '\Applications\PMTool\Models\Dao\Project_manager';
       break;
+      case 'service_id':
+        $table = 'service';
+        $field = 'service_id';
+        $sql = "SELECT * FROM `$table` WHERE `$field` = '".$user->user_value()."' LIMIT 0,1";
+        $dao = '\Applications\PMTool\Models\Dao\Service';
+      break;
       default:
         $table = null;
     }
