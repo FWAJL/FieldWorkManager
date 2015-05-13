@@ -28,12 +28,37 @@ exit('No direct script access allowed');
 
 class DiscussionHelper {
 
+
+  public static function GetDiscussionByIdFromDB($caller, $discussion_id) {
+    $manager = $caller->managers()->getManagerOf('Discussion');
+    $discussion = new \Applications\PMTool\Models\Dao\Discussion();
+    $discussion->setDiscussion_id($discussion_id);
+    $discussions = $manager->selectMany($discussion,'discussion_id');
+    $discussion = $discussions[0];
+    $manager = $caller->managers()->getManagerOf('DiscussionPerson');
+    $discussion_person = new \Applications\PMTool\Models\Dao\Discussion_person();
+    $discussion_person->setDiscussion_id($discussion->discussion_id());
+    //select all connected people so we can store them in session
+    $discussion_people = $manager->selectMany($discussion_person, 'discussion_id');
+    $discussionArray = array(
+      \Library\Enums\SessionKeys::DiscussionObj => $discussion,
+      \Library\Enums\SessionKeys::DiscussionPeople => $discussion_people,
+    );
+    return $discussionArray;
+
+  }
+
   public static function SetCurrentDiscussion($user, $discussion, $discussionPeople) {
     $currentDiscussionArray = array(
       \Library\Enums\SessionKeys::DiscussionObj => $discussion,
       \Library\Enums\SessionKeys::DiscussionPeople => $discussionPeople,
     );
     $user->setAttribute(\Library\Enums\SessionKeys::CurrentDiscussion,$currentDiscussionArray);
+    return true;
+  }
+
+  public static function UnsetCurrentDiscussion($user) {
+    $user->unsetAttribute(\Library\Enums\SessionKeys::CurrentDiscussion);
     return true;
   }
 

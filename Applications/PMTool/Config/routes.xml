@@ -929,6 +929,20 @@
     </route>
     <!-- form/masterForm -->
 
+    <route url="serviceprovider/discussion" module="ServiceProvider" action="serviceDiscussion" resxfile="serviceprovider" type="ui">
+      <js_files>
+        <js_file use="head" value="Web/js/app/controllers/serviceprovider_manager.js" />
+      </js_files>
+      <css_files>
+        <css_file use="project" />
+      </css_files>
+      <php_modules>
+        <php_module key="active_task_comm" file_name="active_task_comm.php" />
+        <php_module key="upload_file" file_name="upload_file.php" shared="true"/>
+        <php_module key="communications_button_module" file_name="communications_button_module.php" />
+      </php_modules>
+    </route>
+
     <!-- WebService AJAX routes -->
     <!-- INSTRUCTIONS
   

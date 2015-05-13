@@ -49,6 +49,8 @@ $(document).ready(function() {
         utils.redirect("user/listAll");
      } else if (reply.role == '3') {
        utils.redirect("user/showDetails");
+     } else if (reply.role == '6') {
+       utils.redirect("serviceprovider/discussion");
      }
    }
   });

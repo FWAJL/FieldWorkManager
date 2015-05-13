@@ -333,6 +333,7 @@ $(document).ready(function(){
             $("#document-upload").show();
           } else {
             $("#document-upload").hide();
+            $('#prompt_ok').off('click');
             utils.showSelectEntityPrompt(function(){
               if($("#group-list-right .ui-selected")!==undefined) {
                 activetask_manager.loadPhoto($("#group-list-right .ui-selected").data('document-id'));
