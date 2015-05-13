@@ -42,7 +42,7 @@ class FileController extends \Library\BaseController {
     if(!is_null($document)) {
       $directory = str_replace("_id", "", $document->document_category());
       $result['document'] = $document;
-      $result["filepath"] = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$manager->webDirectory.$directory.'/'.$document->document_value();
+      $result["filepath"] = $this->getHostUrl().$manager->webDirectory.$directory.'/'.$document->document_value();
       $result['success'] = true;
     } else {
       $result['success'] = false;
@@ -102,7 +102,7 @@ class FileController extends \Library\BaseController {
     $result["dataOut"] = $manager->addWithFile($document,$files['file']);
     $document->setDocument_id($result['dataOut']);
     $result["document"] = $document;
-    $result["filepath"] = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$manager->webDirectory.$directory.'/'.$document->document_value();
+    $result["filepath"] = $this->getHostUrl().$manager->webDirectory.$directory.'/'.$document->document_value();
     if($dataPost['itemReplace']==="true" && $result["dataOut"]!=-1) {
       $manager->DeleteObjectsWithFile($list, 'document_id');
     }
@@ -168,6 +168,16 @@ class FileController extends \Library\BaseController {
     }
     
     $result["dataOut"] = $manager->copyWithFile($document, $files['file']);
+  }
+
+  private function getHostUrl(){
+    $ssl = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? true:false;
+    $sp = strtolower($_SERVER['SERVER_PROTOCOL']);
+    $protocol = substr($sp, 0, strpos($sp, '/')) . (($ssl) ? 's' : '');
+    $port = $_SERVER['SERVER_PORT'];
+    $port = ((!$ssl && $port=='80') || ($ssl && $port=='443')) ? '' : ':'.$port;
+    $host = isset($host) ? $host : $_SERVER['SERVER_NAME'] . $port;
+    return $protocol . '://' . $host;
   }
 
   
