@@ -118,7 +118,7 @@ class DiscussionHelper {
       $discussion->setDiscussion_id($discussion_id);
       //fetch discussion with the time from db so we can set it as the current in the controller
       $discussion =$manager->selectMany($discussion,'discussion_id');
-      return $discussion;
+      return $discussion[0];
     } else {
       return false;
     }

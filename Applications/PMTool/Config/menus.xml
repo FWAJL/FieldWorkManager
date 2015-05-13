@@ -9,13 +9,6 @@
     </links>
   </main_menu><!-- user -->
 
-  <main_menu name="service" active="true">
-    <links>
-      <header href="user" resourcekey="header_service" enablelink="false" />
-      <submenu href="serviceprovider/discussion" id="serviceprovider_discussion" resourcekey="serviceprovider_discussion" active="true"/>
-    </links>
-  </main_menu><!-- user -->
-
   <main_menu name="project" active="true">
     <links>
       <header href="project" resourcekey="header_projects" enablelink="false" />
