@@ -59,6 +59,7 @@ class ServiceProviderController extends \Library\BaseController {
           }
         }
       }
+      $currentUserObject = $this->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     }
 
     $discussionArray = \Applications\PMTool\Helpers\DiscussionHelper::GetDiscussionByIdFromDB($this, $discussionId);
