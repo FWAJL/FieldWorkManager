@@ -85,7 +85,7 @@ class DiscussionHelper {
         }
         $discussion_person_id = $manager->add($discussion_person);
         if($discussion_person_id<=0) {
-          return false;
+          \Library\Core\Utility\Logger::LogEx(__CLASS__, __METHOD__, "::", "Discussion person insertion failed.");
         }
 
       }
