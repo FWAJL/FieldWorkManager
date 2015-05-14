@@ -399,7 +399,7 @@ class ActiveTaskController extends \Library\BaseController {
       }
       $thread = \Applications\PMTool\Helpers\DiscussionHelper::GetDiscussionThread($this, $currentDiscussion);
       $time = $this->dataPost['time'];
-      if(isset($time) && !is_null('time')){
+      if(isset($time) && !is_null('time') && $thread){
         $thread = \Applications\PMTool\Helpers\DiscussionHelper::SliceThread($thread,$time);
       }
       if ($thread) {
