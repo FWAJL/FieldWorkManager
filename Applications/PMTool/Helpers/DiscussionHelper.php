@@ -49,11 +49,13 @@ class DiscussionHelper {
   }
 
   public static function SetCurrentDiscussion($user, $discussion, $discussionPeople) {
+    $user->unsetAttribute(\Library\Enums\SessionKeys::DiscussionThread);
     $currentDiscussionArray = array(
       \Library\Enums\SessionKeys::DiscussionObj => $discussion,
       \Library\Enums\SessionKeys::DiscussionPeople => $discussionPeople,
     );
     $user->setAttribute(\Library\Enums\SessionKeys::CurrentDiscussion,$currentDiscussionArray);
+
     return true;
   }
 

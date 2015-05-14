@@ -79,7 +79,7 @@ $(document).ready(function(){
           blockRefresh = true;
           serviceprovider_manager.refreshThread();
         });
-        setInterval(function(){ if(blockRefresh!==true) { blockRefresh = true; serviceprovider_manager.refreshThread();} }, 5000);
+        setInterval(function(){ if(blockRefresh!==true) { blockRefresh = true; serviceprovider_manager.refreshThread();} }, config.chatRefresh);
         $("#btn_attach_file").on('click',function(e){
             $("#document-upload").show();
         });

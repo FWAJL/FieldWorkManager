@@ -329,7 +329,7 @@ $(document).ready(function(){
           blockRefresh = true;
           activetask_manager.refreshThread();
         });
-        setInterval(function(){ if(blockRefresh!==true) { blockRefresh = true; activetask_manager.refreshThread();} }, 5000);
+        setInterval(function(){ if(blockRefresh!==true) { blockRefresh = true; activetask_manager.refreshThread();} }, config.chatRefresh);
         $("#group-list-right").selectable({
           stop: function() {
             var tmpSelection = "";
