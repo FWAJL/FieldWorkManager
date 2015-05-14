@@ -492,5 +492,12 @@ $(document).ready(function() {
     return imageLightboxElement;
   };
 
+  utils.hyperlinkUrls = function(txt) {
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    return txt.replace(urlRegex, function(url) {
+      return '<a target="_blank" href="' + url + '">' + url + '</a>';
+    })
+  }
+
 
 }(window.utils = window.utils || {}));

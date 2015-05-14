@@ -88,7 +88,7 @@ $(document).ready(function(){
   };
 
   serviceprovider_manager.formatChatMessage = function(name,message,time) {
-    var messageFormatted = '<strong>'+name+'</strong>: '+message+' <small>@'+time+'</small>';
+    var messageFormatted = '<strong>'+name+'</strong>: '+utils.hyperlinkUrls(message)+' <small>@'+time+'</small>';
     return messageFormatted;
   };
 
