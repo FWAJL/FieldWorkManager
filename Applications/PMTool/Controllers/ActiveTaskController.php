@@ -337,17 +337,14 @@ class ActiveTaskController extends \Library\BaseController {
 
     $currentDiscussion = \Applications\PMTool\Helpers\DiscussionHelper::GetCurrentDiscussion($this->user);
     if ($currentDiscussion) {
-      $manager = $this->managers()->getManagerOf('DiscussionContent');
-      $discussion_person = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue(intval($userConnected->user_id()), 'user_id', $currentDiscussion[\Library\Enums\SessionKeys::DiscussionPeople]);
-      $discussion_content = new \Applications\PMTool\Models\Dao\Discussion_content();
-      $discussion_content->setDiscussion_person_id($discussion_person->discussion_person_id());
-      $discussion_content->setDiscussion_content_message($this->dataPost['discussion_content_message']);
-      $discussion_content_id = $manager->add($discussion_content);
+      $dataPost = $this->dataPost();
+      $discussion_content_id = \Applications\PMTool\Helpers\DiscussionHelper::AddMessageToThread($this, $userConnected, $currentDiscussion, $dataPost);
       //here goes mail sending...
       if ($discussion_content_id > 0) {
         $result['success'] = true;
         $discussion_content = new \Applications\PMTool\Models\Dao\Discussion_content();
         $discussion_content->setDiscussion_content_id($discussion_content_id);
+        $manager = $this->managers()->getManagerOf('DiscussionContent');
         $discussion_content = $manager->selectMany($discussion_content, 'discussion_content_id');
         $userTypeObject = $this->user->getAttribute(\Library\Enums\SessionKeys::UserTypeObject);
         if ($this->user->getUserType() == 'pm_id') {
@@ -401,6 +398,10 @@ class ActiveTaskController extends \Library\BaseController {
         }
       }
       $thread = \Applications\PMTool\Helpers\DiscussionHelper::GetDiscussionThread($this, $currentDiscussion);
+      $time = $this->dataPost['time'];
+      if(isset($time) && !is_null('time')){
+        $thread = \Applications\PMTool\Helpers\DiscussionHelper::SliceThread($thread,$time);
+      }
       if ($thread) {
         foreach ($thread as &$content) {
           foreach ($discussionNames as $id => $name) {

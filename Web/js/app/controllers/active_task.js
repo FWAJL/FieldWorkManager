@@ -10,7 +10,8 @@
   
 //************************************************//
 var task_technician_ids = "";
-
+var lastMessageTime = "";
+var blockRefresh = false;
 $(document).ready(function(){
 	
   //active task sub module specific UI cleanups
@@ -185,6 +186,7 @@ $(document).ready(function(){
   $("#btn_send_message").on('click',function() {
     var msg = $("textarea[name=\"task_comm_message\"]").val();
     if(msg.trim() != '') {
+      blockRefresh = true;
       activetask_manager.sendMessage(msg.trim());
     }
   });
@@ -286,9 +288,11 @@ $(document).ready(function(){
         toastr.error(reply.message);
       } else {
         toastr.success(reply.message);
+        lastMessageTime = reply.data.discussion_content_time;
         $("#task-comm-chatbox").prepend(activetask_manager.formatChatMessage(reply.data.user_name,reply.data.discussion_content_message,reply.data.discussion_content_time)+"<br/>");
         $("textarea[name=\"task_comm_message\"]").val('');
       }
+      blockRefresh = false;
     });
   };
 
@@ -314,11 +318,18 @@ $(document).ready(function(){
             $("textarea[name=\"task_comm_message\"]").val($("textarea[name=\"task_comm_message\"]").val()+"\n"+res.filepath);
           }
         });
+
         if(reply.thread !== undefined) {
+          lastMessageTime = reply.thread[0].discussion_content_time;
           $.each(reply.thread, function(index, value) {
             $("#task-comm-chatbox").append(activetask_manager.formatChatMessage(value.user_name,value.discussion_content_message,value.discussion_content_time)+"<br/>");
           });
         }
+        $("#refresh-chat").on('click',function(){
+          blockRefresh = true;
+          activetask_manager.refreshThread();
+        });
+        setInterval(function(){ if(blockRefresh!==true) { blockRefresh = true; activetask_manager.refreshThread();} }, 5000);
         $("#group-list-right").selectable({
           stop: function() {
             var tmpSelection = "";
@@ -363,6 +374,24 @@ $(document).ready(function(){
         }
       }
       $('.pselector-modal').modal('hide');
+    });
+  };
+
+  activetask_manager.refreshThread = function() {
+    datacx.post('activetask/getDiscussionThread',{time:lastMessageTime}).then(function(reply){
+      if(reply === null || reply.result === 0) {
+
+      } else {
+        if(reply.thread !== undefined) {
+          lastMessageTime = reply.thread[0].discussion_content_time;
+          var messages = '';
+          $.each(reply.thread, function(index, value) {
+            messages += activetask_manager.formatChatMessage(value.user_name,value.discussion_content_message,value.discussion_content_time)+"<br/>";
+          });
+          $("#task-comm-chatbox").prepend(messages);
+        }
+      }
+      blockRefresh = false;
     });
   }
 

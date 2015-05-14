@@ -120,6 +120,7 @@ abstract class SessionKeys {
   const DiscussionUserType = "discussion_user_type";
   const DiscussionPeople = "discussion_people";
   const DiscussionObj = "discussion_obj";
+  const DiscussionThread = "discussion_thread";
 }
 
 ?>

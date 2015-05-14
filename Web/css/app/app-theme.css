@@ -428,6 +428,10 @@ ui-widget-content:hover {
   min-width: 320px;
   width: 70%;
 }
+
+#refresh-chat {
+  display: inline;
+}
 /* END Active task related CSS */
 
 /* Task: Lab Matrix, Field Matrix; */

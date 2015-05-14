@@ -9,7 +9,8 @@
 
 
 //************************************************//
-
+var lastMessageTime = "";
+var blockRefresh = false;
 $(document).ready(function(){
 
   Dropzone.autoDiscover = false;
@@ -19,6 +20,7 @@ $(document).ready(function(){
   $("#btn_send_message").on('click',function() {
     var msg = $("textarea[name=\"task_comm_message\"]").val();
     if(msg.trim() != '') {
+      blockRefresh = true;
       serviceprovider_manager.sendMessage(msg.trim());
     }
   });
@@ -37,9 +39,11 @@ $(document).ready(function(){
         toastr.error(reply.message);
       } else {
         toastr.success(reply.message);
+        lastMessageTime = reply.data.discussion_content_time;
         $("#task-comm-chatbox").prepend(serviceprovider_manager.formatChatMessage(reply.data.user_name,reply.data.discussion_content_message,reply.data.discussion_content_time)+"<br/>");
         $("textarea[name=\"task_comm_message\"]").val('');
       }
+      blockRefresh = false;
     });
   };
 
@@ -66,10 +70,16 @@ $(document).ready(function(){
           }
         });
         if(reply.thread !== undefined) {
+          lastMessageTime = reply.thread[0].discussion_content_time;
           $.each(reply.thread, function(index, value) {
             $("#task-comm-chatbox").append(serviceprovider_manager.formatChatMessage(value.user_name,value.discussion_content_message,value.discussion_content_time)+"<br/>");
           });
         }
+        $("#refresh-chat").on('click',function(){
+          blockRefresh = true;
+          serviceprovider_manager.refreshThread();
+        });
+        setInterval(function(){ if(blockRefresh!==true) { blockRefresh = true; serviceprovider_manager.refreshThread();} }, 5000);
         $("#btn_attach_file").on('click',function(e){
             $("#document-upload").show();
         });
@@ -96,5 +106,23 @@ $(document).ready(function(){
       }
       $('.pselector-modal').modal('hide');
     });
-  }
+  };
+
+  serviceprovider_manager.refreshThread = function() {
+    datacx.post('activetask/getDiscussionThread',{time:lastMessageTime}).then(function(reply){
+      if(reply === null || reply.result === 0) {
+
+      } else {
+        if(reply.thread !== undefined) {
+          lastMessageTime = reply.thread[0].discussion_content_time;
+          var messages = '';
+          $.each(reply.thread, function(index, value) {
+            messages += serviceprovider_manager.formatChatMessage(value.user_name,value.discussion_content_message,value.discussion_content_time)+"<br/>";
+          });
+          $("#task-comm-chatbox").prepend(messages);
+        }
+      }
+      blockRefresh = false;
+    });
+  };
 }(window.serviceprovider_manager = window.serviceprovider_manager || {}));
