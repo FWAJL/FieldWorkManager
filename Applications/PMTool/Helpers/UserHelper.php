@@ -48,7 +48,13 @@ class UserHelper {
         $roleId = \Library\Enums\UserRole::ProjectManager;
         break;
       case \Library\Enums\UserRoleType::Technician:
-        $roleId = \Library\Enums\UserRole::ProjectManager;
+        $roleId = \Library\Enums\UserRole::Technician;
+        break;
+      case \Library\Enums\UserRoleType::Client:
+        $roleId = \Library\Enums\UserRole::Client;
+        break;
+      case \Library\Enums\UserRoleType::Service:
+        $roleId = \Library\Enums\UserRole::Service;
         break;
       default:
         $roleId = 0;
@@ -185,6 +191,10 @@ class UserHelper {
         return \Library\Enums\UserRoleType::ProjectManager;
       case \Library\Enums\UserRole::Technician:
         return \Library\Enums\UserRoleType::Technician;
+      case \Library\Enums\UserRole::Client:
+        return \Library\Enums\UserRoleType::Client;
+      case \Library\Enums\UserRole::Service:
+        return \Library\Enums\UserRoleType::Service;
       default://role = 4 and others
         return "";
     }

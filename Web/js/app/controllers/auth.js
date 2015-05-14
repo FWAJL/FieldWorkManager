@@ -42,13 +42,20 @@ $(document).ready(function() {
    } else {//success
     toastr.success(reply.message);
     //Now redirect to project page
-     if(reply.role == '2'){
-       utils.redirect("project");
-     }
-     else if(reply.role == '1') {
+            if(reply.role == '1') {
         utils.redirect("user/listAll");
+     } else if (reply.role == '2') {
+         utils.redirect("project");
      } else if (reply.role == '3') {
        utils.redirect("user/showDetails");
+     } else if (reply.role == '4') {
+       utils.redirect("logout");
+     } else if (reply.role == '5') {
+       utils.redirect("logout");
+     } else if (reply.role == '6') {
+       utils.redirect("serviceprovider/discussion");
+     } else if (reply.role == '7') {
+       utils.redirect("logout");
      }
    }
   });
