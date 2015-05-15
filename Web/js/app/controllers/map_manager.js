@@ -479,7 +479,12 @@ function load(params) {
         if(reply.controls.ruler !== true){
           $("#map-info-ruler").hide();
         }
-
+        if(reply.type === 'task' || reply.type === 'facility') {
+          $("#map-info-add").hide();
+          $("#map-info-shape").hide();
+          $("#map-info-ruler").hide();
+          $("#map-info-pan").hide();
+        }
         //set boundary
         if(reply.controls.shapes === true && typeof reply.boundary !== 'undefined' && reply.boundary.length>0 && reply.boundary!=""  ){
           //get boundary from response and decode it from string to path
@@ -513,7 +518,11 @@ function load(params) {
         }
 
 
-
+        var taskHeading=false;
+        var taskOtherHeading=false;
+        if(reply.type === 'facility') {
+          $("#map-info").append("<div class='row'><h4>Facilities</h4></div>");
+        }
         //Build markers list
         $.each(reply.items, function(index, item) {
           markerIcon = "";
@@ -556,14 +565,29 @@ function load(params) {
             markers.push(item.marker);
             markerIcon = item.marker.icon;
           }
-          $("#map-info").append(
-            "<div id='marker-" + item.id
-              + "' data-id='" + item.id
-              + "' data-active='" + item.active
-              + "' class='row map-info-row " + markerClass
-              + "'><div class='map-info-icon col-md-2'><span class='map-info-icon-image'><img src='" + markerIcon
-              + "' /></span></div><div class='map-info-name col-md-9'>" + item.name
-              + "</div></div>");
+          if(item.task && !taskHeading && reply.type === 'task') {
+            taskHeading = true;
+            $("#map-info").append("<div class='row'><h4>Task Locations</h4></div>");
+          }
+          if(taskHeading && !taskOtherHeading && !item.task && reply.type === 'task') {
+            taskOtherHeading = true;
+            $("#map-info").append("<div class='row'><h4>Other Project Locations</h4></div>");
+          }
+          var showMarker = true;
+          if(reply.type === 'task' && item.noLatLng === true && item.task !==true) {
+            var showMarker = false;
+          }
+          if(showMarker){
+            $("#map-info").append(
+              "<div id='marker-" + item.id
+                + "' data-id='" + item.id
+                + "' data-active='" + item.active
+                + "' class='row map-info-row " + markerClass
+                + "'><div class='map-info-icon col-md-2'><span class='map-info-icon-image'><img src='" + markerIcon
+                + "' /></span></div><div class='map-info-name col-md-9'>" + item.name
+                + "</div></div>");
+          }
+
         });
         markers = map.addMarkers(markers);
         $(document).on('mouseover', '.map-info-row', function () {
@@ -612,15 +636,27 @@ function load(params) {
           if (type === google.maps.drawing.OverlayType.POLYLINE) {
             path = overlay.getPath();
             pathSize = path.getLength();
+            infoPosition = path.getAt(pathSize - 1);
             distance = google.maps.geometry.spherical.computeLength(path);
-            infoContainer.html("Distance: " + (distance / 1000).toFixed(2) + " km " + (distance * 0.62137).toFixed(2) + " miles");
+            infoContent = "Distance: " + (distance / 1000).toFixed(2) + " km " + (distance * 0.62137).toFixed(2) + " miles";
           } else {
             path = overlay.getPath();
             pathSize = path.getLength();
             infoPosition = path.getAt(pathSize - 1);
             area = google.maps.geometry.spherical.computeArea(path);
-            infoContainer.html("Area: " + (area / 1000000).toFixed(2) + " sq kms " + (area / 2589988.11).toFixed(2) + " sq miles");
+            infoContent = "Area: " + (area / 1000000).toFixed(2) + " sq kms " + (area / 2589988.11).toFixed(2) + " sq miles";
           }
+          if(reply.type !== 'task') {
+            infoContainer.html(infoContent);
+          } else {
+            var infowindow = new google.maps.InfoWindow({
+              content: infoContent,
+              position: infoPosition
+            });
+            infowindow.open(map.map);
+          }
+
+
 
         };
         /*
@@ -871,13 +907,18 @@ function load(params) {
               });
               rulerActive = true;
               $("#map-info-ruler").addClass("map-info-control-active");
-              $("#map-ruler").show();
+              if(reply.type !== 'task') {
+                $("#map-ruler").show();
+              }
+
             }
           }
         }
 
         $(".control-active").trigger("click");
-
+        if(reply.type === 'task') {
+          $("#map-info-ruler").trigger('click');
+        }
         //toggle active control
         /*if(reply.activeControl === "markers"){
          toggleAdd(!addActive);

@@ -405,7 +405,7 @@ class MapController extends \Library\BaseController {
     //create google maps marker items
     $projectLocationMarkers = \Applications\PMTool\Helpers\MapHelper::CreateTaskLocationMarkerItems($locations, $properties, $icons);
 
-    $result["noLatLngIcon"] = $icons["noLatLng"];
+    $result["noLatLngIcon"] = $icons["task"];
     $result["items"] = $projectLocationMarkers;
     $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
     $result["boundary"] = \Applications\PMTool\Helpers\MapHelper::GetBoundary($sessionProject);

@@ -28,12 +28,39 @@ exit('No direct script access allowed');
 
 class DiscussionHelper {
 
+
+  public static function GetDiscussionByIdFromDB($caller, $discussion_id) {
+    $manager = $caller->managers()->getManagerOf('Discussion');
+    $discussion = new \Applications\PMTool\Models\Dao\Discussion();
+    $discussion->setDiscussion_id($discussion_id);
+    $discussions = $manager->selectMany($discussion,'discussion_id');
+    $discussion = $discussions[0];
+    $manager = $caller->managers()->getManagerOf('DiscussionPerson');
+    $discussion_person = new \Applications\PMTool\Models\Dao\Discussion_person();
+    $discussion_person->setDiscussion_id($discussion->discussion_id());
+    //select all connected people so we can store them in session
+    $discussion_people = $manager->selectMany($discussion_person, 'discussion_id');
+    $discussionArray = array(
+      \Library\Enums\SessionKeys::DiscussionObj => $discussion,
+      \Library\Enums\SessionKeys::DiscussionPeople => $discussion_people,
+    );
+    return $discussionArray;
+
+  }
+
   public static function SetCurrentDiscussion($user, $discussion, $discussionPeople) {
+    $user->unsetAttribute(\Library\Enums\SessionKeys::DiscussionThread);
     $currentDiscussionArray = array(
       \Library\Enums\SessionKeys::DiscussionObj => $discussion,
       \Library\Enums\SessionKeys::DiscussionPeople => $discussionPeople,
     );
     $user->setAttribute(\Library\Enums\SessionKeys::CurrentDiscussion,$currentDiscussionArray);
+
+    return true;
+  }
+
+  public static function UnsetCurrentDiscussion($user) {
+    $user->unsetAttribute(\Library\Enums\SessionKeys::CurrentDiscussion);
     return true;
   }
 
@@ -85,7 +112,7 @@ class DiscussionHelper {
         }
         $discussion_person_id = $manager->add($discussion_person);
         if($discussion_person_id<=0) {
-          return false;
+          \Library\Core\Utility\Logger::LogEx(__CLASS__, __METHOD__, "::", "Discussion person insertion failed.");
         }
 
       }
@@ -93,7 +120,7 @@ class DiscussionHelper {
       $discussion->setDiscussion_id($discussion_id);
       //fetch discussion with the time from db so we can set it as the current in the controller
       $discussion =$manager->selectMany($discussion,'discussion_id');
-      return $discussion;
+      return $discussion[0];
     } else {
       return false;
     }
@@ -106,12 +133,61 @@ class DiscussionHelper {
     foreach($discussion[\Library\Enums\SessionKeys::DiscussionPeople] as $person) {
       $personArray[] = $person->discussion_person_id();
     }
-    $thread = $manager->selectDiscussionThread($personArray);
-    if($thread) {
-      return $thread;
+    $lastMessage = self::GetLastMessageFromThread($caller);
+    if(!is_null($lastMessage)) {
+      $lastMessageTime = $lastMessage->discussion_content_time();
     } else {
-      return false;
+      $lastMessageTime = false;
     }
+    $thread = $manager->selectDiscussionThread($personArray, $lastMessageTime);
+    if(!is_null($lastMessage)) {
+      if($thread) {
+        $currentSessionThread = $caller->user()->getAttribute(\Library\Enums\SessionKeys::DiscussionThread);
+        $caller->user()->setAttribute(\Library\Enums\SessionKeys::DiscussionThread,array_merge($thread,$currentSessionThread));
+        return $caller->user()->getAttribute(\Library\Enums\SessionKeys::DiscussionThread);
+      } else {
+        return $caller->user()->getAttribute(\Library\Enums\SessionKeys::DiscussionThread);
+      }
+    } else {
+      if($thread) {
+        $caller->user()->setAttribute(\Library\Enums\SessionKeys::DiscussionThread,$thread);
+        return $caller->user()->getAttribute(\Library\Enums\SessionKeys::DiscussionThread);
+      } else {
+        return false;
+      }
+    }
+  }
+
+  public static function GetLastMessageFromThread($caller) {
+    $sessionThread = $caller->user()->getAttribute(\Library\Enums\SessionKeys::DiscussionThread);
+    if(isset($sessionThread)) {
+      $lastMessage = reset($sessionThread);
+      return $lastMessage;
+    } else {
+      return null;
+    }
+  }
+
+  public static function AddMessageToThread($caller, $userConnected, $currentDiscussion, $dataPost) {
+    $manager = $caller->managers()->getManagerOf('DiscussionContent');
+    $discussion_person = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue(intval($userConnected->user_id()), 'user_id', $currentDiscussion[\Library\Enums\SessionKeys::DiscussionPeople]);
+    $discussion_content = new \Applications\PMTool\Models\Dao\Discussion_content();
+    $discussion_content->setDiscussion_person_id($discussion_person->discussion_person_id());
+    $discussion_content->setDiscussion_content_message($dataPost['discussion_content_message']);
+    $discussion_content_id = $manager->add($discussion_content);
+
+    self::GetDiscussionThread($caller, $currentDiscussion);
+
+    return $discussion_content_id;
+  }
+
+  public static function SliceThread($thread, $time) {
+    foreach($thread as $k=>$message) {
+      if(strtotime($message->discussion_content_time()) <= strtotime($time)) {
+        unset($thread[$k]);
+      }
+    }
+    return $thread;
   }
 
 }

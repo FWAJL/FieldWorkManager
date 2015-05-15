@@ -56,6 +56,9 @@
   <resource key="user_list_all">List All</resource>
   <resource key="user_add">Add</resource>
 
+  <resource key="header_service">Service Provider</resource>
+  <resource key="serviceprovider_discussion">Discussions</resource>
+
   <resource key="header_ft_tasks">My Tasks</resource>
   <resource key="header_ft_map">Task Map</resource>
   <resource key="header_ft_locations">Task Locations</resource>

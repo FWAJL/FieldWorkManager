@@ -37,6 +37,8 @@
   
   <resource key="activetask_button_sendmsg">Send</resource>
   <resource key="activetask_button_attach">Attach File</resource>
+  <resource key="activetask_button_attach_local">Local</resource>
+  <resource key="activetask_button_attach_server">Task location form</resource>
   <resource key="btn_to_pm_list">Start discussion</resource>
   <resource key="btn_to_project_list">Unselect</resource>
   <resource key="at_status_savenote">Save</resource>
@@ -48,4 +50,7 @@
   <resource key="taskstatus_recurrence_label">Recurrence</resource>
   <resource key="taskstatus_manualtrigger_label">Manual Trigger</resource>
   <resource key="taskstatus_externaltrigger_label">External Trigger</resource>
+
+  <resource key="form_title">Title</resource>
+  <resource key="form_file">File</resource>
 </resources>

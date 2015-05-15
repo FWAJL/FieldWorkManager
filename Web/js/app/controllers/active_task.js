@@ -10,7 +10,8 @@
   
 //************************************************//
 var task_technician_ids = "";
-
+var lastMessageTime = "";
+var blockRefresh = false;
 $(document).ready(function(){
 	
   //active task sub module specific UI cleanups
@@ -89,6 +90,9 @@ $(document).ready(function(){
         if($('#group-list-left').length > 0) {
           $('#group-list-left').css('height', '200');
         }
+        Dropzone.autoDiscover = false;
+        $("input[name=\"itemCategory\"]").val('discussion_id');
+        $("#document-upload").hide();
         activetask_manager.getThread();
         break;
       default:
@@ -182,6 +186,7 @@ $(document).ready(function(){
   $("#btn_send_message").on('click',function() {
     var msg = $("textarea[name=\"task_comm_message\"]").val();
     if(msg.trim() != '') {
+      blockRefresh = true;
       activetask_manager.sendMessage(msg.trim());
     }
   });
@@ -283,9 +288,11 @@ $(document).ready(function(){
         toastr.error(reply.message);
       } else {
         toastr.success(reply.message);
+        lastMessageTime = reply.data.discussion_content_time;
         $("#task-comm-chatbox").prepend(activetask_manager.formatChatMessage(reply.data.user_name,reply.data.discussion_content_message,reply.data.discussion_content_time)+"<br/>");
         $("textarea[name=\"task_comm_message\"]").val('');
       }
+      blockRefresh = false;
     });
   };
 
@@ -295,17 +302,97 @@ $(document).ready(function(){
         toastr.error(reply.message);
       } else {
         toastr.success(reply.message);
-        $.each(reply.thread, function(index, value) {
+        $("input[name=\"itemId\"]").val(reply.discussion.discussion_id);
+        if(reply.user_type == 'technician_id') {
+          $("#file-attach").hide();
+        }
+        var dropzone = new Dropzone("#document-upload");
+        dropzone.on("success", function(event,res) {
+          if(res.result == 0) {
+            toastr.error(res.message);
+            dropzone.removeAllFiles();
+          } else {
+            toastr.success(res.message);
+            $("#document-upload").hide();
+            dropzone.removeAllFiles();
+            $("textarea[name=\"task_comm_message\"]").val($("textarea[name=\"task_comm_message\"]").val()+"\n"+res.filepath);
+          }
+        });
 
-          $("#task-comm-chatbox").append(activetask_manager.formatChatMessage(value.user_name,value.discussion_content_message,value.discussion_content_time)+"<br/>");
+        if(reply.thread !== undefined) {
+          lastMessageTime = reply.thread[0].discussion_content_time;
+          $.each(reply.thread, function(index, value) {
+            $("#task-comm-chatbox").append(activetask_manager.formatChatMessage(value.user_name,value.discussion_content_message,value.discussion_content_time)+"<br/>");
+          });
+        }
+        $("#refresh-chat").on('click',function(){
+          blockRefresh = true;
+          activetask_manager.refreshThread();
+        });
+        setInterval(function(){ if(blockRefresh!==true) { blockRefresh = true; activetask_manager.refreshThread();} }, config.chatRefresh);
+        $("#group-list-right").selectable({
+          stop: function() {
+            var tmpSelection = "";
+            $(".ui-selected", this).each(function() {
+              tmpSelection += $(this).attr("data-document-id") + ",";
+            });
+            tmpSelection = utils.removeLastChar(tmpSelection);
+          }
+        });
+        $("#btn_attach_file").on('click',function(e){
+          if($("input[name=\"local-server\"]:checked").val()=='local') {
+            $("#document-upload").show();
+          } else {
+            $("#document-upload").hide();
+            $('#prompt_ok').off('click');
+            utils.showSelectEntityPrompt(function(){
+              if($("#group-list-right .ui-selected")!==undefined) {
+                activetask_manager.loadPhoto($("#group-list-right .ui-selected").data('document-id'));
+              }
+            }, function(){});
+          }
         });
       }
     });
   };
 
   activetask_manager.formatChatMessage = function(name,message,time) {
-    var messageFormatted = '<strong>'+name+'</strong>: '+message+' <small>@'+time+'</small>';
+    var messageFormatted = '<strong>'+name+'</strong>: '+utils.hyperlinkUrls(message)+' <small>@'+time+'</small>';
     return messageFormatted;
+  };
+
+  activetask_manager.loadPhoto = function(id) {
+    datacx.post("file/loadOne", {"id": id}).then(function(reply){
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+        return undefined;
+      } else {//success
+        toastr.success(reply.message);
+        console.log(reply.filepath.length);
+        if(reply.filepath.length>0){
+          $("textarea[name=\"task_comm_message\"]").val($("textarea[name=\"task_comm_message\"]").val()+"\n"+reply.filepath);
+        }
+      }
+      $('.pselector-modal').modal('hide');
+    });
+  };
+
+  activetask_manager.refreshThread = function() {
+    datacx.post('activetask/getDiscussionThread',{time:lastMessageTime}).then(function(reply){
+      if(reply === null || reply.result === 0) {
+
+      } else {
+        if(reply.thread !== undefined) {
+          lastMessageTime = reply.thread[0].discussion_content_time;
+          var messages = '';
+          $.each(reply.thread, function(index, value) {
+            messages += activetask_manager.formatChatMessage(value.user_name,value.discussion_content_message,value.discussion_content_time)+"<br/>";
+          });
+          $("#task-comm-chatbox").prepend(messages);
+        }
+      }
+      blockRefresh = false;
+    });
   }
 
 }(window.activetask_manager = window.activetask_manager || {}));
