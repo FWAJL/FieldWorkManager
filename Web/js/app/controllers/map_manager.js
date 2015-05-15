@@ -479,7 +479,7 @@ function load(params) {
         if(reply.controls.ruler !== true){
           $("#map-info-ruler").hide();
         }
-        if(reply.type === 'task') {
+        if(reply.type === 'task' || reply.type === 'facility') {
           $("#map-info-add").hide();
           $("#map-info-shape").hide();
           $("#map-info-ruler").hide();
@@ -520,6 +520,9 @@ function load(params) {
 
         var taskHeading=false;
         var taskOtherHeading=false;
+        if(reply.type === 'facility') {
+          $("#map-info").append("<div class='row'><h4>Facilities</h4></div>");
+        }
         //Build markers list
         $.each(reply.items, function(index, item) {
           markerIcon = "";
