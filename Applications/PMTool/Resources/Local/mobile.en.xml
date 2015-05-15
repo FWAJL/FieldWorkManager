@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <resource key="page_title">Mobile - Field Work Manager</resource>
+  <resource key="h2_welcome">Welcome User</resource>
+  <resource key="user_welcome"> Hello User</resource>
+  <resource key="user_message1">Thank you For Visiting Our Site</resource>
+  <resource key="user_message2">Have a nice Day.</resource>
+</resources>

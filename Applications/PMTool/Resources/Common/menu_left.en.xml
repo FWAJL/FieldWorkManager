@@ -59,5 +59,11 @@
   <resource key="header_service">Service Provider</resource>
   <resource key="serviceprovider_discussion">Discussions</resource>
 
+  <resource key="header_ft_tasks">My Tasks</resource>
+  <resource key="header_ft_map">Task Map</resource>
+  <resource key="header_ft_locations">Task Locations</resource>
+  <resource key="header_ft_collect_data">Data collection</resource>
+  <resource key="header_ft_task_details">Task Details</resource>
+  <resource key="header_ft_task_services">Task Services</resource>
   
 </resources>

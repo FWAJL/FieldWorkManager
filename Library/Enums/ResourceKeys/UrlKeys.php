@@ -77,6 +77,7 @@ class UrlKeys {
   const PmRootUrl = "pm";
   const PmListAll = "pm/listAll";
   const PmShowForm = "pm/showForm";
+  const MobileWelcomePage = "mobile/welcome";
 
   /**
    * Absolute Urls

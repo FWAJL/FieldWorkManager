@@ -104,7 +104,7 @@ $(document).ready(function() {
   utils.redirect = function(page, timeout) {
     timeout = timeout || 0;
     setTimeout(function() {
-      document.location.replace(config.rootFolder + page);
+      window.location.replace(config.rootFolder + page);
     }, timeout);
   };
   /**

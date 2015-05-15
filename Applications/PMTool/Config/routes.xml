@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<routes version="1.6.21">
+<routes version="1.6.22.2">
     <!-- UI routes -->
     <route url="login" module="Authenticate" action="loadLoginView" resxfile="login" type="ui">
         <js_files>
@@ -672,6 +672,23 @@
 	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
+    <!--  All Control For User ROLE 3  -->
+    <!-- Mobile/Welcome -->
+   <route url="mobile" module="Mobile" action="viewTasksForTechnician" resxfile="mobile" type="ui" role="3">
+	<js_files>
+	    <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
+	</js_files>
+	<css_files>
+	    <css_file value="Web/css/app/app-mobile-theme.css" />
+	    <css_file value="Web/css/app/app-mobile-style.css" />
+	    <css_file value="Web/css/app/app-reponsive.css" />
+        <css_file use="project" />
+	</css_files>
+	<php_modules>
+	    <php_module key="welcome" file_name="welcome.php" />
+	</php_modules>
+    </route>
+       <!--  All Control For User ROLE 3  --> 
     <!-- analyte/uploadList -->
     <route url="analyte/uploadCommons" module="Analyte" action="uploadCommonAnalytes" resxfile="analyte" type="ui" role="1">
         <js_files>
