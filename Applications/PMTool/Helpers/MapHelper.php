@@ -63,6 +63,7 @@ class MapHelper {
         "projectActive" => $relativePath . $imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsProjectActiveIcon)),
         "projectInactive" => $relativePath . $imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsProjectInactiveIcon)),
         "locationActive" => $relativePath . $imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsLocationActiveIcon)),
+        "locationActiveSmall" => $relativePath . $imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsLocationActiveIconSmall)),
         "locationInactive" => $relativePath . $imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsLocationInactiveIcon)),
         "task" => $relativePath . $imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsTaskIcon)),
         "noLatLng" => $relativePath . $imageUtil->getImageUrl($configManager->get(\Library\Enums\AppSettingKeys::GoogleMapsNoLatLngIcon)),
@@ -232,7 +233,7 @@ class MapHelper {
             $marker["marker"]["icon"] = $icons['task'];
             $marker["task"] = true;
           } else {
-            $marker["marker"]["icon"] = ($location->$locationObjectType["objectActivePropName"]()) ? $icons["locationActive"] : $icons["locationInactive"];
+            $marker["marker"]["icon"] = ($location->$locationObjectType["objectActivePropName"]()) ? $icons["locationActiveSmall"] : $icons["locationInactive"];
             $marker["task"] = false;
           }
         }
