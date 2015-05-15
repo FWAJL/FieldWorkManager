@@ -166,24 +166,26 @@ class MapHelper {
     $marker = array();
     $locationObjectType = reset($properties);
     $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
-    foreach ($locations as $location) {
-      if (isset($locationObjectType["objectLatPropName"]) && isset($locationObjectType["objectLngPropName"]) && self::CheckCoordinateValue($location->$locationObjectType["objectLatPropName"]()) && self::CheckCoordinateValue($location->$locationObjectType["objectLngPropName"]())) {
-        $marker["marker"]["lat"] = $location->$locationObjectType["objectLatPropName"]();
-        $marker["marker"]["lng"] = $location->$locationObjectType["objectLngPropName"]();
-        $marker["noLatLng"] = false;
-      } else {
-        $marker["noLatLng"] = true;
+    if(!is_null($locations)) {
+      foreach ($locations as $location) {
+        if (isset($locationObjectType["objectLatPropName"]) && isset($locationObjectType["objectLngPropName"]) && self::CheckCoordinateValue($location->$locationObjectType["objectLatPropName"]()) && self::CheckCoordinateValue($location->$locationObjectType["objectLngPropName"]())) {
+          $marker["marker"]["lat"] = $location->$locationObjectType["objectLatPropName"]();
+          $marker["marker"]["lng"] = $location->$locationObjectType["objectLngPropName"]();
+          $marker["noLatLng"] = false;
+        } else {
+          $marker["noLatLng"] = true;
+        }
+        $marker["id"] = $location->$locationObjectType["objectIdPropName"]();
+        $marker["marker"]["title"] = $marker["name"] = $location->$locationObjectType["objectNamePropName"]();
+        $marker["active"] = $location->$locationObjectType["objectActivePropName"]();
+        if (isset($locationObjectType["objectActivePropName"])) {
+          $marker["marker"]["icon"] = ($location->$locationObjectType["objectActivePropName"]()) ? $icons["locationActive"] : $icons["locationInactive"];
+        }
+        if (!isset($marker["marker"]["lat"]) && !isset($marker["marker"]["lng"])) {
+          unset($marker["marker"]);
+        }
+        $markers[] = $marker;
       }
-      $marker["id"] = $location->$locationObjectType["objectIdPropName"]();
-      $marker["marker"]["title"] = $marker["name"] = $location->$locationObjectType["objectNamePropName"]();
-      $marker["active"] = $location->$locationObjectType["objectActivePropName"]();
-      if (isset($locationObjectType["objectActivePropName"])) {
-        $marker["marker"]["icon"] = ($location->$locationObjectType["objectActivePropName"]()) ? $icons["locationActive"] : $icons["locationInactive"];
-      }
-      if (!isset($marker["marker"]["lat"]) && !isset($marker["marker"]["lng"])) {
-        unset($marker["marker"]);
-      }
-      $markers[] = $marker;
     }
 
 
