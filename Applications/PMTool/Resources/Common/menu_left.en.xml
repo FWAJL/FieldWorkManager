@@ -56,5 +56,8 @@
   <resource key="user_list_all">List All</resource>
   <resource key="user_add">Add</resource>
 
+  <resource key="header_service">Service Provider</resource>
+  <resource key="serviceprovider_discussion">Discussions</resource>
+
   
 </resources>

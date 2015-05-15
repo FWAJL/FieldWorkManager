@@ -299,6 +299,8 @@ li textarea {
 .checkbox_text { margin-left: 20px; }
 
 .client_form { padding: 10px; }
+
+#task-comm-chatbox { overflow-y: scroll; }
 /* END TASK */
 
 /* LOCATION */
@@ -425,6 +427,10 @@ ui-widget-content:hover {
   margin-right: 10px;
   min-width: 320px;
   width: 70%;
+}
+
+#refresh-chat {
+  display: inline;
 }
 /* END Active task related CSS */
 

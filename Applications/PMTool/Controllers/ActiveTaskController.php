@@ -11,9 +11,9 @@ class ActiveTaskController extends \Library\BaseController {
     $currentTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
     if ($currentTask !== NULL) {
       $this->Redirect(
-              \Library\Enums\ResourceKeys\UrlKeys::ActiveTaskShowForm
-              . "task_id="
-              . $currentTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+        \Library\Enums\ResourceKeys\UrlKeys::ActiveTaskShowForm
+        . "task_id="
+        . $currentTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
     } else {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ActiveTaskShowForm);
     }
@@ -36,9 +36,9 @@ class ActiveTaskController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::activeTaskTabStatus, \Applications\PMTool\Helpers\ActiveTaskHelper::GetTabsStatus($this->app()->user()));
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::activeTaskTabStatus, \Applications\PMTool\Helpers\ActiveTaskHelper::GetTabsStatus($this->app()->user()));
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
   public function executeMap(\Library\HttpRequest $rq) {
@@ -54,9 +54,9 @@ class ActiveTaskController extends \Library\BaseController {
     \Applications\PMTool\Helpers\ActiveTaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\ActiveTaskTabKeys::ActiveTaskMapTab);
 
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::activeTaskTabStatus, \Applications\PMTool\Helpers\ActiveTaskHelper::GetTabsStatus($this->app()->user()));
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::activeTaskTabStatus, \Applications\PMTool\Helpers\ActiveTaskHelper::GetTabsStatus($this->app()->user()));
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Map::default_active_control, $rq->getData('active') ? : 'pan');
   }
 
@@ -82,23 +82,23 @@ class ActiveTaskController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
     $data_left = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left => $completedForms,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\ActiveTaskHelper::SetPropertyNamesOfDocumentsForDualList()
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left => $completedForms,
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\ActiveTaskHelper::SetPropertyNamesOfDocumentsForDualList()
     );
     $data_right = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_right => $documents,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\ActiveTaskHelper::SetPropertyNamesOfDocumentsForDualList()
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_right => $documents,
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\ActiveTaskHelper::SetPropertyNamesOfDocumentsForDualList()
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data_left, $data_left);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data_right, $data_right);
     //\Applications\PMTool\Helpers\CommonHelper::pr($data_right);
 
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::activeTaskTabStatus, \Applications\PMTool\Helpers\ActiveTaskHelper::GetTabsStatus($this->app()->user()));
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::activeTaskTabStatus, \Applications\PMTool\Helpers\ActiveTaskHelper::GetTabsStatus($this->app()->user()));
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
 
   public function executeCommunications(\Library\HttpRequest $rq) {
@@ -116,11 +116,11 @@ class ActiveTaskController extends \Library\BaseController {
 
     //Get current Discussion from session and set for view
     $currentDiscussion = \Applications\PMTool\Helpers\DiscussionHelper::GetCurrentDiscussion($this->user);
-    if ($currentDiscussion) {
+    if($currentDiscussion){
       $manager = $this->managers()->getManagerOf('User');
-      $discussion_person = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue(0, 'discussion_person_is_author', $currentDiscussion[\Library\Enums\SessionKeys::DiscussionPeople]);
+      $discussion_person = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue(0,'discussion_person_is_author',$currentDiscussion[\Library\Enums\SessionKeys::DiscussionPeople]);
       $discussion_user_type = $manager->selectUserTypeObjectByUserId($discussion_person->user_id());
-      if ($discussion_user_type) {
+      if($discussion_user_type) {
         $currentDiscussion['comm_with'] = $discussion_user_type;
         $currentDiscussion['comm_type'] = \Applications\PMTool\Helpers\UserHelper::FindUserTypeFromObject($discussion_user_type);
       }
@@ -136,15 +136,22 @@ class ActiveTaskController extends \Library\BaseController {
     $pm_services = \Applications\PMTool\Helpers\ServiceHelper::FilterServicesToExcludeTaskServices($pm_services, $task_services);
     //Categorize the list for showing in the list
     $task_services = \Applications\PMTool\Helpers\ServiceHelper::CategorizeTheList($task_services, "service_type");
+    //load forms
+    $documents = \Applications\PMTool\Helpers\ActiveTaskHelper::GetDocumentsForActiveTask($sessionTask, $this);
     //Set data for frontend
     $data = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_left => $task_services,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("service"))
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_left => $task_services,
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("service")),
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
-
-
+    //use group list right for popup task location form attachments
+    $data_right = array(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower('document'),
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_right => $documents,
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\ActiveTaskHelper::SetPropertyNamesOfDocumentsForDualList()
+    );
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data_right, $data_right);
     //Similarly let's get the task specific technicians
     $sessionPm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     $pm_technicians = \Applications\PMTool\Helpers\TechnicianHelper::GetPmTechnicians($this, $sessionPm);
@@ -152,9 +159,9 @@ class ActiveTaskController extends \Library\BaseController {
     // filter the pm technicians after we retrieve the task technicians
     $pm_technicians = \Applications\PMTool\Helpers\TechnicianHelper::FilterTechniciansToExcludeTaskTechnicians($pm_technicians, $task_technicians);
     $data_left = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left => $task_technicians,
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("technician"))
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left => $task_technicians,
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("technician")),
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data_left, $data_left);
 
@@ -163,9 +170,12 @@ class ActiveTaskController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::activeTaskTabStatus, \Applications\PMTool\Helpers\ActiveTaskHelper::GetTabsStatus($this->app()->user()));
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::activeTaskTabStatus, \Applications\PMTool\Helpers\ActiveTaskHelper::GetTabsStatus($this->app()->user()));
+    $modules = $this->app()->router()->selectedRoute()->phpModules();
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_prompt_list,$modules['group_list_right']);
   }
 
   public function executeStartCommWith(\Library\HttpRequest $rq) {
@@ -176,19 +186,19 @@ class ActiveTaskController extends \Library\BaseController {
     $taskDiscussions = \Applications\PMTool\Helpers\DiscussionHelper::GetAllTaskDiscussions($this, $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
 
 
-    if ($this->dataPost['selection_type'] == 'technician_id') {
-      $technicians = \Applications\PMTool\Helpers\TechnicianHelper::GetAndStoreTaskTechnicians($this, $sessionTask);
-      foreach ($technicians as $technician) {
-        if ($technician->technician_id() == $this->dataPost['id']) {
+    if($this->dataPost['selection_type'] == 'technician_id') {
+      $technicians = \Applications\PMTool\Helpers\TechnicianHelper::GetAndStoreTaskTechnicians($this,$sessionTask);
+      foreach($technicians as $technician) {
+        if($technician->technician_id() == $this->dataPost['id']) {
           $manager = $this->managers()->getManagerOf('User');
           $user = $manager->selectUserByTypeId('technician_id', $technician->technician_id());
           break;
         }
       }
     } else {
-      $services = \Applications\PMTool\Helpers\ServiceHelper::GetAndStoreTaskServices($this, $sessionTask);
-      foreach ($services as $service) {
-        if ($service->service_id() == $this->dataPost['id']) {
+      $services = \Applications\PMTool\Helpers\ServiceHelper::GetAndStoreTaskServices($this,$sessionTask);
+      foreach($services as $service) {
+        if($service->service_id() == $this->dataPost['id']) {
           $manager = $this->managers()->getManagerOf('User');
           $user = $manager->selectUserByTypeId('service_id', $service->service_id());
           break;
@@ -219,7 +229,7 @@ class ActiveTaskController extends \Library\BaseController {
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::ActiveTask,
         "resx_key" => $this->action(),
         "step" => ($result['success']) ? "success" : "error"
-            )
+      )
     );
   }
 
@@ -241,11 +251,11 @@ class ActiveTaskController extends \Library\BaseController {
     $result_save = $manager->add($task_note);
 
     $this->SendResponseWS(
-            $result, array(
+      $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::ActiveTask,
         "resx_key" => $this->action(),
         "step" => ($result_save) ? "success" : "error"
-            )
+      )
     );
   }
 
@@ -264,12 +274,12 @@ class ActiveTaskController extends \Library\BaseController {
 
     $result_get = 0;
 
-    if (!empty($result_note)) {
+    if(!empty($result_note)) {
       $user_arr = array();
-      foreach ($result_note as $note_key => $note_obj) {
+      foreach($result_note as $note_key => $note_obj) {
         $datauser = null;
         //Fetch user details who posted that note
-        if ($note_obj->task_note_category_type() == 'pm_id') {
+        if($note_obj->task_note_category_type() == 'pm_id') {
           //Project Manager
           //Init data structure
           $datauser['pm_id'] = $note_obj->task_note_category_value();
@@ -281,7 +291,9 @@ class ActiveTaskController extends \Library\BaseController {
 
           //Stuff into main array
           array_push($user_arr, $result_pm_user[0]->pm_name());
-        } else {
+
+        }
+        else {
           //Technician
           //Init data structure
           $datauser['technician_id'] = $note_obj->task_note_category_value();
@@ -306,11 +318,11 @@ class ActiveTaskController extends \Library\BaseController {
     //\Applications\PMTool\Helpers\CommonHelper::pr($user_arr);
 
     $this->SendResponseWS(
-            $result, array(
+      $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::ActiveTask,
         "resx_key" => $this->action(),
         "step" => ($result_get) ? "success" : "error"
-            )
+      )
     );
   }
 
@@ -325,17 +337,14 @@ class ActiveTaskController extends \Library\BaseController {
 
     $currentDiscussion = \Applications\PMTool\Helpers\DiscussionHelper::GetCurrentDiscussion($this->user);
     if ($currentDiscussion) {
-      $manager = $this->managers()->getManagerOf('DiscussionContent');
-      $discussion_person = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue(intval($userConnected->user_id()), 'user_id', $currentDiscussion[\Library\Enums\SessionKeys::DiscussionPeople]);
-      $discussion_content = new \Applications\PMTool\Models\Dao\Discussion_content();
-      $discussion_content->setDiscussion_person_id($discussion_person->discussion_person_id());
-      $discussion_content->setDiscussion_content_message($this->dataPost['discussion_content_message']);
-      $discussion_content_id = $manager->add($discussion_content);
+      $dataPost = $this->dataPost();
+      $discussion_content_id = \Applications\PMTool\Helpers\DiscussionHelper::AddMessageToThread($this, $userConnected, $currentDiscussion, $dataPost);
       //here goes mail sending...
       if ($discussion_content_id > 0) {
         $result['success'] = true;
         $discussion_content = new \Applications\PMTool\Models\Dao\Discussion_content();
         $discussion_content->setDiscussion_content_id($discussion_content_id);
+        $manager = $this->managers()->getManagerOf('DiscussionContent');
         $discussion_content = $manager->selectMany($discussion_content, 'discussion_content_id');
         $userTypeObject = $this->user->getAttribute(\Library\Enums\SessionKeys::UserTypeObject);
         if ($this->user->getUserType() == 'pm_id') {
@@ -384,8 +393,15 @@ class ActiveTaskController extends \Library\BaseController {
         } else if ($userType == 'service_id') {
           $discussionNames[$person->discussion_person_id()] = $userTypeObject->service_name();
         }
+        if($person->discussion_person_is_author()!=1) {
+          $result['user_type'] = $userType;
+        }
       }
       $thread = \Applications\PMTool\Helpers\DiscussionHelper::GetDiscussionThread($this, $currentDiscussion);
+      $time = $this->dataPost['time'];
+      if(isset($time) && !is_null('time') && $thread){
+        $thread = \Applications\PMTool\Helpers\DiscussionHelper::SliceThread($thread,$time);
+      }
       if ($thread) {
         foreach ($thread as &$content) {
           foreach ($discussionNames as $id => $name) {
@@ -396,10 +412,9 @@ class ActiveTaskController extends \Library\BaseController {
           }
         }
         $result['thread'] = $thread;
-        $result['success'] = true;
-      } else {
-        $result['success'] = false;
       }
+      $result['discussion'] = $currentDiscussion[\Library\Enums\SessionKeys::DiscussionObj];
+      $result['success'] = true;
     } else {
       $result['success'] = false;
     }

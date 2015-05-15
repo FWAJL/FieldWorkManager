@@ -4,6 +4,4 @@
 <input type="button" id="btn_send_message" class="task_add btn btn-default" value="<?php echo $resx["activetask_button_sendmsg"]; ?>" />
 <div id="file-attach">
   <input type="button" id="btn_attach_file" class="task_add btn btn-default" value="<?php echo $resx["activetask_button_attach"]; ?>" />
-  <input type="radio" name="local-server" value="local" checked /> <?php echo $resx["activetask_button_attach_local"]; ?> <br/>
-  <input type="radio" name="local-server" value="server" /> <?php echo $resx["activetask_button_attach_server"]; ?>
 </div>
