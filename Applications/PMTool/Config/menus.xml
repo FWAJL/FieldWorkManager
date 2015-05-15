@@ -95,32 +95,32 @@
   </main_menu><!-- result -->
   <main_menu name="technician_tasks" active="true">
     <links>
-      <header href="mobile" resourcekey="header_ft_tasks" cssClass="glyphicon glyphicon-tasks" enablelink="true" active="true" />
+      <header href="mobile" resourcekey="header_ft_tasks" cssClass="fa fa-tasks" enablelink="true" active="true" />
     </links>
   </main_menu><!-- mobile landing page-->
   <main_menu name="technician_map" active="true">
     <links>
-      <header href="mobile" resourcekey="header_ft_map" cssClass="glyphicon glyphicon-globe" enablelink="true" active="true" />
+      <header href="mobile" resourcekey="header_ft_map" cssClass="fa fa-globe" enablelink="true" active="true" />
     </links>
   </main_menu><!-- mobile - task map -->
   <main_menu name="technician_locations" active="true">
     <links>
-      <header href="mobile" resourcekey="header_ft_locations" cssClass="glyphicon glyphicon-map-marker" enablelink="true" active="true" />
+      <header href="mobile" resourcekey="header_ft_locations" cssClass="fa fa-map-marker" enablelink="true" active="true" />
     </links>
   </main_menu><!-- mobile - task locations-->
   <main_menu name="technician_colloect_data" active="true">
     <links>
-      <header href="mobile" resourcekey="header_ft_collect_data" cssClass="glyphicon glyphicon-list-alt" enablelink="true" active="true" />
+      <header href="mobile" resourcekey="header_ft_collect_data" cssClass="fa fa-table" enablelink="true" active="true" />
     </links>
   </main_menu><!-- mobile - task collect data -->
   <main_menu name="technician_task_details" active="true">
     <links>
-      <header href="mobile" resourcekey="header_ft_task_details" cssClass="glyphicon glyphicon-book" enablelink="true" active="true" />
+      <header href="mobile" resourcekey="header_ft_task_details" cssClass="fa fa-info-circle" enablelink="true" active="true" />
     </links>
   </main_menu><!-- mobile - task collect data -->
   <main_menu name="technician_task_services" active="true">
     <links>
-      <header href="mobile" resourcekey="header_ft_task_services" cssClass="glyphicon glyphicon-briefcase" enablelink="true" active="true" />
+      <header href="mobile" resourcekey="header_ft_task_services" cssClass="fa fa-users" enablelink="true" active="true" />
     </links>
   </main_menu><!-- mobile - task services -->
   

@@ -26,6 +26,12 @@
   ul.content_left > li {
     display:  block;
   }
+  .left-aside {
+    padding-left: 0 !important;
+    padding-right: 10px;
+    width: 60px !important;
+  }
+
 }
 
 @media all and (min-width: 480px) and (max-width: 768px)
