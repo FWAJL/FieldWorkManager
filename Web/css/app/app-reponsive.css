@@ -12,24 +12,36 @@
 
 @media all and (min-width: 980px)
 { /*and (max-width: 1280px) {*/
+  ul.content_left > li {
+    display:  inline-block;
+  }
+  ul.content_left {
+    width: 320px !important;
+    margin: 0 auto;
+  }
 }
 
 @media all and (min-width: 768px) and (max-width: 980px)
 {
-  ul.content_left > li > span:last-child { display: none; }
-  ul.content_left > li > span:first-child { width: 50px; }
+  ul.content_left > li {
+    display:  block;
+  }
 }
 
 @media all and (min-width: 480px) and (max-width: 768px)
 {
-  ul.content_left > li:last-child { display: none; }
-  ul.content_left > li:first-child { width: 50px; }
+  ul.content_left {
+    width: 320px;
+  }
+
 }
 
 @media all and (max-width: 480px)
 {
-  ul.content_left > li > a > span:last-child { display: none; }
-  ul.content_left > li > a > span:first-child { width: 50px; }
+  ul.content_left {
+    width: 320px;
+  }
+
 }
 
 

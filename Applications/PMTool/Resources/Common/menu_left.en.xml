@@ -57,6 +57,10 @@
   <resource key="user_add">Add</resource>
 
   <resource key="header_ft_tasks">My Tasks</resource>
-  <resource key="ft_tasks_list_all">List All</resource>
+  <resource key="header_ft_map">Task Map</resource>
+  <resource key="header_ft_locations">Task Locations</resource>
+  <resource key="header_ft_collect_data">Data collection</resource>
+  <resource key="header_ft_task_details">Task Details</resource>
+  <resource key="header_ft_task_services">Task Services</resource>
   
 </resources>

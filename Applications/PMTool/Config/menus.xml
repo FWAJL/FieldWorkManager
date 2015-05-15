@@ -3,7 +3,7 @@
   <version>1</version>
   <main_menu name="user" active="true">
     <links>
-      <header href="user" resourcekey="header_users" enablelink="false" />
+      <header resourcekey="header_users" enablelink="false" active="true"/>
       <submenu href="user/listAll" id="user_list_all" resourcekey="user_list_all" active="true"/>
       <submenu href="user/showForm" id="user_add" resourcekey="user_add" active="true"/>
     </links>
@@ -11,7 +11,7 @@
 
   <main_menu name="project" active="true">
     <links>
-      <header href="project" resourcekey="header_projects" enablelink="false" />
+      <header resourcekey="header_projects" enablelink="false" active="true" />
       <submenu href="project/listAll" id="project_list_all" resourcekey="project_list" active="true"/>
       <submenu href="project/showForm?mode=add&amp;test=true" id="project_add_left_menu" resourcekey="project_add" active="true"/>
     </links>
@@ -19,7 +19,7 @@
   
   <main_menu name="technician" active="true">
     <links>
-      <header href="technician" resourcekey="header_technician" enablelink="false" />
+      <header resourcekey="header_technician" enablelink="false" active="true" />
       <submenu href="technician/listAll" id="technician_list_all" resourcekey="technician_list" active="true"/>
       <submenu href="technician/showForm" id="btn-add-technician-manual" resourcekey="technician_add" active="true"/>
     </links>
@@ -27,7 +27,7 @@
   
   <main_menu name="location" active="true">
     <links>
-      <header href="location" resourcekey="header_locations" enablelink="false" />
+      <header resourcekey="header_locations" enablelink="false" active="true" />
       <submenu href="location/listAll" id="location_list" resourcekey="location_list" active="true"/>
       <submenu href="location/showForm" id="location_add_button" resourcekey="location_add" active="true"/>
       <submenu href="location/uploadList" id="location_upload_list_button" resourcekey="location_upload_list" active="true"/>
@@ -36,7 +36,7 @@
   
   <main_menu name="map" active="true">
     <links>
-      <header resourcekey="header_map" />
+      <header resourcekey="header_map"  active="true"/>
       <submenu href="map/allProjects" id="map_project_all" resourcekey="map_project_all" active="true"/>
       <submenu href="map/currentProject" id="map_project" resourcekey="map_project" active="true"/>
       <submenu href="map/currentProjectLocations" id="map_project_locations" resourcekey="map_project_locations" active="true"/>
@@ -46,15 +46,15 @@
   
   <main_menu name="task" active="true">
     <links>
-      <header href="task" resourcekey="header_task" enablelink="false" />
+      <header resourcekey="header_task" enablelink="false" active="true" />
       <submenu href="task/listAll" id="task_list_all" resourcekey="task_list" active="true"/>
       <submenu href="task/addPrompt" id="btn-add-task-manual" resourcekey="task_add" active="true"/>
     </links>
   </main_menu><!-- task -->
   
-      <main_menu name="labanalyte" active="true">
+  <main_menu name="labanalyte" active="true">
     <links>
-      <header href="labanalyte" resourcekey="header_lab_analyte" enablelink="false" />
+      <header resourcekey="header_lab_analyte" enablelink="false" active="true" />
       <submenu href="labanalyte/listAll" id="analyte_list_all" resourcekey="lab_analyte_list" active="true" />
       <submenu href="labanalyte/uploadList" id="analyte_upload_list_button" resourcekey="lab_analyte_upload_list" active="true"/>
       <submenu href="labanalyte/uploadCommons" id="analyte_upload_commons_button" resourcekey="lab_analyte_upload_commons" active="true"/>
@@ -63,7 +63,7 @@
   
   <main_menu name="analyte" active="true">
     <links>
-      <header href="analyte" resourcekey="header_analyte" enablelink="false" />
+      <header resourcekey="header_analyte" enablelink="false" active="true" />
       <submenu href="analyte/listAll" id="analyte_list_all" resourcekey="analyte_list" active="true" />
       <submenu href="analyte/uploadList" id="analyte_upload_list_button" resourcekey="analyte_upload_list" active="true"/>
       <submenu href="analyte/uploadCommons" id="analyte_upload_commons_button" resourcekey="analyte_upload_commons" active="true"/>
@@ -72,7 +72,7 @@
     
   <main_menu name="forms" active="true">
     <links>
-      <header href="form/listAll" id="form_list_all" resourcekey="header_form" enablelink="false" />
+      <header id="form_list_all" resourcekey="header_form" enablelink="false" active="true" />
       <submenu href="form/listAll" id="form_list_all" resourcekey="form_list" active="true"/>
       <submenu href="form/masterForm" id="form_show_form_master" resourcekey="form_show_form_master" active="true"/>
       <!--
@@ -82,7 +82,7 @@
   
   <main_menu name="service" active="true">
     <links>
-      <header href="service" resourcekey="header_service" enablelink="false" />
+      <header href="service" resourcekey="header_service" enablelink="false" active="true" />
       <submenu href="service/listAll" id="service_list_all" resourcekey="service_list" active="true"/>
       <submenu href="service/showForm?mode=add&amp;test=true" id="btn-add-service-manual" resourcekey="service_add" active="true"/>
     </links>
@@ -95,8 +95,33 @@
   </main_menu><!-- result -->
   <main_menu name="technician_tasks" active="true">
     <links>
-      <header href="mobile" resourcekey="header_ft_tasks" glyphicon="glyphicon glyphicon-tasks" enablelink="true" />
+      <header href="mobile" resourcekey="header_ft_tasks" cssClass="glyphicon glyphicon-tasks" enablelink="true" active="true" />
     </links>
-  </main_menu><!-- mobile -->
+  </main_menu><!-- mobile landing page-->
+  <main_menu name="technician_map" active="true">
+    <links>
+      <header href="mobile" resourcekey="header_ft_map" cssClass="glyphicon glyphicon-globe" enablelink="true" active="true" />
+    </links>
+  </main_menu><!-- mobile - task map -->
+  <main_menu name="technician_locations" active="true">
+    <links>
+      <header href="mobile" resourcekey="header_ft_locations" cssClass="glyphicon glyphicon-map-marker" enablelink="true" active="true" />
+    </links>
+  </main_menu><!-- mobile - task locations-->
+  <main_menu name="technician_colloect_data" active="true">
+    <links>
+      <header href="mobile" resourcekey="header_ft_collect_data" cssClass="glyphicon glyphicon-list-alt" enablelink="true" active="true" />
+    </links>
+  </main_menu><!-- mobile - task collect data -->
+  <main_menu name="technician_task_details" active="true">
+    <links>
+      <header href="mobile" resourcekey="header_ft_task_details" cssClass="glyphicon glyphicon-book" enablelink="true" active="true" />
+    </links>
+  </main_menu><!-- mobile - task collect data -->
+  <main_menu name="technician_task_services" active="true">
+    <links>
+      <header href="mobile" resourcekey="header_ft_task_services" cssClass="glyphicon glyphicon-briefcase" enablelink="true" active="true" />
+    </links>
+  </main_menu><!-- mobile - task services -->
   
 </main_menus>
