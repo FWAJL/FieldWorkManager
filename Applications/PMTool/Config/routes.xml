@@ -245,7 +245,7 @@
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
-            <php_module key="popup_project_info" file_name="popup_project_info.php" />
+            <php_module key="popup_project_info" file_name="popup_current_project_info.php" />
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
 	    <php_module key="popup_maplegend_project_module" file_name="popup_maplegend_project.php" shared="true" />
         </php_modules>
