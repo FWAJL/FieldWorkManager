@@ -150,18 +150,16 @@ class LocationHelper {
       $location->setProject_id($dataPost["project_id"]);
 
       //Check if the $name could be split on "tab"
-      //If yes, we may asume the columns are name,
+      //If yes, we may assume the columns are name,
       //lat and long and prepare dao accordingly
       $loc_data =  \Applications\PMTool\Helpers\CommonHelper::StringToArray("\t", $name);
       if(count($loc_data) > 1) {
-        //name, lat, long
-        $location->setLocation_name($loc_data[0]);
+        // lat, long
         $location->setLocation_lat($loc_data[1]);
         $location->setLocation_long($loc_data[2]);
-      } else {
-        //only name
-        $location->setLocation_name($loc_data[0]);
-      }
+      } 
+      //name
+      $location->setLocation_name($loc_data[0]);
 
       $location->setLocation_active($dataPost["active"]);
       if(isset($dataPost["visible"])) {
