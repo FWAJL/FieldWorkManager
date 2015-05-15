@@ -50,7 +50,7 @@ $(document).ready(function() {
         utils.redirect("user/listAll");
      }
      if(reply.role == '3'){
-       utils.redirect("mobile/welcome");
+       utils.redirect("mobile");
      }
    }
   });

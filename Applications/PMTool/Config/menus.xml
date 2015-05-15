@@ -36,7 +36,7 @@
   
   <main_menu name="map" active="true">
     <links>
-      <header href="map" resourcekey="header_map" enablelink="false" />
+      <header resourcekey="header_map" />
       <submenu href="map/allProjects" id="map_project_all" resourcekey="map_project_all" active="true"/>
       <submenu href="map/currentProject" id="map_project" resourcekey="map_project" active="true"/>
       <submenu href="map/currentProjectLocations" id="map_project_locations" resourcekey="map_project_locations" active="true"/>
@@ -72,7 +72,7 @@
     
   <main_menu name="forms" active="true">
     <links>
-      <header href="form/listAll" id="form_list_all" resourcekey="header_form" active="true" />
+      <header href="form/listAll" id="form_list_all" resourcekey="header_form" enablelink="false" />
       <submenu href="form/listAll" id="form_list_all" resourcekey="form_list" active="true"/>
       <submenu href="form/masterForm" id="form_show_form_master" resourcekey="form_show_form_master" active="true"/>
       <!--
@@ -88,9 +88,15 @@
     </links>
   </main_menu><!-- resource -->
   
-  <main_menu name="field_results" active="true">
+  <main_menu name="field_results" active="false">
     <links>
       <header href="#" resourcekey="header_user_results" enablelink="false" />
     </links>
   </main_menu><!-- result -->
+  <main_menu name="technician_tasks" active="true">
+    <links>
+      <header href="mobile" resourcekey="header_ft_tasks" glyphicon="glyphicon glyphicon-tasks" enablelink="true" />
+    </links>
+  </main_menu><!-- mobile -->
+  
 </main_menus>
