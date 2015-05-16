@@ -5,6 +5,10 @@
   <resource key="pm_view_info">View and edit your details</resource>
   <resource key="logout_link_text">Logout</resource>
   <resource key="p_user_name_label">Hello </resource>
+  
+  <resource key="ft_notes">Notes</resource>
+  <resource key="ft_map">Map</resource>
+  <resource key="ft_comm">Messages</resource>  
 
   <resource key="header_projects">Projects</resource>
   <resource key="project_add">Add</resource>
