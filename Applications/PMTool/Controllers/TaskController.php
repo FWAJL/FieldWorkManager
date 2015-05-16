@@ -332,12 +332,19 @@ class TaskController extends \Library\BaseController {
 
     foreach ($task_ids as $id) {
       $sessionTask = $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $id];
-      $task = $sessionTask[\Library\Enums\SessionKeys::TaskObj];      
+      $task = $sessionTask[\Library\Enums\SessionKeys::TaskObj]; 
       $task->setTask_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
+      $task_activated = $task->task_activated();
+      //check if task is already not activated and mark accordingly
+      if($task_activated === '0') {
+        $task->setTask_activated('1');
+      }
       $manager = $this->managers->getManagerOf($this->module);
       $rows_affected += $manager->edit($task, "task_id") ? 1 : 0;
+      
       //Create Location specific PDFs for this task
-      if($this->dataPost["action"] === "active" && $rows_affected > 0) {
+      //Also check if task is already activated earlier, if so we don't want file copy feature again
+      if($task_activated === '0' && $this->dataPost["action"] === "active" && $rows_affected > 0) {
         \Applications\PMTool\Helpers\TaskHelper::CreateLocationSpecificPDF($sessionTask, $this);
       }
     }
