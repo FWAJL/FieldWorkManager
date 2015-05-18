@@ -48,4 +48,11 @@
   <resource key="taskstatus_recurrence_label">Recurrence</resource>
   <resource key="taskstatus_manualtrigger_label">Manual Trigger</resource>
   <resource key="taskstatus_externaltrigger_label">External Trigger</resource>
+
+  <!-- Sidebar headings-->
+  <resource key="locations_heading">Locations</resource>
+  <resource key="facilities_heading">Facilities</resource>
+  <resource key="other_locations_heading">Other Project Locations</resource>
+  <resource key="tasks_heading">Task Locations</resource>
+
 </resources>

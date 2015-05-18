@@ -34,7 +34,8 @@
 
     </div>
 
-
+    <input type="hidden" disabled id="tasks-heading" value="<?php echo $resx['tasks_heading']; ?>"/>
+    <input type="hidden" disabled id="other-locations-heading" value="<?php echo $resx['other_locations_heading']; ?>"/>
     
     
 </div>

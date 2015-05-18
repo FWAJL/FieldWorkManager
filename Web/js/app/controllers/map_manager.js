@@ -16,7 +16,7 @@ var polygonSettings = {
   "fillOpacity": .3,
   "strokeWeight": 3
 };
-
+var currentPosition;
 //shows map legend popup
 $(document).ready(function(){
   $('.glyphicon-question-sign').click(function(){
@@ -91,8 +91,8 @@ var addMarkerClick = function(e) {
     $("#marker-" + selectedMarker).removeClass('map-info-marker');
     $("#marker-" + selectedMarker).removeClass("map-info-marker-clickable");
     $("#marker-" + selectedMarker).removeClass("map-info-marker-selected");
-
-    $("#map-info-add").trigger('click');
+    $("#marker-" + selectedMarker).find(".map-info-icon img").draggable({disabled:true});
+    //$("#map-info-add").trigger('click');
 
   } else if (addActive === true) {
     //var infoPrompt = new google.maps.InfoWindow({content: "<form class='form-horizontal'><div class='form-group'><div class='col-sm-10'><input class='form-control' type='text' id='new-marker-name' /></div></div><div class='form-group'><div class='col-sm-12'><textarea class='form-control' rows='3'></textarea></div></div><div class='form-group'><div class='col-sm-5'><button type='button' class='btn btn-primary'>Save</button></div><div class='col-sm-5'><button type='button' class='btn btn-default'>Cancel</button></div></div></form>"});
@@ -450,6 +450,10 @@ var unhighlightMarker = function(e) {
   }
 }
 
+var calculateCurrentPosition = function(e) {
+  currentPosition = e;
+}
+
 function load(params) {
   datacx.post(
     params.dataUrl,
@@ -479,7 +483,7 @@ function load(params) {
         if(reply.controls.ruler !== true){
           $("#map-info-ruler").hide();
         }
-        if(reply.type === 'task' || reply.type === 'facility') {
+        if(reply.type === 'task' || reply.type === 'facility' || reply.type === 'location') {
           $("#map-info-add").hide();
           $("#map-info-shape").hide();
           $("#map-info-ruler").hide();
@@ -521,7 +525,9 @@ function load(params) {
         var taskHeading=false;
         var taskOtherHeading=false;
         if(reply.type === 'facility') {
-          $("#map-info").append("<div class='row'><h4>Facilities</h4></div>");
+          $("#map-info").append("<div class='row'><h4>"+$("#facilities-heading").val()+"</h4></div>");
+        } else if (reply.type === 'location') {
+          $("#map-info").append("<div class='row'><h4>"+$("#locations-heading").val()+"</h4></div>");
         }
         //Build markers list
         $.each(reply.items, function(index, item) {
@@ -567,11 +573,11 @@ function load(params) {
           }
           if(item.task && !taskHeading && reply.type === 'task') {
             taskHeading = true;
-            $("#map-info").append("<div class='row'><h4>Task Locations</h4></div>");
+            $("#map-info").append("<div class='row'><h4>"+$("#tasks-heading").val()+"</h4></div>");
           }
-          if(taskHeading && !taskOtherHeading && !item.task && reply.type === 'task') {
+          if(!taskOtherHeading && !item.task && reply.type === 'task') {
             taskOtherHeading = true;
-            $("#map-info").append("<div class='row'><h4>Other Project Locations</h4></div>");
+            $("#map-info").append("<div class='row'><h4>"+$("#other-locations-heading").val()+"</h4></div>");
           }
           var showMarker = true;
           if(reply.type === 'task' && item.noLatLng === true && item.task !==true) {
@@ -589,6 +595,31 @@ function load(params) {
           }
 
         });
+        if(reply.type === 'location') {
+          $(".map-info-marker .map-info-icon-image>img").draggable({
+            helper: 'clone',
+            containment: 'map',
+            revert: 'invalid',
+            appendTo: 'body',
+            cursorAt: { bottom: 0 },
+            start: function(evt,ui) {
+              GMaps.on('mouseover', map.map, calculateCurrentPosition);
+            },
+            stop: function(evt, ui) {
+              var currentPos = currentPosition;
+              addActive = true;
+              var markerElement = $(this).parent().parent().parent();
+              selectedMarker = markerElement.data('id');
+              if (markerElement.data('active') === 1) {
+                selectedMarkerIcon = activeIcon;
+              } else {
+                selectedMarkerIcon = inactiveIcon;
+              }
+              addMarkerClick(currentPos);
+              addActive = false;
+            }
+          });
+        }
         markers = map.addMarkers(markers);
         $(document).on('mouseover', '.map-info-row', function () {
           var el= $(this);
@@ -646,7 +677,7 @@ function load(params) {
             area = google.maps.geometry.spherical.computeArea(path);
             infoContent = "Area: " + (area / 1000000).toFixed(2) + " sq kms " + (area / 2589988.11).toFixed(2) + " sq miles";
           }
-          if(reply.type !== 'task') {
+          if(false) {
             infoContainer.html(infoContent);
           } else {
             var infowindow = new google.maps.InfoWindow({
@@ -908,7 +939,7 @@ function load(params) {
               rulerActive = true;
               $("#map-info-ruler").addClass("map-info-control-active");
               if(reply.type !== 'task') {
-                $("#map-ruler").show();
+                //$("#map-ruler").show();
               }
 
             }
@@ -916,7 +947,7 @@ function load(params) {
         }
 
         $(".control-active").trigger("click");
-        if(reply.type === 'task') {
+        if(reply.type === 'task' || reply.type === 'location') {
           $("#map-info-ruler").trigger('click');
         }
         //toggle active control

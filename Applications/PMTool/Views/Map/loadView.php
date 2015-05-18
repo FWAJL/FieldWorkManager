@@ -16,4 +16,5 @@
       <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; ?>
       <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_maplegend_projects_module]; ?>
   </div>
+  <input type="hidden" disabled id="facilities-heading" value="<?php echo $resx['facilities_heading']; ?>"/>
 </div><!-- END RIGHT ASIDE MAIN -->
