@@ -35,6 +35,7 @@
   <resource key="location_window_location_lat">Latitude:</resource>
   <resource key="location_window_location_long">Longitude:</resource>
   <resource key="location_window_zoom">Zoom to selected Location</resource>
+  <resource key="location_place_onto_the_map">Place onto the map</resource>
   <resource key="location_window_photos">View photos</resource>
   <resource key="location_window_edit_update">Update</resource>
   <resource key="location_window_edit_cancel">Cancel</resource>
