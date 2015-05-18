@@ -493,20 +493,27 @@ function load(params) {
         if(reply.controls.shapes === true && typeof reply.boundary !== 'undefined' && reply.boundary.length>0 && reply.boundary!=""  ){
           //get boundary from response and decode it from string to path
           boundaryPath = google.maps.geometry.encoding.decodePath(reply.boundary);
+          if(reply.type !== 'facility'){
+            var clickboundary = false;
+          } else {
+            var clickboundary = true;
+          }
           boundaryShape = new google.maps.Polygon({
             paths: boundaryPath,
             strokeWeight: polygonSettings.strokeWeight,
             fillColor: polygonSettings.fillColor,
             fillOpacity: polygonSettings.fillOpacity,
-            clickable: true
+            clickable: clickboundary
           });
-          google.maps.event.addListener(boundaryShape,'click',boundaryClick);
-          google.maps.event.addListener(boundaryShape.getPath(), 'insert_at', function(e) {
-            saveBoundary(boundaryShape);
-          });
-          google.maps.event.addListener(boundaryShape.getPath(), 'set_at', function(e) {
-            saveBoundary(boundaryShape);
-          });
+          if(reply.type === 'facility'){
+            google.maps.event.addListener(boundaryShape,'click',boundaryClick);
+            google.maps.event.addListener(boundaryShape.getPath(), 'insert_at', function(e) {
+              saveBoundary(boundaryShape);
+            });
+            google.maps.event.addListener(boundaryShape.getPath(), 'set_at', function(e) {
+              saveBoundary(boundaryShape);
+            });
+          }
           boundaryShape.setMap(map.map);
         }
 
@@ -641,16 +648,15 @@ function load(params) {
 
 
         setTimeout(function() {
-          if(typeof(boundaryShape) === "object"){
-            map.fitLatLngBounds(boundaryPath);
-          } else {
             if (markers.length > 1) {
               map.fitZoom();
             } else if (markers.length === 1)
             {
               map.setCenter(markers[0].position.lat(), markers[0].position.lng());
+            } else if (typeof(boundaryShape) === "object") {
+              map.fitLatLngBounds(boundaryPath);
             }
-          }
+
         }, 500);
 
         // called on existing/add controls
