@@ -94,6 +94,9 @@ var addMarkerClick = function(e) {
     $("#marker-" + selectedMarker).find(".map-info-icon img").draggable({disabled:true});
     //$("#map-info-add").trigger('click');
     map.setOptions({draggableCursor: 'grab'});
+    addActive = false;
+    existingActive = false;
+    selectedMarker = 0;
 
   } else if (addActive === true) {
     //var infoPrompt = new google.maps.InfoWindow({content: "<form class='form-horizontal'><div class='form-group'><div class='col-sm-10'><input class='form-control' type='text' id='new-marker-name' /></div></div><div class='form-group'><div class='col-sm-12'><textarea class='form-control' rows='3'></textarea></div></div><div class='form-group'><div class='col-sm-5'><button type='button' class='btn btn-primary'>Save</button></div><div class='col-sm-5'><button type='button' class='btn btn-default'>Cancel</button></div></div></form>"});
