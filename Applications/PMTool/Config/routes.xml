@@ -295,7 +295,7 @@
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
             <php_module key="popup_project_info" file_name="popup_project_info.php" />
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-            <php_module key="popup_task_location_info" file_name="popup_task_location_info.php" />
+            <php_module key="popup_task_location_info" file_name="popup_task_location_info.php"  shared="true"/>
             <php_module key="popup_maplegend_task_locations_module" file_name="popup_maplegend_task_locations.php" shared="true" />
             <php_module key="upload_file" file_name="upload_file.php" shared="true" />
         </php_modules>
@@ -400,7 +400,7 @@
             <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/controllers/map_manager.js"/>
-            <js_file use="html" value="Web/js/app/controllers/map/mapCurrentTasks.js"/>
+            <js_file use="html" value="Web/js/app/controllers/map/mapActiveTasks.js"/>
         </js_files>
         <css_files>
             <css_file use="project" />
@@ -414,8 +414,9 @@
             <!--Map specific-->
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
-            <php_module key="popup_maplegend_task_locations_module" file_name="popup_maplegend_task_locations.php" shared="true" />
-
+            <php_module key="popup_maplegend_active_task" file_name="popup_maplegend_active_task.php" shared="true" />
+            <php_module key="popup_task_location_info" file_name="popup_task_location_info.php"  shared="true"/>
+            <php_module key="upload_file" file_name="upload_file.php" shared="true" />
         </php_modules>
     </route><!--  activetask/map -->
 	

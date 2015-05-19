@@ -18,6 +18,7 @@ var polygonSettings = {
 };
 var currentPosition;
 var mapType;
+var activeTask = false;
 //shows map legend popup
 $(document).ready(function(){
   $('.glyphicon-question-sign').click(function(){
@@ -431,8 +432,10 @@ var openTaskLocationInfo = function(e,id,action) {
       setViewPhotosEvent(replyPhotos.fileResults.length);
       setTaskLocationZoomEvent(e);
       $(".task-location-info-modal-action").hide();
-      $("#task-location-info-modal-"+action).show();
-      setAddRemoveFromTaskEvent(e,id,action);
+      if(activeTask!==true) {
+        $("#task-location-info-modal-"+action).show();
+        setAddRemoveFromTaskEvent(e,id,action);
+      }
       utils.showInfoWindow('#task-location-info-modal',function(){
         if($("#task-location-info-modal-location_name").val() !== '') {
           post_data = {};
@@ -497,6 +500,7 @@ function load(params) {
         toastr.error(reply.message);
       } else {//success
         mapType = reply.type;
+        activeTask = reply.activeTask;
         //set current facility and project ids if they are set
         if(typeof(reply.facility_id) !== 'undefined') {
           facilityId = reply.facility_id;
@@ -842,7 +846,6 @@ function load(params) {
                   action = 'add';
                 }
               }
-              console.log('asd');
               openTaskLocationInfo(marker,$(this).data("id"),action);
             }
 

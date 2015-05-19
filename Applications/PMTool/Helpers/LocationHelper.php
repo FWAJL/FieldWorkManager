@@ -216,6 +216,7 @@ class LocationHelper {
       $task_location = new \Applications\PMTool\Models\Dao\Task_location();
       $task_location->setLocation_id($id);
       $task_location->setTask_id($sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+      $task_location->setTask_location_status(0);
       $dal = $caller->managers()->getManagerOf($caller->module());
       if ($dataPost["action"] === "add") {
         $result["rows_affected"] += $dal->add($task_location) >= 0 ? 1 : 0;
