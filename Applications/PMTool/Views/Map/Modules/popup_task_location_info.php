@@ -14,6 +14,7 @@
           <li><a href="#" id="task-location-info-modal-remove" class="task-location-info-modal-action"><span class="glyphicon glyphicon-remove"></span> <?php echo $resx['task_location_window_remove']; ?></a></li>
           <li><a href="#" id="task-location-info-modal-add" class="task-location-info-modal-action"><span class="glyphicon glyphicon-plus"></span> <?php echo $resx['task_location_window_add']; ?></a></li>
           <li><a href="#" id="location-info-modal-photos"><span class="glyphicon glyphicon-camera"></span> <?php echo $resx['location_window_photos']; ?><span id="location-info-modal-photos-count"></span></a></li>
+          <li><a href="#" id="location-info-modal-place"><span class="glyphicon glyphicon-screenshot"></span> <?php echo $resx['location_place_onto_the_map']; ?></a></li>
           <li><br></li>
               <?php require $form_modules["upload_file"]; ?>
       </div>

@@ -63,6 +63,9 @@ var boundaryClick = function(e) {
  * Add marker on the map and call edit or load msg prompt
  */
 var addMarkerClick = function(e) {
+  console.log(e);
+  console.log(selectedMarker);
+  console.log(addActive);
   if (addActive === true && selectedMarker !== 0) {
 
     var post_data = {};
@@ -396,6 +399,13 @@ var setAddRemoveFromTaskEvent = function(e,id,action) {
 
 var openTaskLocationInfo = function(e,id,action) {
   $("#document-upload input[name=\"title\"]").val("");
+  if(e !== undefined) {
+    $("#task-location-info-modal-zoom").show();
+    $("#location-info-modal-place").hide();
+  } else {
+    $("#task-location-info-modal-zoom").hide();
+    $("#location-info-modal-place").show();
+  }
   Dropzone.forElement("#document-upload").removeAllFiles();
   datacx.post('location/getItem',{location_id: id}).then(function(reply){
     toastr.success(reply.message);
@@ -614,6 +624,7 @@ function load(params) {
           }
 
         });
+        /*
         if(reply.type === 'locatiron') {
           $(".map-info-marker .map-info-icon-image>img").draggable({
             helper: 'clone',
@@ -639,6 +650,7 @@ function load(params) {
             }
           });
         }
+        */
         markers = map.addMarkers(markers);
         $(document).on('mouseover', '.map-info-row', function () {
           var el= $(this);
@@ -809,12 +821,16 @@ function load(params) {
             } else if (reply.type == 'facility') {
               openProjectInfo(marker,$(this).data("id"));
             } else if (reply.type == 'task') {
+              selectedMarker = markerId;
               var action = "";
-              if(marker.task == true) {
-                action = 'remove';
-              } else {
-                action = 'add';
+              if(marker !== undefined) {
+                if(marker.task == true) {
+                  action = 'remove';
+                } else {
+                  action = 'add';
+                }
               }
+              console.log('asd');
               openTaskLocationInfo(marker,$(this).data("id"),action);
             }
 

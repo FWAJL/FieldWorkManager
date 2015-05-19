@@ -406,6 +406,8 @@ class MapController extends \Library\BaseController {
     $projectLocationMarkers = \Applications\PMTool\Helpers\MapHelper::CreateTaskLocationMarkerItems($locations, $properties, $icons);
 
     $result["noLatLngIcon"] = $icons["task"];
+    $result["activeIcon"] = $icons["task"];
+    $result["inactiveIcon"] = $icons["task"];
     $result["items"] = $projectLocationMarkers;
     $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
     $result["boundary"] = \Applications\PMTool\Helpers\MapHelper::GetBoundary($sessionProject);
@@ -422,7 +424,7 @@ class MapController extends \Library\BaseController {
     }
 
     $result["controls"] = array(
-      "markers" => false,
+      "markers" => true,
       "shapes" => true,
       "ruler" => true
     );
