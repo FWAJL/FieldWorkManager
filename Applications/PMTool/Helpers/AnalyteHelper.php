@@ -273,10 +273,22 @@ class AnalyteHelper {
     foreach ($analyte_names as $name) {
       $analyte = $isFieldType ? new \Applications\PMTool\Models\Dao\Field_analyte() : new \Applications\PMTool\Models\Dao\Lab_analyte();
       $analyte->setPm_id($dataPost["pm_id"]);
+
+      //Check if the $name could be split on "tab"
+      //If yes, we may assume the columns are lab_analyte_name
+      //or field_analyte_name and analyte_abbrev and thus 
+      //prepare dao accordingly
+      $analyte_data =  \Applications\PMTool\Helpers\CommonHelper::StringToArray("\t", $name);
+      if(count($analyte_data) > 1) {
+        //abbrev
+        $analyte->setAnalyte_abbrev($analyte_data[1]);
+      }
+
+      //lab_analyte_name/field_analyte_name, analyte_abbrev
       if ($isFieldType) {
-        $analyte->setField_analyte_name_unit($name);
+        $analyte->setField_analyte_name_unit($analyte_data[0]);
       } else {
-        $analyte->setLab_analyte_name($name);
+        $analyte->setLab_analyte_name($analyte_data[0]);
       }
       array_push($analytes, $analyte);
     }

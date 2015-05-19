@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <resource key="page_title">Service Providers</resource>
+
+  <resource key="service_h1">Welcome to Field Work Manager</resource>
+  <resource key="service_welcome_message">Please, select an option on the left menu.</resource>
+
+  <resource key="message_error_add">Error inserting the service. Check logs.</resource>
+  <resource key="message_success_add">The Service Provider has been added.</resource>
+
+  <resource key="active_task_comm_header">Discussion</resource>
+  <resource key="h4_taskcomm_leftcol">Discussion Thread</resource>
+  <resource key="form_title">Title</resource>
+  <resource key="form_file">File</resource>
+  <resource key="activetask_button_sendmsg">Send</resource>
+  <resource key="activetask_button_attach">Attach File</resource>
+  <resource key="activetask_button_attach_local">Local</resource>
+  <resource key="activetask_button_attach_server">File</resource>
+
+</resources>

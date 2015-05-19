@@ -1,0 +1,89 @@
+body
+{
+  background-image: url("bg_body.png");
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  min-width: 320px;
+}
+
+.container-fluid
+{
+  padding: 0 10px;
+}
+
+.row
+{
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+footer
+{
+  margin: 0 auto;
+}
+
+.white-container
+{
+  background-color: #FFF;
+  border-radius: 5px;
+}
+
+.clear
+{
+  clear: both;
+  margin-bottom: 20px;
+}
+
+h1
+{
+  color: #AEC857;
+  font-weight: bolder;
+  font-size: 24px;
+}
+
+h2
+{
+  font-size: 20px;
+}
+
+.text-bold
+{
+  font-weight: bolder;
+}
+
+.col-no-pad
+{
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.col-pad-5
+{
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+.col-pad-10
+{
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+/*LANDING PAGE*/
+
+ul.content_left > li > a > span:last-child { display: none; }
+ul.content_left > li > a > span.fa:first-child { 
+  font-size: 30px; 
+  text-align: center;
+  width: 100%;
+}
+
+ul.content_left {
+  padding: 0;
+  margin: 0 auto;
+}
+ul.content_left > li {
+  width: 45px;
+  margin: 2px auto;
+  display: inline-block;
+}
