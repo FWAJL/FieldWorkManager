@@ -51,6 +51,23 @@
   <resource key="taskstatus_manualtrigger_label">Manual Trigger</resource>
   <resource key="taskstatus_externaltrigger_label">External Trigger</resource>
 
+  <!-- Legends-->
+  <resource key="h4_legend_heading">LEGEND</resource>
+  <resource key="active_project"> Active Project</resource>
+  <resource key="inactive_project"> Inactive Project</resource>
+  <resource key="active_location"> Active Location</resource>
+  <resource key="project_location"> Project Locations</resource>
+  <resource key="inactive_location"> Inactive Project Locations</resource>
+  <resource key="no_coords_location"> Location with no coordinates</resource>
+  <resource key="task_location_start"> Task Location</resource>
+  <resource key="task_location_start_active"> Not started</resource>  
+  <resource key="task_location_inprocess"> In process</resource>
+  <resource key="task_location_complete"> Finished</resource>
+  <resource key="ruler"> Click to measure distances</resource>
+  <resource key="add-icon"> Click to move or add Locations</resource>
+  <resource key="boundary"> Click to add Project boundary</resource>
+  <resource key="popup_ok_button">OK</resource>
+
   <resource key="form_title">Title</resource>
   <resource key="form_file">File</resource>
 
