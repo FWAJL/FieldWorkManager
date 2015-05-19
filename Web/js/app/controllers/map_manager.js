@@ -17,6 +17,7 @@ var polygonSettings = {
   "strokeWeight": 3
 };
 var currentPosition;
+var mapType;
 //shows map legend popup
 $(document).ready(function(){
   $('.glyphicon-question-sign').click(function(){
@@ -73,8 +74,7 @@ var addMarkerClick = function(e) {
     post_data.location_long = e.latLng.lng();
     post_data.location_id = selectedMarker;
     map_manager.edit(post_data, "location", "mapEdit");
-
-    newMarker = map.addMarker({
+    markerSettings = {
       draggable: true,
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
@@ -82,9 +82,15 @@ var addMarkerClick = function(e) {
       dragstart: markerDragStart,
       zIndex: 500,
       optimized: false,
-      clickable: true,
-      click: function(e) {openLocationInfo(e,selectedMarker, false)}
-    });
+      clickable: true
+    };
+    var currId = eval(selectedMarker);
+    if(mapType!=='task') {
+      markerSettings.click = function(e) {openLocationInfo(e,currId, false)};
+    } else {
+      markerSettings.click = function(e) {openTaskLocationInfo(e,currId, 'remove')};
+    }
+    newMarker = map.addMarker(markerSettings);
     newMarker.id = selectedMarker;
     if (selectedMarkerIcon !== "") {
       newMarker.setIcon(selectedMarkerIcon);
@@ -414,6 +420,9 @@ var openTaskLocationInfo = function(e,id,action) {
       item = reply.location;
       $("#document-upload input[name=\"itemId\"]").val(id);
       $("#task-location-info-modal-location_name").val(item.location_name);
+      $("#task-location-info-modal-location_desc").val(item.location_desc);
+      $("#task-location-info-modal-location_lat").val(item.location_lat);
+      $("#task-location-info-modal-location_long").val(item.location_long);
       $("#task-location-window-title-task_location_name").html(item.location_name);
       $(".lightbox-content").html("");
       $.each(replyPhotos.fileResults, function(key,photo){
@@ -429,6 +438,9 @@ var openTaskLocationInfo = function(e,id,action) {
           post_data = {};
           post_data.location_id = id;
           post_data.location_name = $("#task-location-info-modal-location_name").val();
+          post_data.location_desc = $("#task-location-info-modal-location_desc").val();
+          post_data.location_lat = $("#task-location-info-modal-location_lat").val();
+          post_data.location_long = $("#task-location-info-modal-location_long").val();
           map_manager.edit(post_data,'location','mapEdit',function(r){
             location.reload();
           });
@@ -484,7 +496,7 @@ function load(params) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success
-
+        mapType = reply.type;
         //set current facility and project ids if they are set
         if(typeof(reply.facility_id) !== 'undefined') {
           facilityId = reply.facility_id;
