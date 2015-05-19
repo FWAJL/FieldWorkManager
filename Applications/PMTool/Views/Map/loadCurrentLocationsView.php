@@ -25,4 +25,5 @@
         <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; ?>
         <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_maplegend_proj_locations_module]; ?>
     </div>
+    <input type="hidden" disabled id="locations-heading" value="<?php echo $resx['locations_heading']; ?>"/>
 </div><!-- END RIGHT ASIDE MAIN -->

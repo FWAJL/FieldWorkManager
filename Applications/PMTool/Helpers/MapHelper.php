@@ -228,6 +228,7 @@ class MapHelper {
           $marker["id"] = $location->$locationObjectType["objectIdPropName"]();
           $marker["name"] = $location->$locationObjectType["objectNamePropName"]();
         }
+        $marker["active"] = $location->$locationObjectType["objectActivePropName"]();
         if (isset($locationObjectType["objectActivePropName"])) {
           if ($locationType == \Library\Enums\SessionKeys::TaskLocations) {
             $marker["marker"]["icon"] = $icons['task'];

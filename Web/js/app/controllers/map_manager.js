@@ -16,7 +16,7 @@ var polygonSettings = {
   "fillOpacity": .3,
   "strokeWeight": 3
 };
-
+var currentPosition;
 //shows map legend popup
 $(document).ready(function(){
   $('.glyphicon-question-sign').click(function(){
@@ -63,6 +63,9 @@ var boundaryClick = function(e) {
  * Add marker on the map and call edit or load msg prompt
  */
 var addMarkerClick = function(e) {
+  console.log(e);
+  console.log(selectedMarker);
+  console.log(addActive);
   if (addActive === true && selectedMarker !== 0) {
 
     var post_data = {};
@@ -80,7 +83,7 @@ var addMarkerClick = function(e) {
       zIndex: 500,
       optimized: false,
       clickable: true,
-      click: function(e) {openLocationInfo(e,selectedMarker)}
+      click: function(e) {openLocationInfo(e,selectedMarker, false)}
     });
     newMarker.id = selectedMarker;
     if (selectedMarkerIcon !== "") {
@@ -91,8 +94,12 @@ var addMarkerClick = function(e) {
     $("#marker-" + selectedMarker).removeClass('map-info-marker');
     $("#marker-" + selectedMarker).removeClass("map-info-marker-clickable");
     $("#marker-" + selectedMarker).removeClass("map-info-marker-selected");
-
-    $("#map-info-add").trigger('click');
+    $("#marker-" + selectedMarker).find(".map-info-icon img").draggable({disabled:true});
+    //$("#map-info-add").trigger('click');
+    map.setOptions({draggableCursor: 'grab'});
+    addActive = false;
+    existingActive = false;
+    selectedMarker = 0;
 
   } else if (addActive === true) {
     //var infoPrompt = new google.maps.InfoWindow({content: "<form class='form-horizontal'><div class='form-group'><div class='col-sm-10'><input class='form-control' type='text' id='new-marker-name' /></div></div><div class='form-group'><div class='col-sm-12'><textarea class='form-control' rows='3'></textarea></div></div><div class='form-group'><div class='col-sm-5'><button type='button' class='btn btn-primary'>Save</button></div><div class='col-sm-5'><button type='button' class='btn btn-default'>Cancel</button></div></div></form>"});
@@ -164,7 +171,7 @@ var saveMarkerData = function (marker){
 var addLocationToMapInfo = function(location, marker){
   marker.id = location.location_id;
   google.maps.event.addListener(marker,'mouseover',function(e) { highlightMarker(e,marker.id);});
-  google.maps.event.addListener(marker,'click', function(e) {openLocationInfo(marker,marker.id);});
+  google.maps.event.addListener(marker,'click', function(e) {openLocationInfo(marker,marker.id, false);});
   $("#map-info").append(
     "<div id='marker-" + location.location_id
       + "' data-id='" + location.location_id
@@ -319,8 +326,15 @@ var setViewPhotosEvent = function(photosCount) {
   }
 }
 
-var openLocationInfo = function(e,id) {
+var openLocationInfo = function(e,id, noLatLng) {
     $("#document-upload input[name=\"title\"]").val("");
+    if(noLatLng) {
+      $("#location-info-modal-place").show();
+      $("#location-info-modal-zoom").hide();
+    } else {
+      $("#location-info-modal-place").hide();
+      $("#location-info-modal-zoom").show();
+    }
     Dropzone.forElement("#document-upload").removeAllFiles();
     datacx.post('location/getItem',{location_id: id}).then(function(reply){
       toastr.success(reply.message);
@@ -385,6 +399,13 @@ var setAddRemoveFromTaskEvent = function(e,id,action) {
 
 var openTaskLocationInfo = function(e,id,action) {
   $("#document-upload input[name=\"title\"]").val("");
+  if(e !== undefined) {
+    $("#task-location-info-modal-zoom").show();
+    $("#location-info-modal-place").hide();
+  } else {
+    $("#task-location-info-modal-zoom").hide();
+    $("#location-info-modal-place").show();
+  }
   Dropzone.forElement("#document-upload").removeAllFiles();
   datacx.post('location/getItem',{location_id: id}).then(function(reply){
     toastr.success(reply.message);
@@ -450,6 +471,11 @@ var unhighlightMarker = function(e) {
   }
 }
 
+var calculateCurrentPosition = function(e) {
+  if(addActive != true)
+    currentPosition = e;
+}
+
 function load(params) {
   datacx.post(
     params.dataUrl,
@@ -479,7 +505,7 @@ function load(params) {
         if(reply.controls.ruler !== true){
           $("#map-info-ruler").hide();
         }
-        if(reply.type === 'task' || reply.type === 'facility') {
+        if(reply.type === 'task' || reply.type === 'facility' || reply.type === 'location') {
           $("#map-info-add").hide();
           $("#map-info-shape").hide();
           $("#map-info-ruler").hide();
@@ -489,20 +515,27 @@ function load(params) {
         if(reply.controls.shapes === true && typeof reply.boundary !== 'undefined' && reply.boundary.length>0 && reply.boundary!=""  ){
           //get boundary from response and decode it from string to path
           boundaryPath = google.maps.geometry.encoding.decodePath(reply.boundary);
+          if(reply.type !== 'facility'){
+            var clickboundary = false;
+          } else {
+            var clickboundary = true;
+          }
           boundaryShape = new google.maps.Polygon({
             paths: boundaryPath,
             strokeWeight: polygonSettings.strokeWeight,
             fillColor: polygonSettings.fillColor,
             fillOpacity: polygonSettings.fillOpacity,
-            clickable: true
+            clickable: clickboundary
           });
-          google.maps.event.addListener(boundaryShape,'click',boundaryClick);
-          google.maps.event.addListener(boundaryShape.getPath(), 'insert_at', function(e) {
-            saveBoundary(boundaryShape);
-          });
-          google.maps.event.addListener(boundaryShape.getPath(), 'set_at', function(e) {
-            saveBoundary(boundaryShape);
-          });
+          if(reply.type === 'facility'){
+            google.maps.event.addListener(boundaryShape,'click',boundaryClick);
+            google.maps.event.addListener(boundaryShape.getPath(), 'insert_at', function(e) {
+              saveBoundary(boundaryShape);
+            });
+            google.maps.event.addListener(boundaryShape.getPath(), 'set_at', function(e) {
+              saveBoundary(boundaryShape);
+            });
+          }
           boundaryShape.setMap(map.map);
         }
 
@@ -521,7 +554,9 @@ function load(params) {
         var taskHeading=false;
         var taskOtherHeading=false;
         if(reply.type === 'facility') {
-          $("#map-info").append("<div class='row'><h4>Facilities</h4></div>");
+          $("#map-info").append("<div class='row'><h4>"+$("#facilities-heading").val()+"</h4></div>");
+        } else if (reply.type === 'location') {
+          $("#map-info").append("<div class='row'><h4>"+$("#locations-heading").val()+"</h4></div>");
         }
         //Build markers list
         $.each(reply.items, function(index, item) {
@@ -548,7 +583,7 @@ function load(params) {
               item.marker.click = function(e){openProjectInfo(e,item.marker.id)};
             } else if (reply.type == 'location') {
               item.marker.clickable = true;
-              item.marker.click = function(e){openLocationInfo(e,item.marker.id)};
+              item.marker.click = function(e){openLocationInfo(e,item.marker.id, false)};
             } else if (reply.type == 'task') {
               item.marker.clickable = true;
               item.marker.task = item.task;
@@ -567,11 +602,11 @@ function load(params) {
           }
           if(item.task && !taskHeading && reply.type === 'task') {
             taskHeading = true;
-            $("#map-info").append("<div class='row'><h4>Task Locations</h4></div>");
+            $("#map-info").append("<div class='row'><h4>"+$("#tasks-heading").val()+"</h4></div>");
           }
-          if(taskHeading && !taskOtherHeading && !item.task && reply.type === 'task') {
+          if(!taskOtherHeading && !item.task && reply.type === 'task') {
             taskOtherHeading = true;
-            $("#map-info").append("<div class='row'><h4>Other Project Locations</h4></div>");
+            $("#map-info").append("<div class='row'><h4>"+$("#other-locations-heading").val()+"</h4></div>");
           }
           var showMarker = true;
           if(reply.type === 'task' && item.noLatLng === true && item.task !==true) {
@@ -589,6 +624,33 @@ function load(params) {
           }
 
         });
+        /*
+        if(reply.type === 'locatiron') {
+          $(".map-info-marker .map-info-icon-image>img").draggable({
+            helper: 'clone',
+            containment: 'map',
+            revert: 'invalid',
+            appendTo: 'body',
+            cursorAt: { bottom: 0 },
+            start: function(evt,ui) {
+              GMaps.on('mouseover', map.map, calculateCurrentPosition);
+            },
+            stop: function(evt, ui) {
+              var currentPos = currentPosition;
+              addActive = true;
+              var markerElement = $(this).parent().parent().parent();
+              selectedMarker = markerElement.data('id');
+              if (markerElement.data('active') === 1) {
+                selectedMarkerIcon = activeIcon;
+              } else {
+                selectedMarkerIcon = inactiveIcon;
+              }
+              addMarkerClick(currentPos);
+              addActive = false;
+            }
+          });
+        }
+        */
         markers = map.addMarkers(markers);
         $(document).on('mouseover', '.map-info-row', function () {
           var el= $(this);
@@ -610,16 +672,15 @@ function load(params) {
 
 
         setTimeout(function() {
-          if(typeof(boundaryShape) === "object"){
-            map.fitLatLngBounds(boundaryPath);
-          } else {
             if (markers.length > 1) {
               map.fitZoom();
             } else if (markers.length === 1)
             {
               map.setCenter(markers[0].position.lat(), markers[0].position.lng());
+            } else if (typeof(boundaryShape) === "object") {
+              map.fitLatLngBounds(boundaryPath);
             }
-          }
+
         }, 500);
 
         // called on existing/add controls
@@ -646,7 +707,7 @@ function load(params) {
             area = google.maps.geometry.spherical.computeArea(path);
             infoContent = "Area: " + (area / 1000000).toFixed(2) + " sq kms " + (area / 2589988.11).toFixed(2) + " sq miles";
           }
-          if(reply.type !== 'task') {
+          if(false) {
             infoContainer.html(infoContent);
           } else {
             var infowindow = new google.maps.InfoWindow({
@@ -725,8 +786,23 @@ function load(params) {
           }
         });
 
+        $("#location-info-modal-place").on('click',function(e){
+          e.preventDefault();
+          addActive = true;
+          existingActive = true;
+          var markerRow = $("#marker-"+selectedMarker);
+
+          if (markerRow.data('active') === 1) {
+            selectedMarkerIcon = activeIcon;
+          } else {
+            selectedMarkerIcon = inactiveIcon;
+          }
+          map.setOptions({draggableCursor: 'pointer'});
+          $('.prompt-modal').modal('hide');
+        });
+
         $(document).on('click','.map-info-row',function(e){
-          if(!$(this).hasClass("map-info-marker")) {
+          //if(!$(this).hasClass("map-info-marker")) {
             var markerId = $(this).data("id");
             var marker;
             $.each(markers, function(key,mrk){
@@ -736,20 +812,29 @@ function load(params) {
             });
             //var marker = markers.find(function(mkr) {return markerId == mkr.id ? mkr : false;});
             if(reply.type == 'location'){
-              openLocationInfo(marker,$(this).data("id"));
+              if($(this).hasClass("map-info-marker")){
+                openLocationInfo(marker,$(this).data("id"), true);
+                selectedMarker = markerId;
+              } else {
+                openLocationInfo(marker,$(this).data("id"), false);
+              }
             } else if (reply.type == 'facility') {
               openProjectInfo(marker,$(this).data("id"));
             } else if (reply.type == 'task') {
+              selectedMarker = markerId;
               var action = "";
-              if(marker.task == true) {
-                action = 'remove';
-              } else {
-                action = 'add';
+              if(marker !== undefined) {
+                if(marker.task == true) {
+                  action = 'remove';
+                } else {
+                  action = 'add';
+                }
               }
+              console.log('asd');
               openTaskLocationInfo(marker,$(this).data("id"),action);
             }
 
-          }
+          //}
         });
 
         /*
@@ -908,7 +993,7 @@ function load(params) {
               rulerActive = true;
               $("#map-info-ruler").addClass("map-info-control-active");
               if(reply.type !== 'task') {
-                $("#map-ruler").show();
+                //$("#map-ruler").show();
               }
 
             }
@@ -916,7 +1001,7 @@ function load(params) {
         }
 
         $(".control-active").trigger("click");
-        if(reply.type === 'task') {
+        if(reply.type === 'task' || reply.type === 'location') {
           $("#map-info-ruler").trigger('click');
         }
         //toggle active control
