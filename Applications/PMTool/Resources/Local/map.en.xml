@@ -53,7 +53,7 @@
   <resource key="location_prompt_ok">OK</resource>
   <resource key="location_prompt_cancel">Cancel</resource>
   
-    <!-- Legends-->
+  <!-- Legends-->
   <resource key="h4_legend_heading">LEGEND</resource>
   <resource key="active_project"> Active Project</resource>
   <resource key="inactive_project"> Inactive Project</resource>

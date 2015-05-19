@@ -2,15 +2,16 @@
   //\Applications\PMTool\Helpers\CommonHelper::pr($form_modules);
 ?>
 <div class="right-aside col-no-right-pad main col-lg-10 col-md-10 col-sm-10">
-  <h3>
+  <span class="h3">
     <?php echo $current_project->project_name(); ?>
     <?php if ($current_task !== NULL) { ?>
       <span class="glyphicon glyphicon-chevron-right"></span>    
       <?php echo $current_task->task_name();
     } ?>
     <span class="glyphicon glyphicon-chevron-right"></span>    
-    <?php echo $resx['active_task_map_header'] ?></h3>  
-    
+    <?php echo $resx['active_task_map_header'] ?>
+  </span>
+  <span class="glyphicon glyphicon-question-sign" id="question-map-h3"></span>
     
     <div class="content-container container-fluid">
 
@@ -27,8 +28,8 @@
         </div>
         
       </div>
-      <?php //require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; ?>
-      <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_maplegends_module]; ?>
+      <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; ?>
+      <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_maplegend_task_locations_module]; ?>
       
       <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::tabs_close]; ?>
 
