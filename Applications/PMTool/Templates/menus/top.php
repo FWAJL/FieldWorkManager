@@ -2,7 +2,9 @@
   <div id="branding">
     <figure class="logo"><img src="<?php echo $this->app->relative_path . $this->app->logoImageUrl; ?>"></figure>
 <!--    <p class="brand"><?php // echo $resx_menu_left["brand"]; ?></p>-->
+    <div id="collapse-menu-button" class="top-right-option glyphicon glyphicon-align-justify"></div>
   </div>
+
   <div id="pm_info">
     <span id="pm_name" class="top-right-option">
       <?php echo $resx_menu_left["p_user_name_label"]; ?><?php echo $pm['pm_name']; ?>

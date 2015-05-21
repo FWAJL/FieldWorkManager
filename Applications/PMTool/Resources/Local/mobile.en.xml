@@ -5,4 +5,23 @@
   <resource key="user_welcome"> Hello User</resource>
   <resource key="user_message1">Thank you For Visiting Our Site</resource>
   <resource key="user_message2">Have a nice Day.</resource>
+  <resource key="map_header">Map</resource>
+
+
+  <!-- Legends-->
+  <resource key="h4_legend_heading">LEGEND</resource>
+  <resource key="active_project"> Active Project</resource>
+  <resource key="inactive_project"> Inactive Project</resource>
+  <resource key="active_location"> Active Location</resource>
+  <resource key="project_location"> Project Locations</resource>
+  <resource key="inactive_location"> Inactive Project Locations</resource>
+  <resource key="no_coords_location"> Location with no coordinates</resource>
+  <resource key="task_location_start"> Task Location</resource>
+  <resource key="task_location_start_active"> Not started</resource>
+  <resource key="task_location_inprocess"> In process</resource>
+  <resource key="task_location_complete"> Finished</resource>
+  <resource key="ruler"> Click to measure distances</resource>
+  <resource key="add-icon"> Click to move or add Locations</resource>
+  <resource key="boundary"> Click to add Project boundary</resource>
+  <resource key="popup_ok_button">OK</resource>
 </resources>

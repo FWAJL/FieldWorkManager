@@ -381,4 +381,14 @@ class TaskHelper {
     TaskHelper::SetCurrentSessionTask($caller->user(), NULL);
   }
 
+  public static function GetLatestTaskForTechnician($caller,$technician) {
+    $manager = $caller->managers()->getManagerOf('Task');
+    $tasks = $manager->selectTasksByTechnician($technician);
+    if(is_array($tasks)) {
+      return $tasks[count($tasks)-1];
+    } else {
+      return null;
+    }
+  }
+
 }
