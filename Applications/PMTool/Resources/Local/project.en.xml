@@ -61,6 +61,10 @@
   <resource key="facility_sic">SIC Code</resource>
   <resource key="boundary">Facility - Boundary</resource>
 
+  <resource key="facility_button_add">Add</resource>
+  <resource key="facility_button_edit">Edit</resource>
+  <resource key="facility_button_delete">Delete</resource>
+
 
   <resource key="client_legend">The Client</resource>
   <resource key="client_company_name">Company Name</resource>
