@@ -98,6 +98,9 @@ class MobileController extends \Library\BaseController {
     $ProjectsSession = \Applications\PMTool\Helpers\ProjectHelper::StoreSessionProjects($this, $lists);
      \Applications\PMTool\Helpers\TaskHelper::GetTasksForTechnician($this,$technician);
     $tasks = \Applications\PMTool\Helpers\TaskHelper::GetSessionTasks($this->user());
+    if(!is_array($tasks)) {
+      $tasks = array();
+    }
     $task_id = $rq->getData("task_id");
 
     $data = array(

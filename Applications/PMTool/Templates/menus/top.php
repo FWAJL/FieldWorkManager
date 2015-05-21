@@ -18,16 +18,18 @@
     </span>
   </div>
   <?php else: ?>
-  <span class="top-right-option">
-    <?php echo (isset($current_project))?$current_project->project_name():''; ?>
-    <?php if (isset($current_task) && $current_task !== NULL) { ?>
-      <span class="glyphicon glyphicon-chevron-right"></span>
-      <?php echo $current_task->task_name();
-    } ?>
-  </span>
-  <span class="top-right-option">
-    <?php $technician = $this->app->user->getAttribute(\Library\Enums\SessionKeys::UserTypeObject); echo $technician->technician_name(); ?>
-  </span>
+    <span class="top-right-option">
+      <?php echo (isset($current_project) and isset($current_task))?$current_project->project_name():''; ?>
+      <?php if (isset($current_task) && $current_task !== NULL) { ?>
+        <span class="glyphicon glyphicon-chevron-right"></span>
+        <?php echo $current_task->task_name();
+      } ?>
+    </span>
+  <div id="ft_info">
+    <span class="top-right-option">
+      <?php $technician = $this->app->user->getAttribute(\Library\Enums\SessionKeys::UserTypeObject); echo $technician->technician_name(); ?>
+    </span>
+  </div>
   <?php endif; ?>
 </section>
 <div class="clearfix"></div>
