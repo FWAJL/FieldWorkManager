@@ -69,7 +69,13 @@ class LeftMenu {
     } else {
       throw new \Exception("In " . __CLASS__ . "->" . __METHOD__);
     }
-    return $xml->getElementsByTagName("main_menu");
+    if($this->app->user->getAttribute(\Library\Enums\SessionKeys::UserRole) == 3) {
+      $xpath = new \DOMXPath($xml);
+      return $xpath->query('main_menu | mobile_menu');
+    } else {
+      return $xml->getElementsByTagName("main_menu");
+    }
+
   }
 
   private function ProcessMainMenus($main_menus) {

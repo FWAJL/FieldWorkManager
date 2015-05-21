@@ -382,13 +382,21 @@ class TaskHelper {
   }
 
   public static function GetLatestTaskForTechnician($caller,$technician) {
-    $manager = $caller->managers()->getManagerOf('Task');
-    $tasks = $manager->selectTasksByTechnician($technician);
+    $tasks = self::GetTasksForTechnician($caller, $technician);
     if(is_array($tasks)) {
       return $tasks[count($tasks)-1];
     } else {
       return null;
     }
+  }
+
+  public static function GetTasksForTechnician($caller, $technician) {
+    $manager = $caller->managers()->getManagerOf('Task');
+    $tasks = $manager->selectTasksByTechnician($technician);
+    foreach($tasks as $task) {
+      self::AddSessionTask($caller->user(),$task);
+    }
+    return $tasks;
   }
 
 }

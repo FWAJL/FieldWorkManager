@@ -48,4 +48,7 @@
   <resource key="location_window_photos">View photos</resource>
   <resource key="form_title">Title</resource>
   <resource key="form_file">File(s)</resource>
+
+  <!-- task list -->
+  <resource key="h3_tasks_active">Active tasks</resource>
 </resources>

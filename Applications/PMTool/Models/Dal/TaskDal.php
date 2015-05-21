@@ -20,7 +20,7 @@ class TaskDal extends \Library\DAL\BaseManager {
   }
 
   public function selectTasksByTechnician($technician) {
-    $sql = "SELECT t.* FROM task AS t JOIN task_technician AS tt ON tt.task_id = t.task_id WHERE tt.technician_id = :technician_id";
+    $sql = "SELECT t.* FROM task AS t JOIN task_technician AS tt ON tt.task_id = t.task_id WHERE tt.technician_id = :technician_id AND t.task_active = 1";
     $sth = $this->dao->prepare($sql);
     $sth->bindValue(':technician_id',$technician->technician_id(),\PDO::PARAM_INT);
     $sth->execute();
