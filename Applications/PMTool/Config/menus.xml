@@ -95,7 +95,7 @@
   </main_menu><!-- result -->
   <main_menu name="technician_map" active="true">
     <links>
-      <header href="mobile" resourcekey="header_ft_map" cssClass="fa fa-globe" enablelink="true" active="true" />
+      <header href="mobile/map" resourcekey="header_ft_map" cssClass="fa fa-globe" enablelink="true" active="true" />
     </links>
   </main_menu><!-- mobile - task map - landing page -->
   <main_menu name="technician_locations" active="true">

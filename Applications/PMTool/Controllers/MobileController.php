@@ -47,15 +47,30 @@ class MobileController extends \Library\BaseController {
   public function executeViewMap(\Library\HttpRequest $rq) {
     $modules = $this->app()->router()->selectedRoute()->phpModules();
     $technician = $this->user()->getAttribute(\Library\Enums\SessionKeys::UserTypeObject);
+    $project = new \Applications\PMTool\Models\Dao\Project();
+    $project->setPm_id($technician->pm_id());
+    //Load interface to query the database for projects
+    $manager = $this->managers->getManagerOf('Project');
+    $lists[\Library\Enums\SessionKeys::UserProjects] = $manager->selectMany($project, "pm_id");
+
+    //Load interface to query the database for facilities
+    $manager = $this->managers->getManagerOf('Facility');
+    $lists[\Library\Enums\SessionKeys::UserProjectFacilityList] = $manager->selectMany($project, "pm_id");
+
+    //Load interface to query the database for clients
+    $manager = $this->managers->getManagerOf('Client');
+    $lists[\Library\Enums\SessionKeys::UserProjectClientList] = $manager->selectMany($project, "pm_id");
+
+    $ProjectsSession = \Applications\PMTool\Helpers\ProjectHelper::StoreSessionProjects($this, $lists);
+
     $task = \Applications\PMTool\Helpers\TaskHelper::GetLatestTaskForTechnician($this,$technician);
     if($task) {
-      \Applications\PMTool\Helpers\TaskHelper::SetCurrentSessionTask($this->user(),$task);
+      \Applications\PMTool\Helpers\TaskHelper::AddSessionTask($this->user(),$task);
       $manager = $this->managers()->getManagerOf('Project');
       $project = new \Applications\PMTool\Models\Dao\Project();
       $project->setProject_id($task->project_id());
       $projects = $manager->selectMany($project,'project_id');
       if($projects) {
-        \Applications\PMTool\Helpers\ProjectHelper::AddSessionProject($this->user(),$projects[0]);
         \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->user(),$task->project_id());
       }
 

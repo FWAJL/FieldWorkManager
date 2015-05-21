@@ -70,7 +70,7 @@ h2
 }
 
 /*LANDING PAGE*/
-
+/*
 ul.content_left > li > a > span:last-child { display: none; }
 ul.content_left > li > a > span.fa:first-child { 
   font-size: 30px; 
@@ -86,4 +86,4 @@ ul.content_left > li {
   width: 45px;
   margin: 2px auto;
   display: inline-block;
-}
+}*/
