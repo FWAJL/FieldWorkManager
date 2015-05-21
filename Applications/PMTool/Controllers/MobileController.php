@@ -111,6 +111,7 @@ class MobileController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+    \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->user(),$sessionTask[\Library\Enums\SessionKeys::TaskObj]->project_id());
     if(count($tasks)==1) {
       $firstTask = reset($tasks);
       $task_id = $firstTask[\Library\Enums\SessionKeys::TaskObj]->task_id();
