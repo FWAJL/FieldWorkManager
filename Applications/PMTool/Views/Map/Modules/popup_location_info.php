@@ -17,6 +17,7 @@
           <li><label for="location-info-modal-location_long"><?php echo $resx['location_window_location_long']; ?></label>
           <input class="" type="text" id="location-info-modal-location_long" name="location_long"><li>
           <li><a href="#" id="location-info-modal-zoom"><span class="glyphicon glyphicon-zoom-in"></span> <?php echo $resx['location_window_zoom']; ?></a></li>
+          <li><a href="#" id="location-info-modal-place"><span class="glyphicon glyphicon-screenshot"></span> <?php echo $resx['location_place_onto_the_map']; ?></a></li>
           <li><a href="#" id="location-info-modal-photos"><span class="glyphicon glyphicon-camera"></span> <?php echo $resx['location_window_photos']; ?><span id="location-info-modal-photos-count"></span></a></li>
           <br>
         <?php require $form_modules["upload_file"]; ?>

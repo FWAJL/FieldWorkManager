@@ -182,6 +182,7 @@ class MapController extends \Library\BaseController {
     $result["items"] = $projectLocationMarkers;
     $result["noLatLngIcon"] = $icons["noLatLng"];
     $result["type"] = "facility";
+    $result["activeTask"] = false;
 
     $result["controls"] = array(
       "markers" => false,
@@ -249,6 +250,7 @@ class MapController extends \Library\BaseController {
     $result["facility_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->facility_id();
     $result["project_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->project_id();
     $result["type"] = "facility";
+    $result["activeTask"] = false;
 
     $result["controls"] = array(
       "markers" => false,
@@ -323,6 +325,7 @@ class MapController extends \Library\BaseController {
     $result["facility_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->facility_id();
     $result["project_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->project_id();
     $result["type"] = "location";
+    $result["activeTask"] = false;
     $result["controls"] = array(
       "markers" => true,
       "shapes" => true,
@@ -402,16 +405,24 @@ class MapController extends \Library\BaseController {
     //load marker icons from config
     $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->relative_path,$this->app()->imageUtil,$this->app()->config());
 
+    if(isset($properties['activeTask']) && $properties['activeTask']) {
+      $activeTask = $result["activeTask"] = true;
+    } else {
+      $activeTask = $result["activeTask"] = false;
+    }
     //create google maps marker items
-    $projectLocationMarkers = \Applications\PMTool\Helpers\MapHelper::CreateTaskLocationMarkerItems($locations, $properties, $icons);
+    $projectLocationMarkers = \Applications\PMTool\Helpers\MapHelper::CreateTaskLocationMarkerItems($this, $locations, $properties, $icons, $activeTask);
 
-    $result["noLatLngIcon"] = $icons["task"];
+    $result["noLatLngIcon"] = $icons["taskNoLatLng"];
+    $result["activeIcon"] = $icons["task"];
+    $result["inactiveIcon"] = $icons["task"];
     $result["items"] = $projectLocationMarkers;
     $result["defaultPosition"] = \Applications\PMTool\Helpers\MapHelper::GetCoordinatesToCenterOverARegion($this->app()->config());
     $result["boundary"] = \Applications\PMTool\Helpers\MapHelper::GetBoundary($sessionProject);
     $result["facility_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->facility_id();
     $result["project_id"] = $sessionProject[\Library\Enums\SessionKeys::FacilityObject]->project_id();
     $result["type"] = 'task';
+
     $noCoordinateMarkers = count(array_filter($projectLocationMarkers,function($item){return !$item['noLatLng'];}));
 
     if($noCoordinateMarkers==0){
@@ -422,7 +433,7 @@ class MapController extends \Library\BaseController {
     }
 
     $result["controls"] = array(
-      "markers" => false,
+      "markers" => true,
       "shapes" => true,
       "ruler" => true
     );

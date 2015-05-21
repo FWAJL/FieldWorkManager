@@ -186,6 +186,10 @@ li textarea {
   overflow-x: hidden;
   padding-left:15px;
 }
+.map-controls, .hide-map-sidebar {
+  display: none;
+}
+
 #map-ruler {
   background-color: white;
   height: 20px;
