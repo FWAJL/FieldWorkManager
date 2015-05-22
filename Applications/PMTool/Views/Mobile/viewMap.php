@@ -1,7 +1,7 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 //\Applications\PMTool\Helpers\CommonHelper::pr($form_modules);
 ?>
-<div class="right-aside col-no-right-pad main col-lg-10 col-md-10 col-sm-10">
+<div class="mobile_map right-aside col-no-right-pad main col-lg-12 col-md-12 col-sm-12">
   <span class="h3">
     <?php echo $current_project->project_name(); ?>
     <?php if ($current_task !== NULL) { ?>

@@ -69,6 +69,8 @@ h2
   padding-right: 10px !important;
 }
 
+.mobile_map {padding-right: 40px !important;  }
+
 /*LANDING PAGE*/
 /*
 ul.content_left > li > a > span:last-child { display: none; }
