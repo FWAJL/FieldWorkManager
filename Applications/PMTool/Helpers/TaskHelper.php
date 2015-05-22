@@ -381,4 +381,321 @@ class TaskHelper {
     TaskHelper::SetCurrentSessionTask($caller->user(), NULL);
   }
 
+  /**
+  * Task Copy: Main method
+  * Copies the task corresponding to the passed task id
+  * and based on that copies all other dependencies into
+  * the new task thus created
+  */
+  public static function copyTaskWithDependencies($caller, $source_task_id, $new_task_name, $usr) {
+    $taskDAO = new \Applications\PMTool\Models\Dao\Task();
+    $taskDAO->setTask_id($source_task_id);
+    $dal = $caller->managers()->getManagerOf("Task");
+    $source_task = $dal->selectMany($taskDAO, "task_id");
+
+    //Create new task out of this
+    $taskDAO = null;
+    $taskDAO = new \Applications\PMTool\Models\Dao\Task();
+    $taskDAO->setProject_id($source_task[0]->project_id());
+    $taskDAO->setTask_name($new_task_name);
+    $taskDAO->setTask_deadline($source_task[0]->task_deadline());
+    $taskDAO->setTask_instructions($source_task[0]->task_instructions());
+    $taskDAO->setTask_trigger_cal($source_task[0]->task_trigger_cal());
+    $taskDAO->setTask_trigger_cal_value($source_task[0]->task_trigger_cal_value());
+    $taskDAO->setTask_trigger_pm($source_task[0]->task_trigger_pm());
+    $taskDAO->setTask_trigger_ext($source_task[0]->task_trigger_ext());
+    $taskDAO->setTask_active($source_task[0]->task_active());
+    $taskDAO->setTask_req_form($source_task[0]->task_req_form());
+    $taskDAO->setTask_req_field_analyte($source_task[0]->task_req_field_analyte());
+    $taskDAO->setTask_req_lab_analyte($source_task[0]->task_req_lab_analyte());
+    $taskDAO->setTask_req_service($source_task[0]->task_req_service());
+    $taskDAO->setTask_start_date($source_task[0]->task_start_date());
+    $taskDAO->setTask_activated($source_task[0]->task_activated());
+
+    $new_task_id = $dal->add($taskDAO);
+
+    //Copy the relations too
+    //FieldAnalyteLocation
+    TaskHelper::copyTaskFieldAnalyteLocation($caller, $source_task_id, $new_task_id);
+
+    //LabAnalyteLocation
+    TaskHelper::copyTaskLabAnalyteLocation($caller, $source_task_id, $new_task_id);
+
+    //TaskCocInfo
+    TaskHelper::copyTaskTaskCocInfo($caller, $source_task_id, $new_task_id);
+
+    //TaskFieldAnalyte
+    TaskHelper::copyTaskTaskFieldAnalyte($caller, $source_task_id, $new_task_id);
+
+    //TaskLabAnalyte
+    TaskHelper::copyTaskTaskLabAnalyte($caller, $source_task_id, $new_task_id);
+
+    //Task_location
+    TaskHelper::copyTaskTaskLocation($caller, $source_task_id, $new_task_id);
+
+    //Task_service
+    TaskHelper::copyTaskTaskService($caller, $source_task_id, $new_task_id);
+
+    //Task_technician
+    TaskHelper::copyTaskTaskTechnician($caller, $source_task_id, $new_task_id);
+
+    //Task_template_form
+    TaskHelper::copyTaskTaskTemplateForm($caller, $source_task_id, $new_task_id);
+
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($usr);
+    $taskDAO->setTask_id($new_task_id);
+    array_push($sessionProject[\Library\Enums\SessionKeys::ProjectTasks], \Library\Enums\SessionKeys::TaskKey . $taskDAO->task_id());
+
+    if ($new_task_id > 0) {
+      \Applications\PMTool\Helpers\TaskHelper::AddSessionTask($usr, $taskDAO);
+      \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($usr, $sessionProject);
+    }
+
+    return $new_task_id;
+    
+  }
+
+  /**
+  * Task copy: Task_template_form
+  * Fetches the related Task_template_form for the 
+  * original task and creates the relation with the new
+  * Task created in "copyTaskWithDependencies"
+  */
+  public static function copyTaskTaskTemplateForm($caller, $source_task_id, $target_task_id) {
+    $ttfDAO = new \Applications\PMTool\Models\Dao\Task_template_form();
+    $ttfDAO->setTask_id($source_task_id);
+    $dal = $caller->managers()->getManagerOf("Task");
+    $allTTFs = $dal->selectMany($ttfDAO, "task_id");
+
+    if(count($allTTFs) > 0) {
+      //TTs found, loop and remap with the new task id
+      foreach($allTTFs as $ttf) {
+        $ttfDAO = null;
+        $ttfDAO = new \Applications\PMTool\Models\Dao\Task_template_form();
+        $ttfDAO->setTask_id($target_task_id);
+        $ttfDAO->setMaster_form_id($ttf->master_form_id());
+        $ttfDAO->setUser_form_id($ttf->user_form_id());
+        //Save
+        $id = $dal->add($ttfDAO);
+      }
+    }
+  }
+
+  /**
+  * Task copy: Task_technician
+  * Fetches the related Task_technician for the 
+  * original task and creates the relation with the new
+  * Task created in "copyTaskWithDependencies"
+  */
+  public static function copyTaskTaskTechnician($caller, $source_task_id, $target_task_id) {
+    $ttDAO = new \Applications\PMTool\Models\Dao\Task_technician();
+    $ttDAO->setTask_id($source_task_id);
+    $dal = $caller->managers()->getManagerOf("Task");
+    $allTTs = $dal->selectMany($ttDAO, "task_id");
+
+    if(count($allTTs) > 0) {
+      //TTs found, loop and remap with the new task id
+      foreach($allTTs as $tt) {
+        $tsDAO = null;
+        $ttDAO = new \Applications\PMTool\Models\Dao\Task_technician();
+        $ttDAO->setTask_id($target_task_id);
+        $ttDAO->setTechnician_id($tt->technician_id());
+        $ttDAO->setIs_lead_tech($tt->is_lead_tech());
+        //Save
+        $id = $dal->add($ttDAO);
+      }
+    }
+  }
+
+  /**
+  * Task copy: Task_service
+  * Fetches the related Task_service for the 
+  * original task and creates the relation with the new
+  * Task created in "copyTaskWithDependencies"
+  */
+  public static function copyTaskTaskService($caller, $source_task_id, $target_task_id) {
+    $tsDAO = new \Applications\PMTool\Models\Dao\Task_service();
+    $tsDAO->setTask_id($source_task_id);
+    $dal = $caller->managers()->getManagerOf("Task");
+    $allTSs = $dal->selectMany($tsDAO, "task_id");
+
+    if(count($allTSs) > 0) {
+      //TSs found, loop and remap with the new task id
+      foreach($allTSs as $ts) {
+        $tsDAO = null;
+        $tsDAO = new \Applications\PMTool\Models\Dao\Task_service();
+        $tsDAO->setTask_id($target_task_id);
+        $tsDAO->setService_id($ts->service_id());
+        //Save
+        $id = $dal->add($tsDAO);
+        
+      }
+    }
+  }
+
+  /**
+  * Task copy: Task_location
+  * Fetches the related Task_location for the 
+  * original task and creates the relation with the new
+  * Task created in "copyTaskWithDependencies"
+  */
+  public static function copyTaskTaskLocation($caller, $source_task_id, $target_task_id) {
+    $tlDAO = new \Applications\PMTool\Models\Dao\Task_location();
+    $tlDAO->setTask_id($source_task_id);
+    $dal = $caller->managers()->getManagerOf("Task");
+    $allTls = $dal->selectMany($tlDAO, "task_id");
+
+    if(count($allTls) > 0) {
+      //fals found, loop and remap with the new task id
+      foreach($allTls as $tl) {
+        $tlDAO = null;
+        $tlDAO = new \Applications\PMTool\Models\Dao\Task_location();
+        $tlDAO->setTask_id($target_task_id);
+        $tlDAO->setLocation_id($tl->location_id());
+        //Save
+        $id = $dal->add($tlDAO);
+        
+      }
+    }
+  }
+
+  /**
+  * Task copy: Task_lab_analyte
+  * Fetches the related Task_lab_analyte for the 
+  * original task and creates the relation with the new
+  * Task created in "copyTaskWithDependencies"
+  */
+  public static function copyTaskTaskLabAnalyte($caller, $source_task_id, $target_task_id) {
+    $tlaDAO = new \Applications\PMTool\Models\Dao\Task_lab_analyte();
+    $tlaDAO->setTask_id($source_task_id);
+    $dal = $caller->managers()->getManagerOf("Task");
+    $allTlas = $dal->selectMany($tlaDAO, "task_id");
+
+    if(count($allTlas) > 0) {
+      //fals found, loop and remap with the new task id
+      foreach($allTlas as $tla) {
+        $tlaDAO = null;
+        $tlaDAO = new \Applications\PMTool\Models\Dao\Task_lab_analyte();
+        $tlaDAO->setTask_id($target_task_id);
+        $tlaDAO->setLab_analyte_id($tla->lab_analyte_id());
+        
+        //Save
+        $dal->add($tlaDAO);
+      }
+    }
+  }
+
+  /**
+  * Task copy: Task_field_analyte
+  * Fetches the related Task_field_analyte for the 
+  * original task and creates the relation with the new
+  * Task created in "copyTaskWithDependencies"
+  */
+  public static function copyTaskTaskFieldAnalyte($caller, $source_task_id, $target_task_id) {
+    $tfaDAO = new \Applications\PMTool\Models\Dao\Task_field_analyte();
+    $tfaDAO->setTask_id($source_task_id);
+    $dal = $caller->managers()->getManagerOf("Task");
+    $allTfas = $dal->selectMany($tfaDAO, "task_id");
+
+    if(count($allTfas) > 0) {
+      //fals found, loop and remap with the new task id
+      foreach($allTfas as $tfa) {
+        $tfaDAO = null;
+        $tfaDAO = new \Applications\PMTool\Models\Dao\Task_field_analyte();
+        $tfaDAO->setTask_id($target_task_id);
+        $tfaDAO->setField_analyte_id($tfa->field_analyte_id());
+        
+        //Save
+        $dal->add($tfaDAO);
+      }
+    }
+  }
+
+  /**
+  * Task copy: Task_coc_info
+  * Fetches the related Task_coc_info for the 
+  * original task and creates the relation with the new
+  * Task created in "copyTaskWithDependencies"
+  */
+  public static function copyTaskTaskCocInfo($caller, $source_task_id, $target_task_id) {
+    $tciDAO = new \Applications\PMTool\Models\Dao\Task_coc_info();
+    $tciDAO->setTask_id($source_task_id);
+    $dal = $caller->managers()->getManagerOf("Task");
+    $allTcis = $dal->selectMany($tciDAO, "task_id");
+
+    if(count($allTcis) > 0) {
+      //fals found, loop and remap with the new task id
+      foreach($allTcis as $tci) {
+        $tciDAO = null;
+        $tciDAO = new \Applications\PMTool\Models\Dao\Task_coc_info();
+        $tciDAO->setTask_id($target_task_id);
+        $tciDAO->setService_id($tci->service_id());
+        $tciDAO->setPo_number($tci->po_number());
+        $tciDAO->setLab_instructions($tci->lab_instructions());
+        $tciDAO->setLab_sample_type($tci->lab_sample_type());
+        $tciDAO->setLab_sample_tat($tci->lab_sample_tat());
+        $tciDAO->setProject_number($tci->project_number());
+        $tciDAO->setResults_to_name($tci->results_to_name());
+        $tciDAO->setResults_to_company($tci->results_to_company());
+        $tciDAO->setResults_to_address($tci->results_to_address());
+        $tciDAO->setResults_to_phone($tci->results_to_phone());
+        $tciDAO->setResults_to_email($tci->results_to_email());
+        //Save
+        $dal->add($tciDAO);
+      }
+    }
+  }
+
+  /**
+  * Task copy: Lab_analyte_location
+  * Fetches the related Lab_analyte_location for the 
+  * original task and creates the relation with the new
+  * Task created in "copyTaskWithDependencies"
+  */
+  public static function copyTaskLabAnalyteLocation($caller, $source_task_id, $target_task_id) {
+    $lalDAO = new \Applications\PMTool\Models\Dao\Lab_analyte_location();
+    $lalDAO->setTask_id($source_task_id);
+    $dal = $caller->managers()->getManagerOf("Task");
+    $allLals = $dal->selectMany($lalDAO, "task_id");
+
+    if(count($allLals) > 0) {
+      //fals found, loop and remap with the new task id
+      foreach($allLals as $lal) {
+        $lalDAO = null;
+        $lalDAO = new \Applications\PMTool\Models\Dao\Lab_analyte_location();
+        $lalDAO->setTask_id($target_task_id);
+        $lalDAO->setLab_analyte_id($lal->lab_analyte_id());
+        $lalDAO->setLocation_id($lal->location_id());
+        //Save
+        $dal->add($lalDAO);
+      }
+    }
+  }
+
+  /**
+  * Task copy: Field_analyte_location
+  * Fetches the related Field_analyte_location for the 
+  * original task and creates the relation with the new
+  * Task created in "copyTaskWithDependencies"
+  */
+  public static function copyTaskFieldAnalyteLocation($caller, $source_task_id, $target_task_id) {
+    $falDAO = new \Applications\PMTool\Models\Dao\Field_analyte_location();
+    $falDAO->setTask_id($source_task_id);
+    $dal = $caller->managers()->getManagerOf("Task");
+    $allFals = $dal->selectMany($falDAO, "task_id");
+
+    if(count($allFals) > 0) {
+      //fals found, loop and remap with the new task id
+      foreach($allFals as $fal) {
+        $falDAO = null;
+        $falDAO = new \Applications\PMTool\Models\Dao\Field_analyte_location();
+        $falDAO->setTask_id($target_task_id);
+        $falDAO->setField_analyte_id($fal->field_analyte_id());
+        $falDAO->setLocation_id($fal->location_id());
+        //Save
+        $dal->add($falDAO);
+      }
+    }
+  }
+
 }

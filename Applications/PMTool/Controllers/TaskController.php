@@ -40,6 +40,8 @@ class TaskController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_show_field_matrix, $showFieldMatrixTabs);
     //Analyte Matrix tab status
 
+    //\Applications\PMTool\Helpers\CommonHelper::pr(\Applications\PMTool\Helpers\TaskHelper::GetSessionTasks($this->user()));
+
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
 
@@ -219,6 +221,30 @@ class TaskController extends \Library\BaseController {
         "resx_key" => $this->action(),
         "step" => $result["dataOut"] > 0 ? "success" : "error"
     ));
+  }
+
+  /**
+  * Copies a task into a completely new task
+  * Copies entirely everything, all the existing
+  * relations like forms, analyte matrix etc
+  * into the new task
+  */
+  public function executeCopyEntireTask(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+
+    //Copy the task corresponding to the passed task id with the new task name
+    $new_task_id = \Applications\PMTool\Helpers\TaskHelper::copyTaskWithDependencies($this, $this->dataPost['task_id'], $this->dataPost['new_taskname'], $this->app()->user());
+    
+    $result["dataOut"] = $new_task_id;
+
+    $this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
+        "resx_key" => $this->action(),
+        "step" => $result["dataOut"] > 0 ? "success" : "error"
+      )
+    ); 
   }
 
   public function executeEdit(\Library\HttpRequest $rq) {
