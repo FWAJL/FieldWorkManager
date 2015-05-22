@@ -1017,6 +1017,7 @@
   
   <route url="task/add" module="Task" action="add" resxfile="task" type="ws" />
   <route url="task/edit" module="Task" action="edit" resxfile="task" type="ws" />
+  <route url="task/copyEntireTask" module="Task" action="copyEntireTask" resxfile="task" type="ws" />
   <route url="task/delete" module="Task" action="delete" resxfile="task" type="ws" />
   <route url="task/getlist" module="Task" action="getList" resxfile="task" type="ws" />
   <route url="task/getItem" module="Task" action="getItem" resxfile="task" type="ws" />
