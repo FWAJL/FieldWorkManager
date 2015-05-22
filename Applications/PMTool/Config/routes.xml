@@ -934,13 +934,16 @@
 
     <route url="form/masterForm" module="Form" action="showFormMaster" resxfile="form" type="ui" role="1">
       <js_files>
+        <js_file use="head" value="Web/js/addons/fancyapps/source/jquery.fancybox.js" />
         <js_file use="head" value="Web/js/app/controllers/form_manager.js" />
       </js_files>
       <css_files>
         <css_file use="project" />
+        <css_file value="Web/js/addons/fancyapps/source/jquery.fancybox.css" />
       </css_files>
       <php_modules>
         <php_module key="form_form_master" file_name="form_form_master.php"/>
+        <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
       </php_modules>
     </route>
     <!-- form/masterForm -->

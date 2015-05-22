@@ -20,6 +20,16 @@ class FormController extends \Library\BaseController {
   }
 
   public function executeShowFormMaster(\Library\HttpRequest $rq) {
+    //Fecth master forms
+    $masterForms = \Applications\PMTool\Helpers\FormHelper::GetMasterForms($this, NULL);
+    
+    $data_right = array(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_right => $masterForms,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\FormHelper::SetPropertyNamesForDualList()
+    );
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data_right, $data_right);
+
     $this->page->addVar(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
