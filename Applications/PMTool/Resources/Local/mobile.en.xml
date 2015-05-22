@@ -37,15 +37,20 @@
   <resource key="task_location_window_location_name">Location name:</resource>
   <resource key="task_location_window_zoom">Zoom to selected Location</resource>
   <resource key="task_location_window_remove">Remove from task</resource>
+  <resource key="task_location_window_collect_data">Collect data</resource>
   <resource key="task_location_window_add">Add to task</resource>
   <resource key="task_location_window_edit_update">Update</resource>
   <resource key="task_location_window_edit_cancel">Cancel</resource>
+  <resource key="task_location_window_directions">Directions</resource>
+  <resource key="task_location_window_walk">Walk</resource>
+  <resource key="task_location_window_drive">Drive</resource>
   <resource key="location_window_location_desc">Location description:</resource>
   <resource key="location_window_location_lat">Latitude:</resource>
   <resource key="location_window_location_long">Longitude:</resource>
   <resource key="location_window_zoom">Zoom to selected Location</resource>
   <resource key="location_place_onto_the_map">Place onto the map</resource>
   <resource key="location_window_photos">View photos</resource>
+  <resource key="location_mark">Mark</resource>
   <resource key="form_title">Title</resource>
   <resource key="form_file">File(s)</resource>
 

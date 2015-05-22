@@ -19,6 +19,7 @@ var polygonSettings = {
 var currentPosition;
 var mapType;
 var activeTask = false;
+var userPosition;
 //shows map legend popup
 $(document).ready(function(){
   $('.glyphicon-question-sign').click(function(){
@@ -405,13 +406,22 @@ var setAddRemoveFromTaskEvent = function(e,id,action) {
 }
 
 var openTaskLocationInfo = function(e,id,action) {
+  selectedMarker = id;
   $("#document-upload input[name=\"title\"]").val("");
   if(e !== undefined) {
     $("#task-location-info-modal-zoom").show();
     $("#location-info-modal-place").hide();
+    $("#location-info-modal-directions").show();
   } else {
     $("#task-location-info-modal-zoom").hide();
     $("#location-info-modal-place").show();
+    $("#location-info-modal-directions").hide();
+  }
+  console.log(action);
+  if(action === 'add') {
+    $("#task-location-info-modal-collect-data").hide();
+  } else {
+    $("#task-location-info-modal-collect-data").show();
   }
   Dropzone.forElement("#document-upload").removeAllFiles();
   datacx.post('location/getItem',{location_id: id}).then(function(reply){
@@ -815,6 +825,64 @@ function load(params) {
           }
           map.setOptions({draggableCursor: 'pointer'});
           $('.prompt-modal').modal('hide');
+        });
+
+        //directions
+        $("#location-info-modal-directions").on('click',function(e){
+          e.preventDefault();
+          $.each(markers, function(key,mrk){
+            if(mrk.id == selectedMarker) {
+              return marker = mrk;
+            }
+          });
+          if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var travelMode = google.maps.TravelMode.WALKING;
+              if($("#task-location-info-walk-drive").val() == 'drive') {
+                travelMode = google.maps.TravelMode.DRIVING ;
+              }
+              userPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+              var directionsService = new google.maps.DirectionsService();
+              var directionsRequest = {
+                origin: userPosition,
+                destination: marker.position,
+                travelMode: google.maps.DirectionsTravelMode.DRIVING,
+                unitSystem: google.maps.UnitSystem.IMPERIAL
+              };
+              directionsService.route(
+                directionsRequest,
+                function(response, status)
+                {
+                  if (status == google.maps.DirectionsStatus.OK)
+                  {
+                    new google.maps.DirectionsRenderer({
+                      map: map.map,
+                      directions: response
+                    });
+                  }
+                  else
+                    console.log('error');
+                }
+              );
+            });
+
+          }
+
+          $('.prompt-modal').modal('hide');
+        });
+        //change marker to user position
+        $("#location-info-modal-mark").on('click',function(e){
+          e.preventDefault();
+          if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+              $("#task-location-info-modal-location_lat").val(position.coords.latitude);
+              $("#task-location-info-modal-location_long").val(position.coords.longitude);
+            });
+          }
+        });
+        $("#task-location-info-modal-collect-data").on('click',function(e){
+          e.preventDefault();
+          utils.redirect('mobile/forms');
         });
 
         $(document).on('click','.map-info-row',function(e){
