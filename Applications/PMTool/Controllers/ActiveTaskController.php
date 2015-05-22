@@ -246,16 +246,31 @@ class ActiveTaskController extends \Library\BaseController {
 
     //Prepare data object
     $userConnected = \Applications\PMTool\Helpers\UserHelper::GetUserConnectedSession($this->user());
-    $data = array('task_id' => $currSessTask['task_info_obj']->task_id(), 'task_note_category_type' => $userConnected->user_type(), 'task_note_category_value' => $userConnected->user_id(), 'task_note_value' => $this->dataPost['note']);
+    $data = array('task_id' => $currSessTask['task_info_obj']->task_id(), 'task_note_category_type' => $userConnected->user_type(), 'task_note_category_value' => $userConnected->user_value(), 'task_note_value' => $this->dataPost['note']);
 
     //Init PDO
     $task_note = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Task_note());
 
-    $result["data"] = $task_note;
+    $result["data"] = '';
+
+
 
     $manager = $this->managers->getManagerOf($this->module());
     $result_save = $manager->add($task_note);
-
+    if($result_save) {
+      $userTypeObject = $this->user->getAttribute(\Library\Enums\SessionKeys::UserTypeObject);
+      if ($this->user->getUserType() == 'pm_id') {
+        $result['user'] = $userTypeObject->pm_name();
+      } else if ($this->user->getUserType() == 'technician_id') {
+        $result['user'] = $userTypeObject->technician_name();
+      } else if ($this->user->getUserType() == 'service_id') {
+        $result['user'] = $userTypeObject->service_name();
+      }
+      $task_note = new \Applications\PMTool\Models\Dao\Task_note();
+      $task_note->setTask_note_id($result_save);
+      $task_notes = $manager->selectMany($task_note,'task_note_id');
+      $result["data"] = $task_notes[0];
+    }
     $this->SendResponseWS(
       $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::ActiveTask,

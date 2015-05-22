@@ -165,4 +165,29 @@ class MobileController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
   }
 
+  public function executeListNotes(\Library\HttpRequest $rq) {
+    $modules = $this->app()->router()->selectedRoute()->phpModules();
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
+    $locationId = $this->user()->getAttribute(\Library\Enums\SessionKeys::CurrentLocationId);
+    if(isset($locationId) && $locationId) {
+      $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
+      $currentLocation = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue(intval($locationId),'location_id',$locations);
+      if($currentLocation) {
+        $this->page->addVar(
+          \Applications\PMTool\Resources\Enums\ViewVariablesKeys::current_location, $currentLocation);
+      }
+    }
+
+
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+    $this->page->addVar(
+      \Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message_module, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]);
+    $this->page->addVar(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::notes, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::notes]);
+    $this->page->addVar(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_instructions, $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_instructions());
+  }
+
 }

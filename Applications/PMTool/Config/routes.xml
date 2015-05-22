@@ -716,8 +716,6 @@
     </route>
     <route url="mobile/listTasks" module="Mobile" action="listTasks" resxfile="mobile" type="ui" role="3">
       <js_files>
-        <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
-        <js_file use="html" value="Web/js/core/gmaps.js"/>
         <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
       </js_files>
       <css_files>
@@ -731,6 +729,21 @@
         <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
         <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
         <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+      </php_modules>
+    </route>
+    <route url="mobile/notes" module="Mobile" action="listNotes" resxfile="mobile" type="ui" role="3">
+      <js_files>
+        <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
+      </js_files>
+      <css_files>
+        <css_file value="Web/css/app/app-mobile-theme.css" />
+        <css_file value="Web/css/app/app-mobile-style.css" />
+        <css_file value="Web/css/app/app-reponsive.css" />
+        <css_file use="project" />
+      </css_files>
+      <php_modules>
+        <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+        <php_module key="notes" file_name="notes.php" />
       </php_modules>
     </route>
     <!--  All Control For User ROLE 3  -->

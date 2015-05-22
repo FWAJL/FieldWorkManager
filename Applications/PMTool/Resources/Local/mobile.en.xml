@@ -57,4 +57,8 @@
   <!-- task list -->
   <resource key="h3_tasks_active">Active tasks</resource>
   <resource key="h3_no_task">No active tasks</resource>
+
+  <!-- notes -->
+  <resource key="h4_tasknotes_leftcol">Notes</resource>
+  <resource key="button_savenote">Save Note</resource>
 </resources>

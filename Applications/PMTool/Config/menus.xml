@@ -105,7 +105,7 @@
   </main_menu><!-- mobile - task discussions-->
   <main_menu name="technician_notes" active="true">
     <links>
-      <header href="mobile" resourcekey="header_ft_notes" cssClass="fa fa-pencil-square" enablelink="true" active="true" />
+      <header href="mobile/notes" resourcekey="header_ft_notes" cssClass="fa fa-pencil-square" enablelink="true" active="true" />
     </links>
   </main_menu><!-- mobile - task notes -->
   <main_menu name="technician_tasks" active="true">
