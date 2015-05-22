@@ -30,6 +30,9 @@
   <define key="GoogleMapsLocationInactiveIcon" value="measle_blue.png" />
   <define key="GoogleMapsTaskIcon" value="red-circle_maps.png" />
   <define key="GoogleMapsNoLatLngIcon" value="ltblu-blank_maps.png" />
+  <define key="GoogleMapsTaskNoLatLngIcon" value="red_maps.png" />
+  <define key="GoogleMapsTaskInProcess" value="yellow-dot_maps.png" />
+  <define key="GoogleMapsTaskFinished" value="green-dot_maps.png" />
 
   <define key="DefaultEmailDomainValue" value="fieldworkmanager.com" />
 
