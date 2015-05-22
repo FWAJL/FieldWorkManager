@@ -133,7 +133,7 @@ class AnalyteHelper {
       $className = "\Applications\PMTool\Models\Dao\Project_" . $type . "_analyte";
       $project_analyte = new $className();
       $project_analyte->setProject_id($project[\Library\Enums\SessionKeys::ProjectObject]->project_id());
-      $dal = $caller->managers()->getManagerOf($caller->module());
+      $dal = $caller->managers()->getManagerOf('Analyte');
       $project_analytes = $dal->selectMany($project_analyte, "project_id");
       $project[$sessionKey] = $project_analytes;
       ProjectHelper::SetUserSessionProject($caller->user(), $project);
