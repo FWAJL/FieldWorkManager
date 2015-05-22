@@ -22,7 +22,7 @@ $(document).ready(function(){
   utils.redirect("mobile/listTasks?task_id=" + parseInt(element.attr("data-task-id")));
 };
   mobile_manager.getNotes = function() {
-    datacx.post("activetask/getNotes", {}).then(function(reply) {
+    datacx.post("activetask/getNotes", {'onlyuser':true}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
         return undefined;
