@@ -29,8 +29,8 @@
         
       </div>
       <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; ?>
-      <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_maplegend_task_locations_module]; ?>
-      
+      <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_maplegend_active_task]; ?>
+      <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Map::popup_task_location_info]; ?>
       <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::tabs_close]; ?>
 
     </div>

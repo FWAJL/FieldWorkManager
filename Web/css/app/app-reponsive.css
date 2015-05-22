@@ -12,13 +12,7 @@
 
 @media all and (min-width: 980px)
 { /*and (max-width: 1280px) {*/
-  ul.content_left > li {
-    display:  inline-block;
-  }
-  ul.content_left {
-    width: 320px !important;
-    margin: 0 auto;
-  }
+
 }
 
 @media all and (min-width: 768px) and (max-width: 980px)

@@ -452,12 +452,12 @@ class TaskHelper {
     }
 
     return $new_task_id;
-    
+
   }
 
   /**
   * Task copy: Task_template_form
-  * Fetches the related Task_template_form for the 
+  * Fetches the related Task_template_form for the
   * original task and creates the relation with the new
   * Task created in "copyTaskWithDependencies"
   */
@@ -483,7 +483,7 @@ class TaskHelper {
 
   /**
   * Task copy: Task_technician
-  * Fetches the related Task_technician for the 
+  * Fetches the related Task_technician for the
   * original task and creates the relation with the new
   * Task created in "copyTaskWithDependencies"
   */
@@ -509,7 +509,7 @@ class TaskHelper {
 
   /**
   * Task copy: Task_service
-  * Fetches the related Task_service for the 
+  * Fetches the related Task_service for the
   * original task and creates the relation with the new
   * Task created in "copyTaskWithDependencies"
   */
@@ -528,14 +528,14 @@ class TaskHelper {
         $tsDAO->setService_id($ts->service_id());
         //Save
         $id = $dal->add($tsDAO);
-        
+
       }
     }
   }
 
   /**
   * Task copy: Task_location
-  * Fetches the related Task_location for the 
+  * Fetches the related Task_location for the
   * original task and creates the relation with the new
   * Task created in "copyTaskWithDependencies"
   */
@@ -554,14 +554,14 @@ class TaskHelper {
         $tlDAO->setLocation_id($tl->location_id());
         //Save
         $id = $dal->add($tlDAO);
-        
+
       }
     }
   }
 
   /**
   * Task copy: Task_lab_analyte
-  * Fetches the related Task_lab_analyte for the 
+  * Fetches the related Task_lab_analyte for the
   * original task and creates the relation with the new
   * Task created in "copyTaskWithDependencies"
   */
@@ -578,7 +578,7 @@ class TaskHelper {
         $tlaDAO = new \Applications\PMTool\Models\Dao\Task_lab_analyte();
         $tlaDAO->setTask_id($target_task_id);
         $tlaDAO->setLab_analyte_id($tla->lab_analyte_id());
-        
+
         //Save
         $dal->add($tlaDAO);
       }
@@ -587,7 +587,7 @@ class TaskHelper {
 
   /**
   * Task copy: Task_field_analyte
-  * Fetches the related Task_field_analyte for the 
+  * Fetches the related Task_field_analyte for the
   * original task and creates the relation with the new
   * Task created in "copyTaskWithDependencies"
   */
@@ -604,7 +604,7 @@ class TaskHelper {
         $tfaDAO = new \Applications\PMTool\Models\Dao\Task_field_analyte();
         $tfaDAO->setTask_id($target_task_id);
         $tfaDAO->setField_analyte_id($tfa->field_analyte_id());
-        
+
         //Save
         $dal->add($tfaDAO);
       }
@@ -613,7 +613,7 @@ class TaskHelper {
 
   /**
   * Task copy: Task_coc_info
-  * Fetches the related Task_coc_info for the 
+  * Fetches the related Task_coc_info for the
   * original task and creates the relation with the new
   * Task created in "copyTaskWithDependencies"
   */
@@ -648,7 +648,7 @@ class TaskHelper {
 
   /**
   * Task copy: Lab_analyte_location
-  * Fetches the related Lab_analyte_location for the 
+  * Fetches the related Lab_analyte_location for the
   * original task and creates the relation with the new
   * Task created in "copyTaskWithDependencies"
   */
@@ -674,7 +674,7 @@ class TaskHelper {
 
   /**
   * Task copy: Field_analyte_location
-  * Fetches the related Field_analyte_location for the 
+  * Fetches the related Field_analyte_location for the
   * original task and creates the relation with the new
   * Task created in "copyTaskWithDependencies"
   */
@@ -696,6 +696,24 @@ class TaskHelper {
         $dal->add($falDAO);
       }
     }
+  }
+
+  public static function GetLatestTaskForTechnician($caller,$technician) {
+    $tasks = self::GetTasksForTechnician($caller, $technician);
+    if(is_array($tasks)) {
+      return $tasks[count($tasks)-1];
+    } else {
+      return null;
+    }
+  }
+
+  public static function GetTasksForTechnician($caller, $technician) {
+    $manager = $caller->managers()->getManagerOf('Task');
+    $tasks = $manager->selectTasksByTechnician($technician);
+    foreach($tasks as $task) {
+      self::AddSessionTask($caller->user(),$task);
+    }
+    return $tasks;
   }
 
 }
