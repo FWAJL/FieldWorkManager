@@ -32,12 +32,12 @@ $(document).ready(function() {
   if($("#document-upload-master").length>0){
     var dropzone = new Dropzone("#document-upload-master");
     dropzone.on("success", function(event,res) {
+      dropzone.removeAllFiles();
       if(res.result == 0) {
         toastr.error(res.message);
-        dropzone.removeAllFiles();
       } else {
         toastr.success(res.message);
-        dropzone.removeAllFiles();
+        utils.redirect('form/masterForm',1000); 
       }
     });
   }
