@@ -135,6 +135,8 @@ $(document).ready(function() {
               }
               
             });
+          } else if (key === "delete") {
+            form_manager.delete(parseInt(options.$trigger.data("form-id")),'master_form');
           } 
         },
         items: {
@@ -313,7 +315,11 @@ $(document).ready(function() {
         return undefined;
       } else {//success
         toastr.success(reply.message);
-        utils.redirect("form/listAll");
+        if(formType == 'master_form') {
+          utils.redirect("form/masterForm");
+        } else {
+          utils.redirect("form/listAll");  
+        }
       }
     });
   };

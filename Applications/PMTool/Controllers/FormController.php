@@ -210,6 +210,30 @@ class FormController extends \Library\BaseController {
           \Applications\PMTool\Helpers\ProjectHelper::SetCurrentSessionProject($this->user(), $sessionProject);
         }
       }
+    } elseif ($this->dataPost["form_type"] == "master_form") {
+      
+      //delete from db
+      //Project form
+      $projectForm = new \Applications\PMTool\Models\Dao\Project_form();
+      $projectForm->setMaster_form_id($form_id);
+      $manager = $this->managers->getManagerOf("ProjectForm");
+      $manager->delete($projectForm,"master_form_id");
+
+      //Task template form
+      $taskForm = new \Applications\PMTool\Models\Dao\Task_template_form();
+      $taskForm->setMaster_form_id($form_id);
+      $manager = $this->managers->getManagerOf("TaskForm");
+      $manager->delete($taskForm,"master_form_id");
+      
+      
+      //Now for the master form
+      $masterFormDAO = new \Applications\PMTool\Models\Dao\Master_form();
+      $masterFormDAO->setForm_id($form_id);
+      $dal = $this->managers()->getManagerOf("MasterForm");
+      $matchingForms = $dal->selectMany($masterFormDAO, "form_id");
+      
+      $db_result = $dal->deleteWithFileV2($matchingForms[0], "form_id");
+
     }
 
     $this->SendResponseWS(
