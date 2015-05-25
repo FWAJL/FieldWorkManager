@@ -68,6 +68,9 @@ class FileController extends \Library\BaseController {
     $directory = str_replace("_id", "", $dataPost['itemCategory']);
     $manager->setObjectDirectory($directory);
     $fileList = $manager->selectManyByCategoryAndId($dataPost['itemCategory'],$dataPost['itemId']);
+    foreach($fileList as $key=>$file) {
+      $fileList[$key]->filePath = $file->WebPath();
+    }
     $result['fileResults'] = $fileList;
 
     $this->SendResponseWS(
