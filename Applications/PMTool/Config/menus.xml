@@ -82,11 +82,19 @@
   
   <main_menu name="service" active="true">
     <links>
-      <header href="service" resourcekey="header_service" enablelink="false" active="true" />
+      <header resourcekey="header_service" enablelink="false" active="true" />
       <submenu href="service/listAll" id="service_list_all" resourcekey="service_list" active="true"/>
       <submenu href="service/showForm?mode=add&amp;test=true" id="btn-add-service-manual" resourcekey="service_add" active="true"/>
     </links>
   </main_menu><!-- resource -->
+  
+<!--    <main_menu name="completed_task" active="true">
+    <links>
+      <header resourcekey="header_completed_task" enablelink="false" active="true" />
+      <submenu href="task/listAll" id="task_list_all" enablelink="false" resourcekey="task_list" active="true"/>
+    </links>
+  </main_menu>-->
+  <!-- completed task -->
   
   <main_menu name="field_results" active="false">
     <links>
