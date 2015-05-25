@@ -32,6 +32,11 @@
   <resource key="pm_phone">Phone Number</resource>
   <resource key="pm_email">Email</resource>
 
+  <resource key="technician_name">Name</resource>
+  <resource key="technician_phone">Mobile Number</resource>
+  <resource key="technician_email">Email</resource>
+  <resource key="technician_active">Active</resource>
+
   <resource key="user_login">Login</resource>
   <resource key="user_password">Password</resource>
   <resource key="user_hint">Hint</resource>
