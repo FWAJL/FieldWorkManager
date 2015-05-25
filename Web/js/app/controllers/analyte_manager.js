@@ -51,31 +51,79 @@ $(document).ready(function() {
 //          } 
         }, 'promptmsg-edit');
       } else if (key === "delete") {
-		var isFieldAnalyte = $(".active").attr("data-form-id") === "field_analyte_info";
-		var msg = 
+        var isFieldAnalyte = $(".active").attr("data-form-id") === "field_analyte_info";
+        var msg = 
 //                        (isFieldAnalyte) ? 
                 $('#confirmmsg-deleteField').val() 
 //                : $('#confirmmsg-deleteLab').val()
                 ;
-		if (typeof msg !== typeof undefined && msg !== false) {
-		  utils.showConfirmBox(msg, function(result) {
-			if (result)
-			{
-			  delAnalyte(ajaxParams, options);
-			}
-		  });
-		}
-		else
-		{
-		  delAnalyte(ajaxParams, options);
-		}
-      }
+      		if (typeof msg !== typeof undefined && msg !== false) {
+      		  utils.showConfirmBox(msg, function(result) {
+        			if (result)
+        			{
+        			  delAnalyte(ajaxParams, options);
+        			}
+      		  });
+      		}
+      		else
+      		{
+      		  delAnalyte(ajaxParams, options);
+      		}
+        }
     },
     items: {
       "edit": {name: "Edit"},
       "delete": {name: "Delete"}
     }
   });//The context menu
+
+  //For Admin UI `labanalyte/uploadCommons`
+  $.contextMenu({
+    selector: '#common-lab-analyte-list > .ui-widget-content',
+    callback: function(key, options) {
+      if (key === "edit") {
+        console.log('about to edit');
+      } else if (key === "delete") {
+        var lab_analyte_id = options.$trigger.attr("data-common_lab_analyte-id");
+        datacx.post('lab_analyte/deleteCommon', {analyte_id: lab_analyte_id}).then(function(reply) {//call AJAX method to call Project/Add WebService
+          if (reply === null || reply.result === 0) {//has an error
+            toastr.error(reply.message);
+          } else {//success
+            toastr.success(reply.message);
+            utils.redirect("labanalyte/uploadCommons", 700);
+          }
+        });
+      }
+    },
+    items: {
+      "edit": {name: "Edit"},
+      "delete": {name: "Delete"}
+    }
+  });
+
+  //For Admin UI `analyte/uploadCommons`
+  $.contextMenu({
+    selector: '#common-field-analyte-list > .ui-widget-content',
+    callback: function(key, options) {
+      if (key === "edit") {
+        console.log('about to edit');
+      } else if (key === "delete") {
+        var field_analyte_id = options.$trigger.attr("data-common_field_analyte-id");
+        datacx.post('field_analyte/deleteCommon', {analyte_id: field_analyte_id}).then(function(reply) {//call AJAX method to call Project/Add WebService
+          if (reply === null || reply.result === 0) {//has an error
+            toastr.error(reply.message);
+          } else {//success
+            toastr.success(reply.message);
+            utils.redirect("analyte/uploadCommons", 700);
+          }
+        });
+      }
+    },
+    items: {
+      "edit": {name: "Edit"},
+      "delete": {name: "Delete"}
+    }
+  });
 
   //get item for field/lab analyte
   getAnalyteItem = function(analyteId, executeWithData) {

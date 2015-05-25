@@ -7,12 +7,12 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class LabAnalyteController extends \Library\BaseController {
     
-      public function executeShowForm(\Library\HttpRequest $rq) {
+  public function executeShowForm(\Library\HttpRequest $rq) {
     $this->page()->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
   
-    public function executeUploadList(\Library\HttpRequest $rq) {
+  public function executeUploadList(\Library\HttpRequest $rq) {
     $tabsStatus = \Applications\PMTool\Helpers\CommonHelper::GetTabsStatus($this->user(), \Library\Enums\SessionKeys::TabActiveAnalyte);
 
     //Fetch tooltip data from xml and pass to view as an array
@@ -123,7 +123,7 @@ class LabAnalyteController extends \Library\BaseController {
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
   
-    public function executeUploadCommonAnalytes(\Library\HttpRequest $rq) {
+  public function executeUploadCommonAnalytes(\Library\HttpRequest $rq) {
     $tabsStatus = \Applications\PMTool\Helpers\CommonHelper::GetTabsStatus($this->user(), \Library\Enums\SessionKeys::TabActiveAnalyte);
     if ($tabsStatus === NULL) {
       \Applications\PMTool\Helpers\AnalyteHelper::AddTabsStatus($this->user());
@@ -135,15 +135,15 @@ class LabAnalyteController extends \Library\BaseController {
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
 
     \Applications\PMTool\Helpers\AnalyteHelper::StoreCommonListData($this);
-
-    $data_common_field_analyte = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => "common_field_analyte",
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\CommonHelper::GetValueInSession(
-                $this->user(), \Library\Enums\SessionKeys::CommonFieldAnalytes),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList("common_field_analyte")
+    
+    $data_common_lab_analyte = array(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => "common_lab_analyte",
+         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\CommonHelper::GetValueInSession(
+                $this->user(), \Library\Enums\SessionKeys::CommonLabAnalytes),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList("common_lab_analyte")
     );
     $this->page()->addVar(
-            "data_common_field_analyte", $data_common_field_analyte);
+            "data_common_lab_analyte", $data_common_lab_analyte);
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {
@@ -261,6 +261,35 @@ class LabAnalyteController extends \Library\BaseController {
         "resx_key" => $this->action(),
         "step" => ($result["rows_affected"] === count($result["arrayOfValues"])) ? "success" : "error"
     ));
+  }
+
+  /**
+  * Ajax response for deleteting common lab analytes
+  */
+  public function executeDeleteCommon(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+
+    $analyte_deleted = 0;
+    $analyte = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($this->dataPost['analyte_id'], 
+                    "common_lab_analyte_id", $_SESSION, \Library\Enums\SessionKeys::CommonLabAnalytes);
+
+    if ($analyte["object"] !== NULL) {
+      $manager = $this->managers->getManagerOf($this->module());
+      $db_result = $manager->delete($analyte["object"], "common_lab_analyte_id");
+      if ($db_result) {
+        unset($_SESSION[\Library\Enums\SessionKeys::CommonLabAnalytes][$analyte["key"]]);
+        $analyte_deleted = 1;    
+      }
+    }
+
+    $this->SendResponseWS(
+            $result, array(
+            "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
+            "resx_key" => $this->action(),
+            "step" => ($analyte_deleted === 1) ? "success" : "error"
+        )
+    );
   }
 
 }

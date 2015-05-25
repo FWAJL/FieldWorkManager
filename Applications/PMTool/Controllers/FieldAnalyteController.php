@@ -125,4 +125,33 @@ class FieldAnalyteController extends \Library\BaseController {
     ));
   }
 
+  /**
+  * Ajax response for deleteting common field analytes
+  */
+  public function executeDeleteCommon(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+
+    $analyte_deleted = 0;
+    $analyte = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($this->dataPost['analyte_id'], 
+                    "common_field_analyte_id", $_SESSION, \Library\Enums\SessionKeys::CommonFieldAnalytes);
+
+    if ($analyte["object"] !== NULL) {
+      $manager = $this->managers->getManagerOf($this->module());
+      $db_result = $manager->delete($analyte["object"], "common_field_analyte_id");
+      if ($db_result) {
+        unset($_SESSION[\Library\Enums\SessionKeys::CommonFieldAnalytes][$analyte["key"]]);
+        $analyte_deleted = 1;    
+      }
+    }
+
+    $this->SendResponseWS(
+            $result, array(
+            "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
+            "resx_key" => $this->action(),
+            "step" => ($analyte_deleted === 1) ? "success" : "error"
+        )
+    );
+  }
+
 }
