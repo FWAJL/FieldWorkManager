@@ -20,6 +20,13 @@
           </div>
         </div>
         <div  class="col-lg-5 col-md-5">
+          <span class="h4"><?php echo $resx["h4_all_master_form"]; ?></span>
+          <!--<span class="glyphicon glyphicon-question-sign" id="inactive-taskForm-header"></span>-->
+          <?php
+          //\Applications\PMTool\Helpers\CommonHelper::pr($form_modules);
+          require $form_modules["group_list_right"]; 
+          ?>
+          <input type="hidden" id="modforjs" name="modforjs" value="admin_masterform" />
         </div>
       </div>
     </div>

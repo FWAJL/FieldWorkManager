@@ -120,6 +120,19 @@ class DocumentDal extends \Library\DAL\BaseManager {
     }
   }
 
+  /**
+  * V2 is used to separate it from deleteWithFile 
+  */
+  public function deleteWithFileV2($object, $where_filter_id) {
+    if($object instanceof \Library\Interfaces\IDocument) {
+      $fileExists = \Library\Core\DirectoryManager::FileExists('./uploads/' . $this->GetUploadDirectory($object) . "/" . $object->Filename());
+      if($fileExists) {
+        $this->DeleteAFile('./uploads/' . $this->GetUploadDirectory($object) . "/" . $object->Filename());
+      }
+      return parent::delete($object, $where_filter_id);
+    }
+  }
+
   public function DeleteObjectsWithFile($objects, $where_filter_id) {
     $return = array();
     foreach($objects as $object){
