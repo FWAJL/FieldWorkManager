@@ -552,6 +552,7 @@ class TaskHelper {
         $tlDAO = new \Applications\PMTool\Models\Dao\Task_location();
         $tlDAO->setTask_id($target_task_id);
         $tlDAO->setLocation_id($tl->location_id());
+        $tlDAO->setTask_location_status($tl->task_location_status());
         //Save
         $id = $dal->add($tlDAO);
 

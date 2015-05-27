@@ -39,7 +39,7 @@
   <resource key="btn_to_pm_list">Add form(s)</resource>
   <resource key="btn_to_project_list">Remove form(s)</resource>
   <resource key="btn_add_user_form">Add template</resource>
-
+  <resource key="h4_all_master_form">All master forms</resource>
 
   
 </resources>
