@@ -1009,6 +1009,7 @@
       <php_modules>
         <php_module key="form_form_master" file_name="form_form_master.php"/>
         <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
+        <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
       </php_modules>
     </route>
     <!-- form/masterForm -->

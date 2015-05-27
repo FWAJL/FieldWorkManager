@@ -72,6 +72,8 @@
 	<resource uicomponent="confirm" targetcontroller="analyte" targetaction="list" operation="deleteLab" value="Are you sure?" />
 	<resource uicomponent="confirm" targetcontroller="analyte" targetaction="uploadCommonAnalytes" operation="deleteCommonLab" value="Are you sure to delete the common analyte?" />
 	<resource uicomponent="confirm" targetcontroller="location" targetaction="view" operation="delete" value="Are you sure you want to permanently remove this Location?  If you place it in inactive status no further work can be done there, but the coordinatesa re not lost." />
+	<resource uicomponent="confirm" targetcontroller="form" targetaction="masterForm" operation="delete" value="Are you sure to delete the master form?" />
+
 	
 	<resource uicomponent="alert" targetcontroller="project" targetaction="list" operation="addUniqueCheck" value="Project name is taken. Choose a new project name." />
 	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addNullCheck" value="To open a new Project, you must provide the Project Name, Facility Address and Client email address." />
