@@ -7,13 +7,14 @@
  * jQuery listeners for the form actions
  */
 $(document).ready(function() {
-    var ajaxParams = {
+  var ajaxParams = {
     "ajaxUrl": "form/getList",
     "redirectUrl": "form/listAll",
     "action": "",
     "arrayOfValues": "",
     "itemId": ""
   };
+  
   Dropzone.autoDiscover = false;
   if($("#document-upload").length>0){
     var dropzone = new Dropzone("#document-upload");
@@ -31,12 +32,12 @@ $(document).ready(function() {
   if($("#document-upload-master").length>0){
     var dropzone = new Dropzone("#document-upload-master");
     dropzone.on("success", function(event,res) {
+      dropzone.removeAllFiles();
       if(res.result == 0) {
         toastr.error(res.message);
-        dropzone.removeAllFiles();
       } else {
         toastr.success(res.message);
-        dropzone.removeAllFiles();
+        utils.redirect('form/masterForm',1000); 
       }
     });
   }
@@ -96,6 +97,55 @@ $(document).ready(function() {
       }
     }
   }); */
+
+  //Conditional CODE 
+  if($('#modforjs').length > 0) {
+    //Only for form/masterForm
+    if($('#modforjs').val() == 'admin_masterform') {
+      //Item selection for master forms
+      $("#group-list-right").selectable({
+        stop: function() {
+          var tmpSelection = "";
+          $(".ui-selected", this).each(function() {
+            tmpSelection += $(this).attr("data-tasklocation-id") + ",";
+          });
+          tmpSelection = utils.removeLastChar(tmpSelection);
+        }
+      });
+
+      //Setup contextual menu
+      $.contextMenu({
+        selector: '.select_item',
+        callback: function(key, options) {
+          if (key === "view") {
+            datacx.post("form/getPdfFileFor", {"form_id": parseInt(options.$trigger.attr("data-form-id")), "form_type": options.$trigger.attr("data-object")}).then(function(reply) {
+              
+              if (reply === null || reply.result === 0) {//has an error
+                toastr.error(reply.message);
+                
+              } else {//success
+                toastr.success(reply.message);
+                $.fancybox({ 
+                  href: reply.form_path,
+                  type: 'iframe', 
+                  openEffect : 'none', 
+                  closeEffect : 'none', 
+                  iframe : { preload: false } 
+                });
+              }
+              
+            });
+          } else if (key === "delete") {
+            form_manager.delete(parseInt(options.$trigger.data("form-id")),'master_form');
+          } 
+        },
+        items: {
+          "view": {name: "View"},
+          "delete": {name: "Delete"}
+        }
+      });//Manages the context menu
+    }
+  } 
 
   var selectionParams = {
     "listLeftId": "categorized-list-left",
@@ -265,7 +315,11 @@ $(document).ready(function() {
         return undefined;
       } else {//success
         toastr.success(reply.message);
-        utils.redirect("form/listAll");
+        if(formType == 'master_form') {
+          utils.redirect("form/masterForm");
+        } else {
+          utils.redirect("form/listAll");  
+        }
       }
     });
   };
