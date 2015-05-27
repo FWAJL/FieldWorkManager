@@ -924,6 +924,7 @@
       </css_files>
       <php_modules>
         <php_module key="pm_form" file_name="pm_form.php" />
+        <php_module key="technician_form" file_name="technician_form.php" />
         <php_module key="user_form" file_name="user_form.php" shared="true"/>
         <php_module key="user_details_buttons" file_name="user_details_buttons.php" />
       </php_modules>
@@ -957,6 +958,7 @@
       </css_files>
       <php_modules>
         <php_module key="pm_form" file_name="pm_form.php" />
+        <php_module key="technician_form" file_name="technician_form.php" />
         <php_module key="user_form" file_name="user_form.php" />
       </php_modules>
     </route>
