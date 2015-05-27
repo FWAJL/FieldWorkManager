@@ -131,6 +131,15 @@ class UserHelper {
     return $user;
   }
 
+  public static function PrepareTechnicianObject($dataPost) {
+    $technician = new \Applications\PMTool\Models\Dao\Technician();
+    $technician->setTechnician_id($dataPost["technician_id"]);
+    $technician->setTechnician_name($dataPost["technician_name"]);
+    $technician->setTechnician_phone(!array_key_exists('technician_phone', $dataPost) ? "" : $dataPost["technician_phone"]);
+    $technician->setTechnician_active(!array_key_exists('technician_active', $dataPost) ? "" : $dataPost["technician_active"]);
+    return $technician;
+  }
+
   public static function PreparePmObject($dataPost) {
     $pm = new \Applications\PMTool\Models\Dao\Project_manager();
     $pm->setPm_id($dataPost["pm_id"]);

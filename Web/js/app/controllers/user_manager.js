@@ -6,6 +6,7 @@
  *
  * jQuery listeners for the user actions
  */
+var userTypeCurrent;
 $(document).ready(function() {
   $(".btn-warning").hide();
   $.contextMenu({
@@ -84,6 +85,8 @@ $(document).ready(function() {
       var requiredFields = ["user_login","user_hint"];
       if($("#user-type").val()==='pm_id'){
         requiredFields.push("pm_name","pm_email");
+      } else if($("#user-type").val()==='technician_id') {
+        requiredFields.push("technician_name");
       }
       var post_data = utils.retrieveInputs("user_form",requiredFields);
       if(!post_data.required_field_missing) {
@@ -92,15 +95,7 @@ $(document).ready(function() {
     });
 
   } else {
-    $("#btn_edit_user").click(function() {
-      var post_data = utils.retrieveInputs("pm_form", ["pm_name"]);
-      post_data.user_password=$("input[name=\"user_password\"]").val();
-      post_data.user_hint=$("input[name=\"user_hint\"]").val();
-      if(!post_data.required_field_missing) {
-        user_manager.edit(post_data, "user", "editCurrent");
-      }
 
-    });//Edit current user
   }
 
 });
@@ -141,6 +136,18 @@ $(document).ready(function() {
     $("input[name=\"pm_email\"]").val(dataWs.pm.pm_email);
   };
 
+  user_manager.loadTechnicianEditForm = function(dataWs) {
+    $("input[name=\"technician_id\"]").val(parseInt(dataWs.technician.technician_id));
+    $("input[name=\"technician_name\"]").val(dataWs.technician.technician_name);
+    $("input[name=\"technician_phone\"]").val(dataWs.technician.technician_phone);
+    $("input[name=\"technician_email\"]").val(dataWs.technician.technician_email);
+    if(dataWs.technician.technician_active==1) {
+      $("input[name=\"technician_active\"]").prop('checked',true);
+    } else {
+      $("input[name=\"technician_active\"]").prop('checked',false);
+    }
+  };
+
   user_manager.loadUserEditForm = function(dataWs) {
     $("input[name=\"user_id\"]").val(parseInt(dataWs.user.user_id));
     $("input[name=\"user_login\"]").val(dataWs.user.user_login);
@@ -157,10 +164,30 @@ $(document).ready(function() {
         utils.clearForm();
         toastr.success(reply.message);
         user_manager.loadUserEditForm(reply);
+        userTypeCurrent = reply.user_type;
         if(reply.user_type=="pm_id") {
           user_manager.loadPMEditForm(reply);
           $(".pm_edit").show().removeClass("hide");
+        } else if(reply.user_type=="technician_id") {
+          user_manager.loadTechnicianEditForm(reply);
+          $(".technician_edit").show().removeClass("hide");
+
         }
+
+        $("#btn_edit_user").click(function() {
+          if(userTypeCurrent == "technician_id") {
+            var post_data = utils.retrieveInputs("technician_form", ["technician_name"]);
+          } else if (userTypeCurrent == "pm_id") {
+            var post_data = utils.retrieveInputs("pm_form", ["pm_name"]);
+          }
+
+          post_data.user_password=$("input[name=\"user_password\"]").val();
+          post_data.user_hint=$("input[name=\"user_hint\"]").val();
+          if(!post_data.required_field_missing) {
+            user_manager.edit(post_data, "user", "editCurrent");
+          }
+
+        });//Edit current user
 
       }
     });
@@ -185,6 +212,14 @@ $(document).ready(function() {
           $("#pm_edit_info").show();
           $(".pm_form").addClass('user_form');
           $(".pm_edit").show().removeClass("hide");
+          $("#user-type").hide();
+        } else if (reply.user.user_type =="technician_id") {
+          user_manager.loadTechnicianEditForm(reply);
+          $(".user-type-form fieldset").removeClass('user_form');
+          $(".user-type-form").hide();
+          $("#technician_info").show();
+          $(".technician_form").addClass('user_form');
+          $(".technician_edit").show().removeClass("hide");
           $("#user-type").hide();
         }
 
