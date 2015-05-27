@@ -246,16 +246,31 @@ class ActiveTaskController extends \Library\BaseController {
 
     //Prepare data object
     $userConnected = \Applications\PMTool\Helpers\UserHelper::GetUserConnectedSession($this->user());
-    $data = array('task_id' => $currSessTask['task_info_obj']->task_id(), 'task_note_category_type' => $userConnected->user_type(), 'task_note_category_value' => $userConnected->user_id(), 'task_note_value' => $this->dataPost['note']);
+    $data = array('task_id' => $currSessTask['task_info_obj']->task_id(), 'task_note_category_type' => $userConnected->user_type(), 'task_note_category_value' => $userConnected->user_value(), 'task_note_value' => $this->dataPost['note']);
 
     //Init PDO
     $task_note = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Task_note());
 
-    $result["data"] = $task_note;
+    $result["data"] = '';
+
+
 
     $manager = $this->managers->getManagerOf($this->module());
     $result_save = $manager->add($task_note);
-
+    if($result_save) {
+      $userTypeObject = $this->user->getAttribute(\Library\Enums\SessionKeys::UserTypeObject);
+      if ($this->user->getUserType() == 'pm_id') {
+        $result['user'] = $userTypeObject->pm_name();
+      } else if ($this->user->getUserType() == 'technician_id') {
+        $result['user'] = $userTypeObject->technician_name();
+      } else if ($this->user->getUserType() == 'service_id') {
+        $result['user'] = $userTypeObject->service_name();
+      }
+      $task_note = new \Applications\PMTool\Models\Dao\Task_note();
+      $task_note->setTask_note_id($result_save);
+      $task_notes = $manager->selectMany($task_note,'task_note_id');
+      $result["data"] = $task_notes[0];
+    }
     $this->SendResponseWS(
       $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::ActiveTask,
@@ -279,40 +294,47 @@ class ActiveTaskController extends \Library\BaseController {
     $result_note = $manager->selectMany($task_note, "task_id");
 
     $result_get = 0;
-
+    $onlyLoggedInUser = $this->dataPost['onlyuser'];
+    $userConnected = \Applications\PMTool\Helpers\UserHelper::GetUserConnectedSession($this->user());
     if(!empty($result_note)) {
       $user_arr = array();
       foreach($result_note as $note_key => $note_obj) {
         $datauser = null;
-        //Fetch user details who posted that note
-        if($note_obj->task_note_category_type() == 'pm_id') {
-          //Project Manager
-          //Init data structure
-          $datauser['pm_id'] = $note_obj->task_note_category_value();
+        if((isset($onlyLoggedInUser) && $onlyLoggedInUser==true) && $note_obj->task_note_category_value() != $userConnected->user_value()){
+          unset($result_note[$note_key]);
+        } else {
+          //Fetch user details who posted that note
+          if($note_obj->task_note_category_type() == 'pm_id') {
+            //Project Manager
+            //Init data structure
+            $datauser['pm_id'] = $note_obj->task_note_category_value();
 
-          //Init PDO
-          $pm_user = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($datauser, new \Applications\PMTool\Models\Dao\Project_manager());
-          $manager = $this->managers->getManagerOf($this->module());
-          $result_pm_user = $manager->selectMany($pm_user, "pm_id");
+            //Init PDO
+            $pm_user = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($datauser, new \Applications\PMTool\Models\Dao\Project_manager());
+            $manager = $this->managers->getManagerOf($this->module());
+            $result_pm_user = $manager->selectMany($pm_user, "pm_id");
 
-          //Stuff into main array
-          array_push($user_arr, $result_pm_user[0]->pm_name());
+            //Stuff into main array
+            array_push($user_arr, $result_pm_user[0]->pm_name());
 
+          }
+          else {
+            //Technician
+            //Init data structure
+            $datauser['technician_id'] = $note_obj->task_note_category_value();
+
+            //Init PDO
+            $tech_user = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($datauser, new \Applications\PMTool\Models\Dao\Technician());
+            $manager = $this->managers->getManagerOf($this->module());
+            $result_tech_user = $manager->selectMany($tech_user, "technician_id");
+
+            //Stuff into main array
+            array_push($user_arr, $result_tech_user[0]->technician_name());
+          }
         }
-        else {
-          //Technician
-          //Init data structure
-          $datauser['technician_id'] = $note_obj->task_note_category_value();
 
-          //Init PDO
-          $tech_user = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($datauser, new \Applications\PMTool\Models\Dao\Technician());
-          $manager = $this->managers->getManagerOf($this->module());
-          $result_tech_user = $manager->selectMany($tech_user, "technician_id");
-
-          //Stuff into main array
-          array_push($user_arr, $result_tech_user[0]->technician_name());
-        }
       }
+      $result_note = array_values($result_note);
       $result_get = 1;
     }
 

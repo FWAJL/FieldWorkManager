@@ -154,7 +154,8 @@ class ProjectHelper {
     
     foreach ($lists[\Library\Enums\SessionKeys::UserProjects] as $project) {
       $sessionProjects[\Library\Enums\SessionKeys::ProjectKey . $project->project_id()] = self::MakeSessionProject($project);
-      PmHelper::AddAProjectIdToList($caller->user(), $project->project_id());
+      if($caller->user()->getAttribute(\Library\Enums\SessionKeys::UserRole == 2 ))
+        PmHelper::AddAProjectIdToList($caller->user(), $project->project_id());
     }
 
     self::SetSessionProjects($caller->user(), $sessionProjects);

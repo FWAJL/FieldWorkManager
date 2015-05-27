@@ -67,6 +67,8 @@ class PhpModuleKeys {
 
   const upload_file = "upload_file";
   const load_file = "load_file";
+
+  const notes = "notes";
 }
 
 ?>

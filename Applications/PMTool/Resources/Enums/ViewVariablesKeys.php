@@ -99,4 +99,8 @@ class ViewVariablesKeys {
   const user_form = "user_form";
   //user showform
   const user_types = "user_types";
+  //notes
+  const notes = "notes";
+  const task_instructions = "task_instructions";
+  const current_location = "current_location";
 }

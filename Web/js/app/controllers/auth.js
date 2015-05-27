@@ -48,7 +48,7 @@ $(document).ready(function() {
         } else if (reply.role == '2') {
           utils.redirect("project");
         } else if (reply.role == '3') {
-          utils.redirect("user/showDetails");
+          utils.redirect("mobile/listTasks");
         } else if (reply.role == '4') {
           utils.redirect("logout");
         } else if (reply.role == '5') {

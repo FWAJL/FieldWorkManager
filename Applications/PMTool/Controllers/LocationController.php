@@ -225,7 +225,9 @@ class LocationController extends \Library\BaseController {
     $location_id = intval($this->dataPost["location_id"]);
 
     $location_selected = $this->_GetLocationFromSession($location_id);
-
+    if($location_selected) {
+      $this->user()->setAttribute(\Library\Enums\SessionKeys::CurrentLocationId, $location_id);
+    }
     $result["location"] = $location_selected["object"];
     $this->SendResponseWS(
             $result, array(

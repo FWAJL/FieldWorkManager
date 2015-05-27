@@ -331,8 +331,8 @@
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-	    	<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
-			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+	    	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+			      <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
         </php_modules>
     </route><!--   task/listAll -->
@@ -407,7 +407,7 @@
         </css_files>
         <php_modules>
             <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" />
-			<php_module key="active_task_status" file_name="active_task_status.php" />
+			      <php_module key="active_task_status" file_name="active_task_status.php" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
 
@@ -674,21 +674,79 @@
     </route>
     <!--  All Control For User ROLE 3  -->
     <!-- Mobile/Welcome -->
-   <route url="mobile" module="Mobile" action="viewTasksForTechnician" resxfile="mobile" type="ui" role="3">
-	<js_files>
-	    <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
-	</js_files>
-	<css_files>
-	    <css_file value="Web/css/app/app-mobile-theme.css" />
-	    <css_file value="Web/css/app/app-mobile-style.css" />
-	    <css_file value="Web/css/app/app-reponsive.css" />
-        <css_file use="project" />
-	</css_files>
-	<php_modules>
-	    <php_module key="welcome" file_name="welcome.php" />
-	</php_modules>
+    <route url="mobile" module="Mobile" action="viewTasksForTechnician" resxfile="mobile" type="ui" role="3">
+      <js_files>
+          <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
+      </js_files>
+      <css_files>
+          <css_file value="Web/css/app/app-mobile-theme.css" />
+          <css_file value="Web/css/app/app-mobile-style.css" />
+          <css_file value="Web/css/app/app-reponsive.css" />
+            <css_file use="project" />
+      </css_files>
+      <php_modules>
+        <php_module key="welcome" file_name="welcome.php" />
+      </php_modules>
     </route>
-       <!--  All Control For User ROLE 3  --> 
+
+    <route url="mobile/map" module="Mobile" action="viewMap" resxfile="mobile" type="ui" role="3">
+      <js_files>
+        <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
+        <js_file use="html" value="Web/js/core/gmaps.js"/>
+        <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
+        <js_file use="head" value="Web/js/app/controllers/map_manager.js" />
+        <js_file use="html" value="Web/js/app/controllers/map/mapActiveTasks.js"/>
+
+      </js_files>
+      <css_files>
+        <css_file value="Web/css/app/app-mobile-theme.css" />
+        <css_file value="Web/css/app/app-mobile-style.css" />
+        <css_file value="Web/css/app/app-reponsive.css" />
+        <css_file use="project" />
+      </css_files>
+      <php_modules>
+        <php_module key="welcome" file_name="welcome.php" />
+        <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+        <php_module key="map_module" file_name="map.php" shared="true"/>
+        <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
+        <php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
+        <php_module key="upload_file" file_name="upload_file.php" shared="true" />
+        <php_module key="popup_task_location_info" file_name="popup_task_location_info.php"/>
+      </php_modules>
+    </route>
+    <route url="mobile/listTasks" module="Mobile" action="listTasks" resxfile="mobile" type="ui" role="3">
+      <js_files>
+        <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
+      </js_files>
+      <css_files>
+        <css_file value="Web/css/app/app-mobile-theme.css" />
+        <css_file value="Web/css/app/app-mobile-style.css" />
+        <css_file value="Web/css/app/app-reponsive.css" />
+        <css_file use="project" />
+      </css_files>
+      <php_modules>
+        <php_module key="active_list_module" file_name="active_list.php" shared="true" />
+        <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+        <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+        <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+      </php_modules>
+    </route>
+    <route url="mobile/notes" module="Mobile" action="listNotes" resxfile="mobile" type="ui" role="3">
+      <js_files>
+        <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
+      </js_files>
+      <css_files>
+        <css_file value="Web/css/app/app-mobile-theme.css" />
+        <css_file value="Web/css/app/app-mobile-style.css" />
+        <css_file value="Web/css/app/app-reponsive.css" />
+        <css_file use="project" />
+      </css_files>
+      <php_modules>
+        <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+        <php_module key="notes" file_name="notes.php" />
+      </php_modules>
+    </route>
+    <!--  All Control For User ROLE 3  -->
     <!-- analyte/uploadList -->
     <route url="analyte/uploadCommons" module="Analyte" action="uploadCommonAnalytes" resxfile="analyte" type="ui" role="1">
         <js_files>
@@ -1018,6 +1076,7 @@
   
   <route url="task/add" module="Task" action="add" resxfile="task" type="ws" />
   <route url="task/edit" module="Task" action="edit" resxfile="task" type="ws" />
+  <route url="task/copyEntireTask" module="Task" action="copyEntireTask" resxfile="task" type="ws" />
   <route url="task/delete" module="Task" action="delete" resxfile="task" type="ws" />
   <route url="task/getlist" module="Task" action="getList" resxfile="task" type="ws" />
   <route url="task/getItem" module="Task" action="getItem" resxfile="task" type="ws" />

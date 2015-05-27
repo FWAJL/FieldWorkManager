@@ -82,46 +82,54 @@
   
   <main_menu name="service" active="true">
     <links>
-      <header href="service" resourcekey="header_service" enablelink="false" active="true" />
+      <header resourcekey="header_service" enablelink="false" active="true" />
       <submenu href="service/listAll" id="service_list_all" resourcekey="service_list" active="true"/>
       <submenu href="service/showForm?mode=add&amp;test=true" id="btn-add-service-manual" resourcekey="service_add" active="true"/>
     </links>
   </main_menu><!-- resource -->
+  
+<!--    <main_menu name="completed_task" active="true">
+    <links>
+      <header resourcekey="header_completed_task" enablelink="false" active="true" />
+      <submenu href="task/listAll" id="task_list_all" enablelink="false" resourcekey="task_list" active="true"/>
+    </links>
+  </main_menu>-->
+  <!-- completed task -->
   
   <main_menu name="field_results" active="false">
     <links>
       <header href="#" resourcekey="header_user_results" enablelink="false" />
     </links>
   </main_menu><!-- result -->
-  <main_menu name="technician_tasks" active="true">
-    <links>
-      <header href="mobile" resourcekey="header_ft_tasks" cssClass="fa fa-tasks" enablelink="true" active="true" />
-    </links>
-  </main_menu><!-- mobile landing page-->
   <main_menu name="technician_map" active="true">
     <links>
-      <header href="mobile" resourcekey="header_ft_map" cssClass="fa fa-globe" enablelink="true" active="true" />
+      <header href="mobile/map" resourcekey="header_ft_map" cssClass="fa fa-globe" enablelink="true" active="true" />
     </links>
-  </main_menu><!-- mobile - task map -->
-  <main_menu name="technician_locations" active="true">
+  </main_menu><!-- mobile - task map - landing page -->
+  <main_menu name="technician_communicate" active="true">
     <links>
-      <header href="mobile" resourcekey="header_ft_locations" cssClass="fa fa-map-marker" enablelink="true" active="true" />
+      <header href="mobile" resourcekey="header_ft_communicate" cssClass="fa fa-comments" enablelink="true" active="true" />
     </links>
-  </main_menu><!-- mobile - task locations-->
-  <main_menu name="technician_colloect_data" active="true">
+  </main_menu><!-- mobile - task discussions-->
+  <main_menu name="technician_notes" active="true">
     <links>
-      <header href="mobile" resourcekey="header_ft_collect_data" cssClass="fa fa-table" enablelink="true" active="true" />
+      <header href="mobile/notes" resourcekey="header_ft_notes" cssClass="fa fa-pencil-square" enablelink="true" active="true" />
     </links>
-  </main_menu><!-- mobile - task collect data -->
-  <main_menu name="technician_task_details" active="true">
+  </main_menu><!-- mobile - task notes -->
+  <main_menu name="technician_tasks" active="true">
     <links>
-      <header href="mobile" resourcekey="header_ft_task_details" cssClass="fa fa-info-circle" enablelink="true" active="true" />
+      <header href="mobile/listTasks" resourcekey="header_ft_tasks" cssClass="fa fa-pencil-square" enablelink="true" active="true" />
     </links>
-  </main_menu><!-- mobile - task collect data -->
-  <main_menu name="technician_task_services" active="true">
+  </main_menu><!-- mobile - task notes -->
+
+  <mobile_menu name="technician_user_edit" active="true">
     <links>
-      <header href="mobile" resourcekey="header_ft_task_services" cssClass="fa fa-users" enablelink="true" active="true" />
+      <header href="user/showDetails" resourcekey="header_ft_user_edit" cssClass="fa fa-pencil-square" enablelink="true" active="true" />
     </links>
-  </main_menu><!-- mobile - task services -->
-  
+  </mobile_menu><!-- mobile - task notes -->
+  <mobile_menu name="technician_logout" active="true">
+    <links>
+      <header href="logout" resourcekey="header_ft_logout" cssClass="fa fa-pencil-square" enablelink="true" active="true" />
+    </links>
+  </mobile_menu><!-- mobile - task notes -->
 </main_menus>
