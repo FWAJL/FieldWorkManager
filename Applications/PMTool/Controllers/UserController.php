@@ -19,6 +19,8 @@ class UserController extends \Library\BaseController {
     if($this->app->user()->getUserType()=="pm_id") {
 
       $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_details, $modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::pm_form]);
+    } else if($this->app->user()->getUserType() == "technician_id") {
+      $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_details, $modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::technician_form]);
     }
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_details_buttons, $modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_details_buttons]);
 
@@ -68,6 +70,15 @@ class UserController extends \Library\BaseController {
           $pmSession[\Library\Enums\SessionKeys::PmObject] = $pm;
           \Applications\PMTool\Helpers\PmHelper::UpdateSessionPm($this->app->user(),$pmSession,true);
         }
+      } else if($this->app->user()->getUserType()=="technician_id") {
+        $technicianObject = $this->user()->getAttribute(\Library\Enums\SessionKeys::UserTypeObject);
+        $technician = \Applications\PMTool\Helpers\UserHelper::PrepareTechnicianObject($this->dataPost());
+        $result["data"] = $technician;
+        $manager = $this->managers->getManagerOf("Technician");
+        $result_insert = $manager->edit($technician, 'technician_id');
+        if($result_insert) {
+          $this->user->setAttribute(\Library\Enums\SessionKeys::UserTypeObject,$technician);
+        }
       }
     }
 
@@ -104,6 +115,10 @@ class UserController extends \Library\BaseController {
           $pm =  \Applications\PMTool\Helpers\UserHelper::PreparePmObject($dataPost);
           $manager = $this->managers->getManagerOf('Pm');
           $result['user_type'] = $result_type = $manager->edit($pm,'pm_id');
+        } else if ($user->user_type == 'technician_id') {
+          $technician =  \Applications\PMTool\Helpers\UserHelper::PrepareTechnicianObject($dataPost);
+          $manager = $this->managers->getManagerOf('Technician');
+          $result['user_type'] = $result_type = $manager->edit($technician,'technician_id');
         }
       }
     }
@@ -141,7 +156,7 @@ class UserController extends \Library\BaseController {
 
   public function executeShowForm(\Library\HttpRequest $rq) {
     //set user types for dropdown menu selection
-    $userTypes = array('pm_id');
+    $userTypes = array('pm_id','technician_id');
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::user_types,$userTypes);
     //Load Modules for view
     $this->page->addVar(
@@ -197,6 +212,13 @@ class UserController extends \Library\BaseController {
         $pms = $manager->selectMany($pm, 'pm_id');
         $pm = $pms[0];
         $result['pm'] = $pm;
+      } else if($user->user_type()=="technician_id") {
+        $technician = new \Applications\PMTool\Models\Dao\Technician();
+        $technician->setTechnician_id($user->user_value());
+        $manager = $this->managers->getManagerOf('Technician');
+        $technicians = $manager->selectMany($technician,'technician_id');
+        $technician = $technicians[0];
+        $result['technician'] = $technician;
       }
     } else {
       $result['user'] = array();
@@ -238,6 +260,10 @@ class UserController extends \Library\BaseController {
     if($this->app->user()->getUserType()=="pm_id") {
       $pm_selected = $this->_GetPmFromSession($this->app->user()->getUserTypeId());
       $result["pm"] = $pm_selected;
+      $result["user_type"] = $this->app->user()->getUserType();
+    } else if($this->app->user()->getUserType()=="technician_id") {
+      $technician_selected=$this->user()->getAttribute(\Library\Enums\SessionKeys::UserTypeObject);
+      $result["technician"] = $technician_selected;
       $result["user_type"] = $this->app->user()->getUserType();
     }
 
