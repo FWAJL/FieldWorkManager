@@ -71,7 +71,8 @@ $(document).ready(function() {
     $(".facility_form input[name=\"facility_id_num\"]").val(dataWs.facility_obj.facility_id_num);
     $(".facility_form input[name=\"facility_sector\"]").val(dataWs.facility_obj.facility_sector);
     $(".facility_form input[name=\"facility_sic\"]").val(dataWs.facility_obj.facility_sic);   
-    
+    $(".facility_form input[name=\"boundary\"]").val(dataWs.facility_obj.boundary);
+
   };
   facility_manager.delete = function() {
     //get facility object from cache (PHP WS)

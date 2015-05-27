@@ -74,17 +74,20 @@ class FacilityController extends \Library\BaseController {
   public function executeEdit(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS();
 
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $this->dataPost["project_id"]);
+    //load facility from session project
+    $facility = $sessionProject[\Library\Enums\SessionKeys::FacilityObject];
     //Load interface to query the database
     $manager = $this->managers->getManagerOf($this->module());
     $result_edit = $manager->edit(
         \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject(
-            $this->dataPost(), new \Applications\PMTool\Models\Dao\Facility()),
+            $this->dataPost(),$facility),
         "facility_id"
         );
     $result["dataId"] = $this->dataPost["facility_id"];
 
     if ($result_edit) {
-      $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $this->dataPost["project_id"]);
+
       $sessionProject[\Library\Enums\SessionKeys::FacilityObject] = 
               \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Facility());
       \Applications\PMTool\Helpers\ProjectHelper::UpdateUserSessionProject($this->app()->user(), $sessionProject);

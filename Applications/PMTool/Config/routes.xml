@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<routes version="1.6.21">
+<routes version="1.6.22.2">
     <!-- UI routes -->
     <route url="login" module="Authenticate" action="loadLoginView" resxfile="login" type="ui">
         <js_files>
@@ -245,7 +245,7 @@
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
 			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
-            <php_module key="popup_project_info" file_name="popup_project_info.php" />
+            <php_module key="popup_project_info" file_name="popup_current_project_info.php" />
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
 	    <php_module key="popup_maplegend_project_module" file_name="popup_maplegend_project.php" shared="true" />
         </php_modules>
@@ -292,11 +292,11 @@
         <php_modules>
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
-			      <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
             <php_module key="popup_project_info" file_name="popup_project_info.php" />
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-            <php_module key="popup_task_location_info" file_name="popup_task_location_info.php" />
-	    <php_module key="popup_maplegend_task_locations_module" file_name="popup_maplegend_task_locations.php" shared="true" />
+            <php_module key="popup_task_location_info" file_name="popup_task_location_info.php"  shared="true"/>
+            <php_module key="popup_maplegend_task_locations_module" file_name="popup_maplegend_task_locations.php" shared="true" />
             <php_module key="upload_file" file_name="upload_file.php" shared="true" />
         </php_modules>
     </route>
@@ -331,8 +331,8 @@
             <php_module key="active_list_module" file_name="active_list.php" shared="true" />
             <php_module key="inactive_list_module" file_name="inactive_list.php" shared="true" />
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-	    	<php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
-			<php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+	    	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+			      <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
         </php_modules>
     </route><!--   task/listAll -->
@@ -400,23 +400,23 @@
             <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
             <js_file use="html" value="Web/js/core/gmaps.js"/>
             <js_file use="html" value="Web/js/app/controllers/map_manager.js"/>
-            <js_file use="html" value="Web/js/app/controllers/map/mapCurrentTasks.js"/>
+            <js_file use="html" value="Web/js/app/controllers/map/mapActiveTasks.js"/>
         </js_files>
         <css_files>
             <css_file use="project" />
         </css_files>
         <php_modules>
             <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" />
-			<php_module key="active_task_status" file_name="active_task_status.php" />
+			      <php_module key="active_task_status" file_name="active_task_status.php" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+            <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+
             <!--Map specific-->
             <php_module key="map_module" file_name="map.php" shared="true"/>
             <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
-            <php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
-
-            <!--<php_module key="popup_project_info" file_name="popup_project_info.php" />
-            <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-            <php_module key="popup_task_location_info" file_name="popup_task_location_info.php" />-->
+            <php_module key="popup_maplegend_active_task" file_name="popup_maplegend_active_task.php" shared="true" />
+            <php_module key="popup_task_location_info" file_name="popup_task_location_info.php"  shared="true"/>
+            <php_module key="upload_file" file_name="upload_file.php" shared="true" />
         </php_modules>
     </route><!--  activetask/map -->
 	
@@ -672,6 +672,81 @@
 	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         </php_modules>
     </route>
+    <!--  All Control For User ROLE 3  -->
+    <!-- Mobile/Welcome -->
+    <route url="mobile" module="Mobile" action="viewTasksForTechnician" resxfile="mobile" type="ui" role="3">
+      <js_files>
+          <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
+      </js_files>
+      <css_files>
+          <css_file value="Web/css/app/app-mobile-theme.css" />
+          <css_file value="Web/css/app/app-mobile-style.css" />
+          <css_file value="Web/css/app/app-reponsive.css" />
+            <css_file use="project" />
+      </css_files>
+      <php_modules>
+        <php_module key="welcome" file_name="welcome.php" />
+      </php_modules>
+    </route>
+
+    <route url="mobile/map" module="Mobile" action="viewMap" resxfile="mobile" type="ui" role="3">
+      <js_files>
+        <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
+        <js_file use="html" value="Web/js/core/gmaps.js"/>
+        <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
+        <js_file use="head" value="Web/js/app/controllers/map_manager.js" />
+        <js_file use="html" value="Web/js/app/controllers/map/mapActiveTasks.js"/>
+
+      </js_files>
+      <css_files>
+        <css_file value="Web/css/app/app-mobile-theme.css" />
+        <css_file value="Web/css/app/app-mobile-style.css" />
+        <css_file value="Web/css/app/app-reponsive.css" />
+        <css_file use="project" />
+      </css_files>
+      <php_modules>
+        <php_module key="welcome" file_name="welcome.php" />
+        <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+        <php_module key="map_module" file_name="map.php" shared="true"/>
+        <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
+        <php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
+        <php_module key="upload_file" file_name="upload_file.php" shared="true" />
+        <php_module key="popup_task_location_info" file_name="popup_task_location_info.php"/>
+      </php_modules>
+    </route>
+    <route url="mobile/listTasks" module="Mobile" action="listTasks" resxfile="mobile" type="ui" role="3">
+      <js_files>
+        <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
+      </js_files>
+      <css_files>
+        <css_file value="Web/css/app/app-mobile-theme.css" />
+        <css_file value="Web/css/app/app-mobile-style.css" />
+        <css_file value="Web/css/app/app-reponsive.css" />
+        <css_file use="project" />
+      </css_files>
+      <php_modules>
+        <php_module key="active_list_module" file_name="active_list.php" shared="true" />
+        <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+        <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+        <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+      </php_modules>
+    </route>
+    <route url="mobile/notes" module="Mobile" action="listNotes" resxfile="mobile" type="ui" role="3">
+      <js_files>
+        <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
+      </js_files>
+      <css_files>
+        <css_file value="Web/css/app/app-mobile-theme.css" />
+        <css_file value="Web/css/app/app-mobile-style.css" />
+        <css_file value="Web/css/app/app-reponsive.css" />
+        <css_file use="project" />
+      </css_files>
+      <php_modules>
+        <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+        <php_module key="notes" file_name="notes.php" />
+      </php_modules>
+    </route>
+    <!--  All Control For User ROLE 3  -->
     <!-- analyte/uploadList -->
     <route url="analyte/uploadCommons" module="Analyte" action="uploadCommonAnalytes" resxfile="analyte" type="ui" role="1">
         <js_files>
@@ -849,6 +924,7 @@
       </css_files>
       <php_modules>
         <php_module key="pm_form" file_name="pm_form.php" />
+        <php_module key="technician_form" file_name="technician_form.php" />
         <php_module key="user_form" file_name="user_form.php" shared="true"/>
         <php_module key="user_details_buttons" file_name="user_details_buttons.php" />
       </php_modules>
@@ -882,6 +958,7 @@
       </css_files>
       <php_modules>
         <php_module key="pm_form" file_name="pm_form.php" />
+        <php_module key="technician_form" file_name="technician_form.php" />
         <php_module key="user_form" file_name="user_form.php" />
       </php_modules>
     </route>
@@ -918,13 +995,16 @@
 
     <route url="form/masterForm" module="Form" action="showFormMaster" resxfile="form" type="ui" role="1">
       <js_files>
+        <js_file use="head" value="Web/js/addons/fancyapps/source/jquery.fancybox.js" />
         <js_file use="head" value="Web/js/app/controllers/form_manager.js" />
       </js_files>
       <css_files>
         <css_file use="project" />
+        <css_file value="Web/js/addons/fancyapps/source/jquery.fancybox.css" />
       </css_files>
       <php_modules>
         <php_module key="form_form_master" file_name="form_form_master.php"/>
+        <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
       </php_modules>
     </route>
     <!-- form/masterForm -->
@@ -1001,6 +1081,7 @@
   
   <route url="task/add" module="Task" action="add" resxfile="task" type="ws" />
   <route url="task/edit" module="Task" action="edit" resxfile="task" type="ws" />
+  <route url="task/copyEntireTask" module="Task" action="copyEntireTask" resxfile="task" type="ws" />
   <route url="task/delete" module="Task" action="delete" resxfile="task" type="ws" />
   <route url="task/getlist" module="Task" action="getList" resxfile="task" type="ws" />
   <route url="task/getItem" module="Task" action="getItem" resxfile="task" type="ws" />
@@ -1055,6 +1136,7 @@
   <route url="field_analyte/getlist" module="FieldAnalyte" action="getList" resxfile="field_analyte" type="ws" />
   <route url="field_analyte/getItem" module="FieldAnalyte" action="getItem" resxfile="field_analyte" type="ws" />
   <route url="field_analyte/updateItems" module="FieldAnalyte" action="updateItems" resxfile="field_analyte" type="ws" />
+  <route url="field_analyte/deleteCommon" module="FieldAnalyte" action="deleteCommon" resxfile="field_analyte" type="ws" />
   
   <route url="lab_analyte/add" module="LabAnalyte" action="add" resxfile="lab_analyte" type="ws" />
   <route url="lab_analyte/addCommon" module="LabAnalyte" action="addCommon" resxfile="lab_analyte" type="ws" />
@@ -1063,6 +1145,7 @@
   <route url="lab_analyte/getlist" module="LabAnalyte" action="getList" resxfile="lab_analyte" type="ws" />
   <route url="lab_analyte/getItem" module="LabAnalyte" action="getItem" resxfile="lab_analyte" type="ws" />
   <route url="lab_analyte/updateItems" module="LabAnalyte" action="updateItems" resxfile="lab_analyte" type="ws" />
+  <route url="lab_analyte/deleteCommon" module="LabAnalyte" action="deleteCommon" resxfile="lab_analyte" type="ws" />
 
   <route url="map/listAll" module="Map" action="listAll" resxfile="map" type="ws" />
   <route url="map/listCurrentProject" module="Map" action="listCurrentProject" resxfile="map" type="ws" />

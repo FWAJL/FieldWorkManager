@@ -280,7 +280,7 @@ $(document).ready(function() {
         toastr.success(reply.message);
         if(reply.fileResults.length>0){
           $.each(reply.fileResults, function(key, file){
-            var lightboxImage = utils.createImageLightboxElement(file.webPath, itemId, file.title);
+            var lightboxImage = utils.createImageLightboxElement(file.filePath, itemId, file.document_title);
             var remove = utils.createRemoveFileElement(file.document_id);
             $("#documents").append('<div class="document-block" id="document-'+file.document_id+'">'+lightboxImage+remove+'</div>');
             $("#documents").show();

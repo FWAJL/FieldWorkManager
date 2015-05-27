@@ -38,7 +38,7 @@ h3 { margin-top: 10px; }
 #top_header .logo img { height: 32px; margin: 4px; }
 
 #pm_info ul { display: none; }
-#pm_info { 
+#pm_info, #ft_info {
     float: right; 
     margin-right: 40px
 }
@@ -186,6 +186,10 @@ li textarea {
   overflow-x: hidden;
   padding-left:15px;
 }
+.map-controls, .hide-map-sidebar {
+  display: none;
+}
+
 #map-ruler {
   background-color: white;
   height: 20px;

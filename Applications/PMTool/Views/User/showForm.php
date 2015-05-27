@@ -9,6 +9,7 @@
         <div class="form_sections add_delete_user">
           <?php require $form_modules["user_form"]; ?>
           <?php require $form_modules["pm_form"]; ?>
+          <?php require $form_modules["technician_form"]; ?>
         </div>
       </div>
       <div class="col-lg-1 col-md-1">

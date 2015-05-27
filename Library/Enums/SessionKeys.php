@@ -104,6 +104,8 @@ abstract class SessionKeys {
   const CurrentPm = "current_pm";
   const CurrentTask = "current_task";
   const CurrentDiscussion = "current_discussion";
+  const CurrentLocationId = "current_location_id";
+  const CurrentLocation = "current_location";
   
   //Routing
   const SessionRoutes = "app_routes";

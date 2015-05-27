@@ -48,7 +48,13 @@ class UserHelper {
         $roleId = \Library\Enums\UserRole::ProjectManager;
         break;
       case \Library\Enums\UserRoleType::Technician:
-        $roleId = \Library\Enums\UserRole::ProjectManager;
+        $roleId = \Library\Enums\UserRole::Technician;
+        break;
+      case \Library\Enums\UserRoleType::Client:
+        $roleId = \Library\Enums\UserRole::Client;
+        break;
+      case \Library\Enums\UserRoleType::Service:
+        $roleId = \Library\Enums\UserRole::Service;
         break;
       default:
         $roleId = 0;
@@ -125,6 +131,15 @@ class UserHelper {
     return $user;
   }
 
+  public static function PrepareTechnicianObject($dataPost) {
+    $technician = new \Applications\PMTool\Models\Dao\Technician();
+    $technician->setTechnician_id($dataPost["technician_id"]);
+    $technician->setTechnician_name($dataPost["technician_name"]);
+    $technician->setTechnician_phone(!array_key_exists('technician_phone', $dataPost) ? "" : $dataPost["technician_phone"]);
+    $technician->setTechnician_active(!array_key_exists('technician_active', $dataPost) ? "" : $dataPost["technician_active"]);
+    return $technician;
+  }
+
   public static function PreparePmObject($dataPost) {
     $pm = new \Applications\PMTool\Models\Dao\Project_manager();
     $pm->setPm_id($dataPost["pm_id"]);
@@ -185,6 +200,10 @@ class UserHelper {
         return \Library\Enums\UserRoleType::ProjectManager;
       case \Library\Enums\UserRole::Technician:
         return \Library\Enums\UserRoleType::Technician;
+      case \Library\Enums\UserRole::Client:
+        return \Library\Enums\UserRoleType::Client;
+      case \Library\Enums\UserRole::Service:
+        return \Library\Enums\UserRoleType::Service;
       default://role = 4 and others
         return "";
     }

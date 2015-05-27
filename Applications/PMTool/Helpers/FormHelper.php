@@ -49,15 +49,18 @@ class FormHelper {
 
   public static function GetMasterForms($caller, $sessionProject) {
     $result = array();
-    if ($sessionProject !== NULL) {
-      $manager = $caller->managers()->getManagerOf("MasterForm");
-      $manager->setRootDirectory($caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
-      $manager->setWebDirectory($caller->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
-      $masterForm = new \Applications\PMTool\Models\Dao\Master_form();
+    $manager = $caller->managers()->getManagerOf("MasterForm");
+    $manager->setRootDirectory($caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
+    $manager->setWebDirectory($caller->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
+    $masterForm = new \Applications\PMTool\Models\Dao\Master_form();
+    
+    if ($sessionProject !== NULL) {  
       $result =
-      $sessionProject[\Library\Enums\SessionKeys::ProjectAvailableForms][\Library\Enums\SessionKeys::ProjectMasterForms] =
-      $manager->selectMany($masterForm, "");
+        $sessionProject[\Library\Enums\SessionKeys::ProjectAvailableForms][\Library\Enums\SessionKeys::ProjectMasterForms] =
+        $manager->selectMany($masterForm, "");
       \Applications\PMTool\Helpers\ProjectHelper::SetCurrentSessionProject($caller->user(), $sessionProject);
+    } else {
+      $result = $manager->selectMany($masterForm, "");
     }
     return $result;
   }

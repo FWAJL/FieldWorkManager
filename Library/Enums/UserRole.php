@@ -31,4 +31,7 @@ class UserRole {
   const ProjectManager = 2;
   const Technician = 3;
   const Visitor = 4;
+  const Client = 5;
+  const Service = 6;
+  const TBD = 7;
 }
