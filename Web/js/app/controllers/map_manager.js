@@ -357,7 +357,7 @@ var openLocationInfo = function(e,id, noLatLng) {
         $("#document-upload input[name=\"itemId\"]").val(id);
         $(".lightbox-content").html("");
         $.each(replyPhotos.fileResults, function(key,photo){
-          $(".lightbox-content").append('<a href="'+photo.webPath+'" data-title="'+photo.title+'" data-lightbox="modal-images"></a>');
+          $(".lightbox-content").append('<a href="'+photo.filePath+'" data-title="'+photo.document_title+'" data-lightbox="modal-images"></a>');
         });
         setViewPhotosEvent(replyPhotos.fileResults.length);
         setLocationZoomEvent(e);
@@ -437,7 +437,7 @@ var openTaskLocationInfo = function(e,id,action) {
       $("#task-location-window-title-task_location_name").html(item.location_name);
       $(".lightbox-content").html("");
       $.each(replyPhotos.fileResults, function(key,photo){
-        $(".lightbox-content").append('<a href="'+photo.webPath+'" data-title="'+photo.title+'" data-lightbox="modal-images"></a>');
+        $(".lightbox-content").append('<a href="'+photo.filePath+'" data-title="'+photo.document_title+'" data-lightbox="modal-images"></a>');
       });
       setViewPhotosEvent(replyPhotos.fileResults.length);
       setTaskLocationZoomEvent(e);
