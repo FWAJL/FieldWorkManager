@@ -80,6 +80,7 @@ class MobileController extends \Library\BaseController {
 
   public function executeListTasks(\Library\HttpRequest $rq) {
     $modules = $this->app()->router()->selectedRoute()->phpModules();
+    \Applications\PMTool\Helpers\DiscussionHelper::UnsetCurrentDiscussion($this->user());
     $technician = $this->user()->getAttribute(\Library\Enums\SessionKeys::UserTypeObject);
     $project = new \Applications\PMTool\Models\Dao\Project();
     $project->setPm_id($technician->pm_id());
@@ -95,6 +96,12 @@ class MobileController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf('Client');
     $lists[\Library\Enums\SessionKeys::UserProjectClientList] = $manager->selectMany($project, "pm_id");
 
+    //SessionPM
+    $manager = $this->managers->getManagerOf('Pm');
+    $pm = new \Applications\PMTool\Models\Dao\Project_manager();
+    $pm->setPm_id($technician->pm_id());
+    $pms = $manager->selectMany($pm,'pm_id');
+    \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this, $pms[0], true);
     $ProjectsSession = \Applications\PMTool\Helpers\ProjectHelper::StoreSessionProjects($this, $lists);
      \Applications\PMTool\Helpers\TaskHelper::GetTasksForTechnician($this,$technician);
     $tasks = \Applications\PMTool\Helpers\TaskHelper::GetSessionTasks($this->user());
@@ -188,6 +195,55 @@ class MobileController extends \Library\BaseController {
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::notes, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::notes]);
     $this->page->addVar(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_instructions, $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_instructions());
+  }
+
+  public function executeCommunications(\Library\HttpRequest $rq) {
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
+    //Check if a project needs to be selected in order to display this page
+    if (!$sessionProject) {
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::TaskAddPrompt);
+    }
+    $sessionPm = $this->user->getAttribute(\Library\Enums\SessionKeys::CurrentPm);
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+    //\Applications\PMTool\Helpers\CommonHelper::pr($sessionTask);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentPm, $sessionPm[\Library\Enums\SessionKeys::PmObject]);
+
+
+    //Get current Discussion from session and set for view
+    $currentDiscussion = \Applications\PMTool\Helpers\DiscussionHelper::GetCurrentDiscussion($this->user);
+    if($currentDiscussion){
+      $manager = $this->managers()->getManagerOf('User');
+      $discussion_person = \Applications\PMTool\Helpers\DiscussionHelper::GetOtherDiscussionPerson($this->user(),$currentDiscussion[\Library\Enums\SessionKeys::DiscussionPeople]);
+      $discussion_user_type = $manager->selectUserTypeObjectByUserId($discussion_person->user_id());
+      if($discussion_user_type) {
+        $currentDiscussion['comm_with'] = $discussion_user_type;
+        $currentDiscussion['comm_type'] = \Applications\PMTool\Helpers\UserHelper::FindUserTypeFromObject($discussion_user_type);
+      }
+      $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentDiscussion, $currentDiscussion);
+    }
+
+    $task_services = \Applications\PMTool\Helpers\ServiceHelper::GetAndStoreTaskServices($this, $sessionTask);
+    $task_services = \Applications\PMTool\Helpers\ServiceHelper::CategorizeTheList($task_services, "service_type");
+    $data = array(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => 'activetask',
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_left => $task_services,
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("service")),
+    );
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
+
+    $task_technicians = \Applications\PMTool\Helpers\TechnicianHelper::GetAndStoreTaskTechnicians($this, $sessionTask);
+    $task_technicians = \Applications\PMTool\Helpers\CommonHelper::FilterObjectsToExcludeRelatedObject($task_technicians,array($this->user()->getAttribute(\Library\Enums\SessionKeys::UserTypeObject)),'technician_id');
+    $data_left = array(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => 'activetask',
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left => $task_technicians,
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_left => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower("technician")),
+    );
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data_left, $data_left);
+    $modules = $this->app()->router()->selectedRoute()->phpModules();
+    $this->page->addVar(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
   }
 
 }
