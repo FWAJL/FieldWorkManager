@@ -1126,6 +1126,7 @@
   <route url="form/addMaster" module="Form" action="addMaster" resxfile="form" type="ws" />
   <route url="form/delete" module="Form" action="delete" resxfile="form" type="ws" />
   <route url="form/getPdfFileFor" module="Form" action="getPdfFileFor" resxfile="form" type="ws" />
+  <route url="form/checkIfTitleExists" module="Form" action="checkIfTitleExists" resxfile="form" type="ws" />
 
   <route url="pm/add" module="Pm" action="add" resxfile="pm" type="ws" />
   <route url="pm/edit" module="Pm" action="edit" resxfile="pm" type="ws" />

@@ -25,7 +25,7 @@ class FormController extends \Library\BaseController {
 
     //Get confirm msg for analyte deletion from showForm screen
     $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"form", "targetaction": 
-            "masterForm", "operation": ["delete"]}', $this->app->name());
+            "masterForm", "operation": ["delete", "addUniqueCheck"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
     
     $data_right = array(
@@ -138,6 +138,25 @@ class FormController extends \Library\BaseController {
       "step" => (intval($result["dataOut"])) > 0 ? "success" : "error"
     ));
 
+  }
+
+  public function executeCheckIfTitleExists(\Library\HttpRequest $rq){
+    // Init result
+    $result = $this->InitResponseWS();
+
+    //At this point check if the file name is already used
+    $existingForm = \Applications\PMTool\Helpers\FormHelper::GetMasterformWithTitle($this, $this->dataPost["title"]);
+    if(count($existingForm) > 0) {
+      //Other forms found with same title
+      $title_found = true;  
+    } else $title_found = false;
+
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Form,
+      "resx_key" => $this->action(),
+      "step" => $title_found ? "error" : "success"
+    ));
   }
 
   public function executeEdit(\Library\HttpRequest $rq) {
