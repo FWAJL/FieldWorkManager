@@ -29,6 +29,35 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class FileController extends \Library\BaseController {
 
+
+  public function executeLoadOne(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS();
+    $dataPost = $this->dataPost();
+    $manager = $this->managers()->getManagerOf("Document");
+    $manager->setRootDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
+    $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
+    $document = new \Applications\PMTool\Models\Dao\Document();
+    $document->setDocument_id($dataPost['id']);
+    $document = $manager->selectOne($document);
+    if(!is_null($document)) {
+      $directory = str_replace("_id", "", $document->document_category());
+      $result['document'] = $document;
+      $result["filepath"] = $this->getHostUrl().$manager->webDirectory.$directory.'/'.$document->document_value();
+      $result['success'] = true;
+    } else {
+      $result['success'] = false;
+    }
+
+    $this->SendResponseWS(
+      $result, array(
+      "directory" => "common",
+      "resx_file" => \Library\Enums\ResourceKeys\ResxFileNameKeys::File,
+      "resx_key" => $this->action(),
+      "step" => $result['success'] ? "success" : "error"
+    ));
+  }
+
+
   public function executeLoad(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS();
     $dataPost = $this->dataPost();
@@ -39,6 +68,9 @@ class FileController extends \Library\BaseController {
     $directory = str_replace("_id", "", $dataPost['itemCategory']);
     $manager->setObjectDirectory($directory);
     $fileList = $manager->selectManyByCategoryAndId($dataPost['itemCategory'],$dataPost['itemId']);
+    foreach($fileList as $key=>$file) {
+      $fileList[$key]->filePath = $file->WebPath();
+    }
     $result['fileResults'] = $fileList;
 
     $this->SendResponseWS(
@@ -71,7 +103,9 @@ class FileController extends \Library\BaseController {
       $document->setDocument_title($files['file']['name']);
     }
     $result["dataOut"] = $manager->addWithFile($document,$files['file']);
-
+    $document->setDocument_id($result['dataOut']);
+    $result["document"] = $document;
+    $result["filepath"] = $this->getHostUrl().$manager->webDirectory.$directory.'/'.$document->document_value();
     if($dataPost['itemReplace']==="true" && $result["dataOut"]!=-1) {
       $manager->DeleteObjectsWithFile($list, 'document_id');
     }
@@ -137,6 +171,16 @@ class FileController extends \Library\BaseController {
     }
     
     $result["dataOut"] = $manager->copyWithFile($document, $files['file']);
+  }
+
+  private function getHostUrl(){
+    $ssl = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? true:false;
+    $sp = strtolower($_SERVER['SERVER_PROTOCOL']);
+    $protocol = substr($sp, 0, strpos($sp, '/')) . (($ssl) ? 's' : '');
+    $port = $_SERVER['SERVER_PORT'];
+    $port = ((!$ssl && $port=='80') || ($ssl && $port=='443')) ? '' : ':'.$port;
+    $host = isset($host) ? $host : $_SERVER['SERVER_NAME'] . $port;
+    return $protocol . '://' . $host;
   }
 
   

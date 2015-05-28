@@ -300,15 +300,16 @@ class ProjectController extends \Library\BaseController {
     $project_selected = NULL;
     if ($project !== NULL) {
       $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $project->project_id());
-      $project_selected = $sessionProject[\Library\Enums\SessionKeys::ProjectObject] = $project;
     } else {
       $project_selected = \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->app()->user(), $project_id);
       $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetUserSessionProject($this->app()->user(), $project_selected->project_id());
     }
 
-    $facility_selected = $sessionProject[\Library\Enums\SessionKeys::FacilityObject];
-    $client_selected = $sessionProject[\Library\Enums\SessionKeys::ClientObject];
-
+    if (!$sessionProject[\Library\Enums\SessionKeys::ClientObject]) {
+      $client = new \Applications\PMTool\Models\Dao\Client();
+      $client->setProject_id($sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id());
+      $sessionProject[\Library\Enums\SessionKeys::ClientObject] = client;
+    }
     $result["sessionProject"] = $sessionProject;
     \Applications\PMTool\Helpers\ProjectHelper::UpdateUserSessionProject($this->app()->user(), $sessionProject);
 
@@ -317,7 +318,7 @@ class ProjectController extends \Library\BaseController {
               $result, array(
           "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Project,
           "resx_key" => $this->action(),
-          "step" => ($project_selected !== NULL && $facility_selected !== NULL && $client_selected !== NULL) ? "success" : "error"
+          "step" => ($sessionProject != NULL) ? "success" : "error"
       ));
     } else {
       return $sessionProject;

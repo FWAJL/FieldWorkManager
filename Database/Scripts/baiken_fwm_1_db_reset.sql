@@ -117,12 +117,14 @@ CREATE TABLE IF NOT EXISTS `task` (
     `project_id` int(11) NOT NULL COMMENT 'Foreign key => project',
     `task_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `task_deadline` varchar(50) NOT NULL,
+    `task_start_date` varchar(50) NULL,
     `task_instructions` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
     `task_trigger_cal` TINYINT(1) DEFAULT 0 NULL,
     `task_trigger_cal_value` VARCHAR(50) NULL,
     `task_trigger_pm` TINYINT(1) DEFAULT 0 NULL,
     `task_trigger_ext` TINYINT(1) DEFAULT 0 NULL,
     `task_active` tinyint(1) NOT NULL DEFAULT '0',
+    `task_activated` tinyint(1) NOT NULL DEFAULT '0',
     `task_req_form` TINYINT(1) DEFAULT 0 NULL,
     `task_req_field_analyte` TINYINT(1) DEFAULT 0 NULL,
     `task_req_lab_analyte` TINYINT(1) DEFAULT 0 NULL,
@@ -154,6 +156,7 @@ CREATE TABLE IF NOT EXISTS `field_analyte` (
     `field_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
     `field_analyte_name_unit` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
     `pm_id` int(11) NOT NULL COMMENT 'Foreign key => project_manager',
+    `analyte_abbrev` VARCHAR( 13 ) NULL DEFAULT NULL,
     PRIMARY KEY (`field_analyte_id`),
     UNIQUE INDEX `un_fa` (`field_analyte_name_unit` ASC),
     CONSTRAINT `fk_field_analyte_pm` FOREIGN KEY (`pm_id`)
@@ -178,6 +181,7 @@ CREATE TABLE IF NOT EXISTS `lab_analyte` (
     `lab_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
     `lab_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `pm_id` int(11) NOT NULL COMMENT 'Foreign key => project_manager',
+    `analyte_abbrev` VARCHAR( 13 ) NULL DEFAULT NULL, 
     PRIMARY KEY (`lab_analyte_id`),
     UNIQUE INDEX `un_la` (`lab_analyte_name` ASC),
     CONSTRAINT `fk_lab_analyte_pm` FOREIGN KEY (`pm_id`)
@@ -264,6 +268,7 @@ CREATE TABLE IF NOT EXISTS `task_location` (
     `task_location_id` INT(11) NOT NULL AUTO_INCREMENT,
     `task_id` int(11) NOT NULL,
     `location_id` int(11) NOT NULL,
+    `task_location_status` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '0 = not started; 1 = in process; 2 = finished',
     CONSTRAINT `fk_tl_task` FOREIGN KEY (`task_id`)
         REFERENCES `task` (`task_id`) ON DELETE CASCADE,
     CONSTRAINT `fk_tl_location` FOREIGN KEY (`location_id`)
@@ -464,6 +469,7 @@ CREATE TABLE IF NOT EXISTS `task_note` (
   `task_note_category_type` varchar(25) NOT NULL COMMENT 'Possible values: pm_id, technician_id',
   `task_note_category_value` int(11) NOT NULL COMMENT 'Represents the value of the object property set in the task_note_category_type',
   `task_note_value`varchar(500) NULL COMMENT 'The value of the note typed by the user',
+  `task_note_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT `fk_tn_task` FOREIGN KEY (`task_id`)
         REFERENCES `task` (`task_id`) ON DELETE CASCADE,
     PRIMARY KEY (`task_note_id`)

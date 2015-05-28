@@ -4,4 +4,5 @@
  */
 (function(config) {
   config.rootFolder = "/FieldWorkAssistantMVC/";
+  config.chatRefresh = 5000;
 }(window.config = window.config || {}));

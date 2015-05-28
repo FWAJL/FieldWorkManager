@@ -30,10 +30,10 @@
           </div>
           
           <?php 
-		  require $tooltip_message_module;
-		  require $popup_msg_module; 
-		  require $prompt_msg_module;
-		  ?>
+    		  require $tooltip_message_module;
+    		  require $popup_msg_module; 
+    		  require $prompt_msg_module;
+    		  ?>
         </div>
       </div>
     </div>

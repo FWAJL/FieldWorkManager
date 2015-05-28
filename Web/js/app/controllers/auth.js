@@ -1,11 +1,11 @@
 $(document).ready(function() {
-  if(typeof(validator) != 'undefined') {
-   validator.requiredInput();//validate the inputs
-   $("#btn_login").click(function() {//on button click...
-    var post_data = auth.retrieveCredentials();//get the credentials typed in
-    if (post_data['result'] === "success")//if the data is valid...
-     auth.login(post_data);//continue to login the user
-   });
+  if (typeof(validator) != 'undefined') {
+    validator.requiredInput();//validate the inputs
+    $("#btn_login").click(function() {//on button click...
+      var post_data = auth.retrieveCredentials();//get the credentials typed in
+      if (post_data['result'] === "success")//if the data is valid...
+        auth.login(post_data);//continue to login the user
+    });
     if (utils.getQueryVariable("enc") === "0") {
       $("#btn_login").trigger('click');
     }
