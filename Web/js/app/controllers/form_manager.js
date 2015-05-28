@@ -136,7 +136,20 @@ $(document).ready(function() {
               
             });
           } else if (key === "delete") {
-            form_manager.delete(parseInt(options.$trigger.data("form-id")),'master_form');
+            var msg = $('#confirmmsg-delete').val() 
+            if (typeof msg !== typeof undefined && msg !== false) {
+              utils.showConfirmBox(msg, function(result) {
+                if (result)
+                {
+                  form_manager.delete(parseInt(options.$trigger.data("form-id")),'master_form');
+                }
+              });
+            }
+            else
+            {
+              //If confirm msg not existing 
+              form_manager.delete(parseInt(options.$trigger.data("form-id")),'master_form');
+            }
           } 
         },
         items: {

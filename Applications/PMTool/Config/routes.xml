@@ -134,8 +134,8 @@
             <php_module key="location_form" file_name="location_form.php" />
             <php_module key="upload_file" file_name="upload_file.php" shared="true"/>
             <php_module key="load_file" file_name="load_file.php" shared="true"/>
-			      <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
-			      <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+            <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+            <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
         </php_modules>
     </route>
     <!-- location/showForm -->
@@ -759,6 +759,8 @@
             <php_module key="field_analyte_form" file_name="common_field_analyte_form.php" />
             <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
             <php_module key="common_field_analyte_list" file_name="common_field_analyte_list.php" />
+            <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+            <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
         </php_modules>
     </route>
     <!-- analyte/uploadCommons -->
@@ -777,9 +779,9 @@
             <php_module key="lab_analyte_list" file_name="lab_analyte_list.php" />
             <php_module key="lab_analyte_buttons" file_name="lab_analyte_list_buttons.php" />
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
-	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
-	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
-	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+    	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+    	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+    	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
         </php_modules>
     </route>
     <!--  labanalyte/ListAll -->
@@ -813,6 +815,8 @@
             <php_module key="lab_analyte_form" file_name="common_lab_analyte_form.php" />
             <php_module key="analyte_buttons" file_name="analyte_buttons.php" />
             <php_module key="common_lab_analyte_list" file_name="common_lab_analyte_list.php" />
+            <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+            <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
         </php_modules>
     </route>
     <!-- labanalyte/uploadCommons -->
@@ -1005,6 +1009,7 @@
       <php_modules>
         <php_module key="form_form_master" file_name="form_form_master.php"/>
         <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
+        <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
       </php_modules>
     </route>
     <!-- form/masterForm -->
@@ -1146,6 +1151,8 @@
   <route url="lab_analyte/getItem" module="LabAnalyte" action="getItem" resxfile="lab_analyte" type="ws" />
   <route url="lab_analyte/updateItems" module="LabAnalyte" action="updateItems" resxfile="lab_analyte" type="ws" />
   <route url="lab_analyte/deleteCommon" module="LabAnalyte" action="deleteCommon" resxfile="lab_analyte" type="ws" />
+  <route url="lab_analyte/isCommonAnalyteExisting" module="LabAnalyte" action="isCommonAnalyteExisting" resxfile="lab_analyte" type="ws" />
+  <route url="lab_analyte/editCommonAnalyte" module="LabAnalyte" action="editCommonAnalyte" resxfile="lab_analyte" type="ws" />
 
   <route url="map/listAll" module="Map" action="listAll" resxfile="map" type="ws" />
   <route url="map/listCurrentProject" module="Map" action="listCurrentProject" resxfile="map" type="ws" />

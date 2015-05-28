@@ -22,6 +22,11 @@ class FormController extends \Library\BaseController {
   public function executeShowFormMaster(\Library\HttpRequest $rq) {
     //Fecth master forms
     $masterForms = \Applications\PMTool\Helpers\FormHelper::GetMasterForms($this, NULL);
+
+    //Get confirm msg for analyte deletion from showForm screen
+    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"form", "targetaction": 
+            "masterForm", "operation": ["delete"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
     
     $data_right = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
