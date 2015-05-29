@@ -81,18 +81,61 @@ $(document).ready(function() {
   $.contextMenu({
     selector: '#common-lab-analyte-list > .ui-widget-content',
     callback: function(key, options) {
+      var lab_analyte_id = options.$trigger.attr("data-common_lab_analyte-id");
+
       if (key === "edit") {
-        console.log('about to edit');
+
+        if (prompt_box_msg == null || prompt_box_msg == '') {
+          prompt_box_msg = $('#promptmsg-edit').val();
+        }
+        
+        $('#promptmsg-edit').val(prompt_box_msg.replace('{0}', options.$trigger.html()));
+        $('#text_input').val(options.$trigger.html());
+        utils.showPromptBox("edit", function() {
+          //check if existing
+          datacx.post('lab_analyte/isCommonAnalyteExisting', {analyte_id: lab_analyte_id, analyte_name: $('#text_input').val(), analyte_type: 'lab'}).then(function(reply) {//call AJAX method to call Project/Add WebService
+            if (reply === null || reply.result === 0) {//has an error
+              //Edit the common lab analyte
+              datacx.post('lab_analyte/editCommonAnalyte', {analyte_id: lab_analyte_id, analyte_name: $('#text_input').val(), analyte_type: 'lab'}).then(function(reply) {
+                if (reply === null || reply.result === 0) {//has an error
+                  toastr.error(reply.message);
+                } else {//success
+                  toastr.success(reply.message);
+                  utils.redirect("labanalyte/uploadCommons", 700);
+                }      
+              });
+            } else {//success
+              //console.log('Analyte exists, show alert box');
+              utils.togglePromptBox();
+              utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
+                utils.togglePromptBox();
+              });
+            }
+          });  
+        }, 'promptmsg-edit');
+
       } else if (key === "delete") {
-        var lab_analyte_id = options.$trigger.attr("data-common_lab_analyte-id");
-        datacx.post('lab_analyte/deleteCommon', {analyte_id: lab_analyte_id}).then(function(reply) {//call AJAX method to call Project/Add WebService
-          if (reply === null || reply.result === 0) {//has an error
-            toastr.error(reply.message);
-          } else {//success
-            toastr.success(reply.message);
-            utils.redirect("labanalyte/uploadCommons", 700);
-          }
-        });
+
+        var msg = $('#confirmmsg-deleteCommonLab').val() 
+        if (typeof msg !== typeof undefined && msg !== false) {
+          utils.showConfirmBox(msg, function(result) {
+            if (result)
+            {
+              datacx.post('lab_analyte/deleteCommon', {analyte_id: lab_analyte_id}).then(function(reply) {//call AJAX method to call Project/Add WebService
+                if (reply === null || reply.result === 0) {//has an error
+                  toastr.error(reply.message);
+                } else {//success
+                  toastr.success(reply.message);
+                  utils.redirect("labanalyte/uploadCommons", 700);
+                }
+              });
+            }
+          });
+        }
+        else
+        {
+          //delAnalyte(ajaxParams, options);
+        }      
       }
     },
     items: {
@@ -105,18 +148,62 @@ $(document).ready(function() {
   $.contextMenu({
     selector: '#common-field-analyte-list > .ui-widget-content',
     callback: function(key, options) {
+      var field_analyte_id = options.$trigger.attr("data-common_field_analyte-id");
       if (key === "edit") {
-        console.log('about to edit');
+        
+        //===========================================
+        if (prompt_box_msg == null || prompt_box_msg == '') {
+          prompt_box_msg = $('#promptmsg-edit').val();
+        }
+        
+        $('#promptmsg-edit').val(prompt_box_msg.replace('{0}', options.$trigger.html()));
+        $('#text_input').val(options.$trigger.html());
+        utils.showPromptBox("edit", function() {
+          //check if existing
+          datacx.post('lab_analyte/isCommonAnalyteExisting', {analyte_id: field_analyte_id, analyte_name: $('#text_input').val(), analyte_type: 'field'}).then(function(reply) {//call AJAX method to call Project/Add WebService
+            if (reply === null || reply.result === 0) {//has an error
+              //Edit the common lab analyte
+              datacx.post('lab_analyte/editCommonAnalyte', {analyte_id: field_analyte_id, analyte_name: $('#text_input').val(), analyte_type: 'field'}).then(function(reply) {
+                if (reply === null || reply.result === 0) {//has an error
+                  toastr.error(reply.message);
+                } else {//success
+                  toastr.success(reply.message);
+                  utils.redirect("analyte/uploadCommons", 700);
+                }      
+              });
+              
+            } else {//success
+              //console.log('Analyte exists, show alert box');
+              utils.togglePromptBox();
+              utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
+                utils.togglePromptBox();
+              });
+            }
+          });
+        }, 'promptmsg-edit');
+
+
       } else if (key === "delete") {
-        var field_analyte_id = options.$trigger.attr("data-common_field_analyte-id");
-        datacx.post('field_analyte/deleteCommon', {analyte_id: field_analyte_id}).then(function(reply) {//call AJAX method to call Project/Add WebService
-          if (reply === null || reply.result === 0) {//has an error
-            toastr.error(reply.message);
-          } else {//success
-            toastr.success(reply.message);
-            utils.redirect("analyte/uploadCommons", 700);
-          }
-        });
+        var msg = $('#confirmmsg-deleteCommonLab').val() 
+        if (typeof msg !== typeof undefined && msg !== false) {
+          utils.showConfirmBox(msg, function(result) {
+            if (result)
+            {
+              datacx.post('field_analyte/deleteCommon', {analyte_id: field_analyte_id}).then(function(reply) {//call AJAX method to call Project/Add WebService
+                if (reply === null || reply.result === 0) {//has an error
+                  toastr.error(reply.message);
+                } else {//success
+                  toastr.success(reply.message);
+                  utils.redirect("analyte/uploadCommons", 700);
+                }
+              });
+            }
+          });
+        }
+        else
+        {
+          //delAnalyte(ajaxParams, options);
+        }
       }
     },
     items: {
@@ -245,7 +332,8 @@ $(document).ready(function() {
     };
     if (ajaxParams.isCommon) {
       ajaxParams.ajaxUrl = ajaxParams.isFieldType ? "field_analyte/addCommon" : "lab_analyte/addCommon";
-      ajaxParams.redirectUrl = "";
+      //ajaxParams.redirectUrl = "";
+      ajaxParams.redirectUrl = ajaxParams.isFieldType ? "analyte/uploadCommons" : "labanalyte/uploadCommons";
     } else {
       ajaxParams.ajaxUrl = ajaxParams.isFieldType ? "field_analyte/add" : "lab_analyte/add";
     }

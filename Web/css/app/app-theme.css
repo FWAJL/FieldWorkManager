@@ -496,3 +496,6 @@ ui-widget-content:hover {
 }
 
 /* END Task: Lab Matrix, Field Matrix; */
+.mobile-glyph { 
+  display:none; 
+}

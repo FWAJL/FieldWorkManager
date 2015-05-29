@@ -17,7 +17,10 @@
         </div>
         <div  class="col-lg-5 col-md-5">
           <?php
+          //\Applications\PMTool\Helpers\CommonHelper::pr($form_modules);
           require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Analyte::common_lab_analyte_list];
+          require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_prompt];
+          require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg];
           ?>
         </div>
       </div>
