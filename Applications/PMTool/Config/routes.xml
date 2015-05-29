@@ -746,6 +746,24 @@
         <php_module key="notes" file_name="notes.php" />
       </php_modules>
     </route>
+    <route url="mobile/communications" module="Mobile" action="communications" resxfile="mobile" type="ui" role="3">
+      <js_files>
+        <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
+      </js_files>
+      <css_files>
+        <css_file value="Web/css/app/app-mobile-theme.css" />
+        <css_file value="Web/css/app/app-mobile-style.css" />
+        <css_file value="Web/css/app/app-reponsive.css" />
+        <css_file use="project" />
+      </css_files>
+      <php_modules>
+        <php_module key="active_task_comm" file_name="mobile_communications.php" />
+        <php_module key="categorized_list_left" file_name="categorized_list_left.php" shared="true" />
+        <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
+        <php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>
+        <php_module key="communications_button_module" file_name="communications_button_module.php" />
+      </php_modules>
+    </route><!--  activetask/communications -->
     <!--  All Control For User ROLE 3  -->
     <!-- analyte/uploadList -->
     <route url="analyte/uploadCommons" module="Analyte" action="uploadCommonAnalytes" resxfile="analyte" type="ui" role="1">
