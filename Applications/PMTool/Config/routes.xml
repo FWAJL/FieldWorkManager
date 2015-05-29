@@ -648,9 +648,9 @@
             <php_module key="field_analyte_list" file_name="field_analyte_list.php" />
             <php_module key="field_analyte_buttons" file_name="field_analyte_list_buttons.php" />
             <php_module key="promote_buttons_module" file_name="promote_buttons.php" shared="true"/>
-	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
-	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
-	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+    	    <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+    	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+    	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
         </php_modules>
     </route>
     <!--  analyte/ListAll -->
@@ -1161,6 +1161,7 @@
   <route url="field_analyte/getItem" module="FieldAnalyte" action="getItem" resxfile="field_analyte" type="ws" />
   <route url="field_analyte/updateItems" module="FieldAnalyte" action="updateItems" resxfile="field_analyte" type="ws" />
   <route url="field_analyte/deleteCommon" module="FieldAnalyte" action="deleteCommon" resxfile="field_analyte" type="ws" />
+  <route url="field_analyte/isfieldAnalyteExisting" module="FieldAnalyte" action="isfieldAnalyteExisting" resxfile="field_analyte" type="ws" />
   
   <route url="lab_analyte/add" module="LabAnalyte" action="add" resxfile="lab_analyte" type="ws" />
   <route url="lab_analyte/addCommon" module="LabAnalyte" action="addCommon" resxfile="lab_analyte" type="ws" />
@@ -1172,6 +1173,7 @@
   <route url="lab_analyte/deleteCommon" module="LabAnalyte" action="deleteCommon" resxfile="lab_analyte" type="ws" />
   <route url="lab_analyte/isCommonAnalyteExisting" module="LabAnalyte" action="isCommonAnalyteExisting" resxfile="lab_analyte" type="ws" />
   <route url="lab_analyte/editCommonAnalyte" module="LabAnalyte" action="editCommonAnalyte" resxfile="lab_analyte" type="ws" />
+  <route url="lab_analyte/isLabAnalyteExisting" module="LabAnalyte" action="isLabAnalyteExisting" resxfile="lab_analyte" type="ws" />
 
   <route url="map/listAll" module="Map" action="listAll" resxfile="map" type="ws" />
   <route url="map/listCurrentProject" module="Map" action="listCurrentProject" resxfile="map" type="ws" />

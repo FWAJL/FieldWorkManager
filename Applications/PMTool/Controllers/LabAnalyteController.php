@@ -71,7 +71,8 @@ class LabAnalyteController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
     //Get confirm msg for analyte deletion from showForm screen
-    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"analyte", "targetaction": "list", "operation": ["deleteField", "deleteLab", "noAnalyteForProject","noAnalyteAvailable"]}', $this->app->name());
+    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"analyte", "targetaction": "list", 
+                "operation": ["deleteField", "deleteLab", "noAnalyteForProject","noAnalyteAvailable", "laExists"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
 
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
@@ -180,6 +181,39 @@ class LabAnalyteController extends \Library\BaseController {
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
         "resx_key" => $this->action(),
         "step" => $result["dataId"] > 0 ? "success" : "error"
+    ));
+  }
+
+  public function executeIsLabAnalyteExisting(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS();
+    
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+    $lab_analytes = $pm[\Library\Enums\SessionKeys::PmLabAnalytes];
+    //Search in session using incoming post
+    $match = \Applications\PMTool\Helpers\CommonHelper::FindObjectByStringValue(
+          $this->dataPost['analyte_name'], "lab_analyte_name",
+          $lab_analytes);
+    
+    if($match === false) {
+      //Free to edit, nothing found
+      $is_existing = false;
+    } else {
+      //something found, check with id, if id are same
+      //it's basically the same record which we are editing
+      if($match->lab_analyte_id() == $this->dataPost['analyte_id']) {
+        //Free to edit, this record itself
+        $is_existing = false;
+      } else {
+        //different id, must be a different record, restrict
+        $is_existing = true;
+      }
+    }
+
+    $this->SendResponseWS(
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
+        "resx_key" => $this->action(),
+        "step" => $is_existing === false ? "error" : "success"
     ));
   }
 

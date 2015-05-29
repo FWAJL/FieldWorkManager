@@ -48,21 +48,39 @@ $(document).ready(function() {
             });
 
           } else {
-            getAnalyteItem("lab", parseInt(options.$trigger.attr("data-labanalyte-id")), function(data) {
-              var post_data = {};
-              post_data["lab_analyte"] = data.field_analyte;
-              post_data["lab_analyte"]["lab_analyte_name"] = $('#text_input').val();
+            //Make a unique check
+            datacx.post('lab_analyte/isLabAnalyteExisting', {analyte_id: options.$trigger.attr("data-labanalyte-id"), analyte_name:$('#text_input').val()}).then(function(reply) {
+              if (reply === null || reply.result === 0) {//has an error
+                toastr.success(reply.message);
+                //Free to edit===========
+                getAnalyteItem("lab", parseInt(options.$trigger.attr("data-labanalyte-id")), function(data) {
+                  var post_data = {};
+                  post_data["lab_analyte"] = data.field_analyte;
+                  post_data["lab_analyte"]["lab_analyte_name"] = $('#text_input').val();
 
-              datacx.post(actionPath, post_data["lab_analyte"]).then(function(reply) {//call AJAX method to call Project/Add WebService
-                if (reply === null || reply.result === 0) {//has an error
-                  toastr.error(reply.message);
-                } else {//success
-                  toastr.success(reply.message.replace("lab_analyte", "lab_analyte (ID:" + reply.dataId + ")"));
-                  utils.redirect("labanalyte/listAll");
-                }
-              });
+                  datacx.post(actionPath, post_data["lab_analyte"]).then(function(reply) {//call AJAX method to call Project/Add WebService
+                    if (reply === null || reply.result === 0) {//has an error
+                      toastr.error(reply.message);
+                    } else {//success
+                      toastr.success(reply.message.replace("lab_analyte", "lab_analyte (ID:" + reply.dataId + ")"));
+                      utils.redirect("labanalyte/listAll");
+                    }
+                  });
 
+                });
+                //=======================
+              } else {//success
+                toastr.error(reply.message);
+                //Show alert
+                utils.togglePromptBox();
+                utils.showAlert($('#confirmmsg-laExists').val(), function(){
+                  utils.togglePromptBox();
+                });
+              }
             });
+
+
+            
           }
         }, 'promptmsg-edit');
       } else if (key === "delete") {
