@@ -70,7 +70,10 @@
 	<resource uicomponent="confirm" targetcontroller="service" targetaction="view" operation="delete" value="Are you sure you want to delete this Service Provider?" />
 	<resource uicomponent="confirm" targetcontroller="analyte" targetaction="list" operation="deleteField" value="Are you sure?" />
 	<resource uicomponent="confirm" targetcontroller="analyte" targetaction="list" operation="deleteLab" value="Are you sure?" />
+	<resource uicomponent="confirm" targetcontroller="analyte" targetaction="uploadCommonAnalytes" operation="deleteCommonLab" value="Are you sure to delete the common analyte?" />
 	<resource uicomponent="confirm" targetcontroller="location" targetaction="view" operation="delete" value="Are you sure you want to permanently remove this Location?  If you place it in inactive status no further work can be done there, but the coordinatesa re not lost." />
+	<resource uicomponent="confirm" targetcontroller="form" targetaction="masterForm" operation="delete" value="Are you sure to delete the master form?" />
+
 	
 	<resource uicomponent="alert" targetcontroller="project" targetaction="list" operation="addUniqueCheck" value="Project name is taken. Choose a new project name." />
 	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addNullCheck" value="To open a new Project, you must provide the Project Name, Facility Address and Client email address." />
@@ -89,6 +92,8 @@
 	<resource uicomponent="alert" targetcontroller="analyte" targetaction="list" operation="noAnalyteAvailable" value="You do not have any Analytes for your Projects. Click OK to building your own custom analyte list." />
 	<resource uicomponent="alert" targetcontroller="location" targetaction="view" operation="addUniqueCheck" value="Location name is taken. Choose a new location name." />
 	<resource uicomponent="alert" targetcontroller="location" targetaction="uploadList" operation="addUniqueCheck" value="The following locations already exist, please change or remove them from the list and click Add again." />
+	<resource uicomponent="alert" targetcontroller="analyte" targetaction="uploadCommonAnalytes" operation="addUniqueCheck" value="Common Analyte name is taken. Choose a new analyte name." />
+	<resource uicomponent="alert" targetcontroller="form" targetaction="masterForm" operation="addUniqueCheck" value="Master form with same title exist. Please select a different one." />
 	
 	<resource uicomponent="prompt" targetcontroller="project" targetaction="list" operation="addNullCheck" value="This will create a copy of Project '{0}'. To continue, you must enter the new project name." />
 	<resource uicomponent="prompt" targetcontroller="project" targetaction="view" operation="addNullCheck" value="This will create a copy of Project '{0}'. To continue, you must enter the new project name." />
@@ -108,6 +113,7 @@
 	<resource uicomponent="prompt" targetcontroller="location" targetaction="uploadList" operation="checkCurrentProject" value="To upload a list of locations, you must select a project." />
 	<resource uicomponent="prompt" targetcontroller="location" targetaction="showForm" operation="promptEnterLocation" value="You must enter a unique Location Name." />
 	<resource uicomponent="prompt" targetcontroller="analyte" targetaction="listAll" operation="edit" value="Edit '{0}'." />
+	<resource uicomponent="prompt" targetcontroller="analyte" targetaction="uploadCommonAnalytes" operation="edit" value="Edit common analyte - '{0}'." />
 	<resource uicomponent="prompt" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="addNullCheckAddPrompt" value="To continue, you must enter the new Location Name." />
 	<resource uicomponent="prompt" targetcontroller="map" targetaction="loadProjectInfo" operation="addNullCheckAddPrompt" value="To continue, you must fill all fields." />
 

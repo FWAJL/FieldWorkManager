@@ -21,6 +21,8 @@
   <resource key="message_success_updateItems">The Form data has been edited.</resource>
   <resource key="message_success_getPdfFileFor">PDF file found, opening.</resource>
   <resource key="message_error_getPdfFileFor">the PDF file could not be found on this server</resource>
+  <resource key="message_success_checkIfTitleExists">Master form doesn't exist.</resource>
+  <resource key="message_error_checkIfTitleExists">Master form exist.</resource>
 
   <resource key="form_legend_add">Add a new Form</resource>
   <resource key="form_legend_edit">Edit this Form</resource>

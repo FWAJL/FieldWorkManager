@@ -108,7 +108,7 @@
   </main_menu><!-- mobile - task map - landing page -->
   <main_menu name="technician_communicate" active="true">
     <links>
-      <header href="mobile" resourcekey="header_ft_communicate" cssClass="fa fa-comments" enablelink="true" active="true" />
+      <header href="mobile/communications" resourcekey="header_ft_communicate" cssClass="fa fa-comments" enablelink="true" active="true" />
     </links>
   </main_menu><!-- mobile - task discussions-->
   <main_menu name="technician_notes" active="true">

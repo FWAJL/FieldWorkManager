@@ -61,4 +61,15 @@
   <!-- notes -->
   <resource key="h4_tasknotes_leftcol">Notes</resource>
   <resource key="button_savenote">Save Note</resource>
+
+  <!-- communications -->
+  <resource key="active_task_comm_header">Discussions</resource>
+  <resource key="h4_taskcomm_leftcol">Discussion Thread</resource>
+  <resource key="h4_taskcomm_rightcol">Who and What</resource>
+  <resource key="h4_taskcomm_services">Service Providers</resource>
+  <resource key="h4_taskcomm_technicians">Technicians</resource>
+  <resource key="h4_taskcomm_pm">Project Manager</resource>
+  <resource key="btn_to_pm_list">Start discussion</resource>
+  <resource key="btn_to_project_list">Unselect</resource>
+  <resource key="activetask_button_sendmsg">Send</resource>
 </resources>
