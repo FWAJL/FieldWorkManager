@@ -190,4 +190,13 @@ class DiscussionHelper {
     return $thread;
   }
 
+  public static function GetOtherDiscussionPerson($user, $discussionPeople) {
+    $userConnected = $user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
+    foreach($discussionPeople as $discussionPerson) {
+      if(intval($discussionPerson->user_id()) !== intval($userConnected->user_id())){
+        return $discussionPerson;
+      }
+    }
+  }
+
 }

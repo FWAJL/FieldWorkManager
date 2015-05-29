@@ -25,6 +25,7 @@
           <?php
           //\Applications\PMTool\Helpers\CommonHelper::pr($form_modules);
           require $form_modules["group_list_right"]; 
+          require $form_modules["popup_msg_module"]; 
           ?>
           <input type="hidden" id="modforjs" name="modforjs" value="admin_masterform" />
         </div>
