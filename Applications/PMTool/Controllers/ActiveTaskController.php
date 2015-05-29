@@ -124,7 +124,7 @@ class ActiveTaskController extends \Library\BaseController {
     $currentDiscussion = \Applications\PMTool\Helpers\DiscussionHelper::GetCurrentDiscussion($this->user);
     if($currentDiscussion){
       $manager = $this->managers()->getManagerOf('User');
-      $discussion_person = \Applications\PMTool\Helpers\CommonHelper::FindObjectByIntValue(0,'discussion_person_is_author',$currentDiscussion[\Library\Enums\SessionKeys::DiscussionPeople]);
+      $discussion_person = \Applications\PMTool\Helpers\DiscussionHelper::GetOtherDiscussionPerson($this->user(),$currentDiscussion[\Library\Enums\SessionKeys::DiscussionPeople]);
       $discussion_user_type = $manager->selectUserTypeObjectByUserId($discussion_person->user_id());
       if($discussion_user_type) {
         $currentDiscussion['comm_with'] = $discussion_user_type;
@@ -201,7 +201,7 @@ class ActiveTaskController extends \Library\BaseController {
           break;
         }
       }
-    } else {
+    } else if($this->dataPost['selection_type'] == 'service_id') {
       $services = \Applications\PMTool\Helpers\ServiceHelper::GetAndStoreTaskServices($this,$sessionTask);
       foreach($services as $service) {
         if($service->service_id() == $this->dataPost['id']) {
@@ -209,6 +209,13 @@ class ActiveTaskController extends \Library\BaseController {
           $user = $manager->selectUserByTypeId('service_id', $service->service_id());
           break;
         }
+      }
+    } else if($this->dataPost['selection_type'] == 'pm_id') {
+      $sessionPm = $this->user->getAttribute(\Library\Enums\SessionKeys::CurrentPm);
+      $currentPmObject = $sessionPm[\Library\Enums\SessionKeys::PmObject];
+      if($currentPmObject->pm_id() == $this->dataPost['id']) {
+        $manager = $this->managers()->getManagerOf('User');
+        $user = $manager->selectUserByTypeId('pm_id', $currentPmObject->pm_id());
       }
     }
     //we can add more users later if we choose to add more people in same discussion
