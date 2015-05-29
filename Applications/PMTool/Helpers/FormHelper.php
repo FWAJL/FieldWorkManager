@@ -65,6 +65,19 @@ class FormHelper {
     return $result;
   }
 
+  /**
+  * Returns a master form matching on the title
+  */
+  public static function GetMasterformWithTitle($caller, $title) {
+    $manager = $caller->managers()->getManagerOf("MasterForm");
+    //$manager->setRootDirectory($caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
+    //$manager->setWebDirectory($caller->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
+    $masterForm = new \Applications\PMTool\Models\Dao\Master_form();
+    $masterForm->setTitle($title);
+    $result = $manager->selectMany($masterForm, "title");
+    return $result;
+  }
+
   public static function GetProjectForms($caller,$sessionProject) {
     $result = array();
     if ($sessionProject !== NULL) {
