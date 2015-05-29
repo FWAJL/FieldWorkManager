@@ -297,7 +297,10 @@ $(document).ready(function() {
       } else {//success
         toastr.success(reply.message);
         //$("li[data-location-id="+ location_id +"]").remove();
-        utils.redirect("location/listAll");
+        datacx.post("file/removeMany", {"itemCategory": $("input[name=\"itemCategory\"]").val(), "itemId": $("input[name=\"itemId\"]").val()}).then(function(reply2){
+          utils.redirect("location/listAll");
+        });
+
       }
     });
   };

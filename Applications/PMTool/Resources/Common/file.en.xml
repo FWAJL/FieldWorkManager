@@ -10,4 +10,6 @@
   <resource key="message_success_upload">Upload has been completed successfully.</resource>
   <resource key="message_error_remove">Generic problem during the file removal.</resource>
   <resource key="message_success_remove">File removal has been completed successfully.</resource>
+  <resource key="message_error_removeMany">File removal has been completed successfully.</resource>
+  <resource key="message_success_removeMany">File removal has been completed successfully.</resource>
 </resources>
