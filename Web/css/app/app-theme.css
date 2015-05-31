@@ -386,6 +386,10 @@ ui-widget-content:hover {
 #document-upload {
   clear:both;
 }
+
+.remove-file-link {
+  color: red;
+}
 /* END FILE MODULES */
 
 /* Active task related CSS */
