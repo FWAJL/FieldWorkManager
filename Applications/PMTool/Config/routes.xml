@@ -1175,6 +1175,7 @@
   <route url="lab_analyte/isCommonAnalyteExisting" module="LabAnalyte" action="isCommonAnalyteExisting" resxfile="lab_analyte" type="ws" />
   <route url="lab_analyte/editCommonAnalyte" module="LabAnalyte" action="editCommonAnalyte" resxfile="lab_analyte" type="ws" />
   <route url="lab_analyte/isLabAnalyteExisting" module="LabAnalyte" action="isLabAnalyteExisting" resxfile="lab_analyte" type="ws" />
+  <route url="lab_analyte/getMasterLabAnalytesAutoComplete" module="LabAnalyte" action="getMasterLabAnalytesAutoComplete" resxfile="lab_analyte" type="ws" />
 
   <route url="map/listAll" module="Map" action="listAll" resxfile="map" type="ws" />
   <route url="map/listCurrentProject" module="Map" action="listCurrentProject" resxfile="map" type="ws" />

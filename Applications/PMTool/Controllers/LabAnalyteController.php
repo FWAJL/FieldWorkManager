@@ -457,4 +457,33 @@ class LabAnalyteController extends \Library\BaseController {
     );
   }
 
+  /**
+  * AJAX response for getting common master lab analytes for auto complete
+  */
+  public function executeGetMasterLabAnalytesAutoComplete() {
+
+    // Init result
+    $result = $this->InitResponseWS();    
+
+    $manager = $this->managers()->getManagerOf('MasterLabAnalyte');
+    $masterLabAnalytes = $manager->getMatchingMasterLabAnalytes($this->dataPost['search']);
+
+    //Our final matches are stored in
+    $matches = \Applications\PMTool\Helpers\AnalyteHelper::GetMasterLabsForAutoComplete($masterLabAnalytes);
+
+    //\Applications\PMTool\Helpers\CommonHelper::pr($match);
+    $result['matches'] = $matches;
+    
+    $match_found = false;
+    if(count($matches) > 0) $match_found = true;
+
+    $this->SendResponseWS(
+          $result, array(
+          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
+          "resx_key" => $this->action(),
+          "step" => ($match_found) ? "success" : "error"
+        )
+    ); 
+  }
+
 }

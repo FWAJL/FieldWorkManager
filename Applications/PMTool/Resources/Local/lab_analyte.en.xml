@@ -24,4 +24,6 @@
   <resource key="message_success_editCommonAnalyte">Common analyte edited succesfully.</resource>
   <resource key="message_error_isLabAnalyteExisting">The lab analyte does not exist.</resource>
   <resource key="message_success_isLabAnalyteExisting">The lab analyte exists.</resource>
+  <resource key="message_error_getMasterLabAnalytesAutoComplete">No matching master lab analyte found.</resource>
+  <resource key="message_success_getMasterLabAnalytesAutoComplete">Master lab analyte found.</resource>
 </resources>
