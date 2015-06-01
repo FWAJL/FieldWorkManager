@@ -444,4 +444,13 @@ class AnalyteHelper {
     $user->setAttribute($sessionKey, $value);
   }
 
+  public static function GetMasterLabsForAutoComplete($mlObjs) {
+    $mlaArr = array();
+    //Let's loop on the result
+    foreach ($mlObjs as $key => $value) {
+      array_push($mlaArr, $value->master_lab_analyte_name());
+    }
+    return $mlaArr;
+  }
+
 }

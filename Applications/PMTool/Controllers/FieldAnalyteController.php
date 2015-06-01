@@ -35,6 +35,39 @@ class FieldAnalyteController extends \Library\BaseController {
     ));
   }
 
+  public function executeIsfieldAnalyteExisting(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS();
+
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+    $field_analytes = $pm[\Library\Enums\SessionKeys::PmFieldAnalytes];
+    //Search in session using incoming post
+    $match = \Applications\PMTool\Helpers\CommonHelper::FindObjectByStringValue(
+          $this->dataPost['analyte_name'], "field_analyte_name_unit",
+          $field_analytes);
+    
+    if($match === false) {
+      //Free to edit, nothing found
+      $is_existing = false;
+    } else {
+      //something found, check with id, if id are same
+      //it's basically the same record which we are editing
+      if($match->field_analyte_id() == $this->dataPost['analyte_id']) {
+        //Free to edit, this record itself
+        $is_existing = false;
+      } else {
+        //different id, must be a different record, restrict
+        $is_existing = true;
+      }
+    }
+
+    $this->SendResponseWS(
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
+        "resx_key" => $this->action(),
+        "step" => $is_existing === false ? "error" : "success"
+    ));
+  }
+
   public function executeEdit(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
