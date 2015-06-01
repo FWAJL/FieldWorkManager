@@ -173,6 +173,35 @@ class FileController extends \Library\BaseController {
     $result["dataOut"] = $manager->copyWithFile($document, $files['file']);
   }
 
+
+  public function executeRemoveMany(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS();
+    $dataPost = $this->dataPost();
+
+    $manager = $this->managers()->getManagerOf("Document");
+    $manager->setRootDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
+    $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
+    $directory = str_replace("_id", "", $dataPost['itemCategory']);
+    $manager->setObjectDirectory($directory);
+    $result['dataOut'] = -1;
+    $fileList = $manager->selectManyByCategoryAndId($dataPost['itemCategory'],$dataPost['itemId']);
+    $result['dataOut']=0;
+    foreach($fileList as $key=>$file) {
+      if($manager->deleteWithFile($file,'document_id'))
+        $result['dataOut']++;
+    }
+
+
+
+    $this->SendResponseWS(
+      $result, array(
+      "directory" => "common",
+      "resx_file" => \Library\Enums\ResourceKeys\ResxFileNameKeys::File,
+      "resx_key" => $this->action(),
+      "step" => (count($fileList)==$result['dataOut']) ? "success" : "error"
+    ));
+  }
+
   private function getHostUrl(){
     $ssl = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? true:false;
     $sp = strtolower($_SERVER['SERVER_PROTOCOL']);

@@ -85,14 +85,16 @@
 	<resource uicomponent="alert" targetcontroller="task" targetaction="view" operation="addUniqueCheck" value="Task name is taken. Choose a new Task name" />
 	<resource uicomponent="alert" targetcontroller="task" targetaction="list" operation="addUniqueCheck" value="Task name is taken. Choose a new Task name" />
 	<resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="addUniqueCheck" value="Location name is taken. Choose a new Location name" />
-    <resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="checkCoordinates" value="Invalid coordinates" />
-	<resource uicomponent="alert" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="noPhotos" value="No available photos for this location" />
-    <resource uicomponent="alert" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="addUniqueCheck" value="Location name is taken. Choose a new Location name" />
+  <resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="checkCoordinates" value="Invalid coordinates" />
+	<resource uicomponent="alert" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="noPhotos" value="No available photos for this location" />  
+  <resource uicomponent="alert" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="addUniqueCheck" value="Location name is taken. Choose a new Location name" />
 	<resource uicomponent="alert" targetcontroller="analyte" targetaction="list" operation="noAnalyteForProject" value="You do not have any Analytes for your Projects. You can start building your own custom analyte list by clicking Analyte > Upload List" />
 	<resource uicomponent="alert" targetcontroller="analyte" targetaction="list" operation="noAnalyteAvailable" value="You do not have any Analytes for your Projects. Click OK to building your own custom analyte list." />
 	<resource uicomponent="alert" targetcontroller="location" targetaction="view" operation="addUniqueCheck" value="Location name is taken. Choose a new location name." />
 	<resource uicomponent="alert" targetcontroller="location" targetaction="uploadList" operation="addUniqueCheck" value="The following locations already exist, please change or remove them from the list and click Add again." />
 	<resource uicomponent="alert" targetcontroller="analyte" targetaction="uploadCommonAnalytes" operation="addUniqueCheck" value="Common Analyte name is taken. Choose a new analyte name." />
+	<resource uicomponent="alert" targetcontroller="analyte" targetaction="list" operation="faExists" value="The Field analyte with that name already exists, please choose another name." />
+	<resource uicomponent="alert" targetcontroller="analyte" targetaction="list" operation="laExists" value="The Lab analyte with that name already exists, please choose another name." />
 	<resource uicomponent="alert" targetcontroller="form" targetaction="masterForm" operation="addUniqueCheck" value="Master form with same title exist. Please select a different one." />
 	
 	<resource uicomponent="prompt" targetcontroller="project" targetaction="list" operation="addNullCheck" value="This will create a copy of Project '{0}'. To continue, you must enter the new project name." />
