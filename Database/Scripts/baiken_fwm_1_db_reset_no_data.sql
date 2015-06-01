@@ -515,9 +515,12 @@ INSERT INTO `user_role` (`user_role_id`,`user_role_desc`) VALUES
 (2,'Project Manager'),
 (3,'Field Technician'),
 (4,'Visitor'),
-(5,'None');
+(5,'None'),
+(6,'Service Provider'),
+(7,'Client');
 
 -- Dumping data for table `user`
+-- Password = test
 INSERT INTO `user` 
 (`user_id`,`user_login`,`user_password`,`user_hint`,`user_type`,`user_value`,`user_role_id`,`user_session_id`,`user_email`)
 VALUES 
