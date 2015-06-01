@@ -33,4 +33,5 @@
   </div>
 </div>
 <div class="lightbox-content"></div>
+<input type="hidden" id="remove-file-title" value="<?php echo $resx['remove_file_title']; ?>" />
 <!--Promt box-->

@@ -93,5 +93,6 @@
   <resource key="location_window_photos">View photos</resource>
   <resource key="form_title">Title</resource>
   <resource key="form_file">File(s)</resource>
+  <resource key="remove_file_title">Remove File</resource>
 
 </resources>
