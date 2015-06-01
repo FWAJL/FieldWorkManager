@@ -53,6 +53,7 @@
   <resource key="location_mark">Mark</resource>
   <resource key="form_title">Title</resource>
   <resource key="form_file">File(s)</resource>
+  <resource key="remove_file_title">Remove File</resource>
 
   <!-- task list -->
   <resource key="h3_tasks_active">Active tasks</resource>

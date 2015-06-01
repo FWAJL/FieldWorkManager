@@ -6,6 +6,11 @@
  *   
  * jQuery listeners for the service actions
  */
+
+//Autocomplete variables
+  var timer = null;
+  var autocompleteTimeout = 700;
+
 $(document).ready(function() {
   var ajaxParams = {
     "ajaxUrl": "service/updateItems",
@@ -14,6 +19,26 @@ $(document).ready(function() {
     "arrayOfValues": "",
     "itemId": ""
   };
+
+
+  $("input[name='service_type']").keyup(function(e){
+    // do nothing if it's an arrow key
+    
+    var code = (e.keyCode || e.which);
+    if(code == 37 || code == 38 || code == 39 || code == 40 || code == 13 || code == 9 || e.shiftKey) {
+      return;
+    } else if(e.shiftKey && e.keyCode == 9) {
+      return;  
+    }
+
+    clearTimeout(timer);
+
+    //else proceed to lookup
+    timer = setTimeout(function(){
+      service_manager.getServiceCategoryUsingAutoComplete($("input[name='service_type']"))
+    }, autocompleteTimeout);
+    
+  });
 
   $(".btn-warning").hide();
   $.contextMenu({
@@ -147,6 +172,12 @@ var selectionParams = {
  * Responsible to manage services.
  */
 (function(service_manager) {
+
+  //Autocomplete vars
+  var query = '';
+  var autocompleteArrayTo = [];
+  var selectedObjectTo;
+
   service_manager.add = function(data, controller, action) {
 
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Resource/Add WebService
@@ -263,6 +294,31 @@ var selectionParams = {
       //alert(reply.record_count);
       decision(reply.record_count);
     });
+  };
+
+  //auto complete fecth and render for service category
+  service_manager.getServiceCategoryUsingAutoComplete = function(txtBoxObject){
+    if (service_manager.query != $(txtBoxObject).val()) {
+      service_manager.query = $(txtBoxObject).val();
+      
+      datacx.post("service/getServiceCategoriesAutoComplete", {"search": service_manager.query}).then(function(reply) {
+        console.log(reply);
+        service_manager.autocompleteArrayTo = [];
+        if (reply === null || reply.result === 0) {//has an error
+          //Do nothing
+        } else {//success
+          //Time for some autocomplete
+          $.each(reply.matches, function (index, selectedObject) {
+            service_manager.autocompleteArrayTo.push(selectedObject);
+          });
+
+          $("input[name='service_type']").autocomplete({
+            source: service_manager.autocompleteArrayTo
+          });
+          $("input[name='service_type']").autocomplete( "search", $("input[name='service_type']").val() );
+        }
+      });
+    }
   };
 
 }(window.service_manager = window.service_manager || {}));
