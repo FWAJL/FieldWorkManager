@@ -1197,4 +1197,5 @@
   <route url="file/load" module="File" action="load" resxfile="file" type="lib ws" />
   <route url="file/remove" module="File" action="remove" resxfile="file" type="lib ws" />
   <route url="file/loadOne" module="File" action="loadOne" resxfile="file" type="lib ws" />
+  <route url="file/removeMany" module="File" action="removeMany" resxfile="file" type="lib ws" />
 </routes>

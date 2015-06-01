@@ -316,7 +316,7 @@ var setLocationZoomEvent = function(e) {
   });
 }
 
-var setViewPhotosEvent = function(photosCount) {
+var setViewPhotosEvent = function(photosCount,documentId) {
   $("#location-info-modal-photos").off('click');
   if(photosCount == 0){
     $("#location-info-modal-photos").hide();
@@ -332,6 +332,30 @@ var setViewPhotosEvent = function(photosCount) {
     });
     $("#location-info-modal-photos").show();
   }
+  if(photosCount != 0){
+    $("#lightbox").on("click",".remove-file-link",function(){
+      var documentId = $(this).data('id');
+      map_manager.removePhoto(documentId);
+    });
+    /*
+    var checkContents = setInterval(function(){
+      console.log($(".remove-file-link[data-id='"+documentId+"']").length);
+      if ($(".remove-file-link[data-id='"+documentId+"']").length > 0 && $("#lightboxOverlay").is(":visible")){ // Check if element has been found
+        $(".remove-file-link").off('click');
+        $(".remove-file-link").on('click',function(e){
+          e.preventDefault();
+          var documentId = $(this).data('id');
+          map_manager.removePhoto(documentId);
+        });
+        window.clearInterval(checkContents);
+      }
+    },500);
+    $('.prompt-modal').on('hidden.bs.modal', function (e) {
+      window.clearInterval(checkContents);
+    });
+    */
+  }
+
 }
 
 var openLocationInfo = function(e,id, noLatLng) {
@@ -356,10 +380,12 @@ var openLocationInfo = function(e,id, noLatLng) {
         $("#location-info-modal-location_long").val(item.location_long);
         $("#document-upload input[name=\"itemId\"]").val(id);
         $(".lightbox-content").html("");
+        var documentId;
         $.each(replyPhotos.fileResults, function(key,photo){
-          $(".lightbox-content").append('<a href="'+photo.filePath+'" data-title="'+photo.document_title+'" data-lightbox="modal-images"></a>');
+          $(".lightbox-content").append('<a href="'+photo.filePath+'" data-title="'+photo.document_title+'<a data-id=\''+photo.document_id+'\' class=\'remove-file-link\' href=\'#\'>'+$("#remove-file-title").val()+'</a>" data-lightbox="modal-images"></a>');
+          documentId = photo.document_id;
         });
-        setViewPhotosEvent(replyPhotos.fileResults.length);
+        setViewPhotosEvent(replyPhotos.fileResults.length,documentId);
         setLocationZoomEvent(e);
         utils.showInfoWindow('#location-info-modal',function(){
           if(!utils.checkLatLng($("#location-info-modal-location_lat").val(),$("#location-info-modal-location_long").val())) {
@@ -436,10 +462,12 @@ var openTaskLocationInfo = function(e,id,action) {
       $("#task-location-info-modal-location_long").val(item.location_long);
       $("#task-location-window-title-task_location_name").html(item.location_name);
       $(".lightbox-content").html("");
+      var documentId;
       $.each(replyPhotos.fileResults, function(key,photo){
-        $(".lightbox-content").append('<a href="'+photo.filePath+'" data-title="'+photo.document_title+'" data-lightbox="modal-images"></a>');
+        $(".lightbox-content").append('<a href="'+photo.filePath+'" data-title="'+photo.document_title+'<a data-id=\''+photo.document_id+'\' class=\'remove-file-link\' href=\'#\'>'+$("#remove-file-title").val()+'</a>" data-lightbox="modal-images"></a>');
+        documentId = photo.document_id;
       });
-      setViewPhotosEvent(replyPhotos.fileResults.length);
+      setViewPhotosEvent(replyPhotos.fileResults.length,documentId);
       setTaskLocationZoomEvent(e);
       $(".task-location-info-modal-action").hide();
       if(activeTask!==true) {
@@ -1161,6 +1189,18 @@ function load(params) {
       }
     });
   };
+
+  map_manager.removePhoto = function(document_id) {
+    datacx.post("file/remove", {"document_id": document_id, "itemCategory": 'location_id'}).then(function(reply){
+      if (reply === null || reply.result === 0) {//has an error
+        toastr.error(reply.message);
+        return undefined;
+      } else {//success
+        toastr.success(reply.message);
+        location.reload();
+      }
+    });
+  }
 
 
 }(window.map_manager = window.map_manager || {}));

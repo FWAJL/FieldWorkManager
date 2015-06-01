@@ -49,6 +49,7 @@
   <resource key="task_location_window_add">Add to task</resource>
   <resource key="task_location_window_edit_update">Update</resource>
   <resource key="task_location_window_edit_cancel">Cancel</resource>
+  <resource key="remove_file_title">Remove File</resource>
   <!-- New location prompt -->
   <resource key="location_prompt_title">To continue, you must enter the new Location Name</resource>
   <resource key="location_prompt_ok">OK</resource>

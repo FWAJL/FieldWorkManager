@@ -102,7 +102,7 @@ public function executeIndex(\Library\HttpRequest $rq) {  }
      \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->user(), $pm);
      
      $this->dataPost['user_email'] = $this->dataPost['service_contact_email'];
-     $userId = \Applications\PMTool\Helpers\UserHelper::AddUser($this, $result["dataOut"], \Library\Enums\UserRole::Visitor, "service_id");
+     $userId = \Applications\PMTool\Helpers\UserHelper::AddUser($this, $result["dataOut"], \Library\Enums\UserRole::Service, "service_id");
     }
 
     $this->SendResponseWS(

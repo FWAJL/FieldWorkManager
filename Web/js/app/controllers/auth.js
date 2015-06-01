@@ -52,7 +52,7 @@ $(document).ready(function() {
      } 
      // Field Technician
           else if (reply.role == '3') {
-       utils.redirect("user/showDetails");
+       utils.redirect("mobile/listTasks");
      } 
      // Visitor
           else if (reply.role == '4') {
