@@ -363,7 +363,7 @@ class TaskController extends \Library\BaseController {
       $task->setTask_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
       $task_activated = $task->task_activated();
       //check if task is already not activated and mark accordingly
-      if($task_activated === '0') {
+      if($task_activated === '0' or is_null($task_activated)) {
         $task->setTask_activated('1');
       }
       $manager = $this->managers->getManagerOf($this->module);
@@ -371,7 +371,7 @@ class TaskController extends \Library\BaseController {
       
       //Create Location specific PDFs for this task
       //Also check if task is already activated earlier, if so we don't want file copy feature again
-      if($task_activated === '0' && $this->dataPost["action"] === "active" && $rows_affected > 0) {
+      if(($task_activated === '0' or is_null($task_activated)) && $this->dataPost["action"] === "active" && $rows_affected > 0) {
         \Applications\PMTool\Helpers\TaskHelper::CreateLocationSpecificPDF($sessionTask, $this);
       }
     }
