@@ -908,10 +908,10 @@ function load(params) {
             });
           }
         });
-        $("#task-location-info-modal-collect-data").on('click',function(e){
+        /*$("#task-location-info-modal-collect-data").on('click',function(e){
           e.preventDefault();
           utils.redirect('mobile/forms');
-        });
+        });*/
 
         $(document).on('click','.map-info-row',function(e){
           //if(!$(this).hasClass("map-info-marker")) {

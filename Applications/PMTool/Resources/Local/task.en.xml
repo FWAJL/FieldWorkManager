@@ -22,6 +22,8 @@
   <resource key="message_success_updateItems">The tasks have been edited</resource>
   <resource key="message_error_ifTaskExists">The task does not exist</resource>
   <resource key="message_success_ifTaskExists">The task exist</resource>
+  <resource key="message_error_getLocationSpecificForms">Location specific forms are not found</resource>
+  <resource key="message_success_getLocationSpecificForms">Location specific forms found</resource>
 
   <!-- Buttons -->
 
