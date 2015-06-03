@@ -69,7 +69,11 @@ h2
   padding-right: 10px !important;
 }
 
-.mobile_map {padding-right: 40px !important;  }
+.mobile_map span.h3 {
+  margin-top: 0.8em;
+  padding-left: 0.8em;
+}
+/*.mobile_map {padding-right: 40px !important;  }*/
 
 /*LANDING PAGE*/
 /*
