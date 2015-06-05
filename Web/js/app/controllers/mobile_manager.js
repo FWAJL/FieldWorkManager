@@ -103,9 +103,12 @@ $(document).ready(function(){
           toastr.success(reply.message);
           $.fancybox({ 
             href: reply.form_path,
-            type: 'iframe', 
-            openEffect : 'none', 
-            closeEffect : 'none', 
+            type: 'iframe',
+            width: '100%',
+            height: '100%',
+            autoSize: false, 
+            openEffect: 'none', 
+            closeEffect: 'none', 
             iframe : { preload: false } 
           });
         }
