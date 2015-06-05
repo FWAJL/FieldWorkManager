@@ -5,7 +5,14 @@ body
   font-size: 14px;
   min-width: 320px;
 }
+.logo {
+  margin-left: 30px !important;
+}
 
+.top-right-option {
+  line-height: 40px;
+  padding: 0 5px;
+}
 .container-fluid
 {
   padding: 0 10px;
@@ -70,8 +77,28 @@ h2
 }
 
 .mobile_map span.h3 {
-  margin-top: 0.8em;
+  margin-top: 10px;
   padding-left: 0.8em;
+  font-size: 18px;
+  line-height: 20px;
+}
+.left-asidebg > nav,
+#collapse-menu-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background-color: #f3f3f3;
+  background-image: -moz-linear-gradient(#f9f9f9, #f3f3f3);
+  background-image: -webkit-linear-gradient(#f9f9f9, #f3f3f3);
+  background-image: linear-gradient(#f9f9f9, #f3f3f3);
+  background-repeat: repeat-x;
+}
+ul.content_left > li {
+  line-height: 40px
+}
+ul.content_left > li > a > span.fa {
+  width: 30px;
 }
 /*.mobile_map {padding-right: 40px !important;  }*/
 
