@@ -48,6 +48,9 @@
   .col-no-width {
     width: 0 !important;
   }
+  .collapse-menu-button {
+    width: 100% !important;
+  }
 
 }
 /* Portrait */
