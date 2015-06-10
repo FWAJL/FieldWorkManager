@@ -699,6 +699,22 @@ class TaskHelper {
     }
   }
 
+  public static function getFormsforTaskLocation($caller, $task_id, $loc_id) {
+    $manager = $caller->managers()->getManagerOf('TaskLocation');
+    $taskLocation = $manager->GetTaskLocations($loc_id, $task_id);
+    $task_location_id = $taskLocation[0]->task_location_id();
+
+    $manager = $caller->managers()->getManagerOf('Document');
+    $locationForms = $manager->GetFormsForTaskLocation($task_location_id);
+
+    $return_data = array(
+                    'location_data' => $taskLocation[0],
+                    'form_data'     => $locationForms
+                  );
+
+    return $return_data;
+  }
+
   public static function GetLatestTaskForTechnician($caller,$technician) {
     $tasks = self::GetTasksForTechnician($caller, $technician);
     if(is_array($tasks)) {

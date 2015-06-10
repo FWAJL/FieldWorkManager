@@ -86,8 +86,11 @@
 	<resource uicomponent="alert" targetcontroller="task" targetaction="list" operation="addUniqueCheck" value="Task name is taken. Choose a new Task name" />
 	<resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="addUniqueCheck" value="Location name is taken. Choose a new Location name" />
   <resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="checkCoordinates" value="Invalid coordinates" />
+  <resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="checkIfLocationComplete" value="This location is marked as completed, please select a different one." />
+  <resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="checkNoTaskLocationForms" value="This location does not have any forms." />
 	<resource uicomponent="alert" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="noPhotos" value="No available photos for this location" />  
   <resource uicomponent="alert" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="addUniqueCheck" value="Location name is taken. Choose a new Location name" />
+
 	<resource uicomponent="alert" targetcontroller="analyte" targetaction="list" operation="noAnalyteForProject" value="You do not have any Analytes for your Projects. You can start building your own custom analyte list by clicking Analyte > Upload List" />
 	<resource uicomponent="alert" targetcontroller="analyte" targetaction="list" operation="noAnalyteAvailable" value="You do not have any Analytes for your Projects. Click OK to building your own custom analyte list." />
 	<resource uicomponent="alert" targetcontroller="location" targetaction="view" operation="addUniqueCheck" value="Location name is taken. Choose a new location name." />
@@ -118,6 +121,7 @@
 	<resource uicomponent="prompt" targetcontroller="analyte" targetaction="uploadCommonAnalytes" operation="edit" value="Edit common analyte - '{0}'." />
 	<resource uicomponent="prompt" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="addNullCheckAddPrompt" value="To continue, you must enter the new Location Name." />
 	<resource uicomponent="prompt" targetcontroller="map" targetaction="loadProjectInfo" operation="addNullCheckAddPrompt" value="To continue, you must fill all fields." />
+	<resource uicomponent="prompt" targetcontroller="mobile" targetaction="viewMap" operation="checkCurrentTaskLocationForms" value="Click on a form to open it" />
 
 	<resource uicomponent="tooltip_ellipsis" targetcontroller="TaskLabAnalyte" targetaction="labMatrix" charlimit="13" placement="top" />
 	<resource uicomponent="tooltip_ellipsis" targetcontroller="TaskFieldAnalyte" targetaction="fieldMatrix" charlimit="13" placement="top" />

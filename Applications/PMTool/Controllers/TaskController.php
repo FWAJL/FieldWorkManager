@@ -404,7 +404,29 @@ class TaskController extends \Library\BaseController {
         "resx_key" => $this->action(),
         "step" => ($result['record_count'] > 0) ? "success" : "error"
       )
-	);
+    );
   }
+
+  public function executeGetLocationSpecificForms(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS(); // Init result
+
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
+    $task_id = $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id();
+    $forms = \Applications\PMTool\Helpers\TaskHelper::getFormsforTaskLocation($this, $task_id, $this->dataPost['loc_id']);
+
+    //Assign result
+    $result['location_form_data'] = $forms;
+
+    $forms_found = true;
+
+    $this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
+        "resx_key" => $this->action(),
+        "step" => ($forms_found) ? "success" : "error"
+      )
+    );
+  }
+
 
 }

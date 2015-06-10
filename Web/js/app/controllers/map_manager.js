@@ -432,6 +432,7 @@ var setAddRemoveFromTaskEvent = function(e,id,action) {
 }
 
 var openTaskLocationInfo = function(e,id,action) {
+ $("#task-location-id-selected").val(id);
   selectedMarker = id;
   $("#document-upload input[name=\"title\"]").val("");
   if(e !== undefined) {
@@ -908,10 +909,10 @@ function load(params) {
             });
           }
         });
-        $("#task-location-info-modal-collect-data").on('click',function(e){
+        /*$("#task-location-info-modal-collect-data").on('click',function(e){
           e.preventDefault();
           utils.redirect('mobile/forms');
-        });
+        });*/
 
         $(document).on('click','.map-info-row',function(e){
           //if(!$(this).hasClass("map-info-marker")) {
