@@ -43,12 +43,12 @@ $(document).ready(function(){
 
   
   $(document).on("click", ".map-info-row", function() {
-    location_id = $(this).attr('data-id');
+    $("#task-location-id-selected").val($(this).attr('data-id'));
   });
 
   $(document).on("click", "#task-location-info-modal-collect-data", function(e) {
     //Fetch forms through ajax
-    datacx.post("task/getLocationSpecificForms", {'loc_id': location_id}).then(function(reply) {
+    datacx.post("task/getLocationSpecificForms", {'loc_id': $("#task-location-id-selected").val()}).then(function(reply) {
       var li_str = '';
       if(reply.location_form_data.location_data.task_location_status == '2') {
         //Task complete, show alert

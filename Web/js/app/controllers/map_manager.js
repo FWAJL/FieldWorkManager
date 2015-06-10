@@ -432,6 +432,7 @@ var setAddRemoveFromTaskEvent = function(e,id,action) {
 }
 
 var openTaskLocationInfo = function(e,id,action) {
+ $("#task-location-id-selected").val(id);
   selectedMarker = id;
   $("#document-upload input[name=\"title\"]").val("");
   if(e !== undefined) {
