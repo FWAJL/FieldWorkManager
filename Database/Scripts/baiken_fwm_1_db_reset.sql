@@ -556,8 +556,7 @@ INSERT INTO `user_role` (`user_role_id`,`user_role_desc`) VALUES
 (2,'Project Manager'),
 (3,'Field Technician'),
 (4,'Visitor'),
-(5,'Client'),
-(6,'Service Provider');
+(5,'None');
 
 -- Dumping data for table `user`
 INSERT INTO `user` 

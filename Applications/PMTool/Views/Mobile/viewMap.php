@@ -1,7 +1,7 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 //\Applications\PMTool\Helpers\CommonHelper::pr($form_modules);
 ?>
-<div class="mobile_map right-aside col-no-right-pad main col-lg-12 col-md-12 col-sm-12 col-no-pad">
+<div class="mobile_map right-aside col-no-right-pad main col-lg-12 col-md-12 col-sm-12">
   <span class="h3">
     <?php echo $current_project->project_name(); ?>
     <?php if ($current_task !== NULL) { ?>
@@ -12,11 +12,11 @@
     <?php echo $resx['map_header'] ?></span>
   <span class="glyphicon glyphicon-question-sign" id="question-map-h3"></span>
 
-  <div class="content-container container-fluid col-no-pad">
+  <div class="content-container container-fluid">
 
 
     <div class="row col-no-right-margin">
-      <div class="col-lg-10 col-md-10 col-no-pad">
+      <div class="col-lg-10 col-md-10">
         <p>
           <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_module]; ?>
         </p>
