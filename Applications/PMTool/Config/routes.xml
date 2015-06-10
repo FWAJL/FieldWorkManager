@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<routes version="1.6.24">
+<routes version="1.6.22">
     <!-- UI routes -->
     <route url="login" module="Authenticate" action="loadLoginView" resxfile="login" type="ui">
         <js_files>
@@ -696,12 +696,14 @@
         <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
         <js_file use="head" value="Web/js/app/controllers/map_manager.js" />
         <js_file use="html" value="Web/js/app/controllers/map/mapActiveTasks.js"/>
+        <js_file use="head" value="Web/js/addons/fancyapps/source/jquery.fancybox.js" />
 
       </js_files>
       <css_files>
         <css_file value="Web/css/app/app-mobile-theme.css" />
         <css_file value="Web/css/app/app-mobile-style.css" />
         <css_file value="Web/css/app/app-reponsive.css" />
+        <css_file value="Web/js/addons/fancyapps/source/jquery.fancybox.css" />
         <css_file use="project" />
       </css_files>
       <php_modules>
@@ -712,6 +714,9 @@
         <php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
         <php_module key="upload_file" file_name="upload_file.php" shared="true" />
         <php_module key="popup_task_location_info" file_name="popup_task_location_info.php"/>
+        <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+        <php_module key="active_list_module" file_name="active_list.php" />
+        <php_module key="popup_selector_module" file_name="popup_selector.php" />
       </php_modules>
     </route>
     <route url="mobile/listTasks" module="Mobile" action="listTasks" resxfile="mobile" type="ui" role="3">
@@ -1122,6 +1127,7 @@
   <route url="task/form/updateItems" module="TaskForm" action="updateItems" resxfile="task_form" type="ws" />
   <route url="task/saveLabMatrix" module="TaskLabAnalyte" action="saveLabMatrix" resxfile="task_lab_analyte" type="ws" />
   <route url="task/saveFieldMatrix" module="TaskFieldAnalyte" action="saveFieldMatrix" resxfile="task_lab_analyte" type="ws" />
+  <route url="task/getLocationSpecificForms" module="Task" action="getLocationSpecificForms" resxfile="task" type="ws" />
   <!--  <route url="service/updateItems" module="ProjectService" action="updateItems" resxfile="service" type="ws" />-->
   
   <route url="activetask/startCommWith" module="ActiveTask" action="startCommWith" resxfile="active_task" type="ws" />
