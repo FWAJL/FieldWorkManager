@@ -5,6 +5,15 @@ body
   font-size: 14px;
   min-width: 320px;
 }
+.logo {
+  margin-left: 30px !important;
+}
+ 
+ 
+.top-right-option {
+  line-height: 40px;
+  padding: 0 5px;
+}
 
 .container-fluid
 {
@@ -69,8 +78,44 @@ h2
   padding-right: 10px !important;
 }
 
-.mobile_map {padding-right: 40px !important;  }
+#map-info {
+  width: 100% !important;
+}
+.map-info-row > div {
+  display: inline-block;
+}
+.map-info-row > .map-info-icon > map-info-icon-image {
+  margin-right: 5px;
+}
+.map-info-name {
+  white-space: nowrap;
+  overflow-x: hidden;
+}
 
+.mobile_map span.h3 {
+  margin-top: 10px;
+  padding-left: 0.8em;
+  font-size: 18px;
+  line-height: 20px;
+}
+.left-asidebg > nav,
+#collapse-menu-button {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  z-index: 9999;
+  background-color: #f3f3f3;
+  background-image: -moz-linear-gradient(#f9f9f9, #f3f3f3);
+  background-image: -webkit-linear-gradient(#f9f9f9, #f3f3f3);
+  background-image: linear-gradient(#f9f9f9, #f3f3f3);
+  background-repeat: repeat-x;
+}
+ul.content_left > li {
+  line-height: 40px
+}
+ul.content_left > li > a > span.fa {
+  width: 30px;
+}
 /*LANDING PAGE*/
 /*
 ul.content_left > li > a > span:last-child { display: none; }
