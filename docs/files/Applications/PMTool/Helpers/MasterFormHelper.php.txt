@@ -1,0 +1,52 @@
+<?php
+
+/**
+ *
+ * @package		Basic MVC framework
+ * @author		Jeremie Litzler
+ * @copyright	Copyright (c) 2015
+ * @license		
+ * @link		
+ * @since		
+ * @filesource
+ */
+// ------------------------------------------------------------------------
+
+/**
+ *  MasterFormHelper Class
+ *
+ * @package		Applications\PMTool
+ * @subpackage	Helpers
+ * @author		Jeremie Litzler
+ * @link		
+ */
+
+namespace Applications\PMTool\Helpers;
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+  exit('No direct script access allowed');
+
+class MasterFormHelper extends \Library\ApplicationComponent {
+
+	/**
+	* Returns the master form record
+	* This method could accept a template object
+	* or simply master form ID. Both of this is
+	* passed through the variable $template.
+	*
+	* The flag $templateIsId decides what is passed
+	*/
+  public static function GetFormFromTaskTemplateFrom($caller, $template, $templateIsId = false) {
+    $masterformDAO = new \Applications\PMTool\Models\Dao\Master_form();
+    if($templateIsId) {
+    	$masterformDAO->setForm_id($template);
+    } else {
+    	$masterformDAO->setForm_id($template->master_form_id());	
+    }
+    
+    $dal = $caller->managers()->getManagerOf("Task");
+    return $dal->selectMany($masterformDAO, "form_id");
+  }
+ 
+
+}

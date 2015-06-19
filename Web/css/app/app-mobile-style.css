@@ -110,6 +110,9 @@ h2
   background-image: linear-gradient(#f9f9f9, #f3f3f3);
   background-repeat: repeat-x;
 }
+ul.content_left {
+  width: 300px !important;
+}
 ul.content_left > li {
   line-height: 40px
 }
@@ -125,10 +128,6 @@ ul.content_left > li > a > span.fa:first-child {
   width: 100%;
 }
 
-ul.content_left {
-  padding: 0;
-  margin: 0 auto;
-}
 ul.content_left > li {
   width: 45px;
   margin: 2px auto;
