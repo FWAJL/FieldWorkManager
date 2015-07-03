@@ -1,6 +1,6 @@
 <?php
 
-define('__VERSION_NUMBER__', '1.6.24.2');
+define('__VERSION_NUMBER__', '1.7.0');
 
 require '../Applications/autoload.php';
 
