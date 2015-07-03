@@ -3,7 +3,7 @@
   <!-- MODES : DEV or RELEASE -->
   <define key="ApplicationMode" value="DEV" />
   
-  <define key="base_url" value="/FieldWorkAssistantMVC/" />
+  <define key="base_url" value="/FieldWorkManager/" />
   <define key="BaseUrlRelease" value="/" />
   <define key="DefaultLanguage" value="en" />
   <define key="RootImageFolderPath" value="Web/images/" />
