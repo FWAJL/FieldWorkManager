@@ -2,15 +2,6 @@
 //\Applications\PMTool\Helpers\CommonHelper::pr($form_modules);
 ?>
 <div class="mobile_map right-aside col-no-right-pad main col-lg-12 col-md-12 col-sm-12 col-no-pad">
-  <span class="h3">
-    <?php echo $current_project->project_name(); ?>
-    <?php if ($current_task !== NULL) { ?>
-      <span class="glyphicon glyphicon-chevron-right"></span>
-      <?php echo $current_task->task_name();
-    } ?>
-    <span class="glyphicon glyphicon-chevron-right"></span>
-    <?php echo $resx['map_header'] ?></span>
-  <span class="glyphicon glyphicon-question-sign" id="question-map-h3"></span>
 
   <div class="content-container container-fluid col-no-pad">
 
