@@ -47,13 +47,13 @@
   };
   //show notification for empty input
   validator.emptyInputToast = function(attr_name) {
-    toastr.error("Please enter your " + attr_name + "!");//TODO: use resource manager
+    //toastr.error("Please enter your " + attr_name + "!");//TODO: use resource manager
     return false;
   };
   //show notificaiton for invalid input
   validator.invalidData = function(invalidInputs) {
     $.each(invalidInputs, function(index, value) {
-      toastr.error("Please enter your " + value + "!");//TODO: use resource manager
+      //toastr.error("Please enter your " + value + "!");//TODO: use resource manager
     });
     return false;
   };

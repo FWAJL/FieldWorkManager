@@ -65,10 +65,10 @@ $(document).ready(function() {
     datacx.post("task/saveLabMatrix", {'lab_matrix': $('.matrix-checkbox').serialize()}).then(function(reply) {
       console.log(reply);
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
         
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         
       }
     });

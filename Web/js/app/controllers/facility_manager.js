@@ -38,9 +38,9 @@ $(document).ready(function() {
   facility_manager.send = function(ws_url,facility) {
     datacx.post(ws_url, facility).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message.replace("facility", "facility (ID:" + reply.dataId + ")"));
+        //toastr.success(reply.message.replace("facility", "facility (ID:" + reply.dataId + ")"));
         //utils.redirect("project/listAll");
       }
     });
@@ -49,10 +49,10 @@ $(document).ready(function() {
     //get facility object from cache (PHP WS)
     datacx.post("facility/getItem", {"facility_id": parseInt(element.attr("data-facility-id"))}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         facility_manager.loadEditForm(reply.facility);
       }
     });
@@ -78,10 +78,10 @@ $(document).ready(function() {
     //get facility object from cache (PHP WS)
     datacx.post("facility/delete", {"facility_id": parseInt($(".facility_form input[name=\"facility_id\"]").val())}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("project/listAll");
       }
     });

@@ -147,7 +147,7 @@ function load(params) {
     {"properties": utils.stringifyJson(params.properties)}
   ).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
 
         if(reply.controls.markers !== true){
@@ -519,9 +519,9 @@ function load(params) {
   map_manager.add = function (data, controller, action, marker, callback) {
     datacx.post(controller + "/" + action, data["location"]).then(function (reply) {//call location/add
       if (reply === null || reply.dataId === undefined || reply.dataId === null || parseInt(reply.dataId) === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         if(callback !== undefined){
           callback(reply.dataIn[0], marker);
         }
@@ -533,9 +533,9 @@ function load(params) {
   map_manager.edit = function(location, controller, action) {
     datacx.post(controller + "/" + action, location).then(function(reply) {//call location/edit
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
       }
     });
   };
@@ -543,9 +543,9 @@ function load(params) {
   map_manager.editBoundary = function(facility, controller, action) {
     datacx.post(controller + "/" + action, facility).then(function(reply) {//call location/edit
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
       }
     });
   };
