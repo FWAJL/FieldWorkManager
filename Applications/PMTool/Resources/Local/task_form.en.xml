@@ -20,7 +20,7 @@
     <resource key="task_tab_locations">Locations</resource>
     <resource key="task_tab_map">Map</resource>
     <resource key="task_tab_forms">Forms</resource>
-    <resource key="task_tab_field_analytes">Field Analytes</resource>
+    <resource key="task_tab_field_analytes">Field Data</resource>
     <resource key="task_tab_lab_analytes">Lab Analytes</resource>
     <resource key="task_tab_coc">Chain of Custody</resource>
     <resource key="task_tab_services">Services</resource>

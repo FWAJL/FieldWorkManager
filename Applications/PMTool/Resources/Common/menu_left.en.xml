@@ -36,7 +36,7 @@
   
   <resource key="header_completed_task">Completed Tasks</resource>  
   
-  <resource key="header_analyte">Field Analytes</resource>
+  <resource key="header_analyte">Field Data</resource>
   <resource key="analyte_upload_list">Upload List</resource>
   <resource key="analyte_list">List All</resource>
   <resource key="analyte_upload_commons">Upload</resource>

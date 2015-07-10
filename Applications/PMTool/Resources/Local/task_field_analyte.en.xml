@@ -12,26 +12,26 @@
   <resource key="task_tab_locations">Locations</resource>
   <resource key="task_tab_map">Map</resource>
   <resource key="task_tab_forms">Forms</resource>
-  <resource key="task_tab_field_analytes">Field Analytes</resource>
+  <resource key="task_tab_field_analytes">Field Data</resource>
   <resource key="task_tab_lab_analytes">Lab Analytes</resource>
   <resource key="task_tab_coc">Chain of Custody</resource>
   <resource key="task_tab_services">Services</resource>
   
-  <resource key="btn_add_field_analyte_names">Add the field analytes</resource> 
+  <resource key="btn_add_field_analyte_names">Add the field data</resource> 
   <resource key="btn_field_analyte_select_project">See list of project</resource> 
   <resource key="btn_add_analyte_to_project">Add Analyte(s) to Project</resource>
   <resource key="btn_add_common_analyte_to_project">Add Common Analyte(s) to Project</resource>
   <resource key="btn_remove_analyte_to_project">Remove Analyte(s) from Project</resource>
   <resource key="btn_add_common_analyte">Add</resource>
     
-  <!--  Task Field Analytes --> 
-  <resource key="task_field_analytes_header">Field Analytes</resource>
-  <resource key="h4_task_field_analytes">Field Analytes for this Task</resource>
-  <resource key="h4_project_field_analytes">Available Field Analytes</resource>
-  <resource key="selected_task_field_analytes">Field Analytes for this Task</resource>
-  <resource key="not_selected_task_field_analytes">All available Field Analytes</resource>
+  <!--  Task Field Data --> 
+  <resource key="task_field_analytes_header">Field Data</resource>
+  <resource key="h4_task_field_analytes">Field Data for this Task</resource>
+  <resource key="h4_project_field_analytes">Available Field Data</resource>
+  <resource key="selected_task_field_analytes">Field Data for this Task</resource>
+  <resource key="not_selected_task_field_analytes">All available Field Data</resource>
   <resource key="btn_add_to_task">Add Field Analyte(s)</resource>
   <resource key="btn_remove_from_task">Remove Field Analyte(s)</resource>
-  <resource key="no_items_to_display_message">There is no active Field Analytes. Go to Field Analytes > List all to activate some</resource>
+  <resource key="no_items_to_display_message">There is no active Field Data. Go to Field Data > List all to activate some</resource>
   
 </resources>
