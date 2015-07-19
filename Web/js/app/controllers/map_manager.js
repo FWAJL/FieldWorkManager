@@ -12,9 +12,9 @@ var projectId;
 var highlightCircle;
 var setCurrentProjectFlag = false;
 var polygonSettings = {
-  "fillColor": "#FF0000",
-  "fillOpacity": .3,
-  "strokeWeight": 3
+  "fillColor": "#F5F6CE",
+  "fillOpacity": .4,
+  "strokeWeight": 0.1
 };
 var currentPosition;
 var mapType;

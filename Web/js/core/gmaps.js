@@ -160,7 +160,7 @@ var GMaps = (function(global) {
     if (!this) return new GMaps(options);
 
     options.zoom = options.zoom || 15;
-    options.mapType = options.mapType || 'roadmap';
+    options.mapType = options.mapType || 'satellite';
 
     var self = this,
         i,
