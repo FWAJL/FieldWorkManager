@@ -36,6 +36,7 @@ abstract class ResxFileNameKeys {
   const FileUpload = "fileupload";
   const FileLoad = "fileload";
   const File = "file";
+  const CommonText = "common_text";
 }
 
 ?>

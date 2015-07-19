@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
-  <resource key="brand">Field Work Manager</resource>
+<!--  <resource key="brand">Field Work Manager</resource>-->
   <resource key="pm_info_edit">Edit Info</resource>
   <resource key="pm_view_info">View and edit your details</resource>
   <resource key="logout_link_text">Logout</resource>

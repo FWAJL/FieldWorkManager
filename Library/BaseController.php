@@ -242,6 +242,8 @@ abstract class BaseController extends ApplicationComponent {
   protected function AddCommonVarsToPage() {
     //Get resources for the left menu
     $resx_left_menu = $this->app->i8n->getCommonResourceArray(Enums\ResourceKeys\ResxFileNameKeys::MenuLeft);
+    //Get common resources for all pages 
+    $resx_common_text = $this->app->i8n->getCommonResourceArray(Enums\ResourceKeys\ResxFileNameKeys::CommonText);
     //Init left menu
     $leftMenu = new UC\LeftMenu($this->app(), $resx_left_menu);
     //Add left menu to layout
