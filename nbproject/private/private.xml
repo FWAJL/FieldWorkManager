@@ -2,6 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Applications/PMTool/Resources/Common/common_text.en.xml</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Library/Enums/ResourceKeys/ResxFileNameKeys.php</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Documentation/files/Applications/PMTool/Views/Authenticate/loadLoginView.php.txt</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Library/Page.php</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Web/css/app/app-style.css</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Library/BaseController.php</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Applications/PMTool/Resources/Common/menu_left.en.xml</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Applications/PMTool/Templates/menus/top.php</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Applications/PMTool/Views/Authenticate/loadLoginView.php</file>
+        </group>
     </open-files>
 </project-private>

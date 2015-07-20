@@ -694,10 +694,9 @@
         <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
         <js_file use="html" value="Web/js/core/gmaps.js"/>
         <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
-        <js_file use="head" value="Web/js/app/controllers/map_manager.js" />
+        <js_file use="head" value="Web/js/app/controllers/mobile_map_manager.js" />
         <js_file use="html" value="Web/js/app/controllers/map/mapActiveTasks.js"/>
         <js_file use="head" value="Web/js/addons/fancyapps/source/jquery.fancybox.js" />
-
       </js_files>
       <css_files>
         <css_file value="Web/css/app/app-mobile-theme.css" />
@@ -725,7 +724,7 @@
         <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
         <js_file use="html" value="Web/js/core/gmaps.js"/>
         <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
-        <js_file use="head" value="Web/js/app/controllers/map_manager.js" />
+        <js_file use="head" value="Web/js/app/controllers/mobile_map_manager.js" />
         <js_file use="html" value="Web/js/app/controllers/map/mapActiveTasks.js"/>
         <js_file use="head" value="Web/js/addons/fancyapps/source/jquery.fancybox.js" />
 
