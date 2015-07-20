@@ -37,14 +37,14 @@ var markerDrag = function(e){
   post_data.location_long = e.latLng.lng();
   post_data.location_id = this.id;
   map_manager.edit(post_data, "location", "mapEdit", function(){});
-  google.maps.event.addListener(this, 'mouseover', function () { highlightMarker(e, this) });
-  highlightMarker(e, this)
+//  google.maps.event.addListener(this, 'mouseover', function () { highlightMarker(e, this) });
+//  highlightMarker(e, this)
 }
 
-var markerDragFacility = function(e) {
-  google.maps.event.addListener(this, 'mouseover', function () { highlightMarker(e, this) });
-  highlightMarker(e, this);
-}
+//var markerDragFacility = function(e) {
+//  google.maps.event.addListener(this, 'mouseover', function () { highlightMarker(e, this) });
+//  highlightMarker(e, this);
+//}
 
 var markerDragStart = function(e){
   unhighlightMarker(e);
@@ -178,7 +178,7 @@ var saveMarkerData = function (marker){
  */
 var addLocationToMapInfo = function(location, marker){
   marker.id = location.location_id;
-  google.maps.event.addListener(marker,'mouseover',function(e) { highlightMarker(e,marker.id);});
+//  google.maps.event.addListener(marker,'mouseover',function(e) { highlightMarker(e,marker.id);});
   google.maps.event.addListener(marker,'click', function(e) {openLocationInfo(marker,marker.id, false);});
   $("#map-info").append(
     "<div id='marker-" + location.location_id
@@ -514,7 +514,7 @@ var highlightMarker = function(e, marker) {
       zIndex: -50,
       map: map.map
     });
-    google.maps.event.addListener(highlightCircle,'mouseout',unhighlightMarker);
+//    google.maps.event.addListener(highlightCircle,'mouseout',unhighlightMarker);
   }
 }
 
@@ -650,7 +650,7 @@ function load(params) {
             }
             item.marker.zIndex = 500;
             item.marker.optimized = false;
-            item.marker.mouseover = function(e) { highlightMarker(e,item.marker);};
+//            item.marker.mouseover = function(e) { highlightMarker(e,item.marker);};
             //item.marker.mouseout = unhighlightMarker;
             markers.push(item.marker);
             markerIcon = item.marker.icon;
@@ -707,23 +707,23 @@ function load(params) {
         }
         */
         markers = map.addMarkers(markers);
-        $(document).on('mouseover', '.map-info-row', function () {
-          var el= $(this);
-          var marker;
-          $.each(markers, function(key,mrk){
-            if(mrk.id == el.data('id')) {
-              return marker = mrk;
-            }
-          });
-          if (typeof marker !== "undefined") {
-            highlightMarker(false, marker);
-          } else {
-            $("#marker-"+el.data('id')).addClass('map-info-marker-highlighted');
-          }
-        });
-        $(document).on('mouseout', '.map-info-row', function () {
-          unhighlightMarker(false);
-        });
+//        $(document).on('mouseover', '.map-info-row', function () {
+//          var el= $(this);
+//          var marker;
+//          $.each(markers, function(key,mrk){
+//            if(mrk.id == el.data('id')) {
+//              return marker = mrk;
+//            }
+//          });
+//          if (typeof marker !== "undefined") {
+//            highlightMarker(false, marker);
+//          } else {
+//            $("#marker-"+el.data('id')).addClass('map-info-marker-highlighted');
+//          }
+//        });
+//        $(document).on('mouseout', '.map-info-row', function () {
+//          unhighlightMarker(false);
+//        });
 
 
         setTimeout(function() {
