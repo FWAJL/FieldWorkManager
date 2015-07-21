@@ -1,11 +1,11 @@
 $(document).ready(function() {
-  if(typeof(validator) != 'undefined') {
-   validator.requiredInput();//validate the inputs
-   $("#btn_login").click(function() {//on button click...
-    var post_data = auth.retrieveCredentials();//get the credentials typed in
-    if (post_data['result'] === "success")//if the data is valid...
-     auth.login(post_data);//continue to login the user
-   });
+  if (typeof(validator) != 'undefined') {
+    validator.requiredInput();//validate the inputs
+    $("#btn_login").click(function() {//on button click...
+      var post_data = auth.retrieveCredentials();//get the credentials typed in
+      if (post_data['result'] === "success")//if the data is valid...
+        auth.login(post_data);//continue to login the user
+    });
     if (utils.getQueryVariable("enc") === "0") {
       $("#btn_login").trigger('click');
     }
@@ -42,13 +42,33 @@ $(document).ready(function() {
    } else {//success
     toastr.success(reply.message);
     //Now redirect to project page
-     if(reply.role == '2'){
-       utils.redirect("project");
-     }
-     else if(reply.role == '1') {
+         //Admin   
+          if(reply.role == '1') {
         utils.redirect("user/listAll");
-     } else if (reply.role == '3') {
-       utils.redirect("user/showDetails");
+     } 
+     // Project Manager
+          else if (reply.role == '2') {
+         utils.redirect("project");
+     } 
+     // Field Technician
+          else if (reply.role == '3') {
+       utils.redirect("mobile/listTasks");
+     } 
+     // Visitor
+          else if (reply.role == '4') {
+       utils.redirect("logout");
+     } 
+     //  Client
+          else if (reply.role == '5') {
+       utils.redirect("logout");
+     } 
+     //Service Provider
+     else if (reply.role == '6') {
+       utils.redirect("serviceprovider/discussion");
+     } 
+     //  TBD
+          else if (reply.role == '7') {
+       utils.redirect("logout");
      }
    }
   });

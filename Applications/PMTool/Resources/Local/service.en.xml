@@ -19,6 +19,8 @@
   <resource key="message_success_updateItems">The Service Provider data has been edited.</resource>
   <resource key="message_success_ifProviderExists">The Service Provider exists.</resource>
   <resource key="message_error_ifProviderExists">The Service Provider doesn't exist.</resource>
+  <resource key="message_success_getServiceCategoriesAutoComplete">Matching categories displayed.</resource>
+  <resource key="message_error_getServiceCategoriesAutoComplete">No matching category found.</resource>
 
   <resource key="service_legend_add">Add a new Service Provider</resource>
   <resource key="service_legend_edit">Edit this Service Provider</resource>

@@ -18,7 +18,7 @@
         <textarea name="lab_instructions" type="text"></textarea>
       </li>
 
-      <li>
+<!--      <li>
         <label><?php echo $resx["coc_service_id"]; ?></label>
         <div class="coc_list_services">
           <select name="service_id">
@@ -31,7 +31,7 @@
             ?>                                    
           </select>
         </div>
-      </li>
+      </li>-->
       <li>
         <label><?php echo $resx["lab_sample_type"]; ?></label>
         <select class="coc_list" name="lab_sample_type">

@@ -1,0 +1,47 @@
+<?php
+
+/**
+ *
+ * @package		Basic MVC framework
+ * @author		Souvik Ghosh
+ * @copyright	Copyright (c) 2015
+ * @license		
+ * @link		
+ * @since		
+ * @filesource
+ */
+// ------------------------------------------------------------------------
+
+/**
+ *  DocumentFormHelper Class
+ *
+ * @package		Applications\PMTool
+ * @subpackage	Helpers
+ * @author		Souvik Ghosh
+ * @link		
+ */
+
+namespace Applications\PMTool\Helpers;
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+  exit('No direct script access allowed');
+
+class DocumentFormHelper extends \Library\ApplicationComponent {
+
+	/**
+	* Returns the user form record
+	* This method could accept a template object
+	* or simply a user form ID. Both of this is
+	* passed through the variable $template.
+	*
+	* The flag $for_id decides what is passed
+	*/
+  public static function GetFormFromDocumentID($caller, $document_id) {
+    $documentformDAO = new \Applications\PMTool\Models\Dao\Document();
+    $documentformDAO->setDocument_id($document_id);
+    
+    $dal = $caller->managers()->getManagerOf("Task");
+    return $dal->selectMany($documentformDAO, "document_id");
+  }
+
+}

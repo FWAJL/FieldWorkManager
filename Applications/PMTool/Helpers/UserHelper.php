@@ -48,7 +48,13 @@ class UserHelper {
         $roleId = \Library\Enums\UserRole::ProjectManager;
         break;
       case \Library\Enums\UserRoleType::Technician:
-        $roleId = \Library\Enums\UserRole::ProjectManager;
+        $roleId = \Library\Enums\UserRole::Technician;
+        break;
+      case \Library\Enums\UserRoleType::Client:
+        $roleId = \Library\Enums\UserRole::Client;
+        break;
+      case \Library\Enums\UserRoleType::Service:
+        $roleId = \Library\Enums\UserRole::Service;
         break;
       default:
         $roleId = 0;
@@ -125,6 +131,15 @@ class UserHelper {
     return $user;
   }
 
+  public static function PrepareTechnicianObject($dataPost) {
+    $technician = new \Applications\PMTool\Models\Dao\Technician();
+    $technician->setTechnician_id($dataPost["technician_id"]);
+    $technician->setTechnician_name($dataPost["technician_name"]);
+    $technician->setTechnician_phone(!array_key_exists('technician_phone', $dataPost) ? "" : $dataPost["technician_phone"]);
+    $technician->setTechnician_active(!array_key_exists('technician_active', $dataPost) ? "" : $dataPost["technician_active"]);
+    return $technician;
+  }
+
   public static function PreparePmObject($dataPost) {
     $pm = new \Applications\PMTool\Models\Dao\Project_manager();
     $pm->setPm_id($dataPost["pm_id"]);
@@ -149,15 +164,16 @@ class UserHelper {
   }
 
   public static function AddUser($caller, $user_value, $user_role_id, $user_type = NULL) {
-    if ($user_type == NULL) {
+    if ($user_type === NULL) {
       $user_type = self::GetTypeFromRoleId($user_role_id);
     }
     $dataPost = $caller->dataPost();
+    $userEmail = self::GetEMailForUser($caller, $dataPost, $user_type, $user_value);
     $manager = $caller->managers()->getManagerOf('User');
     $generatedDataPost = array(
-      'user_login' => $dataPost['user_email'],
-      'user_password' => $dataPost['user_email'],
-      'user_email' => $dataPost['user_email'],
+      'user_login' => $userEmail,
+      'user_password' => $userEmail,
+      'user_email' => $userEmail,
       'user_hint' => '',
       'user_role_id'=> $user_role_id,
       'user_type' => $user_type,
@@ -168,6 +184,13 @@ class UserHelper {
     $user->setUser_password($protect->Encrypt($caller->app()->config()->get("encryption_key"), $user->user_password()));
     return $manager->add($user);
   }
+  public static function GetEmailForUser($caller, $dataPost, $user_type, $user_value) {
+    if (is_null($dataPost['user_email']) || $dataPost['user_email'] == '') {
+      return ($user_type . '_' . $user_value . '@' . $caller->app()->config()->get(\Library\Enums\AppSettingKeys::DefaultEmailDomainValue)); 
+    } else {
+      return $dataPost['user_email'];
+    }
+  }
   
   public static function GetTypeFromRoleId($role_id) {
     switch ($role_id) {
@@ -177,6 +200,10 @@ class UserHelper {
         return \Library\Enums\UserRoleType::ProjectManager;
       case \Library\Enums\UserRole::Technician:
         return \Library\Enums\UserRoleType::Technician;
+      case \Library\Enums\UserRole::Client:
+        return \Library\Enums\UserRoleType::Client;
+      case \Library\Enums\UserRole::Service:
+        return \Library\Enums\UserRoleType::Service;
       default://role = 4 and others
         return "";
     }

@@ -5,6 +5,10 @@
   <resource key="pm_view_info">View and edit your details</resource>
   <resource key="logout_link_text">Logout</resource>
   <resource key="p_user_name_label">Hello </resource>
+  
+  <resource key="ft_notes">Notes</resource>
+  <resource key="ft_map">Map</resource>
+  <resource key="ft_comm">Messages</resource>  
 
   <resource key="header_projects">Projects</resource>
   <resource key="project_add">Add</resource>
@@ -30,13 +34,14 @@
   <resource key="task_add">Add</resource>
   <resource key="task_list">List All</resource>
   
+  <resource key="header_completed_task">Completed Tasks</resource>  
   
   <resource key="header_analyte">Field Analytes</resource>
   <resource key="analyte_upload_list">Upload List</resource>
   <resource key="analyte_list">List All</resource>
   <resource key="analyte_upload_commons">Upload</resource>
   
-    <resource key="header_lab_analyte">Lab Analytes</resource>
+  <resource key="header_lab_analyte">Lab Analytes</resource>
   <resource key="lab_analyte_upload_list">Upload List</resource>
   <resource key="lab_analyte_list">List All</resource>
   <resource key="lab_analyte_upload_commons">Upload</resource>
@@ -56,5 +61,18 @@
   <resource key="user_list_all">List All</resource>
   <resource key="user_add">Add</resource>
 
-  
+  <resource key="header_service">Service Provider</resource>
+  <resource key="serviceprovider_discussion">Discussions</resource>
+
+  <resource key="header_ft_tasks">My Tasks</resource>
+  <resource key="header_ft_map">Task Map</resource>
+  <resource key="header_ft_locations">Task Locations</resource>
+  <resource key="header_ft_collect_data">Data collection</resource>
+  <resource key="header_ft_task_details">Task Details</resource>
+  <resource key="header_ft_task_services">Task Services</resource>
+  <resource key="header_ft_communicate">Communicate</resource>
+  <resource key="header_ft_notes">Notes</resource>
+  <resource key="header_ft_user_edit">User Edit</resource>
+  <resource key="header_ft_logout">Logout</resource>
+
 </resources>

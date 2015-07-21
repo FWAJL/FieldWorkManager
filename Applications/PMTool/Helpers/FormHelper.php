@@ -49,16 +49,32 @@ class FormHelper {
 
   public static function GetMasterForms($caller, $sessionProject) {
     $result = array();
-    if ($sessionProject !== NULL) {
-      $manager = $caller->managers()->getManagerOf("MasterForm");
-      $manager->setRootDirectory($caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
-      $manager->setWebDirectory($caller->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
-      $masterForm = new \Applications\PMTool\Models\Dao\Master_form();
+    $manager = $caller->managers()->getManagerOf("MasterForm");
+    $manager->setRootDirectory($caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
+    $manager->setWebDirectory($caller->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
+    $masterForm = new \Applications\PMTool\Models\Dao\Master_form();
+    
+    if ($sessionProject !== NULL) {  
       $result =
-      $sessionProject[\Library\Enums\SessionKeys::ProjectAvailableForms][\Library\Enums\SessionKeys::ProjectMasterForms] =
-      $manager->selectMany($masterForm, "");
+        $sessionProject[\Library\Enums\SessionKeys::ProjectAvailableForms][\Library\Enums\SessionKeys::ProjectMasterForms] =
+        $manager->selectMany($masterForm, "");
       \Applications\PMTool\Helpers\ProjectHelper::SetCurrentSessionProject($caller->user(), $sessionProject);
+    } else {
+      $result = $manager->selectMany($masterForm, "");
     }
+    return $result;
+  }
+
+  /**
+  * Returns a master form matching on the title
+  */
+  public static function GetMasterformWithTitle($caller, $title) {
+    $manager = $caller->managers()->getManagerOf("MasterForm");
+    //$manager->setRootDirectory($caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
+    //$manager->setWebDirectory($caller->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
+    $masterForm = new \Applications\PMTool\Models\Dao\Master_form();
+    $masterForm->setTitle($title);
+    $result = $manager->selectMany($masterForm, "title");
     return $result;
   }
 
@@ -239,6 +255,37 @@ class FormHelper {
     $sessionTask[\Library\Enums\SessionKeys::TaskServices] = $task_services;
     \Applications\PMTool\Helpers\TaskHelper::SetSessionTask($caller->user(), $sessionTask);
     return $result;
+  }
+
+  /**
+  * Accepts form type and record id to return
+  * the actual physical file name along with
+  * the path. Used for Fancybox PDF viewer.
+  */
+  public static function getPDFFormForFancyBox($caller, $form_type, $form_id){
+    $applicationDirectory = 
+            '../' . $caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath);
+    $finalPath = '';
+    if($form_type === 'master_form') {
+      //Master form, we have to fetch from Master_form
+      $formData = MasterFormHelper::GetFormFromTaskTemplateFrom($caller, $form_id, true);
+      $finalPath = $applicationDirectory. $form_type  . '/' . $formData[0]->value();
+    }
+    elseif($form_type === 'user_form') {
+      $formData = UserFormHelper::GetFormFromTaskTemplateFrom($caller, $form_id, true);
+      $finalPath = $applicationDirectory. $form_type  . '/' . $formData[0]->value(); 
+    }
+    elseif($form_type === 'task_location') {
+      $formData = DocumentFormHelper::GetFormFromDocumentID($caller, $form_id, true);
+      $finalPath = $applicationDirectory. $form_type  . '/' . $formData[0]->document_value();  
+    }
+
+    //Check if actually the physical file exists
+    if(!file_exists($finalPath)) {
+      $finalPath = ''; 
+    }
+
+    return $finalPath;
   }
 
 }

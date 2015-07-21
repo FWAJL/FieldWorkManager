@@ -25,6 +25,11 @@ $(document).ready(function() {
     }
   });
 
+  //Ellipsis Tooltip
+  $('.ellipsis-tooltip').each(function(){
+    $(this).parent().tooltip({placement: $(this).attr('placement'), title: $(this).val()});
+  });
+
 });
 /**
  * JavaScript Module to do JavaScript actions common to several views
@@ -99,7 +104,7 @@ $(document).ready(function() {
   utils.redirect = function(page, timeout) {
     timeout = timeout || 0;
     setTimeout(function() {
-      document.location.replace(config.rootFolder + page);
+      window.location.replace(config.rootFolder + page);
     }, timeout);
   };
   /**
@@ -486,6 +491,13 @@ $(document).ready(function() {
     var imageLightboxElement = '<a href="'+path+'" data-lightbox="'+lightboxGroup+'" data-title="'+title+'"><img class="img-responsive" src="'+path+'" /></a>';
     return imageLightboxElement;
   };
+
+  utils.hyperlinkUrls = function(txt) {
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    return txt.replace(urlRegex, function(url) {
+      return '<a target="_blank" href="' + url + '">' + url + '</a>';
+    })
+  }
 
 
 }(window.utils = window.utils || {}));

@@ -16,5 +16,14 @@
   <resource key="message_success_delete">The lab analyte has been deleted.</resource>
   <resource key="message_error_updateItems">Error editing the lab analytes.</resource>
   <resource key="message_success_updateItems">The lab analytes have been edited</resource>
-
+  <resource key="message_error_deleteCommon">The common lab analytes could not be deleted.</resource>
+  <resource key="message_success_deleteCommon">The common lab analytes deleted succesfully.</resource>
+  <resource key="message_error_isCommonAnalyteExisting">Common analyte exists.</resource>
+  <resource key="message_success_isCommonAnalyteExisting">Common analyte doesn't exist.</resource>
+  <resource key="message_error_editCommonAnalyte">Failed editing Common analyte.</resource>
+  <resource key="message_success_editCommonAnalyte">Common analyte edited succesfully.</resource>
+  <resource key="message_error_isLabAnalyteExisting">The lab analyte does not exist.</resource>
+  <resource key="message_success_isLabAnalyteExisting">The lab analyte exists.</resource>
+  <resource key="message_error_getMasterLabAnalytesAutoComplete">No matching master lab analyte found.</resource>
+  <resource key="message_success_getMasterLabAnalytesAutoComplete">Master lab analyte found.</resource>
 </resources>

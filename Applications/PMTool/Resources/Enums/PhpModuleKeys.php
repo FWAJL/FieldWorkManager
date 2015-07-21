@@ -36,6 +36,11 @@ class PhpModuleKeys {
   const promote_buttons = "promote_buttons_module";
   const popup_selector_module = "popup_selector_module";
   const popup_maplegends_module = "popup_maplegends_module";
+  const popup_maplegend_projects_module = "popup_maplegend_projects_module";
+  const popup_maplegend_project_module = "popup_maplegend_project_module";
+  const popup_maplegend_proj_locations_module = "popup_maplegend_proj_locations_module";
+  const popup_maplegend_task_locations_module = "popup_maplegend_task_locations_module";
+  const popup_maplegend_active_task = "popup_maplegend_active_task";
   const tooltip_msg = "tooltip_msg_module";
   
   const group_list_left = "group_list_left";
@@ -62,6 +67,8 @@ class PhpModuleKeys {
 
   const upload_file = "upload_file";
   const load_file = "load_file";
+
+  const notes = "notes";
 }
 
 ?>

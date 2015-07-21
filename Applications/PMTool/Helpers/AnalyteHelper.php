@@ -133,7 +133,7 @@ class AnalyteHelper {
       $className = "\Applications\PMTool\Models\Dao\Project_" . $type . "_analyte";
       $project_analyte = new $className();
       $project_analyte->setProject_id($project[\Library\Enums\SessionKeys::ProjectObject]->project_id());
-      $dal = $caller->managers()->getManagerOf($caller->module());
+      $dal = $caller->managers()->getManagerOf('Analyte');
       $project_analytes = $dal->selectMany($project_analyte, "project_id");
       $project[$sessionKey] = $project_analytes;
       ProjectHelper::SetUserSessionProject($caller->user(), $project);
@@ -273,10 +273,22 @@ class AnalyteHelper {
     foreach ($analyte_names as $name) {
       $analyte = $isFieldType ? new \Applications\PMTool\Models\Dao\Field_analyte() : new \Applications\PMTool\Models\Dao\Lab_analyte();
       $analyte->setPm_id($dataPost["pm_id"]);
+
+      //Check if the $name could be split on "tab"
+      //If yes, we may assume the columns are lab_analyte_name
+      //or field_analyte_name and analyte_abbrev and thus 
+      //prepare dao accordingly
+      $analyte_data =  \Applications\PMTool\Helpers\CommonHelper::StringToArray("\t", $name);
+      if(count($analyte_data) > 1) {
+        //abbrev
+        $analyte->setAnalyte_abbrev($analyte_data[1]);
+      }
+
+      //lab_analyte_name/field_analyte_name, analyte_abbrev
       if ($isFieldType) {
-        $analyte->setField_analyte_name_unit($name);
+        $analyte->setField_analyte_name_unit($analyte_data[0]);
       } else {
-        $analyte->setLab_analyte_name($name);
+        $analyte->setLab_analyte_name($analyte_data[0]);
       }
       array_push($analytes, $analyte);
     }
@@ -430,6 +442,15 @@ class AnalyteHelper {
 
   public static function SetCommonAnalytes($user, $sessionKey, $value) {
     $user->setAttribute($sessionKey, $value);
+  }
+
+  public static function GetMasterLabsForAutoComplete($mlObjs) {
+    $mlaArr = array();
+    //Let's loop on the result
+    foreach ($mlObjs as $key => $value) {
+      array_push($mlaArr, $value->master_lab_analyte_name());
+    }
+    return $mlaArr;
   }
 
 }

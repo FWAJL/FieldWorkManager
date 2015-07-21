@@ -20,6 +20,21 @@ class FormController extends \Library\BaseController {
   }
 
   public function executeShowFormMaster(\Library\HttpRequest $rq) {
+    //Fecth master forms
+    $masterForms = \Applications\PMTool\Helpers\FormHelper::GetMasterForms($this, NULL);
+
+    //Get confirm msg for analyte deletion from showForm screen
+    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"form", "targetaction": 
+            "masterForm", "operation": ["delete", "addUniqueCheck"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
+    
+    $data_right = array(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_right => $masterForms,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\FormHelper::SetPropertyNamesForDualList()
+    );
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data_right, $data_right);
+
     $this->page->addVar(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
@@ -125,6 +140,25 @@ class FormController extends \Library\BaseController {
 
   }
 
+  public function executeCheckIfTitleExists(\Library\HttpRequest $rq){
+    // Init result
+    $result = $this->InitResponseWS();
+
+    //At this point check if the file name is already used
+    $existingForm = \Applications\PMTool\Helpers\FormHelper::GetMasterformWithTitle($this, $this->dataPost["title"]);
+    if(count($existingForm) > 0) {
+      //Other forms found with same title
+      $title_found = true;  
+    } else $title_found = false;
+
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Form,
+      "resx_key" => $this->action(),
+      "step" => $title_found ? "error" : "success"
+    ));
+  }
+
   public function executeEdit(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
@@ -200,6 +234,30 @@ class FormController extends \Library\BaseController {
           \Applications\PMTool\Helpers\ProjectHelper::SetCurrentSessionProject($this->user(), $sessionProject);
         }
       }
+    } elseif ($this->dataPost["form_type"] == "master_form") {
+      
+      //delete from db
+      //Project form
+      $projectForm = new \Applications\PMTool\Models\Dao\Project_form();
+      $projectForm->setMaster_form_id($form_id);
+      $manager = $this->managers->getManagerOf("ProjectForm");
+      $manager->delete($projectForm,"master_form_id");
+
+      //Task template form
+      $taskForm = new \Applications\PMTool\Models\Dao\Task_template_form();
+      $taskForm->setMaster_form_id($form_id);
+      $manager = $this->managers->getManagerOf("TaskForm");
+      $manager->delete($taskForm,"master_form_id");
+      
+      
+      //Now for the master form
+      $masterFormDAO = new \Applications\PMTool\Models\Dao\Master_form();
+      $masterFormDAO->setForm_id($form_id);
+      $dal = $this->managers()->getManagerOf("MasterForm");
+      $matchingForms = $dal->selectMany($masterFormDAO, "form_id");
+      
+      $db_result = $dal->deleteWithFileV2($matchingForms[0], "form_id");
+
     }
 
     $this->SendResponseWS(
@@ -325,6 +383,28 @@ class FormController extends \Library\BaseController {
       "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Form,
       "resx_key" => $this->action(),
       "step" => ($result["rows_affected"] > 0) ? "success" : "error"
+    ));
+  }
+
+  public function executeGetPdfFileFor(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+    $form_id = intval($this->dataPost["form_id"]);
+    $form_type = $this->dataPost["form_type"];
+
+    $pdfPathForFancyBox = \Applications\PMTool\Helpers\FormHelper::getPDFFormForFancyBox($this, $form_type, $form_id);
+
+    $form_found = false;
+    if(trim($pdfPathForFancyBox) != '') {
+      $form_found = true;
+      $result["form_path"] = $pdfPathForFancyBox;
+    }
+    
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Form,
+      "resx_key" => $this->action(),
+      "step" => ($form_found) ? "success" : "error"
     ));
   }
 

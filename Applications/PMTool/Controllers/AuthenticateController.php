@@ -83,6 +83,7 @@ class AuthenticateController extends \Library\BaseController {
         \Applications\PMTool\Helpers\UserHelper::SaveRoutes($user, $routes);
         switch ($authProvider->getUser()->getType()) {
           case 'technician_id':
+            \Applications\PMTool\Helpers\TaskHelper::UnsetCurrentSessionTask($this->user);
             break;
           case 'pm_id':
             \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this, $authProvider->getUserType(), true);

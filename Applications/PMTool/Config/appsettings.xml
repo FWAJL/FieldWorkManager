@@ -3,7 +3,7 @@
   <!-- MODES : DEV or RELEASE -->
   <define key="ApplicationMode" value="DEV" />
   
-  <define key="base_url" value="/FieldWorkAssistantMVC/" />
+  <define key="base_url" value="/FieldWorkManager/" />
   <define key="BaseUrlRelease" value="/" />
   <define key="DefaultLanguage" value="en" />
   <define key="RootImageFolderPath" value="Web/images/" />
@@ -26,8 +26,17 @@
   <define key="GoogleMapsProjectActiveIcon" value="purple-stars_maps.png" />
   <define key="GoogleMapsProjectInactiveIcon" value="wht-stars_maps.png" />
   <define key="GoogleMapsLocationActiveIcon" value="blu-circle_maps.png" />
+  <define key="GoogleMapsLocationActiveIconSmall" value="blu-circle_maps_small.png" />
   <define key="GoogleMapsLocationInactiveIcon" value="measle_blue.png" />
   <define key="GoogleMapsTaskIcon" value="red-circle_maps.png" />
   <define key="GoogleMapsNoLatLngIcon" value="ltblu-blank_maps.png" />
+  <define key="GoogleMapsTaskNoLatLngIcon" value="red_maps.png" />
+  <define key="GoogleMapsTaskInProcess" value="yellow-dot_maps.png" />
+  <define key="GoogleMapsTaskFinished" value="green-dot_maps.png" />
+
+  <define key="DefaultEmailDomainValue" value="fieldworkmanager.com" />
+
+  <!--Field/Lab Analyte Pagination related configuartion-->
+  <define key="AnalytesPerPage" value="7" />
 
 </definitions>

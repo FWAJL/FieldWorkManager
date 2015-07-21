@@ -3,7 +3,7 @@
   <version>1</version>
   <main_menu name="user" active="true">
     <links>
-      <header href="user" resourcekey="header_users" enablelink="false" />
+      <header resourcekey="header_users" enablelink="false" active="true"/>
       <submenu href="user/listAll" id="user_list_all" resourcekey="user_list_all" active="true"/>
       <submenu href="user/showForm" id="user_add" resourcekey="user_add" active="true"/>
     </links>
@@ -11,7 +11,7 @@
 
   <main_menu name="project" active="true">
     <links>
-      <header href="project" resourcekey="header_projects" enablelink="false" />
+      <header resourcekey="header_projects" enablelink="false" active="true" />
       <submenu href="project/listAll" id="project_list_all" resourcekey="project_list" active="true"/>
       <submenu href="project/showForm?mode=add&amp;test=true" id="project_add_left_menu" resourcekey="project_add" active="true"/>
     </links>
@@ -19,7 +19,7 @@
   
   <main_menu name="technician" active="true">
     <links>
-      <header href="technician" resourcekey="header_technician" enablelink="false" />
+      <header resourcekey="header_technician" enablelink="false" active="true" />
       <submenu href="technician/listAll" id="technician_list_all" resourcekey="technician_list" active="true"/>
       <submenu href="technician/showForm" id="btn-add-technician-manual" resourcekey="technician_add" active="true"/>
     </links>
@@ -27,7 +27,7 @@
   
   <main_menu name="location" active="true">
     <links>
-      <header href="location" resourcekey="header_locations" enablelink="false" />
+      <header resourcekey="header_locations" enablelink="false" active="true" />
       <submenu href="location/listAll" id="location_list" resourcekey="location_list" active="true"/>
       <submenu href="location/showForm" id="location_add_button" resourcekey="location_add" active="true"/>
       <submenu href="location/uploadList" id="location_upload_list_button" resourcekey="location_upload_list" active="true"/>
@@ -36,7 +36,7 @@
   
   <main_menu name="map" active="true">
     <links>
-      <header href="map" resourcekey="header_map" enablelink="false" />
+      <header resourcekey="header_map"  active="true"/>
       <submenu href="map/allProjects" id="map_project_all" resourcekey="map_project_all" active="true"/>
       <submenu href="map/currentProject" id="map_project" resourcekey="map_project" active="true"/>
       <submenu href="map/currentProjectLocations" id="map_project_locations" resourcekey="map_project_locations" active="true"/>
@@ -46,15 +46,15 @@
   
   <main_menu name="task" active="true">
     <links>
-      <header href="task" resourcekey="header_task" enablelink="false" />
+      <header resourcekey="header_task" enablelink="false" active="true" />
       <submenu href="task/listAll" id="task_list_all" resourcekey="task_list" active="true"/>
       <submenu href="task/addPrompt" id="btn-add-task-manual" resourcekey="task_add" active="true"/>
     </links>
   </main_menu><!-- task -->
   
-      <main_menu name="labanalyte" active="true">
+  <main_menu name="labanalyte" active="true">
     <links>
-      <header href="labanalyte" resourcekey="header_lab_analyte" enablelink="false" />
+      <header resourcekey="header_lab_analyte" enablelink="false" active="true" />
       <submenu href="labanalyte/listAll" id="analyte_list_all" resourcekey="lab_analyte_list" active="true" />
       <submenu href="labanalyte/uploadList" id="analyte_upload_list_button" resourcekey="lab_analyte_upload_list" active="true"/>
       <submenu href="labanalyte/uploadCommons" id="analyte_upload_commons_button" resourcekey="lab_analyte_upload_commons" active="true"/>
@@ -63,7 +63,7 @@
   
   <main_menu name="analyte" active="true">
     <links>
-      <header href="analyte" resourcekey="header_analyte" enablelink="false" />
+      <header resourcekey="header_analyte" enablelink="false" active="true" />
       <submenu href="analyte/listAll" id="analyte_list_all" resourcekey="analyte_list" active="true" />
       <submenu href="analyte/uploadList" id="analyte_upload_list_button" resourcekey="analyte_upload_list" active="true"/>
       <submenu href="analyte/uploadCommons" id="analyte_upload_commons_button" resourcekey="analyte_upload_commons" active="true"/>
@@ -72,7 +72,7 @@
     
   <main_menu name="forms" active="true">
     <links>
-      <header href="form/listAll" id="form_list_all" resourcekey="header_form" active="true" />
+      <header id="form_list_all" resourcekey="header_form" enablelink="false" active="true" />
       <submenu href="form/listAll" id="form_list_all" resourcekey="form_list" active="true"/>
       <submenu href="form/masterForm" id="form_show_form_master" resourcekey="form_show_form_master" active="true"/>
       <!--
@@ -82,15 +82,54 @@
   
   <main_menu name="service" active="true">
     <links>
-      <header href="service" resourcekey="header_service" enablelink="false" />
+      <header resourcekey="header_service" enablelink="false" active="true" />
       <submenu href="service/listAll" id="service_list_all" resourcekey="service_list" active="true"/>
       <submenu href="service/showForm?mode=add&amp;test=true" id="btn-add-service-manual" resourcekey="service_add" active="true"/>
     </links>
   </main_menu><!-- resource -->
   
-  <main_menu name="field_results" active="true">
+<!--    <main_menu name="completed_task" active="true">
+    <links>
+      <header resourcekey="header_completed_task" enablelink="false" active="true" />
+      <submenu href="task/listAll" id="task_list_all" enablelink="false" resourcekey="task_list" active="true"/>
+    </links>
+  </main_menu>-->
+  <!-- completed task -->
+  
+  <main_menu name="field_results" active="false">
     <links>
       <header href="#" resourcekey="header_user_results" enablelink="false" />
     </links>
   </main_menu><!-- result -->
+  <main_menu name="technician_map" active="true">
+    <links>
+      <header href="mobile/map" resourcekey="header_ft_map" cssClass="fa fa-globe" enablelink="true" active="true" />
+    </links>
+  </main_menu><!-- mobile - task map - landing page -->
+  <main_menu name="technician_communicate" active="true">
+    <links>
+      <header href="mobile/communications" resourcekey="header_ft_communicate" cssClass="fa fa-comments" enablelink="true" active="true" />
+    </links>
+  </main_menu><!-- mobile - task discussions-->
+  <main_menu name="technician_notes" active="true">
+    <links>
+      <header href="mobile/notes" resourcekey="header_ft_notes" cssClass="fa fa-pencil-square" enablelink="true" active="true" />
+    </links>
+  </main_menu><!-- mobile - task notes -->
+  <main_menu name="technician_tasks" active="true">
+    <links>
+      <header href="mobile/listTasks" resourcekey="header_ft_tasks" cssClass="fa fa-pencil-square" enablelink="true" active="true" />
+    </links>
+  </main_menu><!-- mobile - task notes -->
+
+  <mobile_menu name="technician_user_edit" active="true">
+    <links>
+      <header href="user/showDetails" resourcekey="header_ft_user_edit" cssClass="fa fa-pencil-square" enablelink="true" active="true" />
+    </links>
+  </mobile_menu><!-- mobile - task notes -->
+  <mobile_menu name="technician_logout" active="true">
+    <links>
+      <header href="logout" resourcekey="header_ft_logout" cssClass="fa fa-pencil-square" enablelink="true" active="true" />
+    </links>
+  </mobile_menu><!-- mobile - task notes -->
 </main_menus>

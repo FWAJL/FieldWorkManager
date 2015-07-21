@@ -35,6 +35,39 @@ class FieldAnalyteController extends \Library\BaseController {
     ));
   }
 
+  public function executeIsfieldAnalyteExisting(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS();
+
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+    $field_analytes = $pm[\Library\Enums\SessionKeys::PmFieldAnalytes];
+    //Search in session using incoming post
+    $match = \Applications\PMTool\Helpers\CommonHelper::FindObjectByStringValue(
+          $this->dataPost['analyte_name'], "field_analyte_name_unit",
+          $field_analytes);
+    
+    if($match === false) {
+      //Free to edit, nothing found
+      $is_existing = false;
+    } else {
+      //something found, check with id, if id are same
+      //it's basically the same record which we are editing
+      if($match->field_analyte_id() == $this->dataPost['analyte_id']) {
+        //Free to edit, this record itself
+        $is_existing = false;
+      } else {
+        //different id, must be a different record, restrict
+        $is_existing = true;
+      }
+    }
+
+    $this->SendResponseWS(
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
+        "resx_key" => $this->action(),
+        "step" => $is_existing === false ? "error" : "success"
+    ));
+  }
+
   public function executeEdit(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
@@ -90,20 +123,6 @@ class FieldAnalyteController extends \Library\BaseController {
     ));
   }
 
-  public function executeGetList(\Library\HttpRequest $rq = NULL, $sessionProject = NULL, $isAjaxCall = FALSE) {
-    // Init result
-    $result = \Applications\PMTool\Helpers\LocationHelper::GetLocationList($this, $sessionProject);
-    if ($isAjaxCall) {
-      $step_result = $result[\Library\Enums\SessionKeys::ProjectLocations] !== NULL ? "success" : "error";
-      $this->SendResponseWS(
-              $result, array(
-          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
-          "resx_key" => $this->action(),
-          "step" => $step_result
-      ));
-    }
-  }
-
   public function executeGetItem(\Library\HttpRequest $rq) {
     // Init result
     $result = $this->InitResponseWS();
@@ -137,6 +156,35 @@ class FieldAnalyteController extends \Library\BaseController {
         "resx_key" => $this->action(),
         "step" => ($result["rows_affected"] === count($result["arrayOfValues"])) ? "success" : "error"
     ));
+  }
+
+  /**
+  * Ajax response for deleteting common field analytes
+  */
+  public function executeDeleteCommon(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+
+    $analyte_deleted = 0;
+    $analyte = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($this->dataPost['analyte_id'], 
+                    "common_field_analyte_id", $_SESSION, \Library\Enums\SessionKeys::CommonFieldAnalytes);
+
+    if ($analyte["object"] !== NULL) {
+      $manager = $this->managers->getManagerOf($this->module());
+      $db_result = $manager->delete($analyte["object"], "common_field_analyte_id");
+      if ($db_result) {
+        unset($_SESSION[\Library\Enums\SessionKeys::CommonFieldAnalytes][$analyte["key"]]);
+        $analyte_deleted = 1;    
+      }
+    }
+
+    $this->SendResponseWS(
+            $result, array(
+            "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::FieldAnalyte,
+            "resx_key" => $this->action(),
+            "step" => ($analyte_deleted === 1) ? "success" : "error"
+        )
+    );
   }
 
 }

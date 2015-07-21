@@ -37,8 +37,8 @@ class CssManager extends \Library\ApplicationComponent {
 
   public function __construct(\Library\Application $app) {
     parent::__construct($app);
-    $this->files = \Library\Core\DirectoryManager::GetFilesNamesRecursively(
-            __ROOT__ . \Library\Enums\ApplicationFolderName::WebCss, "css");
   }
+  
+  
 
 }

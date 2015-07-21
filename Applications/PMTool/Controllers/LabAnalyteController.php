@@ -7,12 +7,12 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class LabAnalyteController extends \Library\BaseController {
     
-      public function executeShowForm(\Library\HttpRequest $rq) {
+  public function executeShowForm(\Library\HttpRequest $rq) {
     $this->page()->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
   
-    public function executeUploadList(\Library\HttpRequest $rq) {
+  public function executeUploadList(\Library\HttpRequest $rq) {
     $tabsStatus = \Applications\PMTool\Helpers\CommonHelper::GetTabsStatus($this->user(), \Library\Enums\SessionKeys::TabActiveAnalyte);
 
     //Fetch tooltip data from xml and pass to view as an array
@@ -71,7 +71,8 @@ class LabAnalyteController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
     //Get confirm msg for analyte deletion from showForm screen
-    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"analyte", "targetaction": "list", "operation": ["deleteField", "deleteLab", "noAnalyteForProject","noAnalyteAvailable"]}', $this->app->name());
+    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"analyte", "targetaction": "list", 
+                "operation": ["deleteField", "deleteLab", "noAnalyteForProject","noAnalyteAvailable", "laExists"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
 
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
@@ -123,7 +124,7 @@ class LabAnalyteController extends \Library\BaseController {
             \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
   }
   
-    public function executeUploadCommonAnalytes(\Library\HttpRequest $rq) {
+  public function executeUploadCommonAnalytes(\Library\HttpRequest $rq) {
     $tabsStatus = \Applications\PMTool\Helpers\CommonHelper::GetTabsStatus($this->user(), \Library\Enums\SessionKeys::TabActiveAnalyte);
     if ($tabsStatus === NULL) {
       \Applications\PMTool\Helpers\AnalyteHelper::AddTabsStatus($this->user());
@@ -136,14 +137,23 @@ class LabAnalyteController extends \Library\BaseController {
 
     \Applications\PMTool\Helpers\AnalyteHelper::StoreCommonListData($this);
 
-    $data_common_field_analyte = array(
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => "common_field_analyte",
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\CommonHelper::GetValueInSession(
-                $this->user(), \Library\Enums\SessionKeys::CommonFieldAnalytes),
-        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList("common_field_analyte")
+    //Fetch prompt box data from xml and pass to view as an array
+    $prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"analyte", "targetaction": "uploadCommonAnalytes", "operation": ["edit"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
+
+    //Fetch alert box data
+    $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"analyte", 
+            "targetaction": "uploadCommonAnalytes", "operation": ["addUniqueCheck", "deleteCommonLab"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);
+
+    $data_common_lab_analyte = array(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => "common_lab_analyte",
+         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\CommonHelper::GetValueInSession(
+                $this->user(), \Library\Enums\SessionKeys::CommonLabAnalytes),
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList("common_lab_analyte")
     );
     $this->page()->addVar(
-            "data_common_field_analyte", $data_common_field_analyte);
+            "data_common_lab_analyte", $data_common_lab_analyte);
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {
@@ -171,6 +181,39 @@ class LabAnalyteController extends \Library\BaseController {
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
         "resx_key" => $this->action(),
         "step" => $result["dataId"] > 0 ? "success" : "error"
+    ));
+  }
+
+  public function executeIsLabAnalyteExisting(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS();
+    
+    $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+    $lab_analytes = $pm[\Library\Enums\SessionKeys::PmLabAnalytes];
+    //Search in session using incoming post
+    $match = \Applications\PMTool\Helpers\CommonHelper::FindObjectByStringValue(
+          $this->dataPost['analyte_name'], "lab_analyte_name",
+          $lab_analytes);
+    
+    if($match === false) {
+      //Free to edit, nothing found
+      $is_existing = false;
+    } else {
+      //something found, check with id, if id are same
+      //it's basically the same record which we are editing
+      if($match->lab_analyte_id() == $this->dataPost['analyte_id']) {
+        //Free to edit, this record itself
+        $is_existing = false;
+      } else {
+        //different id, must be a different record, restrict
+        $is_existing = true;
+      }
+    }
+
+    $this->SendResponseWS(
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
+        "resx_key" => $this->action(),
+        "step" => $is_existing === false ? "error" : "success"
     ));
   }
 
@@ -261,6 +304,186 @@ class LabAnalyteController extends \Library\BaseController {
         "resx_key" => $this->action(),
         "step" => ($result["rows_affected"] === count($result["arrayOfValues"])) ? "success" : "error"
     ));
+  }
+
+  /**
+  * Ajax response for deleteting common lab analytes
+  */
+  public function executeDeleteCommon(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+
+    $analyte_deleted = 0;
+    $analyte = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($this->dataPost['analyte_id'], 
+                    "common_lab_analyte_id", $_SESSION, \Library\Enums\SessionKeys::CommonLabAnalytes);
+
+    if ($analyte["object"] !== NULL) {
+      $manager = $this->managers->getManagerOf($this->module());
+      $db_result = $manager->delete($analyte["object"], "common_lab_analyte_id");
+      if ($db_result) {
+        unset($_SESSION[\Library\Enums\SessionKeys::CommonLabAnalytes][$analyte["key"]]);
+        $analyte_deleted = 1;    
+      }
+    }
+
+    $this->SendResponseWS(
+            $result, array(
+            "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
+            "resx_key" => $this->action(),
+            "step" => ($analyte_deleted === 1) ? "success" : "error"
+        )
+    );
+  }
+
+  /**
+  * AJAX response for checking if common lab analyte is existing
+  */
+  public function executeIsCommonAnalyteExisting(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+
+    $analyte_id = $this->dataPost['analyte_id'];
+    $analyte_name = $this->dataPost['analyte_name'];
+    $analyte_type = $this->dataPost['analyte_type'];
+
+    if($analyte_type === 'lab') {
+      $match = \Applications\PMTool\Helpers\CommonHelper::FindObjectByStringValue(
+        $analyte_name, "common_lab_analyte_name",
+        $_SESSION[\Library\Enums\SessionKeys::CommonLabAnalytes]
+      );
+    } elseif($analyte_type === 'field') {
+      $match = \Applications\PMTool\Helpers\CommonHelper::FindObjectByStringValue(
+        $analyte_name, "common_field_analyte_name",
+        $_SESSION[\Library\Enums\SessionKeys::CommonFieldAnalytes]
+      );
+    }
+
+    if($match !== false) {
+      if($analyte_type === 'field') {
+        if($match->common_field_analyte_id() == $analyte_id) {
+          //The same record which is being edited
+          $analyte_existing = 0;        
+        } else {
+          //A different record exists with the name we provided
+          $analyte_existing = 1;
+        }
+      } elseif($analyte_type === 'lab') {
+        if($match->common_lab_analyte_id() == $analyte_id) {
+          //The same record which is being edited
+          $analyte_existing = 0;        
+        } else {
+          //A different record exists with the name we provided
+          $analyte_existing = 1;
+        }  
+      }
+      
+    } else {
+      //Nothing found
+      $analyte_existing = 0;
+    }
+
+
+    $this->SendResponseWS(
+            $result, array(
+            "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
+            "resx_key" => $this->action(),
+            "step" => ($analyte_existing === 1) ? "success" : "error"
+        )
+    );
+  }
+
+  /**
+  * AJAX response for editing a common analyte
+  */
+  public function executeEditCommonAnalyte(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+
+    //\Applications\PMTool\Helpers\CommonHelper::pr($_SESSION[\Library\Enums\SessionKeys::CommonLabAnalytes]);
+
+    $analyte_id = $this->dataPost['analyte_id'];
+    $analyte_name = $this->dataPost['analyte_name'];
+    $analyte_type = $this->dataPost['analyte_type'];
+
+    $analyte_edited = 0;
+
+    if($analyte_type == 'lab') {
+      $analyteDAO = new \Applications\PMTool\Models\Dao\Common_lab_analyte();  
+      $analyteDAO->setCommon_lab_analyte_id($analyte_id);
+      $analyteDAO->setCommon_lab_analyte_name($analyte_name);
+      $analyteDAO->setCommon_lab_analyte_category_name($analyte_name);
+      
+      //Edit
+      $manager = $this->managers->getManagerOf($this->module());
+      $result_edit = $manager->edit($analyteDAO, "common_lab_analyte_id");
+
+      
+      $analyte = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($analyte_id, 
+                    "common_lab_analyte_id", $_SESSION, \Library\Enums\SessionKeys::CommonLabAnalytes);
+      if ($analyte["object"] !== NULL) {
+        unset($_SESSION[\Library\Enums\SessionKeys::CommonLabAnalytes][$analyte["key"]]);
+        array_push($_SESSION[\Library\Enums\SessionKeys::CommonLabAnalytes], $analyteDAO);
+      }
+
+      $analyte_edited = 1;
+      
+    } elseif ($analyte_type == 'field') {
+      $analyteDAO = new \Applications\PMTool\Models\Dao\Common_field_analyte();  
+      $analyteDAO->setCommon_field_analyte_id($analyte_id);
+      $analyteDAO->setCommon_field_analyte_name($analyte_name);
+      
+      //Edit
+      $manager = $this->managers->getManagerOf($this->module());
+      $result_edit = $manager->edit($analyteDAO, "common_field_analyte_id");
+
+      
+      $analyte = \Applications\PMTool\Helpers\CommonHelper::FindIndexInObjectListById($analyte_id, 
+                    "common_field_analyte_id", $_SESSION, \Library\Enums\SessionKeys::CommonFieldAnalytes);
+      if ($analyte["object"] !== NULL) {
+        unset($_SESSION[\Library\Enums\SessionKeys::CommonFieldAnalytes][$analyte["key"]]);
+        array_push($_SESSION[\Library\Enums\SessionKeys::CommonFieldAnalytes], $analyteDAO);
+      }
+
+      $analyte_edited = 1;
+    }
+
+
+    $this->SendResponseWS(
+            $result, array(
+            "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
+            "resx_key" => $this->action(),
+            "step" => ($analyte_edited === 1) ? "success" : "error"
+        )
+    );
+  }
+
+  /**
+  * AJAX response for getting common master lab analytes for auto complete
+  */
+  public function executeGetMasterLabAnalytesAutoComplete() {
+
+    // Init result
+    $result = $this->InitResponseWS();    
+
+    $manager = $this->managers()->getManagerOf('MasterLabAnalyte');
+    $masterLabAnalytes = $manager->getMatchingMasterLabAnalytes($this->dataPost['search']);
+
+    //Our final matches are stored in
+    $matches = \Applications\PMTool\Helpers\AnalyteHelper::GetMasterLabsForAutoComplete($masterLabAnalytes);
+
+    //\Applications\PMTool\Helpers\CommonHelper::pr($match);
+    $result['matches'] = $matches;
+    
+    $match_found = false;
+    if(count($matches) > 0) $match_found = true;
+
+    $this->SendResponseWS(
+          $result, array(
+          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::LabAnalyte,
+          "resx_key" => $this->action(),
+          "step" => ($match_found) ? "success" : "error"
+        )
+    ); 
   }
 
 }

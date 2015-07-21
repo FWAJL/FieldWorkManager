@@ -207,42 +207,33 @@ $(document).ready(function() {
     }
 
     $('#promptmsg-addNullCheckForCopy').val(task_manager.prompt_box_msg.replace('{0}', $('input[name=task_name]').val()));
-    utils.showPromptBox("addNullCheck", function() {
-      if ($('#text_input').val() !== '')
-      {
-        //Check unique
-        task_manager.ifTaskExists($('#text_input').val(), function(record_count) {
-          if (record_count == 0)
-          {
-            task_manager.getItemforCopy(parseInt(utils.getQueryVariable("task_id")), function(reply) {
-              var post_data = {};
-              post_data["task"] = reply.task.task_info_obj;
-              //Remove some attributes
-              delete(post_data["task"]['task_id']);
-              //Set some new attributes
-              post_data["task"]['task_name'] = $('#text_input').val();
-
+      utils.showPromptBox("addNullCheck", function() {
+        if ($('#text_input').val() !== '')
+        {
+          //Check unique
+          task_manager.ifTaskExists($('#text_input').val(), function(record_count) {
+            if (record_count == 0)
+            {
               //Add
-              task_manager.copyWithNewName(post_data, "task", "add");
-            });
-          }
-          else
-          {
-            utils.togglePromptBox();
-            var confirmMsg = $('#confirmmsg-addUniqueCheck').val().replace('{0}', $('#text_input').val());
-            utils.showAlert(confirmMsg, function() {
+              task_manager.copyWithNewName({task_id: utils.getQueryVariable("task_id"), new_taskname: $('#text_input').val()}, "task", "copyEntireTask");
+            }
+            else
+            {
               utils.togglePromptBox();
-            });
-          }
-        });
+              var confirmMsg = $('#confirmmsg-addUniqueCheck').val().replace('{0}', $('#text_input').val());
+              utils.showAlert(confirmMsg, function() {
+                utils.togglePromptBox();
+              });
+            }
+          });
 
-      }
-      else
-      {
-        $('#text_input').focus();
-      }
+        }
+        else
+        {
+          $('#text_input').focus();
+        }
 
-    }, "promptmsg-addNullCheckForCopy");
+      }, "promptmsg-addNullCheckForCopy");
 
   });//Copy a task
 
@@ -300,7 +291,8 @@ $(document).ready(function() {
   };
 
   task_manager.copyWithNewName = function(data, controller, action) {
-    datacx.post(controller + "/" + action, data["task"]).then(function(reply) {//call AJAX method to call Project/Add WebService
+    datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Project/Add WebService
+    //datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
       } else {//success

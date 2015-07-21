@@ -28,9 +28,22 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class UserFormHelper extends \Library\ApplicationComponent {
 
-  public static function GetFormFromTaskTemplateFrom($caller, $template) {
+	/**
+	* Returns the user form record
+	* This method could accept a template object
+	* or simply a user form ID. Both of this is
+	* passed through the variable $template.
+	*
+	* The flag $templateIsId decides what is passed
+	*/
+  public static function GetFormFromTaskTemplateFrom($caller, $template, $templateIsId = false) {
     $userformDAO = new \Applications\PMTool\Models\Dao\User_form();
-    $userformDAO->setForm_id($template->user_form_id());
+    if($templateIsId) {
+    	$userformDAO->setForm_id($template);
+    } else {
+    	$userformDAO->setForm_id($template->user_form_id());
+    }
+    
     $dal = $caller->managers()->getManagerOf("Task");
     return $dal->selectMany($userformDAO, "form_id");
   }

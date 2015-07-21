@@ -9,7 +9,6 @@
 DROP SCHEMA IF EXISTS `baiken_fwm_1`;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zonef = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -118,12 +117,14 @@ CREATE TABLE IF NOT EXISTS `task` (
     `project_id` int(11) NOT NULL COMMENT 'Foreign key => project',
     `task_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `task_deadline` varchar(50) NOT NULL,
+    `task_start_date` varchar(50) NULL,
     `task_instructions` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
     `task_trigger_cal` TINYINT(1) DEFAULT 0 NULL,
     `task_trigger_cal_value` VARCHAR(50) NULL,
     `task_trigger_pm` TINYINT(1) DEFAULT 0 NULL,
     `task_trigger_ext` TINYINT(1) DEFAULT 0 NULL,
     `task_active` tinyint(1) NOT NULL DEFAULT '0',
+    `task_activated` tinyint(1) NOT NULL DEFAULT '0',
     `task_req_form` TINYINT(1) DEFAULT 0 NULL,
     `task_req_field_analyte` TINYINT(1) DEFAULT 0 NULL,
     `task_req_lab_analyte` TINYINT(1) DEFAULT 0 NULL,
@@ -155,6 +156,7 @@ CREATE TABLE IF NOT EXISTS `field_analyte` (
     `field_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
     `field_analyte_name_unit` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
     `pm_id` int(11) NOT NULL COMMENT 'Foreign key => project_manager',
+    `analyte_abbrev` VARCHAR( 13 ) NULL DEFAULT NULL,
     PRIMARY KEY (`field_analyte_id`),
     UNIQUE INDEX `un_fa` (`field_analyte_name_unit` ASC),
     CONSTRAINT `fk_field_analyte_pm` FOREIGN KEY (`pm_id`)
@@ -179,6 +181,7 @@ CREATE TABLE IF NOT EXISTS `lab_analyte` (
     `lab_analyte_id` int(11) NOT NULL AUTO_INCREMENT,
     `lab_analyte_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `pm_id` int(11) NOT NULL COMMENT 'Foreign key => project_manager',
+    `analyte_abbrev` VARCHAR( 13 ) NULL DEFAULT NULL, 
     PRIMARY KEY (`lab_analyte_id`),
     UNIQUE INDEX `un_la` (`lab_analyte_name` ASC),
     CONSTRAINT `fk_lab_analyte_pm` FOREIGN KEY (`pm_id`)
@@ -202,7 +205,7 @@ CREATE TABLE IF NOT EXISTS `lab_sample_matrix` (
 CREATE TABLE IF NOT EXISTS `task_coc_info` (
     `task_coc_id` int(11) NOT NULL AUTO_INCREMENT,
     `task_id` int(11) NOT NULL,
-    `service_id` int(11) NOT NULL COMMENT 'Lab ID number',
+    `service_id` int(11) NULL COMMENT 'Lab ID number',
     `po_number` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
     `lab_instructions` varchar(1000) COLLATE utf8_unicode_ci NOT NULL,
     `lab_sample_type` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
@@ -215,9 +218,9 @@ CREATE TABLE IF NOT EXISTS `task_coc_info` (
     `results_to_email` varchar(35) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Is pm.pm_email by DEFAULT but can changed',
     PRIMARY KEY (`task_coc_id`),
     CONSTRAINT `fk_tci_task` FOREIGN KEY (`task_id`)
-        REFERENCES `task` (`task_id`) ON DELETE CASCADE,
-    CONSTRAINT `fk_tci_service` FOREIGN KEY (`service_id`)
-        REFERENCES `service` (`service_id`) ON DELETE CASCADE
+        REFERENCES `task` (`task_id`) ON DELETE CASCADE
+--    CONSTRAINT `fk_tci_service` FOREIGN KEY (`service_id`)
+--        REFERENCES `service` (`service_id`) ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Table structure for table `task_field_analyte
@@ -265,6 +268,7 @@ CREATE TABLE IF NOT EXISTS `task_location` (
     `task_location_id` INT(11) NOT NULL AUTO_INCREMENT,
     `task_id` int(11) NOT NULL,
     `location_id` int(11) NOT NULL,
+    `task_location_status` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '0 = not started; 1 = in process; 2 = finished',
     CONSTRAINT `fk_tl_task` FOREIGN KEY (`task_id`)
         REFERENCES `task` (`task_id`) ON DELETE CASCADE,
     CONSTRAINT `fk_tl_location` FOREIGN KEY (`location_id`)
@@ -433,11 +437,13 @@ CREATE TABLE IF NOT EXISTS `user` (
     `user_login` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `user_password` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `user_hint` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+    `user_email` VARCHAR(50) NOT NULL COMMENT 'User email that is unique and must be set',
     `user_type` varchar(50) NOT NULL COMMENT 'Possible values: pm_id, technician_id, service_id',
     `user_value` int(11) NOT NULL COMMENT 'ID value corresponding to the user_type',
     `user_role_id` smallint(2) NOT NULL COMMENT 'Look up the table user_role for details about the roles',
     `user_session_id` VARCHAR(50) NULL COMMENT 'Hashed session ID',
     UNIQUE INDEX `un_user_login` (`user_login` ASC),
+    UNIQUE INDEX `un_user_email` (`user_email` ASC),
     CONSTRAINT `fk_user_role_user` FOREIGN KEY (`user_role_id`)
         REFERENCES `user_role` (`user_role_id`),
     PRIMARY KEY (`user_id`)
@@ -463,6 +469,7 @@ CREATE TABLE IF NOT EXISTS `task_note` (
   `task_note_category_type` varchar(25) NOT NULL COMMENT 'Possible values: pm_id, technician_id',
   `task_note_category_value` int(11) NOT NULL COMMENT 'Represents the value of the object property set in the task_note_category_type',
   `task_note_value`varchar(500) NULL COMMENT 'The value of the note typed by the user',
+  `task_note_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT `fk_tn_task` FOREIGN KEY (`task_id`)
         REFERENCES `task` (`task_id`) ON DELETE CASCADE,
     PRIMARY KEY (`task_note_id`)
@@ -503,9 +510,45 @@ CREATE TABLE IF NOT EXISTS `discussion_content` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Dumping data for table `project_manager`
-INSERT INTO `project_manager` (`pm_comp_name`, `pm_name`, `pm_address`, `pm_phone`, `pm_email`) VALUES
-('comp name', 'John', 'Doe', '1234567890', 'test@fwa.net'),
-('','Demo User','','','');
+INSERT INTO 
+`project_manager` VALUES
+(1,'comp name 2','John','Doe1','1234567890','test@fwa.net'),
+(2,'','Demo User','','',''),
+(3,'','Damir','','',''),
+(4,'','Souvik','','',''),
+(5,'','Mehedee','','','');
+
+-- Dumping data for table `technician`
+INSERT INTO `technician` VALUES 
+(1,'Test tech','','test@test.com','',1,1),
+(2,'Demo tech','','demo@demo.com','',1,2),
+(3,'Popup tech','','popup@popup.com','',1,3),
+(4,'Mapping tech','','mapping@mapping.com','',1,4),
+(5,'PDF tech','','pdf@pdf.com','',1,5);
+
+INSERT INTO `service` VALUES 
+(1,1,'Test','Test SP','','','','','TestSP@TestSP.com',1);
+
+INSERT INTO `project` VALUES 
+(1,'EC-TX','','Texas project',1,0,1,0),
+(2,'EC-TX','','Texas project',2,0,2,0),
+(3,'EC-TX','','Texas project',3,0,3,0),
+(4,'EC-TX','','Texas project',4,0,4,0),
+(5,'EC-TX','','Texas project',5,0,5,0);
+
+INSERT INTO `facility` VALUES 
+(1,1,'EC-TX','Texas',29.179445,-96.277115,'','','','','','',''),
+(2,2,'EC-TX','Texas',29.179445,-96.277115,'','','','','','',''),
+(3,3,'EC-TX','Texas',29.179445,-96.277115,'','','','','','',''),
+(4,4,'EC-TX','Texas',29.179445,-96.277115,'','','','','','',''),
+(5,5,'EC-TX','Texas',29.179445,-96.277115,'','','','','','','');
+
+INSERT INTO `client` VALUES 
+(1,1,'Field Work Manager','Austin, TX','Brian Aiken','','baiken@fieldworkmanager.com'),
+(2,2,'Field Work Manager','Austin, TX','Brian Aiken','','baiken@fieldworkmanager.com'),
+(3,3,'Field Work Manager','Austin, TX','Brian Aiken','','baiken@fieldworkmanager.com'),
+(4,4,'Field Work Manager','Austin, TX','Brian Aiken','','baiken@fieldworkmanager.com'),
+(5,5,'Field Work Manager','Austin, TX','Brian Aiken','','baiken@fieldworkmanager.com');
 
 -- Dumping data for table `user_role`
 INSERT INTO `user_role` (`user_role_id`,`user_role_desc`) VALUES
@@ -513,13 +556,26 @@ INSERT INTO `user_role` (`user_role_id`,`user_role_desc`) VALUES
 (2,'Project Manager'),
 (3,'Field Technician'),
 (4,'Visitor'),
-(5,'None');
+(5,'Client'),
+(6,'Service Provider');
 
 -- Dumping data for table `user`
-INSERT INTO `user` (`user_login`, `user_password`, `user_hint`, `user_type`, `user_value`, `user_role_id`) VALUES
-('test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683', 'hint', 'pm_id', 1, 2),
-('demo', '89e495e7941cf9e40e6980d14a16bf023ccd4c91g496lJL683', '', 'pm_id', 2, 2),
-('admin','a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683','','administrator_id',0,1);
+INSERT INTO `user` 
+(`user_id`,`user_login`,`user_password`,`user_hint`,`user_type`,`user_value`,`user_role_id`,`user_session_id`,`user_email`)
+VALUES 
+(1,'test','a94a8fe5ccb19ba61c4c0873d391e987982fbbd3g496lJL683','test','pm_id',1,2,'','test@fieldworkmanager.com'),
+(2,'demo','89e495e7941cf9e40e6980d14a16bf023ccd4c91g496lJL683','','pm_id',2,2,NULL,'demo@fieldworkmanager.com'),
+(3,'mapping','821b7db1bf69055d3819db82de2c55389a73409bg496lJL683','','pm_id',3,2,'','mapping@fieldworkmanager.com'),
+(4,'Popup','3b6fb9033a8302fc168ca0199caaba142dbc5530g496lJL683','','pm_id',4,2,NULL,'Popup@fieldworkmanager.com'),
+(5,'pdf','ce9f44bc3d348133b47226685a8f75bbf17e757bg496lJL683','','pm_id',5,2,NULL,'pdf@fieldworkmanager.com'),
+(6,'admintest','011c945f30ce2cbafc452f39840f025693339c42g496lJL683','test','administrator_id',0,1,'','admintest@fieldworkmanager.com'),
+(7,'test@test.com','a6ad00ac113a19d953efb91820d8788e2263b28ag496lJL683','','technician_id',1,3,NULL,'testtech@fieldworkmanager.com'),
+(8,'demo@demo.com','a5388cd0243ebd05597addccc785ed6d48587e63g496lJL683','','technician_id',2,3,NULL,'demotech@fieldworkmanager.com'),
+(9,'popup@popup.com','2e6a7e7b17101c9da2aa1083874e719ac6fa6506g496lJL683','','technician_id',3,3,NULL,'popuptech@fieldworkmanager.com'),
+(10,'mapping@mapping.com','40944004c454380c10f7d580714a85c727b13390g496lJL683','','technician_id',4,3,NULL,'mappingtech@fieldworkmanager.com'),
+(11,'pdf@pdf.com','8e00de4617164a9090ee8ca54de80ec15301ede2g496lJL683','','technician_id',5,3,NULL,'pdftech@fieldworkmanager.com'),
+(12,'TestSP@TestSP.com','3dee823db92ebaf3bfbcb4bcaee2870c2616fd34g496lJL683','','service_id',1,4,NULL,'TestSP@fieldworkmanager.com'),
+(13,'client_id_1@fieldworkmanager.com','ed5aad2a6289a3ea75d6f0eb89ee60332f684138g496lJL683','','client_id',1,4,NULL,'client_id_1@fieldworkmanager.com');
 
 INSERT INTO `master_form`(`form_id`,`content_type`,`category`,`value`,`size`,`title`) VALUES
 (1,'pdf',NULL,'FWM_T-ChainofCustody.pdf',45,'Chain Of Custody'),

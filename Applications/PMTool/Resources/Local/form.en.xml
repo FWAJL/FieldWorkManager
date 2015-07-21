@@ -19,6 +19,10 @@
   <resource key="message_success_delete">The Form data has been deleted.</resource>
   <resource key="message_error_updateItems">Error editing the Form data - update items. Check logs.</resource>
   <resource key="message_success_updateItems">The Form data has been edited.</resource>
+  <resource key="message_success_getPdfFileFor">PDF file found, opening.</resource>
+  <resource key="message_error_getPdfFileFor">the PDF file could not be found on this server</resource>
+  <resource key="message_success_checkIfTitleExists">Master form doesn't exist.</resource>
+  <resource key="message_error_checkIfTitleExists">Master form exist.</resource>
 
   <resource key="form_legend_add">Add a new Form</resource>
   <resource key="form_legend_edit">Edit this Form</resource>
@@ -37,7 +41,7 @@
   <resource key="btn_to_pm_list">Add form(s)</resource>
   <resource key="btn_to_project_list">Remove form(s)</resource>
   <resource key="btn_add_user_form">Add template</resource>
-
+  <resource key="h4_all_master_form">All master forms</resource>
 
   
 </resources>

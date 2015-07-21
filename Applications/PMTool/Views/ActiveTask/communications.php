@@ -10,7 +10,7 @@ if (isset($current_discussion['comm_type'])) {
   }
 }
 ?>
-<div class="right-aside main col-lg-10 col-md-10 col-sm-10">
+<div class="right-aside col-no-right-pad main col-lg-10 col-md-10 col-sm-10">
   <h3>
     <?php echo $current_project->project_name(); ?>
     <?php if ($current_task !== NULL) { ?>
@@ -37,5 +37,6 @@ if (isset($current_discussion['comm_type'])) {
   <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::tabs_close]; ?>
   </div>
   <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::tooltip_msg_module]; ?>
+  <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_selector]; ?>
   <input type="hidden" id="modforjs" name="modforjs" value="taskcomm" />
 </div>

@@ -40,6 +40,8 @@ class TaskController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_show_field_matrix, $showFieldMatrixTabs);
     //Analyte Matrix tab status
 
+    //\Applications\PMTool\Helpers\CommonHelper::pr(\Applications\PMTool\Helpers\TaskHelper::GetSessionTasks($this->user()));
+
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
 
@@ -147,7 +149,7 @@ class TaskController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::redirect_on_success, $rq->getData('onSuccess'));
 	
-	if (!\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($this->user(), 0)) {
+    if (!\Applications\PMTool\Helpers\TaskHelper::UserHasTasks($this->user(), 0)) {
       $this->executeGetList($rq, NULL, FALSE);
     }
     $data = array(
@@ -155,14 +157,14 @@ class TaskController extends \Library\BaseController {
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => \Applications\PMTool\Helpers\TaskHelper::GetFilteredTaskObjectsList($this->app()->user()),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\CommonHelper::SetPropertyNamesForDualList(strtolower($this->module()))
     );
+  
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
-	
-	
-	$modules = $this->app()->router()->selectedRoute()->phpModules();
+
+    $modules = $this->app()->router()->selectedRoute()->phpModules();
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_prompt_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
+          \Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_prompt_list, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
     $this->page->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
+          \Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]);
     $this->page->addVar(
             \Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_msg, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_selector_module]);
   }
@@ -199,6 +201,7 @@ class TaskController extends \Library\BaseController {
     $this->dataPost["project_id"] = $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id();
     $this->dataPost["task_deadline"] = (isset($this->dataPost["task_deadline"]))?$this->dataPost["task_deadline"]:"";
     $this->dataPost["task_active"] = (isset($this->dataPost["task_active"]))?$this->dataPost["task_active"]:"";
+    $this->dataPost["task_activated"] = (isset($this->dataPost["task_activated"]))?$this->dataPost["task_activated"] : "0";
     $task = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Task());
 
     $result["dataIn"] = $task;
@@ -218,6 +221,30 @@ class TaskController extends \Library\BaseController {
         "resx_key" => $this->action(),
         "step" => $result["dataOut"] > 0 ? "success" : "error"
     ));
+  }
+
+  /**
+  * Copies a task into a completely new task
+  * Copies entirely everything, all the existing
+  * relations like forms, analyte matrix etc
+  * into the new task
+  */
+  public function executeCopyEntireTask(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+
+    //Copy the task corresponding to the passed task id with the new task name
+    $new_task_id = \Applications\PMTool\Helpers\TaskHelper::copyTaskWithDependencies($this, $this->dataPost['task_id'], $this->dataPost['new_taskname'], $this->app()->user());
+    
+    $result["dataOut"] = $new_task_id;
+
+    $this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
+        "resx_key" => $this->action(),
+        "step" => $result["dataOut"] > 0 ? "success" : "error"
+      )
+    ); 
   }
 
   public function executeEdit(\Library\HttpRequest $rq) {
@@ -332,12 +359,19 @@ class TaskController extends \Library\BaseController {
 
     foreach ($task_ids as $id) {
       $sessionTask = $sessionTasks[\Library\Enums\SessionKeys::TaskKey . $id];
-      $task = $sessionTask[\Library\Enums\SessionKeys::TaskObj];      
+      $task = $sessionTask[\Library\Enums\SessionKeys::TaskObj]; 
       $task->setTask_active($this->dataPost["action"] === "active" ? TRUE : FALSE);
+      $task_activated = $task->task_activated();
+      //check if task is already not activated and mark accordingly
+      if($task_activated === '0' or is_null($task_activated)) {
+        $task->setTask_activated('1');
+      }
       $manager = $this->managers->getManagerOf($this->module);
       $rows_affected += $manager->edit($task, "task_id") ? 1 : 0;
+      
       //Create Location specific PDFs for this task
-      if($this->dataPost["action"] === "active" && $rows_affected > 0) {
+      //Also check if task is already activated earlier, if so we don't want file copy feature again
+      if(($task_activated === '0' or is_null($task_activated)) && $this->dataPost["action"] === "active" && $rows_affected > 0) {
         \Applications\PMTool\Helpers\TaskHelper::CreateLocationSpecificPDF($sessionTask, $this);
       }
     }
@@ -370,7 +404,29 @@ class TaskController extends \Library\BaseController {
         "resx_key" => $this->action(),
         "step" => ($result['record_count'] > 0) ? "success" : "error"
       )
-	);
+    );
   }
+
+  public function executeGetLocationSpecificForms(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS(); // Init result
+
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
+    $task_id = $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id();
+    $forms = \Applications\PMTool\Helpers\TaskHelper::getFormsforTaskLocation($this, $task_id, $this->dataPost['loc_id']);
+
+    //Assign result
+    $result['location_form_data'] = $forms;
+
+    $forms_found = true;
+
+    $this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
+        "resx_key" => $this->action(),
+        "step" => ($forms_found) ? "success" : "error"
+      )
+    );
+  }
+
 
 }

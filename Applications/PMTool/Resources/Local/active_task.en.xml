@@ -37,6 +37,8 @@
   
   <resource key="activetask_button_sendmsg">Send</resource>
   <resource key="activetask_button_attach">Attach File</resource>
+  <resource key="activetask_button_attach_local">Local</resource>
+  <resource key="activetask_button_attach_server">Task location form</resource>
   <resource key="btn_to_pm_list">Start discussion</resource>
   <resource key="btn_to_project_list">Unselect</resource>
   <resource key="at_status_savenote">Save</resource>
@@ -48,4 +50,49 @@
   <resource key="taskstatus_recurrence_label">Recurrence</resource>
   <resource key="taskstatus_manualtrigger_label">Manual Trigger</resource>
   <resource key="taskstatus_externaltrigger_label">External Trigger</resource>
+
+  <!-- Legends-->
+  <resource key="h4_legend_heading">LEGEND</resource>
+  <resource key="active_project"> Active Project</resource>
+  <resource key="inactive_project"> Inactive Project</resource>
+  <resource key="active_location"> Active Location</resource>
+  <resource key="project_location"> Project Locations</resource>
+  <resource key="inactive_location"> Inactive Project Locations</resource>
+  <resource key="no_coords_location"> Location with no coordinates</resource>
+  <resource key="task_location_start"> Task Location</resource>
+  <resource key="task_location_start_active"> Not started</resource>  
+  <resource key="task_location_inprocess"> In process</resource>
+  <resource key="task_location_complete"> Finished</resource>
+  <resource key="ruler"> Click to measure distances</resource>
+  <resource key="add-icon"> Click to move or add Locations</resource>
+  <resource key="boundary"> Click to add Project boundary</resource>
+  <resource key="popup_ok_button">OK</resource>
+
+  <resource key="form_title">Title</resource>
+  <resource key="form_file">File</resource>
+
+  <!-- Sidebar headings-->
+  <resource key="locations_heading">Locations</resource>
+  <resource key="facilities_heading">Facilities</resource>
+  <resource key="other_locations_heading">Other Project Locations</resource>
+  <resource key="tasks_heading">Task Locations</resource>
+
+  <!-- map info windows -->
+  <resource key="task_location_window_title">Task Location Info</resource>
+  <resource key="task_location_window_location_name">Location name:</resource>
+  <resource key="task_location_window_zoom">Zoom to selected Location</resource>
+  <resource key="task_location_window_remove">Remove from task</resource>
+  <resource key="task_location_window_add">Add to task</resource>
+  <resource key="task_location_window_edit_update">Update</resource>
+  <resource key="task_location_window_edit_cancel">Cancel</resource>
+  <resource key="location_window_location_desc">Location description:</resource>
+  <resource key="location_window_location_lat">Latitude:</resource>
+  <resource key="location_window_location_long">Longitude:</resource>
+  <resource key="location_window_zoom">Zoom to selected Location</resource>
+  <resource key="location_place_onto_the_map">Place onto the map</resource>
+  <resource key="location_window_photos">View photos</resource>
+  <resource key="form_title">Title</resource>
+  <resource key="form_file">File(s)</resource>
+  <resource key="remove_file_title">Remove File</resource>
+
 </resources>

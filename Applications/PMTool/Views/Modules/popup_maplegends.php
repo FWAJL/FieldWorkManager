@@ -40,6 +40,14 @@
                 <?php echo $resx["inactive_location"]; ?>
            </span>
          </li>
+                       <li>
+       <span class="map-info-icon-image">
+           <img src="../Web/images/ltblu-blank_maps.png">
+       </span>
+       <span>
+            <?php echo $resx["no_coords_location"]; ?>
+       </span>
+     </li>
          <li>
            <span class="map-info-icon-image">
                <img src="../Web/images/red-circle_maps.png">
@@ -65,22 +73,24 @@
            </span>
          </li>
              <li>
-           <span class="map-info-icon-image">
-               <div id="map-info-ruler-icon"></div>
+           <span class="map-info-icon-image1">
+<!--               <div id="map-info-ruler-icon"></div>-->
+<img src="../Web/images/tmp_line_icon.png">
     			<?php echo $resx["ruler"]; ?>
            </span>
          </li>
-             <li>
+<!--             <li>
            <span class="map-info-icon-image">
                <div id="map-info-add-icon"></div>
            </span>
            <span>
-                <?php echo $resx["add-icon"]; ?>
+                <?php //echo $resx["add-icon"]; ?>
            </span>
-         </li>
+         </li>-->
              <li>
-           <span class="map-info-icon-image">
-           <div id="map-info-shape-icon"></div>
+           <span class="map-info-icon-image1">
+<!--           <div id="map-info-shape-icon"></div>-->
+<img src="../Web/images/tmp_area_icon.png">
            </span>
            <span>
                 <?php echo $resx["boundary"]; ?>

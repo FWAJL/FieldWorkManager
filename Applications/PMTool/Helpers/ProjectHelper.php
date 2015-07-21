@@ -154,7 +154,8 @@ class ProjectHelper {
     
     foreach ($lists[\Library\Enums\SessionKeys::UserProjects] as $project) {
       $sessionProjects[\Library\Enums\SessionKeys::ProjectKey . $project->project_id()] = self::MakeSessionProject($project);
-      PmHelper::AddAProjectIdToList($caller->user(), $project->project_id());
+      if($caller->user()->getAttribute(\Library\Enums\SessionKeys::UserRole == 2 ))
+        PmHelper::AddAProjectIdToList($caller->user(), $project->project_id());
     }
 
     self::SetSessionProjects($caller->user(), $sessionProjects);
@@ -168,9 +169,9 @@ class ProjectHelper {
       $client = CommonHelper::FindObjectByIntValue($project_id, "project_id", $lists[\Library\Enums\SessionKeys::UserProjectClientList]);
       $sessionProject[\Library\Enums\SessionKeys::ClientObject] = $client;
 
-      self::FillProjectSessionWithDataList($caller, $sessionProject);
+      $sessionProjectUpdated = self::FillProjectSessionWithDataList($caller, $sessionProject);
 
-      $sessionProjects[\Library\Enums\SessionKeys::ProjectKey . $project_id] = $sessionProject;
+      $sessionProjects[\Library\Enums\SessionKeys::ProjectKey . $project_id] = $sessionProjectUpdated;
     }
 
     self::SetSessionProjects($caller->user(), $sessionProjects);
@@ -208,6 +209,25 @@ class ProjectHelper {
       }
     }
     return $projects;
+  }
+  
+  public static function RefreshProjectObjectsForCurrentPm($caller) {
+    $pm = PmHelper::GetCurrentSessionPm($caller->user());
+    $projectObj = new \Applications\PMTool\Models\Dao\Project();
+    $projectObj->setPm_id($pm[\Library\Enums\SessionKeys::PmObject]->pm_id());
+    $dal = $caller->managers()->getManagerOf("Project");
+    $projects = $dal->selectMany($projectObj, "pm_id");
+    
+    $sessionProjects = self::GetSessionProjects($caller->user());
+    foreach ($projects as $project) {
+      $key = \Library\Enums\SessionKeys::ProjectKey . $project->project_id();
+      if(array_key_exists($key, $sessionProjects)) {
+        $sessionProjects[$key][\Library\Enums\SessionKeys::ProjectObject] = $project;
+      } else {
+        throw new \Exception(__CLASS__ . '::' . __METHOD__ . " => key not found in SessionProjects (" . $key . ")");
+      }
+    }
+    self::SetSessionProjects($caller->user(), $sessionProjects);
   }
 
 }

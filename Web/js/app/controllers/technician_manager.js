@@ -6,6 +6,7 @@
  *   
  * jQuery listeners for the technician actions
  */
+var documentId = 0;
 $(document).ready(function() {
   $(".btn-warning").hide();
   $("#document-upload").hide();
@@ -238,7 +239,13 @@ $(document).ready(function() {
         return undefined;
       } else {//success
         toastr.success(reply.message);
-        utils.redirect("technician/listAll");
+        if(documentId!=0) {
+          datacx.post("file/remove", {"document_id": documentId, "itemCategory": 'technician_id'}).then(function(reply){
+            utils.redirect("technician/listAll");
+          });
+        } else {
+          utils.redirect("technician/listAll");
+        }
       }
     });
   };
@@ -280,9 +287,10 @@ $(document).ready(function() {
         toastr.success(reply.message);
         if(reply.fileResults.length>0){
           $.each(reply.fileResults, function(key, file){
-            var lightboxImage = utils.createImageLightboxElement(file.webPath, itemId, file.title);
+            var lightboxImage = utils.createImageLightboxElement(file.filePath, itemId, file.document_title);
             var remove = utils.createRemoveFileElement(file.document_id);
             $("#documents").append('<div class="document-block" id="document-'+file.document_id+'">'+lightboxImage+remove+'</div>');
+            documentId = file.document_id;
             $("#documents").show();
           });
         } else {

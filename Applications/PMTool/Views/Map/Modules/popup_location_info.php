@@ -8,16 +8,18 @@
       </div>
 
       <div class="modal-body">
-        <label for="location-info-modal-location_name"><?php echo $resx['location_window_location_name']; ?></label>
-        <input class="form-control" type="text" id="location-info-modal-location_name" name="location_name">
-        <label for="location-info-modal-location_desc"><?php echo $resx['location_window_location_desc']; ?></label>
-        <textarea class="form-control" type="text" id="location-info-modal-location_desc" name="location_desc"></textarea>
-        <label for="location-info-modal-location_lat"><?php echo $resx['location_window_location_lat']; ?></label>
-        <input class="form-control" type="text" id="location-info-modal-location_lat" name="location_lat">
-        <label for="location-info-modal-location_long"><?php echo $resx['location_window_location_long']; ?></label>
-        <input class="form-control" type="text" id="location-info-modal-location_long" name="location_long">
-        <a href="#" id="location-info-modal-zoom"><span class="glyphicon glyphicon-zoom-in"></span> <?php echo $resx['location_window_zoom']; ?></a>
-        <a href="#" id="location-info-modal-photos"><span class="glyphicon glyphicon-camera"></span> <?php echo $resx['location_window_photos']; ?><span id="location-info-modal-photos-count"></span></a>
+          <li><label for="location-info-modal-location_name"><?php echo $resx['location_window_location_name']; ?></label>
+              <input class="" type="text" id="location-info-modal-location_name" name="location_name"></li>
+          <li><label for="location-info-modal-location_desc"><?php echo $resx['location_window_location_desc']; ?></label>
+              <textarea class="" type="text" id="location-info-modal-location_desc" name="location_desc"></textarea></li>
+          <li><label for="location-info-modal-location_lat"><?php echo $resx['location_window_location_lat']; ?></label>
+              <input class="" type="text" id="location-info-modal-location_lat" name="location_lat"></li>
+          <li><label for="location-info-modal-location_long"><?php echo $resx['location_window_location_long']; ?></label>
+          <input class="" type="text" id="location-info-modal-location_long" name="location_long"><li>
+          <li><a href="#" id="location-info-modal-zoom"><span class="glyphicon glyphicon-zoom-in"></span> <?php echo $resx['location_window_zoom']; ?></a></li>
+          <li><a href="#" id="location-info-modal-place"><span class="glyphicon glyphicon-screenshot"></span> <?php echo $resx['location_place_onto_the_map']; ?></a></li>
+          <li><a href="#" id="location-info-modal-photos"><span class="glyphicon glyphicon-camera"></span> <?php echo $resx['location_window_photos']; ?><span id="location-info-modal-photos-count"></span></a></li>
+          <br>
         <?php require $form_modules["upload_file"]; ?>
       </div>
       <div class="modal-footer">
@@ -29,4 +31,5 @@
   </div>
 </div>
 <div class="lightbox-content"></div>
+<input type="hidden" id="remove-file-title" value="<?php echo $resx['remove_file_title']; ?>" />
 <!--Promt box-->

@@ -1,6 +1,6 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 <div id="map-info">
-  <div class="row">
+  <div class="row col-no-right-margin map-controls">
     <div id="map-info-pan" class="col-md-3 col-lg-3 <?php echo $default_active_control == 'pan' ? 'control-active' : '' ?>">
       <div id="map-info-pan-icon"></div>
     </div>
@@ -13,7 +13,7 @@
       <div id="map-info-ruler-icon"></div>
     </div>
   </div>
-  <div class="row">
+  <div class="row col-no-right-margin">
     <div id="map-ruler"></div>
   </div>
 </div>

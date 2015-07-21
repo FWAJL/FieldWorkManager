@@ -304,5 +304,24 @@ class ServiceHelper {
     return $result;
   }
 
+  public static function GetMatchingServiceCategories($pm_services, $pattern) {
+    $categoryArray = array();
+    foreach($pm_services as $pm_service) {
+      $category = $pm_service->service_type();
+      $category = ($category === '') ? 'Uncategorized' : $category;
+      if(!in_array($category, $categoryArray)) {
+        //check pattern
+        if($pattern === '') {
+          array_push($categoryArray, $category);
+        } else {
+          if(strpos(strtolower($category), strtolower($pattern)) !== false) {
+            array_push($categoryArray, $category);
+          }
+        }
+      }
+    }
+    return $categoryArray;
+  }
+
 }
 
