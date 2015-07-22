@@ -23,10 +23,6 @@ class Page extends ApplicationComponent {
     }
     $user = $this->app->user();
     
-    //Get resources for the left menu
-    $this->addVar("resx_menu_left", $this->app->i8n->getCommonResourceArray("menu_left"));
-    //Get resources for the page
-    $this->addVar("resx_common_text", $this->app->i8n->getCommonResourceArray("common_text"));
     $int = extract($this->vars);
 
     ob_start();
