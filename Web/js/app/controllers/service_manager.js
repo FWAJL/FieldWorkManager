@@ -182,9 +182,9 @@ var selectionParams = {
 
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Resource/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("service/listAll", 1000);
       }
     });
@@ -192,9 +192,9 @@ var selectionParams = {
   service_manager.edit = function(service, controller, action) {
     datacx.post(controller + "/" + action, service).then(function(reply) {//call AJAX method to call Resource/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("service/listAll", 1000);
       }
     });
@@ -207,9 +207,9 @@ var selectionParams = {
   service_manager.getList = function() {
     datacx.post("service/getlist", null).then(function(reply) {//call AJAX method to call Resource/GetList WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         //Build the table
         service_manager.buildOutputList(reply.lists.services);
         //Now show the table
@@ -253,10 +253,10 @@ var selectionParams = {
   service_manager.delete = function(service_id) {
     datacx.post("service/delete", {"service_id": service_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("service/listAll");
       }
     });
@@ -266,12 +266,12 @@ var selectionParams = {
     //get service object from cache (PHP WS)
     datacx.post("service/getItem", {"service_id": service_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         $(".form_sections").hide();
         utils.redirect("service/listAll", 3000)
       } else {//success
         $(".service_edit").show().removeClass("hide");
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         service_manager.loadEditForm(reply);
       }
     });
@@ -280,10 +280,10 @@ var selectionParams = {
   service_manager.updateServices = function(action, arrayId) {
     datacx.post("service/updateItems", {"action": action, "service_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("service/listAll");
       }
     });

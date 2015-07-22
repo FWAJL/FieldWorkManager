@@ -7,18 +7,18 @@
 
 
     <div class="row col-no-right-margin">
-      <div class="col-lg-12 col-md-12 col-no-pad">
+
+      <div class="col-lg-2 col-md-2">
+        <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_info_module]; ?>
+      </div>
+      <div id="mobile_list_map" class="col-lg-1 col-md-1 col-no-pad">
         <p>
           <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_module]; ?>
         </p>
       </div>
-<!--      <div class="col-lg-2 col-md-2">
-        <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_info_module]; ?>
-      </div>-->
-
     </div>
     <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; ?>
-    <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_maplegends_module]; ?>
+    <?php //require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_maplegends_module]; ?>
     <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Map::popup_task_location_info]; ?>
     <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_msg]; ?>
     <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_selector_module]; ?>

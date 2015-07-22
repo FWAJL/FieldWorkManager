@@ -112,7 +112,7 @@ $(document).ready(function() {
           //Make a unique check
           datacx.post('field_analyte/isfieldAnalyteExisting', {analyte_id: options.$trigger.attr("data-fieldanalyte-id"), analyte_name:$('#text_input').val()}).then(function(reply) {
             if (reply === null || reply.result === 0) {//has an error
-              toastr.success(reply.message);
+              //toastr.success(reply.message);
               
               var actionPath = "field_analyte/edit";
               getAnalyteItem(parseInt(options.$trigger.attr("data-fieldanalyte-id")), function(data) {
@@ -122,16 +122,16 @@ $(document).ready(function() {
 
                 datacx.post(actionPath, post_data["field_analyte"]).then(function(reply) {//call AJAX method to call Project/Add WebService
                   if (reply === null || reply.result === 0) {//has an error
-                    toastr.error(reply.message);
+                    //toastr.error(reply.message);
                   } else {//success
-                    toastr.success(reply.message.replace("field_analyte", "field_analyte (ID:" + reply.dataId + ")"));
+                    //toastr.success(reply.message.replace("field_analyte", "field_analyte (ID:" + reply.dataId + ")"));
                     utils.redirect("analyte/listAll");
                   }
                 });
               });
               
             } else {//success
-              toastr.error(reply.message);
+              //toastr.error(reply.message);
               //Show alert
               utils.togglePromptBox();
               utils.showAlert($('#confirmmsg-faExists').val(), function(){
@@ -190,9 +190,9 @@ $(document).ready(function() {
               //Edit the common lab analyte
               datacx.post('lab_analyte/editCommonAnalyte', {analyte_id: lab_analyte_id, analyte_name: $('#text_input').val(), analyte_type: 'lab'}).then(function(reply) {
                 if (reply === null || reply.result === 0) {//has an error
-                  toastr.error(reply.message);
+                  //toastr.error(reply.message);
                 } else {//success
-                  toastr.success(reply.message);
+                  //toastr.success(reply.message);
                   utils.redirect("labanalyte/uploadCommons", 700);
                 }      
               });
@@ -215,9 +215,9 @@ $(document).ready(function() {
             {
               datacx.post('lab_analyte/deleteCommon', {analyte_id: lab_analyte_id}).then(function(reply) {//call AJAX method to call Project/Add WebService
                 if (reply === null || reply.result === 0) {//has an error
-                  toastr.error(reply.message);
+                  //toastr.error(reply.message);
                 } else {//success
-                  toastr.success(reply.message);
+                  //toastr.success(reply.message);
                   utils.redirect("labanalyte/uploadCommons", 700);
                 }
               });
@@ -257,9 +257,9 @@ $(document).ready(function() {
               //Edit the common lab analyte
               datacx.post('lab_analyte/editCommonAnalyte', {analyte_id: field_analyte_id, analyte_name: $('#text_input').val(), analyte_type: 'field'}).then(function(reply) {
                 if (reply === null || reply.result === 0) {//has an error
-                  toastr.error(reply.message);
+                  //toastr.error(reply.message);
                 } else {//success
-                  toastr.success(reply.message);
+                  //toastr.success(reply.message);
                   utils.redirect("analyte/uploadCommons", 700);
                 }      
               });
@@ -283,9 +283,9 @@ $(document).ready(function() {
             {
               datacx.post('field_analyte/deleteCommon', {analyte_id: field_analyte_id}).then(function(reply) {//call AJAX method to call Project/Add WebService
                 if (reply === null || reply.result === 0) {//has an error
-                  toastr.error(reply.message);
+                  //toastr.error(reply.message);
                 } else {//success
-                  toastr.success(reply.message);
+                  //toastr.success(reply.message);
                   utils.redirect("analyte/uploadCommons", 700);
                 }
               });
@@ -311,7 +311,7 @@ $(document).ready(function() {
 //    {
       datacx.post(actionPath, {field_analyte_id: analyteId}).then(function(reply) {
         if (reply === null || reply.result === 0) {//has an error
-          toastr.error(reply.message);
+          //toastr.error(reply.message);
         } else {//success
           //return reply;
           executeWithData(reply);
@@ -322,7 +322,7 @@ $(document).ready(function() {
 //    {
 //      datacx.post(actionPath, {lab_analyte_id: analyteId}).then(function(reply) {
 //        if (reply === null || reply.result === 0) {//has an error
-//          toastr.error(reply.message);
+//          //toastr.error(reply.message);
 //        } else {//success
 //          //return reply;
 //          executeWithData(reply);
@@ -433,7 +433,7 @@ $(document).ready(function() {
     if (ajaxParams.arrayOfValues.names !== undefined && ajaxParams.arrayOfValues.names !== "") {
       datacx.add(ajaxParams);
     } else {
-      toastr.error("Please type some analyte names or select at least one from the right list.");
+      //toastr.error("Please type some analyte names or select at least one from the right list.");
     }
   });
   //************************************************//

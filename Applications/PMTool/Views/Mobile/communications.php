@@ -13,21 +13,6 @@ if (isset($current_discussion['comm_type'])) {
 }
 ?>
 <div class="right-aside col-no-right-pad main col-lg-12 col-md-12 col-sm-12">
-  <h3>
-    <?php echo $current_project->project_name(); ?>
-    <?php if ($current_task !== NULL) { ?>
-      <span class="glyphicon glyphicon-chevron-right"></span>
-      <?php echo $current_task->task_name();
-    }
-    ?>
-    <span class="glyphicon glyphicon-chevron-right"></span>
-    <?php echo $resx['active_task_comm_header'] ?>
-    <?php if ($comm_with_name !== '') { ?>
-      <span class="glyphicon glyphicon-chevron-right"></span>
-      <?php echo $comm_with_name;
-    }
-    ?>
-  </h3>
   <div class="form_sections">
     <!-- task communication block -->
     <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::active_task_comm]; ?>

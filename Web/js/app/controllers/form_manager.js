@@ -20,10 +20,10 @@ $(document).ready(function() {
     var dropzone = new Dropzone("#document-upload");
     dropzone.on("success", function(event,res) {
       if(res.result == 0) {
-        toastr.error(res.message);
+        //toastr.error(res.message);
         dropzone.removeAllFiles();
       } else {
-        toastr.success(res.message);
+        //toastr.success(res.message);
         utils.redirect('form/listAll',300);
       }
     });
@@ -36,9 +36,9 @@ $(document).ready(function() {
     dropzone.on("success", function(event,res) {
       dropzone.removeAllFiles();
       if(res.result == 0) {
-        toastr.error(res.message);
+        //toastr.error(res.message);
       } else {
-        toastr.success(res.message);
+        //toastr.success(res.message);
         utils.redirect('form/masterForm',1000); 
       }
     });
@@ -47,14 +47,14 @@ $(document).ready(function() {
       //check if the title sected is unique
       datacx.post('form/checkIfTitleExists', {title: $("input[name='title']").val()}).then(function(reply) {
         if (reply === null || reply.result === 0) {//has an error
-          toastr.error(reply.message);
+          //toastr.error(reply.message);
           //show alert message, stating form title exists
           if($('#confirmmsg-addUniqueCheck').length > 0) {
             utils.showAlert($('#confirmmsg-addUniqueCheck').val(), null);  
           } 
           dropzone.removeAllFiles();
         } else {//success
-          toastr.success(reply.message);
+          //toastr.success(reply.message);
           //Continue normally
           dropzone.processQueue();
         }
@@ -142,10 +142,10 @@ $(document).ready(function() {
             datacx.post("form/getPdfFileFor", {"form_id": parseInt(options.$trigger.attr("data-form-id")), "form_type": options.$trigger.attr("data-object")}).then(function(reply) {
               
               if (reply === null || reply.result === 0) {//has an error
-                toastr.error(reply.message);
+                //toastr.error(reply.message);
                 
               } else {//success
-                toastr.success(reply.message);
+                //toastr.success(reply.message);
                 $.fancybox({ 
                   href: reply.form_path,
                   type: 'iframe', 
@@ -281,9 +281,9 @@ $(document).ready(function() {
  
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Resource/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("form/listAll", 1000);
       }
     });
@@ -292,9 +292,9 @@ $(document).ready(function() {
   form_manager.getList = function() {
     datacx.post("form/getlist", null).then(function(reply) {//call AJAX method to call Resource/GetList WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         //Build the table
         form_manager.buildOutputList(reply.lists.forms);
         //Now show the table
@@ -306,12 +306,12 @@ $(document).ready(function() {
     //get task object from cache (PHP WS)
     datacx.post("form/getItem", {"form_id": form_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         $(".form_sections").hide();
         utils.redirect("form/listAll", 3000)
       } else {//success
         $(".form_edit").show().removeClass("hide");
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         form_manager.loadEditForm(reply.task);
       }
     });
@@ -345,10 +345,10 @@ $(document).ready(function() {
   form_manager.delete = function(form_id, formType) {
     datacx.post("form/delete", {"form_id": form_id,"form_type": formType}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         if(formType == 'master_form') {
           utils.redirect("form/masterForm");
         } else {
@@ -361,10 +361,10 @@ $(document).ready(function() {
   form_manager.updateProjectForms = function(action, masterFormIds, userFormIds) {
     datacx.post("form/updateItems", {"action": action, "masterFormIds": masterFormIds, "userFormIds": userFormIds}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("form/listAll");
       }
     });
@@ -373,9 +373,9 @@ $(document).ready(function() {
   form_manager.edit = function(task, controller, action) {
     datacx.post(controller + "/" + action, task).then(function(reply) {//call AJAX method to call Task/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("form/listAll", 1000);
       }
     });

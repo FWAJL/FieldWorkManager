@@ -145,7 +145,7 @@ li textarea {
 }
 
 .cbox {
-    width: 15px;
+    width: 15px!important;
     margin-bottom: 3px;
 }
 

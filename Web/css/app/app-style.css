@@ -21,6 +21,8 @@
   background-repeat: repeat-x;
 }
 
+#branding_text {font-size: 20px; font-weight: bold; padding-top: 4px;}
+
 .top-right-option a:hover {
   background-color: #e5e5e5;
 }

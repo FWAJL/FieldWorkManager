@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
-  <resource key="brand">Field Work Manager</resource>
+<!--  <resource key="brand">Field Work Manager</resource>-->
   <resource key="pm_info_edit">Edit Info</resource>
   <resource key="pm_view_info">View and edit your details</resource>
   <resource key="logout_link_text">Logout</resource>
@@ -36,7 +36,7 @@
   
   <resource key="header_completed_task">Completed Tasks</resource>  
   
-  <resource key="header_analyte">Field Analytes</resource>
+  <resource key="header_analyte">Field Data</resource>
   <resource key="analyte_upload_list">Upload List</resource>
   <resource key="analyte_list">List All</resource>
   <resource key="analyte_upload_commons">Upload</resource>
@@ -66,6 +66,7 @@
 
   <resource key="header_ft_tasks">My Tasks</resource>
   <resource key="header_ft_map">Task Map</resource>
+  <resource key="header_ft_loc_list">List of Locations</resource>
   <resource key="header_ft_locations">Task Locations</resource>
   <resource key="header_ft_collect_data">Data collection</resource>
   <resource key="header_ft_task_details">Task Details</resource>

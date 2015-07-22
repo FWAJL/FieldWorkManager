@@ -94,5 +94,7 @@
   <resource key="form_title">Title</resource>
   <resource key="form_file">File(s)</resource>
   <resource key="remove_file_title">Remove File</resource>
+  <resource key="field_data">Field Data</resource>
+
 
 </resources>
