@@ -7,14 +7,14 @@
 
 
     <div class="row col-no-right-margin">
-      <div class="col-lg-10 col-md-10 col-no-pad">
+      <div class="col-lg-12 col-md-12 col-no-pad">
         <p>
           <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_module]; ?>
         </p>
       </div>
-      <div class="col-lg-2 col-md-2">
+<!--      <div class="col-lg-2 col-md-2">
         <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_info_module]; ?>
-      </div>
+      </div>-->
 
     </div>
     <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; ?>
