@@ -3,7 +3,7 @@
   <div class="task_list">
     <div class="content-container container-fluid">
       <div class="row col-no-right-margin">
-        <div  class="col-lg-5 col-md-5">
+        <div  class="mobile_form_sections col-lg-5 col-md-5">
           <span class="h4"><?php echo $resx["h3_tasks_active"]; ?></span>
           <?php require $active_list_module; ?>
         </div>

@@ -4,7 +4,7 @@
     <div id="collapse-menu-button" class="top-right-option glyphicon fa fa-bars fa-2x"></div>
     <?php endif; ?>
     <figure class="logo"><img src="<?php echo $this->app->relative_path . $this->app->logoImageUrl; ?>"></figure>
-    <span id="branding_text"><?php echo $resx_common_text["brand"]; ?></span>
+<!--    <span id="branding_text"><?php //echo $resx_common_text["brand"]; ?></span>-->
   </div>
   <?php if($user->getAttribute(\Library\Enums\SessionKeys::UserRole)!= 3): ?>
   <div id="pm_info">
