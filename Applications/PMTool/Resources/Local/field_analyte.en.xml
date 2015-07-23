@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
-  <resource key="page_title">Your Field Analytes - Field Work Manager</resource>
+  <resource key="page_title">Your Field Data - Field Work Manager</resource>
     
   <resource key="message_error_add">Error inserting the field analyte.</resource>
   <resource key="message_success_add">The field analyte has been inserted.</resource>
   <resource key="message_error_addCommon">Error inserting the common field analyte.</resource>
   <resource key="message_success_addCommon">The common field analyte has been inserted.</resource>
-  <resource key="message_error_getlist">Error reading the field analytes.</resource>
-  <resource key="message_success_getlist">The field analytes have been read.</resource>
+  <resource key="message_error_getlist">Error reading the field data.</resource>
+  <resource key="message_success_getlist">The field data have been read.</resource>
   <resource key="message_error_getItem">Error reading the field analyte.</resource>
   <resource key="message_success_getItem">The field analyte has been read.</resource>
   <resource key="message_error_edit">Error editing the field analyte.</resource>
   <resource key="message_success_edit">The field analyte has been edited.</resource>
   <resource key="message_error_delete">Error deleting the field analyte.</resource>
   <resource key="message_success_delete">The field analyte has been deleted.</resource>
-  <resource key="message_error_updateItems">Error editing the field analytes.</resource>
-  <resource key="message_success_updateItems">The field analytes have been edited</resource>
-  <resource key="message_error_deleteCommon">The common field analytes could not be deleted.</resource>
-  <resource key="message_success_deleteCommon">The common field analytes deleted succesfully.</resource>
+  <resource key="message_error_updateItems">Error editing the field data.</resource>
+  <resource key="message_success_updateItems">The field data have been edited</resource>
+  <resource key="message_error_deleteCommon">The common field data could not be deleted.</resource>
+  <resource key="message_success_deleteCommon">The common field data deleted succesfully.</resource>
   <resource key="message_error_isfieldAnalyteExisting">The field analyte does not exist.</resource>
   <resource key="message_success_isfieldAnalyteExisting">The field analyte exists.</resource>
 </resources>

@@ -43,7 +43,7 @@ $(document).ready(function() {
     datacx.post("task/getTaskCoc", {"task_id": task_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {
       } else {
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         if (reply.task_coc.task_coc_id === null) {
           task_coc.editing = false;
         }
@@ -58,9 +58,9 @@ $(document).ready(function() {
   task_coc.addCoc = function(taskcoc, controller, action) {
     datacx.post(controller + "/" + action, taskcoc).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("task/coc?mode=edit&task_id=" + taskcoc.task_id, 1000);
       }
     });
@@ -69,9 +69,9 @@ $(document).ready(function() {
   task_coc.editCoc = function(taskcoc, controller, action) {
     datacx.post(controller + "/" + action, taskcoc).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("task/coc?mode=edit&task_id=" + taskcoc.task_id, 1000);
       }
     });

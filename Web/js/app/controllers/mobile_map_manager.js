@@ -37,14 +37,14 @@ var markerDrag = function(e){
   post_data.location_long = e.latLng.lng();
   post_data.location_id = this.id;
   map_manager.edit(post_data, "location", "mapEdit", function(){});
-  google.maps.event.addListener(this, 'mouseover', function () { highlightMarker(e, this) });
-  highlightMarker(e, this)
+//  google.maps.event.addListener(this, 'mouseover', function () { highlightMarker(e, this) });
+//  highlightMarker(e, this)
 }
 
-var markerDragFacility = function(e) {
-  google.maps.event.addListener(this, 'mouseover', function () { highlightMarker(e, this) });
-  highlightMarker(e, this);
-}
+//var markerDragFacility = function(e) {
+//  google.maps.event.addListener(this, 'mouseover', function () { highlightMarker(e, this) });
+//  highlightMarker(e, this);
+//}
 
 var markerDragStart = function(e){
   unhighlightMarker(e);
@@ -77,7 +77,7 @@ var addMarkerClick = function(e) {
     post_data.location_id = selectedMarker;
     map_manager.edit(post_data, "location", "mapEdit");
     markerSettings = {
-      draggable: true,
+      draggable: false,
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
       dragend: markerDrag,
@@ -112,7 +112,7 @@ var addMarkerClick = function(e) {
   } else if (addActive === true) {
     //var infoPrompt = new google.maps.InfoWindow({content: "<form class='form-horizontal'><div class='form-group'><div class='col-sm-10'><input class='form-control' type='text' id='new-marker-name' /></div></div><div class='form-group'><div class='col-sm-12'><textarea class='form-control' rows='3'></textarea></div></div><div class='form-group'><div class='col-sm-5'><button type='button' class='btn btn-primary'>Save</button></div><div class='col-sm-5'><button type='button' class='btn btn-default'>Cancel</button></div></div></form>"});
     newMarker = map.addMarker({
-      draggable: true,
+      draggable: false,
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
       dragend: markerDrag,
@@ -178,7 +178,7 @@ var saveMarkerData = function (marker){
  */
 var addLocationToMapInfo = function(location, marker){
   marker.id = location.location_id;
-  google.maps.event.addListener(marker,'mouseover',function(e) { highlightMarker(e,marker.id);});
+//  google.maps.event.addListener(marker,'mouseover',function(e) { highlightMarker(e,marker.id);});
   google.maps.event.addListener(marker,'click', function(e) {openLocationInfo(marker,marker.id, false);});
   $("#map-info").append(
     "<div id='marker-" + location.location_id
@@ -514,7 +514,7 @@ var highlightMarker = function(e, marker) {
       zIndex: -50,
       map: map.map
     });
-    google.maps.event.addListener(highlightCircle,'mouseout',unhighlightMarker);
+//    google.maps.event.addListener(highlightCircle,'mouseout',unhighlightMarker);
   }
 }
 
@@ -624,12 +624,12 @@ function load(params) {
           } else {
             item.marker.id = item.id;
             if(reply.type === 'facility') {
-              item.marker.draggable = true;
+              item.marker.draggable = false;
               item.marker.dragstart = markerDragStart;
               item.marker.dragend = markerDragFacility;
             }
             if(reply.controls.markers === true){
-              item.marker.draggable = true;
+              item.marker.draggable = false;
               item.marker.dragend = markerDrag;
               item.marker.dragstart = markerDragStart;
             }
@@ -650,7 +650,7 @@ function load(params) {
             }
             item.marker.zIndex = 500;
             item.marker.optimized = false;
-            item.marker.mouseover = function(e) { highlightMarker(e,item.marker);};
+//            item.marker.mouseover = function(e) { highlightMarker(e,item.marker);};
             //item.marker.mouseout = unhighlightMarker;
             markers.push(item.marker);
             markerIcon = item.marker.icon;
@@ -707,23 +707,23 @@ function load(params) {
         }
         */
         markers = map.addMarkers(markers);
-        $(document).on('mouseover', '.map-info-row', function () {
-          var el= $(this);
-          var marker;
-          $.each(markers, function(key,mrk){
-            if(mrk.id == el.data('id')) {
-              return marker = mrk;
-            }
-          });
-          if (typeof marker !== "undefined") {
-            highlightMarker(false, marker);
-          } else {
-            $("#marker-"+el.data('id')).addClass('map-info-marker-highlighted');
-          }
-        });
-        $(document).on('mouseout', '.map-info-row', function () {
-          unhighlightMarker(false);
-        });
+//        $(document).on('mouseover', '.map-info-row', function () {
+//          var el= $(this);
+//          var marker;
+//          $.each(markers, function(key,mrk){
+//            if(mrk.id == el.data('id')) {
+//              return marker = mrk;
+//            }
+//          });
+//          if (typeof marker !== "undefined") {
+//            highlightMarker(false, marker);
+//          } else {
+//            $("#marker-"+el.data('id')).addClass('map-info-marker-highlighted');
+//          }
+//        });
+//        $(document).on('mouseout', '.map-info-row', function () {
+//          unhighlightMarker(false);
+//        });
 
 
         setTimeout(function() {
@@ -754,21 +754,13 @@ function load(params) {
             pathSize = path.getLength();
             infoPosition = path.getAt(pathSize - 1);
             distance = google.maps.geometry.spherical.computeLength(path);
-            if (distance >= 1000) {
-              infoContent = "Distance: " + (distance / 1000).toFixed(2) + " km " + (distance * 0.62137).toFixed(2) + " miles";
-            } else {
-              infoContent = "Distance: " + (distance / 1).toFixed(2) + " m " + (distance * 3.28084).toFixed(2) + " feet";
-            }
+            infoContent = "Distance: " + (distance / 1000).toFixed(2) + " km " + (distance * 0.62137).toFixed(2) + " miles";
           } else {
             path = overlay.getPath();
             pathSize = path.getLength();
             infoPosition = path.getAt(pathSize - 1);
             area = google.maps.geometry.spherical.computeArea(path);
-            if (area >= 1000000) {
-              infoContent = "Area: " + (area / 1000000).toFixed(2) + " sq kms " + (area / 2589988.11).toFixed(2) + " sq miles";
-            } else {
-              infoContent = "Area: " + (area / 1).toFixed(2) + " sq m " + (area * 10.7639).toFixed(2) + " sq ft";
-            }
+            infoContent = "Area: " + (area / 1000000).toFixed(2) + " sq kms " + (area / 2589988.11).toFixed(2) + " sq miles";
           }
           if(false) {
             infoContainer.html(infoContent);

@@ -45,7 +45,7 @@ class AuthenticateController extends \Library\BaseController {
     $resourceFileKey = "login";
 
     $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
-    $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
+    //$this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
     $username = $pwd = '';
     if(isset($this->dataPost['username']) && isset($this->dataPost['pwd'])){
       $username = $this->dataPost['username'];

@@ -119,6 +119,10 @@ ul.content_left > li {
 ul.content_left > li > a > span.fa {
   width: 30px;
 }
+
+#mobile_list_map { display: none; }
+/*Temporary to hide map in list view.*/
+
 /*LANDING PAGE*/
 /*
 ul.content_left > li > a > span:last-child { display: none; }

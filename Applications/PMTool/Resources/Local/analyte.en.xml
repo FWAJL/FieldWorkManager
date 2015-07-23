@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
-  <resource key="page_title">Your Field Analytes - Field Work Manager</resource>
+  <resource key="page_title">Your Field Data - Field Work Manager</resource>
     
   <resource key="message_error_add">Error inserting the field analyte.</resource>
   <resource key="message_success_add">The field analyte has been inserted.</resource>
-  <resource key="message_error_getlist">Error reading the field analytes.</resource>
-  <resource key="message_success_getlist">The field analytes have been read.</resource>
+  <resource key="message_error_getlist">Error reading the field data.</resource>
+  <resource key="message_success_getlist">The field data have been read.</resource>
   <resource key="message_error_getItem">Error reading the field analyte.</resource>
   <resource key="message_success_getItem">The field analyte has been read.</resource>
   <resource key="message_error_edit">Error editing the field analyte.</resource>
   <resource key="message_success_edit">The field analyte has been edited.</resource>
   <resource key="message_error_delete">Error deleting the field analyte.</resource>
   <resource key="message_success_delete">The field analyte has been deleted.</resource>
-  <resource key="message_error_updateItems">Error editing the field analytes.</resource>
-  <resource key="message_success_updateItems">The field analytes have been edited</resource>
+  <resource key="message_error_updateItems">Error editing the field data.</resource>
+  <resource key="message_success_updateItems">The field data have been edited</resource>
 
   <resource key="field_analyte_legend_add">Add new field analyte</resource>
   <resource key="field_analyte_legend_edit">Edit this field analyte</resource>
@@ -21,41 +21,41 @@
 <!--  Added Reource Keys -->
   <resource key="field_analyte_name_unit">Analyte and Units</resource>
   <resource key="lab_analyte_name">Lab Analyte</resource>
-  <resource key="field_analyte_info_tab">Field analytes</resource>
+  <resource key="field_analyte_info_tab">Field data</resource>
   <resource key="lab_analyte_info_tab">Lab analytes</resource>
   <resource key="analyte_button_add">Add</resource>
   <resource key="analyte_button_edit">Edit analyte</resource>
   <resource key="analyte_button_delete">Delete analyte</resource>
-  <resource key="field_analytes_header">Field analytes</resource>
+  <resource key="field_analytes_header">Field data</resource>
   <resource key="h4_project_analytes">Analytes for this Project</resource>
-  <resource key="h4_analytes">Field Analytes</resource>
+  <resource key="h4_analytes">Field Data</resource>
   <resource key="h4_lab_analytes">Lab Analytes</resource>  
   <resource key="btn_add_to_project">Add to Project Analytes</resource> 
   <resource key="btn_remove_from_project">Remove from Project Analytes</resource> 
   <resource key="lab_analytes_header">Lab Analytes</resource>  
   
-  <resource key="h3_field_analytes_inactive">Inactive field analytes</resource> 
+  <resource key="h3_field_analytes_inactive">Inactive field data</resource> 
   <resource key="h3_field_analyte_names_form">Add field analyte names</resource> 
   <resource key="h3_pm_analytes">Create a custom list of analytes to be used on your Projects</resource> 
   <resource key="h3_field_analyte_add_buttons">Add field analyte:</resource>
  
-  <resource key="btn_add_field_analyte_names">Add the field analytes</resource> 
+  <resource key="btn_add_field_analyte_names">Add the field data</resource> 
   <resource key="btn_field_analyte_select_project">See list of project</resource> 
   <resource key="btn_add_analyte_to_project">Add Analyte(s) to Project</resource>
   <resource key="btn_add_common_analyte_to_project">Add Common Analyte(s) to Project</resource>
   <resource key="btn_remove_analyte_to_project">Remove Analyte(s) from Project</resource>
   <resource key="btn_add_common_analyte">Add</resource>
   
-  <resource key="h4_project_analytes">Field analytes to be used for this Project</resource>
+  <resource key="h4_project_analytes">Field data to be used for this Project</resource>
   <resource key="h4_project_lab_analytes">Lab analytes to be used for this Project</resource>
-  <resource key="h4_your_analytes">All your field analytes (available for all projects)</resource>
+  <resource key="h4_your_analytes">All your field data (available for all projects)</resource>
   <resource key="h4_your_lab_analytes">All your lab analytes (available for all projects)</resource>  
-  <resource key="h4_analyte_form">Enter or paste a list of field analytes here...</resource>
+  <resource key="h4_analyte_form">Enter or paste a list of field data here...</resource>
   <resource key="h4_lab_analyte_form">Enter or paste a list of lab analytes here...</resource>
   <resource key="h4_common_lab_analytes">...or select from these common lab analytes</resource>
-  <resource key="h4_common_field_analytes">...or select from these common field analytes</resource>
+  <resource key="h4_common_field_analytes">...or select from these common field data</resource>
   <resource key="h3_common_lab_analytes">Upload Common Lab Analytes</resource>
-  <resource key="h3_common_field_analytes">Upload Common Field Analytes</resource>
+  <resource key="h3_common_field_analytes">Upload Common Field Data</resource>
   <resource key="h4_of_field_type">Field analyte type</resource>
   <resource key="h4_of_lab_type">Lab analyte type</resource>
   
