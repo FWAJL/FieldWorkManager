@@ -16,10 +16,10 @@ $(document).ready(function() {
     var dropzone = new Dropzone("#document-upload");
     dropzone.on("success", function(event,res) {
       if(res.result == 0) {
-        toastr.error(res.message);
+        //toastr.error(res.message);
         dropzone.removeAllFiles();
       } else {
-        toastr.success(res.message);
+        //toastr.success(res.message);
         dropzone.removeAllFiles();
         $("#documents").html("");
         location_manager.loadPhoto('location_id',parseInt( $("input[name=\"itemId\"]").val()));
@@ -217,9 +217,9 @@ $(document).ready(function() {
 //  var data = isSingle ? userData : {"names": userData};
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Location/Add WebService
       if (reply === null || reply.dataId === undefined || reply.dataId === null || parseInt(reply.dataId) === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
     		if(openEdit === true) {
     		  utils.redirect("location/showForm?mode=edit&location_id=" + reply.dataIn[0].location_id, 1000);
     		} else {
@@ -231,9 +231,9 @@ $(document).ready(function() {
   location_manager.edit = function(location, controller, action) {
     datacx.post(controller + "/" + action, location).then(function(reply) {//call AJAX method to call Location/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("location/listAll", 1000);
       }
     });
@@ -241,9 +241,9 @@ $(document).ready(function() {
   location_manager.getList = function() {
     datacx.post("location/getlist", null).then(function(reply) {//call AJAX method to call Location/GetList WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         //Build the table
         location_manager.buildOutputList(reply.lists.locations);
         //Now show the table
@@ -292,10 +292,10 @@ $(document).ready(function() {
   location_manager.delete = function(location_id) {
     datacx.post("location/delete", {"location_id": location_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         //$("li[data-location-id="+ location_id +"]").remove();
         datacx.post("file/removeMany", {"itemCategory": $("input[name=\"itemCategory\"]").val(), "itemId": $("input[name=\"itemId\"]").val()}).then(function(reply2){
           utils.redirect("location/listAll");
@@ -309,12 +309,12 @@ $(document).ready(function() {
     //get location object from cache (PHP WS)
     datacx.post("location/getItem", {"location_id": location_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         $(".form_sections").hide();
         utils.redirect("location/listAll", 3000)
       } else {//success
         $(".location_edit").show().removeClass("hide");
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         location_manager.loadEditForm(reply);
       }
     });
@@ -333,10 +333,10 @@ $(document).ready(function() {
   location_manager.updateLocations = function(action, arrayId) {
     datacx.post("location/updateItems", {"action": action, "location_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("location/listAll");
       }
     });
@@ -357,10 +357,10 @@ $(document).ready(function() {
   location_manager.loadPhoto = function(itemCategory, itemId) {
     datacx.post("file/load", {"itemCategory": itemCategory, "itemId": itemId}).then(function(reply){
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         if(reply.fileResults.length>0){
           $.each(reply.fileResults, function(key, file){
             var lightboxImage = utils.createImageLightboxElement(file.filePath, itemId, file.document_title);
@@ -377,10 +377,10 @@ $(document).ready(function() {
   location_manager.removePhoto = function(document_id) {
     datacx.post("file/remove", {"document_id": document_id, "itemCategory": 'location_id'}).then(function(reply){
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         $("#document-"+document_id).remove();
       }
     });

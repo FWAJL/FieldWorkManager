@@ -19,7 +19,7 @@ $(document).ready(function() {
       } else if (key === "switch") {
         datacx.post("user/getItem",{user_id:parseInt(options.$trigger.data("user-id"))}).then(function(reply) {
           if (reply === null || reply.result === 0) {
-            toastr.error(reply.message);
+            //toastr.error(reply.message);
           } else {
             $("#authorize-username").val(reply.user.user_login);
             $("#authorize-pwd").val(reply.user.user_password);
@@ -108,9 +108,9 @@ $(document).ready(function() {
   user_manager.edit = function(user, controller, action) {
     datacx.post(controller + "/" + action, user).then(function(reply) {//call AJAX method to call Pm/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         location.reload();
       }
     });
@@ -119,9 +119,9 @@ $(document).ready(function() {
   user_manager.delete = function(user_id) {
     datacx.post("user/delete",{user_id:user_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect('user/listAll',500);
       }
     });
@@ -158,11 +158,11 @@ $(document).ready(function() {
     //get current user object from cache (PHP WS)
     datacx.post("user/getCurrent").then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         $(".form_sections").hide();
       } else {//success
         utils.clearForm();
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         user_manager.loadUserEditForm(reply);
         userTypeCurrent = reply.user_type;
         if(reply.user_type=="pm_id") {
@@ -197,12 +197,12 @@ $(document).ready(function() {
     //get current user object from cache (PHP WS)
     datacx.post("user/getItem",{user_id:user_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         $(".form_sections").hide();
         utils.redirect('user/listAll',300);
       } else {//success
         utils.clearForm();
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         user_manager.loadUserEditForm(reply);
         $(".user_edit").show().removeClass("hide");
         if(reply.user.user_type=="pm_id") {
@@ -230,10 +230,10 @@ $(document).ready(function() {
   user_manager.add = function(post_data) {
     datacx.post('user/add',post_data).then(function(reply){
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         $(".form_sections").hide();
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("user/listAll",300);
       }
     });

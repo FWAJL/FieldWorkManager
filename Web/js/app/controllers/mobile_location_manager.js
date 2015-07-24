@@ -12,9 +12,9 @@ var projectId;
 var highlightCircle;
 var setCurrentProjectFlag = false;
 var polygonSettings = {
-  "fillColor": "#F5F6CE",
-  "fillOpacity": .4,
-  "strokeWeight": 0.1
+  "fillColor": "#FF0000",
+  "fillOpacity": .3,
+  "strokeWeight": 3
 };
 var currentPosition;
 var mapType;
@@ -754,21 +754,13 @@ function load(params) {
             pathSize = path.getLength();
             infoPosition = path.getAt(pathSize - 1);
             distance = google.maps.geometry.spherical.computeLength(path);
-            if (distance >= 1000) {
-              infoContent = "Distance: " + (distance / 1000).toFixed(2) + " km " + (distance * 0.62137).toFixed(2) + " miles";
-            } else {
-              infoContent = "Distance: " + (distance / 1).toFixed(2) + " m " + (distance * 3.28084).toFixed(2) + " feet";
-            }
+            infoContent = "Distance: " + (distance / 1000).toFixed(2) + " km " + (distance * 0.62137).toFixed(2) + " miles";
           } else {
             path = overlay.getPath();
             pathSize = path.getLength();
             infoPosition = path.getAt(pathSize - 1);
             area = google.maps.geometry.spherical.computeArea(path);
-            if (area >= 1000000) {
-              infoContent = "Area: " + (area / 1000000).toFixed(2) + " sq kms " + (area / 2589988.11).toFixed(2) + " sq miles";
-            } else {
-              infoContent = "Area: " + (area / 1).toFixed(2) + " sq m " + (area * 10.7639).toFixed(2) + " sq ft";
-            }
+            infoContent = "Area: " + (area / 1000000).toFixed(2) + " sq kms " + (area / 2589988.11).toFixed(2) + " sq miles";
           }
           if(false) {
             infoContainer.html(infoContent);

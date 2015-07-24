@@ -272,9 +272,9 @@ $(document).ready(function() {
     isCopying = isCopying || false;
     datacx.post(controller + "/" + action, data["project"]).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
+        //toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
         var facility_data = [];
         var client_data = [];
         if (!isCopying) {
@@ -301,9 +301,9 @@ $(document).ready(function() {
   project_manager.edit = function(project, controller, action) {
     datacx.post(controller + "/" + action, project).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
+        //toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
 
         var post_data = utils.retrieveInputs("facility_form", ["facility_name", "facility_address"]);
         if (post_data.facility_name !== undefined && post_data.facility_address !== undefined) {
@@ -317,9 +317,9 @@ $(document).ready(function() {
   project_manager.getList = function() {
     datacx.post("project/getlist", null).then(function(reply) {//call AJAX method to call Project/GetList WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         //Build the table
         project_manager.buildOutputList(reply.lists.projects);
         //Now show the table
@@ -366,10 +366,10 @@ $(document).ready(function() {
   project_manager.delete = function(project_id) {
     datacx.post("project/delete", {"project_id": project_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         //$("li[data-project-id="+ project_id +"]").remove();
         utils.redirect("project/listAll");
       }
@@ -380,12 +380,12 @@ $(document).ready(function() {
     //get project object from cache (PHP WS)
     datacx.post("project/getItem", {"project_id": project_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         $(".form_sections").hide();
         //utils.redirect("project/listAll", 3000)
       } else {//success
         $(".project_edit").show().removeClass("hide");
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         project_manager.loadEditForm(reply.sessionProject);
       }
     });
@@ -395,7 +395,7 @@ $(document).ready(function() {
     //get project object from cache (PHP WS)
     datacx.post("project/getItem", {"project_id": project_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
         //return reply;
         executeCopy(reply);
@@ -419,10 +419,10 @@ $(document).ready(function() {
   project_manager.updateProjects = function(action, arrayId) {
     datacx.post("project/updateItems", {"action": action, "project_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("project/listAll");
       }
     });
@@ -430,10 +430,10 @@ $(document).ready(function() {
   project_manager.setCurrentProject = function(projectId) {
     datacx.post("project/setCurrentProject", {"project_id": projectId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
+        //toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
 
         if ($("#redirectOnSuccess").val() !== undefined) {
           utils.redirect($("#redirectOnSuccess").val());

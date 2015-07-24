@@ -8,10 +8,10 @@ $(document).ready(function() {
             console.log(reply);
             
             if (reply === null || reply.result === 0) {//has an error
-              toastr.error(reply.message);
+              //toastr.error(reply.message);
               
             } else {//success
-              toastr.success(reply.message);
+              //toastr.success(reply.message);
               $.fancybox({ 
                 href: reply.form_path,
                 type: 'iframe', 
@@ -73,10 +73,10 @@ $(document).ready(function() {
   taskform_manager.updateTaskForms = function(action, masterFormIds, userFormIds) {
     datacx.post("task/form/updateItems", {"action": action, "masterFormIds": masterFormIds, "userFormIds": userFormIds}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("task/forms");
       }
     });

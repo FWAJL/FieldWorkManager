@@ -51,7 +51,7 @@ class ClientController extends \Library\BaseController {
     
     if(intval($result["dataId"])>0) {
       $this->dataPost['user_email'] = $this->dataPost['client_contact_email'];
-      $userId = \Applications\PMTool\Helpers\UserHelper::AddUser($this, $result["dataId"], \Library\Enums\UserRole::Visitor, "client_id");
+      //$userId = \Applications\PMTool\Helpers\UserHelper::AddUser($this, $result["dataId"], \Library\Enums\UserRole::Visitor, "client_id");
     }
 
     //Process DB result and send result

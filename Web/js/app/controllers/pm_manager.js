@@ -80,9 +80,9 @@ $(document).ready(function() {
     var data = isSingle ? userData : {"names": userData};
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Pm/Add WebService
       if (reply === null || reply.dataId === undefined || reply.dataId === null || parseInt(reply.dataId) === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("pm/listAll", 1000);
       }
     });
@@ -90,9 +90,9 @@ $(document).ready(function() {
   pm_manager.edit = function(pm, controller, action) {
     datacx.post(controller + "/" + action, pm).then(function(reply) {//call AJAX method to call Pm/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         location.reload();
       }
     });
@@ -100,9 +100,9 @@ $(document).ready(function() {
   pm_manager.getList = function() {
     datacx.post("pm/getlist", null).then(function(reply) {//call AJAX method to call Pm/GetList WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         //Build the table
         pm_manager.buildOutputList(reply.lists.pms);
         //Now show the table
@@ -143,10 +143,10 @@ $(document).ready(function() {
   pm_manager.delete = function(pm_id) {
     datacx.post("pm/delete", {"pm_id": pm_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("pm/listAll");
       }
     });
@@ -156,12 +156,12 @@ $(document).ready(function() {
     //get pm object from cache (PHP WS)
     datacx.post("pm/getItem", {"pm_id": pm_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         $(".form_sections").hide();
         //utils.redirect("pm/listAll", 3000)
       } else {//success
         $(".pm_edit").show().removeClass("hide");
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         pm_manager.loadEditForm(reply);
       }
     });
@@ -170,10 +170,10 @@ $(document).ready(function() {
   pm_manager.updatePms = function(action, arrayId) {
     datacx.post("pm/updateItems", {"action": action, "pm_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("pm/listAll");
       }
     });

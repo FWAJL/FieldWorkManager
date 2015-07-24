@@ -22,6 +22,7 @@ class ActiveTaskHelper {
         \Applications\PMTool\Resources\Enums\ActiveTaskTabKeys::ActiveTaskMapTab => "",
         \Applications\PMTool\Resources\Enums\ActiveTaskTabKeys::ActiveTaskFormsTab => "",
         \Applications\PMTool\Resources\Enums\ActiveTaskTabKeys::ActiveTaskCommTab => "",
+        \Applications\PMTool\Resources\Enums\ActiveTaskTabKeys::ActiveTaskFieldDataTab => ""
     );
     $user->setAttribute(\Library\Enums\SessionKeys::ActiveTaskTabsStatus, $tabs);
   }

@@ -26,7 +26,8 @@
   <define key="GoogleMapsProjectActiveIcon" value="purple-stars_maps.png" />
   <define key="GoogleMapsProjectInactiveIcon" value="wht-stars_maps.png" />
   <define key="GoogleMapsLocationActiveIcon" value="blu-circle_maps.png" />
-  <define key="GoogleMapsLocationActiveIconSmall" value="blu-circle_maps_small.png" />
+  <define key="GoogleMapsLocationActiveIconSmall" value="measle_blue.png" />
+<!--  <define key="GoogleMapsLocationActiveIconSmall" value="blu-circle_maps_small.png" /> -->
   <define key="GoogleMapsLocationInactiveIcon" value="measle_blue.png" />
   <define key="GoogleMapsTaskIcon" value="red-circle_maps.png" />
   <define key="GoogleMapsNoLatLngIcon" value="ltblu-blank_maps.png" />

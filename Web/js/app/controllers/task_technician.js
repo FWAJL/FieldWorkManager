@@ -44,10 +44,10 @@ $(document).ready(function() {
   task_manager.updateTaskTechnicians = function(action, arrayId) {
     datacx.post("task/technician/updateItems", {"action": action, "technician_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("task/technicians");
       }
     });
