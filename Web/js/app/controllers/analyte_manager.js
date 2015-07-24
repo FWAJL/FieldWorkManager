@@ -171,7 +171,7 @@ $(document).ready(function() {
 
   //For Admin UI `labanalyte/uploadCommons`
   $.contextMenu({
-    selector: '#common-lab-analyte-list > .ui-widget-content',
+    selector: '.admin-ui > #common-lab-analyte-list > .ui-widget-content',
     callback: function(key, options) {
       var lab_analyte_id = options.$trigger.attr("data-common_lab_analyte-id");
 
@@ -238,7 +238,7 @@ $(document).ready(function() {
 
   //For Admin UI `analyte/uploadCommons`
   $.contextMenu({
-    selector: '#common-field-analyte-list > .ui-widget-content',
+    selector: '.admin-ui > #common-field-analyte-list > .ui-widget-content', 
     callback: function(key, options) {
       var field_analyte_id = options.$trigger.attr("data-common_field_analyte-id");
       if (key === "edit") {
