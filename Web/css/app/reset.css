@@ -28,9 +28,18 @@ var{
 
 .version {
   text-align: right;
-  font-size: smaller;
+  font-size: 10px;
   color: #CCC;
+  margin-right: 5px;
 }
+.poweredby,
+.poweredby a{
+  text-align: left;
+  font-size: 10px;
+  color: #CCC;
+  margin-left: 5px;
+}
+
 .col-no-pad{
   padding: 0 !important;
 

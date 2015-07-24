@@ -34,8 +34,7 @@ abstract class BaseController extends ApplicationComponent {
     $this->setUploadingFiles();
     $this->toolTips[\Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings] =
             \Applications\PMTool\Helpers\PopUpHelper::getTooltipEllipsisSettings(
-                    '{"targetcontroller":"'. $this->module .'","targetaction": "'. $this->action .'"}', 
-                    $app->name());
+                    '{"targetcontroller":"' . $this->module . '","targetaction": "' . $this->action . '"}', $app->name());
   }
 
   public function execute() {
@@ -44,10 +43,7 @@ abstract class BaseController extends ApplicationComponent {
     if (!is_callable(array($this, $method))) {
       throw new \RuntimeException('The action "' . $this->action . '" is not defined for this module');
     }
-    //
-    if ($this->resxfile !== NULL) {
-      $this->AddCommonVarsToPage();
-    }
+    $this->AddCommonVarsToPage();
 
     $br = new UC\Breadcrumb($this->app());
     //Load controller method
@@ -99,7 +95,7 @@ abstract class BaseController extends ApplicationComponent {
   public function files() {
     return $this->files;
   }
-  
+
   public function toolTips() {
     return $this->toolTips;
   }
@@ -128,12 +124,12 @@ abstract class BaseController extends ApplicationComponent {
     $this->view = $view;
 
     $this->page->setContentFile(
-        __ROOT__ . Enums\ApplicationFolderName::AppsFolderName
-        . $this->app->name()
-        . Enums\ApplicationFolderName::ViewsFolderName
-        . $this->module
-        . '/'
-        . $this->view . '.php');
+            __ROOT__ . Enums\ApplicationFolderName::AppsFolderName
+            . $this->app->name()
+            . Enums\ApplicationFolderName::ViewsFolderName
+            . $this->module
+            . '/'
+            . $this->view . '.php');
   }
 
   public function setResxFile($resxfile) {
@@ -167,17 +163,17 @@ abstract class BaseController extends ApplicationComponent {
   public function InitResponseWS($params = array("resx_file" => "ws_defaults", "resx_key" => "", "step" => "error")) {
     if ($params["step"] === "success") {
       return array(
-        "result" => 1,
-        "message" => $params["resx_file"] === "ws_defaults" ?
-            $this->app->i8n->getCommonResource($params["resx_file"], "message_success" . $params["resx_key"]) :
-            $this->app->i8n->getLocalResource($params["resx_file"], "message_success" . $params["resx_key"])
+          "result" => 1,
+          "message" => $params["resx_file"] === "ws_defaults" ?
+                  $this->app->i8n->getCommonResource($params["resx_file"], "message_success" . $params["resx_key"]) :
+                  $this->app->i8n->getLocalResource($params["resx_file"], "message_success" . $params["resx_key"])
       );
     } else {
       return array(
-        "result" => 0,
-        "message" => $params["resx_file"] === "ws_defaults" ?
-            $this->app->i8n->getCommonResource($params["resx_file"], "message_error" . $params["resx_key"]) :
-            $this->app->i8n->getLocalResource($params["resx_file"], "message_error" . $params["resx_key"])
+          "result" => 0,
+          "message" => $params["resx_file"] === "ws_defaults" ?
+                  $this->app->i8n->getCommonResource($params["resx_file"], "message_error" . $params["resx_key"]) :
+                  $this->app->i8n->getLocalResource($params["resx_file"], "message_error" . $params["resx_key"])
       );
     }
   }
@@ -194,13 +190,13 @@ abstract class BaseController extends ApplicationComponent {
     if ($params["step"] === "success") {
       $result["result"] = 1;
       $result["message"] = ($params["resx_file"] === "ws_defaults" || (array_key_exists("directory", $params) && $params["directory"] === "common")) ?
-          $this->app->i8n->getCommonResource($params["resx_file"], "message_success_" . $params["resx_key"]) :
-          $this->app->i8n->getLocalResource($params["resx_file"], "message_success_" . $params["resx_key"]);
+              $this->app->i8n->getCommonResource($params["resx_file"], "message_success_" . $params["resx_key"]) :
+              $this->app->i8n->getLocalResource($params["resx_file"], "message_success_" . $params["resx_key"]);
     } else {
       $result["result"] = 0;
       $result["message"] = ($params["resx_file"] === "ws_defaults" || (array_key_exists("directory", $params) && $params["directory"] === "common")) ?
-          $this->app->i8n->getCommonResource($params["resx_file"], "message_error_" . $params["resx_key"]) :
-          $this->app->i8n->getLocalResource($params["resx_file"], "message_error_" . $params["resx_key"]);
+              $this->app->i8n->getCommonResource($params["resx_file"], "message_error_" . $params["resx_key"]) :
+              $this->app->i8n->getLocalResource($params["resx_file"], "message_error_" . $params["resx_key"]);
     }
     echo \Library\HttpResponse::encodeJson($result);
   }
@@ -240,6 +236,7 @@ abstract class BaseController extends ApplicationComponent {
    *    - pageTitle (not local variable but a variable in the application
    */
   protected function AddCommonVarsToPage() {
+    $this->app->pageTitle = $this->app->i8n->getLocalResource($this->resxfile, "page_title");
     //Get resources for the left menu
     $resx_left_menu = $this->app->i8n->getCommonResourceArray(Enums\ResourceKeys\ResxFileNameKeys::MenuLeft);
     //Init left menu
@@ -247,7 +244,8 @@ abstract class BaseController extends ApplicationComponent {
     //Add left menu to layout
     $this->page->addVar("leftMenu", $leftMenu->Build());
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($this->resxfile));
-    $this->app->pageTitle = $this->app->i8n->getLocalResource($this->resxfile, "page_title");
+    $this->page->addVar('resx_common_text', $this->app->i8n->getCommonResourceArray(Enums\ResourceKeys\ResxFileNameKeys::CommonText));
+    $this->page->addVar('resx_menu_left', $resx_left_menu);
     $this->page->addVar("logout_url", __BASEURL__ . Enums\ResourceKeys\UrlKeys::LogoutUrl);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::toolTips, $this->toolTips);
   }

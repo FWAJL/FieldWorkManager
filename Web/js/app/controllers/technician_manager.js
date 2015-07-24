@@ -16,10 +16,10 @@ $(document).ready(function() {
     var dropzone = new Dropzone("#document-upload");
     dropzone.on("success", function(event,res) {
       if(res.result == 0) {
-        toastr.error(res.message);
+        //toastr.error(res.message);
         dropzone.removeAllFiles();
       } else {
-        toastr.success(res.message);
+        //toastr.success(res.message);
         $("#document-upload").hide();
         dropzone.removeAllFiles();
         technician_manager.loadPhoto('technician_id',parseInt( $("input[name=\"itemId\"]").val()));
@@ -159,9 +159,9 @@ $(document).ready(function() {
     var data = isSingle ? userData : {"names": userData};
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Technician/Add WebService
       if (reply === null || reply.dataId === undefined || reply.dataId === null || parseInt(reply.dataId) === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("technician/listAll", 1000);
       }
     });
@@ -169,9 +169,9 @@ $(document).ready(function() {
   technician_manager.edit = function(technician, controller, action) {
     datacx.post(controller + "/" + action, technician).then(function(reply) {//call AJAX method to call Technician/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         //utils.redirect("technician/listAll", 1000);
       }
     });
@@ -179,9 +179,9 @@ $(document).ready(function() {
   technician_manager.editUser = function(technician, controller, action) {
     datacx.post(controller + "/" + action, technician).then(function(reply) {//call AJAX method to call Technician/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         //utils.redirect("technician/listAll", 1000);
       }
     });
@@ -189,9 +189,9 @@ $(document).ready(function() {
   technician_manager.getList = function() {
     datacx.post("technician/getlist", null).then(function(reply) {//call AJAX method to call Technician/GetList WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         //Build the table
         technician_manager.buildOutputList(reply.lists.technicians);
         //Now show the table
@@ -235,10 +235,10 @@ $(document).ready(function() {
   technician_manager.delete = function(technician_id) {
     datacx.post("technician/delete", {"technician_id": technician_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         if(documentId!=0) {
           datacx.post("file/remove", {"document_id": documentId, "itemCategory": 'technician_id'}).then(function(reply){
             utils.redirect("technician/listAll");
@@ -254,12 +254,12 @@ $(document).ready(function() {
     //get technician object from cache (PHP WS)
     datacx.post("technician/getItem", {"technician_id": technician_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         $(".form_sections").hide();
         utils.redirect("technician/listAll", 3000)
       } else {//success
         $(".technician_edit").show().removeClass("hide");
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         technician_manager.loadEditForm(reply);
         technician_manager.getUserItem(technician_id);
       }
@@ -269,10 +269,10 @@ $(document).ready(function() {
   technician_manager.updateTechnicians = function(action, arrayId) {
     datacx.post("technician/updateItems", {"action": action, "technician_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("technician/listAll");
       }
     });
@@ -281,10 +281,10 @@ $(document).ready(function() {
   technician_manager.loadPhoto = function(itemCategory, itemId) {
     datacx.post("file/load", {"itemCategory": itemCategory, "itemId": itemId}).then(function(reply){
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         if(reply.fileResults.length>0){
           $.each(reply.fileResults, function(key, file){
             var lightboxImage = utils.createImageLightboxElement(file.filePath, itemId, file.document_title);
@@ -303,10 +303,10 @@ $(document).ready(function() {
   technician_manager.removePhoto = function(document_id) {
     datacx.post("file/remove", {"document_id": document_id, "itemCategory": 'technician_id'}).then(function(reply){
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         $("#documents").hide();
         $("#document-"+document_id).remove();
         $("#document-upload").show();
@@ -317,9 +317,9 @@ $(document).ready(function() {
   technician_manager.getUserItem = function(technician_id) {
     datacx.post("user/getTechnicianItem",{technician_id:technician_id}).then(function(reply) {
       if(reply == null || reply.result === 0) {
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         technician_manager.loadUserEditForm(reply);
         $("#user_info").show();
       }

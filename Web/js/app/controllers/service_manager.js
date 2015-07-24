@@ -6,6 +6,11 @@
  *   
  * jQuery listeners for the service actions
  */
+
+//Autocomplete variables
+  var timer = null;
+  var autocompleteTimeout = 700;
+
 $(document).ready(function() {
   var ajaxParams = {
     "ajaxUrl": "service/updateItems",
@@ -14,6 +19,26 @@ $(document).ready(function() {
     "arrayOfValues": "",
     "itemId": ""
   };
+
+
+  $("input[name='service_type']").keyup(function(e){
+    // do nothing if it's an arrow key
+    
+    var code = (e.keyCode || e.which);
+    if(code == 37 || code == 38 || code == 39 || code == 40 || code == 13 || code == 9 || e.shiftKey) {
+      return;
+    } else if(e.shiftKey && e.keyCode == 9) {
+      return;  
+    }
+
+    clearTimeout(timer);
+
+    //else proceed to lookup
+    timer = setTimeout(function(){
+      service_manager.getServiceCategoryUsingAutoComplete($("input[name='service_type']"))
+    }, autocompleteTimeout);
+    
+  });
 
   $(".btn-warning").hide();
   $.contextMenu({
@@ -147,13 +172,19 @@ var selectionParams = {
  * Responsible to manage services.
  */
 (function(service_manager) {
+
+  //Autocomplete vars
+  var query = '';
+  var autocompleteArrayTo = [];
+  var selectedObjectTo;
+
   service_manager.add = function(data, controller, action) {
 
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Resource/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("service/listAll", 1000);
       }
     });
@@ -161,9 +192,9 @@ var selectionParams = {
   service_manager.edit = function(service, controller, action) {
     datacx.post(controller + "/" + action, service).then(function(reply) {//call AJAX method to call Resource/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("service/listAll", 1000);
       }
     });
@@ -176,9 +207,9 @@ var selectionParams = {
   service_manager.getList = function() {
     datacx.post("service/getlist", null).then(function(reply) {//call AJAX method to call Resource/GetList WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         //Build the table
         service_manager.buildOutputList(reply.lists.services);
         //Now show the table
@@ -222,10 +253,10 @@ var selectionParams = {
   service_manager.delete = function(service_id) {
     datacx.post("service/delete", {"service_id": service_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("service/listAll");
       }
     });
@@ -235,12 +266,12 @@ var selectionParams = {
     //get service object from cache (PHP WS)
     datacx.post("service/getItem", {"service_id": service_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         $(".form_sections").hide();
         utils.redirect("service/listAll", 3000)
       } else {//success
         $(".service_edit").show().removeClass("hide");
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         service_manager.loadEditForm(reply);
       }
     });
@@ -249,10 +280,10 @@ var selectionParams = {
   service_manager.updateServices = function(action, arrayId) {
     datacx.post("service/updateItems", {"action": action, "service_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("service/listAll");
       }
     });
@@ -263,6 +294,31 @@ var selectionParams = {
       //alert(reply.record_count);
       decision(reply.record_count);
     });
+  };
+
+  //auto complete fecth and render for service category
+  service_manager.getServiceCategoryUsingAutoComplete = function(txtBoxObject){
+    if (service_manager.query != $(txtBoxObject).val()) {
+      service_manager.query = $(txtBoxObject).val();
+      
+      datacx.post("service/getServiceCategoriesAutoComplete", {"search": service_manager.query}).then(function(reply) {
+        console.log(reply);
+        service_manager.autocompleteArrayTo = [];
+        if (reply === null || reply.result === 0) {//has an error
+          //Do nothing
+        } else {//success
+          //Time for some autocomplete
+          $.each(reply.matches, function (index, selectedObject) {
+            service_manager.autocompleteArrayTo.push(selectedObject);
+          });
+
+          $("input[name='service_type']").autocomplete({
+            source: service_manager.autocompleteArrayTo
+          });
+          $("input[name='service_type']").autocomplete( "search", $("input[name='service_type']").val() );
+        }
+      });
+    }
   };
 
 }(window.service_manager = window.service_manager || {}));

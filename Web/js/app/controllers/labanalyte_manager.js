@@ -1,7 +1,14 @@
 /**
  * jQuery listeners for the analyte_manager actions
  */
+
 $(document).ready(function() {
+
+  //Autocomplete variables
+  var timer = null;
+  var autocompleteTimeout = 700;
+  var query = '';
+  var autocompleteArrayTo = [];
 
   var prompt_box_msg;
   var ajaxParams = {
@@ -13,6 +20,85 @@ $(document).ready(function() {
     "isFieldType": true,
     "isCommon": true
   };
+
+  //Auto complete on lab_analyte_name
+  $("textarea[name='lab_analyte_name']").keyup(function(e){
+    // do nothing if it's an arrow key
+    var code = (e.keyCode || e.which);
+    if(code == 27 ||code == 37 || code == 38 || code == 39 || code == 40 || code == 13 
+          || code == 9 || code == 8 || e.shiftKey) {
+      return;
+    } else if(e.shiftKey && e.keyCode == 9) {
+      return;  
+    }
+
+    clearTimeout(timer);
+
+    //else proceed to lookup
+    timer = setTimeout(function(){
+      getMasterLabAnalytesAutoComplete($("textarea[name='lab_analyte_name']"))
+    }, autocompleteTimeout);
+    
+  });
+
+  //auto complete fecth and render for service category
+  getMasterLabAnalytesAutoComplete = function(txtBoxObject){
+    
+    if (query != $(txtBoxObject).val()) {
+      query = $(txtBoxObject).val();
+      
+      var words = query.split("\n");
+      for(var i = words.length; i != 0; i--) {
+        if(words[i-1] !== '') {
+          query = words[i-1];
+          break;
+        }
+      }
+
+      var offsetAC = words.length * 20;
+
+      datacx.post("lab_analyte/getMasterLabAnalytesAutoComplete", {"search": query}).then(function(reply) {
+        
+        autocompleteArrayTo = [];
+        if (reply === null || reply.result === 0) {//has an error
+          //Do nothing
+        } else {//success
+          //Time for some autocomplete
+          $.each(reply.matches, function (index, selectedObject) {
+            autocompleteArrayTo.push(selectedObject);
+          });
+
+          $("textarea[name='lab_analyte_name']").autocomplete({
+            source: autocompleteArrayTo,
+            focus: function (event, ui) {
+               event.preventDefault();
+            },
+            select: function (event, ui) {
+              event.preventDefault();
+              //console.log(ui.item.value);
+              var temp = $("textarea[name='lab_analyte_name']").val().split("\n");
+              var str = '';
+              if(temp.length <= 1) {
+                $("textarea[name='lab_analyte_name']").val(ui.item.value);
+              } else {
+                temp[temp.length - 1] = ui.item.value;
+                for(var i = 0; i < temp.length; i++) {
+                  str += temp[i] + "\n";
+                }
+                $("textarea[name='lab_analyte_name']").val(str);
+              }
+            },
+          });
+          $("textarea[name='lab_analyte_name']").autocomplete( "search", query );
+          $('#ui-id-1').css({
+            top: (150 + offsetAC)
+          });
+        }
+      });
+    }
+    
+  };
+
 
   /* Context menu */
   $.contextMenu({
@@ -38,9 +124,9 @@ $(document).ready(function() {
 
               datacx.post(actionPath, post_data["field_analyte"]).then(function(reply) {//call AJAX method to call Project/Add WebService
                 if (reply === null || reply.result === 0) {//has an error
-                  toastr.error(reply.message);
+                  //toastr.error(reply.message);
                 } else {//success
-                  toastr.success(reply.message.replace("field_analyte", "field_analyte (ID:" + reply.dataId + ")"));
+                  //toastr.success(reply.message.replace("field_analyte", "field_analyte (ID:" + reply.dataId + ")"));
                   utils.redirect("analyte/listAll");
                 }
               });
@@ -48,21 +134,39 @@ $(document).ready(function() {
             });
 
           } else {
-            getAnalyteItem("lab", parseInt(options.$trigger.attr("data-labanalyte-id")), function(data) {
-              var post_data = {};
-              post_data["lab_analyte"] = data.field_analyte;
-              post_data["lab_analyte"]["lab_analyte_name"] = $('#text_input').val();
+            //Make a unique check
+            datacx.post('lab_analyte/isLabAnalyteExisting', {analyte_id: options.$trigger.attr("data-labanalyte-id"), analyte_name:$('#text_input').val()}).then(function(reply) {
+              if (reply === null || reply.result === 0) {//has an error
+                //toastr.success(reply.message);
+                //Free to edit===========
+                getAnalyteItem("lab", parseInt(options.$trigger.attr("data-labanalyte-id")), function(data) {
+                  var post_data = {};
+                  post_data["lab_analyte"] = data.field_analyte;
+                  post_data["lab_analyte"]["lab_analyte_name"] = $('#text_input').val();
 
-              datacx.post(actionPath, post_data["lab_analyte"]).then(function(reply) {//call AJAX method to call Project/Add WebService
-                if (reply === null || reply.result === 0) {//has an error
-                  toastr.error(reply.message);
-                } else {//success
-                  toastr.success(reply.message.replace("lab_analyte", "lab_analyte (ID:" + reply.dataId + ")"));
-                  utils.redirect("labanalyte/listAll");
-                }
-              });
+                  datacx.post(actionPath, post_data["lab_analyte"]).then(function(reply) {//call AJAX method to call Project/Add WebService
+                    if (reply === null || reply.result === 0) {//has an error
+                      //toastr.error(reply.message);
+                    } else {//success
+                      //toastr.success(reply.message.replace("lab_analyte", "lab_analyte (ID:" + reply.dataId + ")"));
+                      utils.redirect("labanalyte/listAll");
+                    }
+                  });
 
+                });
+                //=======================
+              } else {//success
+                //toastr.error(reply.message);
+                //Show alert
+                utils.togglePromptBox();
+                utils.showAlert($('#confirmmsg-laExists').val(), function(){
+                  utils.togglePromptBox();
+                });
+              }
             });
+
+
+            
           }
         }, 'promptmsg-edit');
       } else if (key === "delete") {
@@ -95,7 +199,7 @@ $(document).ready(function() {
     {
       datacx.post(actionPath, {field_analyte_id: analyteId}).then(function(reply) {
         if (reply === null || reply.result === 0) {//has an error
-          toastr.error(reply.message);
+          //toastr.error(reply.message);
         } else {//success
           //return reply;
           executeWithData(reply);
@@ -106,7 +210,7 @@ $(document).ready(function() {
     {
       datacx.post(actionPath, {lab_analyte_id: analyteId}).then(function(reply) {
         if (reply === null || reply.result === 0) {//has an error
-          toastr.error(reply.message);
+          //toastr.error(reply.message);
         } else {//success
           //return reply;
           executeWithData(reply);
@@ -215,7 +319,7 @@ $(document).ready(function() {
     if (ajaxParams.arrayOfValues.names !== undefined && ajaxParams.arrayOfValues.names !== "") {
       datacx.add(ajaxParams);
     } else {
-      toastr.error("Please type some analyte names or select at least one from the right list.");
+      //toastr.error("Please type some analyte names or select at least one from the right list.");
     }
   });
   //************************************************//

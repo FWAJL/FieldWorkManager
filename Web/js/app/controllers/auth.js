@@ -32,15 +32,15 @@ $(document).ready(function() {
      return {"result": "success", "email": email, "username": username, "pwd": pwd, "encrypt_pwd": 1};//return array with data
    }
   } else {
-   toastr.error("Try again...");//TODO: use resource manager
+   //toastr.error("Try again...");//TODO: use resource manager
   }
  };
  auth.login = function(credentials) {
   datacx.post("auth", credentials).then(function(reply) {//call AJAX method to call Login WebService
    if (reply === null || reply.result === 0) {//has an error
-    toastr.error(reply.message);
+    //toastr.error(reply.message);
    } else {//success
-    toastr.success(reply.message);
+    //toastr.success(reply.message);
     //Now redirect to project page
          //Admin   
           if(reply.role == '1') {
@@ -52,7 +52,7 @@ $(document).ready(function() {
      } 
      // Field Technician
           else if (reply.role == '3') {
-       utils.redirect("user/showDetails");
+       utils.redirect("mobile/listTasks");
      } 
      // Visitor
           else if (reply.role == '4') {

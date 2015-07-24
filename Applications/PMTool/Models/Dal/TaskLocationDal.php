@@ -28,4 +28,20 @@ class TaskLocationDal extends \Library\DAL\BaseManager {
   //public function delete($object) {
   //}
 
+  /**
+  * Returns form from the Document table
+  * matching on task_id and location_id
+  */
+  public function GetTaskLocations($loc_id, $task_id) {
+    $sql = 'select * from task_location where task_id = :task_id and location_id = :location_id';
+    $dao = $this->dao->prepare($sql);
+    $dao->bindValue(':task_id', $task_id, \PDO::PARAM_INT);
+    $dao->bindValue(':location_id', $loc_id, \PDO::PARAM_INT);
+    $dao->execute();
+    $dao->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Task_location');
+    $search_res = $dao->fetchAll();
+    $dao->closeCursor();
+    return $search_res;
+  }
+
 }

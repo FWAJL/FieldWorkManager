@@ -69,6 +69,8 @@ class UrlKeys {
   const ActiveTaskMap = "activetask/map";
   const ActiveTaskInspForms = "activetask/forms";
   const ActiveTaskComm = "activetask/communications";
+  const ActiveTaskFieldData = "activetask/fieldData";
+
   
   const CompleteTaskMap = "xxx";
   const CompleteTaskInspForms = "xxx";
@@ -77,9 +79,10 @@ class UrlKeys {
   const PmRootUrl = "pm";
   const PmListAll = "pm/listAll";
   const PmShowForm = "pm/showForm";
-  const MobileWelcomePage = "mobile/welcome";
 
+  const MobileWelcomePage = "mobile/welcome";
   const MobileMap = "mobile/map";
+  const MobileTasks = "mobile/listTasks";
 
   /**
    * Absolute Urls

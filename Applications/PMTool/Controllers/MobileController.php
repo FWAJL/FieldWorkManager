@@ -48,36 +48,74 @@ class MobileController extends \Library\BaseController {
     $modules = $this->app()->router()->selectedRoute()->phpModules();
     $technician = $this->user()->getAttribute(\Library\Enums\SessionKeys::UserTypeObject);
 
-
-
-
-
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
-
 
 
     //Check if a project needs to be selected in order to display this page
     if (!$sessionProject)
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::MapTaskLocations);
-
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::MobileTasks);
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
     //Next check if a task is selected
     if(!$sessionTask)
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::TaskSelectTask . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::MapTaskLocations);
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::MobileTasks);
     //Fetch tooltip data from xml and pass to view as an array
     $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "taskLocations", "targetattr": ["question-map-h3", "map-info-ruler", "map-info-shape", "map-info-add"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
-    $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"map", "targetaction": "loadMaps", "operation": ["addUniqueCheck","checkCoordinates"]}', $this->app->name());
+    $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"map", "targetaction": "loadMaps", 
+            "operation": ["addUniqueCheck", "checkCoordinates", "checkIfLocationComplete", "checkNoTaskLocationForms"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);
+
+    //Get prompt box message
+    $prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"mobile", 
+            "targetaction": "viewMap", "operation": ["checkCurrentTaskLocationForms"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
 
     //add view vars for breadcrumb
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_prompt_list, 
+            $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Map::default_active_control, $rq->getData('active') ?: 'pan');
   }
 
+    public function executeViewList(\Library\HttpRequest $rq) {
+    $modules = $this->app()->router()->selectedRoute()->phpModules();
+    $technician = $this->user()->getAttribute(\Library\Enums\SessionKeys::UserTypeObject);
+
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+
+
+    //Check if a project needs to be selected in order to display this page
+    if (!$sessionProject)
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::MobileTasks);
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
+    //Next check if a task is selected
+    if(!$sessionTask)
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::MobileTasks);
+    //Fetch tooltip data from xml and pass to view as an array
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"map", "targetaction": "taskLocations", "targetattr": ["question-map-h3", "map-info-ruler", "map-info-shape", "map-info-add"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+
+    $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"map", "targetaction": "loadMaps", 
+            "operation": ["addUniqueCheck", "checkCoordinates", "checkIfLocationComplete", "checkNoTaskLocationForms"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);
+
+    //Get prompt box message
+    $prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"mobile", 
+            "targetaction": "viewMap", "operation": ["checkCurrentTaskLocationForms"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
+
+    //add view vars for breadcrumb
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_prompt_list, 
+            $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::active_list]);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Map::default_active_control, $rq->getData('active') ?: 'pan');
+  }
+  
   public function executeListTasks(\Library\HttpRequest $rq) {
     $modules = $this->app()->router()->selectedRoute()->phpModules();
     \Applications\PMTool\Helpers\DiscussionHelper::UnsetCurrentDiscussion($this->user());
@@ -118,7 +156,12 @@ class MobileController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
 
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
-    \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->user(),$sessionTask[\Library\Enums\SessionKeys::TaskObj]->project_id());
+    if($sessionTask){
+      \Applications\PMTool\Helpers\ProjectHelper::GetAndStoreCurrentProject($this->user(),$sessionTask[\Library\Enums\SessionKeys::TaskObj]->project_id());
+    } else {
+      $this->user()->unsetAttribute(\Library\Enums\SessionKeys::CurrentProject);
+    }
+
     if(count($tasks)==1) {
       $firstTask = reset($tasks);
       $task_id = $firstTask[\Library\Enums\SessionKeys::TaskObj]->task_id();
@@ -175,6 +218,9 @@ class MobileController extends \Library\BaseController {
   public function executeListNotes(\Library\HttpRequest $rq) {
     $modules = $this->app()->router()->selectedRoute()->phpModules();
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    if (!$sessionProject) {
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::MobileTasks);
+    }
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
     $locationId = $this->user()->getAttribute(\Library\Enums\SessionKeys::CurrentLocationId);
     if(isset($locationId) && $locationId) {
@@ -201,7 +247,7 @@ class MobileController extends \Library\BaseController {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
     //Check if a project needs to be selected in order to display this page
     if (!$sessionProject) {
-      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::TaskAddPrompt);
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::MobileTasks);
     }
     $sessionPm = $this->user->getAttribute(\Library\Enums\SessionKeys::CurrentPm);
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());

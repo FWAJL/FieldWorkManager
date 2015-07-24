@@ -1,4 +1,4 @@
-/*APPLIES TO: position/margins/widths/heights*/
+m/*APPLIES TO: position/margins/widths/heights*/
 
 /* GENERAL THEMES */
 body, html, .sidebar { height: 100% }
@@ -145,7 +145,7 @@ li textarea {
 }
 
 .cbox {
-    width: 15px;
+    width: 15px!important;
     margin-bottom: 3px;
 }
 
@@ -198,7 +198,7 @@ li textarea {
 }
 
 .map-info-row {
-  height: 35px;
+  line-height: 35px;
   padding-left: 0;
   padding-right: 0;
   overflow-y: hidden;

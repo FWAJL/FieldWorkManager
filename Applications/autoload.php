@@ -11,7 +11,7 @@ function autoload($class) {
   }
 }
 define('__EXECUTION_ACCESS_RESTRICTION__', true);
-define('__BASEURL__', '/FieldWorkAssistantMVC/');
+define('__BASEURL__', '/FieldWorkManager/');
 define('__ROOT__', dirname(dirname(__FILE__)) . '/');
 
 spl_autoload_register('autoload');

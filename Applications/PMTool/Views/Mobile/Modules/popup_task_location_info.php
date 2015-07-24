@@ -1,5 +1,6 @@
 <!--Prompt box: genrates a project info prompt box-->
 <div class="modal fade prompt-modal" id="task-location-info-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <input type="hidden" id="task-location-id-selected" />
   <div class="modal-dialog modal-upload">
     <div class="modal-content">
       <div class="modal-header">

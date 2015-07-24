@@ -12,9 +12,9 @@ var projectId;
 var highlightCircle;
 var setCurrentProjectFlag = false;
 var polygonSettings = {
-  "fillColor": "#FF0000",
-  "fillOpacity": .3,
-  "strokeWeight": 3
+  "fillColor": "#F5F6CE",
+  "fillOpacity": .4,
+  "strokeWeight": 0.1
 };
 var currentPosition;
 var mapType;
@@ -218,10 +218,10 @@ var setBoundaryEditEvent = function(e, projectId) {
     } else {
       datacx.post('project/setCurrentProject',{project_id: projectId}).then(function(reply){
         if(reply.dataId == projectId) {
-          toastr.success(reply.message);
+          //toastr.success(reply.message);
           utils.redirect('map/currentProject?active=shape',200);
         } else {
-          toastr.error(reply.message);
+          //toastr.error(reply.message);
         }
 
       });
@@ -250,10 +250,10 @@ var setLoadCoordinatesFromMarkerEvent = function(id) {
 var setCurrentProject = function(id) {
   datacx.post("project/setCurrentProject", {"project_id": id}).then(function(reply) {
     if (reply === null || reply.result === 0) {//has an error
-      toastr.error(reply.message);
+      //toastr.error(reply.message);
       return undefined;
     } else {//success
-      toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
+      //toastr.success(reply.message.replace("project", "project (ID:" + reply.dataId + ")"));
     }
   });
 };
@@ -261,7 +261,7 @@ var setCurrentProject = function(id) {
 var openProjectInfo = function(e,id) {
   datacx.post('facility/getItem',{'facility_id':id}).then(function(reply){
     if(reply.data.length > 0) {
-      toastr.success(reply.message);
+      //toastr.success(reply.message);
       item = reply.data[0];
       if(setCurrentProjectFlag) {
         setCurrentProject(item.project.project_id);
@@ -300,7 +300,7 @@ var openProjectInfo = function(e,id) {
       },function(){});
 
     } else {
-      toastr.error(reply.message);
+      //toastr.error(reply.message);
     }
 
   });
@@ -369,7 +369,7 @@ var openLocationInfo = function(e,id, noLatLng) {
     }
     Dropzone.forElement("#document-upload").removeAllFiles();
     datacx.post('location/getItem',{location_id: id}).then(function(reply){
-      toastr.success(reply.message);
+      //toastr.success(reply.message);
       var category = $("#document-upload input[name=\"itemCategory\"]").val();
       datacx.post('file/load',{itemId: id, itemCategory: category}).then(function(replyPhotos){
         item = reply.location;
@@ -432,6 +432,7 @@ var setAddRemoveFromTaskEvent = function(e,id,action) {
 }
 
 var openTaskLocationInfo = function(e,id,action) {
+ $("#task-location-id-selected").val(id);
   selectedMarker = id;
   $("#document-upload input[name=\"title\"]").val("");
   if(e !== undefined) {
@@ -451,7 +452,7 @@ var openTaskLocationInfo = function(e,id,action) {
   }
   Dropzone.forElement("#document-upload").removeAllFiles();
   datacx.post('location/getItem',{location_id: id}).then(function(reply){
-    toastr.success(reply.message);
+    //toastr.success(reply.message);
     var category = $("#document-upload input[name=\"itemCategory\"]").val();
     datacx.post('file/load',{itemId: id, itemCategory: category}).then(function(replyPhotos){
       item = reply.location;
@@ -535,7 +536,7 @@ function load(params) {
     {"properties": utils.stringifyJson(params.properties)}
   ).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
         mapType = reply.type;
         activeTask = reply.activeTask;
@@ -753,13 +754,21 @@ function load(params) {
             pathSize = path.getLength();
             infoPosition = path.getAt(pathSize - 1);
             distance = google.maps.geometry.spherical.computeLength(path);
-            infoContent = "Distance: " + (distance / 1000).toFixed(2) + " km " + (distance * 0.62137).toFixed(2) + " miles";
+            if (distance >= 1000) {
+              infoContent = "Distance: " + (distance / 1000).toFixed(2) + " km " + (distance * 0.62137).toFixed(2) + " miles";
+            } else {
+              infoContent = "Distance: " + (distance / 1).toFixed(2) + " m " + (distance * 3.28084).toFixed(2) + " feet";
+            }
           } else {
             path = overlay.getPath();
             pathSize = path.getLength();
             infoPosition = path.getAt(pathSize - 1);
             area = google.maps.geometry.spherical.computeArea(path);
-            infoContent = "Area: " + (area / 1000000).toFixed(2) + " sq kms " + (area / 2589988.11).toFixed(2) + " sq miles";
+            if (area >= 1000000) {
+              infoContent = "Area: " + (area / 1000000).toFixed(2) + " sq kms " + (area / 2589988.11).toFixed(2) + " sq miles";
+            } else {
+              infoContent = "Area: " + (area / 1).toFixed(2) + " sq m " + (area * 10.7639).toFixed(2) + " sq ft";
+            }
           }
           if(false) {
             infoContainer.html(infoContent);
@@ -908,10 +917,10 @@ function load(params) {
             });
           }
         });
-        $("#task-location-info-modal-collect-data").on('click',function(e){
+        /*$("#task-location-info-modal-collect-data").on('click',function(e){
           e.preventDefault();
           utils.redirect('mobile/forms');
-        });
+        });*/
 
         $(document).on('click','.map-info-row',function(e){
           //if(!$(this).hasClass("map-info-marker")) {
@@ -1156,9 +1165,9 @@ function load(params) {
   map_manager.add = function (data, controller, action, marker, callback) {
     datacx.post(controller + "/" + action, data["location"]).then(function (reply) {//call location/add
       if (reply === null || reply.dataId === undefined || reply.dataId === null || parseInt(reply.dataId) === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         if(callback !== undefined){
           callback(reply.dataIn[0], marker);
         }
@@ -1170,9 +1179,9 @@ function load(params) {
   map_manager.edit = function(data, controller, action, callback) {
     datacx.post(controller + "/" + action, data).then(function(reply) {//call edit
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         if(callback !== undefined){
           callback(reply);
         }
@@ -1183,9 +1192,9 @@ function load(params) {
   map_manager.editBoundary = function(facility, controller, action) {
     datacx.post(controller + "/" + action, facility).then(function(reply) {//call location/edit
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
       }
     });
   };
@@ -1193,10 +1202,10 @@ function load(params) {
   map_manager.removePhoto = function(document_id) {
     datacx.post("file/remove", {"document_id": document_id, "itemCategory": 'location_id'}).then(function(reply){
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         location.reload();
       }
     });

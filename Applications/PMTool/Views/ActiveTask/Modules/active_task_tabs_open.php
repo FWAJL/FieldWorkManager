@@ -20,6 +20,11 @@
       <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ActiveTaskComm . '?task_id=' . $current_task->task_id(); ?>">
         <?php echo $resx["task_tab_comm"]; ?>
       </a>
-    </li>    
+    </li>   
+        <li class="tab <?php echo $active_task_tab[Applications\PMTool\Resources\Enums\ActiveTaskTabKeys::ActiveTaskFieldDataTab]; ?>" data-form-id="active_task_field_data">
+      <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::ActiveTaskFieldData . '?task_id=' . $current_task->task_id(); ?>">
+        <?php echo $resx["field_data"]; ?>
+      </a>
+    </li> 
   </ul>
 </div>

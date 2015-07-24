@@ -102,7 +102,7 @@ public function executeIndex(\Library\HttpRequest $rq) {  }
      \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->user(), $pm);
      
      $this->dataPost['user_email'] = $this->dataPost['service_contact_email'];
-     $userId = \Applications\PMTool\Helpers\UserHelper::AddUser($this, $result["dataOut"], \Library\Enums\UserRole::Service, "service_id");
+     //$userId = \Applications\PMTool\Helpers\UserHelper::AddUser($this, $result["dataOut"], \Library\Enums\UserRole::Service, "service_id");
     }
 
     $this->SendResponseWS(
@@ -283,6 +283,32 @@ public function executeGetItem(\Library\HttpRequest $rq) {
         "resx_key" => $this->action(),
         "step" => ($result['record_count'] > 0) ? "success" : "error"
       ));
+  }
+
+  /**
+  * Ajax response for auto complete
+  * returns JSON of matching service categories
+  */
+  public function executeGetServiceCategoriesAutoComplete(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS(); // Init result
+
+    //Get services
+    $sessionPm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+    $pm_services = \Applications\PMTool\Helpers\ServiceHelper::GetPmServices($this, $sessionPm, NULL, TRUE);
+    $categories = \Applications\PMTool\Helpers\ServiceHelper::GetMatchingServiceCategories($pm_services, $this->dataPost['search']);
+    
+  
+    $result['matches'] = $categories;
+
+    $scFound = true;
+
+    $this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Service,
+        "resx_key" => $this->action(),
+        "step" => ($scFound) ? "success" : "error"
+      )
+    );    
   }
     
     /**

@@ -106,6 +106,11 @@
       <header href="mobile/map" resourcekey="header_ft_map" cssClass="fa fa-globe" enablelink="true" active="true" />
     </links>
   </main_menu><!-- mobile - task map - landing page -->
+  <main_menu name="technician_loc" active="true">
+    <links>
+      <header href="mobile/loc_list" resourcekey="header_ft_loc_list" cssClass="fa fa-list-ol" enablelink="true" active="true" />
+    </links>
+  </main_menu><!-- mobile - task locations -->
   <main_menu name="technician_communicate" active="true">
     <links>
       <header href="mobile/communications" resourcekey="header_ft_communicate" cssClass="fa fa-comments" enablelink="true" active="true" />
@@ -118,18 +123,18 @@
   </main_menu><!-- mobile - task notes -->
   <main_menu name="technician_tasks" active="true">
     <links>
-      <header href="mobile/listTasks" resourcekey="header_ft_tasks" cssClass="fa fa-pencil-square" enablelink="true" active="true" />
+      <header href="mobile/listTasks" resourcekey="header_ft_tasks" cssClass="fa fa-list-ul" enablelink="true" active="true" />
     </links>
   </main_menu><!-- mobile - task notes -->
 
   <mobile_menu name="technician_user_edit" active="true">
     <links>
-      <header href="user/showDetails" resourcekey="header_ft_user_edit" cssClass="fa fa-pencil-square" enablelink="true" active="true" />
+      <header href="user/showDetails" resourcekey="header_ft_user_edit" cssClass="fa fa-edit" enablelink="true" active="true" />
     </links>
   </mobile_menu><!-- mobile - task notes -->
   <mobile_menu name="technician_logout" active="true">
     <links>
-      <header href="logout" resourcekey="header_ft_logout" cssClass="fa fa-pencil-square" enablelink="true" active="true" />
+      <header href="logout" resourcekey="header_ft_logout" cssClass="fa fa-sign-out" enablelink="true" active="true" />
     </links>
   </mobile_menu><!-- mobile - task notes -->
 </main_menus>

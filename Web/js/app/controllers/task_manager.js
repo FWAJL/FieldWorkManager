@@ -266,7 +266,7 @@ $(document).ready(function() {
   var alreadyHovered = false;
   $(".select_item").hover(function() {
     if (!alreadyHovered)
-      toastr.info("Right-click to edit!");
+      //toastr.info("Right-click to edit!");
     alreadyHovered = true;
   });//Show a task tip
 });
@@ -282,9 +282,9 @@ $(document).ready(function() {
 //      alert(data["task"] + ", " + controller + ", " + action);
     datacx.post(controller + "/" + action, data["task"]).then(function(reply) {//call AJAX method to call Task/Add WebService
       if (reply === null || reply.dataOut === undefined || reply.dataOut === null || parseInt(reply.dataOut) === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("task/showForm?mode=edit&task_id=" + reply.dataOut, 1000);
       }
     });
@@ -294,9 +294,9 @@ $(document).ready(function() {
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Project/Add WebService
     //datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("task/showForm?mode=edit&task_id=" + reply.dataOut, 1000);
       }
     });
@@ -305,9 +305,9 @@ $(document).ready(function() {
   task_manager.edit = function(task, controller, action) {
     datacx.post(controller + "/" + action, task).then(function(reply) {//call AJAX method to call Task/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("task", 1000);
       }
     });
@@ -320,9 +320,9 @@ $(document).ready(function() {
   task_manager.getList = function() {
     datacx.post("task/getlist", null).then(function(reply) {//call AJAX method to call Task/GetList WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         //Build the table
         task_manager.buildOutputList(reply.lists.tasks);
         //Now show the table
@@ -411,10 +411,10 @@ $(document).ready(function() {
   task_manager.delete = function(task_id) {
     datacx.post("task/delete", {"task_id": task_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("task/listAll");
       }
     });
@@ -424,12 +424,12 @@ $(document).ready(function() {
     //get task object from cache (PHP WS)
     datacx.post("task/getItem", {"task_id": task_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         $(".form_sections").hide();
         utils.redirect("task/listAll", 3000)
       } else {//success
         $(".task_edit").show().removeClass("hide");
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         task_manager.loadEditForm(reply.task);
       }
     });
@@ -439,7 +439,7 @@ $(document).ready(function() {
     //get task object from cache (PHP WS)
     datacx.post("task/getItem", {"task_id": task_id}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
         //return reply;
         executeCopy(reply);
@@ -458,10 +458,10 @@ $(document).ready(function() {
   task_manager.updateTasks = function(action, arrayId) {
     datacx.post("task/updateItems", {"action": action, "task_ids": arrayId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("task/listAll");
       }
     });
