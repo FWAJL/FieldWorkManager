@@ -39,9 +39,9 @@ $(document).ready(function() {
     isCopying = isCopying || false;
     datacx.post(ws_url, client).then(function(reply) {//call AJAX method to call Project/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message.replace("client", "client (ID:" + reply.dataId + ")"));
+        //toastr.success(reply.message.replace("client", "client (ID:" + reply.dataId + ")"));
         if (!isCopying) {
           utils.redirect("project/listAll", 3000);
         } else {
@@ -64,10 +64,10 @@ $(document).ready(function() {
     //get client object from cache (PHP WS)
     datacx.post("client/delete", {"client_id": parseInt($(".client_form input[name=\"client_id\"]").val())}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("project/listAll");
       }
     });

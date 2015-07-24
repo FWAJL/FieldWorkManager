@@ -53,7 +53,7 @@ $(document).ready(function() {
           user_inputs[$(this).attr("name")] = ($(this).val() === "1") || ($(this).val() === "true") || $(this).prop("checked");
         }
       } else {
-        toastr.error("The field " + $(this).attr("name") + " is empty. Please fill out all fields.");
+        ////toastr.error("The field " + $(this).attr("name") + " is empty. Please fill out all fields.");
         user_inputs.required_field_missing = true;
       }
     });
@@ -466,7 +466,7 @@ $(document).ready(function() {
         target += e + delimiter;
         return;
       } else {
-        toastr.warning(e + "is already present in the values typed or added.");
+        //toastr.warning(e + "is already present in the values typed or added.");
       }
     });
     return target;

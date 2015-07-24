@@ -61,10 +61,10 @@ $(document).ready(function(){
               datacx.post("form/getPdfFileFor", {"form_id": parseInt(options.$trigger.attr("data-activetask-id")), "form_type": options.$trigger.attr("data-object")}).then(function(reply) {
                 
                 if (reply === null || reply.result === 0) {//has an error
-                  toastr.error(reply.message);
+                  //toastr.error(reply.message);
                   
                 } else {//success
-                  toastr.success(reply.message);
+                  //toastr.success(reply.message);
                   $.fancybox({ 
                     href: reply.form_path,
                     type: 'iframe', 
@@ -251,10 +251,10 @@ $(document).ready(function(){
     datacx.post("activetask/startCommWith", {"selection_type": selection_type, "id": id}).then(function(reply) {
       console.log(reply);
 	  if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         utils.redirect("activetask/communications?task_id=" + utils.getQueryVariable("task_id"));
       }
     });
@@ -263,9 +263,9 @@ $(document).ready(function(){
   activetask_manager.postNote = function(note, controller, action, clbk){
 	datacx.post(controller + "/" + action, {"note": note}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         clbk();
       }
     });
@@ -274,9 +274,9 @@ $(document).ready(function(){
   activetask_manager.getNotes = function(controller, action, clbk){
     datacx.post(controller + "/" + action, {/*empty JSON*/}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         clbk(reply);
       }
     });
@@ -285,9 +285,9 @@ $(document).ready(function(){
   activetask_manager.sendMessage = function(msg) {
     datacx.post('activetask/sendMessage',{discussion_content_message:msg}).then(function(reply){
       if(reply === null || reply.result === 0) {
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         lastMessageTime = reply.data.discussion_content_time;
         $("#task-comm-chatbox").prepend(activetask_manager.formatChatMessage(reply.data.user_name,reply.data.discussion_content_message,reply.data.discussion_content_time)+"<br/>");
         $("textarea[name=\"task_comm_message\"]").val('');
@@ -299,9 +299,9 @@ $(document).ready(function(){
   activetask_manager.getThread = function() {
     datacx.post('activetask/getDiscussionThread',{}).then(function(reply){
       if(reply === null || reply.result === 0) {
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
       } else {
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         $("input[name=\"itemId\"]").val(reply.discussion.discussion_id);
         if(reply.user_type == 'technician_id') {
           $("#file-attach").hide();
@@ -309,10 +309,10 @@ $(document).ready(function(){
         var dropzone = new Dropzone("#document-upload");
         dropzone.on("success", function(event,res) {
           if(res.result == 0) {
-            toastr.error(res.message);
+            //toastr.error(res.message);
             dropzone.removeAllFiles();
           } else {
-            toastr.success(res.message);
+            //toastr.success(res.message);
             $("#document-upload").hide();
             dropzone.removeAllFiles();
             $("textarea[name=\"task_comm_message\"]").val($("textarea[name=\"task_comm_message\"]").val()+"\n"+res.filepath);
@@ -364,10 +364,10 @@ $(document).ready(function(){
   activetask_manager.loadPhoto = function(id) {
     datacx.post("file/loadOne", {"id": id}).then(function(reply){
       if (reply === null || reply.result === 0) {//has an error
-        toastr.error(reply.message);
+        //toastr.error(reply.message);
         return undefined;
       } else {//success
-        toastr.success(reply.message);
+        //toastr.success(reply.message);
         console.log(reply.filepath.length);
         if(reply.filepath.length>0){
           $("textarea[name=\"task_comm_message\"]").val($("textarea[name=\"task_comm_message\"]").val()+"\n"+reply.filepath);

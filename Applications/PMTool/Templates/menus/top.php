@@ -1,9 +1,10 @@
 <section id="top_header">
   <div id="branding">
     <?php if($user->getAttribute(\Library\Enums\SessionKeys::UserRole) == 3): ?>
-    <div id="collapse-menu-button" class="top-right-option glyphicon glyphicon-align-justify"></div>
+    <div id="collapse-menu-button" class="top-right-option glyphicon fa fa-bars fa-2x"></div>
     <?php endif; ?>
     <figure class="logo"><img src="<?php echo $this->app->relative_path . $this->app->logoImageUrl; ?>"></figure>
+<!--    <span id="branding_text"><?php //echo $resx_common_text["brand"]; ?></span>-->
   </div>
   <?php if($user->getAttribute(\Library\Enums\SessionKeys::UserRole)!= 3): ?>
   <div id="pm_info">
@@ -33,13 +34,11 @@
     </span>
   </div>
   <?php else: ?>
-    <span class="top-right-option">
       <?php echo (isset($current_project) and isset($current_task))?$current_project->project_name():''; ?>
       <?php if (isset($current_task) && $current_task !== NULL) { ?>
         <span class="glyphicon glyphicon-chevron-right"></span>
         <?php echo $current_task->task_name();
       } ?>
-    </span>
   <div id="ft_info">
     <span class="top-right-option">
       <?php $technician = $this->app->user->getAttribute(\Library\Enums\SessionKeys::UserTypeObject); echo $technician->technician_name(); ?>

@@ -1,29 +1,20 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 //\Applications\PMTool\Helpers\CommonHelper::pr($form_modules);
 ?>
-<div class="mobile_map right-aside col-no-right-pad main col-lg-12 col-md-12 col-sm-12">
-  <span class="h3">
-    <?php echo $current_project->project_name(); ?>
-    <?php if ($current_task !== NULL) { ?>
-      <span class="glyphicon glyphicon-chevron-right"></span>
-      <?php echo $current_task->task_name();
-    } ?>
-    <span class="glyphicon glyphicon-chevron-right"></span>
-    <?php echo $resx['map_header'] ?></span>
-  <span class="glyphicon glyphicon-question-sign" id="question-map-h3"></span>
+<div class="mobile_map right-aside col-no-right-pad main col-lg-12 col-md-12 col-sm-12 col-no-pad">
 
-  <div class="content-container container-fluid">
+  <div class="content-container container-fluid col-no-pad">
 
 
     <div class="row col-no-right-margin">
-      <div class="col-lg-10 col-md-10">
+      <div class="col-lg-12 col-md-12 col-no-pad">
         <p>
           <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_module]; ?>
         </p>
       </div>
-      <div class="col-lg-2 col-md-2">
+<!--      <div class="col-lg-2 col-md-2">
         <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_info_module]; ?>
-      </div>
+      </div>-->
 
     </div>
     <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; ?>

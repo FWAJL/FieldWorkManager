@@ -1,8 +1,9 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 </div><!-- END ROW DIV -->
-<div class="row  col-no-right-margin">
-  <div class="col-xs-12 col-no-right-pad">
-    <p class="version"><?php echo 'Current version: ' . str_replace('?', '', $version); ?></p>
+<div class="row">
+  <div class="col-xs-7 col-pad-5"><p class="poweredby"><?php echo __POWEREDBY__; ?></p></div>
+  <div class="col-xs-5 col-pad-5">
+    <p class="version"><?php echo 'Version: ' . str_replace('?', '', $version); ?></p>
   </div>
 </div>
 </div><!-- END CONTENT CONTAINER -->
