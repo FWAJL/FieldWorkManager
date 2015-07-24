@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
   <resource key="brand">Field Work Manager</resource>
-  <resource key="field_data">Field Data</resource>
+  <resource key="field_data">Field Data Test</resource>
 
 
 </resources>
