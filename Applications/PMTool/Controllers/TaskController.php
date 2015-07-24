@@ -52,6 +52,10 @@ class TaskController extends \Library\BaseController {
     //Fetch prompt box data from xml and pass to view as an array
     $prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"task", "targetaction": "view", "operation": ["addNullCheck","addNullCheckForCopy"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
+    
+        //Get confirm msg 
+    $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"task", "targetaction": "showForm", "operation": ["activate","addUniqueCheck"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
 
     //Fetch alert box data
     $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"task", "targetaction": "view", "operation": ["addUniqueCheck","delete"]}', $this->app->name());
@@ -104,7 +108,7 @@ class TaskController extends \Library\BaseController {
     $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"task", "targetaction": "list", "targetattr": ["active-task-header","inactive-task-header"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
-    //Get confirm msg for project deletion from context menu
+    //Get confirm msg 
     $confirm_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"task", "targetaction": "list", "operation": ["activate","addUniqueCheck"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $confirm_msg);
 
