@@ -141,6 +141,24 @@ $(document).ready(function() {
       task_manager.updateTasks("active", task_ids);
     }
   });
+  
+    $(".from-inactive-task").click(function() {
+    task_id = $(this).attr("data-task-id");
+    var msg = $('#confirmmsg-activate').val();
+    alert(msg);
+    if (typeof msg !== typeof undefined && msg !== false) {
+      utils.showConfirmBox(msg, function(result) {
+        if (result)
+        {
+          task_manager.updateTasks("active", task_id);
+        }
+      });
+    }
+    else
+    {
+      task_manager.updateTasks("active", task_id);
+    }
+  });
 
   $("#btn_add_task").click(function() {
     var post_data = {};

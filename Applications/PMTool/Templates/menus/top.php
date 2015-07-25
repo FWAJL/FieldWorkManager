@@ -39,11 +39,11 @@
         <span class="glyphicon glyphicon-chevron-right"></span>
         <?php echo $current_task->task_name();
       } ?>
-  <div id="ft_info">
+<!--  <div id="ft_info">
     <span class="top-right-option">
-      <?php $technician = $this->app->user->getAttribute(\Library\Enums\SessionKeys::UserTypeObject); echo $technician->technician_name(); ?>
+      <?php //$technician = $this->app->user->getAttribute(\Library\Enums\SessionKeys::UserTypeObject); echo $technician->technician_name(); ?>
     </span>
-  </div>
+  </div>-->
   <?php endif; ?>
 </section>
 <div class="clearfix"></div>
