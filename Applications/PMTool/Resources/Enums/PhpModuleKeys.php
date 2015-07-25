@@ -69,6 +69,7 @@ class PhpModuleKeys {
   const load_file = "load_file";
 
   const notes = "notes";
+  const checklist = "checklist";
 }
 
 ?>
