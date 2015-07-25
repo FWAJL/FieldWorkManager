@@ -14,7 +14,7 @@
       </li>
           <li>
       <label><?php echo $resx["client_address"]; ?></label>
-      <textarea name="client_address" type="text"></textarea>
+      <textarea class="address" name="client_address" type="text"></textarea>
     </li>
       <li>
         <label><?php echo $resx["client_contact_name"]; ?></label>
