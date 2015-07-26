@@ -81,6 +81,7 @@ $(document).ready(function() {
           {
             if (post_data.service_name !== undefined) {
               service_manager.add(post_data, "service", "add", true);
+              utils.redirect("service/listAll", 1000);
             }
           }
 
@@ -179,13 +180,13 @@ var selectionParams = {
   var selectedObjectTo;
 
   service_manager.add = function(data, controller, action) {
-
+               alert(182);
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Resource/Add WebService
       if (reply === null || reply.result === 0) {//has an error
-        //toastr.error(reply.message);
+        toastr.error(reply.message);
       } else {//success
-        //toastr.success(reply.message);
-        utils.redirect("service/listAll", 1000);
+//        toastr.success(reply.message);
+//        utils.redirect("service/listAll", 1000);
       }
     });
   };
