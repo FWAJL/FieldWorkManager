@@ -107,10 +107,35 @@ $(document).ready(function() {
 
   $("#btn_edit_service").click(function() {
     var post_data = utils.retrieveInputs("service_form", ["service_name"]);
-    if (post_data.service_name !== undefined) {
+    var msgNullCheck = $('#confirmmsg-addNullCheck').val();
+    var msgUniqueCheck = $('#confirmmsg-addUniqueCheck').val();
+    if (typeof msgNullCheck !== typeof undefined && msgNullCheck !== false &&
+        typeof msgUniqueCheck !== typeof undefined && msgUniqueCheck !== false) {    
+        //Check uniqueness
+        service_manager.ifServiceProviderExists(post_data.service_name, function(record_count) {
+          if (record_count > 0)
+          {
+            utils.showAlert(msgUniqueCheck.replace("{0}", post_data.service_name));
+          }
+          else
+          {
+           if (post_data.service_name !== undefined) 
+           {
       service_manager.edit(post_data, "service", "edit");
-    }
+           }
+           }
+  });
+ }
+  else 
+  {
+        utils.showAlert(msgNullCheck);
+      }
   });//Edit a service
+  
+  
+  
+  
+  
 
   $("#btn_delete_service").click(function() {
 	var msg = $('#confirmmsg-delete').val();
@@ -180,7 +205,6 @@ var selectionParams = {
   var selectedObjectTo;
 
   service_manager.add = function(data, controller, action) {
-               alert(182);
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Resource/Add WebService
       if (reply === null || reply.result === 0) {//has an error
         toastr.error(reply.message);
