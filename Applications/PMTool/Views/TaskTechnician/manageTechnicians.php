@@ -17,6 +17,7 @@
     </div>
     <div class="col-lg-1 col-md-1">
         <?php require $form_modules["group_list_promote_buttons_module"]; ?> 
+        <input type="button" id="btn_add_task_technician" class="task_add_technician btn btn-default" value="<?php echo $resx["task_technician_button_add"]; ?>" />
     </div>
     <div  class="col-lg-5 col-md-5">
       <span class="h4"><?php echo $resx["h4_project_technicians"]; ?></span>
