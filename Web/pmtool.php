@@ -1,6 +1,6 @@
 <?php
 
-define('__VERSION_NUMBER__', '1.7.2');
+define('__VERSION_NUMBER__', '1.7.3');
 define('__POWEREDBY__', "<a href=\"https://github.com/WebDevJL/EasyMVC\" target=\"_BLANK\">Powered by EasyMvc (GNU)</a>");
 
 require '../Applications/autoload.php';
