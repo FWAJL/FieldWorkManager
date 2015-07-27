@@ -15,7 +15,7 @@
     </li>
     <li>
       <label><?php echo $resx["facility_address"]; ?></label>
-      <textarea name="facility_address" type="text"></textarea>
+      <textarea class="address" name="facility_address" type="text"></textarea>
     </li>
     <li>
       <label><?php echo $resx["facility_lat"]; ?></label>

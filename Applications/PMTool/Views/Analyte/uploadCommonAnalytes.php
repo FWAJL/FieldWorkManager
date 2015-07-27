@@ -15,7 +15,7 @@
             <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Analyte::analyte_buttons]; ?>
           </div>
         </div>
-        <div  class="col-lg-5 col-md-5">
+        <div  class="col-lg-5 col-md-5 admin-ui">
           <?php
           require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariables\Analyte::common_field_analyte_list];
           require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_prompt];
