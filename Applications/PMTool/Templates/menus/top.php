@@ -1,12 +1,17 @@
 <section id="top_header">
   <div id="branding">
-    <?php if ($user->getAttribute(\Library\Enums\SessionKeys::UserRole) == 3): ?>
+<!--    Mobile user header-->
+      <?php if ($user->getAttribute(\Library\Enums\SessionKeys::UserRole) == 3): ?>
       <div id="collapse-menu-button" class="top-right-option glyphicon fa fa-bars fa-2x"></div>
     <?php endif; ?>
-    <figure class="logo"><img src="<?php echo $this->app->relative_path . $this->app->logoImageUrl; ?>"></figure>
+    <figure class="logo"><img src="../Web/images/FWM_logo_only.png" alt="Mobile logo"/></figure>
 <!--    <span id="branding_text"><?php //echo $resx_common_text["brand"];  ?></span>-->
   </div>
-  <?php if ($user->getAttribute(\Library\Enums\SessionKeys::UserRole) != 3): ?>
+ 
+<!--    Other user header-->
+
+ <?php if ($user->getAttribute(\Library\Enums\SessionKeys::UserRole) != 3): ?>
+    <figure class="logo"><img src="<?php echo $this->app->relative_path . $this->app->logoImageUrl; ?>"></figure>
     <div id="pm_info">
       <span id="pm_name" class="top-right-option">
         <?php echo $resx_menu_left["p_user_name_label"]; ?><?php echo $pm['pm_name']; ?>
@@ -34,7 +39,7 @@
       </span>
     </div>
   <?php else: ?>
-    <div class="mobile-breacrumb-top">
+    <div class="breacrumb-top">
       <?php echo (isset($current_project) and isset($current_task)) ? $current_project->project_name() : ''; ?>
       <?php if (isset($current_task) && $current_task !== NULL) { ?>
         <span class="glyphicon glyphicon-chevron-right"></span>
