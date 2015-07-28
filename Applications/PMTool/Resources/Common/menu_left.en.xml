@@ -73,6 +73,7 @@
   <resource key="header_ft_task_services">Task Services</resource>
   <resource key="header_ft_communicate">Communicate</resource>
   <resource key="header_ft_notes">Notes</resource>
+  <resource key="header_ft_checklist">Checklist</resource>
   <resource key="header_ft_user_edit">User Edit</resource>
   <resource key="header_ft_logout">Logout</resource>
 
