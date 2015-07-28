@@ -1154,6 +1154,7 @@
   <route url="location/ifLocationExists" module="Location" action="ifLocationExists" resxfile="location" type="ws" />
   <route url="location/ifAllLocationsExist" module="Location" action="ifAllLocationsExist" resxfile="location" type="ws" />
   <route url="location/mapEdit" module="Location" action="mapEdit" resxfile="location" type="ws" />
+  <route url="location/addLocMob" module="Location" action="addLocMob" resxfile="location" type="ws" />
 
   <route url="technician/add" module="Technician" action="add" resxfile="technician" type="ws" />
   <route url="technician/edit" module="Technician" action="edit" resxfile="technician" type="ws" />

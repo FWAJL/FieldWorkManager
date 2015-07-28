@@ -25,6 +25,8 @@
   <resource key="message_success_ifAllLocationsExist">some of the locations exist</resource>
   <resource key="message_error_mapEdit">Error editing the location.</resource>
   <resource key="message_success_mapEdit">The location has been edited.</resource>
+  <resource key="message_error_addLocMob">Error adding location.</resource>
+  <resource key="message_success_addLocMob">The location has been added.</resource>
 
   <resource key="location_legend_add">Add new location</resource>
   <resource key="location_legend_edit">Edit this location</resource>

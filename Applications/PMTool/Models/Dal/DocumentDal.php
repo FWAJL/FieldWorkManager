@@ -60,4 +60,15 @@ class DocumentDal extends \Library\DAL\Modules\DocumentDal {
     return $search_res;
   }
 
+  public function getRecordsMatchingDocumentValue($match_on) {
+    $sql = 'select * from document where document_value LIKE :search_str';
+    $dao = $this->dao->prepare($sql);
+    $dao->bindValue(':search_str', '%' . $match_on . '%', \PDO::PARAM_STR);
+    $dao->execute();
+    $dao->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Document');
+    $search_res = $dao->fetchAll();
+    $dao->closeCursor();
+    return $search_res;
+  }
+
 }

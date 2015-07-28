@@ -80,11 +80,13 @@ class MobileController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Map::default_active_control, $rq->getData('active') ?: 'pan');
   }
 
-    public function executeViewList(\Library\HttpRequest $rq) {
+  public function executeViewList(\Library\HttpRequest $rq) {
     $modules = $this->app()->router()->selectedRoute()->phpModules();
     $technician = $this->user()->getAttribute(\Library\Enums\SessionKeys::UserTypeObject);
 
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+
+    //\Applications\PMTool\Helpers\CommonHelper::pr($_SESSION[\Library\Enums\SessionKeys::UserSessionProjects]['project_' . $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id()]);
 
 
     //Check if a project needs to be selected in order to display this page

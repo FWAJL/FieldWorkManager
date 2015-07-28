@@ -14,6 +14,7 @@
       <div id="mobile_list_map" class="col-lg-1 col-md-1 col-no-pad">
         <p>
           <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_module]; ?>
+
         </p>
       </div>
     </div>
