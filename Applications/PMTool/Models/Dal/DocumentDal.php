@@ -15,7 +15,7 @@ class DocumentDal extends \Library\DAL\Modules\DocumentDal {
    * @return array of \Applications\PMTool\Models\Dao\Document
    */
   public function selectManyByCategoryAndId($document_category, $category_id) {
-    $category_id .= '_%';
+    $category_id .= '\_%';
     $sql = 'SELECT d.* FROM `document` d';
     $sql .= ' where d.`document_category` = :document_category and d.`document_value` LIKE :category_id;';
     $sth = $this->dao->prepare($sql);
