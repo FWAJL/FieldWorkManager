@@ -66,7 +66,7 @@
 	<resource uicomponent="confirm" targetcontroller="technician" targetaction="list" operation="delete" value="Are you sure you want to permanently remove this technician?" />
 	<resource uicomponent="confirm" targetcontroller="technician" targetaction="view" operation="delete" value="Are you sure you want to permanently remove this technician?" />
 	<resource uicomponent="confirm" targetcontroller="task" targetaction="list" operation="activate" value="Are you sure you want to activate this task?  Active Tasks must be move to the inactive column in order to be modified or edited." />
-        <resource uicomponent="confirm" targetcontroller="task" targetaction="showForm" operation="activate" value="Are you sure you want to activate this task?  Active Tasks must be move to the inactive column in order to be modified or edited." />
+        <resource uicomponent="confirm" targetcontroller="task" targetaction="view" operation="activate" value="Are you sure you want to activate this task?  Active Tasks must be move to the inactive column in order to be modified or edited." />
 	<resource uicomponent="confirm" targetcontroller="task" targetaction="view" operation="delete" value="Are you Sure to delete this task?" />
 	<resource uicomponent="confirm" targetcontroller="service" targetaction="view" operation="delete" value="Are you sure you want to delete this Service Provider?" />
 	<resource uicomponent="confirm" targetcontroller="analyte" targetaction="list" operation="deleteField" value="Are you sure?" />

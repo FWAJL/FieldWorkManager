@@ -20,7 +20,7 @@
     </li>-->
     <li>
       <label><?php echo $resx["location_address"]; ?></label>
-      <input name="location_address" type="text" />
+      <textarea class="address" name="location_address" type="text"></textarea>
     </li>
     <li>
       <label><?php echo $resx["location_lat"]; ?></label>

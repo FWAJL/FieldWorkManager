@@ -145,7 +145,6 @@ $(document).ready(function() {
     $(".from-inactive-task").click(function() {
     task_id = $(this).attr("data-task-id");
     var msg = $('#confirmmsg-activate').val();
-    alert(msg);
     if (typeof msg !== typeof undefined && msg !== false) {
       utils.showConfirmBox(msg, function(result) {
         if (result)

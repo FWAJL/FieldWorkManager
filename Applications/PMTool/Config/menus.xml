@@ -121,6 +121,11 @@
       <header href="mobile/notes" resourcekey="header_ft_notes" cssClass="fa fa-pencil-square" enablelink="true" active="true" />
     </links>
   </main_menu><!-- mobile - task notes -->
+ <main_menu name="technician_checklist" active="true">
+    <links>
+      <header href="mobile/checklist" resourcekey="header_ft_checklist" cssClass="fa fa-check-square" enablelink="true" active="true" />
+    </links>
+  </main_menu><!-- mobile - task checklist -->
   <main_menu name="technician_tasks" active="true">
     <links>
       <header href="mobile/listTasks" resourcekey="header_ft_tasks" cssClass="fa fa-list-ul" enablelink="true" active="true" />

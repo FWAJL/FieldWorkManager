@@ -244,6 +244,10 @@ class MobileController extends \Library\BaseController {
     $this->page->addVar(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_instructions, $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_instructions());
   }
+  
+    public function executeChecklist(\Library\HttpRequest $rq) {
+
+    }
 
   public function executeCommunications(\Library\HttpRequest $rq) {
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
