@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<routes version="1.7.2">
+<routes version="1.7.3">
     <!-- UI routes -->
     <route url="login" module="Authenticate" action="loadLoginView" resxfile="login" type="ui">
         <js_files>
@@ -356,6 +356,7 @@
             <js_file use="head" value="Web/js/app/controllers/task_manager.js" />
         </js_files>
         <css_files>
+            
             <css_file use="project" />
         </css_files>
         <php_modules>
@@ -363,6 +364,7 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="task_info_lists" file_name="task_info_lists.php" />
             <php_module key="task_form" file_name="task_form.php" />
+            <php_module key="task_instr_checklist" file_name="task_instr_checklist.php" />
             <php_module key="task_buttons" file_name="task_buttons.php" />
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
             <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
@@ -804,6 +806,21 @@
       <php_modules>
         <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         <php_module key="notes" file_name="notes.php" />
+      </php_modules>
+    </route>
+        <route url="mobile/checklist" module="Mobile" action="checklist" resxfile="mobile" type="ui" role="3">
+      <js_files>
+        <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
+      </js_files>
+      <css_files>
+        <css_file value="Web/css/app/app-mobile-theme.css" />
+        <css_file value="Web/css/app/app-mobile-style.css" />
+        <css_file value="Web/css/app/app-reponsive.css" />
+        <css_file use="project" />
+      </css_files>
+      <php_modules>
+        <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+        <php_module key="checklist" file_name="checklist.php" />
       </php_modules>
     </route>
     <route url="mobile/communications" module="Mobile" action="communications" resxfile="mobile" type="ui" role="3">

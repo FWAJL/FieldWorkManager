@@ -36,5 +36,7 @@
   <resource key="btn_add_to_task">Add technician(s)</resource>
   <resource key="btn_remove_from_task">Remove technician(s)</resource>
   <resource key="no_items_to_display_message">There is no active technicians. Go to Technicians > List all to activate some</resource>
+  <resource key="task_technician_button_add"> Add Task Technician</resource>
+
   
 </resources>

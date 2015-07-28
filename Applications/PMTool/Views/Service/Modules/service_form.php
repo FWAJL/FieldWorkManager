@@ -23,7 +23,7 @@
     </li>
     <li>
    <label><?php echo $resx["service_address"]; ?></label>
-      <input name="service_address" type="text" />
+      <textarea class="address" name="service_address" type="text"></textarea>
     </li>
         <li>
       <label><?php echo $resx["service_contact_name"]; ?></label>

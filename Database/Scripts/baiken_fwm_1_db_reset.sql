@@ -168,6 +168,8 @@ CREATE TABLE IF NOT EXISTS `field_analyte_location` (
     `task_id` int(11) NOT NULL,
     `field_analyte_id` int(11) NOT NULL,
     `location_id` int(11) NOT NULL,
+	`field_analyte_location_result` VARCHAR(100) NULL,
+	`field_analyte_location_date` VARCHAR(50) NULL,
     CONSTRAINT `fk_fsm_task` FOREIGN KEY (`task_id`)
         REFERENCES `task` (`task_id`) ON DELETE CASCADE,
     CONSTRAINT `fk_fsm_field_analyte` FOREIGN KEY (`field_analyte_id`)
