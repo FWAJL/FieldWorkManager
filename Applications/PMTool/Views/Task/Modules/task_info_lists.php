@@ -11,7 +11,8 @@
       </div>
     </div>
     <div  class="col-lg-5 col-md-5">
-      
+      <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::task_instr_checklist]; ?>
+    </div>
     </div>
   </div>
 </div>

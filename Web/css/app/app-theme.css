@@ -12,7 +12,7 @@ ol, ul { margin-bottom: 0; }
 h3 { margin-top: 10px; }
 
 .show { display: block; }
-.hide { display: none; }
+/*.hide { display: none; }*/
 
 .required { border: 4px solid #f00;}
 /* END GENRAL */
@@ -109,8 +109,6 @@ h3 { margin-top: 10px; }
   white-space:initial;
 }
 
-textarea { resize: vertical;}
-
 .scroll-bar { overflow-y: scroll; }
 
 .list-panel {
@@ -133,15 +131,21 @@ li label {
     margin-bottom: 3px;
 }
 
-li input, li textarea {
+li input {
     width: 65%!important;
     margin-bottom: 3px;
 }
 
 .modal-body li { margin-bottom: 5px; }
 
-li textarea {
+.instructions {
+    width:100%;
+}
+
+
+.address {
     height: 6em;
+    width: 65%!important;  
 }
 
 .cbox {
