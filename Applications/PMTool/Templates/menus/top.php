@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <section id="top_header">
   <div id="branding">
 <!--    Mobile user header-->
@@ -50,3 +51,11 @@
 <?php endif; ?>
 </section>
 <div class="clearfix"></div>
+=======
+<?php 
+if ($user->getAttribute(\Library\Enums\SessionKeys::UserRole) == 3) {
+  require_once 'topBarMobile.php'; 
+} else {
+  require_once 'topBarDesktop.php'; 
+}
+>>>>>>> 04dd342151239235a8a93b7508fe2808b6324da5
