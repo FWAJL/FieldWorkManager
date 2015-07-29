@@ -3,8 +3,8 @@
 <!--    Mobile user header-->
       <?php if ($user->getAttribute(\Library\Enums\SessionKeys::UserRole) == 3): ?>
       <div id="collapse-menu-button" class="top-right-option glyphicon fa fa-bars fa-2x"></div>
-    <?php endif; ?>
     <figure class="logo"><img src="../Web/images/FWM_logo_only.png" alt="Mobile logo"/></figure>
+<?php endif; ?>
 <!--    <span id="branding_text"><?php //echo $resx_common_text["brand"];  ?></span>-->
   </div>
  

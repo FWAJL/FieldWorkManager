@@ -56,6 +56,7 @@ class PhpModuleKeys {
   
   const task_tabs_open = "task_tabs_open";
   const task_form = "task_form";
+  const task_checklist = "task_checklist";
   const task_instr_checklist = "task_instr_checklist";
   const task_buttons = "task_buttons";
   
