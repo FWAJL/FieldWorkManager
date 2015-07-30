@@ -618,11 +618,11 @@ function load(params) {
         //label options
         var labelOptions = {
           boxStyle: {
-            border: "1px solid black"
-            ,textAlign: "center"
-            ,fontSize: "8pt"
+             textAlign: "center"
+            ,fontSize: "9pt"
             ,width: "50px"
-            ,background: "white"
+            ,color: "#FFFF00"
+            ,font: "bold"
           }
           ,zIndex:99999
           ,disableAutoPan: true
@@ -707,12 +707,12 @@ function load(params) {
         });
         google.maps.event.addListener(map.map, 'zoom_changed', function(e) {
           var zoomLevel = map.map.getZoom();
-          if(zoomLevel>=15 && labelsHidden===true) {
+          if(zoomLevel>=17 && labelsHidden===true) {
             $.each(labels, function(index, label) {
               label.open(map.map);
             });
             labelsHidden = false;
-          } else if(zoomLevel<15 && labelsHidden===false) {
+          } else if(zoomLevel<17 && labelsHidden===false) {
             $.each(labels, function(index, label) {
               label.close();
             });
