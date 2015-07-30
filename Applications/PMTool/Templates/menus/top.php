@@ -1,61 +1,8 @@
-<<<<<<< HEAD
-<section id="top_header">
-  <div id="branding">
-<!--    Mobile user header-->
-      <?php if ($user->getAttribute(\Library\Enums\SessionKeys::UserRole) == 3): ?>
-      <div id="collapse-menu-button" class="top-right-option glyphicon fa fa-bars fa-2x"></div>
-    <figure class="logo"><img src="../Web/images/FWM_logo_only.png" alt="Mobile logo"/></figure>
-<?php endif; ?>
-<!--    <span id="branding_text"><?php //echo $resx_common_text["brand"];  ?></span>-->
-  </div>
- 
-<!--    Other user header-->
 
- <?php if ($user->getAttribute(\Library\Enums\SessionKeys::UserRole) != 3): ?>
-    <figure class="logo"><img src="<?php echo $this->app->relative_path . $this->app->logoImageUrl; ?>"></figure>
-    <div id="pm_info">
-      <span id="pm_name" class="top-right-option">
-        <?php echo $resx_menu_left["p_user_name_label"]; ?><?php echo $pm['pm_name']; ?>
-      </span>
-      <span id="ft_comm" class="top-right-option mobile-glyph">
-        <a class="glyphicon"  title="<?php echo $resx_menu_left["ft_comm"]; ?>">
-          <img src="../Web/images/glyphicons-246-chat.png">
-        </a>
-      </span>
-      <span id="ft_map" class="top-right-option mobile-glyph">
-        <a class="glyphicon" title="<?php echo $resx_menu_left["ft_map"]; ?>">
-          <img src="../Web/images/glyphicons-503-map.png">
-        </a>
-      </span>
-      <span id="ft_notes" class="top-right-option mobile-glyph">
-        <a class="glyphicon" title="<?php echo $resx_menu_left["ft_notes"]; ?>">
-          <img src="../Web/images/glyphicons-151-edit.png">
-        </a>
-      </span>     
-      <span id="view_info" class="top-right-option">
-        <a class="glyphicon glyphicon-user" title="<?php echo $resx_menu_left["pm_view_info"]; ?>"></a>
-      </span>
-      <span id="pm_logout" class="top-right-option">
-        <a class="glyphicon glyphicon-log-out" title="<?php echo $resx_menu_left["logout_link_text"]; ?>" href="<?php echo $logout_url; ?>" ></a>
-      </span>
-    </div>
-  <?php else: ?>
-    <div class="breacrumb-top">
-      <?php echo (isset($current_project) and isset($current_task)) ? $current_project->project_name() : ''; ?>
-      <?php if (isset($current_task) && $current_task !== NULL) { ?>
-        <span class="glyphicon glyphicon-chevron-right"></span>
-        <?php echo $current_task->task_name();
-      }
-      ?>
-    </div>
-<?php endif; ?>
-</section>
-<div class="clearfix"></div>
-=======
 <?php 
 if ($user->getAttribute(\Library\Enums\SessionKeys::UserRole) == 3) {
   require_once 'topBarMobile.php'; 
 } else {
   require_once 'topBarDesktop.php'; 
 }
->>>>>>> 04dd342151239235a8a93b7508fe2808b6324da5
+

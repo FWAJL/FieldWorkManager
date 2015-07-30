@@ -1,8 +1,7 @@
 <section id="top_header">
   <div id="branding">
-    <figure class="logo"><img src="<?php echo $this->app->relative_path . $this->app()->imageUtil->getImageUrl("FWM_logo_only.png"); ?> alt="Mobile logo"/></figure>
-  </div>
-  <figure class="logo"><img src="<?php echo $this->app->relative_path . $this->app->logoImageUrl; ?>"></figure>
+        <figure class="logo"><img src="<?php echo $this->app->relative_path . $this->app->logoImageUrl; ?>"></figure>
+   </div>       
   <div id="pm_info">
     <span id="pm_name" class="top-right-option">
       <?php echo $resx_menu_left["p_user_name_label"]; ?><?php echo $pm['pm_name']; ?>
@@ -29,5 +28,6 @@
       <a class="glyphicon glyphicon-log-out" title="<?php echo $resx_menu_left["logout_link_text"]; ?>" href="<?php echo $logout_url; ?>" ></a>
     </span>
   </div>
-</section>
+
+</section>  
 <div class="clearfix"></div>
