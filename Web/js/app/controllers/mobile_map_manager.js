@@ -11,6 +11,8 @@ var facilityId;
 var projectId;
 var highlightCircle;
 var setCurrentProjectFlag = false;
+var labels = new Array();
+var labelsHidden = true;
 var polygonSettings = {
   "fillColor": "#F5F6CE",
   "fillOpacity": .4,
@@ -613,6 +615,24 @@ function load(params) {
         } else if (reply.type === 'location') {
           $("#map-info").append("<div class='row'><h4>"+$("#locations-heading").val()+"</h4></div>");
         }
+        //label options
+        var labelOptions = {
+          boxStyle: {
+            border: "1px solid black"
+            ,textAlign: "center"
+            ,fontSize: "8pt"
+            ,width: "50px"
+            ,background: "white"
+          }
+          ,zIndex:99999
+          ,disableAutoPan: true
+          ,pixelOffset: new google.maps.Size(-25, 0)
+          ,closeBoxURL: ""
+          ,isHidden: false
+          ,pane: "mapPane"
+          ,enableEventPropagation: true
+        };
+
         //Build markers list
         $.each(reply.items, function(index, item) {
           markerIcon = "";
@@ -654,6 +674,12 @@ function load(params) {
             //item.marker.mouseout = unhighlightMarker;
             markers.push(item.marker);
             markerIcon = item.marker.icon;
+            if(item.task === true) {
+              labelOptions.content = item.name;
+              labelOptions.position = new google.maps.LatLng(item.marker.lat,item.marker.lng);
+              var nLabel = new InfoBox(labelOptions);
+              labels.push(nLabel);
+            }
           }
           if(item.task && !taskHeading && reply.type === 'task') {
             taskHeading = true;
@@ -678,6 +704,20 @@ function load(params) {
                 + "</div></div>");
           }
 
+        });
+        google.maps.event.addListener(map.map, 'zoom_changed', function(e) {
+          var zoomLevel = map.map.getZoom();
+          if(zoomLevel>=15 && labelsHidden===true) {
+            $.each(labels, function(index, label) {
+              label.open(map.map);
+            });
+            labelsHidden = false;
+          } else if(zoomLevel<15 && labelsHidden===false) {
+            $.each(labels, function(index, label) {
+              label.close();
+            });
+            labelsHidden = true;
+          }
         });
         /*
         if(reply.type === 'locatiron') {
