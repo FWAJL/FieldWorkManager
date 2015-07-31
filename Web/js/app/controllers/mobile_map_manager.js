@@ -13,6 +13,7 @@ var highlightCircle;
 var setCurrentProjectFlag = false;
 var labels = new Array();
 var labelsHidden = true;
+var taskMarkersBoundary = new Array();
 var polygonSettings = {
   "fillColor": "#F5F6CE",
   "fillOpacity": .4,
@@ -663,6 +664,8 @@ function load(params) {
               item.marker.clickable = true;
               item.marker.task = item.task;
               if(item.task) {
+                var tmpTaskBound = new google.maps.LatLng(item.marker.lat,item.marker.lng);
+                taskMarkersBoundary.push(tmpTaskBound);
                 item.marker.click = function(e){openTaskLocationInfo(e,item.marker.id,'remove')};
               } else {
                 item.marker.click = function(e){openTaskLocationInfo(e,item.marker.id,'add')};
@@ -767,7 +770,10 @@ function load(params) {
 
 
         setTimeout(function() {
-            if (markers.length > 1) {
+            if(taskMarkersBoundary.length>0){
+              console.log(taskMarkersBoundary);
+              map.fitLatLngBounds(taskMarkersBoundary);
+            } else if (markers.length > 1) {
               map.fitZoom();
             } else if (markers.length === 1)
             {
