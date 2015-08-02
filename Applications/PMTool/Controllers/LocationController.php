@@ -177,6 +177,81 @@ class LocationController extends \Library\BaseController {
     ));
   }
 
+  /**
+  * Add a new location from the TaskLocationInfo popup
+  */
+  public function executeAddLocMob(\Library\HttpRequest $rq){
+    // Init result
+    $result = $this->InitResponseWS();
+
+    //Get session project
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    //Sesion project falicity
+    $sessProjFacilityObj = $_SESSION[\Library\Enums\SessionKeys::UserSessionProjects]['project_' . $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id()][\Library\Enums\SessionKeys::FacilityObject];
+    //Get current Session task
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+
+    //Extract image data from POST
+    $locImages = json_decode($this->dataPost['images']);
+    //Unset image data from POST so that we may create the DAO
+    unset($this->dataPost['images']);
+
+    //Set some extra variables
+    $this->dataPost['project_id'] = $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id();
+    $this->dataPost['location_active'] = 1;
+    $this->dataPost['location_visible'] = 0;
+    $this->dataPost['location_lat'] = $sessProjFacilityObj->facility_lat();
+    $this->dataPost['location_long'] = $sessProjFacilityObj->facility_long();
+
+    
+    $locationDAO = new \Applications\PMTool\Models\Dao\Location();
+    $location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), $locationDAO);
+    $manager = $this->managers->getManagerOf($this->module());
+    $new_location_id = $manager->add($location);
+
+    //Based on that let's create the Task Location object
+    $tl_data = array(
+                'task_id'               => $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id(),
+                'location_id'           => $new_location_id,
+                'task_location_status'  => 0
+              );
+    $task_location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($tl_data, new \Applications\PMTool\Models\Dao\Task_location());
+    $manager = $this->managers()->getManagerOf('TaskLocation');
+    $task_location_id = $manager->add($task_location);
+    
+
+    //Process the images
+    foreach($locImages as $theLocImage) {
+      $manager = $this->managers()->getManagerOf('Document');
+      $docObj = $manager->getRecordsMatchingDocumentValue($theLocImage);
+      //Our new document value is
+      $newDocumentValue = $new_location_id . '_' . $docObj[0]->document_value();
+      //Rename the file on disk
+      rename('./uploads/location/' . $docObj[0]->document_value(), './uploads/location/' . $newDocumentValue);
+      //Update the document value into the Dal
+      $docObj[0]->setDocument_value($newDocumentValue);
+      //and commit the edit
+      $result_edit = $manager->edit($docObj[0], "document_id");      
+    }
+
+    //Set the newly created id to the object
+    $location->setLocation_id($new_location_id);
+    //Update session var
+    array_push($sessionProject[\Library\Enums\SessionKeys::ProjectLocations], $location);
+    \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->app()->user(), $sessionProject);
+    /*\Applications\PMTool\Helpers\CommonHelper::pr($_SESSION[\Library\Enums\SessionKeys::UserSessionProjects]['project_' . 
+        $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id()]);*/
+
+    $result_add = true;
+    
+    $this->SendResponseWS(
+      $result, array(
+      "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,
+      "resx_key" => $this->action(),
+      "step" => $result_add ? "success" : "error"
+    ));
+  }
+
 
   public function executeDelete(\Library\HttpRequest $rq) {
     // Init result

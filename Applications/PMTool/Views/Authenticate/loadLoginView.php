@@ -2,7 +2,7 @@
 <section id="top_header">
   <section id="branding">
     <figure class="logo"><img src="<?php echo $this->app->relative_path . $this->app->logoImageUrl; ?>"></figure>
-       <span id="branding_text"><?php echo $resx_common_text["brand"]; ?></span>
+<!--       <span id="branding_text"><?php //echo $resx_common_text["brand"]; ?></span>-->
   </section>
 </section>
 <section  class="login-container">

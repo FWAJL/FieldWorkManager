@@ -24,14 +24,14 @@ h3 { margin-top: 10px; }
   clear: both;
   height: 40px;
 }
-#top_header #branding > * { float: left; }
 
 .brand { 
   line-height: 40px;  
   padding-left: 10px; 
 }
 
-.logo { margin-left: 20px; }
+.logo { margin-left: 20px; 
+}
 
 #pm_name { padding: 0 12px; }
 
@@ -42,7 +42,7 @@ h3 { margin-top: 10px; }
     float: right; 
     margin-right: 40px
 }
-
+#top_header #branding > * { float: left; }
 .top-right-option a { padding: 12px; }
 /* END TOP HEADER */
 
