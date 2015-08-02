@@ -1,0 +1,105 @@
+/*APPLIES TO: colors/fonts/border style*/
+
+/* GENERAL STYLES */
+.validator {
+ /*display: none;*/
+ /*color: #FC7F6F;*/
+}
+
+/* END GENRAL */
+
+/* LOGIN */
+
+/* END LOGIN */
+
+/* TOP HEADER */
+#top_header{
+  background-color: #f3f3f3;
+  background-image: -moz-linear-gradient(#f9f9f9, #f3f3f3);
+  background-image: -webkit-linear-gradient(#f9f9f9, #f3f3f3);
+  background-image: linear-gradient(#f9f9f9, #f3f3f3);
+  background-repeat: repeat-x;
+}
+
+#branding_text {font-size: 20px; font-weight: bold; padding-top: 4px;}
+
+.top-right-option a:hover {
+  background-color: #e5e5e5;
+}
+/* END TOP HEADER */
+
+/* BREADCRUMB */
+
+/* END BREADCRUMB */
+
+/* CONTENT_CONTAINER */
+
+/* END CONTENT_CONTAINER */
+
+/* COMMON FORM ELEMENTS */
+.header4 {
+   font-size: 14px;
+   font-style: bold;
+}
+
+.welcome > * { color: #333; } 
+
+/* BUTTONS */
+.btn-primary {
+  background-color: #FFF;
+  border-color: #999;
+  color: #333;
+}
+
+.btn-primary:hover, 
+.btn-primary:focus, 
+.btn-primary:active, 
+.btn-primary.active, 
+.open .dropdown-toggle.btn-primary{
+  background-color: #000;
+  border-color: #999;
+}
+/* END COMMON FORM ELEMENTS */
+
+/* PROJECT */
+
+/* END PROJECT */
+
+/* FACILITY */
+
+/* CLIENT */
+
+/* LOCATION */
+
+/* TASK */
+
+li.category-name {
+  font-size: larger;
+  font-style: italic;
+  color: #fff;
+  background-color: #FFB445;
+  text-decoration: underline;
+}
+
+/* JS WIDGETS */
+
+.select_item:hover,
+.select_item:focus, 
+ui-widget-content:focus, 
+ui-widget-content:hover {
+  background-color: #ffd;
+  color: #F39814;
+}
+
+.ui-selecting { background: #FECA40; }
+
+.ui-selected { 
+    background: #F39814; 
+    color: white; 
+}
+
+.context-menu-active {
+    font-weight: bold; 
+    color: #F39814;
+}
+/* JS WIDGETS */
