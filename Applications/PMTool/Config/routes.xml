@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<routes version="1.7.3">
+<routes version="1.7.4">
     <!-- UI routes -->
     <route url="login" module="Authenticate" action="loadLoginView" resxfile="login" type="ui">
         <js_files>
@@ -538,6 +538,25 @@
         </php_modules>
     </route><!--  task/technicians -->
     
+        <route url="task/checklist" module="TaskChecklist" action="uploadList" resxfile="task_checklist" type="ui" role="2">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/task_checklist_manager.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="task_tabs_open" file_name="task_tabs_open.php" shared="true" />
+            <php_module key="task_checklist" file_name="uploadList.php" />
+            <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
+            <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+<!--            <php_module key="group_list_promote_buttons_module" file_name="group_list_promote_buttons.php" shared="true"/>
+	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="task_analyte_matrix_switch" file_name="task_analyte_matrix_switch.php" shared="true" />-->
+        </php_modules>
+    </route><!--  task/checklist -->
+    
     <route url="task/fieldAnalytes" module="TaskFieldAnalyte" action="manageFieldAnalytes" resxfile="task_field_analyte" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/task_field_analyte.js" />
@@ -721,8 +740,9 @@
         <js_file use="html" value="Web/js/core/gmaps.js"/>
         <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
         <js_file use="head" value="Web/js/app/controllers/mobile_map_manager.js" />
-        <js_file use="html" value="Web/js/app/controllers/map/mapActiveTasks.js"/>
+        <js_file use="html" value="Web/js/app/controllers/map/mapMobile.js"/>
         <js_file use="head" value="Web/js/addons/fancyapps/source/jquery.fancybox.js" />
+        <js_file use="head" value="Web/js/addons/infobox.js" />
       </js_files>
       <css_files>
         <css_file value="Web/css/app/app-mobile-theme.css" />
@@ -748,10 +768,7 @@
         <route url="mobile/loc_list" module="Mobile" action="viewList" resxfile="mobile" type="ui" role="3">
       <js_files>
         <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
-        <js_file use="html" value="Web/js/core/gmaps.js"/>
         <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
-        <js_file use="head" value="Web/js/app/controllers/mobile_map_manager.js" />
-        <js_file use="html" value="Web/js/app/controllers/map/mapActiveTasks.js"/>
         <js_file use="head" value="Web/js/addons/fancyapps/source/jquery.fancybox.js" />
 
       </js_files>
@@ -1171,6 +1188,7 @@
   <route url="location/ifLocationExists" module="Location" action="ifLocationExists" resxfile="location" type="ws" />
   <route url="location/ifAllLocationsExist" module="Location" action="ifAllLocationsExist" resxfile="location" type="ws" />
   <route url="location/mapEdit" module="Location" action="mapEdit" resxfile="location" type="ws" />
+  <route url="location/addLocMob" module="Location" action="addLocMob" resxfile="location" type="ws" />
 
   <route url="technician/add" module="Technician" action="add" resxfile="technician" type="ws" />
   <route url="technician/edit" module="Technician" action="edit" resxfile="technician" type="ws" />

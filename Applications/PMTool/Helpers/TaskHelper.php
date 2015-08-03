@@ -42,6 +42,7 @@ class TaskHelper {
         \Applications\PMTool\Resources\Enums\TaskTabKeys::InfoTab => "active",
         \Applications\PMTool\Resources\Enums\TaskTabKeys::TechniciansTab => "",
         \Applications\PMTool\Resources\Enums\TaskTabKeys::LocationsTab => "",
+        \Applications\PMTool\Resources\Enums\TaskTabKeys::ChecklistTab => "",
         \Applications\PMTool\Resources\Enums\TaskTabKeys::InspFormsTab => "",
         \Applications\PMTool\Resources\Enums\TaskTabKeys::FieldAnalytesTab => "",
         \Applications\PMTool\Resources\Enums\TaskTabKeys::CocTab => "",

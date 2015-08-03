@@ -13,14 +13,24 @@ class DocumentDal extends \Library\DAL\Modules\DocumentDal {
    * @param string $document_category
    * @param integer $category_id
    * @return array of \Applications\PMTool\Models\Dao\Document
+   * @todo: the table document should have a column document_category_id in
+   * addition of storing that value in the document_value. It will allow a more
+   * performant querying when retrieving documents from a category and a set of 
+   * category_id.
    */
-  public function selectManyByCategoryAndId($document_category, $category_id) {
-    $category_id .= '_%';
+  public function selectManyByCategoryAndId($document_category, $category_id = false) {
     $sql = 'SELECT d.* FROM `document` d';
-    $sql .= ' where d.`document_category` = :document_category and d.`document_value` LIKE :category_id;';
+    $sql .= ' WHERE d.`document_category` = :document_category';
+    if ($category_id !== FALSE) {
+      $category_id .= '\_%';
+      $sql .= ' AND d.`document_value` LIKE :category_id';
+    } 
+    $sql .= ";";
     $sth = $this->dao->prepare($sql);
-    $sth->bindValue(':document_category',$document_category,\PDO::PARAM_STR);
-    $sth->bindValue(':category_id',$category_id,\PDO::PARAM_STR);
+    $sth->bindValue(':document_category', $document_category, \PDO::PARAM_STR);
+    if ($category_id !== FALSE) {
+      $sth->bindValue(':category_id', $category_id, \PDO::PARAM_STR);
+    }
     $sth->execute();
     $sth->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Document');
 
@@ -33,17 +43,17 @@ class DocumentDal extends \Library\DAL\Modules\DocumentDal {
   public function selectOne($document) {
     if ($document->document_id() !== "") {//Check if the user is giving his username and that there is a value
       $tableName = \Applications\PMTool\Helpers\CommonHelper::GetShortClassName($document);
-      $sql = 'SELECT * FROM `'.$tableName.'` where `document_id` = :document_id LIMIT 0, 1;';
+      $sql = 'SELECT * FROM `' . $tableName . '` where `document_id` = :document_id LIMIT 0, 1;';
     } else {
       return NULL;
     }
 
     $sth = $this->dao->prepare($sql);
-    $sth->bindValue(':document_id',$document->document_id(),\PDO::PARAM_INT);
+    $sth->bindValue(':document_id', $document->document_id(), \PDO::PARAM_INT);
     $sth->execute();
     $sth->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Document');
 
-    $document_out = $sth->fetch ();
+    $document_out = $sth->fetch();
     $sth->closeCursor();
 
     return $document_out;
@@ -53,6 +63,17 @@ class DocumentDal extends \Library\DAL\Modules\DocumentDal {
     $sql = 'select * from document where document_value LIKE :search_str';
     $dao = $this->dao->prepare($sql);
     $dao->bindValue(':search_str', $task_location_id . '_%', \PDO::PARAM_STR);
+    $dao->execute();
+    $dao->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Document');
+    $search_res = $dao->fetchAll();
+    $dao->closeCursor();
+    return $search_res;
+  }
+
+  public function getRecordsMatchingDocumentValue($match_on) {
+    $sql = 'select * from document where document_value LIKE :search_str';
+    $dao = $this->dao->prepare($sql);
+    $dao->bindValue(':search_str', '%' . $match_on . '%', \PDO::PARAM_STR);
     $dao->execute();
     $dao->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Document');
     $search_res = $dao->fetchAll();

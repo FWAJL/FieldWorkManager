@@ -8,13 +8,8 @@
 
     <div class="row col-no-right-margin">
 
-      <div class="col-lg-2 col-md-2">
+      <div id="mobile-location-list" class="col-lg-2 col-md-2">
         <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_info_module]; ?>
-      </div>
-      <div id="mobile_list_map" class="col-lg-1 col-md-1 col-no-pad">
-        <p>
-          <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_module]; ?>
-        </p>
       </div>
     </div>
     <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; ?>
