@@ -42,6 +42,7 @@ $(document).ready(function(){
   }
 
   if($("#mobile-location-list").length){
+    $("#document-upload input[name=\"itemCategory\"]").val('location_id')
     var params = {
       "dataUrl": "map/listCurrentProjectTasks",
       "properties": {
@@ -150,6 +151,83 @@ $(document).ready(function(){
         });
       });
     }
+    var openAddNewTaskLocation = function() {
+      var imagesOfNewLocation = [];
+
+      utils.showInfoWindow('#task-location-info-modal',
+        function(){
+          //check to see if unique
+          datacx.post('location/ifLocationExists', {location_name: $("#task-location-info-modal-location_name").val()}).then(function(reply) {
+            if(reply.record_count > 0) {
+              $('#task-location-info-modal').modal('hide');
+              utils.showAlert($('#confirmmsg-addUniqueCheck').val(), function(){
+                $('#task-location-info-modal').modal('show');
+                hideModifyTaskLocationFields();
+              });
+            } else {
+              //Callback on OK
+              if($("#task-location-info-modal-location_name").val() !== '') {
+                post_data = {};
+                //values
+                post_data.location_name   = $("#task-location-info-modal-location_name").val();
+                post_data.location_desc   = $("#task-location-info-modal-location_desc").val();
+                //post_data.location_lat    = $("#task-location-info-modal-location_lat").val();
+                //post_data.location_long   = $("#task-location-info-modal-location_long").val();
+                post_data.images          = JSON.stringify(imagesOfNewLocation);
+
+                //Call save
+                mobile_manager.editLocation(post_data,'location', 'addLocMob', function(r){
+                  //console.log(r);
+                  //resetTaskLocationDialogForEdit();
+                  location.reload();
+                });
+              } else {
+                $('#location-info-modal-location_name').focus();
+              }
+            }
+          });
+
+        },function(){
+          //Callback on Cancel
+          resetTaskLocationDialogForEdit();
+        }
+      );
+
+      Dropzone.forElement("#document-upload").removeAllFiles();
+
+      hideModifyTaskLocationFields();
+
+
+      Dropzone.forElement("#document-upload").on("success", function(e, response) {
+        //Keep pushing to the JS array
+        imagesOfNewLocation.push(response.document.document_value);
+      });
+    };
+    var hideModifyTaskLocationFields = function () {
+      //hide/modify irrelevant fields
+      $('#task-location-info-modal-location_name').removeAttr('disabled');
+      $('.modal-update').html('Add');
+      $('#task-location-info-modal-zoom').parent().hide();
+      $('#task-location-info-modal-collect-data').parent().hide();
+      $('#location-info-modal-mark').parent().hide();
+      $('#location-info-modal-directions').parent().hide();
+      $('#location-info-modal-photos').parent().hide();
+      $('#task-location-info-modal-location_lat').parent().hide();
+      $('#task-location-info-modal-location_long').parent().hide();
+      //clear text
+      $('#task-location-info-modal-location_name').val('');
+      $('#task-location-info-modal-location_desc').val('');
+    };
+    var resetTaskLocationDialogForEdit = function () {
+      $('.modal-update').html('Update');
+      $('#task-location-info-modal-zoom').parent().show();
+      $('#task-location-info-modal-collect-data').parent().show();
+      $('#location-info-modal-mark').parent().show();
+      $('#location-info-modal-directions').parent().show();
+      $('#location-info-modal-photos').parent().show();
+      $('#task-location-info-modal-location_lat').parent().show();
+      $('#task-location-info-modal-location_long').parent().show();
+    };
     var markers = new Array();
     var selectedMarker = 0;
     function loadList(params) {
@@ -205,6 +283,7 @@ $(document).ready(function(){
             if(item.task && !taskHeading && reply.type === 'task') {
               taskHeading = true;
               $("#map-info").append("<div class='row'><h4>"+$("#tasks-heading").val()+"</h4></div>");
+              $("#map-info").append("<div class='row'><input type='button' value='Add New Location' class='at at-status btn btn-default' id='btn_addnewloc'></div>")
             }
             if(!taskOtherHeading && !item.task && reply.type === 'task') {
               taskOtherHeading = true;
@@ -251,6 +330,10 @@ $(document).ready(function(){
             }
 
             //}
+          });
+          //add new task location
+          $(document).on('click','#btn_addnewloc',function(e){
+            openAddNewTaskLocation();
           });
         });
     }
