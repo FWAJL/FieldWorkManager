@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<routes version="1.7.3">
+<routes version="1.7.4">
     <!-- UI routes -->
     <route url="login" module="Authenticate" action="loadLoginView" resxfile="login" type="ui">
         <js_files>
@@ -740,8 +740,9 @@
         <js_file use="html" value="Web/js/core/gmaps.js"/>
         <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
         <js_file use="head" value="Web/js/app/controllers/mobile_map_manager.js" />
-        <js_file use="html" value="Web/js/app/controllers/map/mapActiveTasks.js"/>
+        <js_file use="html" value="Web/js/app/controllers/map/mapMobile.js"/>
         <js_file use="head" value="Web/js/addons/fancyapps/source/jquery.fancybox.js" />
+        <js_file use="head" value="Web/js/addons/infobox.js" />
       </js_files>
       <css_files>
         <css_file value="Web/css/app/app-mobile-theme.css" />
@@ -767,10 +768,7 @@
         <route url="mobile/loc_list" module="Mobile" action="viewList" resxfile="mobile" type="ui" role="3">
       <js_files>
         <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
-        <js_file use="html" value="Web/js/core/gmaps.js"/>
         <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
-        <js_file use="head" value="Web/js/app/controllers/mobile_map_manager.js" />
-        <js_file use="html" value="Web/js/app/controllers/map/mapActiveTasks.js"/>
         <js_file use="head" value="Web/js/addons/fancyapps/source/jquery.fancybox.js" />
 
       </js_files>

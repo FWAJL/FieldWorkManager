@@ -121,7 +121,7 @@ ul.content_left > li > a > span.fa {
 }
 
 #mobile_list_map { display: none; }
-.breacrumb-top {
+.mobile-breacrumb-top {
   line-height: 40px;
 }
 /*Temporary to hide map in list view.*/
