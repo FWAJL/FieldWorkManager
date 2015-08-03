@@ -29,6 +29,7 @@ class TaskTabKeys {
   const InfoTab = "ttk_it";
   const TechniciansTab = "ttk_tt";
   const LocationsTab = "ttk_lt";
+  const ChecklistTab = "ttk_clt";
   const InspFormsTab = "ttk_itft";
   const FieldAnalytesTab = "ttk_fat";
   const FieldSampleMatrixTab = "ttk_fsmt";

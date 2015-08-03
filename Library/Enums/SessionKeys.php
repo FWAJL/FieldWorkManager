@@ -79,6 +79,7 @@ abstract class SessionKeys {
   const TaskObj = "task_info_obj";
   const TaskCocInfoObj = "task_coc_info_obj";
   const TaskLocations = "task_locations";
+  const TaskChecklist = "task_checklist";
   const TaskTechnicians = "task_technicians";
   const TaskServices = "task_services";
   const TaskFieldSampleMatrix = "task_field_sample_matrix";

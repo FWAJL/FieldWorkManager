@@ -165,11 +165,14 @@ CREATE TABLE IF NOT EXISTS `field_analyte` (
 
 -- Table structure for table `field_analyte_location`
 CREATE TABLE IF NOT EXISTS `field_analyte_location` (
+	`field_analyte_location_id` INT(11) NOT NULL AUTO_INCREMENT,
     `task_id` int(11) NOT NULL,
     `field_analyte_id` int(11) NOT NULL,
     `location_id` int(11) NOT NULL,
 	`field_analyte_location_result` VARCHAR(100) NULL,
 	`field_analyte_location_date` VARCHAR(50) NULL,
+	PRIMARY KEY (`field_analyte_location_id`),
+    UNIQUE INDEX `un_fa` (`field_analyte_location_id` ASC),
     CONSTRAINT `fk_fsm_task` FOREIGN KEY (`task_id`)
         REFERENCES `task` (`task_id`) ON DELETE CASCADE,
     CONSTRAINT `fk_fsm_field_analyte` FOREIGN KEY (`field_analyte_id`)
