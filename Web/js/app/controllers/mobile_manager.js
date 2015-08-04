@@ -261,7 +261,7 @@ $(document).ready(function(){
 
             if (item.noLatLng === true) {
               markerIcon = reply.noLatLngIcon;
-              markerClass = "map-info-marker";
+              markerClass = "location-list-marker";
             } else {
               item.marker.id = item.id;
               if (reply.type == 'task') {
@@ -282,31 +282,31 @@ $(document).ready(function(){
             }
             if(item.task && !taskHeading && reply.type === 'task') {
               taskHeading = true;
-              $("#map-info").append("<div class='row'><h4>"+$("#tasks-heading").val()+"</h4></div>");
-              $("#map-info").append("<div class='row'><input type='button' value='Add New Location' class='at at-status btn btn-default' id='btn_addnewloc'></div>")
+              $("#location-list").append("<div class='row'><h4>"+$("#tasks-heading").val()+"</h4></div>");
+              $("#location-list").append("<div class='row'><input type='button' value='Add New Location' class='at at-status btn btn-default' id='btn_addnewloc'></div>")
             }
             if(!taskOtherHeading && !item.task && reply.type === 'task') {
               taskOtherHeading = true;
-              $("#map-info").append("<div class='row'><h4>"+$("#other-locations-heading").val()+"</h4></div>");
+              $("#location-list").append("<div class='row'><h4>"+$("#other-locations-heading").val()+"</h4></div>");
             }
             var showMarker = true;
             if(reply.type === 'task' && item.noLatLng === true && item.task !==true) {
               var showMarker = false;
             }
             if(showMarker){
-              $("#map-info").append(
+              $("#location-list").append(
                 "<div id='marker-" + item.id
                   + "' data-id='" + item.id
                   + "' data-active='" + item.active
-                  + "' class='row map-info-row " + markerClass
-                  + "'><div class='map-info-icon col-md-2'><span class='map-info-icon-image'><img src='" + markerIcon
-                  + "' /></span></div><div class='map-info-name col-md-9'>" + item.name
+                  + "' class='row location-list-row " + markerClass
+                  + "'><div class='location-list-icon col-md-2'><span class='location-list-icon-image'><img src='" + markerIcon
+                  + "' /></span></div><div class='location-list-name col-md-9'>" + item.name
                   + "</div></div>");
             }
 
           });
 
-          $(document).on('click','.map-info-row',function(e){
+          $(document).on('click','.location-list-row',function(e){
             //if(!$(this).hasClass("map-info-marker")) {
             var markerId = $(this).data("id");
             var marker;
@@ -342,7 +342,7 @@ $(document).ready(function(){
   }
 
   
-  $(document).on("click", ".map-info-row", function() {
+  $(document).on("click", ".location-list-row", function() {
     $("#task-location-id-selected").val($(this).attr('data-id'));
   });
 

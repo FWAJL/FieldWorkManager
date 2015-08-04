@@ -105,4 +105,6 @@ class ViewVariablesKeys {
   const notes = "notes";
   const task_instructions = "task_instructions";
   const current_location = "current_location";
+  //location list
+  const location_list = "location_list";
 }

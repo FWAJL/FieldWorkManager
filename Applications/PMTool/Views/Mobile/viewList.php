@@ -9,7 +9,7 @@
     <div class="row col-no-right-margin">
 
       <div id="mobile-location-list" class="col-lg-2 col-md-2">
-        <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_info_module]; ?>
+        <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::location_list]; ?>
       </div>
     </div>
     <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; ?>
