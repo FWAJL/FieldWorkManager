@@ -75,7 +75,7 @@ class TaskFieldAnalyteController extends \Library\BaseController {
     \Applications\PMTool\Helpers\AnalyteHelper::StoreListsData($this);  
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
-    //Get task specific lab analytes
+    //Get task specific field analytes
     $task_field_analytes = \Applications\PMTool\Helpers\AnalyteHelper::GetAndStoreTaskFieldAnalytes($this, $sessionTask);
     //Check which page to render
     $pg = (is_null($rq->getData('pg'))) ? 1 : (intval($rq->getData('pg')) == 0) ? 1 : intval($rq->getData('pg'));
@@ -133,6 +133,23 @@ class TaskFieldAnalyteController extends \Library\BaseController {
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Task,
+        "resx_key" => $this->action(),
+        "step" => $result_save ? "success" : "error"
+    ));
+  }
+
+  public function executeSaveFieldMatrixResult(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+    //Our current Session
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+    $sess_task_id = $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id();
+
+    $result_save = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::SaveAnalyteMatrixResult($this, $sess_task_id, $this->dataPost['field_matrix']);;
+
+    $this->SendResponseWS(
+            $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::ActiveTask,
         "resx_key" => $this->action(),
         "step" => $result_save ? "success" : "error"
     ));

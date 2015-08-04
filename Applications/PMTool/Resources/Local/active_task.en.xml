@@ -96,5 +96,15 @@
   <resource key="remove_file_title">Remove File</resource>
   <resource key="field_data">Field Data</resource>
 
+  <!-- active task field data matrix -->
+  <resource key="active_task_at_fdm_header">Field Data Matrix</resource>
+  <resource key="at_fdm_analyte_heading">Field Analyte</resource>
+  <resource key="at_fdm_location_heading">Location</resource>
+  <resource key="at_fdm_h4_label">Update Field Data Matrix</resource>
+  <resource key="tlm_savebtn_label">Save</resource>
+  <resource key="do_not_sample_label">Do not sample</resource>
+  <resource key="not_yet_sampled">Not yet sampled</resource>
+  <resource key="message_success_saveFieldMatrixResult">Field Matrix Result saved</resource>
+  <resource key="message_error_saveFieldMatrixResult">Error saving Field Matrix</resource>
 
 </resources>
