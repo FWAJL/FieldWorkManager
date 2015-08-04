@@ -171,15 +171,15 @@ $(document).ready(function(){
                 //values
                 post_data.location_name   = $("#task-location-info-modal-location_name").val();
                 post_data.location_desc   = $("#task-location-info-modal-location_desc").val();
-                //post_data.location_lat    = $("#task-location-info-modal-location_lat").val();
-                //post_data.location_long   = $("#task-location-info-modal-location_long").val();
+                post_data.location_lat    = $("#task-location-info-modal-location_lat").val();
+                post_data.location_long   = $("#task-location-info-modal-location_long").val();
                 post_data.images          = JSON.stringify(imagesOfNewLocation);
 
                 //Call save
                 mobile_manager.editLocation(post_data,'location', 'addLocMob', function(r){
                   //console.log(r);
                   //resetTaskLocationDialogForEdit();
-                  location.reload();
+                  utils.redirect("mobile/map");
                 });
               } else {
                 $('#location-info-modal-location_name').focus();
