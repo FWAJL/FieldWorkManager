@@ -42,6 +42,11 @@ $(document).ready(function(){
   }
 
   if($("#mobile-location-list").length){
+    var optionsPosition = {
+      enableHighAccuracy: true,
+      timeout: 50000,
+      maximumAge: 0
+    };
     $("#document-upload input[name=\"itemCategory\"]").val('location_id')
     var params = {
       "dataUrl": "map/listCurrentProjectTasks",
@@ -102,7 +107,6 @@ $(document).ready(function(){
       $("#task-location-info-modal-zoom").hide();
       $("#location-info-modal-directions").hide();
       $("#location-info-modal-place").hide();
-      $("#location-info-modal-mark").hide();
       $("#task-location-info-walk-drive").hide();
       if(action === 'add') {
         $("#task-location-info-modal-collect-data").hide();
@@ -174,13 +178,18 @@ $(document).ready(function(){
                 post_data.location_lat    = $("#task-location-info-modal-location_lat").val();
                 post_data.location_long   = $("#task-location-info-modal-location_long").val();
                 post_data.images          = JSON.stringify(imagesOfNewLocation);
-
-                //Call save
-                mobile_manager.editLocation(post_data,'location', 'addLocMob', function(r){
-                  //console.log(r);
-                  //resetTaskLocationDialogForEdit();
-                  utils.redirect("mobile/map");
-                });
+                if(navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(function(position) {
+                    post_data.location_lat = position.coords.latitude;
+                    post_data.location_long = position.coords.longitude;
+                    //Call save
+                    mobile_manager.editLocation(post_data,'location', 'addLocMob', function(r){
+                      //console.log(r);
+                      //resetTaskLocationDialogForEdit();
+                      utils.redirect("mobile/map");
+                    });
+                  },function(err){},optionsPosition);
+                }
               } else {
                 $('#location-info-modal-location_name').focus();
               }
@@ -211,6 +220,9 @@ $(document).ready(function(){
       $('#task-location-info-modal-collect-data').parent().hide();
       $('#location-info-modal-directions').parent().hide();
       $('#location-info-modal-photos').parent().hide();
+      $("#task-location-info-modal-location_lat").parent().hide();
+      $("#task-location-info-modal-location_long").parent().hide();
+      $("#location-info-modal-mark").parent().hide();
       //clear text
       $('#task-location-info-modal-location_name').val('');
       $('#task-location-info-modal-location_desc').val('');
@@ -221,12 +233,11 @@ $(document).ready(function(){
       $('#task-location-info-modal-collect-data').parent().show();
       $('#location-info-modal-directions').parent().show();
       $('#location-info-modal-photos').parent().show();
+      $("#task-location-info-modal-location_lat").parent().show();
+      $("#task-location-info-modal-location_long").parent().show();
+      $("#location-info-modal-mark").parent().show();
     };
-    var optionsPosition = {
-      enableHighAccuracy: true,
-      timeout: 50000,
-      maximumAge: 0
-    };
+
     $("#location-info-modal-mark").on('click',function(e){
       e.preventDefault();
       if(navigator.geolocation) {
