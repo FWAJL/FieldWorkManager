@@ -209,11 +209,8 @@ $(document).ready(function(){
       $('.modal-update').html('Add');
       $('#task-location-info-modal-zoom').parent().hide();
       $('#task-location-info-modal-collect-data').parent().hide();
-      $('#location-info-modal-mark').parent().hide();
       $('#location-info-modal-directions').parent().hide();
       $('#location-info-modal-photos').parent().hide();
-      $('#task-location-info-modal-location_lat').parent().hide();
-      $('#task-location-info-modal-location_long').parent().hide();
       //clear text
       $('#task-location-info-modal-location_name').val('');
       $('#task-location-info-modal-location_desc').val('');
@@ -222,12 +219,23 @@ $(document).ready(function(){
       $('.modal-update').html('Update');
       $('#task-location-info-modal-zoom').parent().show();
       $('#task-location-info-modal-collect-data').parent().show();
-      $('#location-info-modal-mark').parent().show();
       $('#location-info-modal-directions').parent().show();
       $('#location-info-modal-photos').parent().show();
-      $('#task-location-info-modal-location_lat').parent().show();
-      $('#task-location-info-modal-location_long').parent().show();
     };
+    var optionsPosition = {
+      enableHighAccuracy: true,
+      timeout: 50000,
+      maximumAge: 0
+    };
+    $("#location-info-modal-mark").on('click',function(e){
+      e.preventDefault();
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          $("#task-location-info-modal-location_lat").val(position.coords.latitude);
+          $("#task-location-info-modal-location_long").val(position.coords.longitude);
+        },function(err){},optionsPosition);
+      }
+    });
     var markers = new Array();
     var selectedMarker = 0;
     function loadList(params) {
