@@ -23,6 +23,11 @@ var currentPosition;
 var mapType;
 var activeTask = false;
 var userPosition;
+var optionsPosition = {
+  enableHighAccuracy: true,
+  timeout: 50000,
+  maximumAge: 0
+};
 //shows map legend popup
 $(document).ready(function(){
   $('.glyphicon-question-sign').click(function(){
@@ -1020,7 +1025,7 @@ function load(params) {
                     console.log('error');
                 }
               );
-            });
+            },function(err){},optionsPosition);
 
           }
 
@@ -1033,7 +1038,7 @@ function load(params) {
             navigator.geolocation.getCurrentPosition(function(position) {
               $("#task-location-info-modal-location_lat").val(position.coords.latitude);
               $("#task-location-info-modal-location_long").val(position.coords.longitude);
-            });
+            },function(err){},optionsPosition);
           }
         });
         /*$("#task-location-info-modal-collect-data").on('click',function(e){
