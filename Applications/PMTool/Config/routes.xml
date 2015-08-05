@@ -783,7 +783,7 @@
         <php_module key="welcome" file_name="welcome.php" />
         <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         <php_module key="map_module" file_name="map.php" shared="true"/>
-        <php_module key="map_info_module" file_name="map_info.php" shared="true"/>
+        <php_module key="location_list" file_name="location_list.php"/>
         <php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
         <php_module key="upload_file" file_name="upload_file.php" shared="true" />
         <php_module key="popup_task_location_info" file_name="popup_task_location_info.php"/>

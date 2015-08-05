@@ -42,6 +42,11 @@ $(document).ready(function(){
   }
 
   if($("#mobile-location-list").length){
+    var optionsPosition = {
+      enableHighAccuracy: true,
+      timeout: 50000,
+      maximumAge: 0
+    };
     $("#document-upload input[name=\"itemCategory\"]").val('location_id')
     var params = {
       "dataUrl": "map/listCurrentProjectTasks",
@@ -102,7 +107,6 @@ $(document).ready(function(){
       $("#task-location-info-modal-zoom").hide();
       $("#location-info-modal-directions").hide();
       $("#location-info-modal-place").hide();
-      $("#location-info-modal-mark").hide();
       $("#task-location-info-walk-drive").hide();
       if(action === 'add') {
         $("#task-location-info-modal-collect-data").hide();
@@ -171,16 +175,21 @@ $(document).ready(function(){
                 //values
                 post_data.location_name   = $("#task-location-info-modal-location_name").val();
                 post_data.location_desc   = $("#task-location-info-modal-location_desc").val();
-                //post_data.location_lat    = $("#task-location-info-modal-location_lat").val();
-                //post_data.location_long   = $("#task-location-info-modal-location_long").val();
+                post_data.location_lat    = $("#task-location-info-modal-location_lat").val();
+                post_data.location_long   = $("#task-location-info-modal-location_long").val();
                 post_data.images          = JSON.stringify(imagesOfNewLocation);
-
-                //Call save
-                mobile_manager.editLocation(post_data,'location', 'addLocMob', function(r){
-                  //console.log(r);
-                  //resetTaskLocationDialogForEdit();
-                  location.reload();
-                });
+                if(navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(function(position) {
+                    post_data.location_lat = position.coords.latitude;
+                    post_data.location_long = position.coords.longitude;
+                    //Call save
+                    mobile_manager.editLocation(post_data,'location', 'addLocMob', function(r){
+                      //console.log(r);
+                      //resetTaskLocationDialogForEdit();
+                      utils.redirect("mobile/map");
+                    });
+                  },function(err){},optionsPosition);
+                }
               } else {
                 $('#location-info-modal-location_name').focus();
               }
@@ -209,11 +218,11 @@ $(document).ready(function(){
       $('.modal-update').html('Add');
       $('#task-location-info-modal-zoom').parent().hide();
       $('#task-location-info-modal-collect-data').parent().hide();
-      $('#location-info-modal-mark').parent().hide();
       $('#location-info-modal-directions').parent().hide();
       $('#location-info-modal-photos').parent().hide();
-      $('#task-location-info-modal-location_lat').parent().hide();
-      $('#task-location-info-modal-location_long').parent().hide();
+      $("#task-location-info-modal-location_lat").parent().hide();
+      $("#task-location-info-modal-location_long").parent().hide();
+      $("#location-info-modal-mark").parent().hide();
       //clear text
       $('#task-location-info-modal-location_name').val('');
       $('#task-location-info-modal-location_desc').val('');
@@ -222,12 +231,22 @@ $(document).ready(function(){
       $('.modal-update').html('Update');
       $('#task-location-info-modal-zoom').parent().show();
       $('#task-location-info-modal-collect-data').parent().show();
-      $('#location-info-modal-mark').parent().show();
       $('#location-info-modal-directions').parent().show();
       $('#location-info-modal-photos').parent().show();
-      $('#task-location-info-modal-location_lat').parent().show();
-      $('#task-location-info-modal-location_long').parent().show();
+      $("#task-location-info-modal-location_lat").parent().show();
+      $("#task-location-info-modal-location_long").parent().show();
+      $("#location-info-modal-mark").parent().show();
     };
+
+    $("#location-info-modal-mark").on('click',function(e){
+      e.preventDefault();
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          $("#task-location-info-modal-location_lat").val(position.coords.latitude);
+          $("#task-location-info-modal-location_long").val(position.coords.longitude);
+        },function(err){},optionsPosition);
+      }
+    });
     var markers = new Array();
     var selectedMarker = 0;
     function loadList(params) {
@@ -261,7 +280,7 @@ $(document).ready(function(){
 
             if (item.noLatLng === true) {
               markerIcon = reply.noLatLngIcon;
-              markerClass = "map-info-marker";
+              markerClass = "location-list-marker";
             } else {
               item.marker.id = item.id;
               if (reply.type == 'task') {
@@ -282,31 +301,31 @@ $(document).ready(function(){
             }
             if(item.task && !taskHeading && reply.type === 'task') {
               taskHeading = true;
-              $("#map-info").append("<div class='row'><h4>"+$("#tasks-heading").val()+"</h4></div>");
-              $("#map-info").append("<div class='row'><input type='button' value='Add New Location' class='at at-status btn btn-default' id='btn_addnewloc'></div>")
+              $("#location-list").append("<div class='row'><h4>"+$("#tasks-heading").val()+"</h4></div>");
+              $("#location-list").append("<div class='row'><input type='button' value='Add New Location' class='at at-status btn btn-default' id='btn_addnewloc'></div>")
             }
             if(!taskOtherHeading && !item.task && reply.type === 'task') {
               taskOtherHeading = true;
-              $("#map-info").append("<div class='row'><h4>"+$("#other-locations-heading").val()+"</h4></div>");
+              $("#location-list").append("<div class='row'><h4>"+$("#other-locations-heading").val()+"</h4></div>");
             }
             var showMarker = true;
             if(reply.type === 'task' && item.noLatLng === true && item.task !==true) {
               var showMarker = false;
             }
             if(showMarker){
-              $("#map-info").append(
+              $("#location-list").append(
                 "<div id='marker-" + item.id
                   + "' data-id='" + item.id
                   + "' data-active='" + item.active
-                  + "' class='row map-info-row " + markerClass
-                  + "'><div class='map-info-icon col-md-2'><span class='map-info-icon-image'><img src='" + markerIcon
-                  + "' /></span></div><div class='map-info-name col-md-9'>" + item.name
+                  + "' class='row location-list-row " + markerClass
+                  + "'><div class='location-list-icon col-md-2'><span class='location-list-icon-image'><img src='" + markerIcon
+                  + "' /></span></div><div class='location-list-name col-md-9'>" + item.name
                   + "</div></div>");
             }
 
           });
 
-          $(document).on('click','.map-info-row',function(e){
+          $(document).on('click','.location-list-row',function(e){
             //if(!$(this).hasClass("map-info-marker")) {
             var markerId = $(this).data("id");
             var marker;
@@ -342,7 +361,7 @@ $(document).ready(function(){
   }
 
   
-  $(document).on("click", ".map-info-row", function() {
+  $(document).on("click", ".location-list-row", function() {
     $("#task-location-id-selected").val($(this).attr('data-id'));
   });
 

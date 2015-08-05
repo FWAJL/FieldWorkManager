@@ -7,9 +7,8 @@
 
 
     <div class="row col-no-right-margin">
-
-      <div id="mobile-location-list" class="col-lg-4 col-md-4">
-        <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_info_module]; ?>
+      <div id="mobile-location-list" class="col-lg-2 col-md-2">
+        <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::location_list]; ?>
       </div>
       <div class="col-lg-8 col-md-8"></div>
     </div>
