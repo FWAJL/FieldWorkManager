@@ -322,7 +322,7 @@ class ActiveTaskController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf($this->module());
     $result_note = $manager->selectMany($task_note, "task_id");
 
-    $result_get = 0;
+    $result_get = 1;
     $onlyLoggedInUser = $this->dataPost['onlyuser'];
     $userConnected = \Applications\PMTool\Helpers\UserHelper::GetUserConnectedSession($this->user());
     if(!empty($result_note)) {
