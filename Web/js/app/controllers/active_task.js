@@ -317,9 +317,6 @@ $(document).ready(function(){
       } else {
         //toastr.success(reply.message);
         $("input[name=\"itemId\"]").val(reply.discussion.discussion_id);
-        if(reply.user_type == 'technician_id') {
-          $("#file-attach").hide();
-        }
         var dropzone = new Dropzone("#document-upload");
         dropzone.on("success", function(event,res) {
           if(res.result == 0) {
