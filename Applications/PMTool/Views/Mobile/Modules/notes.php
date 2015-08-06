@@ -5,7 +5,8 @@
       <div>
 
         <textarea  class="upload_list" id="task_notes_message" name="task_notes_message" type="text"></textarea>
-             <div class="buttons">
+        <?php require $upload_file; ?>
+    <div class="buttons">
         <input type="button" id="btn_savenotes" class="at at-status btn btn-default" value="<?php echo $resx["button_savenote"]; ?>" />
     </div>
         <div class="list-panel upload_list notes" name="task_notes" id="task-notes"></div>

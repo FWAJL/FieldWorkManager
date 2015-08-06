@@ -272,6 +272,13 @@ class ActiveTaskController extends \Library\BaseController {
     $result = $this->InitResponseWS(); // Init result
 
     $currSessTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+    $images = array();
+    if(isset($this->dataPost['images'])) {
+      $images = json_decode($this->dataPost['images']);
+    //Unset image data from POST so that we may create the DAO
+    unset($this->dataPost['images']);
+    }
+    //process images
 
     //Prepare data object
     $userConnected = \Applications\PMTool\Helpers\UserHelper::GetUserConnectedSession($this->user());
@@ -297,7 +304,28 @@ class ActiveTaskController extends \Library\BaseController {
       }
       $task_note = new \Applications\PMTool\Models\Dao\Task_note();
       $task_note->setTask_note_id($result_save);
+      $noteAttachments = '';
+
+      foreach($images as $image) {
+        $manager = $this->managers()->getManagerOf('Document');
+        $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
+        $docObj = $manager->getRecordsMatchingDocumentValue($image);
+        //Our new document value is
+        $newDocumentValue = $result_save . '_' . $docObj[0]->document_value();
+        //Rename the file on disk
+        rename('./uploads/task_note/' . $docObj[0]->document_value(), './uploads/task_note/' . $newDocumentValue);
+        //Update the document value into the Dal
+        $docObj[0]->setDocument_value($newDocumentValue);
+        $noteAttachments .= ' '.$this->getHostUrl().$manager->webDirectory.'task_note/'.$docObj[0]->document_value();
+        //and commit the edit
+        $result_edit = $manager->edit($docObj[0], "document_id");
+      }
+      $manager = $this->managers->getManagerOf($this->module());
       $task_notes = $manager->selectMany($task_note,'task_note_id');
+      if(!empty($images)) {
+        $task_notes[0]->setTask_note_value($task_notes[0]->task_note_value().$noteAttachments);
+        $manager->edit($task_notes[0],'task_note_id');
+      }
       $result["data"] = $task_notes[0];
     }
     $this->SendResponseWS(
@@ -483,6 +511,16 @@ class ActiveTaskController extends \Library\BaseController {
         "step" => ($result['success']) ? "success" : "error"
             )
     );
+  }
+
+  private function getHostUrl(){
+    $ssl = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? true:false;
+    $sp = strtolower($_SERVER['SERVER_PROTOCOL']);
+    $protocol = substr($sp, 0, strpos($sp, '/')) . (($ssl) ? 's' : '');
+    $port = $_SERVER['SERVER_PORT'];
+    $port = ((!$ssl && $port=='80') || ($ssl && $port=='443')) ? '' : ':'.$port;
+    $host = isset($host) ? $host : $_SERVER['SERVER_NAME'] . $port;
+    return $protocol . '://' . $host;
   }
 
 }

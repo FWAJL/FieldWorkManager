@@ -8,11 +8,29 @@ $(document).ready(function(){
   });
 
   if($("#task-notes").length) {
+    Dropzone.autoDiscover = false;
+    var noteImages = [];
+    $("#document-upload input[name=\"itemCategory\"]").val('task_note_id');
+    $("#document-upload input[name=\"itemId\"]").val(0);
+    $("#document-upload input[name='title']").parent('li').hide();
+    var dropzone = new Dropzone("#document-upload");
+    dropzone.on("success", function(e, response) {
+      //Keep pushing to the JS array
+      noteImages.push(response.document.document_value);
+    });
     if($("#current-location-name").length) {
       locationName = $("#current-location-name").val()+': ';
       $("#task_notes_message").val(locationName);
     }
-    mobile_manager.getNotes();
+    mobile_manager.getNotes(function(){
+      $("#btn_savenotes").on('click',function(e){
+        e.preventDefault();
+        mobile_manager.sendNote($("#task_notes_message").val(), JSON.stringify(noteImages), function(){
+          dropzone.removeAllFiles();
+          noteImages = [];
+        });
+      });
+    });
   }
   if($("#task-comm-chatbox").length){
     mobile_manager.getThread();
@@ -447,7 +465,7 @@ $(document).ready(function(){
   mobile_manager.set = function(element) {
     utils.redirect("mobile/listTasks?task_id=" + parseInt(element.attr("data-task-id")));
   };
-  mobile_manager.getNotes = function() {
+  mobile_manager.getNotes = function(callback) {
     datacx.post("activetask/getNotes", {'onlyuser':true}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
         //toastr.error(reply.message);
@@ -459,25 +477,23 @@ $(document).ready(function(){
           messages += mobile_manager.formatChatMessage(reply.users[index],value.task_note_value,value.task_note_time)+"<br/>";
         });
         $("#task-notes").prepend(messages);
-        $("#btn_savenotes").on('click',function(e){
-          e.preventDefault();
-          mobile_manager.sendNote($("#task_notes_message").val());
-        });
       }
+      callback();
     });
   };
   mobile_manager.formatChatMessage = function(name,message,time) {
-    var messageFormatted = '<strong>'+name+'</strong>: '+message+' <small>@'+time+'</small>';
+    var messageFormatted = '<strong>'+name+'</strong>: '+hyperlinkUrls(message)+' <small>@'+time+'</small>';
     return messageFormatted;
   };
-  mobile_manager.sendNote = function(msg) {
-    datacx.post('activetask/postNote',{note:msg}).then(function(reply){
+  mobile_manager.sendNote = function(msg, images, callback) {
+    datacx.post('activetask/postNote',{note:msg, images: images}).then(function(reply){
       if(reply === null || reply.result === 0) {
         //toastr.error(reply.message);
       } else {
         //toastr.success(reply.message);
         $("#task-notes").prepend(mobile_manager.formatChatMessage(reply.user,reply.data.task_note_value,reply.data.task_note_time)+"<br/>");
         $("#task_notes_message").val(locationName);
+        callback();
       }
     });
   };
