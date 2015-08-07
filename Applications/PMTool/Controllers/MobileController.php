@@ -298,4 +298,28 @@ class MobileController extends \Library\BaseController {
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $modules);
   }
 
+  /**
+  * Gets the web form data matrix for task location
+  */
+  public function executeGetWebFormMatrixWithData(\Library\HttpRequest $rq) {
+    $result = $this->InitResponseWS(); // Init result
+
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
+    $task_id = $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id();
+    $matrix = \Applications\PMTool\Helpers\MobileHelper::GetFieldMatrixDataFromDB($this, $task_id, $this->dataPost['loc_id']);
+
+    //Assign result
+    $result['matrix'] = $matrix;
+
+    $forms_found = true;
+
+    $this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Mobile,
+        "resx_key" => $this->action(),
+        "step" => ($forms_found) ? "success" : "error"
+      )
+    );
+  }
+
 }
