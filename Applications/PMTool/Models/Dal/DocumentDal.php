@@ -62,7 +62,7 @@ class DocumentDal extends \Library\DAL\Modules\DocumentDal {
   public function GetFormsForTaskLocation($task_location_id) {
     $sql = 'select * from document where document_value LIKE :search_str';
     $dao = $this->dao->prepare($sql);
-    $dao->bindValue(':search_str', $task_location_id . '_%', \PDO::PARAM_STR);
+    $dao->bindValue(':search_str', $task_location_id . '\_%', \PDO::PARAM_STR);
     $dao->execute();
     $dao->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Document');
     $search_res = $dao->fetchAll();

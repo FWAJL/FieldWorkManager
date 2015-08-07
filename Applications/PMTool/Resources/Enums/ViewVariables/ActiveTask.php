@@ -54,6 +54,8 @@ class ActiveTask {
   const popup_msg_module = "popup_msg_module";
   const tooltip_msg_module = "tooltip_msg_module";
   const popup_prompt_module = "popup_prompt_module";
+
+  const upload_file = "upload_file";
   //Data keys
 
   

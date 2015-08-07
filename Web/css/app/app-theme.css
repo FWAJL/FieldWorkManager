@@ -222,6 +222,36 @@ li input {
   height:30px;
 }
 
+#location-list {
+  width: 250px;
+  min-width: 50px;
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-left:15px;
+}
+
+.location-list-row {
+  line-height: 35px;
+  padding-left: 0;
+  padding-right: 0;
+  overflow-y: hidden;
+}
+
+#location-list > .row {
+  padding-left: 0;
+  padding-rigt: 0;
+}
+
+#location-list > .row > [class*='col-'] {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#location-list-title {
+  height:30px;
+}
+
 .map-info-icon-image {
     width:35px;
     height:35px;
