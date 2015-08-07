@@ -204,6 +204,22 @@ $(document).ready(function(){
       activetask_manager.sendMessage(msg.trim());
     }
   });
+
+  //Field data matrix save
+  $('#btn_save_fieldmatrix_result').click(function(){
+    datacx.post("task/saveFieldMatrixResult", {'field_matrix': $('[name^=field_data_result_]').serialize()}).then(function(reply) {
+      console.log(reply);
+      if (reply === null || reply.result === 0) {//has an error
+        //toastr.error(reply.message);
+      } else {//success
+        
+        //toastr.success(reply.message);
+        window.location.reload();
+        
+      }
+    });
+  });
+
 });  
 
 
