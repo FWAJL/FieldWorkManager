@@ -92,6 +92,7 @@ class ViewVariablesKeys {
   
   //Active Task 
   const currentDiscussion = "current_discussion";
+  const task_id           = "task_id";
 
   //user details form
   const user_details = "user_details";

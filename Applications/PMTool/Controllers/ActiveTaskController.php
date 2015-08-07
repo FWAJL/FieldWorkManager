@@ -184,18 +184,45 @@ class ActiveTaskController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_prompt_list,$modules['group_list_right']);
   }
   
-    public function executeFieldData(\Library\HttpRequest $rq) {
+  public function executeFieldData(\Library\HttpRequest $rq) {
     \Applications\PMTool\Helpers\ActiveTaskHelper::AddTabsStatus($this->user());
+    \Applications\PMTool\Helpers\AnalyteHelper::StoreListsData($this);  
+
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
+
+    \Applications\PMTool\Helpers\AnalyteHelper::StoreListsData($this);
+
     //Check if a project needs to be selected in order to display this page
     if (!$sessionProject) {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::TaskAddPrompt);
     }
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::SetCurrentSessionTask($this->user(), NULL, $rq->getData("task_id"));
+
+    //Get task specific field analytes
+    $task_field_analytes = \Applications\PMTool\Helpers\AnalyteHelper::GetAndStoreTaskFieldAnalytes($this, $sessionTask);
+    //Check which page to render
+    $pg = (is_null($rq->getData('pg'))) ? 1 : (intval($rq->getData('pg')) == 0) ? 1 : intval($rq->getData('pg'));
+    //Calculate pages
+    $pages = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::returnTotalPagesOfAnalytes($task_field_analytes, $this->app);
+    //Filter paged result set of analytes
+    $task_field_analytes = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::returnPagedAnalyteObjects($task_field_analytes, $pg, $this->app);
+
+    //Task specific locations
+    $project_locations = \Applications\PMTool\Helpers\LocationHelper::GetProjectLocations($this, $sessionProject);
+    $task_locations = \Applications\PMTool\Helpers\LocationHelper::GetAndStoreTaskLocations($this, $sessionTask);
+
+    //Get LocationLabMatrix relation
+    $id_map = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::GetFieldDataMatrixForTaskWithResult($this, 
+            $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+    //\Applications\PMTool\Helpers\CommonHelper::pr($id_map);
+
+
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
 
-    //\Applications\PMTool\Helpers\CommonHelper::pr($_SESSION);
+    \Applications\PMTool\Helpers\ActiveTaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\ActiveTaskTabKeys::ActiveTaskFieldDataTab);
+
+    
     //Fetch tooltip data from xml and pass to view as an array
     $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"activeTask", "targetaction": "showForm", "targetattr": ["h4-taskstatus-leftcol-gi", "h4-taskstatus-rightcol-gi", "h4-taskstatus-notes-gi", "h4-taskstatus-notesrecord-gi"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
@@ -204,7 +231,18 @@ class ActiveTaskController extends \Library\BaseController {
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::activeTaskTabStatus, \Applications\PMTool\Helpers\ActiveTaskHelper::GetTabsStatus($this->app()->user()));
     $this->page->addVar(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
-    }
+
+    //--------
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_locations, $task_locations);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_field_analytes, $task_field_analytes);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_analytes_pages, $pages);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::current_page, $pg);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_field_analytes_idmap, $id_map);
+    //footer task id
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_id, $rq->getData("task_id"));
+    
+
+  }
 
   public function executeStartCommWith(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS(); // Init result

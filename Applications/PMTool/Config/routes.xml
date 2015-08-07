@@ -1221,6 +1221,8 @@
   <route url="task/form/updateItems" module="TaskForm" action="updateItems" resxfile="task_form" type="ws" />
   <route url="task/saveLabMatrix" module="TaskLabAnalyte" action="saveLabMatrix" resxfile="task_lab_analyte" type="ws" />
   <route url="task/saveFieldMatrix" module="TaskFieldAnalyte" action="saveFieldMatrix" resxfile="task_lab_analyte" type="ws" />
+  <route url="task/saveFieldMatrixResult" module="TaskFieldAnalyte" action="saveFieldMatrixResult" resxfile="active_task" type="ws" />
+
   <route url="task/getLocationSpecificForms" module="Task" action="getLocationSpecificForms" resxfile="task" type="ws" />
   <!--  <route url="service/updateItems" module="ProjectService" action="updateItems" resxfile="service" type="ws" />-->
   
