@@ -18,6 +18,10 @@ $(document).ready(function(){
   if($('#modforjs').length > 0) {
     switch($('#modforjs').val()) {
       case 'taskstatus':
+        Dropzone.autoDiscover = false;
+        var noteImages = [];
+        $("#document-upload input[name=\"itemCategory\"]").val('task_note_id');
+        $("#document-upload input[name=\"itemId\"]").val(0);
         $('.at').hide();
 		    $('#btn_refreshnotes').show();
 		    $('#task_status_notes').css('height', '150px');
@@ -27,11 +31,26 @@ $(document).ready(function(){
     		  if(reply.notes.length > 0) {
       			for(i in reply.notes) {
       			  var classStr = (i % 2 == 0) ? 'note-user1' : 'note-user2';
-       			  var str = '<div class="msg-row"><div class="' + classStr + '">' + reply.users[i] + ': </div><div class="user-msg">' + reply.notes[i].task_note_value + '</div></div>';
+       			  var str = '<div class="msg-row"><div class="' + classStr + '">' + reply.users[i] + ': </div><div class="user-msg">' + utils.hyperlinkUrls(reply.notes[i].task_note_value) + '<small> @'+reply.notes[i].task_note_time+'</small></div></div>';
       			  $('#messages').append(str);
       			}
     		  }
     		});
+        $("#document-upload input[name='title']").parent('li').hide();
+        var dropzone = new Dropzone("#document-upload");
+        dropzone.on("success", function(e, response) {
+          //Keep pushing to the JS array
+          noteImages.push(response.document.document_value);
+        });
+        $('#btn_savenotes').click(function(){
+          activetask_manager.postNote($('#task_status_notes').val(), JSON.stringify(noteImages), 'activetask', 'postNote', function(){
+            $('#task_status_notes').val('');
+            $('#task_status_notes').focus();
+            noteImages = [];
+            $('#btn_refreshnotes').trigger('click');
+            dropzone.removeAllFiles();
+          });
+        });
         break;
       case 'taskforms':
         //Item selection for documents
@@ -162,12 +181,7 @@ $(document).ready(function(){
   	}
   });
   
-  $('#btn_savenotes').click(function(){
-  	activetask_manager.postNote($('#task_status_notes').val(), 'activetask', 'postNote', function(){
-  	  $('#task_status_notes').val('');
-  	  $('#task_status_notes').focus();
-  	});
-  });
+
   
   //refresh notes
   $('#btn_refreshnotes').click(function(){
@@ -177,7 +191,7 @@ $(document).ready(function(){
         $('#messages').html('');
         for(i in reply.notes) {
           var classStr = (i % 2 == 0) ? 'note-user1' : 'note-user2';
-          var str = '<div class="msg-row"><div class="' + classStr + '">' + reply.users[i] + ': </div><div class="user-msg">' + reply.notes[i].task_note_value + '</div></div>';
+          var str = '<div class="msg-row"><div class="' + classStr + '">' + reply.users[i] + ': </div><div class="user-msg">' + utils.hyperlinkUrls(reply.notes[i].task_note_value) + '<small> @'+reply.notes[i].task_note_time+'</small></div></div>';
 		      $('#messages').append(str);
 		    }
       }
@@ -260,8 +274,8 @@ $(document).ready(function(){
     });
   };
   
-  activetask_manager.postNote = function(note, controller, action, clbk){
-	datacx.post(controller + "/" + action, {"note": note}).then(function(reply) {
+  activetask_manager.postNote = function(note, images, controller, action, clbk){
+	datacx.post(controller + "/" + action, {"note": note, "images":images}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
         //toastr.error(reply.message);
       } else {//success
@@ -303,9 +317,6 @@ $(document).ready(function(){
       } else {
         //toastr.success(reply.message);
         $("input[name=\"itemId\"]").val(reply.discussion.discussion_id);
-        if(reply.user_type == 'technician_id') {
-          $("#file-attach").hide();
-        }
         var dropzone = new Dropzone("#document-upload");
         dropzone.on("success", function(event,res) {
           if(res.result == 0) {

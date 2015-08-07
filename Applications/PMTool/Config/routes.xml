@@ -384,13 +384,14 @@
             <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="active_task_form" file_name="active_task_form.php" />
-	    <php_module key="active_task_status" file_name="active_task_status.php" />
-	    <php_module key="active_task_progress_details" file_name="active_task_progress_details.php" />
-	    <php_module key="active_task_instructions" file_name="active_task_instructions.php" />
+            <php_module key="active_task_status" file_name="active_task_status.php" />
+	          <php_module key="active_task_progress_details" file_name="active_task_progress_details.php" />
+	          <php_module key="active_task_instructions" file_name="active_task_instructions.php" />
             <php_module key="active_task_buttons" file_name="active_task_buttons.php" />
-	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+	          <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
             <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
-	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+	          <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="upload_file" file_name="upload_file.php" shared="true" />
         </php_modules>
     </route><!--  activetask/showAddForm -->
 	
@@ -810,6 +811,7 @@
         <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
       </php_modules>
     </route>
+
     <route url="mobile/notes" module="Mobile" action="listNotes" resxfile="mobile" type="ui" role="3">
       <js_files>
         <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
@@ -823,7 +825,9 @@
       <php_modules>
         <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         <php_module key="notes" file_name="notes.php" />
+        <php_module key="upload_file" file_name="upload_file.php" shared="true" />
       </php_modules>
+
     </route>
         <route url="mobile/checklist" module="Mobile" action="checklist" resxfile="mobile" type="ui" role="3">
       <js_files>
@@ -836,8 +840,8 @@
         <css_file use="project" />
       </css_files>
       <php_modules>
-        <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
         <php_module key="checklist" file_name="checklist.php" />
+        <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
       </php_modules>
     </route>
     <route url="mobile/communications" module="Mobile" action="communications" resxfile="mobile" type="ui" role="3">
