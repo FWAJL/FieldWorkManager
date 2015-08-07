@@ -167,6 +167,36 @@ class TaskAnalyteMatrixHelper {
   }
 
   /**
+  * Saves the field data matrix result to the db
+  */
+  public static function SaveAnalyteMatrixResult($caller, $task_id, $matrix_data) {
+    //Field_analyte_location
+    //First thing, split the in coming data on '&'
+    $data_pairs = explode('&', $matrix_data);
+    //loop and further isolate the ids and the actual data
+    foreach($data_pairs as $the_data_pair) {
+      $data_nodes = explode('=', $the_data_pair);
+      
+      //The result part is isolated
+      $matrix_result = $data_nodes[1];
+
+      //Get the location and field analyte id
+      $loc_analyte_ids = explode('_', str_replace('field_data_result_', '', $data_nodes[0]));
+      $location_id = $loc_analyte_ids[0];
+      $field_analyte_id = $loc_analyte_ids[1];
+
+      //Get manager
+      $manager = $caller->managers()->getManagerOf('FieldAnalyteLocation');
+      $ret_val = $manager->updateFieldDataMatrixResult($location_id, $field_analyte_id, urldecode($matrix_result));
+      if($ret_val == false) {
+        break;
+      }
+    }
+    
+    return $ret_val;
+  }
+
+  /**
   * Returns a page of objects based
   * on config like records per page
   * and current page number
@@ -203,5 +233,33 @@ class TaskAnalyteMatrixHelper {
     $pages = ($total_records % $rec_per_pg == 0) ? ($total_records / $rec_per_pg) : (($total_records - ($total_records % $rec_per_pg)) / $rec_per_pg) + 1;
 
     return $pages;
+  }
+
+  /**
+  * Fetches the relationship between location and analyte
+  * for the passed Task and Analyte Type, along with the 
+  * result if any (Only valid for field_analyte_location)
+  */
+  public static function GetFieldDataMatrixForTaskWithResult($caller, $task_id) {
+    $id_map = array();
+    $fmatrix_result_data = array();
+    
+    //FIELD Analyte
+    $matrixDAO = new \Applications\PMTool\Models\Dao\Field_analyte_location();
+    $matrixDAO->setTask_id($task_id);
+    $dal = $caller->managers()->getManagerOf("FieldLabAnalyte");
+    $relation_data = $dal->selectMany($matrixDAO, "task_id");
+
+    if(!empty($relation_data)){
+      foreach($relation_data as $relation){
+        
+        $id_str = $relation->location_id() . '_' . $relation->field_analyte_id();
+        
+        array_push($id_map, $id_str);
+        array_push($fmatrix_result_data, $relation->field_analyte_location_result());
+      }
+    }
+
+    return array('id_map' => $id_map, 'result_map' => $fmatrix_result_data);
   }
 }

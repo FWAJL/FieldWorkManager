@@ -92,6 +92,7 @@ class ViewVariablesKeys {
   
   //Active Task 
   const currentDiscussion = "current_discussion";
+  const task_id           = "task_id";
 
   //user details form
   const user_details = "user_details";
@@ -105,4 +106,7 @@ class ViewVariablesKeys {
   const notes = "notes";
   const task_instructions = "task_instructions";
   const current_location = "current_location";
+  const upload_file = "upload_file";
+  //location list
+  const location_list = "location_list";
 }

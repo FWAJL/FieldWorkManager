@@ -126,4 +126,5 @@
 
 	<resource uicomponent="tooltip_ellipsis" targetcontroller="TaskLabAnalyte" targetaction="labMatrix" charlimit="13" placement="top" />
 	<resource uicomponent="tooltip_ellipsis" targetcontroller="TaskFieldAnalyte" targetaction="fieldMatrix" charlimit="13" placement="top" />
+	<resource uicomponent="tooltip_ellipsis" targetcontroller="ActiveTask" targetaction="fieldData" charlimit="13" placement="top" />
 </resources>

@@ -242,6 +242,8 @@ class MobileController extends \Library\BaseController {
     $this->page->addVar(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::notes, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::notes]);
     $this->page->addVar(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::upload_file, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::upload_file]);
+    $this->page->addVar(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_instructions, $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_instructions());
   }
   

@@ -67,7 +67,7 @@ class ActiveTaskHelper {
     //be modified to do the same
     $documentDAO = new \Applications\PMTool\Models\Dao\Document();
     $dal = $caller->managers()->getManagerOf("Document");
-    $documents = $dal->selectManyByCategoryAndId("task_location_id");
+    $documents = $dal->selectManyByCategoryAndId("task_location");
 
     $docData = array();
     //Return empty array if there are no documents found

@@ -200,8 +200,6 @@ class LocationController extends \Library\BaseController {
     $this->dataPost['project_id'] = $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id();
     $this->dataPost['location_active'] = 1;
     $this->dataPost['location_visible'] = 0;
-    $this->dataPost['location_lat'] = $sessProjFacilityObj->facility_lat();
-    $this->dataPost['location_long'] = $sessProjFacilityObj->facility_long();
 
     
     $locationDAO = new \Applications\PMTool\Models\Dao\Location();
