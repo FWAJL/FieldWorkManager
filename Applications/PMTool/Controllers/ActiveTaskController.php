@@ -184,18 +184,45 @@ class ActiveTaskController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_prompt_list,$modules['group_list_right']);
   }
   
-    public function executeFieldData(\Library\HttpRequest $rq) {
+  public function executeFieldData(\Library\HttpRequest $rq) {
     \Applications\PMTool\Helpers\ActiveTaskHelper::AddTabsStatus($this->user());
+    \Applications\PMTool\Helpers\AnalyteHelper::StoreListsData($this);  
+
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
+
+    \Applications\PMTool\Helpers\AnalyteHelper::StoreListsData($this);
+
     //Check if a project needs to be selected in order to display this page
     if (!$sessionProject) {
       $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::TaskAddPrompt);
     }
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::SetCurrentSessionTask($this->user(), NULL, $rq->getData("task_id"));
+
+    //Get task specific field analytes
+    $task_field_analytes = \Applications\PMTool\Helpers\AnalyteHelper::GetAndStoreTaskFieldAnalytes($this, $sessionTask);
+    //Check which page to render
+    $pg = (is_null($rq->getData('pg'))) ? 1 : (intval($rq->getData('pg')) == 0) ? 1 : intval($rq->getData('pg'));
+    //Calculate pages
+    $pages = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::returnTotalPagesOfAnalytes($task_field_analytes, $this->app);
+    //Filter paged result set of analytes
+    $task_field_analytes = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::returnPagedAnalyteObjects($task_field_analytes, $pg, $this->app);
+
+    //Task specific locations
+    $project_locations = \Applications\PMTool\Helpers\LocationHelper::GetProjectLocations($this, $sessionProject);
+    $task_locations = \Applications\PMTool\Helpers\LocationHelper::GetAndStoreTaskLocations($this, $sessionTask);
+
+    //Get LocationLabMatrix relation
+    $id_map = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::GetFieldDataMatrixForTaskWithResult($this, 
+            $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+    //\Applications\PMTool\Helpers\CommonHelper::pr($id_map);
+
+
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
 
-    //\Applications\PMTool\Helpers\CommonHelper::pr($_SESSION);
+    \Applications\PMTool\Helpers\ActiveTaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\ActiveTaskTabKeys::ActiveTaskFieldDataTab);
+
+    
     //Fetch tooltip data from xml and pass to view as an array
     $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"activeTask", "targetaction": "showForm", "targetattr": ["h4-taskstatus-leftcol-gi", "h4-taskstatus-rightcol-gi", "h4-taskstatus-notes-gi", "h4-taskstatus-notesrecord-gi"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
@@ -204,7 +231,18 @@ class ActiveTaskController extends \Library\BaseController {
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::activeTaskTabStatus, \Applications\PMTool\Helpers\ActiveTaskHelper::GetTabsStatus($this->app()->user()));
     $this->page->addVar(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
-    }
+
+    //--------
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_locations, $task_locations);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_field_analytes, $task_field_analytes);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_analytes_pages, $pages);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::current_page, $pg);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_field_analytes_idmap, $id_map);
+    //footer task id
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::task_id, $rq->getData("task_id"));
+    
+
+  }
 
   public function executeStartCommWith(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS(); // Init result
@@ -272,6 +310,13 @@ class ActiveTaskController extends \Library\BaseController {
     $result = $this->InitResponseWS(); // Init result
 
     $currSessTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+    $images = array();
+    if(isset($this->dataPost['images'])) {
+      $images = json_decode($this->dataPost['images']);
+    //Unset image data from POST so that we may create the DAO
+    unset($this->dataPost['images']);
+    }
+    //process images
 
     //Prepare data object
     $userConnected = \Applications\PMTool\Helpers\UserHelper::GetUserConnectedSession($this->user());
@@ -297,7 +342,28 @@ class ActiveTaskController extends \Library\BaseController {
       }
       $task_note = new \Applications\PMTool\Models\Dao\Task_note();
       $task_note->setTask_note_id($result_save);
+      $noteAttachments = '';
+
+      foreach($images as $image) {
+        $manager = $this->managers()->getManagerOf('Document');
+        $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
+        $docObj = $manager->getRecordsMatchingDocumentValue($image);
+        //Our new document value is
+        $newDocumentValue = $result_save . '_' . $docObj[0]->document_value();
+        //Rename the file on disk
+        rename('./uploads/task_note/' . $docObj[0]->document_value(), './uploads/task_note/' . $newDocumentValue);
+        //Update the document value into the Dal
+        $docObj[0]->setDocument_value($newDocumentValue);
+        $noteAttachments .= ' '.$this->getHostUrl().$manager->webDirectory.'task_note/'.$docObj[0]->document_value();
+        //and commit the edit
+        $result_edit = $manager->edit($docObj[0], "document_id");
+      }
+      $manager = $this->managers->getManagerOf($this->module());
       $task_notes = $manager->selectMany($task_note,'task_note_id');
+      if(!empty($images)) {
+        $task_notes[0]->setTask_note_value($task_notes[0]->task_note_value().$noteAttachments);
+        $manager->edit($task_notes[0],'task_note_id');
+      }
       $result["data"] = $task_notes[0];
     }
     $this->SendResponseWS(
@@ -322,7 +388,7 @@ class ActiveTaskController extends \Library\BaseController {
     $manager = $this->managers->getManagerOf($this->module());
     $result_note = $manager->selectMany($task_note, "task_id");
 
-    $result_get = 0;
+    $result_get = 1;
     $onlyLoggedInUser = $this->dataPost['onlyuser'];
     $userConnected = \Applications\PMTool\Helpers\UserHelper::GetUserConnectedSession($this->user());
     if(!empty($result_note)) {
@@ -483,6 +549,16 @@ class ActiveTaskController extends \Library\BaseController {
         "step" => ($result['success']) ? "success" : "error"
             )
     );
+  }
+
+  private function getHostUrl(){
+    $ssl = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? true:false;
+    $sp = strtolower($_SERVER['SERVER_PROTOCOL']);
+    $protocol = substr($sp, 0, strpos($sp, '/')) . (($ssl) ? 's' : '');
+    $port = $_SERVER['SERVER_PORT'];
+    $port = ((!$ssl && $port=='80') || ($ssl && $port=='443')) ? '' : ':'.$port;
+    $host = isset($host) ? $host : $_SERVER['SERVER_NAME'] . $port;
+    return $protocol . '://' . $host;
   }
 
 }
