@@ -14,9 +14,13 @@ $(document).ready(function(){
     $("#document-upload input[name=\"itemId\"]").val(0);
     $("#document-upload input[name='title']").parent('li').hide();
     var dropzone = new Dropzone("#document-upload");
+    dropzone.on("sending",function(event, xhr, formData){
+      $("#btn_savenotes").attr('disabled','disabled');
+    });
     dropzone.on("success", function(e, response) {
       //Keep pushing to the JS array
       noteImages.push(response.document.document_value);
+      $("#btn_savenotes").removeAttr('disabled');
     });
     if($("#current-location-name").length) {
       locationName = $("#current-location-name").val()+': ';
@@ -132,6 +136,12 @@ $(document).ready(function(){
         $("#task-location-info-modal-collect-data").show();
       }
       Dropzone.forElement("#document-upload").removeAllFiles();
+      Dropzone.forElement("#document-upload").on("sending",function(event, xhr, formData){
+        $("#task-location-info-modal .modal-footer button").attr('disabled','disabled');
+      });
+      Dropzone.forElement("#document-upload").on("success",function(event,res){
+        $("#task-location-info-modal .modal-footer button").removeAttr('disabled');
+      });
       datacx.post('location/getItem',{location_id: id}).then(function(reply){
         //toastr.success(reply.message);
         var category = $("#document-upload input[name=\"itemCategory\"]").val();
@@ -221,13 +231,14 @@ $(document).ready(function(){
       );
 
       Dropzone.forElement("#document-upload").removeAllFiles();
-
+      Dropzone.forElement("#document-upload").on("sending",function(event, xhr, formData){
+        $("#task-location-info-modal .modal-footer button").attr('disabled','disabled');
+      });
       hideModifyTaskLocationFields();
-
-
       Dropzone.forElement("#document-upload").on("success", function(e, response) {
         //Keep pushing to the JS array
         imagesOfNewLocation.push(response.document.document_value);
+        $("#task-location-info-modal .modal-footer button").removeAttr('disabled');
       });
     };
     var hideModifyTaskLocationFields = function () {

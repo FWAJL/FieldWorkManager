@@ -14,6 +14,9 @@ $(document).ready(function() {
   Dropzone.autoDiscover = false;
   if($("#document-upload").length>0){
     var dropzone = new Dropzone("#document-upload");
+    dropzone.on("sending",function(event, xhr, formData){
+      $("#btn_edit_location").attr('disabled','disabled');
+    });
     dropzone.on("success", function(event,res) {
       if(res.result == 0) {
         //toastr.error(res.message);
@@ -24,6 +27,7 @@ $(document).ready(function() {
         $("#documents").html("");
         location_manager.loadPhoto('location_id',parseInt( $("input[name=\"itemId\"]").val()));
       }
+      $("#btn_edit_location").removeAttr('disabled');
     });
   }
   $(document).on('click','.remove-image',function(e){

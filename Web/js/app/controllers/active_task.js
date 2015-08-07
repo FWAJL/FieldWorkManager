@@ -38,9 +38,13 @@ $(document).ready(function(){
     		});
         $("#document-upload input[name='title']").parent('li').hide();
         var dropzone = new Dropzone("#document-upload");
+        dropzone.on("sending",function(event, xhr, formData){
+          $("#btn_savenotes").attr('disabled','disabled');
+        });
         dropzone.on("success", function(e, response) {
           //Keep pushing to the JS array
           noteImages.push(response.document.document_value);
+          $("#btn_savenotes").removeAttr('disabled');
         });
         $('#btn_savenotes').click(function(){
           activetask_manager.postNote($('#task_status_notes').val(), JSON.stringify(noteImages), 'activetask', 'postNote', function(){
@@ -334,6 +338,9 @@ $(document).ready(function(){
         //toastr.success(reply.message);
         $("input[name=\"itemId\"]").val(reply.discussion.discussion_id);
         var dropzone = new Dropzone("#document-upload");
+        dropzone.on("sending",function(event, xhr, formData){
+          $("#btn_send_message").attr('disabled','disabled');
+        });
         dropzone.on("success", function(event,res) {
           if(res.result == 0) {
             //toastr.error(res.message);
@@ -344,6 +351,7 @@ $(document).ready(function(){
             dropzone.removeAllFiles();
             $("textarea[name=\"task_comm_message\"]").val($("textarea[name=\"task_comm_message\"]").val()+"\n"+res.filepath);
           }
+          $("#btn_send_message").removeAttr('disabled');
         });
 
         if(reply.thread !== undefined) {
