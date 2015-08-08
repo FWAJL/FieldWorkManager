@@ -425,7 +425,18 @@ class AnalyteHelper {
     return $result;
   }
   
-  
+  public static function getAnalyteRecordFromDB($caller, $analyte_id, $analyte_type = 'field') {
+    $ret_arr = null;
+    if($analyte_type == 'field') {
+      //FIELD Analyte
+      $faDAO = new \Applications\PMTool\Models\Dao\Field_analyte();
+      $faDAO->setField_analyte_id($analyte_id);
+      $dal = $caller->managers()->getManagerOf("FieldAnalyte");
+      $ret_arr = $dal->selectMany($faDAO, "field_analyte_id");
+    }
+
+    return $ret_arr;
+  }
   
 
   public static function AddTabsStatus(\Library\User $user) {

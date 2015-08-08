@@ -14,9 +14,13 @@ $(document).ready(function(){
     $("#document-upload input[name=\"itemId\"]").val(0);
     $("#document-upload input[name='title']").parent('li').hide();
     var dropzone = new Dropzone("#document-upload");
+    dropzone.on("sending",function(event, xhr, formData){
+      $("#btn_savenotes").attr('disabled','disabled');
+    });
     dropzone.on("success", function(e, response) {
       //Keep pushing to the JS array
       noteImages.push(response.document.document_value);
+      $("#btn_savenotes").removeAttr('disabled');
     });
     if($("#current-location-name").length) {
       locationName = $("#current-location-name").val()+': ';
@@ -61,9 +65,8 @@ $(document).ready(function(){
 
   if($("#mobile-location-list").length){
     var optionsPosition = {
-      enableHighAccuracy: true,
-      timeout: 50000,
-      maximumAge: 0
+      desiredAccuracy: 20,
+      maxWait: 15000
     };
     $("#document-upload input[name=\"itemCategory\"]").val('location_id')
     var params = {
@@ -132,6 +135,12 @@ $(document).ready(function(){
         $("#task-location-info-modal-collect-data").show();
       }
       Dropzone.forElement("#document-upload").removeAllFiles();
+      Dropzone.forElement("#document-upload").on("sending",function(event, xhr, formData){
+        $("#task-location-info-modal .modal-footer button").attr('disabled','disabled');
+      });
+      Dropzone.forElement("#document-upload").on("success",function(event,res){
+        $("#task-location-info-modal .modal-footer button").removeAttr('disabled');
+      });
       datacx.post('location/getItem',{location_id: id}).then(function(reply){
         //toastr.success(reply.message);
         var category = $("#document-upload input[name=\"itemCategory\"]").val();
@@ -197,7 +206,23 @@ $(document).ready(function(){
                 post_data.location_long   = $("#task-location-info-modal-location_long").val();
                 post_data.images          = JSON.stringify(imagesOfNewLocation);
                 if(navigator.geolocation) {
-                  navigator.geolocation.getCurrentPosition(function(position) {
+                  $("#location-info-modal-mark").hide();
+                  $("#location-info-modal-mark").parent().show();
+                  var counter = Math.floor(optionsPosition.maxWait/1000);
+                  $("#location-info-modal-mark").parent().append('<div id="location-info-modal-geolocation">Fetching coordinates: <div id="location-info-modal-geolocation-seconds">'+counter+'</div>s</div>');
+                  var interval = setInterval(function() {
+                    if($("#location-info-modal-geolocation-seconds").length){
+                      counter--;
+                      $("#location-info-modal-geolocation-seconds").html(counter);
+                      if (counter == 0) {
+                        clearInterval(interval);
+                      }
+                    } else {
+                      clearInterval(interval);
+                    }
+                  }, 1000);
+                  navigator.geolocation.getAccurateCurrentPosition(function(position) {
+                    $("#location-info-modal-geolocation").remove();
                     post_data.location_lat = position.coords.latitude;
                     post_data.location_long = position.coords.longitude;
                     //Call save
@@ -206,7 +231,7 @@ $(document).ready(function(){
                       //resetTaskLocationDialogForEdit();
                       utils.redirect("mobile/map");
                     });
-                  },function(err){},optionsPosition);
+                  },function(err){},function(prog){},optionsPosition);
                 }
               } else {
                 $('#location-info-modal-location_name').focus();
@@ -221,13 +246,14 @@ $(document).ready(function(){
       );
 
       Dropzone.forElement("#document-upload").removeAllFiles();
-
+      Dropzone.forElement("#document-upload").on("sending",function(event, xhr, formData){
+        $("#task-location-info-modal .modal-footer button").attr('disabled','disabled');
+      });
       hideModifyTaskLocationFields();
-
-
       Dropzone.forElement("#document-upload").on("success", function(e, response) {
         //Keep pushing to the JS array
         imagesOfNewLocation.push(response.document.document_value);
+        $("#task-location-info-modal .modal-footer button").removeAttr('disabled');
       });
     };
     var hideModifyTaskLocationFields = function () {
@@ -259,10 +285,25 @@ $(document).ready(function(){
     $("#location-info-modal-mark").on('click',function(e){
       e.preventDefault();
       if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
+        var counter = Math.floor(optionsPosition.maxWait/1000);
+        $("#location-info-modal-mark").parent().append('<div id="location-info-modal-geolocation">Fetching coordinates: <div id="location-info-modal-geolocation-seconds">'+counter+'</div>s</div>');
+        var interval = setInterval(function() {
+          if($("#location-info-modal-geolocation-seconds").length){
+            counter--;
+            $("#location-info-modal-geolocation-seconds").html(counter);
+            if (counter == 0) {
+              clearInterval(interval);
+            }
+          } else {
+            clearInterval(interval);
+          }
+        }, 1000);
+        navigator.geolocation.getAccurateCurrentPosition(function(position) {
+          $("#location-info-modal-geolocation").remove();
           $("#task-location-info-modal-location_lat").val(position.coords.latitude);
           $("#task-location-info-modal-location_long").val(position.coords.longitude);
-        },function(err){},optionsPosition);
+        },function(err){},function(prog){
+        },optionsPosition);
       }
     });
     var markers = new Array();
@@ -393,6 +434,16 @@ $(document).ready(function(){
           utils.showAlert($('#confirmmsg-checkIfLocationComplete').val(), null);  
         }
       } else {
+        /*
+        //*****************
+        //the following Code used to show the PDF forms for this location
+        //Effective 8 6 2015 we would be showing the Web form instead.
+
+        //Please note the old code for showing PDF form is intact in the
+        //following commented out block
+        //*****************
+
+
         if(reply.location_form_data.form_data.length > 0) {
 
           //Show prompt
@@ -423,8 +474,72 @@ $(document).ready(function(){
             utils.showAlert($('#confirmmsg-checkNoTaskLocationForms').val(), null);  
           }
         }
+        */
+
+        //-----------
+        //The new code follows
+        //-----------
+        $('.prompt-modal').modal('hide');
+        $('#prompt_ok').modal('hide');
+        //Lets fetch the field matrix data
+        datacx.post("mobile/getWebFormMatrixWithData", {'loc_id': $("#task-location-id-selected").val()}).then(function(reply) {
+          console.log(reply);
+          //Clear the area before adding any new markup
+          $('.tlf-selector-modal').find('.modal-body').html('');
+          //Check if any data came
+          if(reply.matrix.data_matrix.length > 0) {
+            $('#matrix_prompt_ok').show();
+            for (i in reply.matrix.data_matrix) {
+              
+              $('.tlf-selector-modal').find('.modal-body').append(
+                '<div style="height: 33px; margin-top: 6px; display: inline-block; width: 100%;">' + 
+                  '<div style="float: left; height: 100%; margin: 4px; text-align: right; width: 28%;">' + reply.matrix.data_matrix[i].fa_name + '</div>' +
+                  '<div style="float: right; width: 65%;"><input type="text" style="color: #EC1914;" value="' + reply.matrix.data_matrix[i].matrix_rec.field_analyte_location_result + '" name="field_data_result_' + $("#task-location-id-selected").val() + '_' + reply.matrix.data_matrix[i].matrix_rec.field_analyte_id + '"></div>' +
+                '</div>'
+              );
+
+            }
+          } else {
+            $('.tlf-selector-modal').find('.modal-body').append(
+              $('#matrix_no_recs').html()
+            );
+            $('#matrix_prompt_ok').hide();
+          }
+          
+          mobile_manager.showTaskLocationWebFormForDateEntry(
+            function(){
+
+              $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: "../task/saveFieldMatrixResult",
+                data: {'field_matrix': $('[name^=field_data_result_]').serialize()},
+                timeout: 10000,
+                success: function(reply, textStatus ){
+                  window.location.reload();
+                },
+                error: function(xhr, textStatus, errorThrown){
+                  toastr.options = {
+                    "closeButton": true,
+                    "timeOut": "0"
+                  } 
+                  toastr.error(reply.message);
+                }
+              });
+            },
+            function(){
+              $('.prompt-modal').modal('show');
+            }
+          );
+          
+        });
+        
       }
 
+    });
+
+    $(document).on("focus", "[name^=field_data_result_]", function(e) {
+      $(this).css('color', '#000');
     });
 
     $(document).on("click", "ol#active-list li", function(e) {
@@ -587,6 +702,18 @@ $(document).ready(function(){
       clbkCancel();
     })
   };
+
+  mobile_manager.showTaskLocationWebFormForDateEntry = function(clbkOk, clbkCancel){
+    $('.tlf-selector-modal').modal('show');
+
+    //Events
+    $('#matrix_prompt_ok').on('click', function(){
+      clbkOk();
+    });
+    $('.tlf-selector-modal').on('hidden.bs.modal', function (e) {
+      clbkCancel();
+    })
+  }
 
   mobile_manager.editLocation = function(data, controller, action, callback) {
     datacx.post(controller + "/" + action, data).then(function(reply) {//call edit

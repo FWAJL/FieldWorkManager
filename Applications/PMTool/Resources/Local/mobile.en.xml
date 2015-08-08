@@ -73,4 +73,12 @@
   <resource key="btn_to_pm_list">Start discussion</resource>
   <resource key="btn_to_project_list">Unselect</resource>
   <resource key="activetask_button_sendmsg">Send</resource>
+
+  <!-- Location list and its popups -->
+  <resource key="web_form_h4">Field Data Matrix</resource>
+  <resource key="web_form_ok_label">Save</resource>
+  <resource key="web_form_cancel_label">Exit</resource>
+  <resource key="web_form_no_rec">No Field Data Matrix Data found</resource>
+  <resource key="message_success_getWebFormMatrixWithData">Could not save your data, please retry later.</resource>
+  <resource key="message_error_getWebFormMatrixWithData">Error Rendereing Web Form Data</resource>
 </resources>

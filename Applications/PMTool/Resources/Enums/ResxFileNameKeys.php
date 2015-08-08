@@ -48,6 +48,7 @@ abstract class ResxFileNameKeys {
   const TaskChecklist = "task_checklist";
   
   const Map = "map";
+  const Mobile = "mobile";
 }
 
 ?>
