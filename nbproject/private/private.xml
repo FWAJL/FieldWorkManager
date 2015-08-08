@@ -3,14 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Applications/PMTool/Config/routes.xml</file>
-            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Applications/PMTool/Views/TaskChecklist/uploadList.php</file>
-            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Applications/PMTool/Controllers/TaskChecklistController.php</file>
-            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Applications/PMTool/Helpers/TaskChecklistHelper.php</file>
-            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Applications/PMTool/Helpers/TaskHelper.php</file>
-            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Library/Enums/SessionKeys.php</file>
-            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Applications/PMTool/Views/LabAnalyte/uploadList.php</file>
-            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Applications/PMTool/Views/Modules/task_tabs_open.php</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Applications/PMTool/Helpers/AnalyteHelper.php</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Applications/PMTool/Controllers/AnalyteController.php</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Applications/PMTool/Resources/Enums/AnalyteTabKeys.php</file>
+            <file>file:/Users/brianscottaiken/Sites/FieldWorkManager/Applications/PMTool/Controllers/LabAnalyteController.php</file>
         </group>
     </open-files>
 </project-private>
