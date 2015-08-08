@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<routes version="1.7.6">
+<routes version="1.7.7">
     <!-- UI routes -->
     <route url="login" module="Authenticate" action="loadLoginView" resxfile="login" type="ui">
         <js_files>
@@ -767,7 +767,7 @@
       </php_modules>
     </route>
     
-        <route url="mobile/loc_list" module="Mobile" action="viewList" resxfile="mobile" type="ui" role="3">
+    <route url="mobile/loc_list" module="Mobile" action="viewList" resxfile="mobile" type="ui" role="3">
       <js_files>
         <js_file use="head" type="external" value="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry" />
         <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
@@ -1284,6 +1284,8 @@
   <route url="map/listCurrentProject" module="Map" action="listCurrentProject" resxfile="map" type="ws" />
   <route url="map/listCurrentProjectLocations" module="Map" action="listCurrentProjectLocations" resxfile="map" type="ws" />
   <route url="map/listCurrentProjectTasks" module="Map" action="listCurrentProjectTasks" resxfile="map" type="ws" />
+
+  <route url="mobile/getWebFormMatrixWithData" module="Mobile" action="getWebFormMatrixWithData" resxfile="task" type="ws" />
 
   <route url="user/getCurrent" module="User" action="getCurrent" resxfile="user" type="ws" />
   <route url="user/editCurrent" module="User" action="editCurrent" resxfile="user" type="ws" />
