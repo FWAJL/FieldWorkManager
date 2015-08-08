@@ -23,7 +23,8 @@ $(document).ready(function() {
         div: '#map',
         lat: 0,
         lng: 0,
-        zoom: 15
+        zoom: 15,
+        tilt: 0
       });
       load(params);
     }, 1000);
