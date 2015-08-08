@@ -24,9 +24,8 @@ var mapType;
 var activeTask = false;
 var userPosition;
 var optionsPosition = {
-  enableHighAccuracy: true,
-  timeout: 50000,
-  maximumAge: 0
+  desiredAccuracy: 20,
+  maxWait: 15000
 };
 //shows map legend popup
 $(document).ready(function(){
@@ -1008,7 +1007,21 @@ function load(params) {
             }
           });
           if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
+            var counter = Math.floor(optionsPosition.maxWait/1000);
+            $("#location-info-modal-mark").parent().append('<div id="location-info-modal-geolocation">Fetching coordinates: <div id="location-info-modal-geolocation-seconds">'+counter+'</div>s</div>');
+            var interval = setInterval(function() {
+              if($("#location-info-modal-geolocation-seconds").length){
+                counter--;
+                $("#location-info-modal-geolocation-seconds").html(counter);
+                if (counter == 0) {
+                  clearInterval(interval);
+                }
+              } else {
+                clearInterval(interval);
+              }
+            }, 1000);
+            navigator.geolocation.getAccurateCurrentPosition(function(position) {
+              $("#location-info-modal-geolocation").remove();
                 var travelMode = google.maps.TravelMode.WALKING;
               if($("#task-location-info-walk-drive").val() == 'drive') {
                 travelMode = google.maps.TravelMode.DRIVING ;
@@ -1036,20 +1049,35 @@ function load(params) {
                     console.log('error');
                 }
               );
-            },function(err){},optionsPosition);
+              $('.prompt-modal').modal('hide');
+            },function(err){},function(prog){},optionsPosition);
 
           }
 
-          $('.prompt-modal').modal('hide');
+
         });
         //change marker to user position
         $("#location-info-modal-mark").on('click',function(e){
           e.preventDefault();
           if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
+            var counter = Math.floor(optionsPosition.maxWait/1000);
+            $("#location-info-modal-mark").parent().append('<div id="location-info-modal-geolocation">Fetching coordinates: <div id="location-info-modal-geolocation-seconds">'+counter+'</div>s</div>');
+            var interval = setInterval(function() {
+              if($("#location-info-modal-geolocation-seconds").length){
+                counter--;
+                $("#location-info-modal-geolocation-seconds").html(counter);
+                if (counter == 0) {
+                  clearInterval(interval);
+                }
+              } else {
+                clearInterval(interval);
+              }
+            }, 1000);
+            navigator.geolocation.getAccurateCurrentPosition(function(position) {
+              $("#location-info-modal-geolocation").remove();
               $("#task-location-info-modal-location_lat").val(position.coords.latitude);
               $("#task-location-info-modal-location_long").val(position.coords.longitude);
-            },function(err){},optionsPosition);
+            },function(err){},function(prog){},optionsPosition);
           }
         });
         /*$("#task-location-info-modal-collect-data").on('click',function(e){
