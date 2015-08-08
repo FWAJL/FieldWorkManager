@@ -537,3 +537,8 @@ ui-widget-content:hover {
 .mobile-glyph { 
   display:none; 
 }
+
+/* Mobile Infowindow geolocation */
+#location-info-modal-geolocation-seconds {
+  display: inline;
+}

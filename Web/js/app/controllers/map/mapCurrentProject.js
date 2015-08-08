@@ -19,7 +19,8 @@ $(document).ready(function() {
                 div: '#map',
                 lat: 0,
                 lng: 0,
-                zoom: 14
+                zoom: 14,
+                tilt: 0
             });
             load(params);
         }, 1000);

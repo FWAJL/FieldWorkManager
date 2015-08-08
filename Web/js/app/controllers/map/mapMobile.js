@@ -24,7 +24,8 @@ $(document).ready(function() {
         lat: 0,
         lng: 0,
         zoom: 15,
-        disableDefaultUI: true
+        disableDefaultUI: true,
+        tilt: 0
       });
       load(params);
     }, 1000);

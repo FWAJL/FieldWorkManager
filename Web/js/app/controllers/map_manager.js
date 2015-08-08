@@ -368,6 +368,12 @@ var openLocationInfo = function(e,id, noLatLng) {
       $("#location-info-modal-zoom").show();
     }
     Dropzone.forElement("#document-upload").removeAllFiles();
+    Dropzone.forElement("#document-upload").on("sending",function(event, xhr, formData){
+      $("#location-info-modal .modal-footer button").attr('disabled','disabled');
+    });
+    Dropzone.forElement("#document-upload").on("success",function(event,res){
+      $("#location-info-modal .modal-footer button").removeAttr('disabled');
+    });
     datacx.post('location/getItem',{location_id: id}).then(function(reply){
       //toastr.success(reply.message);
       var category = $("#document-upload input[name=\"itemCategory\"]").val();
@@ -444,13 +450,18 @@ var openTaskLocationInfo = function(e,id,action) {
     $("#location-info-modal-place").show();
     $("#location-info-modal-directions").hide();
   }
-  console.log(action);
   if(action === 'add') {
     $("#task-location-info-modal-collect-data").hide();
   } else {
     $("#task-location-info-modal-collect-data").show();
   }
   Dropzone.forElement("#document-upload").removeAllFiles();
+  Dropzone.forElement("#document-upload").on("sending",function(event, xhr, formData){
+    $("#task-location-info-modal .modal-footer button").attr('disabled','disabled');
+  });
+  Dropzone.forElement("#document-upload").on("success",function(event,res){
+    $("#task-location-info-modal .modal-footer button").removeAttr('disabled');
+  });
   datacx.post('location/getItem',{location_id: id}).then(function(reply){
     //toastr.success(reply.message);
     var category = $("#document-upload input[name=\"itemCategory\"]").val();
