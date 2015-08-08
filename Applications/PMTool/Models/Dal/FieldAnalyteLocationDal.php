@@ -23,4 +23,24 @@ class FieldAnalyteLocationDal extends \Library\DAL\BaseManager {
       echo $exc->getTraceAsString();
     }
 	}
+
+  /**
+  * Gets all records based on tak_id and loc_id from Field_analyte_location
+  */
+  public function getAllMatrixDataForTaskLocation($task_id, $location_id) {
+    $sql = 'select * from field_analyte_location where task_id = :task_id and location_id = :location_id';
+    $dao = $this->dao->prepare($sql);
+    $dao->bindValue(':task_id', $task_id, \PDO::PARAM_STR);
+    $dao->bindValue(':location_id', $location_id, \PDO::PARAM_STR);
+    
+    try {
+      $dao->execute();
+      $dao->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Field_analyte_location');
+      $search_res = $dao->fetchAll();
+      $dao->closeCursor();
+      return $search_res;
+    } catch (Exception $exc) {
+      echo $exc->getTraceAsString();
+    }
+  }
 }

@@ -434,6 +434,16 @@ $(document).ready(function(){
           utils.showAlert($('#confirmmsg-checkIfLocationComplete').val(), null);  
         }
       } else {
+        /*
+        //*****************
+        //the following Code used to show the PDF forms for this location
+        //Effective 8 6 2015 we would be showing the Web form instead.
+
+        //Please note the old code for showing PDF form is intact in the
+        //following commented out block
+        //*****************
+
+
         if(reply.location_form_data.form_data.length > 0) {
 
           //Show prompt
@@ -464,8 +474,72 @@ $(document).ready(function(){
             utils.showAlert($('#confirmmsg-checkNoTaskLocationForms').val(), null);  
           }
         }
+        */
+
+        //-----------
+        //The new code follows
+        //-----------
+        $('.prompt-modal').modal('hide');
+        $('#prompt_ok').modal('hide');
+        //Lets fetch the field matrix data
+        datacx.post("mobile/getWebFormMatrixWithData", {'loc_id': $("#task-location-id-selected").val()}).then(function(reply) {
+          console.log(reply);
+          //Clear the area before adding any new markup
+          $('.tlf-selector-modal').find('.modal-body').html('');
+          //Check if any data came
+          if(reply.matrix.data_matrix.length > 0) {
+            $('#matrix_prompt_ok').show();
+            for (i in reply.matrix.data_matrix) {
+              
+              $('.tlf-selector-modal').find('.modal-body').append(
+                '<div style="height: 33px; margin-top: 6px; display: inline-block; width: 100%;">' + 
+                  '<div style="float: left; height: 100%; margin: 4px; text-align: right; width: 28%;">' + reply.matrix.data_matrix[i].fa_name + '</div>' +
+                  '<div style="float: right; width: 65%;"><input type="text" style="color: #EC1914;" value="' + reply.matrix.data_matrix[i].matrix_rec.field_analyte_location_result + '" name="field_data_result_' + $("#task-location-id-selected").val() + '_' + reply.matrix.data_matrix[i].matrix_rec.field_analyte_id + '"></div>' +
+                '</div>'
+              );
+
+            }
+          } else {
+            $('.tlf-selector-modal').find('.modal-body').append(
+              $('#matrix_no_recs').html()
+            );
+            $('#matrix_prompt_ok').hide();
+          }
+          
+          mobile_manager.showTaskLocationWebFormForDateEntry(
+            function(){
+
+              $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: "../task/saveFieldMatrixResult",
+                data: {'field_matrix': $('[name^=field_data_result_]').serialize()},
+                timeout: 10000,
+                success: function(reply, textStatus ){
+                  window.location.reload();
+                },
+                error: function(xhr, textStatus, errorThrown){
+                  toastr.options = {
+                    "closeButton": true,
+                    "timeOut": "0"
+                  } 
+                  toastr.error(reply.message);
+                }
+              });
+            },
+            function(){
+              $('.prompt-modal').modal('show');
+            }
+          );
+          
+        });
+        
       }
 
+    });
+
+    $(document).on("focus", "[name^=field_data_result_]", function(e) {
+      $(this).css('color', '#000');
     });
 
     $(document).on("click", "ol#active-list li", function(e) {
@@ -628,6 +702,18 @@ $(document).ready(function(){
       clbkCancel();
     })
   };
+
+  mobile_manager.showTaskLocationWebFormForDateEntry = function(clbkOk, clbkCancel){
+    $('.tlf-selector-modal').modal('show');
+
+    //Events
+    $('#matrix_prompt_ok').on('click', function(){
+      clbkOk();
+    });
+    $('.tlf-selector-modal').on('hidden.bs.modal', function (e) {
+      clbkCancel();
+    })
+  }
 
   mobile_manager.editLocation = function(data, controller, action, callback) {
     datacx.post(controller + "/" + action, data).then(function(reply) {//call edit
