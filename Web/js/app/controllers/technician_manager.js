@@ -12,29 +12,29 @@ $(document).ready(function() {
   $("#document-upload").hide();
   $("#documents").hide();
   Dropzone.autoDiscover = false;
-  if($("#document-upload").length>0){
+  if ($("#document-upload").length > 0) {
     var dropzone = new Dropzone("#document-upload");
-    dropzone.on("sending",function(event, xhr, formData){
-      $("#btn_edit_technician").attr('disabled','disabled');
+    dropzone.on("sending", function(event, xhr, formData) {
+      $("#btn_edit_technician").attr('disabled', 'disabled');
     });
-    dropzone.on("success", function(event,res) {
-      if(res.result == 0) {
+    dropzone.on("success", function(event, res) {
+      if (res.result == 0) {
         //toastr.error(res.message);
         dropzone.removeAllFiles();
       } else {
         //toastr.success(res.message);
         $("#document-upload").hide();
         dropzone.removeAllFiles();
-        technician_manager.loadPhoto('technician_id',parseInt( $("input[name=\"itemId\"]").val()));
+        technician_manager.loadPhoto('technician_id', parseInt($("input[name=\"itemId\"]").val()));
       }
       $("#btn_edit_technician").removeAttr('disabled');
     });
   }
-  $("#tech_photo_upload").on('click',function(e){
+  $("#tech_photo_upload").on('click', function(e) {
     e.preventDefault();
     $("#document-upload").show();
   });
-  $(document).on('click','.remove-image',function(e){
+  $(document).on('click', '.remove-image', function(e) {
     e.preventDefault();
     technician_manager.removePhoto($(this).data("id"));
   });
@@ -43,7 +43,7 @@ $(document).ready(function() {
     callback: function(key, options) {
       if (key === "edit") {
         technician_manager.retrieveTechnician(options.$trigger);
-      } 
+      }
     },
     items: {
       "edit": {name: "Edit"}
@@ -71,20 +71,20 @@ $(document).ready(function() {
     }
   });
   $(".from-inactive-list").click(function() {
-		var msg = $('#confirmmsg-activate').val();
-		if (typeof msg !== typeof undefined && msg !== false) {
-			utils.showConfirmBox(msg, function(result){
-				if(result)
-				{
-					technician_manager.updateTechnicians("active", technician_ids);
-				}
-			});
-		}
-		else
-		{
-			technician_manager.updateTechnicians("active", technician_ids);
-		}
-    
+    var msg = $('#confirmmsg-activate').val();
+    if (typeof msg !== typeof undefined && msg !== false) {
+      utils.showConfirmBox(msg, function(result) {
+        if (result)
+        {
+          technician_manager.updateTechnicians("active", technician_ids);
+        }
+      });
+    }
+    else
+    {
+      technician_manager.updateTechnicians("active", technician_ids);
+    }
+
   });
   $(".from-active-list").click(function() {
     technician_manager.updateTechnicians("inactive", technician_ids);
@@ -102,15 +102,15 @@ $(document).ready(function() {
 
   $("#btn_add_technician").click(function() {
     var post_data = {};
-    post_data = utils.retrieveInputs("technician_form", ["technician_name","technician_email"]);
+    post_data = utils.retrieveInputs("technician_form", ["technician_name", "technician_email"]);
     if (post_data.technician_name !== undefined || post_data.required_field_missing != true) {
       technician_manager.add(post_data, "technician", "add", true);
     }
   });//Add a technician
 
   $("#btn_edit_technician").click(function() {
-    var user_post_data = {technician_id:parseInt(utils.getQueryVariable("technician_id")),user_password:$("input[name=\"user_password\"]").val(),user_hint:$("input[name=\"user_hint\"]").val()};
-    technician_manager.editUser(user_post_data,"user","editTechnician");
+    var user_post_data = {technician_id: parseInt(utils.getQueryVariable("technician_id")), user_password: $("input[name=\"user_password\"]").val(), user_hint: $("input[name=\"user_hint\"]").val()};
+    technician_manager.editUser(user_post_data, "user", "editTechnician");
     var post_data = utils.retrieveInputs("technician_form", ["technician_name"]);
     if (post_data.technician_name !== undefined) {
       technician_manager.edit(post_data, "technician", "edit");
@@ -118,19 +118,19 @@ $(document).ready(function() {
   });//Edit a technician
 
   $("#btn_delete_technician").click(function() {
-	var msg = $('#confirmmsg-delete').val();
-	if (typeof msg !== typeof undefined && msg !== false) {
-	  utils.showConfirmBox(msg, function(result){
-		if(result)
-		{
-			technician_manager.delete(parseInt(utils.getQueryVariable("technician_id")));
-		}
-	  });
-	}
-	else
-	{
-	  technician_manager.delete(parseInt(utils.getQueryVariable("technician_id")));
-	}
+    var msg = $('#confirmmsg-delete').val();
+    if (typeof msg !== typeof undefined && msg !== false) {
+      utils.showConfirmBox(msg, function(result) {
+        if (result)
+        {
+          technician_manager.delete(parseInt(utils.getQueryVariable("technician_id")));
+        }
+      });
+    }
+    else
+    {
+      technician_manager.delete(parseInt(utils.getQueryVariable("technician_id")));
+    }
   });//Delete a technician
 
   if (utils.getQueryVariable("mode") === "edit") {
@@ -160,7 +160,14 @@ $(document).ready(function() {
  */
 (function(technician_manager) {
   technician_manager.add = function(userData, controller, action, isSingle) {
-    var data = isSingle ? userData : {"names": userData};
+    var data = undefined;
+    var origin = utils.getQueryVariable("origin");
+    if (!origin) {
+      data = isSingle ? userData : {"names": userData};
+    } else {
+      data = isSingle ? {"userData": userData, "origin": origin} : {"names": userData, "origin": origin};
+    }
+
     datacx.post(controller + "/" + action, data).then(function(reply) {//call AJAX method to call Technician/Add WebService
       if (reply === null || reply.dataId === undefined || reply.dataId === null || parseInt(reply.dataId) === 0) {//has an error
         //toastr.error(reply.message);
@@ -233,7 +240,7 @@ $(document).ready(function() {
     $("input[name=\"itemCategory\"]").val('technician_id');
     $("input[name=\"itemId\"]").val(parseInt(dataWs.technician.technician_id));
     $("input[name=\"itemReplace\"]").val(true);
-    technician_manager.loadPhoto('technician_id',parseInt(dataWs.technician.technician_id));
+    technician_manager.loadPhoto('technician_id', parseInt(dataWs.technician.technician_id));
     $("input[name=\"technician_active\"]").prop('checked', utils.setCheckBoxValue(dataWs.technician.technician_active));
   };
   technician_manager.delete = function(technician_id) {
@@ -243,8 +250,8 @@ $(document).ready(function() {
         return undefined;
       } else {//success
         //toastr.success(reply.message);
-        if(documentId!=0) {
-          datacx.post("file/remove", {"document_id": documentId, "itemCategory": 'technician_id'}).then(function(reply){
+        if (documentId != 0) {
+          datacx.post("file/remove", {"document_id": documentId, "itemCategory": 'technician_id'}).then(function(reply) {
             utils.redirect("technician/listAll");
           });
         } else {
@@ -283,17 +290,17 @@ $(document).ready(function() {
   };
 
   technician_manager.loadPhoto = function(itemCategory, itemId) {
-    datacx.post("file/load", {"itemCategory": itemCategory, "itemId": itemId}).then(function(reply){
+    datacx.post("file/load", {"itemCategory": itemCategory, "itemId": itemId}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
         //toastr.error(reply.message);
         return undefined;
       } else {//success
         //toastr.success(reply.message);
-        if(reply.fileResults.length>0){
-          $.each(reply.fileResults, function(key, file){
+        if (reply.fileResults.length > 0) {
+          $.each(reply.fileResults, function(key, file) {
             var lightboxImage = utils.createImageLightboxElement(file.filePath, itemId, file.document_title);
             var remove = utils.createRemoveFileElement(file.document_id);
-            $("#documents").append('<div class="document-block" id="document-'+file.document_id+'">'+lightboxImage+remove+'</div>');
+            $("#documents").append('<div class="document-block" id="document-' + file.document_id + '">' + lightboxImage + remove + '</div>');
             documentId = file.document_id;
             $("#documents").show();
           });
@@ -305,22 +312,22 @@ $(document).ready(function() {
   }
 
   technician_manager.removePhoto = function(document_id) {
-    datacx.post("file/remove", {"document_id": document_id, "itemCategory": 'technician_id'}).then(function(reply){
+    datacx.post("file/remove", {"document_id": document_id, "itemCategory": 'technician_id'}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
         //toastr.error(reply.message);
         return undefined;
       } else {//success
         //toastr.success(reply.message);
         $("#documents").hide();
-        $("#document-"+document_id).remove();
+        $("#document-" + document_id).remove();
         $("#document-upload").show();
       }
     });
   }
 
   technician_manager.getUserItem = function(technician_id) {
-    datacx.post("user/getTechnicianItem",{technician_id:technician_id}).then(function(reply) {
-      if(reply == null || reply.result === 0) {
+    datacx.post("user/getTechnicianItem", {technician_id: technician_id}).then(function(reply) {
+      if (reply == null || reply.result === 0) {
         //toastr.error(reply.message);
       } else {
         //toastr.success(reply.message);

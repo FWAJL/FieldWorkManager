@@ -34,6 +34,10 @@ $(document).ready(function() {
   $(".from-group-list-left").click(function() {
     task_manager.updateTaskTechnicians("remove", task_technician_ids);
   });
+  
+  $("#btn_add_task_technician").click(function() {
+    utils.redirect("technician/showForm?origin=task");
+  });
   //************************************************//
 });
 /***********
