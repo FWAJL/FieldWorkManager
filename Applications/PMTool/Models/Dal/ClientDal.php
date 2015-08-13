@@ -13,7 +13,7 @@ class ClientDal extends \Library\DAL\BaseManager {
    * @param Client $p
    * @return array the selected row in the db
    */
-  public function selectOne($client_in) {
+  public function selectOne($client_in, $where_filter_id = "", $filter_as_string = false) {
     return NULL;
   }
 

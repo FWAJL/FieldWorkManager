@@ -229,4 +229,20 @@ class LocationHelper {
     \Applications\PMTool\Helpers\TaskHelper::SetSessionTask($caller->user(), $sessionTask);
     return $result;
   }
+
+  public static function GetLocationFromDB($caller, $location_id) {
+    $manager = $caller->managers()->getManagerOf($caller->module());
+    $location = new \Applications\PMTool\Models\Dao\Location();
+    $location->setLocation_id($location_id);
+    $location = $manager->selectOne($location, 'location_id');
+    return $location;
+  }
+
+  public static function GetLocationListFromDB($caller, $project_id) {
+    $manager = $caller->managers()->getManagerOf('Location');
+    $location = new \Applications\PMTool\Models\Dao\Location();
+    $location->setProject_id($project_id);
+    $locations = $manager->selectMany($location, 'project_id');
+    return $locations;
+  }
 }
