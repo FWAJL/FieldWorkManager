@@ -34,5 +34,5 @@
   <resource key="btn_to_pm_list">Add location(s)</resource>
   <resource key="btn_to_project_list">Remove location(s)</resource>
   <resource key="no_items_to_display_message">There is no active locations. Go to Locations > List all to activate some</resource>
-  
+  <resource key="task_location_button_add">Add task location(s)</resource>
 </resources>

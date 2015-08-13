@@ -18,9 +18,9 @@
         <div class="col-lg-1 col-md-1">
           <?php require $form_modules["group_list_promote_buttons_module"]; ?> 
           <a
-            class="task_add_technician btn btn-default"
+            class="task_add_technician task_add_item btn btn-default"
             href="<?php echo $this->app->relative_path; ?>technician/showForm?origin=task&originid=<?php echo $current_task->task_id(); ?>">
-              <?php echo $resx["task_technician_button_add"]; ?>
+            <?php echo $resx["task_technician_button_add"]; ?>
           </a>
           <!--<input type="button" id="btn_add_task_technician" class="task_add_technician btn btn-default" value="<?php echo $resx["task_technician_button_add"]; ?>" />-->
         </div>
