@@ -78,7 +78,7 @@ class LocationController extends \Library\BaseController {
     $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = $locations = \Applications\PMTool\Helpers\LocationHelper::GetLocationListFromDB($this, $project_id);
     //store updated session
     \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->user(), $sessionProject);
-    
+
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $locations,
