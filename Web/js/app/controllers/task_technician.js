@@ -36,7 +36,7 @@ $(document).ready(function() {
   });
   
   $("#btn_add_task_technician").click(function() {
-    utils.redirect("technician/showForm?origin=task");
+    //utils.redirect("technician/showForm?origin=task&originid=");
   });
   //************************************************//
 });
