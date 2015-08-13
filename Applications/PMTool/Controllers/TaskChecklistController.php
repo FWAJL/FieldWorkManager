@@ -13,23 +13,63 @@ class TaskChecklistController extends \Library\BaseController {
   }
 
   public function executeUploadList(\Library\HttpRequest $rq) {
-    $tabsStatus = \Applications\PMTool\Helpers\CommonHelper::GetTabsStatus($this->user(), \Library\Enums\SessionKeys::TaskChecklist);
+    // Set $current_project for breadcrumb
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
 
-    //Fetch tooltip data from xml and pass to view as an array
-    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"taskchecklist", "targetaction": "uploadList", "targetattr": ["activequestion-taskchecklist-uploadList-headerH4", "inactivequestion-taskchecklist-uploadList-headerH4"]}', $this->app->name());
-    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+    //Task tab status 
+    $tab_status_arr = \Applications\PMTool\Helpers\TaskHelper::TabStatusFor($sessionTask);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_tab_status_keys, $tab_status_arr);
+    //Task tab status 
 
-    if ($tabsStatus === NULL) {
-//      \Applications\PMTool\Helpers\TaskChecklistHelper::AddTabsStatus($this->user());
-      $tabsStatus = \Applications\PMTool\Helpers\CommonHelper::GetTabsStatus($this->user(), \Library\Enums\SessionKeys::TaskChecklist);
-    }
+    //Analyte Matrix tab status
+    $showLabMatrixTabs = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::DoesAnalytesAndLocationsExistsFor($sessionTask, $this, 'Lab');
+    $showFieldMatrixTabs = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::DoesAnalytesAndLocationsExistsFor($sessionTask, $this, 'Field');
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_show_lab_matrix, $showLabMatrixTabs);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Task::task_show_field_matrix, $showFieldMatrixTabs);
+    //Analyte Matrix tab status
+
+    \Applications\PMTool\Helpers\TaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\TaskTabKeys::ChecklistTab);
+    $sessionPm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+
+    //**********
+    //Get all checklist data
+    $all_checklist = \Applications\PMTool\Helpers\TaskChecklistHelper::GetAllChecklistsfor($sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id(), $this);
+    //\Applications\PMTool\Helpers\CommonHelper::pr($all_checklist);
+    $data_all_checklists = array(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => "task_check_list",
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $all_checklist,
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties => \Applications\PMTool\Helpers\TaskCheckListHelper::SetPropertyNamesForDualList("task_check_list")
+    );
+
     $this->page()->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::tabStatus, $tabsStatus);
-    $this->page()->addVar(
-            \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+            "data_all_checklists", $data_all_checklists);
+    //**********
 
-    \Applications\PMTool\Helpers\TaskChecklistHelper::StoreListsData($this, TRUE);
+    //Fetch alert box data
+    $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"TaskChecklist", 
+            "targetaction": "uploadList", "operation": ["addUniqueCheck", "deleteCheckList"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);
 
+    //Fetch prompt box data from xml and pass to view as an array
+    $prompt_msg = \Applications\PMTool\Helpers\PopUpHelper::getPromptBoxMsg('{"targetcontroller":"TaskChecklist", "targetaction": "uploadList", "operation": ["edit"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::prompt_message, $prompt_msg);
+
+
+    $data = array(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module())
+    );
+
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data, $data);
+    //tab status
+    $this->page->addVar(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::tabStatus, \Applications\PMTool\Helpers\TaskHelper::GetTabsStatus($this->user()));
+    $this->page->addVar(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
+
+    
   }
 
   
@@ -107,4 +147,69 @@ class TaskChecklistController extends \Library\BaseController {
         "step" => ($result["rows_affected"] === count($result["arrayOfValues"])) ? "success" : "error"
     ));
   }
+
+  public function executeAddCheckList(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();
+
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+    $task_id = $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id();
+
+    //Call the helper which actually adds the checklist
+    $result = \Applications\PMTool\Helpers\TaskChecklistHelper::AddChecklist($this, $result, $task_id);
+
+    $this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::TaskChecklist,
+        "resx_key" => $this->action(),
+        "step" => ($result['rec_count'] >= 1) ? "success" : "error"
+      )
+    );    
   }
+
+  public function executeDelCheckList(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();    
+
+    $is_deleted = \Applications\PMTool\Helpers\TaskChecklistHelper::DelChecklist($this, $this->dataPost);
+
+    $this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::TaskChecklist,
+        "resx_key" => $this->action(),
+        "step" => ($is_deleted) ? "success" : "error"
+      )
+    ); 
+  }
+
+  public function executeCheckDuplicateCheckList(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();    
+
+    $is_duplicate = \Applications\PMTool\Helpers\TaskChecklistHelper::IsDuplicateCheckList($this, $this->dataPost);
+
+    $this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::TaskChecklist,
+        "resx_key" => $this->action(),
+        "step" => ($is_duplicate) ? "error" : "success"
+      )
+    ); 
+  }
+
+  public function executeEditCheckList(\Library\HttpRequest $rq) {
+    // Init result
+    $result = $this->InitResponseWS();    
+
+    $is_edited = \Applications\PMTool\Helpers\TaskChecklistHelper::UpdateCheckList($this, $this->dataPost);
+
+    $this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::TaskChecklist,
+        "resx_key" => $this->action(),
+        "step" => ($is_edited) ? "success" : "error"
+      )
+    );
+  }
+
+}
