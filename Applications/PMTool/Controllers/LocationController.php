@@ -74,7 +74,11 @@ class LocationController extends \Library\BaseController {
 
     $this->_GetAndStoreLocationsInSession($sessionProject);
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-    $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
+    $project_id = $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id();
+    $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = $locations = \Applications\PMTool\Helpers\LocationHelper::GetLocationListFromDB($this, $project_id);
+    //store updated session
+    \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->user(), $sessionProject);
+
     $data = array(
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
         \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects => $locations,
@@ -297,11 +301,12 @@ class LocationController extends \Library\BaseController {
     $result = $this->InitResponseWS();
     $location_id = intval($this->dataPost["location_id"]);
 
-    $location_selected = $this->_GetLocationFromSession($location_id);
+    //$location_selected = $this->_GetLocationFromSession($location_id);
+    $location_selected = \Applications\PMTool\Helpers\LocationHelper::GetLocationFromDB($this, $location_id);
     if($location_selected) {
       $this->user()->setAttribute(\Library\Enums\SessionKeys::CurrentLocationId, $location_id);
     }
-    $result["location"] = $location_selected["object"];
+    $result["location"] = $location_selected;
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Location,

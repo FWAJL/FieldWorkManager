@@ -7,10 +7,6 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class LocationDal extends \Library\DAL\BaseManager {
 
-  public function selectOne($object) {
-    return NULL;
-  }
-
   public function update($object) {
     return NULL;
   }

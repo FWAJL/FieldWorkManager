@@ -7,7 +7,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class ProjectDal extends \Library\DAL\BaseManager {
 
-  public function selectOne($project) {
+  public function selectOne($project, $where_filter_id = "", $filter_as_string = false) {
     return NULL;
   }
 

@@ -74,6 +74,7 @@
 	<resource uicomponent="confirm" targetcontroller="analyte" targetaction="uploadCommonAnalytes" operation="deleteCommonLab" value="Are you sure to delete the common analyte?" />
 	<resource uicomponent="confirm" targetcontroller="location" targetaction="view" operation="delete" value="Are you sure you want to permanently remove this Location?  If you place it in inactive status no further work can be done there, but the coordinatesa re not lost." />
 	<resource uicomponent="confirm" targetcontroller="form" targetaction="masterForm" operation="delete" value="Are you sure to delete the master form?" />
+	<resource uicomponent="confirm" targetcontroller="TaskChecklist" targetaction="uploadList" operation="deleteCheckList" value="Are you sure to delete this Check list item?" />
 
 	
 	<resource uicomponent="alert" targetcontroller="project" targetaction="list" operation="addUniqueCheck" value="Project name is taken. Choose a new project name." />
@@ -100,6 +101,8 @@
 	<resource uicomponent="alert" targetcontroller="analyte" targetaction="list" operation="faExists" value="The Field analyte with that name already exists, please choose another name." />
 	<resource uicomponent="alert" targetcontroller="analyte" targetaction="list" operation="laExists" value="The Lab analyte with that name already exists, please choose another name." />
 	<resource uicomponent="alert" targetcontroller="form" targetaction="masterForm" operation="addUniqueCheck" value="Master form with same title exist. Please select a different one." />
+	<resource uicomponent="alert" targetcontroller="TaskChecklist" targetaction="uploadList" operation="addUniqueCheck" value="Check list item already exists, please select another name" />
+	
 	
 	<resource uicomponent="prompt" targetcontroller="project" targetaction="list" operation="addNullCheck" value="This will create a copy of Project '{0}'. To continue, you must enter the new project name." />
 	<resource uicomponent="prompt" targetcontroller="project" targetaction="view" operation="addNullCheck" value="This will create a copy of Project '{0}'. To continue, you must enter the new project name." />
@@ -123,6 +126,7 @@
 	<resource uicomponent="prompt" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="addNullCheckAddPrompt" value="To continue, you must enter the new Location Name." />
 	<resource uicomponent="prompt" targetcontroller="map" targetaction="loadProjectInfo" operation="addNullCheckAddPrompt" value="To continue, you must fill all fields." />
 	<resource uicomponent="prompt" targetcontroller="mobile" targetaction="viewMap" operation="checkCurrentTaskLocationForms" value="Click on a form to open it" />
+	<resource uicomponent="prompt" targetcontroller="TaskChecklist" targetaction="uploadList" operation="edit" value="Edit checklist" />
 
 	<resource uicomponent="tooltip_ellipsis" targetcontroller="TaskLabAnalyte" targetaction="labMatrix" charlimit="13" placement="top" />
 	<resource uicomponent="tooltip_ellipsis" targetcontroller="TaskFieldAnalyte" targetaction="fieldMatrix" charlimit="13" placement="top" />
