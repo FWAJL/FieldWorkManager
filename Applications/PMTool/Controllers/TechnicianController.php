@@ -59,13 +59,23 @@ class TechnicianController extends \Library\BaseController {
   public function executeAdd(\Library\HttpRequest $rq) {
     // Init result sent to client (e.g. browser)
     $result = $this->InitResponseWS();
-
     //Get the current PM Session
     $pm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->app()->user());
+    $dataPost = $this->dataPost();
+    $dataPost["pm_id"] = $pm === NULL ? NULL : $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
+    $origin = $originId = "";
+    if (array_key_exists("origin", $dataPost)) {
+      $postUserData = (array) $dataPost["userData"];
+      $postUserData["pm_id"] = $dataPost["pm_id"];
+      $origin = $dataPost["origin"];
+      $originId = $dataPost["originid"];
+    } else {
+      $postUserData = $dataPost;
+    }
+
     //Store the pm_id in the dataPost...
-    $this->dataPost["pm_id"] = $pm === NULL ? NULL : $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
     //.. and build the object to query the DB
-    $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Technician());
+    $technician = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($postUserData, new \Applications\PMTool\Models\Dao\Technician());
     $technician->setTechnician_document("");
     $result["dataIn"] = $technician;
 
@@ -75,6 +85,11 @@ class TechnicianController extends \Library\BaseController {
     if ($pm !== NULL) {
       //Update the object with last inserted Id
       $technician->setTechnician_id($result["dataId"]);
+      if ($technician->technician_id() > 0 &&
+          \Library\Utility\StringHelper::Equals($origin, "task") &&
+          !\Library\Utility\StringHelper::IsNullOrEmpty($originId)) {
+        \Applications\PMTool\Helpers\TechnicianHelper::AddTaskTechnician($this, $originId, $technician->technician_id());
+      }
       //Update the PM Session
       array_push($pm[\Library\Enums\SessionKeys::PmTechnicians], $technician);
       //And update the Sessiom
@@ -82,7 +97,7 @@ class TechnicianController extends \Library\BaseController {
     }
     //add user record for FT
     if (intval($result["dataId"]) > 0) {
-      $this->dataPost['user_email'] = $this->dataPost['technician_email'];
+      $this->dataPost['user_email'] = $postUserData['technician_email'];
       $userId = \Applications\PMTool\Helpers\UserHelper::AddUser($this, $result["dataId"], \Library\Enums\UserRole::Technician);
     }
 

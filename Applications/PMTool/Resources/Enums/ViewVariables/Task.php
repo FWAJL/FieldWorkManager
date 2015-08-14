@@ -56,6 +56,11 @@ class Task {
   const task_show_field_matrix = "task_show_field_matrix";
   //Data keys
 
+  //View variables for task check list form
+  const check_list_form = "check_list_form";
+  const checklist_buttons = "checklist_buttons";
+  const checklist_list    = "checklist_list";
+
   //View variables for Task tab visibility
   const task_req_service          = "task_req_service";
   const task_req_form             = "task_req_form";

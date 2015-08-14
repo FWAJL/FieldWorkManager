@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
- <resource key="page_title">Your Field Data - Field Work Manager</resource>
+	<resource key="page_title">Your Field Data - Field Work Manager</resource>
+	<resource key="h3_taskchecklist">Checklist</resource>
+	<resource key="h4_taskchecklist">Add checklists</resource>
+	<resource key="h4_existing_checklists">Existing Checklists</resource>
+  <resource key="checklist-add-button">Add CL</resource>
 
-  
-  
-  
+	<!-- Tabs -->
+	<resource key="task_tab_info">Task Info</resource>
+  <resource key="task_tab_technicians">Technicians</resource>
+  <resource key="task_tab_locations">Locations</resource>
+  <resource key="task_tab_map">Map</resource>
+  <resource key="task_tab_forms">Forms</resource>
+  <resource key="task_tab_field_analytes">Field Data</resource>
+  <resource key="task_tab_lab_analytes">Lab Analytes</resource>
+  <resource key="task_tab_coc">Chain of Custody</resource>
+  <resource key="task_tab_services">Services</resource>
+
+  <!-- Ajax messages -->
+  <resource key="message_success_addCheckList">Checklist added</resource>
+  <resource key="message_error_addCheckList">Error adding Checklist</resource>
+  <resource key="message_success_delCheckList">Checklist Deleted</resource>
+  <resource key="message_error_delCheckList">Error deleting checklist</resource>
+  <resource key="message_success_checkDuplicateCheckList">No duplicates found</resource>
+  <resource key="message_error_checkDuplicateCheckList">Duplicate checklist found</resource>
+  <resource key="message_success_editCheckList">Check List Edited</resource>
+  <resource key="message_error_editCheckList">Error editing check list</resource>
 </resources>
