@@ -121,9 +121,9 @@ class UserHelper {
   public static function PrepareUserObject($dataPost,$config, $setPass = FALSE) {
     $user = new \Applications\PMTool\Models\Dao\User();
     $protect = new \Library\BL\Core\Encryption();
-    $user->setUser_hint($dataPost['user_hint']);
-    $user->setUser_login($dataPost['user_login']);
-    $user->setUser_email($dataPost['pm_email']);
+    $user->setUser_hint(array_key_exists("user_hint", $dataPost) ? $dataPost['user_hint'] : "");
+    $user->setUser_login(array_key_exists("user_login", $dataPost) ? $dataPost['user_login'] : "");
+    $user->setUser_email(array_key_exists("pm_email", $dataPost) ? $dataPost['pm_email'] : "jl".\Library\Core\Utility\UUID::v4()."@test.com");
     if($setPass==TRUE) {
       $user->setUser_password($protect->Encrypt($config->get("encryption_key"), $dataPost['user_password']));
     }

@@ -40,9 +40,9 @@ class DocumentDal extends \Library\DAL\Modules\DocumentDal {
     return $list;
   }
 
-  public function selectOne($document) {
-    if ($document->document_id() !== "") {//Check if the user is giving his username and that there is a value
-      $tableName = \Applications\PMTool\Helpers\CommonHelper::GetShortClassName($document);
+  public function selectOne($object, $where_filter_id = "", $filter_as_string = false) {
+    if ($object->document_id() !== "") {//Check if the user is giving his username and that there is a value
+      $tableName = \Applications\PMTool\Helpers\CommonHelper::GetShortClassName($object);
       $sql = 'SELECT * FROM `' . $tableName . '` where `document_id` = :document_id LIMIT 0, 1;';
     } else {
       return NULL;

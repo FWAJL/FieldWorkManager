@@ -13,7 +13,7 @@ class LoginDal extends \Library\DAL\BaseManager {
    * @param User $user
    * @return array the selected row in the db
    */
-  public function selectOne($user) {
+  public function selectOne($user, $where_filter_id = "", $filter_as_string = false) {
     if ($user->user_login() !== "") {//Check if the user is giving his username and that there is a value
       $sql = 'SELECT * FROM user where `user_login` = :user_login AND `user_password` = :user_password LIMIT 0, 1;';
     }else {

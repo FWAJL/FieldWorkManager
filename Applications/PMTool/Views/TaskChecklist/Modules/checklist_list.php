@@ -14,7 +14,7 @@
     "<li data-"
     . $data_all_checklists[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::module]
     . "-id=\"" . $object->$prop_id() . "\" class=\"ui-widget-content\">"
-    . "<input type=\"checkbox\" style=\"width: 30px !important;\">"
+    . "<input disabled type=\"checkbox\" style=\"width: 30px !important;\">"
     . $object->$prop_name()
     . "</li>";
   }

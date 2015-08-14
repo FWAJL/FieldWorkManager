@@ -56,6 +56,13 @@ class TechnicianHelper {
     return $result;
   }
 
+  public static function AddTaskTechnician($caller, $taskId, $technicianId) {
+    $db = $caller->managers()->getManagerOf("TaskTechnician");
+    $taskTech = new \Applications\PMTool\Models\Dao\Task_technician();
+    $taskTech->setTask_id($taskId);
+    $taskTech->setTechnician_id($technicianId);
+    $db->add($taskTech);
+  }
   public static function DeactivateTechnician($caller, $params) {
 
   }
