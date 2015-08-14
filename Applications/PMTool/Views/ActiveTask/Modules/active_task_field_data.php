@@ -19,7 +19,7 @@
 				<div class="matrix-row">
 					<div class="matrix-location-header matrix-cell"><?php echo $resx["at_fdm_location_heading"] ?></div>
 					<?php
-			  		if(!empty($task_field_analytes)){
+			  		if(!empty($task_field_analytes) && is_array($task_field_analytes)){
 							foreach($task_field_analytes as $analyte){
 					  		?>
 					  		<div class="matrix-cell matrix-cell-data">
@@ -36,7 +36,7 @@
 			  	?>
 				</div>
 				<?php
-				if(!empty($task_locations)){
+				if(!empty($task_locations) && is_array($task_locations)){
 		  		foreach ($task_locations as $location) {
 		  		?>
 		    	<div class="matrix-row">
@@ -59,7 +59,7 @@
 			  						$key = array_search($id_pair, $task_field_analytes_idmap['id_map']);
 			  						if($key !== false) {
 			  							?>
-			  							<input type="text" name="field_data_result_<?php echo $id_pair ?>" value="<?php echo $task_field_analytes_idmap['result_map'][$key] ?>" style="width:90%;" placeholder="<?php echo $resx["not_yet_sampled"] ?>">
+			  							<input disabled type="text" name="field_data_result_<?php echo $id_pair ?>" value="<?php echo $task_field_analytes_idmap['result_map'][$key] ?>" style="width:90%;" placeholder="<?php echo $resx["not_yet_sampled"] ?>">
 			  							<?php
 			  						} else {
 			  							echo $resx["do_not_sample_label"];
@@ -75,11 +75,11 @@
 		  		}	
 				}
 			  ?>
-			  <div class="matrix-row">
+<!--			  <div class="matrix-row">
 			  	<div class="matrix-cell matrix-cell">
 			  		<input type="button" value="<?php echo $resx["tlm_savebtn_label"] ?>" class="btn btn-default" id="btn_save_fieldmatrix_result" style="display: inline-block;">
 			  	</div>
-			  </div>
+			  </div>-->
 			  <div class="matrix-row pg-container">
 		  		<?php
 		  		if($task_analytes_pages > 1) {

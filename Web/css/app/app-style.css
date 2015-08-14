@@ -103,3 +103,6 @@ ui-widget-content:hover {
     color: #F39814;
 }
 /* JS WIDGETS */
+.task_add_item {
+  white-space: normal !important;
+}

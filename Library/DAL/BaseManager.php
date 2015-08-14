@@ -13,10 +13,38 @@ class BaseManager extends \Library\Manager {
   /**
    * Select method for one item
    *
-   * @param array $item array containing the data to use to build the SQL statement
+   * @param object <p>
+   * $object: Dao object
+   * @param mixed <p>
+   * $where_filter_id: a string or integer value
+   * representing the column name to filter the data on. It is used in the WHERE clause.
+   * @param bool <p>
+   * $filter_as_string: TRUE or FALSE to know if a where filter is a string or a integer </p>
+   * @return mixed <p>
+   * Can be a bool (TRUE,FALSE), a integer or a Dao object (of type $dao_class) </p>
    */
-  public function selectOne($item) {
-    
+  public function selectOne($object, $where_filter_id, $filter_as_string = false) {
+    $params = array("type" => "SELECTONE", "dao_class" => \Applications\PMTool\Helpers\CommonHelper::GetFullClassName($object));
+    if ($where_filter_id !== "") {
+      $where_clause = " WHERE " . $where_filter_id . " = :where_filter_id";
+    } else {
+      return false;
+    }
+    $select_clause = "SELECT ";
+    foreach ($object as $key => $value) {
+      $select_clause .= $key . ", ";
+    }
+    $select_clause = rtrim($select_clause, ", ");
+    $select_clause .= " FROM ".$this->GetTableName($object).$where_clause;
+    $sth = $this->dao->prepare($select_clause);
+    if($where_filter_id !== "") {
+      if($filter_as_string) {
+        $sth->bindValue(':where_filter_id',$object->$where_filter_id(),\PDO::PARAM_STR);
+      } else {
+        $sth->bindValue(':where_filter_id',$object->$where_filter_id(),\PDO::PARAM_INT);
+      }
+    }
+    return $this->ExecuteQuery($sth, $params);
   }
 
   /**
@@ -189,6 +217,12 @@ class BaseManager extends \Library\Manager {
         $result = $query->errorCode();
       } else {
         switch ($params["type"]) {
+          case "SELECTONE":
+            $sth->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $params["dao_class"]);
+            $object = $sth->fetch();
+            $sth->closeCursor();
+            return $object ? $object : false;
+            break;
           case "SELECT":
             $sth->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $params["dao_class"]);
             $list = $sth->fetchAll();

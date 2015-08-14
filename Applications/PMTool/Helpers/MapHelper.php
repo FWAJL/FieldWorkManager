@@ -165,11 +165,11 @@ class MapHelper {
    * The array with location info and nested array "marker" in Google Maps API format
    * </p>
    */
-  public static function CreateLocationMarkerItems($sessionProject, $properties, $icons) {
+  public static function CreateLocationMarkerItems($locations, $properties, $icons) {
     $markers = array();
     $marker = array();
     $locationObjectType = reset($properties);
-    $locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
+    //$locations = $sessionProject[\Library\Enums\SessionKeys::ProjectLocations];
     if(!is_null($locations)) {
       foreach ($locations as $location) {
         if (isset($locationObjectType["objectLatPropName"]) && isset($locationObjectType["objectLngPropName"]) && self::CheckCoordinateValue($location->$locationObjectType["objectLatPropName"]()) && self::CheckCoordinateValue($location->$locationObjectType["objectLngPropName"]())) {

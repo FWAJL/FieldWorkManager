@@ -49,7 +49,7 @@ class TaskAnalyteMatrixHelper {
       $relation_data = $dal->selectMany($matrixDAO, "task_id");
   	}
 
-  	if(!empty($relation_data)){
+  	if(!empty($relation_data) && is_array($relation_data)){
   	  foreach($relation_data as $relation){
   	  	if($analyte_type === 'Lab'){
   	  	  $id_str = $relation->location_id() . '_' . $relation->lab_analyte_id();
@@ -250,7 +250,7 @@ class TaskAnalyteMatrixHelper {
     $dal = $caller->managers()->getManagerOf("FieldLabAnalyte");
     $relation_data = $dal->selectMany($matrixDAO, "task_id");
 
-    if(!empty($relation_data)){
+    if(!empty($relation_data) && is_array($relation_data)){
       foreach($relation_data as $relation){
         
         $id_str = $relation->location_id() . '_' . $relation->field_analyte_id();
