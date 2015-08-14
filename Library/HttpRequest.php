@@ -112,8 +112,8 @@ class HttpRequest {
     }
 
     if ($xss_clean === TRUE) {
-      $array[$index] = strip_tags($array[$index]);
-      $array[$index] = filter_var($array[$index]);
+      $array[$index] = $array[$index] instanceof \stdClass ? $array[$index] : strip_tags($array[$index]);
+      //$array[$index] = filter_var($array[$index]);
 //$security = new BL\Core\Security();
       //return $security->xss_clean($array[$index]);
     }
