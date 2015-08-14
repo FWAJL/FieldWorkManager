@@ -867,7 +867,6 @@ function load(params) {
 
         setTimeout(function() {
             if(taskMarkersBoundary.length>0){
-              console.log(taskMarkersBoundary);
               map.fitLatLngBounds(taskMarkersBoundary);
             } else if (markers.length > 1) {
               map.fitZoom();
