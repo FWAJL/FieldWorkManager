@@ -34,7 +34,15 @@ $(document).ready(function(){
   });
   $("#location-info-modal-photos").hide();
 });
-
+function createCookie(name,value,days) {
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime()+(days*24*60*60*1000));
+    var expires = "; expires="+date.toGMTString();
+  }
+  else var expires = "";
+  document.cookie = name+"="+value+expires+"; path=/";
+}
 /*
  * On marker drag function
  */
@@ -817,6 +825,10 @@ function load(params) {
             labelsHidden = true;
           }
         });
+
+        google.maps.event.addListener( map.map, 'maptypeid_changed', function() {
+          createCookie('mapTypeId',map.map.getMapTypeId(),false);
+        } );
 
         /*
         if(reply.type === 'locatiron') {
