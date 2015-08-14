@@ -7,6 +7,11 @@ $(document).ready(function(){
     mobile_manager.set($(this));
   });
 
+
+  if($('#checklist-display-module').length) {
+    mobile_manager.getChecklist();
+  }
+
   if($("#task-notes").length) {
     Dropzone.autoDiscover = false;
     var noteImages = [];
@@ -737,6 +742,48 @@ $(document).ready(function(){
         location.reload();
       }
     });
-  }
+  };
+  mobile_manager.getChecklist = function() {
+    datacx.post("task/getCheckList", {}).then(function(reply){
+      if (reply === null || reply.result === 0) {//has an error
+      } else {//success
+        $.each(reply.task_checklist, function(index, value){
+          $("#checklist-display-module").append("<li><input id='checklist-item-"+value.task_check_list_id+"' class='checklist-item' data-id='"+value.task_check_list_id+"' type='checkbox' />"+value.task_check_list_detail+"</li>");
+          var complete = false;
+          if(value.task_check_list_complete == 1){
+            complete = true;
+          }
+          $("#checklist-item-"+value.task_check_list_id).prop('checked',complete);
+        });
+        $(".checklist-item").on('click',function(e){
+          $(".checklist-item").prop('disabled',true);
+          var id = $(this).data('id');
+          var complete = 1;
+          if($(this).prop('checked') == false) {
+            complete = 0;
+          }
+          mobile_manager.setStatusChecklist(id, complete);
+
+        });
+      }
+    });
+  };
+
+  mobile_manager.setStatusChecklist = function(id, complete) {
+    datacx.post("task/setStatusCheckList", {id: id, complete: complete}).then(function(reply){
+      if(reply===null || reply.result === 0) { //has an error
+        var resetComplete;
+        if(complete == 1) {
+          resetComplete = false
+        } else {
+          resetComplete = true;
+        }
+        $("#checklist-display-module input[data-id="+id+"]").prop('checked',resetComplete);
+      } else { //success
+
+      }
+      $(".checklist-item").prop('disabled',false);
+    });
+  };
 
 }(window.mobile_manager = window.mobile_manager || {}));

@@ -248,7 +248,9 @@ class MobileController extends \Library\BaseController {
   }
   
     public function executeChecklist(\Library\HttpRequest $rq) {
-
+      $modules = $this->app()->router()->selectedRoute()->phpModules();
+      $this->page->addVar(
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::checklist, $modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::checklist]);
     }
 
   public function executeCommunications(\Library\HttpRequest $rq) {
