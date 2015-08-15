@@ -44,7 +44,6 @@ $(document).ready(function() {
         options.mapTypeId = readCookie('mapTypeId');
       }
       map = new GMaps(options);
-
       load(params);
     }, 1000);
   }

@@ -1,4 +1,4 @@
-  var map;
+var map;
 var boundaryShape;
 var boundaryPath;
 var rulerShape;
@@ -27,6 +27,46 @@ var optionsPosition = {
   desiredAccuracy: 20,
   maxWait: 15000
 };
+var geolocationMarkerIcon = '../Web/images/geoloc_marker.png';
+function GeolocationControl(controlDiv, map) {
+  // Set CSS for the control border.
+  var controlUI = document.createElement('div');
+  controlUI.id = "geolocation-map-control";
+  controlUI.className = 'geolocation-map-control-inactive';
+  controlDiv.appendChild(controlUI);
+
+  // Set CSS for the control interior.
+  var controlText = document.createElement('div');
+  controlText.id = "geolocation-map-control-text";
+  controlUI.appendChild(controlText);
+
+  controlUI.addEventListener('click', function(e) {
+    e.preventDefault();
+    if(navigator.geolocation) {
+      navigator.geolocation.getAccurateCurrentPosition(function(position) {
+        $("#geolocation-map-control").removeClass('geolocation-map-control-inactive');
+        $("#geolocation-map-control").addClass('geolocation-map-control-active');
+        geolocationMarkerSettings = {
+          draggable: false,
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+          zIndex: 1000,
+          optimized: false
+        };
+        var geolocationMarker = map.addMarker(geolocationMarkerSettings);
+        geolocationMarker.setIcon(geolocationMarkerIcon);
+        map.setCenter(position.coords.latitude, position.coords.longitude);
+        setTimeout(function(){
+          $("#geolocation-map-control").removeClass('geolocation-map-control-active');
+          $("#geolocation-map-control").addClass('geolocation-map-control-inactive');
+          geolocationMarker.setMap(null);
+        }, 30000);
+      },function(err){},function(prog){},optionsPosition);
+    }
+  });
+
+}
+
 //shows map legend popup
 $(document).ready(function(){
   $('.glyphicon-question-sign').click(function(){
@@ -890,6 +930,12 @@ function load(params) {
             }
 
         }, 500);
+
+        //add custom control
+        var geolocationControlDiv = document.createElement('div');
+        var geolocationControl = new GeolocationControl(geolocationControlDiv, map);
+        geolocationControlDiv.index = 1;
+        map.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(geolocationControlDiv);
 
         // called on existing/add controls
         if(reply.controls.markers === true){
