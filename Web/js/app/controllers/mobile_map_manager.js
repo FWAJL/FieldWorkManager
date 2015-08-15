@@ -496,6 +496,7 @@ var openTaskLocationInfo = function(e,id,action) {
  $("#task-location-id-selected").val(id);
   selectedMarker = id;
   $("#document-upload input[name=\"title\"]").val("");
+  $("#task-location-info-walk-drive").hide();
   if(e !== undefined) {
     $("#task-location-info-modal-zoom").show();
     $("#location-info-modal-place").hide();
@@ -522,6 +523,7 @@ var openTaskLocationInfo = function(e,id,action) {
     var category = $("#document-upload input[name=\"itemCategory\"]").val();
     datacx.post('file/load',{itemId: id, itemCategory: category}).then(function(replyPhotos){
       item = reply.location;
+      $("#location-info-modal-directions").attr('href',"http://maps.google.com?q=loc:"+item.location_lat+"+"+item.location_long);
       $("#document-upload input[name=\"itemId\"]").val(id);
       $("#task-location-info-modal-location_name").val(item.location_name);
       $("#task-location-info-modal-location_desc").val(item.location_desc);
@@ -1056,6 +1058,7 @@ function load(params) {
         });
 
         //directions
+        /* not used
         $("#location-info-modal-directions").on('click',function(e){
           e.preventDefault();
           $.each(markers, function(key,mrk){
@@ -1113,6 +1116,7 @@ function load(params) {
 
 
         });
+        */
         //change marker to user position
         $("#location-info-modal-mark").on('click',function(e){
           e.preventDefault();
