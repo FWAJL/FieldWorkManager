@@ -1,3 +1,13 @@
+function createCookie(name,value,days) {
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime()+(days*24*60*60*1000));
+    var expires = "; expires="+date.toGMTString();
+  }
+  else var expires = "";
+  document.cookie = name+"="+value+expires+"; path=/";
+}
+createCookie('mapTypeId',"",-1);
 $(document).ready(function() {
   if (typeof(validator) != 'undefined') {
     validator.requiredInput();//validate the inputs
