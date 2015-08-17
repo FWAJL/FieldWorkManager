@@ -53,7 +53,7 @@ class TaskChecklistHelper {
   public static function GetAllChecklistsfor($task_id, $caller){
     $checklistDAO = new \Applications\PMTool\Models\Dao\Task_check_list();
     $checklistDAO->setTask_id($task_id);
-    $dal = $caller->managers()->getManagerOf("TaskCheckList");
+    $dal = $caller->managers()->getManagerOf("TaskChecklist");
     $checklist_data = $dal->selectMany($checklistDAO, "task_id");
     return $checklist_data;
   }
@@ -64,7 +64,7 @@ class TaskChecklistHelper {
   public static function DelChecklist($caller, $dataPost) {
     $checklistDAO = new \Applications\PMTool\Models\Dao\Task_check_list();
     $checklistDAO->setTask_check_list_id($dataPost['check_list_id']);
-    $manager = $caller->managers()->getManagerOf('TaskCheckList');
+    $manager = $caller->managers()->getManagerOf('TaskChecklist');
     return $manager->delete($checklistDAO, 'task_check_list_id');
   }
 
@@ -75,7 +75,7 @@ class TaskChecklistHelper {
     $checklistDAO = new \Applications\PMTool\Models\Dao\Task_check_list();
     $checklistDAO->setTask_check_list_id($dataPost['check_list_id']);
     $checklistDAO->setTask_check_list_detail($dataPost['checklist_detail']);
-    $manager = $caller->managers()->getManagerOf('TaskCheckList');
+    $manager = $caller->managers()->getManagerOf('TaskChecklist');
     return $manager->edit($checklistDAO, 'task_check_list_id');
   }
 
@@ -85,7 +85,7 @@ class TaskChecklistHelper {
   public static function IsDuplicateCheckList($caller, $dataPost) {
     $checklistDAO = new \Applications\PMTool\Models\Dao\Task_check_list();
     $checklistDAO->setTask_check_list_detail($dataPost['checklist_detail']);
-    $dal = $caller->managers()->getManagerOf("TaskCheckList");
+    $dal = $caller->managers()->getManagerOf("TaskChecklist");
     $checklist_data = $dal->selectMany($checklistDAO, "task_check_list_detail");
     return (count($checklist_data) > 0)? true : false ; 
   }
