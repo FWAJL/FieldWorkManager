@@ -249,7 +249,7 @@ class TaskChecklistController extends \Library\BaseController {
 
     $checklist = new \Applications\PMTool\Models\Dao\Task_check_list();
     $checklist->setTask_check_list_id($dataPost['id']);
-    $manager = $this->managers()->getManagerOf('TaskCheckList');
+    $manager = $this->managers()->getManagerOf($this->module());
     $checklists = $manager->selectMany($checklist, 'task_check_list_id');
     if(count($checklists)>0) {
       $checklist = $checklists[0];
