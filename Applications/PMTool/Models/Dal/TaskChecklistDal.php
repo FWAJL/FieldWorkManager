@@ -5,7 +5,7 @@ namespace Applications\PMTool\Models\Dal;
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class TaskCheckListDal extends \Library\DAL\BaseManager {
+class TaskChecklistDal extends \Library\DAL\BaseManager {
 
   public function selectOne($object, $where_filter_id = "", $filter_as_string = false) {
     return NULL;
