@@ -109,4 +109,6 @@ class ViewVariablesKeys {
   const upload_file = "upload_file";
   //location list
   const location_list = "location_list";
+  //checklist
+  const checklist = "checklist";
 }

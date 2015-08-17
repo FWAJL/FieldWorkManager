@@ -212,4 +212,65 @@ class TaskChecklistController extends \Library\BaseController {
     );
   }
 
+  public function executeGetCheckList(\Library\HttpRequest $rq) {
+    //Init result
+    $result = $this->InitResponseWS();
+    $error = true;
+    //Get current task
+    $currSessTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+    $task_id = $currSessTask['task_info_obj']->task_id();
+
+    $checklist = new \Applications\PMTool\Models\Dao\Task_check_list();
+    $checklist->setTask_id($task_id);
+    $manager = $this->managers()->getManagerOf('TaskCheckList');
+    $checklists = $manager->selectMany($checklist, 'task_id');
+    if(count($checklists)>0) {
+      $result[\Library\Enums\SessionKeys::TaskChecklist]=$checklists;
+      $error = false;
+    }
+
+    $this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::TaskChecklist,
+        "resx_key" => $this->action(),
+        "step" => $error ? "error" : "success"
+      )
+    );
+  }
+
+  public function executeSetStatusCheckList(\Library\HttpRequest $rq) {
+    //Init result
+    $result = $this->InitResponseWS();
+    $dataPost = $this->dataPost();
+    $error = true;
+    //Get current task
+    $currSessTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user());
+    $task_id = $currSessTask['task_info_obj']->task_id();
+
+    $checklist = new \Applications\PMTool\Models\Dao\Task_check_list();
+    $checklist->setTask_check_list_id($dataPost['id']);
+    $manager = $this->managers()->getManagerOf('TaskCheckList');
+    $checklists = $manager->selectMany($checklist, 'task_check_list_id');
+    if(count($checklists)>0) {
+      $checklist = $checklists[0];
+      //check if checklist is part of the current task
+      if($checklist->task_id() == $task_id) {
+        $checklist->setTask_check_list_complete($dataPost['complete']);
+        $result_edit = $manager->edit($checklist, 'task_check_list_id');
+      }
+    }
+
+    if(isset($result_edit) && $result_edit) {
+      $error = false;
+    }
+
+    $this->SendResponseWS(
+      $result, array(
+        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::TaskChecklist,
+        "resx_key" => $this->action(),
+        "step" => $error ? "error" : "success"
+      )
+    );
+  }
+
 }
