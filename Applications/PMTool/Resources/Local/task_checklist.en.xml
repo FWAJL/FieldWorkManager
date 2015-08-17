@@ -26,4 +26,8 @@
   <resource key="message_error_checkDuplicateCheckList">Duplicate checklist found</resource>
   <resource key="message_success_editCheckList">Check List Edited</resource>
   <resource key="message_error_editCheckList">Error editing check list</resource>
+  <resource key="message_success_getCheckList">Checklists loaded</resource>
+  <resource key="message_error_getCheckList">No Checklists found</resource>
+  <resource key="message_success_setStatusCheckList">Checklist status changed</resource>
+  <resource key="message_error_setStatusCheckList">Error changing checklist status</resource>
 </resources>
