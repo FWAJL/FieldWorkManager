@@ -10,7 +10,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
  */
 class TechnicianDal extends \Library\DAL\BaseManager {
 
-  public function selectOne($object) {
+  public function selectOne($object, $where_filter_id = "", $filter_as_string = false) {
     return NULL;
   }
 

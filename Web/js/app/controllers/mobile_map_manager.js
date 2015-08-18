@@ -1,4 +1,4 @@
-  var map;
+var map;
 var boundaryShape;
 var boundaryPath;
 var rulerShape;
@@ -27,6 +27,46 @@ var optionsPosition = {
   desiredAccuracy: 20,
   maxWait: 15000
 };
+var geolocationMarkerIcon = '../Web/images/geoloc_marker.png';
+function GeolocationControl(controlDiv, map) {
+  // Set CSS for the control border.
+  var controlUI = document.createElement('div');
+  controlUI.id = "geolocation-map-control";
+  controlUI.className = 'geolocation-map-control-inactive';
+  controlDiv.appendChild(controlUI);
+
+  // Set CSS for the control interior.
+  var controlText = document.createElement('div');
+  controlText.id = "geolocation-map-control-text";
+  controlUI.appendChild(controlText);
+
+  controlUI.addEventListener('click', function(e) {
+    e.preventDefault();
+    if(navigator.geolocation) {
+      navigator.geolocation.getAccurateCurrentPosition(function(position) {
+        $("#geolocation-map-control").removeClass('geolocation-map-control-inactive');
+        $("#geolocation-map-control").addClass('geolocation-map-control-active');
+        geolocationMarkerSettings = {
+          draggable: false,
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+          zIndex: 1000,
+          optimized: false
+        };
+        var geolocationMarker = map.addMarker(geolocationMarkerSettings);
+        geolocationMarker.setIcon(geolocationMarkerIcon);
+        map.setCenter(position.coords.latitude, position.coords.longitude);
+        setTimeout(function(){
+          $("#geolocation-map-control").removeClass('geolocation-map-control-active');
+          $("#geolocation-map-control").addClass('geolocation-map-control-inactive');
+          geolocationMarker.setMap(null);
+        }, 30000);
+      },function(err){},function(prog){},optionsPosition);
+    }
+  });
+
+}
+
 //shows map legend popup
 $(document).ready(function(){
   $('.glyphicon-question-sign').click(function(){
@@ -34,7 +74,15 @@ $(document).ready(function(){
   });
   $("#location-info-modal-photos").hide();
 });
-
+function createCookie(name,value,days) {
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime()+(days*24*60*60*1000));
+    var expires = "; expires="+date.toGMTString();
+  }
+  else var expires = "";
+  document.cookie = name+"="+value+expires+"; path=/";
+}
 /*
  * On marker drag function
  */
@@ -448,6 +496,7 @@ var openTaskLocationInfo = function(e,id,action) {
  $("#task-location-id-selected").val(id);
   selectedMarker = id;
   $("#document-upload input[name=\"title\"]").val("");
+  $("#task-location-info-walk-drive").hide();
   if(e !== undefined) {
     $("#task-location-info-modal-zoom").show();
     $("#location-info-modal-place").hide();
@@ -474,6 +523,7 @@ var openTaskLocationInfo = function(e,id,action) {
     var category = $("#document-upload input[name=\"itemCategory\"]").val();
     datacx.post('file/load',{itemId: id, itemCategory: category}).then(function(replyPhotos){
       item = reply.location;
+      $("#location-info-modal-directions").attr('href',"http://maps.google.com?q=loc:"+item.location_lat+"+"+item.location_long);
       $("#document-upload input[name=\"itemId\"]").val(id);
       $("#task-location-info-modal-location_name").val(item.location_name);
       $("#task-location-info-modal-location_desc").val(item.location_desc);
@@ -818,6 +868,10 @@ function load(params) {
           }
         });
 
+        google.maps.event.addListener( map.map, 'maptypeid_changed', function() {
+          createCookie('mapTypeId',map.map.getMapTypeId(),false);
+        } );
+
         /*
         if(reply.type === 'locatiron') {
           $(".map-info-marker .map-info-icon-image>img").draggable({
@@ -867,7 +921,6 @@ function load(params) {
 
         setTimeout(function() {
             if(taskMarkersBoundary.length>0){
-              console.log(taskMarkersBoundary);
               map.fitLatLngBounds(taskMarkersBoundary);
             } else if (markers.length > 1) {
               map.fitZoom();
@@ -879,6 +932,12 @@ function load(params) {
             }
 
         }, 500);
+
+        //add custom control
+        var geolocationControlDiv = document.createElement('div');
+        var geolocationControl = new GeolocationControl(geolocationControlDiv, map);
+        geolocationControlDiv.index = 1;
+        map.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(geolocationControlDiv);
 
         // called on existing/add controls
         if(reply.controls.markers === true){
@@ -999,6 +1058,7 @@ function load(params) {
         });
 
         //directions
+        /* not used
         $("#location-info-modal-directions").on('click',function(e){
           e.preventDefault();
           $.each(markers, function(key,mrk){
@@ -1056,6 +1116,7 @@ function load(params) {
 
 
         });
+        */
         //change marker to user position
         $("#location-info-modal-mark").on('click',function(e){
           e.preventDefault();

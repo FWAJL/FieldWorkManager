@@ -13,7 +13,7 @@ class FacilityDal extends \Library\DAL\BaseManager {
    * @param Facility $p
    * @return array the selected row in the db
    */
-  public function selectOne($facility_in) {
+  public function selectOne($facility_in, $where_filter_id = "", $filter_as_string = false) {
     return NULL;
   }
 

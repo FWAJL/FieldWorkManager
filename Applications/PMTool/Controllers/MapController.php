@@ -306,15 +306,19 @@ class MapController extends \Library\BaseController {
     //unset default location because we don't want to show facility marker
     unset($properties['defaultLocation']);
 
-    //get current sesion project and refresh project's locations
+    //get current sesion project
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-    $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = $this->_GetAndStoreLocationsInSession($sessionProject);
 
+    //get project_id and load locations from DB
+    $project_id = $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id();
+    $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = $locations = \Applications\PMTool\Helpers\LocationHelper::GetLocationListFromDB($this, $project_id);
+    //store updated session
+    \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->user(), $sessionProject);
     //load marker icons from config
     $icons = \Applications\PMTool\Helpers\MapHelper::GetActiveInactiveIcons($this->app()->relative_path,$this->app()->imageUtil,$this->app()->config());
 
     //create google maps marker items
-    $projectLocationMarkers = \Applications\PMTool\Helpers\MapHelper::CreateLocationMarkerItems($sessionProject,$properties,$icons);
+    $projectLocationMarkers = \Applications\PMTool\Helpers\MapHelper::CreateLocationMarkerItems($locations,$properties,$icons);
 
     $result["noLatLngIcon"] = $icons["noLatLng"];
     $result["activeIcon"] = $icons["locationActive"];
@@ -393,6 +397,12 @@ class MapController extends \Library\BaseController {
 
     //get current sesion project and refresh project's locations then get current session task
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
+    //get project_id and load locations from DB
+    $project_id = $sessionProject[\Library\Enums\SessionKeys::ProjectObject]->project_id();
+    $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = $locations = \Applications\PMTool\Helpers\LocationHelper::GetLocationListFromDB($this, $project_id);
+    //store updated session
+    \Applications\PMTool\Helpers\ProjectHelper::SetUserSessionProject($this->user(), $sessionProject);
+
     $sessionProject[\Library\Enums\SessionKeys::ProjectLocations] = $this->_GetAndStoreLocationsInSession($sessionProject);
     $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->app()->user());
 
