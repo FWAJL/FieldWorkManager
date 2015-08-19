@@ -44,6 +44,7 @@ class ActiveTask {
   const active_task_progress_details = "active_task_progress_details";
   const active_task_instructions = "active_task_instructions";
   const active_task_field_data = "active_task_field_data";
+  const active_task_checklist = "active_task_checklist";
 
 
   const task_buttons = "task_buttons";
