@@ -117,7 +117,11 @@ class TaskAnalyteMatrixHelper {
 	        $manager = $caller->managers()->getManagerOf('TaskLabAnalyte');
 	        $result_save_relation = $manager->add($lab_analyte_location);
         } else {
-          $data = array('task_id' => $task_id, 'location_id' => $location_id, 'field_analyte_id' => $analyte_id); 
+          $data = array(
+              'task_id' => $task_id, 
+              'location_id' => $location_id, 
+              'field_analyte_id' => $analyte_id,
+              'field_analyte_location_result' => ''); 
           //Init PDO
           $field_analyte_location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Field_analyte_location());
           $manager = $caller->managers()->getManagerOf('TaskFieldAnalyte');
