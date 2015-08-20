@@ -533,7 +533,8 @@ $(document).ready(function(){
               });
             },
             function(){
-              $('.prompt-modal').modal('show');
+              //$('.prompt-modal').modal('show');
+              utils.redirect('mobile/loc_list');
             }
           );
           
