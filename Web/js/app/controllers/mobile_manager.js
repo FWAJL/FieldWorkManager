@@ -510,6 +510,9 @@ $(document).ready(function(){
             );
             $('#matrix_prompt_ok').hide();
           }
+
+          //set location mame
+          $("#task-location-window-title-task_location_name2").html(item.location_name);
           
           mobile_manager.showTaskLocationWebFormForDateEntry(
             function(){

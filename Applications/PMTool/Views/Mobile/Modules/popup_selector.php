@@ -48,7 +48,7 @@
             <?php echo isset($current_task)?$current_task->task_name():''; ?>
           </span>
           <span class="glyphicon glyphicon-chevron-right"></span>
-          <span id="task-location-window-title-task_location_name">
+          <span id="task-location-window-title-task_location_name2">
             <?php echo $resx['web_form_h4']; ?>
           </span>
         </h4>
