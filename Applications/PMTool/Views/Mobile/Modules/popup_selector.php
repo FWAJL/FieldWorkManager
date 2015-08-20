@@ -39,7 +39,19 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="tlf_prompt_title"><?php echo $resx['web_form_h4']; ?></h4>
+        <h4 class="modal-title" id="tlf_prompt_title">
+          <span id="task-location-window-title-project_name">
+            <?php echo isset($current_project)?$current_project->project_name():''; ?>
+          </span>
+          <span class="glyphicon glyphicon-chevron-right"></span>
+          <span id="task-location-window-title-task_name">
+            <?php echo isset($current_task)?$current_task->task_name():''; ?>
+          </span>
+          <span class="glyphicon glyphicon-chevron-right"></span>
+          <span id="task-location-window-title-task_location_name">
+            <?php echo $resx['web_form_h4']; ?>
+          </span>
+        </h4>
       </div>
       <div class="modal-body">
         <!--This is where the Web form would be installed dynamically using javascript-->
