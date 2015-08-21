@@ -26,8 +26,9 @@
         <?php require $form_modules["upload_file"]; ?>
       </div>
       <div class="modal-footer">
+        <button type="button" id="location-info-upload-btn" data-dismiss="modal" class="btn btn-default confirmbuttons"><?php echo $resx['task_location_window_edit_upload']; ?></button>
         <button type="submit" class="btn btn-primary confirmbuttons modal-update"><?php echo $resx['task_location_window_edit_update']; ?></button>
-        <button type="button" class="btn btn-default confirmbuttons" data-dismiss="modal"><?php echo $resx['task_location_window_edit_cancel']; ?></button>
+        <button type="button" id="location-info-cancel-btn" class="btn btn-default confirmbuttons" data-dismiss="modal"><?php echo $resx['task_location_window_edit_cancel']; ?></button>
       </div>
 
     </div>

@@ -90,7 +90,9 @@
   <resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="checkCoordinates" value="Invalid coordinates" />
   <resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="checkIfLocationComplete" value="This location is marked as completed, please select a different one." />
   <resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="checkNoTaskLocationForms" value="This location does not have any forms." />
-	<resource uicomponent="alert" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="noPhotos" value="No available photos for this location" />  
+  <resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="photoTimeout" value="Upload timeout." />
+  <resource uicomponent="alert" targetcontroller="map" targetaction="loadMaps" operation="photoUpload" value="Photo upload in progress." />
+	<resource uicomponent="alert" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="noPhotos" value="No available photos for this location" />
   <resource uicomponent="alert" targetcontroller="map" targetaction="loadCurrentLocationsView" operation="addUniqueCheck" value="Location name is taken. Choose a new Location name" />
 
 	<resource uicomponent="alert" targetcontroller="analyte" targetaction="list" operation="noAnalyteForProject" value="You do not have any Analytes for your Projects. You can start building your own custom analyte list by clicking Analyte > Upload List" />

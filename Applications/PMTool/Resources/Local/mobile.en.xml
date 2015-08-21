@@ -40,6 +40,7 @@
   <resource key="task_location_window_collect_data">Collect data</resource>
   <resource key="task_location_window_add">Add to task</resource>
   <resource key="task_location_window_edit_update">Update</resource>
+  <resource key="task_location_window_edit_upload">Upload</resource>
   <resource key="task_location_window_edit_cancel">Cancel</resource>
   <resource key="task_location_window_directions">Directions</resource>
   <resource key="task_location_window_walk">Walk</resource>
