@@ -30,6 +30,7 @@ var optionsPosition = {
 var geolocationMarkerIcon = '../Web/images/geoloc_marker.png';
 var dropzone;
 var showInfoWindow;
+var showUploadAlert = false;
 function disableShowInfoWindow(id, callback, callbackOnCancel) {utils.showAlert($("#confirmmsg-photoUpload").val())};
 function GeolocationControl(controlDiv, map) {
   // Set CSS for the control border.
@@ -421,12 +422,17 @@ var setViewPhotosEvent = function(photosCount,documentId) {
 }
 
 var openLocationInfo = function(e,id, noLatLng) {
+  showUploadAlert = false;
   $("#location-info-cancel-btn").off('click');
   $("#location-info-cancel-btn").on('click',function(e){
     dropzone.removeAllFiles(true);
     showInfoWindow = utils.showInfoWindow;
   });
   $("#location-info-upload-btn").attr('disabled','disabled');
+  $("#location-info-upload-btn").off('click');
+  $("#location-info-upload-btn").on('click',function(e){
+    showUploadAlert = true;
+  });
     $("#document-upload input[name=\"title\"]").val("");
     if(noLatLng) {
       $("#location-info-modal-place").show();
@@ -446,6 +452,9 @@ var openLocationInfo = function(e,id, noLatLng) {
     dropzone.on("success",function(event,res){
       showInfoWindow = utils.showInfoWindow;
       $('.prompt-modal').modal('hide');
+      if(showUploadAlert) {
+        utils.showAlert($('#confirmmsg-photoUploadFinished').val());
+      }
     });
     dropzone.off("error");
     dropzone.on("error",function(file,res, xhr) {
@@ -521,6 +530,7 @@ var setAddRemoveFromTaskEvent = function(e,id,action) {
 }
 
 var openTaskLocationInfo = function(e,id,action) {
+  showUploadAlert = false;
   $("#location-info-cancel-btn").off('click');
   $("#location-info-cancel-btn").on('click',function(e){
     dropzone.removeAllFiles(true);
@@ -550,21 +560,24 @@ var openTaskLocationInfo = function(e,id,action) {
   dropzone.off("sending");
   dropzone.on("sending",function(event, xhr, formData){
     $("#location-info-upload-btn").removeAttr('disabled');
+    $("#location-info-upload-btn").off('click');
+    $("#location-info-upload-btn").on('click',function(e){
+      showUploadAlert = true;
+    });
     showInfoWindow = disableShowInfoWindow;
   });
   dropzone.off("success");
   dropzone.on("success",function(event,res){
     showInfoWindow = utils.showInfoWindow;
     $('.prompt-modal').modal('hide');
+    if(showUploadAlert) {
+      utils.showAlert($('#confirmmsg-photoUploadFinished').val());
+    }
   });
   dropzone.off("error");
   dropzone.on("error",function(file,res, xhr) {
     showInfoWindow = utils.showInfoWindow;
-    console.log('test');
-    console.log(file);
-    console.log(res);
     if(typeof(xhr) != 'undefined'){
-      console.log(xhr);
       if(xhr.status === 0){
         utils.showAlert($("#confirmmsg-photoTimeout").val(), function(){$('.prompt-modal').modal('hide');});
         dropzone.removeFile(file);
@@ -694,6 +707,8 @@ var resetTaskLocationDialogForEdit = function () {
   $('#task-location-info-modal-location_lat').parent().show();
   $('#task-location-info-modal-location_long').parent().show();
 };
+
+
 
 var highlightMarker = function(e, marker) {
   if (!marker.dragging) {

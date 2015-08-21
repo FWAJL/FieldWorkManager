@@ -70,6 +70,7 @@ $(document).ready(function(){
 
   if($("#mobile-location-list").length){
     var showInfoWindow;
+    var showUploadAlert = false;
     showInfoWindow = utils.showInfoWindow;
     function disableShowInfoWindow(id, callback, callbackOnCancel) {utils.showAlert($("#confirmmsg-photoUpload").val(), function(){});};
     Dropzone.autoDiscover = false;
@@ -124,12 +125,17 @@ $(document).ready(function(){
     }
 
     var openTaskLocationInfo = function(e,id,action) {
+      showUploadAlert = false;
       $("#location-info-cancel-btn").off('click');
       $("#location-info-cancel-btn").on('click',function(e){
         showInfoWindow = utils.showInfoWindow;
         dropzone.removeAllFiles(true);
       });
       $("#location-info-upload-btn").attr('disabled','disabled');
+      $("#location-info-upload-btn").off('click');
+      $("#location-info-upload-btn").on('click',function(e){
+        showUploadAlert = true;
+      });
       $("#task-location-id-selected").val(id);
       selectedMarker = id;
       $("#document-upload input[name=\"title\"]").val("");
@@ -161,6 +167,9 @@ $(document).ready(function(){
       dropzone.on("success",function(event,res){
         showInfoWindow = utils.showInfoWindow;
         $('.prompt-modal').modal('hide');
+        if(showUploadAlert) {
+          utils.showAlert($('#confirmmsg-photoUploadFinished').val());
+        }
       });
       dropzone.off("error");
       dropzone.on("error",function(file,res, xhr) {
