@@ -160,6 +160,7 @@ $(document).ready(function(){
       dropzone.off("success");
       dropzone.on("success",function(event,res){
         showInfoWindow = utils.showInfoWindow;
+        $('.prompt-modal').modal('hide');
       });
       dropzone.off("error");
       dropzone.on("error",function(file,res, xhr) {

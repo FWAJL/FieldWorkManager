@@ -445,6 +445,7 @@ var openLocationInfo = function(e,id, noLatLng) {
     dropzone.off("success");
     dropzone.on("success",function(event,res){
       showInfoWindow = utils.showInfoWindow;
+      $('.prompt-modal').modal('hide');
     });
     dropzone.off("error");
     dropzone.on("error",function(file,res, xhr) {
@@ -554,6 +555,7 @@ var openTaskLocationInfo = function(e,id,action) {
   dropzone.off("success");
   dropzone.on("success",function(event,res){
     showInfoWindow = utils.showInfoWindow;
+    $('.prompt-modal').modal('hide');
   });
   dropzone.off("error");
   dropzone.on("error",function(file,res, xhr) {
