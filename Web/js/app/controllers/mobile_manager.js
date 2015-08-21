@@ -131,11 +131,6 @@ $(document).ready(function(){
         showInfoWindow = utils.showInfoWindow;
         dropzone.removeAllFiles(true);
       });
-      $("#location-info-upload-btn").attr('disabled','disabled');
-      $("#location-info-upload-btn").off('click');
-      $("#location-info-upload-btn").on('click',function(e){
-        showUploadAlert = true;
-      });
       $("#task-location-id-selected").val(id);
       selectedMarker = id;
       $("#document-upload input[name=\"title\"]").val("");
@@ -161,7 +156,6 @@ $(document).ready(function(){
       dropzone.off("sending");
       dropzone.on("sending",function(event, xhr, formData){
         showInfoWindow = disableShowInfoWindow;
-        $("#location-info-upload-btn").removeAttr('disabled');
       });
       dropzone.off("success");
       dropzone.on("success",function(event,res){
@@ -206,6 +200,7 @@ $(document).ready(function(){
           }
           showInfoWindow('#task-location-info-modal',function(){
             if($("#task-location-info-modal-location_name").val() !== '') {
+              showUploadAlert = true;
               post_data = {};
               post_data.location_id = id;
               post_data.location_name = $("#task-location-info-modal-location_name").val();
@@ -213,7 +208,7 @@ $(document).ready(function(){
               post_data.location_lat = $("#task-location-info-modal-location_lat").val();
               post_data.location_long = $("#task-location-info-modal-location_long").val();
               mobile_manager.editLocation(post_data,'location','mapEdit',function(r){
-                location.reload();
+                $('.prompt-modal').modal('hide');
               });
             } else {
               $('#location-info-modal-location_name').focus();
@@ -290,12 +285,10 @@ $(document).ready(function(){
           resetTaskLocationDialogForEdit();
         }
       );
-      $("#location-info-upload-btn").attr('disabled','disabled');
       dropzone.removeAllFiles();
       dropzone.off("sending");
       dropzone.on("sending",function(event, xhr, formData){
         showInfoWindow = disableShowInfoWindow;
-        $("#location-info-upload-btn").removeAttr('disabled');
       });
       hideModifyTaskLocationFields();
       dropzone.off("success");
@@ -317,7 +310,6 @@ $(document).ready(function(){
     };
     var hideModifyTaskLocationFields = function () {
       //hide/modify irrelevant fields
-      $("#location-info-upload-btn").hide();
       $('#task-location-info-modal-location_name').removeAttr('disabled');
       $('.modal-update').html('Add');
       $('#task-location-info-modal-zoom').parent().hide();
@@ -332,7 +324,6 @@ $(document).ready(function(){
       $('#task-location-info-modal-location_desc').val('');
     };
     var resetTaskLocationDialogForEdit = function () {
-      $("#location-info-upload-btn").show();
       $('.modal-update').html('Update');
       $('#task-location-info-modal-zoom').parent().show();
       $('#task-location-info-modal-collect-data').parent().show();
@@ -544,7 +535,6 @@ $(document).ready(function(){
         $('#prompt_ok').modal('hide');
         //Lets fetch the field matrix data
         datacx.post("mobile/getWebFormMatrixWithData", {'loc_id': $("#task-location-id-selected").val()}).then(function(reply) {
-          console.log(reply);
           //Clear the area before adding any new markup
           $('.tlf-selector-modal').find('.modal-body').html('');
           //Check if any data came

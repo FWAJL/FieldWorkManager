@@ -128,9 +128,6 @@ var boundaryClick = function(e) {
  * Add marker on the map and call edit or load msg prompt
  */
 var addMarkerClick = function(e) {
-  console.log(e);
-  console.log(selectedMarker);
-  console.log(addActive);
   if (addActive === true && selectedMarker !== 0) {
 
     var post_data = {};
@@ -422,16 +419,17 @@ var setViewPhotosEvent = function(photosCount,documentId) {
 }
 
 var openLocationInfo = function(e,id, noLatLng) {
+  var mrkKey;
+  $.each(markers, function(key,mrk){
+    if(mrk.id == id) {
+      mrkKey = key;
+    }
+  });
   showUploadAlert = false;
   $("#location-info-cancel-btn").off('click');
   $("#location-info-cancel-btn").on('click',function(e){
     dropzone.removeAllFiles(true);
     showInfoWindow = utils.showInfoWindow;
-  });
-  $("#location-info-upload-btn").attr('disabled','disabled');
-  $("#location-info-upload-btn").off('click');
-  $("#location-info-upload-btn").on('click',function(e){
-    showUploadAlert = true;
   });
     $("#document-upload input[name=\"title\"]").val("");
     if(noLatLng) {
@@ -446,7 +444,6 @@ var openLocationInfo = function(e,id, noLatLng) {
     dropzone.off("sending");
     dropzone.on("sending",function(event, xhr, formData){
       showInfoWindow = disableShowInfoWindow;
-      $("#location-info-upload-btn").removeAttr('disabled');
     });
     dropzone.off("success");
     dropzone.on("success",function(event,res){
@@ -492,14 +489,16 @@ var openLocationInfo = function(e,id, noLatLng) {
               utils.togglePromptBox();
             });
           } else if($("#location-info-modal-location_name").val() !== '') {
+            showUploadAlert = true;
             post_data = {};
             post_data.location_id = id;
             post_data.location_name = $("#location-info-modal-location_name").val();
             post_data.location_desc = $("#location-info-modal-location_desc").val();
             post_data.location_lat = $("#location-info-modal-location_lat").val();
             post_data.location_long = $("#location-info-modal-location_long").val();
+            markers[mrkKey].setPosition(new google.maps.LatLng(post_data.location_lat,post_data.location_long));
             map_manager.edit(post_data,'location','mapEdit',function(r){
-              location.reload();
+              $('.prompt-modal').modal('hide');
             });
           } else {
             $('#location-info-modal-location_name').focus();
@@ -530,13 +529,18 @@ var setAddRemoveFromTaskEvent = function(e,id,action) {
 }
 
 var openTaskLocationInfo = function(e,id,action) {
+  var mrkKey;
+  $.each(markers, function(key,mrk){
+    if(mrk.id == id) {
+      mrkKey = key;
+    }
+  });
   showUploadAlert = false;
   $("#location-info-cancel-btn").off('click');
   $("#location-info-cancel-btn").on('click',function(e){
     dropzone.removeAllFiles(true);
     showInfoWindow = utils.showInfoWindow;
   });
- $("#location-info-upload-btn").attr('disabled','disabled');
  $("#task-location-id-selected").val(id);
   selectedMarker = id;
   $("#document-upload input[name=\"title\"]").val("");
@@ -559,11 +563,6 @@ var openTaskLocationInfo = function(e,id,action) {
   dropzone.removeAllFiles();
   dropzone.off("sending");
   dropzone.on("sending",function(event, xhr, formData){
-    $("#location-info-upload-btn").removeAttr('disabled');
-    $("#location-info-upload-btn").off('click');
-    $("#location-info-upload-btn").on('click',function(e){
-      showUploadAlert = true;
-    });
     showInfoWindow = disableShowInfoWindow;
   });
   dropzone.off("success");
@@ -611,14 +610,16 @@ var openTaskLocationInfo = function(e,id,action) {
       }
       showInfoWindow('#task-location-info-modal',function(){
         if($("#task-location-info-modal-location_name").val() !== '') {
+          showUploadAlert = true;
           post_data = {};
           post_data.location_id = id;
           post_data.location_name = $("#task-location-info-modal-location_name").val();
           post_data.location_desc = $("#task-location-info-modal-location_desc").val();
           post_data.location_lat = $("#task-location-info-modal-location_lat").val();
           post_data.location_long = $("#task-location-info-modal-location_long").val();
+          markers[mrkKey].setPosition(new google.maps.LatLng(post_data.location_lat,post_data.location_long));
           map_manager.edit(post_data,'location','mapEdit',function(r){
-            location.reload();
+            $('.prompt-modal').modal('hide');
           });
         } else {
           $('#location-info-modal-location_name').focus();
