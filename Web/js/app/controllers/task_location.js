@@ -37,7 +37,7 @@ $(document).ready(function() {
     selector: '#group-list-left>li',
     callback: function(key, options) {
       if (key === "edit") {
-        console.log('Logic to edit goes here');
+        utils.redirect('location/showForm?mode=edit&location_id=' + options.$trigger.attr('data-tasklocation-id'));
       } 
     },
     items: {
@@ -49,7 +49,7 @@ $(document).ready(function() {
     selector: '#group-list-right>li',
     callback: function(key, options) {
       if (key === "edit") {
-        console.log('Logic to edit goes here');
+        utils.redirect('location/showForm?mode=edit&location_id=' + options.$trigger.attr('data-tasklocation-id'));
       } 
     },
     items: {
