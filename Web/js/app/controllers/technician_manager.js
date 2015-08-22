@@ -105,6 +105,7 @@ $(document).ready(function() {
   post_data = utils.retrieveInputs("technician_form", ["technician_name", "technician_email"]);
   if (post_data.technician_name !== undefined || post_data.required_field_missing != true) {
    technician_manager.add(post_data, "technician", "add", true);
+   utils.redirect("technician/listAll");
   }
  });//Add a technician
 
