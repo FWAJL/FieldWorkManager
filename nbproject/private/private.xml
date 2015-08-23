@@ -3,12 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/jl/Sites/FieldWorkManager/Applications/PMTool/Config/appsettings.xml</file>
-            <file>file:/Users/jl/Sites/FieldWorkManager/Applications/PMTool/Helpers/TaskAnalyteMatrixHelper.php</file>
-            <file>file:/Users/jl/Sites/FieldWorkManager/Applications/PMTool/Controllers/TaskFieldAnalyteController.php</file>
-            <file>file:/Users/jl/Sites/FieldWorkManager/Applications/PMTool/Controllers/TaskController.php</file>
-            <file>file:/Users/jl/Sites/FieldWorkManager/Library/DAL/BaseManager.php</file>
-            <file>file:/Users/jl/Sites/FieldWorkManager/Applications/PMTool/Config/routes.xml</file>
+            <file>file:/Users/jl/Sites/FieldWorkManager/Library/UC/LeftMenu.php</file>
+            <file>file:/Users/jl/Sites/FieldWorkManager/Library/Enums/LeftMenuConstants.php</file>
         </group>
     </open-files>
 </project-private>
