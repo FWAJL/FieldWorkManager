@@ -36,7 +36,7 @@ class Task {
   const active_task_info_lists = "active_task_info_lists";
 
   const task_form = "task_form";
-  const task_instr_checklist = "task_instr_checklist";
+  const task_instr = "task_instr";
   const active_task_form = "active_task_form"; 
 
   const task_buttons = "task_buttons";

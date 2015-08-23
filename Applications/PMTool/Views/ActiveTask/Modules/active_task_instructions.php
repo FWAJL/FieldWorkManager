@@ -6,27 +6,3 @@
     <div class="p-desc"><?php echo $current_task->task_instructions(); ?></div>
   </div>
   
-  <div>&nbsp;
-  </div>
-  
-  <div>
-    <span class="h4"><?php echo $resx["h4_taskstatus_notes_label"]; ?></span>
-    <span class="glyphicon glyphicon-info-sign" id="h4-taskstatus-notes-gi"></span>
-    <div>
-    	<textarea  class="list-panel upload_list" id="task_status_notes" name="task_status_notes" type="text"></textarea>
-      <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\ActiveTask::upload_file]; ?>
-    </div>
-  </div>
-  
-  <div>&nbsp;
-  </div>
-  
-  <div>
-  	<span class="h4"><?php echo $resx["h4_taskstatus_noteshistory"]; ?></span>
-    <span class="glyphicon glyphicon-info-sign" id="h4-taskstatus-notesrecord-gi"></span>
-    <div class="notes-container">
-      <div id="messages">
-      	  
-      </div>
-    </div>
-  </div>

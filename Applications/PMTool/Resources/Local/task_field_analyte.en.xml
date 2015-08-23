@@ -26,12 +26,13 @@
     
   <!--  Task Field Data --> 
   <resource key="task_field_analytes_header">Field Data</resource>
-  <resource key="h4_task_field_analytes">Field Data for this Task</resource>
-  <resource key="h4_project_field_analytes">Available Field Data</resource>
+  <resource key="task_field_matrix_label">Test</resource>
+  <resource key="h4_task_field_analytes">Field Parameters (this Task)</resource>
+  <resource key="h4_project_field_analytes">Field Parameters (all Tasks for this Project)</resource>
   <resource key="selected_task_field_analytes">Field Data for this Task</resource>
   <resource key="not_selected_task_field_analytes">All available Field Data</resource>
   <resource key="btn_add_to_task">Add Field Analyte(s)</resource>
   <resource key="btn_remove_from_task">Remove Field Analyte(s)</resource>
   <resource key="no_items_to_display_message">There is no active Field Data. Go to Field Data > List all to activate some</resource>
-  
+  <resource key="task_field_data_button_add">Add Field Data parameter(s)</resource>
 </resources>

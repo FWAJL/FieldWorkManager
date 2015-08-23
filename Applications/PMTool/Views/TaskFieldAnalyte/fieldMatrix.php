@@ -5,19 +5,19 @@
     <span class="glyphicon glyphicon-chevron-right"></span>    
     <?php echo $current_task->task_name(); ?>
     <span class="glyphicon glyphicon-chevron-right"></span>    
-    <?php echo $resx["task_lab_analytes_header"] ?></h3>  
+    <?php echo $resx["tlm_parameter_label"] ?></h3>  
   	<div class="form_sections">
       <?php require $form_modules["task_tabs_open"]; ?> 
 	  <div class="content-container container-fluid">
   		<div class="row col-no-right-margin">
-		  <span class="h4"><?php echo $resx["task_lab_matrix_label"] ?></span>
+		  <span class="h4"><?php echo $resx["task_field_matrix_label"] ?></span>
 			<span id="active-taskFieldAnalyte-header" class="glyphicon glyphicon-info-sign"></span>
 		</div>
 	  	<div class="row col-no-right-margin">
 	      <div class="col-lg-10 col-md-10">
 	      	<div class="matrix-container">
 	    	  <div class="matrix-row">
-	    	  	<div class="matrix-cell">&nbsp;</div><div class="matrix-alalyte-header matrix-cell"><?php echo $resx["tlm_analyte_label"] ?></div>
+	    	  	<div class="matrix-cell">&nbsp;</div><div class="matrix-alalyte-header matrix-cell"><?php echo $resx["tlm_parameter_label"] ?></div>
 	    	  </div>
 	    	  <div class="matrix-row">
 	    	  	<div class="matrix-location-header matrix-cell"><?php echo $resx["tlm_locationhead_label"] ?></div>
