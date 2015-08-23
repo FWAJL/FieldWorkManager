@@ -334,10 +334,12 @@ var setViewPhotosEvent = function(photosCount,documentId) {
     $("#location-info-modal-photos").show();
   }
   if(photosCount != 0){
+    $("#lightbox").off("click",".remove-file-link");
     $("#lightbox").on("click",".remove-file-link",function(){
       var documentId = $(this).data('id');
       map_manager.removePhoto(documentId);
     });
+
     /*
     var checkContents = setInterval(function(){
       console.log($(".remove-file-link[data-id='"+documentId+"']").length);
@@ -370,10 +372,8 @@ var openLocationInfo = function(e,id, noLatLng) {
     }
     Dropzone.forElement("#document-upload").removeAllFiles();
     Dropzone.forElement("#document-upload").on("sending",function(event, xhr, formData){
-      $("#location-info-modal .modal-footer button").attr('disabled','disabled');
     });
     Dropzone.forElement("#document-upload").on("success",function(event,res){
-      $("#location-info-modal .modal-footer button").removeAttr('disabled');
     });
     datacx.post('location/getItem',{location_id: id}).then(function(reply){
       //toastr.success(reply.message);
@@ -458,10 +458,8 @@ var openTaskLocationInfo = function(e,id,action) {
   }
   Dropzone.forElement("#document-upload").removeAllFiles();
   Dropzone.forElement("#document-upload").on("sending",function(event, xhr, formData){
-    $("#task-location-info-modal .modal-footer button").attr('disabled','disabled');
   });
   Dropzone.forElement("#document-upload").on("success",function(event,res){
-    $("#task-location-info-modal .modal-footer button").removeAttr('disabled');
   });
   datacx.post('location/getItem',{location_id: id}).then(function(reply){
     //toastr.success(reply.message);
@@ -1218,11 +1216,12 @@ function load(params) {
   map_manager.removePhoto = function(document_id) {
     datacx.post("file/remove", {"document_id": document_id, "itemCategory": 'location_id'}).then(function(reply){
       if (reply === null || reply.result === 0) {//has an error
-        //toastr.error(reply.message);
+        toastr.error(reply.message);
         return undefined;
       } else {//success
-        //toastr.success(reply.message);
-        location.reload();
+        toastr.success(reply.message);
+        $("a.lb-close").trigger('click');
+        $('.prompt-modal').modal('hide');
       }
     });
   }

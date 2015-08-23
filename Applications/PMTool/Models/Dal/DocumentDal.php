@@ -49,7 +49,7 @@ class DocumentDal extends \Library\DAL\Modules\DocumentDal {
     }
 
     $sth = $this->dao->prepare($sql);
-    $sth->bindValue(':document_id', $document->document_id(), \PDO::PARAM_INT);
+    $sth->bindValue(':document_id', $object->document_id(), \PDO::PARAM_INT);
     $sth->execute();
     $sth->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Document');
 

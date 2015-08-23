@@ -34,3 +34,7 @@
   paddingLeft: '5px';
   paddingRight: '5px';
 }
+
+.lb-nav a.lb-next, .lb-nav a.lb-prev {
+  opacity:1;
+}
