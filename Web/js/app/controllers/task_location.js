@@ -30,6 +30,35 @@ $(document).ready(function() {
     task_manager.updateTaskLocations("remove", task_location_ids);
   });
   //************************************************//
+
+  
+  //Setup contextual menu for left hand list
+  $.contextMenu({
+    selector: '#group-list-left>li',
+    callback: function(key, options) {
+      if (key === "edit") {
+        utils.redirect('location/showForm?mode=edit&location_id=' + options.$trigger.attr('data-tasklocation-id'));
+      } 
+    },
+    items: {
+      "edit": {name: "Edit"}
+    }
+  });
+
+  $.contextMenu({
+    selector: '#group-list-right>li',
+    callback: function(key, options) {
+      if (key === "edit") {
+        utils.redirect('location/showForm?mode=edit&location_id=' + options.$trigger.attr('data-tasklocation-id'));
+      } 
+    },
+    items: {
+      "edit": {name: "Edit"}
+    }
+  });  
+  //Context menu ends here
+
+
 });
 /***********
  * task_manager namespace 

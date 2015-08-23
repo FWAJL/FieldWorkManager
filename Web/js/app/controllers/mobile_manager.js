@@ -159,6 +159,7 @@ $(document).ready(function(){
       });
       dropzone.off("success");
       dropzone.on("success",function(event,res){
+        $("#task-location-info-modal .modal-footer button").removeAttr('disabled');
         showInfoWindow = utils.showInfoWindow;
         $('.prompt-modal').modal('hide');
         if(showUploadAlert) {
@@ -296,6 +297,7 @@ $(document).ready(function(){
         showInfoWindow = utils.showInfoWindow;
         //Keep pushing to the JS array
         imagesOfNewLocation.push(response.document.document_value);
+        $("#task-location-info-modal .modal-footer button").removeAttr('disabled');
       });
       dropzone.off("error");
       dropzone.on("error",function(file,res, xhr) {
@@ -556,7 +558,6 @@ $(document).ready(function(){
             );
             $('#matrix_prompt_ok').hide();
           }
-
           mobile_manager.showTaskLocationWebFormForDateEntry(
             function(){
 
@@ -579,7 +580,7 @@ $(document).ready(function(){
               });
             },
             function(){
-              $('.prompt-modal').modal('show');
+              //$('.prompt-modal').modal('show');
             }
           );
 
