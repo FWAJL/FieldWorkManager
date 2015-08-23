@@ -70,6 +70,7 @@ class UrlKeys {
   const ActiveTaskMap = "activetask/map";
   const ActiveTaskInspForms = "activetask/forms";
   const ActiveTaskComm = "activetask/communications";
+  const ActiveTaskNotes = "activetask/notes";
   const ActiveTaskFieldData = "activetask/fieldData";
 
   

@@ -2,6 +2,8 @@
 <resources>
   <resource key="brand">Field Work Manager</resource>
   <resource key="field_data">Field Data Test</resource>
+    <resource key="task_instructions">Test</resource>
+
 
 
 </resources>

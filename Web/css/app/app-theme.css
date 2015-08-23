@@ -542,3 +542,5 @@ ui-widget-content:hover {
 #location-info-modal-geolocation-seconds {
   display: inline;
 }
+
+.instructions { height: 495px;}
