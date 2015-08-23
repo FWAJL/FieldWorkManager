@@ -70,7 +70,7 @@
   <resource key="task_trigger_cal">Recurring</resource>
   <resource key="task_trigger_pm">Manual</resource>
   <resource key="inspection">Task requires completion of a field form</resource>
-  <resource key="field_sample">Analyzing field samples</resource>
+  <resource key="field_sample">Collect Field Parameters</resource>
   <resource key="lab_sample">Submitting samples to a laboratory</resource>
   <resource key="service_provider">Outside Resources required</resource>
   <resource key="data_collect">Data Collection and Services</resource>

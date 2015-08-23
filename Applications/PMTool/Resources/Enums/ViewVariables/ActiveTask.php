@@ -41,6 +41,10 @@ class ActiveTask {
   const active_task_status = "active_task_status";
   const active_task_forms = "active_task_forms";
   const active_task_comm = "active_task_comm";
+  const active_task_notes = "active_task_notes";
+  const active_task_make_notes = "active_task_make_notes";
+  const active_task_show_notes = "active_task_show_notes";
+  
   const active_task_progress_details = "active_task_progress_details";
   const active_task_instructions = "active_task_instructions";
   const active_task_field_data = "active_task_field_data";
