@@ -364,7 +364,7 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="task_info_lists" file_name="task_info_lists.php" />
             <php_module key="task_form" file_name="task_form.php" />
-            <php_module key="task_instr_checklist" file_name="task_instr_checklist.php" />
+            <php_module key="task_instr" file_name="task_instr.php" shared="true" /> 
             <php_module key="task_buttons" file_name="task_buttons.php" />
             <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
             <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
@@ -385,15 +385,15 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="active_task_form" file_name="active_task_form.php" />
             <php_module key="active_task_status" file_name="active_task_status.php" />
-	          <php_module key="active_task_progress_details" file_name="active_task_progress_details.php" />
-	          <php_module key="active_task_instructions" file_name="active_task_instructions.php" />
+	    <php_module key="active_task_progress_details" file_name="active_task_progress_details.php" />
+	    <php_module key="active_task_instructions" file_name="task_instr.php" shared="true" /> 
             <php_module key="active_task_buttons" file_name="active_task_buttons.php" />
 	          <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
             <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
 	          <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
             <php_module key="upload_file" file_name="upload_file.php" shared="true" />
         </php_modules>
-    </route><!--  activetask/showAddForm -->
+    </route><!--  activetask/showForm -->
 	
 	
 	<route url="activetask/map" module="ActiveTask" action="map" resxfile="active_task" type="ui" role="2">
@@ -435,7 +435,7 @@
         </css_files>
         <php_modules>
             <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" />
-			<php_module key="active_task_forms" file_name="active_task_forms.php" />
+	    <php_module key="active_task_forms" file_name="active_task_forms.php" />
             <php_module key="group_list_left" file_name="group_list_left.php" shared="true" />
             <php_module key="group_list_right" file_name="group_list_right.php" shared="true" />
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
@@ -465,6 +465,29 @@
           <php_module key="popup_selector" file_name="popup_selector.php" shared="true"/>
         </php_modules>
     </route><!--  activetask/communications -->
+    
+        <route url="activetask/notes" module="ActiveTask" action="Notes" resxfile="active_task" type="ui" role="2">
+        <js_files>
+            <js_file use="head" value="Web/js/app/controllers/active_task.js" />
+        </js_files>
+        <css_files>
+            <css_file use="project" />
+        </css_files>
+        <php_modules>
+            <php_module key="active_task_tabs_open" file_name="active_task_tabs_open.php" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+            <php_module key="notes" file_name="notes.php" shared="true" />
+            <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
+            <php_module key="active_task_notes" file_name="active_task_notes.php" />            
+            <php_module key="active_task_make_notes" file_name="active_task_make_notes.php" />
+            <php_module key="active_task_show_notes" file_name="active_task_show_notes.php" />
+            <php_module key="active_task_buttons" file_name="active_task_buttons.php" />
+	    <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
+            <php_module key="popup_prompt_module" file_name="popup_prompt.php" shared="true" />
+	    <php_module key="tooltip_msg_module" file_name="tooltip_msg.php" shared="true" />
+            <php_module key="upload_file" file_name="upload_file.php" shared="true" />
+        </php_modules>
+    </route><!--  activetask/notes -->
 	
 	<route url="activetask/fieldData" module="ActiveTask" action="fieldData" resxfile="active_task" type="ui" role="2">
         <js_files>

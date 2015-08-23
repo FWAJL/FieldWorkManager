@@ -35,8 +35,11 @@
   <resource key="no_items_to_display_message">There is no active Lab Analytes. Go to Lab Analytes > List all to activate some</resource>
 
   <!-- Task Lab Matrix -->
-  <resource key="task_lab_matrix_label">Analyte and Location Table</resource>
-  <resource key="tlm_analyte_label">Analytes</resource>
+  <resource key="task_lab_matrix_label">Lab Analyte and Location Table</resource>
+  <resource key="task_field_matrix_label">Field Parameter and Location Table</resource>
+
+  <resource key="tlm_analyte_label">Lab Analytes</resource>
+  <resource key="tlm_parameter_label">Field Parameters</resource>
   <resource key="tlm_locationhead_label">Location</resource>
   <resource key="tlm_checkboxtoggle_label">Check/Uncheck All</resource>
   <resource key="tlm_savebtn_label">Save</resource>

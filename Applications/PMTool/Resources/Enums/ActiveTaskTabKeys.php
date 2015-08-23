@@ -31,4 +31,5 @@ class ActiveTaskTabKeys {
   const ActiveTaskFormsTab = "attk_atft";
   const ActiveTaskCommTab = "attk_atct";
   const ActiveTaskFieldDataTab = "attk_atfdt";
+  const ActiveTaskNotesTab = "attk_ant";
 }

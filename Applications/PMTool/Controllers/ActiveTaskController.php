@@ -187,6 +187,30 @@ class ActiveTaskController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::popup_prompt_list,$modules['group_list_right']);
   }
   
+    public function executeNotes(\Library\HttpRequest $rq) {
+    \Applications\PMTool\Helpers\ActiveTaskHelper::AddTabsStatus($this->user());
+    $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->user());
+    //Check if a project needs to be selected in order to display this page
+    if (!$sessionProject) {
+      $this->Redirect(\Library\Enums\ResourceKeys\UrlKeys::ProjectsSelectProject . "?onSuccess=" . \Library\Enums\ResourceKeys\UrlKeys::TaskAddPrompt);
+    }
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::SetCurrentSessionTask($this->user(), NULL, $rq->getData("task_id"));
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentProject, $sessionProject[\Library\Enums\SessionKeys::ProjectObject]);
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentTask, $sessionTask[\Library\Enums\SessionKeys::TaskObj]);
+
+    //\Applications\PMTool\Helpers\CommonHelper::pr($_SESSION);
+    //Fetch tooltip data from xml and pass to view as an array
+    $tooltip_array = \Applications\PMTool\Helpers\PopUpHelper::getTooltipMsgForAttribute('{"targetcontroller":"activeTask", "targetaction": "showForm", "targetattr": ["h4-taskstatus-leftcol-gi", "h4-taskstatus-rightcol-gi", "h4-taskstatus-notes-gi", "h4-taskstatus-notesrecord-gi"]}', $this->app->name());
+    $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
+
+   \Applications\PMTool\Helpers\ActiveTaskHelper::SetActiveTab($this->user(), \Applications\PMTool\Resources\Enums\ActiveTaskTabKeys::ActiveTaskNotesTab);
+
+    $this->page->addVar(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::activeTaskTabStatus, \Applications\PMTool\Helpers\ActiveTaskHelper::GetTabsStatus($this->app()->user()));
+    $this->page->addVar(
+      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::form_modules, $this->app()->router()->selectedRoute()->phpModules());
+  }
+
   public function executeFieldData(\Library\HttpRequest $rq) {
     \Applications\PMTool\Helpers\ActiveTaskHelper::AddTabsStatus($this->user());
     \Applications\PMTool\Helpers\AnalyteHelper::StoreListsData($this);  
