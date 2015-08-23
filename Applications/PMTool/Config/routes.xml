@@ -385,6 +385,7 @@
             <php_module key="tabs_close" file_name="tabs_close.php" shared="true" />
             <php_module key="active_task_form" file_name="active_task_form.php" />
             <php_module key="active_task_status" file_name="active_task_status.php" />
+            <php_module key="active_task_checklist" file_name="checklist.php" shared="true" />
 	    <php_module key="active_task_progress_details" file_name="active_task_progress_details.php" />
 	    <php_module key="active_task_instructions" file_name="task_instr.php" shared="true" /> 
             <php_module key="active_task_buttons" file_name="active_task_buttons.php" />
