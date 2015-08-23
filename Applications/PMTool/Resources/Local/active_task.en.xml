@@ -23,6 +23,7 @@
   <resource key="task_tab_map">Map</resource>
   <resource key="task_tab_forms">Forms</resource>
   <resource key="task_tab_comm">Communications</resource>
+  <resource key="task_tab_notes">Notes</resource>
   
   <resource key="h4_taskstatus_leftcol">Task Progress</resource>
   <resource key="h4_taskstatus_instruction_label">Instructions</resource>
@@ -106,5 +107,8 @@
   <resource key="not_yet_sampled">Not yet sampled</resource>
   <resource key="message_success_saveFieldMatrixResult">Field Matrix Result saved</resource>
   <resource key="message_error_saveFieldMatrixResult">Error saving Field Matrix</resource>
+  
+  <resource key="task_instructions">Instructions</resource>
+
 
 </resources>
