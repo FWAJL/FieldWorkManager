@@ -467,7 +467,7 @@
         </php_modules>
     </route><!--  activetask/communications -->
     
-        <route url="activetask/notes" module="ActiveTask" action="Notes" resxfile="active_task" type="ui" role="2">
+        <route url="activetask/notes" module="ActiveTask" action="notes" resxfile="active_task" type="ui" role="2">
         <js_files>
             <js_file use="head" value="Web/js/app/controllers/active_task.js" />
         </js_files>
