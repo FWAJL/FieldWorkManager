@@ -63,7 +63,7 @@ class MobileController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
     $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"map", "targetaction": "loadMaps", 
-            "operation": ["addUniqueCheck", "checkCoordinates", "checkIfLocationComplete", "checkNoTaskLocationForms"]}', $this->app->name());
+            "operation": ["addUniqueCheck", "checkCoordinates", "checkIfLocationComplete", "checkNoTaskLocationForms", "photoTimeout", "photoUpload", "photoUploadFinished"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);
 
     //Get prompt box message
@@ -101,7 +101,7 @@ class MobileController extends \Library\BaseController {
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::tooltip_message, $tooltip_array);
 
     $alert_msg = \Applications\PMTool\Helpers\PopUpHelper::getConfirmBoxMsg('{"targetcontroller":"map", "targetaction": "loadMaps", 
-            "operation": ["addUniqueCheck", "checkCoordinates", "checkIfLocationComplete", "checkNoTaskLocationForms"]}', $this->app->name());
+            "operation": ["addUniqueCheck", "checkCoordinates", "checkIfLocationComplete", "checkNoTaskLocationForms", "photoTimeout", "photoUpload", "photoUploadFinished"]}', $this->app->name());
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariables\Popup::confirm_message, $alert_msg);
 
     //Get prompt box message
