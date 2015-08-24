@@ -29,6 +29,7 @@
   <resource key="h4_taskstatus_instruction_label">Instructions</resource>
   <resource key="h4_taskstatus_notes_label">Notes</resource>
   <resource key="h4_taskstatus_noteshistory">Notes for this Task</resource>
+  <resource key="h4_taskstatus_checklists">Checklists</resource>
   <resource key="h4_taskforms_leftcol">Completed Forms</resource>
   <resource key="h4_taskforms_rightcol">Forms used for this task</resource>
   <resource key="h4_taskcomm_leftcol">Discussion Thread</resource>

@@ -86,28 +86,32 @@ class FileController extends \Library\BaseController {
     $result = $this->InitResponseWS();
     $dataPost = $this->dataPost();
     $files = $this->files();
-    $manager = $this->managers()->getManagerOf("Document");
-    $manager->setRootDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
-    $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
-    $directory = str_replace("_id", "", $dataPost['itemCategory']);
-    $manager->setObjectDirectory($directory);
-    if($dataPost['itemReplace']==="true") {
-      $list = $manager->selectManyByCategoryAndId($dataPost['itemCategory'],$dataPost['itemId']);
-    }
-    $manager->setFilenamePrefix($dataPost['itemId'].'_');
-    $document = new \Applications\PMTool\Models\Dao\Document();
-    $document->setDocument_category($dataPost['itemCategory']);
-    if(isset($dataPost['title']) && $dataPost['title']!="") {
-      $document->setDocument_title($dataPost['title']);
+    if(intval($files['file']['size'])>0){
+      $manager = $this->managers()->getManagerOf("Document");
+      $manager->setRootDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
+      $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
+      $directory = str_replace("_id", "", $dataPost['itemCategory']);
+      $manager->setObjectDirectory($directory);
+      if($dataPost['itemReplace']==="true") {
+        $list = $manager->selectManyByCategoryAndId($dataPost['itemCategory'],$dataPost['itemId']);
+      }
+      $manager->setFilenamePrefix($dataPost['itemId'].'_');
+      $document = new \Applications\PMTool\Models\Dao\Document();
+      $document->setDocument_category($dataPost['itemCategory']);
+      if(isset($dataPost['title']) && $dataPost['title']!="") {
+        $document->setDocument_title($dataPost['title']);
+      } else {
+        $document->setDocument_title($files['file']['name']);
+      }
+      $result["dataOut"] = $manager->addWithFile($document,$files['file']);
+      $document->setDocument_id($result['dataOut']);
+      $result["document"] = $document;
+      $result["filepath"] = $this->getHostUrl().$manager->webDirectory.$directory.'/'.$document->document_value();
+      if($dataPost['itemReplace']==="true" && $result["dataOut"]!=-1) {
+        $manager->DeleteObjectsWithFile($list, 'document_id');
+      }
     } else {
-      $document->setDocument_title($files['file']['name']);
-    }
-    $result["dataOut"] = $manager->addWithFile($document,$files['file']);
-    $document->setDocument_id($result['dataOut']);
-    $result["document"] = $document;
-    $result["filepath"] = $this->getHostUrl().$manager->webDirectory.$directory.'/'.$document->document_value();
-    if($dataPost['itemReplace']==="true" && $result["dataOut"]!=-1) {
-      $manager->DeleteObjectsWithFile($list, 'document_id');
+      $result["dataOut"] = -1;
     }
     $this->SendResponseWS(
       $result, array(

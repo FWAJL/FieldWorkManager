@@ -236,6 +236,10 @@ class LocationController extends \Library\BaseController {
       $result_edit = $manager->edit($docObj[0], "document_id");      
     }
 
+    //Add to the field_analyte_location table
+    $task_id = $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id();
+    \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::CreateFALocationRelationForFT($this, $task_id, $new_location_id);
+
     //Set the newly created id to the object
     $location->setLocation_id($new_location_id);
     //Update session var

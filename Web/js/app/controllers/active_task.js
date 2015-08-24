@@ -18,6 +18,9 @@ $(document).ready(function(){
   if($('#modforjs').length > 0) {
     switch($('#modforjs').val()) {
       case 'taskstatus':
+        if($('#checklist-display-module').length) {
+          activetask_manager.getChecklist();
+        }
         Dropzone.autoDiscover = false;
         var noteImages = [];
         $("#document-upload input[name=\"itemCategory\"]").val('task_note_id');
@@ -428,6 +431,23 @@ $(document).ready(function(){
       }
       blockRefresh = false;
     });
-  }
+  };
+
+  activetask_manager.getChecklist = function() {
+    datacx.post("task/getCheckList", {}).then(function(reply){
+      if (reply === null || reply.result === 0) {//has an error
+      } else {//success
+        $.each(reply.task_checklist, function(index, value){
+          $("#checklist-display-module").append("<li><input id='checklist-item-"+value.task_check_list_id+"' class='checklist-item' data-id='"+value.task_check_list_id+"' type='checkbox' />"+value.task_check_list_detail+"</li>");
+          var complete = false;
+          if(value.task_check_list_complete == 1){
+            complete = true;
+          }
+          $("#checklist-item-"+value.task_check_list_id).prop('checked',complete);
+          $("#checklist-item-"+value.task_check_list_id).prop('disabled',true);
+        });
+      }
+    });
+  };
 
 }(window.activetask_manager = window.activetask_manager || {}));

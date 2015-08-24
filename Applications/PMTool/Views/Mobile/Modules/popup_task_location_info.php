@@ -27,7 +27,7 @@
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary confirmbuttons modal-update"><?php echo $resx['task_location_window_edit_update']; ?></button>
-        <button type="button" class="btn btn-default confirmbuttons" data-dismiss="modal"><?php echo $resx['task_location_window_edit_cancel']; ?></button>
+        <button type="button" id="location-info-cancel-btn" class="btn btn-default confirmbuttons" data-dismiss="modal"><?php echo $resx['task_location_window_edit_cancel']; ?></button>
       </div>
 
     </div>
