@@ -21,17 +21,19 @@
     <div  class="col-lg-5 col-md-5">
       <span class="h4"><?php echo $resx['h4_taskcomm_rightcol'] ?></span>
       <span id="h4-taskcomm-rightcol-gi" class="glyphicon glyphicon-question-sign"></span>
+            <div>
+        <span class="h4"><?php echo $resx["h4_taskcomm_technicians"]; ?></span>
+        <span class="glyphicon glyphicon-info-sign" id="h4-taskcomm-technicians-gi"></span>
+        <?php require $form_modules["group_list_left"]; ?>
+      </div>
+
+      <div>&nbsp;
+      </div>
+      
       <div>
         <span class="h4"><?php echo $resx["h4_taskcomm_services"]; ?></span>
         <span class="glyphicon glyphicon-info-sign" id="h4-taskcomm-services-gi"></span>
         <?php require $form_modules[Applications\PMTool\Resources\Enums\ViewVariablesKeys::categorized_list_left]; ?>
-      </div>
-      <div>&nbsp;
-      </div>
-      <div>
-        <span class="h4"><?php echo $resx["h4_taskcomm_technicians"]; ?></span>
-        <span class="glyphicon glyphicon-info-sign" id="h4-taskcomm-technicians-gi"></span>
-        <?php require $form_modules["group_list_left"]; ?>
       </div>
     </div>
   </div>

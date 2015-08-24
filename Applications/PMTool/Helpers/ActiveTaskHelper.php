@@ -23,6 +23,7 @@ class ActiveTaskHelper {
       \Applications\PMTool\Resources\Enums\ActiveTaskTabKeys::ActiveTaskMapTab => "",
       \Applications\PMTool\Resources\Enums\ActiveTaskTabKeys::ActiveTaskFormsTab => "",
       \Applications\PMTool\Resources\Enums\ActiveTaskTabKeys::ActiveTaskCommTab => "",
+      \Applications\PMTool\Resources\Enums\ActiveTaskTabKeys::ActiveTaskNotesTab => "",       
       \Applications\PMTool\Resources\Enums\ActiveTaskTabKeys::ActiveTaskFieldDataTab => ""
     );
     $user->setAttribute(\Library\Enums\SessionKeys::ActiveTaskTabsStatus, $tabs);
@@ -85,6 +86,19 @@ class ActiveTaskHelper {
 
     //Return the doc array
     return $docData;
+  }
+
+  /**
+  * Queries the database for the task (tas_id passed)
+  * and returns it as task object
+  */
+  public static function QueryDBForActiveTaskData($task_id, $caller) {
+    $taskDAO = new \Applications\PMTool\Models\Dao\Task();
+    $taskDAO->setTask_id($task_id);
+    $dal = $caller->managers()->getManagerOf("Task");
+    $taskObj = $dal->selectMany($taskDAO, "task_id");
+    
+    return $taskObj[0];
   }
 
 }

@@ -116,6 +116,7 @@
     Dropzone.prototype.defaultOptions = {
       url: null,
       method: "post",
+      timeout: 0,
       withCredentials: false,
       parallelUploads: 2,
       uploadMultiple: false,
@@ -1210,6 +1211,7 @@
       method = resolveOption(this.options.method, files);
       url = resolveOption(this.options.url, files);
       xhr.open(method, url, true);
+      xhr.timeout = this.options.timeout;
       xhr.withCredentials = !!this.options.withCredentials;
       response = null;
       handleError = (function(_this) {
@@ -1292,6 +1294,11 @@
           }
           return handleError();
         };
+      })(this);
+      xhr.ontimeout = (function(_this) {
+        return function() {
+          return handleError();
+        }
       })(this);
       progressObj = (_ref = xhr.upload) != null ? _ref : xhr;
       progressObj.onprogress = updateProgress;

@@ -266,4 +266,35 @@ class TaskAnalyteMatrixHelper {
 
     return array('id_map' => $id_map, 'result_map' => $fmatrix_result_data);
   }
+
+  /**
+  * Creates a new relation in the "field_analyte_location" table based on 
+  * the passed task_id, location_id
+  */
+  public static function CreateFALocationRelationForFT($caller, $task_id, $location_id) {
+    //Get the Field data for this task id
+    //FIELD Analyte
+    $tfaDAO = new \Applications\PMTool\Models\Dao\Task_field_analyte();
+    $tfaDAO->setTask_id($task_id);
+    $dal = $caller->managers()->getManagerOf("TaskFieldAnalyte");
+    $relation_data = $dal->selectMany($tfaDAO, "task_id");
+
+    //Loop on the above and start preparing data for "field_analyte_location"
+    if(count($relation_data) > 0) {
+      foreach($relation_data as $fa_rec) {
+        //Add to the "field_analyte_location" table
+        $data = array(
+                'task_id'                         => $task_id, 
+                'location_id'                     => $location_id, 
+                'field_analyte_id'                => $fa_rec->field_analyte_id(),
+                'field_analyte_location_result'   => ''
+              ); 
+        //Init PDO
+        $field_analyte_location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Field_analyte_location());
+        $manager = $caller->managers()->getManagerOf('FieldAnalyteLocation');
+        $result_save_relation = $manager->add($field_analyte_location);
+      }
+    }
+  
+  }
 }

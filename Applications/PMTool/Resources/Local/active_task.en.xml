@@ -23,11 +23,13 @@
   <resource key="task_tab_map">Map</resource>
   <resource key="task_tab_forms">Forms</resource>
   <resource key="task_tab_comm">Communications</resource>
+  <resource key="task_tab_notes">Notes</resource>
   
   <resource key="h4_taskstatus_leftcol">Task Progress</resource>
   <resource key="h4_taskstatus_instruction_label">Instructions</resource>
   <resource key="h4_taskstatus_notes_label">Notes</resource>
   <resource key="h4_taskstatus_noteshistory">Notes for this Task</resource>
+  <resource key="h4_taskstatus_checklists">Checklists</resource>
   <resource key="h4_taskforms_leftcol">Completed Forms</resource>
   <resource key="h4_taskforms_rightcol">Forms used for this task</resource>
   <resource key="h4_taskcomm_leftcol">Discussion Thread</resource>
@@ -98,13 +100,16 @@
 
   <!-- active task field data matrix -->
   <resource key="active_task_at_fdm_header">Field Data Matrix</resource>
-  <resource key="at_fdm_analyte_heading">Field Analyte</resource>
+  <resource key="at_fdm_analyte_heading">Field Parameter</resource>
   <resource key="at_fdm_location_heading">Location</resource>
-  <resource key="at_fdm_h4_label">Update Field Data Matrix</resource>
+  <resource key="at_fdm_h4_label">Field Data</resource>
   <resource key="tlm_savebtn_label">Save</resource>
   <resource key="do_not_sample_label">Do not sample</resource>
   <resource key="not_yet_sampled">Not yet sampled</resource>
   <resource key="message_success_saveFieldMatrixResult">Field Matrix Result saved</resource>
   <resource key="message_error_saveFieldMatrixResult">Error saving Field Matrix</resource>
+  
+  <resource key="task_instructions">Instructions</resource>
+
 
 </resources>

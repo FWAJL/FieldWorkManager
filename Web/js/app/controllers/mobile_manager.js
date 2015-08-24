@@ -1,7 +1,7 @@
 /* JS FILE FOR MOBILE PAGES */
 var locationName, blockRefresh;
 var lastMessageTime = "";
-var location_id = ''; 
+var location_id = '';
 $(document).ready(function(){
   $(".task_list #active-list li").on('click',function(e){
     mobile_manager.set($(this));
@@ -18,7 +18,7 @@ $(document).ready(function(){
     $("#document-upload input[name=\"itemCategory\"]").val('task_note_id');
     $("#document-upload input[name=\"itemId\"]").val(0);
     $("#document-upload input[name='title']").parent('li').hide();
-    var dropzone = new Dropzone("#document-upload");
+    var dropzone = new Dropzone("#document-upload", {maxFiles: 1, timeout: 60000});
     dropzone.on("sending",function(event, xhr, formData){
       $("#btn_savenotes").attr('disabled','disabled');
     });
@@ -69,6 +69,12 @@ $(document).ready(function(){
   }
 
   if($("#mobile-location-list").length){
+    var showInfoWindow;
+    var showUploadAlert = false;
+    showInfoWindow = utils.showInfoWindow;
+    function disableShowInfoWindow(id, callback, callbackOnCancel) {utils.showAlert($("#confirmmsg-photoUpload").val(), function(){});};
+    Dropzone.autoDiscover = false;
+    var dropzone = new Dropzone("#document-upload", {maxFiles: 1, timeout: 60000});
     var optionsPosition = {
       desiredAccuracy: 20,
       maxWait: 15000
@@ -109,6 +115,7 @@ $(document).ready(function(){
         $("#location-info-modal-photos").show();
       }
       if(photosCount != 0){
+        $("#lightbox").off("click",".remove-file-link");
         $("#lightbox").on("click",".remove-file-link",function(){
           var documentId = $(this).data('id');
           mobile_manager.removePhoto(documentId);
@@ -118,6 +125,12 @@ $(document).ready(function(){
     }
 
     var openTaskLocationInfo = function(e,id,action) {
+      showUploadAlert = false;
+      $("#location-info-cancel-btn").off('click');
+      $("#location-info-cancel-btn").on('click',function(e){
+        showInfoWindow = utils.showInfoWindow;
+        dropzone.removeAllFiles(true);
+      });
       $("#task-location-id-selected").val(id);
       selectedMarker = id;
       $("#document-upload input[name=\"title\"]").val("");
@@ -139,12 +152,29 @@ $(document).ready(function(){
       } else {
         $("#task-location-info-modal-collect-data").show();
       }
-      Dropzone.forElement("#document-upload").removeAllFiles();
-      Dropzone.forElement("#document-upload").on("sending",function(event, xhr, formData){
-        $("#task-location-info-modal .modal-footer button").attr('disabled','disabled');
+      dropzone.removeAllFiles();
+      dropzone.off("sending");
+      dropzone.on("sending",function(event, xhr, formData){
+        showInfoWindow = disableShowInfoWindow;
       });
-      Dropzone.forElement("#document-upload").on("success",function(event,res){
+      dropzone.off("success");
+      dropzone.on("success",function(event,res){
         $("#task-location-info-modal .modal-footer button").removeAttr('disabled');
+        showInfoWindow = utils.showInfoWindow;
+        $('.prompt-modal').modal('hide');
+        if(showUploadAlert) {
+          utils.showAlert($('#confirmmsg-photoUploadFinished').val());
+        }
+      });
+      dropzone.off("error");
+      dropzone.on("error",function(file,res, xhr) {
+        showInfoWindow = utils.showInfoWindow;
+        if(typeof(xhr) != 'undefined'){
+          if(xhr.status === 0){
+            utils.showAlert($("#confirmmsg-photoTimeout").val(), function(){$('.prompt-modal').modal('hide');});
+            dropzone.removeFile(file);
+          }
+        }
       });
       datacx.post('location/getItem',{location_id: id}).then(function(reply){
         //toastr.success(reply.message);
@@ -169,8 +199,9 @@ $(document).ready(function(){
             $("#task-location-info-modal-"+action).show();
             setAddRemoveFromTaskEvent(e,id,action);
           }
-          utils.showInfoWindow('#task-location-info-modal',function(){
+          showInfoWindow('#task-location-info-modal',function(){
             if($("#task-location-info-modal-location_name").val() !== '') {
+              showUploadAlert = true;
               post_data = {};
               post_data.location_id = id;
               post_data.location_name = $("#task-location-info-modal-location_name").val();
@@ -178,7 +209,7 @@ $(document).ready(function(){
               post_data.location_lat = $("#task-location-info-modal-location_lat").val();
               post_data.location_long = $("#task-location-info-modal-location_long").val();
               mobile_manager.editLocation(post_data,'location','mapEdit',function(r){
-                location.reload();
+                $('.prompt-modal').modal('hide');
               });
             } else {
               $('#location-info-modal-location_name').focus();
@@ -188,9 +219,15 @@ $(document).ready(function(){
       });
     }
     var openAddNewTaskLocation = function() {
+      $("#location-info-cancel-btn").off('click');
+      $("#location-info-cancel-btn").on('click',function(e){
+        showInfoWindow = utils.showInfoWindow;
+        dropzone.removeAllFiles(true);
+      });
       var imagesOfNewLocation = [];
-
-      utils.showInfoWindow('#task-location-info-modal',
+      $("#document-upload input[name=\"itemId\"]").val('');
+      $("#task-location-window-title-task_location_name").html('');
+      showInfoWindow('#task-location-info-modal',
         function(){
           //check to see if unique
           datacx.post('location/ifLocationExists', {location_name: $("#task-location-info-modal-location_name").val()}).then(function(reply) {
@@ -249,16 +286,28 @@ $(document).ready(function(){
           resetTaskLocationDialogForEdit();
         }
       );
-
-      Dropzone.forElement("#document-upload").removeAllFiles();
-      Dropzone.forElement("#document-upload").on("sending",function(event, xhr, formData){
-        $("#task-location-info-modal .modal-footer button").attr('disabled','disabled');
+      dropzone.removeAllFiles();
+      dropzone.off("sending");
+      dropzone.on("sending",function(event, xhr, formData){
+        showInfoWindow = disableShowInfoWindow;
       });
       hideModifyTaskLocationFields();
-      Dropzone.forElement("#document-upload").on("success", function(e, response) {
+      dropzone.off("success");
+      dropzone.on("success", function(e, response) {
+        showInfoWindow = utils.showInfoWindow;
         //Keep pushing to the JS array
         imagesOfNewLocation.push(response.document.document_value);
         $("#task-location-info-modal .modal-footer button").removeAttr('disabled');
+      });
+      dropzone.off("error");
+      dropzone.on("error",function(file,res, xhr) {
+        showInfoWindow = utils.showInfoWindow;
+        if(typeof(xhr) != 'undefined'){
+          if(xhr.status === 0){
+            utils.showAlert($("#confirmmsg-photoTimeout").val(), function(){$('.prompt-modal').modal('hide');});
+            dropzone.removeFile(file);
+          }
+        }
       });
     };
     var hideModifyTaskLocationFields = function () {
@@ -424,7 +473,7 @@ $(document).ready(function(){
 
   }
 
-  
+
   $(document).on("click", ".location-list-row", function() {
     $("#task-location-id-selected").val($(this).attr('data-id'));
   });
@@ -436,50 +485,50 @@ $(document).ready(function(){
       if(reply.location_form_data.location_data.task_location_status == '2') {
         //Task complete, show alert
         if($('#confirmmsg-checkIfLocationComplete').length > 0) {
-          utils.showAlert($('#confirmmsg-checkIfLocationComplete').val(), null);  
+          utils.showAlert($('#confirmmsg-checkIfLocationComplete').val(), null);
         }
       } else {
         /*
-        //*****************
-        //the following Code used to show the PDF forms for this location
-        //Effective 8 6 2015 we would be showing the Web form instead.
+         //*****************
+         //the following Code used to show the PDF forms for this location
+         //Effective 8 6 2015 we would be showing the Web form instead.
 
-        //Please note the old code for showing PDF form is intact in the
-        //following commented out block
-        //*****************
+         //Please note the old code for showing PDF form is intact in the
+         //following commented out block
+         //*****************
 
 
-        if(reply.location_form_data.form_data.length > 0) {
+         if(reply.location_form_data.form_data.length > 0) {
 
-          //Show prompt
-          $('.prompt-modal').modal('hide');
-          $('#prompt_ok').hide();
+         //Show prompt
+         $('.prompt-modal').modal('hide');
+         $('#prompt_ok').hide();
 
-          //Render data
-          $('#active-list').addClass('ui-selectable');
-          for(i in reply.location_form_data.form_data) {
-            li_str += '<li data-object="task_location" data-document-id="' + reply.location_form_data.form_data[i].document_id + 
-                  '" class="ui-widget-content ui-selectee">' + reply.location_form_data.form_data[i].document_title + '</li>';
-          }
+         //Render data
+         $('#active-list').addClass('ui-selectable');
+         for(i in reply.location_form_data.form_data) {
+         li_str += '<li data-object="task_location" data-document-id="' + reply.location_form_data.form_data[i].document_id +
+         '" class="ui-widget-content ui-selectee">' + reply.location_form_data.form_data[i].document_title + '</li>';
+         }
 
-          mobile_manager.showTaskLocationFormSelectorPrompt(
-            null, 
-            function(){
-              $('.prompt-modal').modal('show');
-            }
-          );
+         mobile_manager.showTaskLocationFormSelectorPrompt(
+         null,
+         function(){
+         $('.prompt-modal').modal('show');
+         }
+         );
 
-          $('#active-list').html('');
-          $('#active-list').append(li_str);
-          $('ol#active-list li').addClass('select_item'); 
-          
-        } else {
-          //show alert, no form
-          if($('#confirmmsg-checkNoTaskLocationForms').length > 0) {
-            utils.showAlert($('#confirmmsg-checkNoTaskLocationForms').val(), null);  
-          }
-        }
-        */
+         $('#active-list').html('');
+         $('#active-list').append(li_str);
+         $('ol#active-list li').addClass('select_item');
+
+         } else {
+         //show alert, no form
+         if($('#confirmmsg-checkNoTaskLocationForms').length > 0) {
+         utils.showAlert($('#confirmmsg-checkNoTaskLocationForms').val(), null);
+         }
+         }
+         */
 
         //-----------
         //The new code follows
@@ -488,19 +537,18 @@ $(document).ready(function(){
         $('#prompt_ok').modal('hide');
         //Lets fetch the field matrix data
         datacx.post("mobile/getWebFormMatrixWithData", {'loc_id': $("#task-location-id-selected").val()}).then(function(reply) {
-          console.log(reply);
           //Clear the area before adding any new markup
           $('.tlf-selector-modal').find('.modal-body').html('');
           //Check if any data came
           if(reply.matrix.data_matrix.length > 0) {
             $('#matrix_prompt_ok').show();
             for (i in reply.matrix.data_matrix) {
-              
+
               $('.tlf-selector-modal').find('.modal-body').append(
-                '<div style="height: 33px; margin-top: 6px; display: inline-block; width: 100%;">' + 
+                '<div style="height: 33px; margin-top: 6px; display: inline-block; width: 100%;">' +
                   '<div style="float: left; height: 100%; margin: 4px; text-align: right; width: 28%;">' + reply.matrix.data_matrix[i].fa_name + '</div>' +
                   '<div style="float: right; width: 65%;"><input type="text" style="color: #EC1914;" value="' + reply.matrix.data_matrix[i].matrix_rec.field_analyte_location_result + '" name="field_data_result_' + $("#task-location-id-selected").val() + '_' + reply.matrix.data_matrix[i].matrix_rec.field_analyte_id + '"></div>' +
-                '</div>'
+                  '</div>'
               );
 
             }
@@ -510,6 +558,9 @@ $(document).ready(function(){
             );
             $('#matrix_prompt_ok').hide();
           }
+          
+                    //set location mame
+          $("#task-location-window-title-task_location_name2").html(item.location_name);
           
           mobile_manager.showTaskLocationWebFormForDateEntry(
             function(){
@@ -527,18 +578,18 @@ $(document).ready(function(){
                   toastr.options = {
                     "closeButton": true,
                     "timeOut": "0"
-                  } 
+                  }
                   toastr.error(reply.message);
                 }
               });
             },
             function(){
-              $('.prompt-modal').modal('show');
+              //$('.prompt-modal').modal('show');
             }
           );
-          
+
         });
-        
+
       }
 
     });
@@ -548,32 +599,32 @@ $(document).ready(function(){
     });
 
     $(document).on("click", "ol#active-list li", function(e) {
-      $('ol#active-list li').removeClass('ui-selected'); 
+      $('ol#active-list li').removeClass('ui-selected');
       $(this).addClass('ui-selected');
 
       datacx.post("form/getPdfFileFor", {"form_id": parseInt($(this).attr("data-document-id")), "form_type": "task_location"}).then(function(reply) {
-                
+
         if (reply === null || reply.result === 0) {//has an error
           //toastr.error(reply.message);
-          
+
         } else {//success
           //toastr.success(reply.message);
-          $.fancybox({ 
+          $.fancybox({
             href: reply.form_path,
             type: 'iframe',
             width: '100%',
             height: '100%',
-            autoSize: false, 
-            openEffect: 'none', 
-            closeEffect: 'none', 
-            iframe : { preload: false } 
+            autoSize: false,
+            openEffect: 'none',
+            closeEffect: 'none',
+            iframe : { preload: false }
           });
         }
-        
+
       });
     });
 
-    
+
   });
 
 });
@@ -738,8 +789,9 @@ $(document).ready(function(){
         //toastr.error(reply.message);
         return undefined;
       } else {//success
-        //toastr.success(reply.message);
-        location.reload();
+        toastr.success(reply.message);
+        $("a.lb-close").trigger('click');
+        $('.prompt-modal').modal('hide');
       }
     });
   };
