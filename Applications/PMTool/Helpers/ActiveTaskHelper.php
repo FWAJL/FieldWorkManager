@@ -88,4 +88,17 @@ class ActiveTaskHelper {
     return $docData;
   }
 
+  /**
+  * Queries the database for the task (tas_id passed)
+  * and returns it as task object
+  */
+  public static function QueryDBForActiveTaskData($task_id, $caller) {
+    $taskDAO = new \Applications\PMTool\Models\Dao\Task();
+    $taskDAO->setTask_id($task_id);
+    $dal = $caller->managers()->getManagerOf("Task");
+    $taskObj = $dal->selectMany($taskDAO, "task_id");
+    
+    return $taskObj[0];
+  }
+
 }
