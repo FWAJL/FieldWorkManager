@@ -1,6 +1,6 @@
 <?php
 
-define('__VERSION_NUMBER__', '1.7.14');
+define('__VERSION_NUMBER__', '1.7.15');
 define('__POWEREDBY__', "<a href=\"https://github.com/WebDevJL/EasyMVC\" target=\"_BLANK\">Powered by EasyMvc (GNU)</a>");
 
 require '../Applications/autoload.php';
@@ -29,5 +29,5 @@ try {
     die();
   }
 } catch (Exception $exc) {
-  echo "<!--" . $exc->getMessage() . "\n\r" . $exc->getTraceAsString() . "-->";
+  echo $exc->getMessage() . "\n\r" . $exc->getTraceAsString();
 }

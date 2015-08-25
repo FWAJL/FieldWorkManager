@@ -390,7 +390,8 @@ $(document).ready(function () {
   });
 
   $(".btn-add-analyte").click(function () {
-    ajaxParams.isFieldType = utils.containsStr($(this).attr("name"), "^(.*field.*)$");
+    //use url to distinguish the type of analyte...
+    ajaxParams.isFieldType = utils.containsStr(window.location.pathname, "^(.*analyte/uploadList.*)$");
     ajaxParams.isCommon = utils.containsStr($(this).attr("name"), "^(common.*)$");
     var getValuesParams = {
       "attrNameValues": $(this).attr("name"),
@@ -411,6 +412,7 @@ $(document).ready(function () {
       if (origin !== false && originid !== false) {
         ajaxParams.arrayOfValues['origin'] = origin;
         ajaxParams.arrayOfValues['originid'] = originid;
+        ajaxParams.redirectUrl = "task/fieldAnalytes";
       }
 
       datacx.add(ajaxParams);
