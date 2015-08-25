@@ -211,16 +211,11 @@ class AnalyteHelper {
       $pm = PmHelper::GetCurrentSessionPm($caller->user());
       $dataPost["pm_id"] = $pm[\Library\Enums\SessionKeys::PmObject]->pm_id();
     }
-    $origin = $originId = "";
+    $origin = "";
     if (array_key_exists("origin", $dataPost)) {
-      $postUserData = (array) $dataPost["userData"];
-      $postUserData["project_id"] = $dataPost["project_id"];
       $origin = $dataPost["origin"];
-      $originId = $dataPost["originid"];
-    } else {
-      $postUserData = $dataPost;
     }
-    
+
     $analytes = array();
     $analyteObj = null;
     if ($isCommon) {
@@ -251,6 +246,9 @@ class AnalyteHelper {
         $result["error"]["message"] = "Some items couldn't be added to the database";
       } elseif ($isFieldType && !$isCommon) {
         $analyte->setField_analyte_id($result["dataId"]);
+        if (strcmp($origin, "task") === 0) {
+          self::AddProjectAnalyte($caller, $analyte, $dataPost);
+        }
         array_push($pm[\Library\Enums\SessionKeys::PmFieldAnalytes], $analyte);
       } elseif (!$isFieldType && !$isCommon) {
         $analyte->setLab_analyte_id($result["dataId"]);
@@ -270,6 +268,34 @@ class AnalyteHelper {
       PmHelper::SetSessionPm($caller->user(), $pm);
     }
     return $result;
+  }
+
+  public static function AddProjectAnalyte($caller, \Applications\PMTool\Models\Dao\Field_analyte $analyte, $dataPost) {
+    $sessionProject = ProjectHelper::GetCurrentSessionProject($caller->user());
+    $project = $sessionProject[\Library\Enums\SessionKeys::ProjectObject];
+    $projectAnalyte = new \Applications\PMTool\Models\Dao\Project_field_analyte();
+
+    $dal = $caller->managers()->getManagerOf($caller->module());
+    $projectAnalyte->setProject_id($project->project_id());
+    $projectAnalyte->setField_analyte_id($analyte->field_analyte_id());
+    $result = $dal->add($projectAnalyte);
+    if ($result >= 0) {
+      self::AddTaskAnalyte($caller, $projectAnalyte, $dataPost);
+    } else {
+      throw new \Exception("Project field data wasn't added for following field data => \n\r" . var_dump($analyte), $result, NULL);
+    }
+  }
+
+  public static function AddTaskAnalyte($caller, \Applications\PMTool\Models\Dao\Project_field_analyte $analyte, $dataPost) {
+    $taskFieldData = new \Applications\PMTool\Models\Dao\Task_field_analyte();
+
+    $dal = $caller->managers()->getManagerOf($caller->module());
+    $taskFieldData->setField_analyte_id($analyte->field_analyte_id());
+    $taskFieldData->setTask_id($dataPost["originid"]);
+    $result = $dal->add($taskFieldData);
+    if ($result < 0) {
+      throw new \Exception("Task field data wasn't added for project field data => \n\r" . var_dump($analyte), $result, NULL);
+    }
   }
 
   private static function _PrepareManyAnalyteObjects($dataPost, $isFieldType = TRUE) {
