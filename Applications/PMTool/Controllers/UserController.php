@@ -72,7 +72,7 @@ class UserController extends \Library\BaseController {
         }
       } else if($this->app->user()->getUserType()=="technician_id") {
         $technicianObject = $this->user()->getAttribute(\Library\Enums\SessionKeys::UserTypeObject);
-        $technician = \Applications\PMTool\Helpers\UserHelper::PrepareTechnicianObject($this->dataPost());
+        $technician = \Applications\PMTool\Helpers\UserHelper::PrepareTechnicianObject($this->dataPost(),$technicianObject);
         $result["data"] = $technician;
         $manager = $this->managers->getManagerOf("Technician");
         $result_insert = $manager->edit($technician, 'technician_id');
