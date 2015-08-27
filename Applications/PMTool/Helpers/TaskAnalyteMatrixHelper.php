@@ -295,6 +295,37 @@ class TaskAnalyteMatrixHelper {
         $result_save_relation = $manager->add($field_analyte_location);
       }
     }
-  
+  }
+
+  /**
+  * Separates the Analyte name on the unit part and returns 
+  * both part of the string as an array
+  *
+  * Example:
+  * Analyte Name passed: Dissolved Oxygen (mg/L)
+  * Return data:
+  * array('Dissolved Oxygen', '(mg/L)')
+  */
+  public static function splitAnalyteNameOnUnit($analyte_name) {
+    $expression = '/\(([A-Za-z0-9@#$%*\/+-_~ ]+?)\)/';
+    preg_match_all($expression, $analyte_name, $matching_strings);
+
+    /*$final_arr = array(
+        str_replace($matching_strings[0][0], '', $analyte_name),
+        $matching_strings[0][0]
+      );*/
+    if(is_array($matching_strings[0]) && !empty($matching_strings[0])) {
+      $final_arr = array(
+        str_replace($matching_strings[0][0], '', $analyte_name),
+        $matching_strings[0][0]
+      );
+    } else {
+      $final_arr = array(
+        $analyte_name,
+        ''
+      );
+    }
+
+    return $final_arr;
   }
 }

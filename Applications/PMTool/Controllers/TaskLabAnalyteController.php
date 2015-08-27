@@ -90,7 +90,7 @@ class TaskLabAnalyteController extends \Library\BaseController {
     //Calculate pages
     $pages = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::returnTotalPagesOfAnalytes($task_lab_analytes, $this->app);
     //Filter paged result set of analytes
-    $task_lab_analytes = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::returnPagedAnalyteObjects($task_lab_analytes, $pg, $this->app);
+    //$task_lab_analytes = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::returnPagedAnalyteObjects($task_lab_analytes, $pg, $this->app);
 
     //Fetch ELLIPSIS tooltip settings from xml and pass to view as an array
     $ellipsis_tooltip_settings = \Applications\PMTool\Helpers\PopUpHelper::getTooltipEllipsisSettings('{"targetcontroller":"taskLabAnalyte", "targetaction": "labMatrix"}', $this->app->name());

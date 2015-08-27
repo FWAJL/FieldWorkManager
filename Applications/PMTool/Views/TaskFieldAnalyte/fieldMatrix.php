@@ -1,4 +1,13 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
+<?php
+/*if(!empty($task_field_analytes)){
+	foreach($task_field_analytes as $analyte){
+
+		//At this point separate the unit and the analyte name
+		$splitted_analyte_name = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::splitAnalyteNameOnUnit($analyte->field_analyte_name_unit());
+	}
+}*/
+?>
 <div class="right-aside col-no-right-pad main col-lg-10 col-md-10 col-sm-10">
   <h3>
     <?php echo $current_project->project_name(); ?>
@@ -22,6 +31,9 @@
 	    	  </div>
 	    	  <div class="matrix-scrollable-wrapper">
 	    	  	<div class="matrix-fixed-locations">
+	    	  		<div class="matrix-row">
+	    	  			<div class="matrix-location-header matrix-cell">&nbsp;</div>
+	    	  		</div>
 	    	  		<div class="matrix-row">
 	    	  			<div class="matrix-location-header matrix-cell"><?php echo $resx["tlm_locationhead_label"] ?></div>
 	    	  		</div>
@@ -48,13 +60,43 @@
 							
 							<div class="matrix-row matrix-scroll-row">
 								<?php
+									$analyte_units = array();
 						  		if(!empty($task_field_analytes)){
 										foreach($task_field_analytes as $analyte){
+
+											//At this point separate the unit and the analyte name
+											$splitted_analyte_name = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::splitAnalyteNameOnUnit($analyte->field_analyte_name_unit());
+
+											$field_analyte_name = $splitted_analyte_name[0];
+											//Store the unit into the array later use
+											array_push($analyte_units, $splitted_analyte_name[1]);
+
 								  		?>
 								  		<div class="matrix-cell matrix-cell-data">
 								  			<?php 
 								  			\Applications\PMTool\Helpers\CommonHelper::generateEllipsisAndTooltipMarkupFor(
-			                                        $analyte->field_analyte_name_unit(), 
+			                                        $field_analyte_name, 
+			                                        $toolTips[Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings]['charlimit'], 
+			                                        $toolTips[Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings]['placement']);
+								  			?>
+								  		</div>
+								  		<?php
+										}	
+						  		}
+						  	?>
+					  	</div>
+					  	<div></div>
+					  	<!--The units if any  -->
+							<div class="matrix-row matrix-scroll-row">
+								<?php
+									
+						  		if(!empty($task_field_analytes)){
+										foreach($analyte_units as $analyte_unit){
+								  		?>
+								  		<div class="matrix-cell matrix-cell-data">
+								  			<?php 
+								  			\Applications\PMTool\Helpers\CommonHelper::generateEllipsisAndTooltipMarkupFor(
+			                                        $analyte_unit, 
 			                                        $toolTips[Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings]['charlimit'], 
 			                                        $toolTips[Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings]['placement']);
 								  			?>

@@ -284,13 +284,14 @@ class CommonHelper {
   * using HTML <br />
   */
   private static function _returnLineBrokenText($text, $break_at) {
-    if(strlen($text) > 15) {
+    /*if(strlen($text) > 15) {
       $final_text = substr($text, 0, $break_at) . '<br />' . substr($text, $break_at);  
     } else {
       return $text;
-    }
+    }*/
     
-    return $final_text;
+    //return $final_text;
+    return wordwrap($text, 15, "<br>\n", true);
   }
 
 }
