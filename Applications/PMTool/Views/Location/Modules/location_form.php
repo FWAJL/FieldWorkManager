@@ -32,7 +32,7 @@
     </li>
     <li>
       <label><?php echo $resx["location_desc"]; ?></label>
-      <input name="location_desc" type="text" />
+      <textarea class="address" name="location_desc" type="text"></textarea>
     </li>
 <!--     <li>
       <label><?php echo $resx["location_document"]; ?></label>
