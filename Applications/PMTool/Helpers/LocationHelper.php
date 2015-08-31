@@ -79,6 +79,14 @@ class LocationHelper {
     $taskLoc->setLocation_id($location_id);
     $taskLoc->setTask_id($task_id);
     $taskLoc->setTask_location_status(0);
+
+    //At the same time create the relationship in "field_analyte_location"
+    \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::CreateFALocationRelationForFT(
+              $caller, 
+              $task_id, 
+              $location_id
+            );
+
     return $db->add($taskLoc);
   }
 
