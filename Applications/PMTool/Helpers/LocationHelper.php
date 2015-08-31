@@ -251,6 +251,12 @@ class LocationHelper {
       $dal = $caller->managers()->getManagerOf($caller->module());
       if ($dataPost["action"] === "add") {
         $result["rows_affected"] += $dal->add($task_location) >= 0 ? 1 : 0;
+        //At the same time create the relationship in "field_analyte_location"
+        \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::CreateFALocationRelationForFT(
+                  $caller, 
+                  $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id(), 
+                  $id
+                );
       } else {
         $result["rows_affected"] += $dal->delete($task_location, "location_id") ? 1 : 0;
       }

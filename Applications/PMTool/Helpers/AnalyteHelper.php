@@ -447,6 +447,15 @@ class AnalyteHelper {
         $sessionTaskAnalytes = $sessionTask[$params["sessionKey"]];
         array_push($sessionTaskAnalytes, $analyte);
         $sessionTask[$params["sessionKey"]] = $sessionTaskAnalytes;
+
+        //Set up task field_analyte_location relationship
+        if($params["objPropId"] === "field_analyte_id") {
+          \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::CreateLocationFARelationForFT(
+                                                    $caller, 
+                                                    $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id(), 
+                                                    $id
+                                                  );
+        }
       } else {
         $result["rows_affected"] += $dal->delete($params["object"], $params["objPropId"]) ? 1 : 0;
         //TODO: remove object deleted from array list
