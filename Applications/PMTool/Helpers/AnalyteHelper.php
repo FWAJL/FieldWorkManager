@@ -293,6 +293,14 @@ class AnalyteHelper {
     $taskFieldData->setField_analyte_id($analyte->field_analyte_id());
     $taskFieldData->setTask_id($dataPost["originid"]);
     $result = $dal->add($taskFieldData);
+
+    //Set up task field_analyte_location relationship
+    \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::CreateLocationFARelationForFT(
+                                              $caller, 
+                                              $dataPost["originid"], 
+                                              $analyte->field_analyte_id()
+                                            );
+
     if ($result < 0) {
       throw new \Exception("Task field data wasn't added for project field data => \n\r" . var_dump($analyte), $result, NULL);
     }
