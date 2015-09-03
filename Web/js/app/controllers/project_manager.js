@@ -94,13 +94,16 @@ $(document).ready(function() {
     post_data["facility"] = utils.retrieveInputs("facility_form", ["facility_name"]);
     post_data["client"] = utils.retrieveInputs("client_form", []);
 
+    console.log(post_data["facility"]);
+
     var msgNullCheck = $('#confirmmsg-addNullCheck').val();
     var msgUniqueCheck = $('#confirmmsg-addUniqueCheck').val();
     if (typeof msgNullCheck !== typeof undefined && msgNullCheck !== false &&
             typeof msgUniqueCheck !== typeof undefined && msgUniqueCheck !== false) {
       if (post_data["project"].project_name !== undefined &&
               post_data["facility"].facility_address !== undefined &&
-              post_data["facility"].facility_address !== "")
+              post_data["facility"].facility_address !== "" &&
+              post_data["facility"].facility_name !== undefined)
       {
         project_manager.ifProjectExists(post_data["project"]['project_name'], function(record_count) {
           if (record_count > 0 || post_data["project"].project_name === undefined)

@@ -82,7 +82,7 @@ class TaskFieldAnalyteController extends \Library\BaseController {
     //Calculate pages
     $pages = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::returnTotalPagesOfAnalytes($task_field_analytes, $this->app);
     //Filter paged result set of analytes
-    $task_field_analytes = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::returnPagedAnalyteObjects($task_field_analytes, $pg, $this->app);
+    //$task_field_analytes = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::returnPagedAnalyteObjects($task_field_analytes, $pg, $this->app);
 
     //Task specific locations
     $project_locations = \Applications\PMTool\Helpers\LocationHelper::GetProjectLocations($this, $sessionProject);

@@ -438,7 +438,7 @@ $(document).ready(function(){
       if (reply === null || reply.result === 0) {//has an error
       } else {//success
         $.each(reply.task_checklist, function(index, value){
-          $("#checklist-display-module").append("<li><input id='checklist-item-"+value.task_check_list_id+"' class='checklist-item' data-id='"+value.task_check_list_id+"' type='checkbox' />"+value.task_check_list_detail+"</li>");
+          $("#checklist-display-module").append("<li><input style='width: 30px !important;' id='checklist-item-"+value.task_check_list_id+"' class='checklist-item' data-id='"+value.task_check_list_id+"' type='checkbox' />"+value.task_check_list_detail+"</li>");
           var complete = false;
           if(value.task_check_list_complete == 1){
             complete = true;

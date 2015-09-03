@@ -45,6 +45,7 @@ abstract class AppSettingKeys {
   const GoogleMapsTaskInProcess = "GoogleMapsTaskInProcess";
 
   const DefaultEmailDomainValue = "DefaultEmailDomainValue";
+  const AddUserForProjectClient = "AddUserForProjectClient";
 }
 
 ?>

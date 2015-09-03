@@ -72,7 +72,7 @@ $(document).ready(function() {
             typeof msgUniqueCheck !== typeof undefined && msgUniqueCheck !== false) {
       if (post_data.service_name !== undefined && post_data.service_type !== undefined) {
         //Check uniqueness
-        service_manager.ifServiceProviderExists(post_data.service_name, function(record_count) {
+        service_manager.ifServiceProviderExists(post_data.service_name, '', function(record_count) {
           if (record_count > 0)
           {
             utils.showAlert(msgUniqueCheck.replace("{0}", post_data.service_name));
@@ -107,33 +107,31 @@ $(document).ready(function() {
 
   $("#btn_edit_service").click(function() {
     var post_data = utils.retrieveInputs("service_form", ["service_name"]);
+    console.log(post_data);
     var msgNullCheck = $('#confirmmsg-addNullCheck').val();
     var msgUniqueCheck = $('#confirmmsg-addUniqueCheck').val();
     if (typeof msgNullCheck !== typeof undefined && msgNullCheck !== false &&
         typeof msgUniqueCheck !== typeof undefined && msgUniqueCheck !== false) {    
-        //Check uniqueness
-        service_manager.ifServiceProviderExists(post_data.service_name, function(record_count) {
-          if (record_count > 0)
+      //Check uniqueness
+      service_manager.ifServiceProviderExists(post_data.service_name, post_data.service_id, function(record_count) {
+        if (record_count > 0)
+        {
+          utils.showAlert(msgUniqueCheck.replace("{0}", post_data.service_name));
+        }
+        else
+        {
+          if (post_data.service_name !== undefined) 
           {
-            utils.showAlert(msgUniqueCheck.replace("{0}", post_data.service_name));
+            service_manager.edit(post_data, "service", "edit");
           }
-          else
-          {
-           if (post_data.service_name !== undefined) 
-           {
-      service_manager.edit(post_data, "service", "edit");
-           }
-           }
-  });
- }
-  else 
-  {
-        utils.showAlert(msgNullCheck);
-      }
+        }
+      });
+    }
+    else 
+    {
+      utils.showAlert(msgNullCheck);
+    }
   });//Edit a service
-  
-  
-  
   
   
 
@@ -269,7 +267,7 @@ var selectionParams = {
     $("input[name=\"service_name\"]").val(dataWs.service.service_name);
     $("input[name=\"service_type\"]").val(dataWs.service.service_type);
     $("input[name=\"service_url\"]").val(dataWs.service.service_url);
-    $("input[name=\"service_address\"]").val(dataWs.service.service_address);
+    $("textarea[name=\"service_address\"]").val(dataWs.service.service_address);
     $("input[name=\"service_contact_name\"]").val(dataWs.service.service_contact_name);
     $("input[name=\"service_contact_phone\"]").val(dataWs.service.service_contact_phone);
     $("input[name=\"service_contact_email\"]").val(dataWs.service.service_contact_email);
@@ -314,8 +312,8 @@ var selectionParams = {
     });
   };
 
-  service_manager.ifServiceProviderExists = function(providerName, decision) {
-    datacx.post("service/ifProviderExists", {service_name: providerName}).then(function(reply) {
+  service_manager.ifServiceProviderExists = function(providerName, service_id, decision) {
+    datacx.post("service/ifProviderExists", {'service_name': providerName, 'service_id': service_id}).then(function(reply) {
       //alert(reply.record_count);
       decision(reply.record_count);
     });

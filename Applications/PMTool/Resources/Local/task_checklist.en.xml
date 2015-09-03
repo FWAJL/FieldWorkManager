@@ -2,8 +2,8 @@
 <resources>
 	<resource key="page_title">Your Field Data - Field Work Manager</resource>
 	<resource key="h3_taskchecklist">Checklist</resource>
-	<resource key="h4_taskchecklist">Add checklists</resource>
-	<resource key="h4_existing_checklists">Existing Checklists</resource>
+	<resource key="h4_taskchecklist">Add checklist</resource>
+	<resource key="h4_existing_checklists">Existing Checklist</resource>
   <resource key="checklist-add-button">Add CL</resource>
 
 	<!-- Tabs -->
