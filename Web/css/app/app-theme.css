@@ -483,28 +483,28 @@ ui-widget-content:hover {
 }
 .matrix-row {
   height: 40px;
-  margin-top: 3px;
+  margin-top: 1px;
 }
 .matrix-cell {
   width: 120px;
   background-color: #F7F7F7;
   float: left;
   height: 90%;
-  margin: 3px;
+  margin: 1px;
   text-align: center;
 }
 .matrix-alalyte-header {
   width: calc(100% - 135px);
-  font-size: 18px;
+  font-size: 16px;
   padding-top: 5px;
 }
 .matrix-location-header {
-  font-size: 18px;
+  font-size: 16px;
   padding-top: 5px;
 }
 .matrix-cell-data {
-  padding-top: 7px;
-  font-size: 14px;
+  padding-top: 4px;
+  font-size: 12px;
 }
 .matrix-footer {
   width: 150px;
@@ -531,6 +531,32 @@ ui-widget-content:hover {
   background-color: #fff;
   border: 1px solid #f7f7f7;
   padding: 4px;
+}
+
+.matrix-scrollable-wrapper {
+  float: left;
+  height: auto;
+  width: 100%;
+}
+
+.matrix-fixed-locations {
+  width: 126px;
+  float: left;
+}
+
+.matrix-scrollable-window {
+  float: right;
+  width: 872px;
+  overflow-x: scroll;
+  height: auto;
+  padding-bottom: 5px;
+  margin-right: 14px;
+}
+
+.matrix-scroll-row {
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
 }
 
 /* END Task: Lab Matrix, Field Matrix; */

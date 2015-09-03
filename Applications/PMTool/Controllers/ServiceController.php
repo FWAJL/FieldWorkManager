@@ -256,33 +256,41 @@ public function executeGetItem(\Library\HttpRequest $rq) {
   
   public function executeIfProviderExists(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS(); // Init result
-	$pmSession = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
+    $pmSession = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
 	
-	//Check if already list exists in Session
-	$service = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Service());
-	if (!array_key_exists(\Library\Enums\SessionKeys::PmServices, $pmSession)) {
-	  //No, we have to query db and then populate the list into Session
-	  $manager = $this->managers->getManagerOf($this->module());
-	  $allServiceProviders = $manager->selectMany($service, "", true);
-	  
-	  $pmSession[\Library\Enums\SessionKeys::PmServices] = $allServiceProviders;
-	  \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->user(), $pmSession);
+    //Check if already list exists in Session
+    $service = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Service());
+  	if (!array_key_exists(\Library\Enums\SessionKeys::PmServices, $pmSession)) {
+  	  //No, we have to query db and then populate the list into Session
+  	  $manager = $this->managers->getManagerOf($this->module());
+  	  $allServiceProviders = $manager->selectMany($service, "", true);
+  	  
+  	  $pmSession[\Library\Enums\SessionKeys::PmServices] = $allServiceProviders;
+  	  \Applications\PMTool\Helpers\PmHelper::SetSessionPm($this->user(), $pmSession);
     }
 	
-	//Now check if Service provider already exists
-	$match = \Applications\PMTool\Helpers\CommonHelper::FindObjectByStringValue(
-				$service->service_name(), "service_name",
-				$pmSession[\Library\Enums\SessionKeys::PmServices]
-    		);
-	
-	$result['record_count'] = (!$match || empty($match)) ? 0 : 1;
-	
-	$this->SendResponseWS(
-      $result, array(
-        "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Service,
-        "resx_key" => $this->action(),
-        "step" => ($result['record_count'] > 0) ? "success" : "error"
-      ));
+  	//Now check if Service provider already exists
+  	$match = \Applications\PMTool\Helpers\CommonHelper::FindObjectByStringValue(
+  				$service->service_name(), "service_name",
+  				$pmSession[\Library\Enums\SessionKeys::PmServices]
+      	);
+
+    $result['record_count'] = (!$match || empty($match)) ? 0 : 1;
+
+    //While editing, check if comparing with self
+    if(!empty($match) && $service->service_id() !== '') {
+      if($match->service_id() == $service->service_id()) {
+        $result['record_count'] = 0;        
+      }
+    }
+  	
+  	
+  	$this->SendResponseWS(
+        $result, array(
+          "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::Service,
+          "resx_key" => $this->action(),
+          "step" => ($result['record_count'] > 0) ? "success" : "error"
+        ));
   }
 
   /**
