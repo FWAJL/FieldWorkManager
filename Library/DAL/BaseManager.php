@@ -175,8 +175,6 @@ class BaseManager extends \Library\Manager {
     foreach ($object as $key => $value) {
       if ($key === $where_filter_id) {
         $where_clause = "$key = :$key";
-      } else if($value=== null){
-
       } else {
         $set_clause .= "`$key` = :$key,";
       }
@@ -187,6 +185,8 @@ class BaseManager extends \Library\Manager {
     foreach ($object as $key => $value) {
       if($value!==null){
         $sth->bindValue(":$key",$value,\PDO::PARAM_STR);
+      } else {
+        $sth->bindValue(":$key",$value,\PDO::PARAM_NULL);
       }
     }
     return $this->ExecuteQuery($sth, $params);
