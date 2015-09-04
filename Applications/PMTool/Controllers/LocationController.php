@@ -98,6 +98,9 @@ class LocationController extends \Library\BaseController {
   }
 
   public function executeAdd(\Library\HttpRequest $rq) {
+    if(empty($this->dataPost['location_lat']) or $this->dataPost['location_lat']=='' or empty($this->dataPost['location_long']) or $this->dataPost['location_long']=='' or !is_numeric($this->dataPost['location_lat']) or !is_numeric($this->dataPost['location_long'])){
+      $this->dataPost['location_lat'] = $this->dataPost['location_long'] = null;
+    }
     $result = \Applications\PMTool\Helpers\LocationHelper::AddProjectLocation($this, $this->InitResponseWS());
     $this->SendResponseWS(
             $result, array(
@@ -111,7 +114,9 @@ class LocationController extends \Library\BaseController {
     // Init result
     $result = $this->InitResponseWS();
     $sessionProject = \Applications\PMTool\Helpers\ProjectHelper::GetCurrentSessionProject($this->app()->user());
-
+    if(empty($this->dataPost['location_lat']) or $this->dataPost['location_lat']=='' or empty($this->dataPost['location_long']) or $this->dataPost['location_long']=='' or !is_numeric($this->dataPost['location_lat']) or !is_numeric($this->dataPost['location_long'])){
+      $this->dataPost['location_lat'] = $this->dataPost['location_long'] = null;
+    }
     //Init PDO
     $location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Applications\PMTool\Models\Dao\Location());
     $result["data"] = $location;
@@ -152,6 +157,9 @@ class LocationController extends \Library\BaseController {
     //save location project id
     $oldProjectId = $location->project_id();
     if ($location !== NULL) {
+      if(empty($this->dataPost['location_lat']) or $this->dataPost['location_lat']=='' or empty($this->dataPost['location_long']) or $this->dataPost['location_long']=='' or !is_numeric($this->dataPost['location_lat']) or !is_numeric($this->dataPost['location_long'])){
+        $this->dataPost['location_lat'] = $this->dataPost['location_long'] = null;
+      }
       //Init PDO
       $location = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), $location);
       $result["data"] = $location;
