@@ -270,11 +270,28 @@ class CommonHelper {
     }
 
     if(trim($truncatedData['truncated']) !== '') {
-      echo $truncatedData['truncated'];
+      echo self::_returnLineBrokenText($truncatedData['truncated'], 15);
       echo '<input type="hidden" class="ellipsis-tooltip" value="' . $truncatedData['source'] . '" placement="' . $placement . '" >';
     } else {
-      echo $truncatedData['source'];
+      //echo $truncatedData['source'];
+      echo self::_returnLineBrokenText($truncatedData['source'], 15);
     }
+  }
+
+  /**
+  * Related to the above functionality, introduce
+  * line breaks at certain points of the string
+  * using HTML <br />
+  */
+  private static function _returnLineBrokenText($text, $break_at) {
+    /*if(strlen($text) > 15) {
+      $final_text = substr($text, 0, $break_at) . '<br />' . substr($text, $break_at);  
+    } else {
+      return $text;
+    }*/
+    
+    //return $final_text;
+    return wordwrap($text, 15, "<br>\n", true);
   }
 
 }

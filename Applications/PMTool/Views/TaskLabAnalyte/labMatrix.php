@@ -19,88 +19,130 @@
             <div class="matrix-row">
               <div class="matrix-cell">&nbsp;</div><div class="matrix-alalyte-header matrix-cell"><?php echo $resx["tlm_analyte_label"] ?></div>
             </div>
-            <div class="matrix-row">
-              <div class="matrix-location-header matrix-cell"><?php echo $resx["tlm_locationhead_label"] ?></div>
-              <?php
-              if (!empty($task_lab_analytes)) {
-                //At this point fetch the char limit we have for the matrix cells
-                $charLimit = $this->app->config->get('MaxCharInCell');
-                //Loop over the analytes
-                foreach ($task_lab_analytes as $analyte) {
-                  ?>
-                  <div class="matrix-cell matrix-cell-data">
-                    <?php
-                    \Applications\PMTool\Helpers\CommonHelper::generateEllipsisAndTooltipMarkupFor(
-                            $analyte->lab_analyte_name(), 
-                            $toolTips[Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings]['charlimit'], 
-                            $toolTips[Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings]['placement']);
+            <div class="matrix-scrollable-wrapper">
+              
+              <div class="matrix-fixed-locations">
+                <div class="matrix-row">
+                  <div class="matrix-location-header matrix-cell">&nbsp;</div>
+                </div>
+                <div class="matrix-row">
+                  <div class="matrix-location-header matrix-cell"><?php echo $resx["tlm_locationhead_label"] ?></div>
+                </div>
+                <?php
+                if(!empty($task_locations)){
+                  foreach ($task_locations as $location) {
                     ?>
-                  </div>
+                    <div class="matrix-row">
+                      <div class="matrix-cell matrix-cell-data">
+                        <?php 
+                        \Applications\PMTool\Helpers\CommonHelper::generateEllipsisAndTooltipMarkupFor(
+                                      $location->location_name(),
+                                      $toolTips[Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings]['charlimit'], 
+                                      $toolTips[Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings]['placement']);
+                        ?>
+                      </div>
+                    </div>
                     <?php
                   }
                 }
                 ?>
-            </div>
-              <?php
-              if (!empty($task_locations)) {
-                foreach ($task_locations as $location) {
+              </div>
+              
+              <div class="matrix-scrollable-window">
+                <div class="matrix-row matrix-scroll-row">
+                <?php
+                  $analyte_units = array();
+                  if(!empty($task_lab_analytes)) {
+                    //At this point fetch the char limit we have for the matrix cells
+                    //$charLimit = $this->app->config->get('MaxCharInCell');
+
+                    //Loop over the analytes
+                    foreach ($task_lab_analytes as $analyte) {
+
+                      //At this point separate the unit and the analyte name
+                      $splitted_analyte_name = \Applications\PMTool\Helpers\TaskAnalyteMatrixHelper::splitAnalyteNameOnUnit($analyte->lab_analyte_name());
+
+                      $lab_analyte_name = $splitted_analyte_name[0];
+                      //Store the unit into the array later use
+                      array_push($analyte_units, $splitted_analyte_name[1]);
+
+                      ?>
+                      <div class="matrix-cell matrix-cell-data">
+                        <?php
+                        \Applications\PMTool\Helpers\CommonHelper::generateEllipsisAndTooltipMarkupFor(
+                                $lab_analyte_name, 
+                                $toolTips[Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings]['charlimit'], 
+                                $toolTips[Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings]['placement']);
+                        ?>
+                      </div>
+                      <?php
+                    }
+                  }
+                ?>
+                </div>
+                <div></div>
+
+                <!--The units if any  -->
+                <div class="matrix-row matrix-scroll-row">
+                  <?php
+                    
+                    if(!empty($task_lab_analytes)){
+                      foreach($analyte_units as $analyte_unit){
+                        ?>
+                        <div class="matrix-cell matrix-cell-data">
+                          <?php 
+                          \Applications\PMTool\Helpers\CommonHelper::generateEllipsisAndTooltipMarkupFor(
+                                                $analyte_unit, 
+                                                $toolTips[Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings]['charlimit'], 
+                                                $toolTips[Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings]['placement']);
+                          ?>
+                        </div>
+                        <?php
+                      } 
+                    }
                   ?>
-                <div class="matrix-row">
-                  <div class="matrix-cell matrix-cell-data">
-    <?php
-    //echo $location->location_name(); 
-    \Applications\PMTool\Helpers\CommonHelper::generateEllipsisAndTooltipMarkupFor(
-            $location->location_name(), 
-            $toolTips[Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings]['charlimit'], 
-            $toolTips[Applications\PMTool\Resources\Enums\ViewVariables\Popup::ellipsis_tooltip_settings]['placement']);
-    ?>
-                  </div>
+                </div>
+                <div></div>
+
+                <?php
+                if (!empty($task_locations)) {
+                  foreach ($task_locations as $location) {
+                  ?>
+                  <div class="matrix-row matrix-scroll-row">
                     <?php
                     foreach ($task_lab_analytes as $analyte) {
                       $id_pair = $location->location_id() . '_' . $analyte->lab_analyte_id();
                       ?>
-                    <div class="matrix-cell matrix-cell-data">
-                      <input type="checkbox" name="matrix_checkbox" class="matrix-checkbox" value="<?php echo $id_pair ?>"<?php if (in_array($id_pair, $task_lab_analytes_idmap)) echo "checked='checked'" ?> >
-                    </div>
-                    <?php
-                  }
-                  ?>
-                </div>
-                  <?php
-                }
-              }
-              ?>
-            <div class="matrix-row">
-              <div class="matrix-footer matrix-cell"><input type="checkbox" id="toggle_all"> <?php echo $resx["tlm_checkboxtoggle_label"] ?></div>
-              <div class="matrix-cell matrix-cell">
-                <input type="button" value="<?php echo $resx["tlm_savebtn_label"] ?>" class="btn btn-default" id="btn_save_labmatrix" style="display: inline-block;">
-              </div>
-            </div>
-            <div class="matrix-row pg-container">
-<?php
-if ($task_analytes_pages > 1) {
-  for ($pgno = 1; $pgno <= $task_analytes_pages; $pgno++) {
-    if ($pgno == $current_page) {
-      ?>
-                    <div class="pg currpg"><?php echo $pgno ?></div>
-                    <?php
-                  } else {
+                      <div class="matrix-cell matrix-cell-data">
+                        <input type="checkbox" name="matrix_checkbox" class="matrix-checkbox" value="<?php echo $id_pair ?>"<?php if (in_array($id_pair, $task_lab_analytes_idmap)) echo "checked='checked'" ?> >
+                      </div>
+                      <?php
+                    }
                     ?>
-                    <div class="pg"><a href="?pg=<?php echo $pgno ?>"><?php echo $pgno ?></a></div>
-                    <?php
+                  </div>
+                  <div></div>
+                  <?php
                   }
                 }
-              }
-              ?>
-            </div>
+                ?>
+              </div>
+
+              <div class="matrix-row">
+                <div class="matrix-footer matrix-cell"><input type="checkbox" id="toggle_all"> <?php echo $resx["tlm_checkboxtoggle_label"] ?></div>
+                <div class="matrix-cell" style="margin-top:10px;">
+                  <input type="button" value="<?php echo $resx["tlm_savebtn_label"] ?>" class="btn btn-default" id="btn_save_labmatrix" style="display: inline-block;">
+                </div>
+              </div>
+
+            </div> 
           </div>
         </div>
       </div>
-<?php
-require $form_modules["tabs_close"];
-require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg];
-require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::task_analyte_matrix_switch];
-?>
+      <?php
+      require $form_modules["tabs_close"];
+      require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg];
+      require $form_modules[Applications\PMTool\Resources\Enums\ViewVariables\Task::task_analyte_matrix_switch];
+      ?>
     </div>
   </div>
 </div>

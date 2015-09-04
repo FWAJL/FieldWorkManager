@@ -39,5 +39,5 @@
 
   <!--Field/Lab Analyte Pagination related configuartion-->
   <define key="AnalytesPerPage" value="7" />
-
+  <define key="AddUserForProjectClient" value="0" />
 </definitions>

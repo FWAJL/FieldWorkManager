@@ -43,4 +43,29 @@ class FieldAnalyteLocationDal extends \Library\DAL\BaseManager {
       echo $exc->getTraceAsString();
     }
   }
+
+  /**
+  * Check if matrix data is already inserted for this task id, location_id and FA id
+  */
+  public function ifMatrixDataExistsFor($task_id, $location_id, $fa_id) {
+    $sql = 'select * from field_analyte_location where task_id = :task_id and location_id = :location_id and field_analyte_id = :field_analyte_id';
+    $dao = $this->dao->prepare($sql);
+    $dao->bindValue(':task_id', $task_id, \PDO::PARAM_STR);
+    $dao->bindValue(':location_id', $location_id, \PDO::PARAM_STR);
+    $dao->bindValue(':field_analyte_id', $fa_id, \PDO::PARAM_STR);
+    
+    $ret_val = false;
+    try {
+      $dao->execute();
+      $dao->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Field_analyte_location');
+      $search_res = $dao->fetchAll();
+      $dao->closeCursor();
+      if(count($search_res) > 0) {
+        $ret_val = true;
+      }
+    } catch (Exception $exc) {
+      echo $exc->getTraceAsString();
+    } 
+    return $ret_val;
+  }
 }

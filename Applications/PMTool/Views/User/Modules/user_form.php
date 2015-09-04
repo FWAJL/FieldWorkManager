@@ -15,16 +15,16 @@
         </select>
       </li>
       <li>
-        <label><?php echo $resx["user_login"]; ?></label>
-        <input name="user_login" type="text" />
+        <label ><?php echo $resx["user_login"]; ?></label>
+        <input class='required' name="user_login" type="text" />
       </li>
       <li>
         <label><?php echo $resx["user_password"]; ?></label>
-        <input name="user_password" type="text" placeholder="<?php echo $resx["user_password_tip"]; ?>" />
+        <input class='required' name="user_password" type="text" placeholder="<?php echo $resx["user_password_tip"]; ?>" />
       </li>
       <li>
         <label><?php echo $resx["user_hint"]; ?></label>
-        <input name="user_hint" type="text" />
+        <input class='required' name="user_hint" type="text" />
       </li>
     </ol>
   </fieldset>

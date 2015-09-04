@@ -295,7 +295,7 @@ $(document).ready(function() {
   $("textarea[name=\"location_address\"]").val(dataWs.location.location_address);
   $("input[name=\"location_lat\"]").val(dataWs.location.location_lat);
   $("input[name=\"location_long\"]").val(dataWs.location.location_long);
-  $("input[name=\"location_desc\"]").val(dataWs.location.location_desc);
+  $("textarea[name=\"location_desc\"]").val(dataWs.location.location_desc);
   $("input[name=\"location_active\"]").prop('checked', utils.setCheckBoxValue(dataWs.location.location_active));
 
   $("input[name=\"itemCategory\"]").val('location_id');

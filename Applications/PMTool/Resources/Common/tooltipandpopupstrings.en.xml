@@ -78,7 +78,7 @@
 
 	
 	<resource uicomponent="alert" targetcontroller="project" targetaction="list" operation="addUniqueCheck" value="Project name is taken. Choose a new project name." />
-	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addNullCheck" value="To open a new Project, you must provide the Project Name, Facility Address and Client email address." />
+	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addNullCheck" value="To open a new Project, you must provide the Project Name, Facility Name, Facility Address and Client email address." />
 	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addUniqueCheck" value="'{0}' is already used for an existing project as a project name. Please choose another name." />
 	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addAddressCheck" value="Error finding the coordinates for facility address. You can edit them on the project map." />
 	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addCoordinatesCheck" value="Invalid coordinates." />
@@ -133,6 +133,6 @@
 	<resource uicomponent="prompt" targetcontroller="TaskChecklist" targetaction="uploadList" operation="edit" value="Edit checklist" />
 
 	<resource uicomponent="tooltip_ellipsis" targetcontroller="TaskLabAnalyte" targetaction="labMatrix" charlimit="13" placement="top" />
-	<resource uicomponent="tooltip_ellipsis" targetcontroller="TaskFieldAnalyte" targetaction="fieldMatrix" charlimit="13" placement="top" />
-	<resource uicomponent="tooltip_ellipsis" targetcontroller="ActiveTask" targetaction="fieldData" charlimit="13" placement="top" />
+	<resource uicomponent="tooltip_ellipsis" targetcontroller="TaskFieldAnalyte" targetaction="fieldMatrix" charlimit="28" placement="top" />
+	<resource uicomponent="tooltip_ellipsis" targetcontroller="ActiveTask" targetaction="fieldData" charlimit="28" placement="top" />
 </resources>
