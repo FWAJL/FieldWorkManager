@@ -24,7 +24,7 @@
     </li>
     <li>
       <label><?php echo $resx["pm_email"]; ?></label>
-      <input name="pm_email" type="text" />
+      <input class='required'  name="pm_email" type="text" />
     </li>
   </ol>
 </fieldset>

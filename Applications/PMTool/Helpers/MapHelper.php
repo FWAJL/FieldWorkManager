@@ -274,7 +274,7 @@ class MapHelper {
   }
 
   private static function CheckCoordinateValue($value) {
-    return isset($value) && $value !== "" && $value !== "0.000000";
+    return isset($value) && $value !== "" && $value !== "0.000000" && $value !== null;
   }
 
 }
