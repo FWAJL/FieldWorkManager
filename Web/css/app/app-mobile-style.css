@@ -127,6 +127,10 @@ ul.content_left > li > a > span.fa {
 #btn_addnewloc {
   width: 200px;
 }
+.modal-fullscreen {
+  margin: -1px !important;
+}
+
 /*Temporary to hide map in list view.*/
 
 /*LANDING PAGE*/

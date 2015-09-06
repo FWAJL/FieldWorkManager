@@ -41,7 +41,6 @@ class Managers {
    * Thrown if the module isn't given in $module parameter. </p>
    */
   public function getManagerOf($module, $isCoreModule = FALSE) {
-    error_log("Module is <" . $module . ">");
     if (!is_string($module) || empty($module)) {
       throw new \InvalidArgumentException('The module provided is invalid.');
     }
