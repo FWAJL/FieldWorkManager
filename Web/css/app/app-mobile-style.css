@@ -128,7 +128,7 @@ ul.content_left > li > a > span.fa {
   width: 200px;
 }
 .modal-fullscreen {
-  margin: -1px !important;
+  margin: -5px -1px !important;
 }
 .modal-header {
   padding-left: 40px;
