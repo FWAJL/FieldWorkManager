@@ -177,6 +177,10 @@ class ActiveTaskController extends \Library\BaseController {
               $this, 
               'technician_id', 
               $task_technicians[0]->technician_id());
+
+      
+      header("Location: http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
+      exit;
     }
 
     $data_left = array(
