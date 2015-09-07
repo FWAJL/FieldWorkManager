@@ -325,5 +325,4 @@ class MobileController extends \Library\BaseController {
       )
     );
   }
-
 }
