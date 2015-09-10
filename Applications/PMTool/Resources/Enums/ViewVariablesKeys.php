@@ -111,4 +111,5 @@ class ViewVariablesKeys {
   const location_list = "location_list";
   //checklist
   const checklist = "checklist";
+  const currentLocation = "currentLocation";
 }

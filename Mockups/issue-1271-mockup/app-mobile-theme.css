@@ -1,0 +1,40 @@
+.mobile_form_sections .list-panel {height: auto; }
+
+.mobile_form_sections .buttons {margin-top: 2px; }
+
+.chatbox {
+    margin-bottom: 15px;
+}
+
+/* Mobile Map Custom Control */
+#geolocation-map-control {
+  border: 1px solid #fff;
+  borderRadius: 2px;
+  boxShadow: 0 1px 4px rgba(0,0,0,.3);
+  cursor: pointer;
+  marginBottom: '22px';
+  textAlign: 'center';
+  background-size: cover;
+  width:32px;
+  height:32px;
+  background-color:white;
+  margin-right:5px;
+}
+.geolocation-map-control-active {
+  background: url("../../images/loc_active.png");
+}
+.geolocation-map-control-inactive {
+  background: url("../../images/loc.png");
+}
+#geolocation-map-control-text {
+  color: rgb(25,25,25);
+  fontFamily: 'Roboto,Arial,sans-serif';
+  fontSize: '16px';
+  lineHeight: '38px';
+  paddingLeft: '5px';
+  paddingRight: '5px';
+}
+
+.lb-nav a.lb-next, .lb-nav a.lb-prev {
+  opacity:1;
+}

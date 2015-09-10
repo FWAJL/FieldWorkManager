@@ -3,6 +3,7 @@ var locationName, blockRefresh;
 var lastMessageTime = "";
 var location_id = '';
 $(document).ready(function(){
+  $(".modal-dialog").addClass("modal-fullscreen");
   $(".task_list #active-list li").on('click',function(e){
     mobile_manager.set($(this));
   });
