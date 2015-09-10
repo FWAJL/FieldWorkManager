@@ -7,10 +7,9 @@
 
 
     <div class="row col-no-right-margin">
-      <div id="mobile-location-list" class="col-lg-2 col-md-2">
+      <div id="mobile-location-list" class="col-lg-12 col-md-12">
         <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::location_list]; ?>
       </div>
-      <div class="col-lg-8 col-md-8"></div>
     </div>
     <?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::tooltip_msg]; ?>
     <?php //require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::popup_maplegends_module]; ?>
