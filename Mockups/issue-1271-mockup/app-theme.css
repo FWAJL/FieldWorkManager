@@ -1,0 +1,572 @@
+m/*APPLIES TO: position/margins/widths/heights*/
+
+/* GENERAL THEMES */
+body, html, .sidebar { height: 100% }
+ol, ul { margin-bottom: 0; }
+.btn { margin-bottom: 5px; }
+.btn-warning { display: none; }
+.btn { width: 100%; }
+
+.header { margin-bottom: 10px; }
+
+h3 { margin-top: 10px; }
+
+.show { display: block; }
+/*.hide { display: none; }*/
+
+.required { border: 4px solid #f00;}
+/* END GENRAL */
+
+/* TOP HEADER */
+#top_header{
+  text-shadow: 0 1px 0 #fff;
+  border-bottom: 1px solid #e5e5e5;
+  clear: both;
+  height: 40px;
+}
+
+.brand { 
+  line-height: 40px;  
+  padding-left: 10px; 
+}
+
+.logo { margin-left: 20px; 
+}
+
+#pm_name { padding: 0 12px; }
+
+#top_header .logo img { height: 32px; margin: 4px; }
+
+#pm_info ul { display: none; }
+#pm_info, #ft_info {
+    float: right; 
+    margin-right: 40px
+}
+#top_header #branding > * { float: left; }
+.top-right-option a { padding: 12px; }
+/* END TOP HEADER */
+
+/* LOGIN */
+.login-box p label { width: 100px; }
+
+.login-box p input { line-height: 20px; }
+
+.login-container { margin:10px; }
+
+.login-container figure {
+  width: 300px;
+  margin: 0 auto;
+  padding: 5px;
+  border: solid 1px #999;
+}
+/* END LOGIN */
+
+/* BREADCRUMB */
+.breadcrumb li { display: inline-block; }
+
+.br_seperator { margin-left: -10px; }
+
+.breadcrumb {
+  line-height: 40px;
+  padding: 0;
+  margin: 0 10px;
+  text-indent: 10px;
+  border: solid 1px #999;
+}
+/* END BREADCRUMB */
+
+/* CONTENT_CONTAINER */
+.content-container {
+  max-width: 100%; 
+  height: auto;
+  margin: 0 auto;
+}
+
+.container-fluid {
+    padding-right: 0px;
+    padding-top: 10px;
+}
+
+.col-md-1, .col-lg-1 {
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.main { border-left: solid 1px #999; }
+/* END CONTENT_CONTAINER */
+
+/* COMMON FORM ELEMENTS */
+.h4 {
+    margin-right: 3px;
+}
+
+.form_sections {
+  padding: 5px;
+  padding-bottom: 30px;
+}
+
+.form_sections input[type="button"] {
+  white-space:initial;
+}
+
+.scroll-bar { overflow-y: scroll; }
+
+.list-panel {
+  height: 500px;
+  border: 1px solid #999;
+  margin-top: 10px;
+}
+
+.upload_list {
+ width: 100%;
+}
+
+.data-form {
+  padding: 5px;
+  padding-top: 20px; 
+}
+
+li label {
+    width: 30%;
+    margin-bottom: 3px;
+}
+
+li input {
+    width: 65%!important;
+    margin-bottom: 3px;
+}
+
+.modal-body li { margin-bottom: 5px; }
+
+.instructions {
+    width:100%;
+}
+
+
+.address {
+    height: 6em;
+    width: 65%!important;  
+}
+
+.cbox {
+    width: 15px!important;
+    margin-bottom: 3px;
+}
+
+.welcome > * { padding-left: 10px; } 
+
+/* BUTTONS */
+.buttons { margin-top: 40px; }
+
+
+/* END COMMON FORM ELEMENTS */
+
+/* PROJECT */
+#btn_edit_project { display: none;}
+/* END PROJECT */
+
+/* VIEW PROJECTS LIST */
+.project_list_section { padding: 10px 20px; }
+/* END VIEW PROJECTS LIST */
+
+/* END PROJECT */
+
+/* MAP */
+#map-wrapper {
+  position: relative;
+}
+#map {
+  width: 100%;
+  height: 600px;
+}
+.map-info-col {
+  padding:0;
+}
+#map-info {
+  width: 250px;
+  min-width: 50px;
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-left:15px;
+}
+.map-controls, .hide-map-sidebar {
+  display: none;
+}
+
+#map-ruler {
+  background-color: white;
+  height: 20px;
+  min-width: 50px;
+  display: none;
+}
+
+.map-info-row {
+  line-height: 35px;
+  padding-left: 0;
+  padding-right: 0;
+  overflow-y: hidden;
+}
+
+#map-info > .row {
+  padding-left: 0;
+  padding-rigt: 0;
+}
+
+#map-info > .row > [class*='col-'] {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#map-info-title {
+  height:30px;
+}
+
+#location-list {
+  width: 250px;
+  min-width: 50px;
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-left:15px;
+}
+
+.location-list-row {
+  line-height: 35px;
+  padding-left: 0;
+  padding-right: 0;
+  overflow-y: hidden;
+}
+
+#location-list > .row {
+  padding-left: 0;
+  padding-rigt: 0;
+}
+
+#location-list > .row > [class*='col-'] {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#location-list-title {
+  height:30px;
+}
+
+.map-info-icon-image {
+    width:35px;
+    height:35px;
+    margin: 0 auto;
+}
+
+.map-info-icon-image1 {
+    width:20px;
+    height:20px;
+    margin: 0 auto;
+}
+
+#map-info-shape, #map-info-add, #map-info-pan, #map-info-ruler {
+  cursor:pointer;
+}
+#map-info-ruler-icon {
+  background-image: url(../../images/map-ruler.png);
+  height:50px;
+  width:50px;
+}
+#map-info-add-icon {
+  background-image: url(../../images/map-add.png);
+  height:50px;
+  width:50px;
+}
+#map-info-pan-icon {
+  background-image: url(../../images/map-existing.png);
+  height:50px;
+  width:50px;
+}
+#map-info-shape-icon {
+  background-image: url(../../images/map-shape.png);
+  height:50px;
+  width:50px;
+}
+#map-info-toggle {
+  cursor: pointer;
+}
+#map-info .row {
+}
+.map-info-control-active {
+  background-color: #EEEEEE;
+}
+.map-info-marker-clickable {
+  cursor: pointer;
+}
+.map-info-marker-selected {
+  background-color: #EEEEEE;
+}
+
+.map-info-marker-highlighted {
+  background-color: #EEEEEE;
+}
+/* END MAP */
+
+/* TASK */
+.task_info_input {
+ margin-left: 10px;
+ margin-top: 25px;
+}
+
+.task_info_input li { padding-bottom: 10px; }
+
+.task_boxes { margin-left: 10px; }
+
+.checkbox {
+  margin-left: 25px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#freq_list { margin-left: 20px; }
+
+.task_box_label {
+    padding-left: 20px;
+    font-weight: bold;
+}
+
+.tab_cbox { width: 400px; }
+
+#freq_list { margin-left: 40px; }
+
+.checkbox_text { margin-left: 20px; }
+
+.client_form { padding: 10px; }
+
+#task-comm-chatbox { overflow-y: scroll; }
+/* END TASK */
+
+/* LOCATION */
+.location_form { width: 100%; }
+
+.btn-add-location-names {display: inline-block;}
+
+.field_analyte_form textarea, 
+.lab_analyte_form textarea
+{ width: 100% !important; }
+/* END LOCATION */
+
+#photo_form {
+  width: 40%;
+  float: right;
+}
+
+li.category-name {
+  padding: 4px;
+}
+
+.context-menu-list{ margin-left: 10px; }
+
+/* JS WIDGETS */
+
+.ui-widget-content {
+  padding: 5px;
+  margin-bottom: 1px;
+  border-bottom: 1px solid #999;
+}
+
+.select_item:hover,.select_item:focus, 
+ui-widget-content:focus, 
+ui-widget-content:hover {
+  border-right: solid 4px #F39814; 
+  padding: 5px;
+}
+
+.confirmbuttons {
+   margin-bottom:0;
+   width:auto;
+}
+
+.categorized li.ui-widget-content {
+  text-indent: 10px;
+}
+
+.tooltip-inner {
+    white-space:pre-wrap;
+   width:auto;
+
+}
+/* JS WIDGETS */
+
+/* FILE MODULES */
+.remove-image {
+  position:absolute;
+  top:0;
+  right:0;
+}
+.remove-image {
+  right:0px;
+  z-index:100;
+  opacity: 0.5;
+  font-size:30px;
+  text-shadow:
+    -1px -1px 0 #FFFFFF,
+    1px -1px 0 #FFFFFF,
+    -1px 1px 0 #FFFFFF,
+    1px 1px 0 #FFFFFF;
+  color: red;
+}
+
+.document-block {
+  position: relative;
+  padding-right:0px;
+}
+
+#document-upload {
+  clear:both;
+}
+
+.remove-file-link {
+  color: red;
+}
+/* END FILE MODULES */
+
+/* Active task related CSS */
+.p-desc {
+	font-size: 20px;
+    margin-top: 45px;
+}
+
+.notes-container {
+	font-size: 16px;
+    margin-top: 20px;
+	height:200px;
+	overflow-y : scroll;
+}
+
+#messages div {
+	margin-bottom:5px;
+	margin-top:5px;
+}
+
+.msg-row {
+	width:100%;
+	height:auto;
+	float:left;
+}
+
+.note-user1 {
+	float:left;
+	font-weight:bold;
+	width:28%;
+	min-width:150px;
+}
+.note-user2 {
+	font-weight:bold;
+	color:#A1A1A1;
+	float:left;
+	width:28%;
+	min-width:150px;
+}
+
+.user-msg {
+	float: right;
+  margin-right: 10px;
+  min-width: 320px;
+  width: 70%;
+}
+
+#refresh-chat {
+  display: inline;
+}
+/* END Active task related CSS */
+
+/* Task: Lab Matrix, Field Matrix; */
+.matrix-container {
+  width: 1012px;
+  margin-top: 20px;
+}
+.matrix-row {
+  height: 40px;
+  margin-top: 1px;
+}
+.matrix-cell {
+  width: 120px;
+  background-color: #F7F7F7;
+  float: left;
+  height: 90%;
+  margin: 1px;
+  text-align: center;
+}
+.matrix-alalyte-header {
+  width: calc(100% - 135px);
+  font-size: 16px;
+  padding-top: 5px;
+}
+.matrix-location-header {
+  font-size: 16px;
+  padding-top: 5px;
+}
+.matrix-cell-data {
+  padding-top: 4px;
+  font-size: 12px;
+}
+.matrix-footer {
+  width: 150px;
+  text-align: left;
+  padding-top: 5px;
+  margin-top: 10px;
+  background-color: #fff;
+  padding-left: 3px;
+}
+.pg-container {
+  padding-left: 150px;
+  text-align: center;
+}
+.pg {
+  background-color: #f7f7f7;
+  display: inline-block;
+  height: 30px;
+  margin-top: 20px;
+  padding: 5px;
+  text-align: center;
+  width: 30px;
+}
+.currpg {
+  background-color: #fff;
+  border: 1px solid #f7f7f7;
+  padding: 4px;
+}
+
+.matrix-scrollable-wrapper {
+  float: left;
+  height: auto;
+  width: 100%;
+}
+
+.matrix-fixed-locations {
+  width: 126px;
+  float: left;
+}
+
+.matrix-scrollable-window {
+  float: right;
+  width: 872px;
+  overflow-x: scroll;
+  height: auto;
+  padding-bottom: 5px;
+  margin-right: 14px;
+}
+
+.matrix-scroll-row {
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+/* END Task: Lab Matrix, Field Matrix; */
+.mobile-glyph { 
+  display:none; 
+}
+
+/* Mobile Infowindow geolocation */
+#location-info-modal-geolocation-seconds {
+  display: inline;
+}
+
+.instructions { height: 495px;}

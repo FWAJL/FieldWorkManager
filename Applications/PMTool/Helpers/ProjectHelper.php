@@ -230,4 +230,8 @@ class ProjectHelper {
     self::SetSessionProjects($caller->user(), $sessionProjects);
   }
 
+  public static function GetCurrentProject($caller) {
+    $sessionProject = self::GetCurrentSessionProject($caller->user());
+    return $sessionProject[\Library\Enums\SessionKeys::ProjectObject];
+  }
 }
