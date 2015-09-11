@@ -38,3 +38,11 @@
 .lb-nav a.lb-next, .lb-nav a.lb-prev {
   opacity:1;
 }
+
+  body.modal-open {
+    -webkit-overflow-scrolling: touch !important;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
