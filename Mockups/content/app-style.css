@@ -117,3 +117,17 @@ ui-widget-content:hover {
 .left-asidebg nav {
   display: none;
 }
+
+.list-header {
+      font-size: 20px;
+    font-weight: bolder;
+    line-height: 40px;
+    border-bottom: 1px solid #AAA;
+    text-indent: 5px;
+}
+.task-list > section > ul {
+  margin: 5px;
+}
+.task-list > section > ul > li > a{
+  text-decoration: underline;
+}
