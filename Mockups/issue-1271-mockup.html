@@ -3,28 +3,28 @@
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <title>Your tasks - Field Work Manager</title>
-    <link rel="stylesheet" type="text/css" href="issue-1271-mockup/reset.css">
-    <link rel="stylesheet" type="text/css" href="issue-1271-mockup/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="issue-1271-mockup/toastr.css">
-    <link rel="stylesheet" type="text/css" href="issue-1271-mockup/jquery.contextMenu.css">
-    <link rel="stylesheet" type="text/css" href="issue-1271-mockup/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="issue-1271-mockup/lightbox.css">
-    <link rel="stylesheet" type="text/css" href="issue-1271-mockup/dropzone.css">
-    <link rel="stylesheet" type="text/css" href="issue-1271-mockup/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="content/reset.css">
+    <link rel="stylesheet" type="text/css" href="content/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="content/toastr.css">
+    <link rel="stylesheet" type="text/css" href="content/jquery.contextMenu.css">
+    <link rel="stylesheet" type="text/css" href="content/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="content/lightbox.css">
+    <link rel="stylesheet" type="text/css" href="content/dropzone.css">
+    <link rel="stylesheet" type="text/css" href="content/font-awesome.min.css">
 
-    <link rel="stylesheet" type="text/css" href="issue-1271-mockup/nav.css">
-    <link rel="stylesheet" type="text/css" href="issue-1271-mockup/app-style.css">
-    <link rel="stylesheet" type="text/css" href="issue-1271-mockup/app-theme.css">
-    <link rel="stylesheet" type="text/css" href="issue-1271-mockup/app-mobile-style.css">
-    <link rel="stylesheet" type="text/css" href="issue-1271-mockup/app-mobile-theme.css">
-    <link rel="stylesheet" type="text/css" href="issue-1271-mockup/app-responsive.css">
-    <link rel="stylesheet" type="text/css" href="issue-1271-mockup/tabs.css">    
+    <link rel="stylesheet" type="text/css" href="content/nav.css">
+    <link rel="stylesheet" type="text/css" href="content/app-style.css">
+    <link rel="stylesheet" type="text/css" href="content/app-theme.css">
+    <link rel="stylesheet" type="text/css" href="content/app-mobile-style.css">
+    <link rel="stylesheet" type="text/css" href="content/app-mobile-theme.css">
+    <link rel="stylesheet" type="text/css" href="content/app-responsive.css">
+    <link rel="stylesheet" type="text/css" href="content/tabs.css">    
 <!--    <script type="application/javascript" src="
 ../Web/js/app/controllers/pm_manager.js"></script>-->
-    <script type="application/javascript" src="issue-1271-mockup/jquery.js"></script>
-    <script type="application/javascript" src="issue-1271-mockup/jquery-ui.js"></script>
-    <script type="application/javascript" src="issue-1271-mockup/top_menu.actions.js"></script>
-    <script type="application/javascript" src="issue-1271-mockup/task_manager.js"></script>    <!--<script type="application/javascript" src="../Web/js/app/controllers/pm_manager.js"></script>-->
+    <script type="application/javascript" src="content/jquery.js"></script>
+    <script type="application/javascript" src="content/jquery-ui.js"></script>
+    <script type="application/javascript" src="content/top_menu.actions.js"></script>
+    <script type="application/javascript" src="content/task_manager.js"></script>    <!--<script type="application/javascript" src="../Web/js/app/controllers/pm_manager.js"></script>-->
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--<link rel="shortcut icon" type="image/x-icon" href="../Web/images/favicon.ico">-->
@@ -39,7 +39,7 @@
 
 <section id="top_header">
   <div id="branding">
-    <figure class="logo"><img src="issue-1271-mockup/FWM_logo.jpg"></figure>
+    <figure class="logo"><img src="content/FWM_logo.jpg"></figure>
   </div>
   <div id="collapse-menu-button" class="top-right-option glyphicon fa fa-bars fa-2x"></div>    
   <span class="breadcrumb-top">
@@ -51,17 +51,17 @@
       Hello Jeremie    </span>
     <span id="ft_comm" class="top-right-option mobile-glyph">
       <a class="glyphicon" title="Messages">
-        <img src="issue-1271-mockup/glyphicons-246-chat.png">
+        <img src="content/glyphicons-246-chat.png">
       </a>
     </span>
     <span id="ft_map" class="top-right-option mobile-glyph">
       <a class="glyphicon" title="Map">
-        <img src="issue-1271-mockup/glyphicons-503-map.png">
+        <img src="content/glyphicons-503-map.png">
       </a>
     </span>
     <span id="ft_notes" class="top-right-option mobile-glyph">
       <a class="glyphicon" title="Notes">
-        <img src="issue-1271-mockup/glyphicons-151-edit.png">
+        <img src="content/glyphicons-151-edit.png">
       </a>
     </span>     
     <span id="view_info" class="top-right-option">
@@ -83,8 +83,8 @@
           <li>
             <span>Tasks</span>
             <ul>
-              <li><a href="http://myapps.local/FieldWorkManager/task/listAll" id="{{itemId}}">List All</a></li>
-              <li><a href="http://myapps.local/FieldWorkManager/task/addPrompt" id="{{itemId}}">Add</a></li>
+              <li><a href="issue-1271-mockup-task.html">List All</a></li>
+              <li><a href="issue-1271-mockup-subtask.html">Add</a></li>
             </ul>
           </li>
           <li>
@@ -93,59 +93,59 @@
               <li>
                 <span>Projects</span>
                 <ul>
-                  <li><a href="http://myapps.local/FieldWorkManager/project/listAll" id="{{itemId}}">List All</a></li>
-                  <li><a href="http://myapps.local/FieldWorkManager/project/showForm?mode=add&test=true" id="{{itemId}}">Add</a></li>
+                  <li><a href="http://myapps.local/FieldWorkManager/project/listAll">List All</a></li>
+                  <li><a href="http://myapps.local/FieldWorkManager/project/showForm?mode=add&test=true">Add</a></li>
                 </ul>
               </li>
               <li>
                 <span>Technicians</span>
                 <ul>
-                  <li><a href="http://myapps.local/FieldWorkManager/technician/listAll" id="{{itemId}}">List All</a></li>
-                  <li><a href="http://myapps.local/FieldWorkManager/technician/showForm" id="{{itemId}}">Add</a></li>
+                  <li><a href="http://myapps.local/FieldWorkManager/technician/listAll">List All</a></li>
+                  <li><a href="http://myapps.local/FieldWorkManager/technician/showForm">Add</a></li>
                 </ul>
               </li>
               <li>
                 <span>Locations</span>
                 <ul>
-                  <li><a href="http://myapps.local/FieldWorkManager/location/listAll" id="{{itemId}}">List All</a></li>
-                  <li><a href="http://myapps.local/FieldWorkManager/location/showForm" id="{{itemId}}">Add</a></li>
-                  <li><a href="http://myapps.local/FieldWorkManager/location/uploadList" id="{{itemId}}">Upload List</a></li>
+                  <li><a href="http://myapps.local/FieldWorkManager/location/listAll">List All</a></li>
+                  <li><a href="http://myapps.local/FieldWorkManager/location/showForm">Add</a></li>
+                  <li><a href="http://myapps.local/FieldWorkManager/location/uploadList">Upload List</a></li>
                 </ul>
               </li>
               <li>
                 <span>Map</span>
                 <ul>
-                  <li><a href="http://myapps.local/FieldWorkManager/map/allProjects" id="{{itemId}}">All Projects</a></li>
-                  <li><a href="http://myapps.local/FieldWorkManager/map/currentProject" id="{{itemId}}">Selected Project</a></li>
-                  <li><a href="http://myapps.local/FieldWorkManager/map/currentProjectLocations" id="{{itemId}}">All Project's Locations</a></li>
-                  <li><a href="http://myapps.local/FieldWorkManager/map/taskLocations" id="{{itemId}}">Task Locations</a></li>
+                  <li><a href="http://myapps.local/FieldWorkManager/map/allProjects">All Projects</a></li>
+                  <li><a href="http://myapps.local/FieldWorkManager/map/currentProject">Selected Project</a></li>
+                  <li><a href="http://myapps.local/FieldWorkManager/map/currentProjectLocations">All Project's Locations</a></li>
+                  <li><a href="http://myapps.local/FieldWorkManager/map/taskLocations">Task Locations</a></li>
                 </ul>
               </li>
               <li>
                 <span>Lab Analytes</span>
                 <ul>
-                  <li><a href="http://myapps.local/FieldWorkManager/labanalyte/listAll" id="{{itemId}}">List All</a></li>
-                  <li><a href="http://myapps.local/FieldWorkManager/labanalyte/uploadList" id="{{itemId}}">Upload List</a></li>
+                  <li><a href="http://myapps.local/FieldWorkManager/labanalyte/listAll">List All</a></li>
+                  <li><a href="http://myapps.local/FieldWorkManager/labanalyte/uploadList">Upload List</a></li>
                 </ul>
               </li>
               <li>
                 <span>Field Parameters</span>
                 <ul>
-                  <li><a href="http://myapps.local/FieldWorkManager/analyte/listAll" id="{{itemId}}">List All</a></li>
-                  <li><a href="http://myapps.local/FieldWorkManager/analyte/uploadList" id="{{itemId}}">Upload List</a></li>
+                  <li><a href="http://myapps.local/FieldWorkManager/analyte/listAll">List All</a></li>
+                  <li><a href="http://myapps.local/FieldWorkManager/analyte/uploadList">Upload List</a></li>
                 </ul>
               </li>
               <li>
                 <span>Field Forms</span>
                 <ul>
-                  <li><a href="http://myapps.local/FieldWorkManager/form/listAll" id="{{itemId}}">List All</a></li>
+                  <li><a href="http://myapps.local/FieldWorkManager/form/listAll">List All</a></li>
                 </ul>
               </li>
               <li>
                 <span>Service Provider</span>
                 <ul>
-                  <li><a href="http://myapps.local/FieldWorkManager/service/listAll" id="{{itemId}}">List All</a></li>
-                  <li><a href="http://myapps.local/FieldWorkManager/service/showForm?mode=add&test=true" id="{{itemId}}">Add</a></li>
+                  <li><a href="http://myapps.local/FieldWorkManager/service/listAll">List All</a></li>
+                  <li><a href="http://myapps.local/FieldWorkManager/service/showForm?mode=add&test=true">Add</a></li>
                 </ul>
               </li>
             </ul>
@@ -165,7 +165,7 @@ Edit this task</h3>
 <div id="tab-container" class="tab-container">
   <ul class="etabs">
     <li class="tab active" data-form-id="task_info">
-      <a href="issue-1271-mockup/Your tasks - Field Work Manager.html">
+      <a href="content/Your tasks - Field Work Manager.html">
         Task Info      </a>
     </li>
     <li class="tab " data-form-id="task_technicians">
@@ -378,22 +378,22 @@ Edit this task</h3>
   </div>
 </div>
 <!-- END CONTENT CONTAINER -->
-    <script type="application/javascript" src="issue-1271-mockup/parsexml.js"></script>
+    <script type="application/javascript" src="content/parsexml.js"></script>
 <!--    <script type="application/javascript" src="../Web/js/core/ko.js"></script>-->
-    <script type="application/javascript" src="issue-1271-mockup/bootstrap.min.js"></script>
-    <script type="application/javascript" src="issue-1271-mockup/bootbox.min.js"></script>
-    <script type="application/javascript" src="issue-1271-mockup/moment.locales.js"></script>  
-    <script type="application/javascript" src="issue-1271-mockup/dropzone.js"></script>
-    <script type="application/javascript" src="issue-1271-mockup/lightbox.js"></script>
-    <script type="application/javascript" src="issue-1271-mockup/toastr.js"></script>  
-    <script type="application/javascript" src="issue-1271-mockup/jquery.parseParams.js"></script>  
-    <script type="application/javascript" src="issue-1271-mockup/jquery.contextMenu.js"></script>  
-    <script type="application/javascript" src="issue-1271-mockup/jquery.ui.position.js"></script>  
-    <script type="application/javascript" src="issue-1271-mockup/spin.min.js"></script>  
-    <script type="application/javascript" src="issue-1271-mockup/config.js"></script>
-    <script type="application/javascript" src="issue-1271-mockup/dataservice.js"></script>
-    <script type="application/javascript" src="issue-1271-mockup/utils.js"></script>
-    <script type="application/javascript" src="issue-1271-mockup/tabs.js"></script>
+    <script type="application/javascript" src="content/bootstrap.min.js"></script>
+    <script type="application/javascript" src="content/bootbox.min.js"></script>
+    <script type="application/javascript" src="content/moment.locales.js"></script>  
+    <script type="application/javascript" src="content/dropzone.js"></script>
+    <script type="application/javascript" src="content/lightbox.js"></script>
+    <script type="application/javascript" src="content/toastr.js"></script>  
+    <script type="application/javascript" src="content/jquery.parseParams.js"></script>  
+    <script type="application/javascript" src="content/jquery.contextMenu.js"></script>  
+    <script type="application/javascript" src="content/jquery.ui.position.js"></script>  
+    <script type="application/javascript" src="content/spin.min.js"></script>  
+    <script type="application/javascript" src="content/config.js"></script>
+    <script type="application/javascript" src="content/dataservice.js"></script>
+    <script type="application/javascript" src="content/utils.js"></script>
+    <script type="application/javascript" src="content/tabs.js"></script>
       
 <!--<div class="modal fade pselector-modal in" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;">
     <div class="modal-dialog modal-upload">

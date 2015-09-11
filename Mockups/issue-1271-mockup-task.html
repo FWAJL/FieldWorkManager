@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Your tasks - Field Work Manager</title>
+    <link rel="stylesheet" type="text/css" href="content/reset.css">
+    <link rel="stylesheet" type="text/css" href="content/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="content/toastr.css">
+    <link rel="stylesheet" type="text/css" href="content/jquery.contextMenu.css">
+    <link rel="stylesheet" type="text/css" href="content/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="content/lightbox.css">
+    <link rel="stylesheet" type="text/css" href="content/dropzone.css">
+    <link rel="stylesheet" type="text/css" href="content/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" href="content/nav.css">
+    <link rel="stylesheet" type="text/css" href="content/app-style.css">
+    <link rel="stylesheet" type="text/css" href="content/app-theme.css">
+    <link rel="stylesheet" type="text/css" href="content/app-mobile-style.css">
+    <link rel="stylesheet" type="text/css" href="content/app-mobile-theme.css">
+    <link rel="stylesheet" type="text/css" href="content/app-responsive.css">
+    <link rel="stylesheet" type="text/css" href="content/tabs.css">    
+    <!--    <script type="application/javascript" src="
+    ../Web/js/app/controllers/pm_manager.js"></script>-->
+    <script type="application/javascript" src="content/jquery.js"></script>
+    <script type="application/javascript" src="content/jquery-ui.js"></script>
+    <script type="application/javascript" src="content/top_menu.actions.js"></script>
+    <script type="application/javascript" src="content/task_manager.js"></script>    <!--<script type="application/javascript" src="../Web/js/app/controllers/pm_manager.js"></script>-->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<link rel="shortcut icon" type="image/x-icon" href="../Web/images/favicon.ico">-->
+    <!--<link href='http://fonts.googleapis.com/css?family=Droid+Serif:700,400,400italic,700italic' rel='stylesheet' type='text/css'>-->
+
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style type="text/css"></style></head>
+
+  <body id="home">
+
+    <section id="top_header">
+      <div id="branding">
+        <figure class="logo"><img src="content/FWM_logo.jpg"></figure>
+      </div>
+      <div id="collapse-menu-button" class="top-right-option glyphicon fa fa-bars fa-2x"></div>    
+      <span class="breadcrumb-top">
+        <span class="fa fa-plus-circle fa-2x"></span>
+        <span class="fa fa-list fa-2x"></span>
+      </span>
+      <div id="pm_info">
+        <span id="pm_name" class="top-right-option">
+          Hello Jeremie    </span>
+        <span id="ft_comm" class="top-right-option mobile-glyph">
+          <a class="glyphicon" title="Messages">
+            <img src="content/glyphicons-246-chat.png">
+          </a>
+        </span>
+        <span id="ft_map" class="top-right-option mobile-glyph">
+          <a class="glyphicon" title="Map">
+            <img src="content/glyphicons-503-map.png">
+          </a>
+        </span>
+        <span id="ft_notes" class="top-right-option mobile-glyph">
+          <a class="glyphicon" title="Notes">
+            <img src="content/glyphicons-151-edit.png">
+          </a>
+        </span>     
+        <span id="view_info" class="top-right-option">
+          <a class="glyphicon glyphicon-user" title="View and edit your details"></a>
+        </span>
+        <span id="pm_logout" class="top-right-option">
+          <a class="glyphicon glyphicon-log-out" title="Logout" href="http://myapps.local/FieldWorkManager/logout"></a>
+        </span>
+      </div>
+
+    </section>  
+    <div class="clearfix"></div>
+    <div class="content-container container-fluid col-no-pad">
+      <div class="row col-no-right-margin mobile_main">
+        <section id="left-menu" class="left-aside">
+          <section class="left-asidebg">
+            <nav>
+              <!-- CONTENT -->
+              <ul class="content_left nav-sidebar">
+                <li>
+                  <span>Tasks</span>
+                  <ul>
+                    <li><a href="http://myapps.local/FieldWorkManager/task/listAll">List All</a></li>
+                    <li><a href="issue-1271-mockup-subtask.html">Add</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span>Menus</span>
+                  <ul class="other-menu-links">
+                    <li>
+                      <span>Projects</span>
+                      <ul>
+                        <li><a href="http://myapps.local/FieldWorkManager/project/listAll">List All</a></li>
+                        <li><a href="http://myapps.local/FieldWorkManager/project/showForm?mode=add&test=true">Add</a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <span>Technicians</span>
+                      <ul>
+                        <li><a href="http://myapps.local/FieldWorkManager/technician/listAll">List All</a></li>
+                        <li><a href="http://myapps.local/FieldWorkManager/technician/showForm">Add</a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <span>Locations</span>
+                      <ul>
+                        <li><a href="http://myapps.local/FieldWorkManager/location/listAll">List All</a></li>
+                        <li><a href="http://myapps.local/FieldWorkManager/location/showForm">Add</a></li>
+                        <li><a href="http://myapps.local/FieldWorkManager/location/uploadList">Upload List</a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <span>Map</span>
+                      <ul>
+                        <li><a href="http://myapps.local/FieldWorkManager/map/allProjects">All Projects</a></li>
+                        <li><a href="http://myapps.local/FieldWorkManager/map/currentProject">Selected Project</a></li>
+                        <li><a href="http://myapps.local/FieldWorkManager/map/currentProjectLocations">All Project's Locations</a></li>
+                        <li><a href="http://myapps.local/FieldWorkManager/map/taskLocations">Task Locations</a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <span>Lab Analytes</span>
+                      <ul>
+                        <li><a href="http://myapps.local/FieldWorkManager/labanalyte/listAll">List All</a></li>
+                        <li><a href="http://myapps.local/FieldWorkManager/labanalyte/uploadList">Upload List</a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <span>Field Parameters</span>
+                      <ul>
+                        <li><a href="http://myapps.local/FieldWorkManager/analyte/listAll">List All</a></li>
+                        <li><a href="http://myapps.local/FieldWorkManager/analyte/uploadList">Upload List</a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <span>Field Forms</span>
+                      <ul>
+                        <li><a href="http://myapps.local/FieldWorkManager/form/listAll">List All</a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <span>Service Provider</span>
+                      <ul>
+                        <li><a href="http://myapps.local/FieldWorkManager/service/listAll">List All</a></li>
+                        <li><a href="http://myapps.local/FieldWorkManager/service/showForm?mode=add&test=true">Add</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </nav></section>
+        </section>
+        <section id="task-list" class="task-list sidebar col-lg-1 col-md-1 col-sm-1 col-no-pad">
+          <section>
+            <div class="list-header">Tasks list</div>
+            <ul>
+              <li>
+                <a href="issue-1271-mockup-task.html">Task 1</a>
+                <ul class="subtasks-list">
+                  <li><a href="issue-1271-mockup-subtask.html">Sub-task 1</a></li>
+                  <li><a href="issue-1271-mockup-subtask.html">Sub-task 2</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="http://myapps.local/FieldWorkManager/task/listAll">Task 2</a>
+                <ul>
+                  <li>
+                    <a href="issue-1271-mockup-subtask.html">
+                      <span class="fa fa-plus-circle"></span>
+                      <span>new subtask</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a class="task-selected" href="http://myapps.local/FieldWorkManager/task/listAll">Task N</a>
+                <ul class="subtasks-list">
+                  <li><a href="issue-1271-mockup-subtask.html">Sub-task 1</a></li>
+                  <li><a href="issue-1271-mockup-subtask.html">Sub-task 2</a></li>
+                  <li><a href="issue-1271-mockup-subtask.html">Sub-task 3</a></li>
+                  <li><a href="issue-1271-mockup-subtask.html">Sub-task N</a></li>
+                </ul>
+              </li>
+
+            </ul>
+          </section>
+        </section>
+        <div class="right-aside col-no-right-pad main col-lg-11 col-md-11 col-sm-11">
+          <h3>
+            Test project<span class="glyphicon glyphicon-chevron-right"></span>    
+            Task N<span class="glyphicon glyphicon-chevron-right"></span>    
+            <!--Sub-task2<span class="glyphicon glyphicon-chevron-right"></span>    -->
+            Edit this task</h3>  
+          <div class="form_sections show">
+            <!-- open tabs -->
+
+            <div id="tab-container" class="tab-container">
+              <ul class="etabs">
+                <li class="tab active" data-form-id="task_info">
+                  <a href="content/Your tasks - Field Work Manager.html">
+                    Task Info      </a>
+                </li>
+                <li class="tab " data-form-id="task_technicians">
+                  <a href="http://myapps.local/FieldWorkManager/task/technicians">
+                    Technicians      </a>
+                </li>
+                <li class="tab " data-form-id="task_locations">
+                  <a href="http://myapps.local/FieldWorkManager/task/locations">
+                    Locations      </a>
+                </li>
+                <li class="tab " data-form-id="task_checklist">
+                  <a href="http://myapps.local/FieldWorkManager/task/checklist">
+                    Checklist
+                  </a>
+                </li>
+                <li class="tab " id="tab2" data-form-id="task_insp_info" style="display: none;">
+                  <a href="http://myapps.local/FieldWorkManager/task/forms">
+                    Forms      </a>
+                </li>
+                <li class="tab " id="tab3" data-form-id="field_analytes" style="display: none;">
+                  <a href="http://myapps.local/FieldWorkManager/task/fieldAnalytes">
+                    Field Data      </a>
+                </li>
+                <li class="tab " id="tab3a" data-form-id="field_matrix" style="display: none;">
+                  <a href="http://myapps.local/FieldWorkManager/task/fieldMatrix">
+                    Field Matrix
+                  </a>
+                </li>  
+                <li class="tab " id="tab5" data-form-id="lab_analytes" style="display: none;">
+                  <a href="http://myapps.local/FieldWorkManager/task/labAnalytes">
+                    Lab Analytes      </a>
+                </li>
+                <li class="tab " id="tab5a" data-form-id="lab_matrix" style="display: none;">
+                  <a href="http://myapps.local/FieldWorkManager/task/labMatrix">
+                    Lab Matrix
+                  </a>
+                </li>
+                <li class="tab " id="tab4" data-form-id="task_coc_info" style="display: none;">
+                  <a href="http://myapps.local/FieldWorkManager/task/coc?mode=edit&task_id=2">
+                    Chain of Custody      </a>
+                </li>  
+                <li class="tab " id="tab7" data-form-id="task_services" style="display: none;">
+                  <a href="http://myapps.local/FieldWorkManager/task/services">
+                    Services      </a>
+                </li>
+              </ul>
+
+              <!-- task info block -->
+
+              <div class="content-container container-fluid">
+                <div class="row col-no-right-margin">
+                  <div class="col-lg-5 col-md-5">
+
+                    <div id="task_info" class="data-form" style="display: block;">
+                      <fieldset class="task_form">
+                        <ol class="add-new-item">
+                          <li style="display: none;">
+                            <input name="task_id" type="text">
+                          </li>
+                          <li style="display: none;">
+                            <input name="project_id" type="text" value="1">
+                          </li>
+                          <li>
+                            <label>Task Name</label>
+                            <input name="task_name" type="text">
+                          </li>
+                          <li>
+                            <label>Deadline</label>
+                            <input type="text" name="task_deadline" id="datepicker" class="hasDatepicker">
+                          </li>
+                          <li class="hide">
+                            <label>Active</label>
+                            <input name="task_active" type="checkbox">
+                          </li>
+                        </ol>
+                      </fieldset>
+
+                      <div class="task_info_input">
+                        <h4>Triggers</h4>
+                        <fieldset class="task_form">
+                          <ol class="task_boxes">
+                            <li>
+                              <input class="cbox" name="task_trigger_cal" id="freq_list_box" type="checkbox">
+                              <span class="task_box_label">Recurring</span>
+                              <select name="task_trigger_cal_value" id="freq_list" style="display: none;">
+                                <option value="" selected="selected">Select</option>
+                                <option value="Daily">Daily</option>
+                                <option value="Weekly">Weekly</option>
+                                <option value="Two Weeks">Two Weeks</option>
+                                <option value="Monthly">Monthly</option>
+                                <option value="Two Months">Two Months</option>
+                                <option value="Quarterly">Quarterly</option>
+                                <option value="semi-Annual">semi-Annual</option>
+                                <option value="Annual">Annual</option>
+                              </select>
+                            </li>
+
+                            <li>
+                              <input class="cbox" name="task_trigger_pm" id="manual_box" type="checkbox">
+                              <span class="task_box_label">Manual</span>
+                              <span class="glyphicon glyphicon-question-sign" id="question-task-showForm-manual-box" data-original-title="" title=""></span>
+                            </li>
+
+                            <li>
+                              <input class="cbox" name="task_trigger_ext" id="external_box" type="checkbox">
+                              <span class="task_box_label">External</span>
+                              <span class="glyphicon glyphicon-question-sign" id="question-task-showForm-external-box" data-original-title="" title=""></span>
+                            </li>
+                          </ol>
+                        </fieldset>
+                      </div>
+
+                      <div class="task_info_input">
+                        <h4>Data Collection and Services</h4>
+                        <fieldset class="task_form">
+                          <ol class="task_boxes">
+                            <li>
+                              <input class="cbox" name="task_req_form" id="insp_note_box" type="checkbox">
+                              <span class="task_box_label tab_cbox">Task requires completion of a field form</span>
+                            </li>
+
+                            <li>
+                              <input class="cbox" name="task_req_field_analyte" id="field_data_box" type="checkbox">
+                              <span class="task_box_label tab_cbox">Collect Field Parameters</span>
+                            </li>
+
+                            <li>
+                              <input class="cbox" name="task_req_lab_analyte" id="lab_sample_box" type="checkbox">
+                              <span class="task_box_label tab_cbox">Submitting samples to a laboratory</span>
+                            </li>
+
+                            <li>
+                              <input class="cbox" name="task_req_service" id="service_providers_box" type="checkbox">
+                              <span class="task_box_label tab_cbox">Outside Resources required</span>
+                            </li>
+                          </ol>
+                        </fieldset>
+                      </div>
+                      <input type="hidden" id="tooltipmsg_question-task-showForm-manual-box" value="The Task will not start unless you click the &#39;Begin Work&#39; button in the active Task view." placement="right">
+                      <input type="hidden" id="tooltipmsg_question-task-showForm-external-box" value="This allows Tasks to be initiated by an external trigger, like and alarm.  Not currently functional." placement="right">
+                    </div>
+                  </div>
+                  <div class="col-lg-1 col-md-1">
+                    <div class="buttons">
+
+                      <!-- One set of buttons for all tabs -->
+
+                      <input type="button" id="btn_add_task" class="task_add btn btn-default" value="Add" style="display: none;">
+                      <input type="button" id="btn_edit_task" class="task_edit btn btn-default" value="Save" style="display: inline-block;">
+                      <input type="button" id="btn_delete_task" class="task_edit btn btn-default" value="Delete" style="display: inline-block;">
+                      <input type="button" id="btn_copy_task" class="task_edit btn btn-default" value="Copy" style="display: inline-block;">
+                      <input type="button" data-task-id="2" id="btn-from-inactive-task" class="from-inactive-task btn btn-default" value="Activate Task">
+                    </div>
+                  </div>
+                  <div class="col-lg-5 col-md-5">
+                    <span class="h4">Instructions</span>
+                    <span class="glyphicon glyphicon-info-sign" id=""></span>
+
+                    <div id="task_info_instr" class="scroll-bar">
+                      <fieldset class="task_form">
+                        <ol id="group-list-right" class="list-panel">
+                          <li id="task_instructions">
+                            <textarea id="instructions" class="instructions" name="task_instructions" type="text"></textarea>
+                          </li>
+                        </ol>
+                      </fieldset>      
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- close tabs -->
+
+          </div><!-- This div closes out the tab-container --> 
+        </div>
+        <input type="hidden" id="confirmmsg-activate" value="Are you sure you want to activate this task?  Active Tasks must be move to the inactive column in order to be modified or edited.">
+        <input type="hidden" id="confirmmsg-delete" value="Are you Sure to delete this task?">
+        <input type="hidden" id="confirmmsg-addUniqueCheck" value="Task name is taken. Choose a new Task name">
+        <!--Promt box: genrates a general prompt box-->
+        <div class="modal fade prompt-modal" tabindex="-1" role="dialog" aria-hidden="true">
+          <input type="hidden" id="promptmsg-addNullCheck" value="To continue, you must enter the new Task Name.">
+          <input type="hidden" id="promptmsg-addNullCheckForCopy" value="This will create a copy of Task &#39;{0}&#39;. To continue, you must enter the new task name.">
+          <div class="modal-dialog modal-upload">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="prompt_title"></h4>
+              </div>
+
+              <div class="modal-body">
+                <input class="form-control" type="text" id="text_input" name="text_input">
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary confirmbuttons" id="prompt_ok">Ok</button>
+                <button type="button" class="btn btn-default confirmbuttons" data-dismiss="modal" id="prompt_cancel">Cancel</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!--Promt box-->  </div></div><!-- END ROW DIV -->
+    <div class="row">
+      <div class="col-xs-7 col-pad-5"><p class="poweredby"><a href="https://github.com/WebDevJL/EasyMVC" target="_BLANK">Powered by EasyMvc (GNU)</a></p></div>
+      <div class="col-xs-5 col-pad-5">
+        <p class="version">Version: v1.7.17</p>
+      </div>
+    </div>
+    <!-- END CONTENT CONTAINER -->
+    <script type="application/javascript" src="content/parsexml.js"></script>
+    <!--    <script type="application/javascript" src="../Web/js/core/ko.js"></script>-->
+    <script type="application/javascript" src="content/bootstrap.min.js"></script>
+    <script type="application/javascript" src="content/bootbox.min.js"></script>
+    <script type="application/javascript" src="content/moment.locales.js"></script>  
+    <script type="application/javascript" src="content/dropzone.js"></script>
+    <script type="application/javascript" src="content/lightbox.js"></script>
+    <script type="application/javascript" src="content/toastr.js"></script>  
+    <script type="application/javascript" src="content/jquery.parseParams.js"></script>  
+    <script type="application/javascript" src="content/jquery.contextMenu.js"></script>  
+    <script type="application/javascript" src="content/jquery.ui.position.js"></script>  
+    <script type="application/javascript" src="content/spin.min.js"></script>  
+    <script type="application/javascript" src="content/config.js"></script>
+    <script type="application/javascript" src="content/dataservice.js"></script>
+    <script type="application/javascript" src="content/utils.js"></script>
+    <script type="application/javascript" src="content/tabs.js"></script>
+
+    <!--<div class="modal fade pselector-modal in" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;">
+        <div class="modal-dialog modal-upload">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="prompt_title">Select a task</h4>
+          </div>
+    
+          <div class="modal-body">
+            <div class="scroll-bar">
+      <ol id="active-list" class="list-panel ui-selectable">
+        <li data-project-id="2" class="ui-widget-content ui-selectee">Project 8</li>
+        <li data-project-id="3" class="ui-widget-content ui-selectee">Project 34</li>
+        <li data-project-id="4" class="ui-widget-content ui-selectee">Project 592</li>
+        <li data-project-id="5" class="ui-widget-content ui-selectee">Project 771</li>              
+      </ol>
+    </div>      </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary confirmbuttons" id="prompt_ok">Ok</button>
+            <button type="button" class="btn btn-default confirmbuttons" data-dismiss="modal" id="prompt_cancel">Cancel</button>
+          </div>
+    
+        </div>
+    
+      </div>
+    </div>-->
+    <ul class="context-menu-list context-menu-root" style="display: none;"><li class="context-menu-item"><span>Edit</span></li><li class="context-menu-item"><span>Select (as current Task)</span></li></ul><ul class="context-menu-list context-menu-root" style="display: none;"><li class="context-menu-item"><span>Check Task Status</span></li><li class="context-menu-item"><span>Select (as current Task)</span></li></ul><div id="lightboxOverlay" class="lightboxOverlay" style="display: none;"></div><div id="lightbox" class="lightbox" style="display: none;"><div class="lb-outerContainer"><div class="lb-container"><img class="lb-image" src=""><div class="lb-nav"><a class="lb-prev" href=""></a><a class="lb-next" href=""></a></div><div class="lb-loader"><a class="lb-cancel"></a></div></div></div><div class="lb-dataContainer"><div class="lb-data"><div class="lb-details"><span class="lb-caption"></span><span class="lb-number"></span></div><div class="lb-closeContainer"><a class="lb-close"></a></div></div></div></div><div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a><div class="ui-datepicker-title"><span class="ui-datepicker-month">September</span>&nbsp;<span class="ui-datepicker-year">2015</span></div></div><table class="ui-datepicker-calendar"><thead><tr><th scope="col" class="ui-datepicker-week-end"><span title="Sunday">Su</span></th><th scope="col"><span title="Monday">Mo</span></th><th scope="col"><span title="Tuesday">Tu</span></th><th scope="col"><span title="Wednesday">We</span></th><th scope="col"><span title="Thursday">Th</span></th><th scope="col"><span title="Friday">Fr</span></th><th scope="col" class="ui-datepicker-week-end"><span title="Saturday">Sa</span></th></tr></thead><tbody><tr><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">1</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">2</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">3</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">4</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">5</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">6</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">7</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">8</a></td><td class=" ui-datepicker-days-cell-over  ui-datepicker-current-day ui-datepicker-today" data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default ui-state-highlight ui-state-active ui-state-hover" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">9</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">10</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">11</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">12</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">13</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">14</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">15</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">16</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">17</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">18</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">19</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">20</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">21</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">22</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">23</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">24</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">25</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">26</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">27</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">28</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">29</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">30</a></td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td></tr></tbody></table></div><div id="window-resizer-tooltip" style="display: block;"><a href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#" title="Edit settings"></a><span class="tooltipTitle">Window size: </span><span class="tooltipWidth" id="winWidth">1680</span> x <span class="tooltipHeight" id="winHeight">988</span><br><span class="tooltipTitle">Viewport size: </span><span class="tooltipWidth" id="vpWidth">1680</span> x <span class="tooltipHeight" id="vpHeight">849</span></div></body></html>

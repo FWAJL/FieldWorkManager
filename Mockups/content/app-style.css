@@ -117,3 +117,27 @@ ui-widget-content:hover {
 .left-asidebg nav {
   display: none;
 }
+
+.list-header {
+      font-size: 20px;
+    font-weight: bolder;
+    line-height: 40px;
+    border-bottom: 1px solid #AAA;
+    text-indent: 5px;
+}
+.task-list > section > ul {
+  text-indent: 5px;
+}
+.task-list > section > ul > li > a{
+  text-decoration: underline;
+}
+.task-list > section > ul > li > ul{
+  text-indent: 10px;
+}
+.task-selected,
+.task-list > section > ul > li > a:hover,
+.task-list > section > ul > li > ul > li:hover{
+  border-top: 1px solid #F39814;
+  border-bottom: 1px solid #F39814;
+  border-right: 5px solid #F39814;
+}

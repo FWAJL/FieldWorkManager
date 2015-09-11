@@ -4,6 +4,6 @@ $(document).ready(function() {
     utils.redirect("user/showDetails");
   });//Show pm info
   $("#collapse-menu-button").on('click',function(){
-    $('#left-menu').toggle(400);
+    $('#left-menu').show(400);
 });
 });

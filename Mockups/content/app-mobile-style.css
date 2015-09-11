@@ -5,8 +5,12 @@ body
   font-size: 14px;
   min-width: 320px;
 }
+.branding {
+
+}
+
 .logo {
-  margin-left: 30px !important;
+  margin-left: 0px !important;
 }
  
  
@@ -100,10 +104,10 @@ h2
 }
 .left-asidebg > nav,
 #collapse-menu-button {
-  position: absolute !important;
+  /*position: absolute !important;
   top: 0 !important;
-  left: 0 !important;
-  z-index: 9999;
+  left: 0 !important;*/
+  z-index: 99;
   background-color: #f3f3f3;
   background-image: -moz-linear-gradient(#f9f9f9, #f3f3f3);
   background-image: -webkit-linear-gradient(#f9f9f9, #f3f3f3);
