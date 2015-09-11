@@ -126,8 +126,18 @@ ui-widget-content:hover {
     text-indent: 5px;
 }
 .task-list > section > ul {
-  margin: 5px;
+  text-indent: 5px;
 }
 .task-list > section > ul > li > a{
   text-decoration: underline;
+}
+.task-list > section > ul > li > ul{
+  text-indent: 10px;
+}
+.task-selected,
+.task-list > section > ul > li > a:hover,
+.task-list > section > ul > li > ul > li:hover{
+  border-top: 1px solid #F39814;
+  border-bottom: 1px solid #F39814;
+  border-right: 5px solid #F39814;
 }
