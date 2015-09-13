@@ -125,22 +125,43 @@ ui-widget-content:hover {
     border-bottom: 1px solid #AAA;
     text-indent: 5px;
 }
-.task-list > section > ul {
+/*Issue 1270*/
+.project-name {
   text-indent: 5px;
 }
-.task-list > section > ul > li > a{
-  text-decoration: underline;
-}
-.task-list > section > ul > li > ul{
+ul.task-list {
   text-indent: 10px;
 }
+.project-name .project-name-value {
+  font-style: italic;
+  font-weight: bolder;
+}
+.project-name,
+ul.task-list > li > a,
+ul.subtasks-list > li {
+  padding: 4px 0;
+}
+
+ul.task-list > li > a{
+  text-decoration: underline;
+}
+ul.task-list > li > ul{
+  text-indent: 15px;
+}
 .task-selected,
-.task-list > section > ul > li > a:hover,
-.task-list > section > ul > li > ul > li:hover{
+.project-name:hover,
+ul.task-list > li > a:hover,
+ul.task-list > li > ul > li:hover{
   border-top: 1px solid #F39814;
   border-bottom: 1px solid #F39814;
   border-right: 5px solid #F39814;
 }
+.project-name > i,
+.add-new-subtask > a > span.fa{
+  float: right;
+  padding: 2px;
+}
+
 /* issue 1271 */
 .lightbox{
   display: none !important;

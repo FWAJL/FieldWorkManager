@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="content/app-mobile-style.css">
     <link rel="stylesheet" type="text/css" href="content/app-mobile-theme.css">
     <link rel="stylesheet" type="text/css" href="content/app-responsive.css">
-    <link rel="stylesheet" type="text/css" href="content/tabs.css">    
+    <link rel="stylesheet" type="text/css" href="content/tabs.css">
     <!--    <script type="application/javascript" src="
     ../Web/js/app/controllers/pm_manager.js"></script>-->
     <script type="application/javascript" src="content/jquery.js"></script>
@@ -41,7 +41,7 @@
       <div id="branding">
         <figure class="logo"><img src="content/FWM_logo.jpg"></figure>
       </div>
-      <div id="collapse-menu-button" class="top-right-option glyphicon fa fa-bars fa-2x"></div>    
+      <div id="collapse-menu-button" class="top-right-option glyphicon fa fa-bars fa-2x"></div>
       <span class="breadcrumb-top">
         <span class="fa fa-plus-circle fa-2x"></span>
         <span class="fa fa-list fa-2x"></span>
@@ -63,7 +63,7 @@
           <a class="glyphicon" title="Notes">
             <img src="content/glyphicons-151-edit.png">
           </a>
-        </span>     
+        </span>
         <span id="view_info" class="top-right-option">
           <a class="glyphicon glyphicon-user" title="View and edit your details"></a>
         </span>
@@ -72,7 +72,7 @@
         </span>
       </div>
 
-    </section>  
+    </section>
     <div class="clearfix"></div>
     <div class="content-container container-fluid col-no-pad">
       <div class="row col-no-right-margin mobile_main">
@@ -154,47 +154,98 @@
               </ul>
             </nav></section>
         </section>
-        <section id="task-list" class="task-list sidebar col-lg-1 col-md-1 col-sm-1 col-no-pad">
+        <section id="task-list-menu" class="sidebar col-lg-1 col-md-1 col-sm-1 col-no-pad">
           <section>
             <div class="list-header">Tasks list</div>
-            <ul>
-              <li>
-                <a href="issue-1271-mockup-task.html">Task 1</a>
-                <ul class="subtasks-list">
-                  <li><a href="issue-1271-mockup-subtask.html">Sub-task 1</a></li>
-                  <li><a href="issue-1271-mockup-subtask.html">Sub-task 2</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="http://myapps.local/FieldWorkManager/task/listAll">Task 2</a>
-                <ul>
-                  <li>
-                    <a href="issue-1271-mockup-subtask.html">
-                      <span class="fa fa-plus-circle"></span>
-                      <span>new subtask</span>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a class="task-selected" href="http://myapps.local/FieldWorkManager/task/listAll">Task N</a>
-                <ul class="subtasks-list">
-                  <li><a href="issue-1271-mockup-subtask.html">Sub-task 1</a></li>
-                  <li><a href="issue-1271-mockup-subtask.html">Sub-task 2</a></li>
-                  <li><a href="issue-1271-mockup-subtask.html">Sub-task 3</a></li>
-                  <li><a href="issue-1271-mockup-subtask.html">Sub-task N</a></li>
-                </ul>
-              </li>
+            <div class="project">
+              <a href="#" class="project-name">
+                <span class="project-name-value">Project Test</span>
+                <i class="fa fa-pencil-square-o"></i>
+              </a>
+              <ul class="task-list">
+                <li>
+                  <a  class="task-selected" href="issue-1271-mockup-task.html">Task 1</a>
+                  <ul class="subtasks-list">
+                    <li><a href="issue-1271-mockup-subtask.html">Sub-task 1</a></li>
+                    <li><a href="issue-1271-mockup-subtask.html">Sub-task 2</a></li>
+                    <li class="add-new-subtask">
+                      <a href="issue-1271-mockup-task.html">
+                        <span>new subtask</span>
+                        <span class="fa fa-plus-circle"></span>
+                      </a>
+                    </li>
 
-            </ul>
+                  </ul>
+                </li>
+                <li>
+                  <a href="issue-1271-mockup-task.html">Task 2</a>
+                  <ul>
+                    <li class="add-new-subtask">
+                      <a href="issue-1271-mockup-task.html">
+                        <span>new subtask</span>
+                        <span class="fa fa-plus-circle"></span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="issue-1271-mockup-task.html">Task N</a>
+                  <ul class="subtasks-list">
+                    <li><a href="issue-1271-mockup-subtask.html">Sub-task 1</a></li>
+                    <li><a href="issue-1271-mockup-subtask.html">Sub-task 2</a></li>
+                    <li><a href="issue-1271-mockup-subtask.html">Sub-task 3</a></li>
+                    <li><a href="issue-1271-mockup-subtask.html">Sub-task N</a></li>
+                    <li class="add-new-subtask">
+                      <a href="issue-1271-mockup-task.html">
+                        <span>new subtask</span>
+                        <span class="fa fa-plus-circle"></span>
+                      </a>
+                    </li>
+
+                  </ul>
+                </li>
+
+              </ul>
+            </div>
+            <div class="project">
+              <a href="#" class="project-name">
+                <span class="project-name-value">Project Brian</span>
+                <i class="fa fa-pencil-square-o"></i>
+              </a>
+              <ul class="task-list">
+                <li>
+                  <a href="issue-1271-mockup-task.html">Task W</a>
+                  <ul>
+                    <li class="add-new-subtask">
+                      <a href="issue-1271-mockup-task.html">
+                        <span>new subtask</span>
+                        <span class="fa fa-plus-circle"></span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="issue-1271-mockup-task.html">Task N</a>
+                  <ul class="subtasks-list">
+                    <li><a href="issue-1271-mockup-subtask.html" title="Sub-task aaaaaaaaaaaa">Sub-task aaaaa...</a></li>
+                    <li><a href="issue-1271-mockup-subtask.html">Sub-task b</a></li>
+                    <li><a href="issue-1271-mockup-subtask.html">Sub-task c</a></li>
+                    <li><a href="issue-1271-mockup-subtask.html">Sub-task N</a></li>
+                    <li class="add-new-subtask">
+                      <a href="issue-1271-mockup-task.html">
+                        <span>new subtask</span>
+                        <span class="fa fa-plus-circle"></span>
+                      </a>
+                    </li>
+
+                  </ul>
+                </li>
+
+              </ul>
+            </div>
           </section>
         </section>
         <div class="right-aside col-no-right-pad main col-lg-11 col-md-11 col-sm-11">
-          <h3>
-            Test project<span class="glyphicon glyphicon-chevron-right"></span>    
-            Task N<span class="glyphicon glyphicon-chevron-right"></span>    
-            <!--Sub-task2<span class="glyphicon glyphicon-chevron-right"></span>    -->
-            Edit this task</h3>  
           <div class="form_sections show">
             <!-- open tabs -->
 
@@ -229,7 +280,7 @@
                   <a href="http://myapps.local/FieldWorkManager/task/fieldMatrix">
                     Field Matrix
                   </a>
-                </li>  
+                </li>
                 <li class="tab " id="tab5" data-form-id="lab_analytes" style="display: none;">
                   <a href="http://myapps.local/FieldWorkManager/task/labAnalytes">
                     Lab Analytes      </a>
@@ -242,7 +293,7 @@
                 <li class="tab " id="tab4" data-form-id="task_coc_info" style="display: none;">
                   <a href="http://myapps.local/FieldWorkManager/task/coc?mode=edit&task_id=2">
                     Chain of Custody      </a>
-                </li>  
+                </li>
                 <li class="tab " id="tab7" data-form-id="task_services" style="display: none;">
                   <a href="http://myapps.local/FieldWorkManager/task/services">
                     Services      </a>
@@ -367,7 +418,7 @@
                             <textarea id="instructions" class="instructions" name="task_instructions" type="text"></textarea>
                           </li>
                         </ol>
-                      </fieldset>      
+                      </fieldset>
 
                     </div>
                   </div>
@@ -378,7 +429,7 @@
 
             <!-- close tabs -->
 
-          </div><!-- This div closes out the tab-container --> 
+          </div><!-- This div closes out the tab-container -->
         </div>
         <input type="hidden" id="confirmmsg-activate" value="Are you sure you want to activate this task?  Active Tasks must be move to the inactive column in order to be modified or edited.">
         <input type="hidden" id="confirmmsg-delete" value="Are you Sure to delete this task?">
@@ -417,14 +468,14 @@
     <!--    <script type="application/javascript" src="../Web/js/core/ko.js"></script>-->
     <script type="application/javascript" src="content/bootstrap.min.js"></script>
     <script type="application/javascript" src="content/bootbox.min.js"></script>
-    <script type="application/javascript" src="content/moment.locales.js"></script>  
+    <script type="application/javascript" src="content/moment.locales.js"></script>
     <script type="application/javascript" src="content/dropzone.js"></script>
     <script type="application/javascript" src="content/lightbox.js"></script>
-    <script type="application/javascript" src="content/toastr.js"></script>  
-    <script type="application/javascript" src="content/jquery.parseParams.js"></script>  
-    <script type="application/javascript" src="content/jquery.contextMenu.js"></script>  
-    <script type="application/javascript" src="content/jquery.ui.position.js"></script>  
-    <script type="application/javascript" src="content/spin.min.js"></script>  
+    <script type="application/javascript" src="content/toastr.js"></script>
+    <script type="application/javascript" src="content/jquery.parseParams.js"></script>
+    <script type="application/javascript" src="content/jquery.contextMenu.js"></script>
+    <script type="application/javascript" src="content/jquery.ui.position.js"></script>
+    <script type="application/javascript" src="content/spin.min.js"></script>
     <script type="application/javascript" src="content/config.js"></script>
     <script type="application/javascript" src="content/dataservice.js"></script>
     <script type="application/javascript" src="content/utils.js"></script>
@@ -437,23 +488,23 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h4 class="modal-title" id="prompt_title">Select a task</h4>
           </div>
-    
+
           <div class="modal-body">
             <div class="scroll-bar">
       <ol id="active-list" class="list-panel ui-selectable">
         <li data-project-id="2" class="ui-widget-content ui-selectee">Project 8</li>
         <li data-project-id="3" class="ui-widget-content ui-selectee">Project 34</li>
         <li data-project-id="4" class="ui-widget-content ui-selectee">Project 592</li>
-        <li data-project-id="5" class="ui-widget-content ui-selectee">Project 771</li>              
+        <li data-project-id="5" class="ui-widget-content ui-selectee">Project 771</li>
       </ol>
     </div>      </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary confirmbuttons" id="prompt_ok">Ok</button>
             <button type="button" class="btn btn-default confirmbuttons" data-dismiss="modal" id="prompt_cancel">Cancel</button>
           </div>
-    
+
         </div>
-    
+
       </div>
     </div>-->
     <ul class="context-menu-list context-menu-root" style="display: none;"><li class="context-menu-item"><span>Edit</span></li><li class="context-menu-item"><span>Select (as current Task)</span></li></ul><ul class="context-menu-list context-menu-root" style="display: none;"><li class="context-menu-item"><span>Check Task Status</span></li><li class="context-menu-item"><span>Select (as current Task)</span></li></ul><div id="lightboxOverlay" class="lightboxOverlay" style="display: none;"></div><div id="lightbox" class="lightbox" style="display: none;"><div class="lb-outerContainer"><div class="lb-container"><img class="lb-image" src=""><div class="lb-nav"><a class="lb-prev" href=""></a><a class="lb-next" href=""></a></div><div class="lb-loader"><a class="lb-cancel"></a></div></div></div><div class="lb-dataContainer"><div class="lb-data"><div class="lb-details"><span class="lb-caption"></span><span class="lb-number"></span></div><div class="lb-closeContainer"><a class="lb-close"></a></div></div></div></div><div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a><div class="ui-datepicker-title"><span class="ui-datepicker-month">September</span>&nbsp;<span class="ui-datepicker-year">2015</span></div></div><table class="ui-datepicker-calendar"><thead><tr><th scope="col" class="ui-datepicker-week-end"><span title="Sunday">Su</span></th><th scope="col"><span title="Monday">Mo</span></th><th scope="col"><span title="Tuesday">Tu</span></th><th scope="col"><span title="Wednesday">We</span></th><th scope="col"><span title="Thursday">Th</span></th><th scope="col"><span title="Friday">Fr</span></th><th scope="col" class="ui-datepicker-week-end"><span title="Saturday">Sa</span></th></tr></thead><tbody><tr><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">1</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">2</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">3</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">4</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">5</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">6</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">7</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">8</a></td><td class=" ui-datepicker-days-cell-over  ui-datepicker-current-day ui-datepicker-today" data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default ui-state-highlight ui-state-active ui-state-hover" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">9</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">10</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">11</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">12</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">13</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">14</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">15</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">16</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">17</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">18</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">19</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">20</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">21</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">22</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">23</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">24</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">25</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">26</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">27</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">28</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">29</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2015"><a class="ui-state-default" href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#">30</a></td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td></tr></tbody></table></div><div id="window-resizer-tooltip" style="display: block;"><a href="http://myapps.local/FieldWorkManager/task/showForm?mode=edit&task_id=2#" title="Edit settings"></a><span class="tooltipTitle">Window size: </span><span class="tooltipWidth" id="winWidth">1680</span> x <span class="tooltipHeight" id="winHeight">988</span><br><span class="tooltipTitle">Viewport size: </span><span class="tooltipWidth" id="vpWidth">1680</span> x <span class="tooltipHeight" id="vpHeight">849</span></div></body></html>
