@@ -141,3 +141,25 @@ ui-widget-content:hover {
   border-bottom: 1px solid #F39814;
   border-right: 5px solid #F39814;
 }
+/* issue 1271 */
+.lightbox{
+  display: none !important;
+}
+.parent-task-list {
+  display: none;
+}
+.add-a-subtask,
+.parent-task-list {
+  margin-bottom: 5px;
+}
+.two-choices {
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  width: 75px;
+  padding: 5px;
+}
+.selected-choice 
+{
+  background-color: #F39814;
+  color: #fff;
+}
