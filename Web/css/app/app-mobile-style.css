@@ -134,7 +134,7 @@ ul.content_left > li > a > span.fa {
   padding-left: 40px;
 }
 
-.modal-dialog {
+.modal {
   position: fixed;
     left: 0;
     top: 0;
