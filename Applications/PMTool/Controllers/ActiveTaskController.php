@@ -136,7 +136,6 @@ class ActiveTaskController extends \Library\BaseController {
       $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::currentDiscussion, $currentDiscussion);
     }
 
-
     //Let's get this task specific services
     $sessionPm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     $pm_services = \Applications\PMTool\Helpers\ServiceHelper::GetPmServices($this, $sessionPm);
@@ -161,12 +160,29 @@ class ActiveTaskController extends \Library\BaseController {
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties_right => \Applications\PMTool\Helpers\ActiveTaskHelper::SetPropertyNamesOfDocumentsForDualList()
     );
     $this->page->addVar(\Applications\PMTool\Resources\Enums\ViewVariablesKeys::data_right, $data_right);
+    
     //Similarly let's get the task specific technicians
     $sessionPm = \Applications\PMTool\Helpers\PmHelper::GetCurrentSessionPm($this->user());
     $pm_technicians = \Applications\PMTool\Helpers\TechnicianHelper::GetPmTechnicians($this, $sessionPm);
     $task_technicians = \Applications\PMTool\Helpers\TechnicianHelper::GetAndStoreTaskTechnicians($this, $sessionTask);
     // filter the pm technicians after we retrieve the task technicians
     $pm_technicians = \Applications\PMTool\Helpers\TechnicianHelper::FilterTechniciansToExcludeTaskTechnicians($pm_technicians, $task_technicians);
+
+    //\Applications\PMTool\Helpers\CommonHelper::pr($task_technicians);
+    //Check if the technician count for this task is only one, if so
+    //startComm for this technician
+    if(count($task_technicians) === 1 and !$currentDiscussion) {
+      //Only one, let's start comm
+      \Applications\PMTool\Helpers\ActiveTaskHelper::StartCommunicationWith(
+              $this, 
+              'technician_id', 
+              $task_technicians[0]->technician_id());
+
+      
+      header("Location: http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
+      exit;
+    }
+
     $data_left = array(
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::module => strtolower($this->module()),
       \Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects_list_left => $task_technicians,
@@ -275,55 +291,10 @@ class ActiveTaskController extends \Library\BaseController {
     $result = $this->InitResponseWS(); // Init result
 
     $result['success'] = false;
-    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($this->user);
-    $taskDiscussions = \Applications\PMTool\Helpers\DiscussionHelper::GetAllTaskDiscussions($this, $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+    
+    $result['success'] = \Applications\PMTool\Helpers\ActiveTaskHelper::StartCommunicationWith($this, $this->dataPost['selection_type'], $this->dataPost['id']);
 
 
-    if($this->dataPost['selection_type'] == 'technician_id') {
-      $technicians = \Applications\PMTool\Helpers\TechnicianHelper::GetAndStoreTaskTechnicians($this,$sessionTask);
-      foreach($technicians as $technician) {
-        if($technician->technician_id() == $this->dataPost['id']) {
-          $manager = $this->managers()->getManagerOf('User');
-          $user = $manager->selectUserByTypeId('technician_id', $technician->technician_id());
-          break;
-        }
-      }
-    } else if($this->dataPost['selection_type'] == 'service_id') {
-      $services = \Applications\PMTool\Helpers\ServiceHelper::GetAndStoreTaskServices($this,$sessionTask);
-      foreach($services as $service) {
-        if($service->service_id() == $this->dataPost['id']) {
-          $manager = $this->managers()->getManagerOf('User');
-          $user = $manager->selectUserByTypeId('service_id', $service->service_id());
-          break;
-        }
-      }
-    } else if($this->dataPost['selection_type'] == 'pm_id') {
-      $sessionPm = $this->user->getAttribute(\Library\Enums\SessionKeys::CurrentPm);
-      $currentPmObject = $sessionPm[\Library\Enums\SessionKeys::PmObject];
-      if($currentPmObject->pm_id() == $this->dataPost['id']) {
-        $manager = $this->managers()->getManagerOf('User');
-        $user = $manager->selectUserByTypeId('pm_id', $currentPmObject->pm_id());
-      }
-    }
-    //we can add more users later if we choose to add more people in same discussion
-    $discussionUsers = array($this->user->getAttribute(\Library\Enums\SessionKeys::UserConnected), $user);
-
-    $discussion = \Applications\PMTool\Helpers\DiscussionHelper::CheckIfDiscussionExistsByUsers($this, $this->user->getAttribute(\Library\Enums\SessionKeys::UserConnected), $user, $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
-    if ($discussion === false) {
-      $discussion = \Applications\PMTool\Helpers\DiscussionHelper::CreateNewDiscussion($this, $discussionUsers, $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
-    }
-    //in case create discussion returned false we will check if discussion is false again
-    if ($discussion !== false) {
-      $manager = $this->managers()->getManagerOf('DiscussionPerson');
-      $discussion_person = new \Applications\PMTool\Models\Dao\Discussion_person();
-      $discussion_person->setDiscussion_id($discussion->discussion_id());
-      //select all connected people so we can store them in session
-      $discussion_people = $manager->selectMany($discussion_person, 'discussion_id');
-      \Applications\PMTool\Helpers\DiscussionHelper::SetCurrentDiscussion($this->user, $discussion, $discussion_people);
-      $result['success'] = true;
-    } else {
-      $result['success'] = false;
-    }
     $this->SendResponseWS(
             $result, array(
         "resx_file" => \Applications\PMTool\Resources\Enums\ResxFileNameKeys::ActiveTask,
