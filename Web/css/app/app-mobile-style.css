@@ -133,7 +133,12 @@ ul.content_left > li > a > span.fa {
 .modal-header {
   padding-left: 40px;
 }
-
+.modal {
+  position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
 /*Temporary to hide map in list view.*/
 
 /*LANDING PAGE*/
