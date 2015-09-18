@@ -101,4 +101,64 @@ class ActiveTaskHelper {
     return $taskObj[0];
   }
 
+  /**
+  * Starts communication with 
+  * entities with passed parameters
+  */
+  public static function StartCommunicationWith($caller, $selection_type, $selection_id) {
+
+    $sessionTask = \Applications\PMTool\Helpers\TaskHelper::GetCurrentSessionTask($caller->user());
+    $taskDiscussions = \Applications\PMTool\Helpers\DiscussionHelper::GetAllTaskDiscussions($caller, $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+
+
+    if($selection_type == 'technician_id') {
+      $technicians = \Applications\PMTool\Helpers\TechnicianHelper::GetAndStoreTaskTechnicians($caller,$sessionTask);
+      foreach($technicians as $technician) {
+        if($technician->technician_id() == $selection_id) {
+          $manager = $caller->managers()->getManagerOf('User');
+          $user = $manager->selectUserByTypeId('technician_id', $technician->technician_id());
+          break;
+        }
+      }
+    } else if($selection_type == 'service_id') {
+      $services = \Applications\PMTool\Helpers\ServiceHelper::GetAndStoreTaskServices($caller, $sessionTask);
+      foreach($services as $service) {
+        if($service->service_id() == $selection_id) {
+          $manager = $caller->managers()->getManagerOf('User');
+          $user = $manager->selectUserByTypeId('service_id', $service->service_id());
+          break;
+        }
+      }
+    } else if($selection_type == 'pm_id') {
+      $sessionPm = $caller->user->getAttribute(\Library\Enums\SessionKeys::CurrentPm);
+      $currentPmObject = $sessionPm[\Library\Enums\SessionKeys::PmObject];
+      if($currentPmObject->pm_id() == $selection_id) {
+        $manager = $caller->managers()->getManagerOf('User');
+        $user = $manager->selectUserByTypeId('pm_id', $currentPmObject->pm_id());
+      }
+    }
+    //we can add more users later if we choose to add more people in same discussion
+    $discussionUsers = array($caller->user()->getAttribute(\Library\Enums\SessionKeys::UserConnected), $user);
+
+    $discussion = \Applications\PMTool\Helpers\DiscussionHelper::CheckIfDiscussionExistsByUsers($caller, $caller->user()->getAttribute(\Library\Enums\SessionKeys::UserConnected), $user, $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+    if ($discussion === false) {
+      $discussion = \Applications\PMTool\Helpers\DiscussionHelper::CreateNewDiscussion($caller, $discussionUsers, $sessionTask[\Library\Enums\SessionKeys::TaskObj]->task_id());
+    }
+    //in case create discussion returned false we will check if discussion is false again
+    if ($discussion !== false) {
+      $manager = $caller->managers()->getManagerOf('DiscussionPerson');
+      $discussion_person = new \Applications\PMTool\Models\Dao\Discussion_person();
+      $discussion_person->setDiscussion_id($discussion->discussion_id());
+      //select all connected people so we can store them in session
+      $discussion_people = $manager->selectMany($discussion_person, 'discussion_id');
+      \Applications\PMTool\Helpers\DiscussionHelper::SetCurrentDiscussion($caller->user(), $discussion, $discussion_people);
+      $return_val = true;
+    } else {
+      $return_val = false;
+    }
+
+    return $return_val;
+
+  }
+
 }

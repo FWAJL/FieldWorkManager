@@ -4,6 +4,14 @@
 <html lang="<?php echo $this->app->locale; ?>">
   <head>
     <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <meta name="apple-touch-fullscreen" content="yes">
+
     <title><?php echo $this->app->pageTitle; ?></title>
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/app/reset.css<?php echo $version; ?>" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/core/bootstrap.css<?php echo $version; ?>" />
@@ -15,9 +23,9 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/css/core/font-awesome.min.css<?php echo $version; ?>" />
 
     <?php echo $this->app->globalResources["css_files"]; ?>
-    
+
 <!--    <script type="application/javascript" src="
-<?php echo $this->app->relative_path; ?>
+    <?php echo $this->app->relative_path; ?>
 Web/js/app/controllers/pm_manager.js"></script>-->
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/jquery.js<?php echo $version; ?>"></script>
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/js/core/jquery-ui.js<?php echo $version; ?>"></script>
