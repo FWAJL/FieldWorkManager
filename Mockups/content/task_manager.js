@@ -8,6 +8,20 @@
  */
 $(document).ready(function() {
   $(".btn-warning").hide();
+  //issue 1271
+  $(".two-choices").click(function() {
+    if($(this).hasClass("yes")) {
+      $(".no").removeClass("selected-choice");
+      $(".yes").addClass("selected-choice");
+      $(".parent-task-list").show();
+    } else {
+      $(".yes").removeClass("selected-choice");
+      $(".no").addClass("selected-choice");
+      $(".parent-task-list").hide();
+    }
+
+  });
+  //end of issue 1271
   $.contextMenu({
     selector: '#inactive-list .select_item',
     callback: function(key, options) {
