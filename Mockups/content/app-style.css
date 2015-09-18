@@ -1,0 +1,186 @@
+/*APPLIES TO: colors/fonts/border style*/
+
+/* GENERAL STYLES */
+.validator {
+ /*display: none;*/
+ /*color: #FC7F6F;*/
+}
+
+/* END GENRAL */
+
+/* LOGIN */
+
+/* END LOGIN */
+
+/* TOP HEADER */
+#top_header{
+  background-color: #f3f3f3;
+  background-image: -moz-linear-gradient(#f9f9f9, #f3f3f3);
+  background-image: -webkit-linear-gradient(#f9f9f9, #f3f3f3);
+  background-image: linear-gradient(#f9f9f9, #f3f3f3);
+  background-repeat: repeat-x;
+}
+
+#branding_text {font-size: 20px; font-weight: bold; padding-top: 4px;}
+
+.top-right-option a:hover {
+  background-color: #e5e5e5;
+}
+/* END TOP HEADER */
+
+/* BREADCRUMB */
+
+/* END BREADCRUMB */
+
+/* CONTENT_CONTAINER */
+
+/* END CONTENT_CONTAINER */
+
+/* COMMON FORM ELEMENTS */
+.header4 {
+   font-size: 14px;
+   font-style: bold;
+}
+
+.welcome > * { color: #333; } 
+
+/* BUTTONS */
+.btn-primary {
+  background-color: #FFF;
+  border-color: #999;
+  color: #333;
+}
+
+.btn-primary:hover, 
+.btn-primary:focus, 
+.btn-primary:active, 
+.btn-primary.active, 
+.open .dropdown-toggle.btn-primary{
+  background-color: #000;
+  border-color: #999;
+}
+/* END COMMON FORM ELEMENTS */
+
+/* PROJECT */
+
+/* END PROJECT */
+
+/* FACILITY */
+
+/* CLIENT */
+
+/* LOCATION */
+
+/* TASK */
+
+li.category-name {
+  font-size: larger;
+  font-style: italic;
+  color: #fff;
+  background-color: #FFB445;
+  text-decoration: underline;
+}
+
+/* JS WIDGETS */
+
+.select_item:hover,
+.select_item:focus, 
+ui-widget-content:focus, 
+ui-widget-content:hover {
+  background-color: #ffd;
+  color: #F39814;
+}
+
+.ui-selecting { background: #FECA40; }
+
+.ui-selected { 
+    background: #F39814; 
+    color: white; 
+}
+
+.context-menu-active {
+    font-weight: bold; 
+    color: #F39814;
+}
+/* JS WIDGETS */
+.task_add_item {
+  white-space: normal !important;
+}
+.other-menu-links {
+  display: none;
+}
+.breadcrumb-top .fa {
+  padding-left: 10px;
+  padding-right: 10px;
+  line-height: 40px;
+}
+.left-asidebg nav {
+  display: none;
+}
+
+.list-header {
+      font-size: 20px;
+    font-weight: bolder;
+    line-height: 40px;
+    border-bottom: 1px solid #AAA;
+    text-indent: 5px;
+}
+/*Issue 1270*/
+.project-name {
+  text-indent: 5px;
+}
+ul.task-list {
+  text-indent: 10px;
+}
+.project-name .project-name-value {
+  font-style: italic;
+  font-weight: bolder;
+}
+.project-name,
+ul.task-list > li > a,
+ul.subtasks-list > li {
+  padding: 4px 0;
+}
+
+ul.task-list > li > a{
+  text-decoration: underline;
+}
+ul.task-list > li > ul{
+  text-indent: 15px;
+}
+.task-selected,
+.project-name:hover,
+ul.task-list > li > a:hover,
+ul.task-list > li > ul > li:hover{
+  border-top: 1px solid #F39814;
+  border-bottom: 1px solid #F39814;
+  border-right: 5px solid #F39814;
+}
+.project-name > i,
+.add-new-subtask > a > span.fa{
+  float: right;
+  padding: 2px;
+}
+
+/* issue 1271 */
+.lightbox{
+  display: none !important;
+}
+.parent-task-list {
+  display: none;
+}
+.add-a-subtask,
+.parent-task-list {
+  margin-bottom: 5px;
+}
+.two-choices {
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  width: 75px;
+  padding: 5px;
+}
+.selected-choice 
+{
+  background-color: #F39814;
+  color: #fff;
+}
