@@ -73,9 +73,10 @@
       </div>
 
     </section>  
-    <div class="clearfix"></div><div class="content-container container-fluid col-no-pad">
+    <div class="clearfix"></div>
+    <div class="content-container container-fluid col-no-pad">
       <div class="row col-no-right-margin mobile_main">
-        <section id="left-menu" class="left-aside sidebar col-lg-2 col-md-2 col-sm-2 col-no-pad col-no-width">
+        <section id="left-menu" class="left-aside">
           <section class="left-asidebg">
             <nav>
               <!-- CONTENT -->
@@ -153,7 +154,98 @@
               </ul>
             </nav></section>
         </section>
-        <div class="right-aside col-no-right-pad main col-lg-10 col-md-10 col-sm-10">
+        <section id="task-list-menu" class="sidebar col-lg-1 col-md-1 col-sm-1 col-no-pad">
+          <section>
+            <div class="list-header">Tasks list</div>
+            <div class="project">
+              <a href="#" class="project-name">
+                <span class="project-name-value">Project Test</span>
+                <i class="fa fa-pencil-square-o"></i>
+              </a>
+              <ul class="task-list">
+                <li>
+                  <a href="issue-1271-mockup-task.html">Task 1</a>
+                  <ul class="subtasks-list">
+                    <li><a href="issue-1271-mockup-subtask.html">Sub-task 1</a></li>
+                    <li><a href="issue-1271-mockup-subtask.html">Sub-task 2</a></li>
+                    <li class="add-new-subtask">
+                      <a href="issue-1271-mockup-task.html">
+                        <span>new subtask</span>
+                        <span class="fa fa-plus-circle"></span>
+                      </a>
+                    </li>
+
+                  </ul>
+                </li>
+                <li>
+                  <a href="issue-1271-mockup-task.html">Task 2</a>
+                  <ul>
+                    <li class="add-new-subtask">
+                      <a href="issue-1271-mockup-task.html">
+                        <span>new subtask</span>
+                        <span class="fa fa-plus-circle"></span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="issue-1271-mockup-task.html">Task N</a>
+                  <ul class="subtasks-list">
+                    <li class="task-selected"><a href="issue-1271-mockup-subtask.html">Sub-task 1</a></li>
+                    <li><a href="issue-1271-mockup-subtask.html">Sub-task 2</a></li>
+                    <li><a href="issue-1271-mockup-subtask.html">Sub-task 3</a></li>
+                    <li><a href="issue-1271-mockup-subtask.html">Sub-task N</a></li>
+                    <li class="add-new-subtask">
+                      <a href="issue-1271-mockup-task.html">
+                        <span>new subtask</span>
+                        <span class="fa fa-plus-circle"></span>
+                      </a>
+                    </li>
+
+                  </ul>
+                </li>
+
+              </ul>
+            </div>
+            <div class="project">
+              <a href="#" class="project-name">
+                <span class="project-name-value">Project Brian</span>
+                <i class="fa fa-pencil-square-o"></i>
+              </a>
+              <ul class="task-list">
+                <li>
+                  <a href="issue-1271-mockup-task.html">Task W</a>
+                  <ul>
+                    <li class="add-new-subtask">
+                      <a href="issue-1271-mockup-task.html">
+                        <span>new subtask</span>
+                        <span class="fa fa-plus-circle"></span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="issue-1271-mockup-task.html">Task N</a>
+                  <ul class="subtasks-list">
+                    <li><a href="issue-1271-mockup-subtask.html" title="Sub-task aaaaaaaaaaaa">Sub-task aaaaa...</a></li>
+                    <li><a href="issue-1271-mockup-subtask.html">Sub-task b</a></li>
+                    <li><a href="issue-1271-mockup-subtask.html">Sub-task c</a></li>
+                    <li><a href="issue-1271-mockup-subtask.html">Sub-task N</a></li>
+                    <li class="add-new-subtask">
+                      <a href="issue-1271-mockup-task.html">
+                        <span>new subtask</span>
+                        <span class="fa fa-plus-circle"></span>
+                      </a>
+                    </li>
+
+                  </ul>
+                </li>
+
+              </ul>
+            </div>
+          </section>
+        </section>
+        <div class="right-aside col-no-right-pad main col-lg-11 col-md-11 col-sm-11">
           <div class="form_sections show">
             <!-- open tabs -->
 
@@ -223,7 +315,6 @@
                           <li style="display: none;">
                             <input name="project_id" type="text" value="1">
                           </li>
-                          <br>
                           <li>
                             <label>Task Name</label>
                             <input name="task_name" type="text">
