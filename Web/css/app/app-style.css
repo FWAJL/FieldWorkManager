@@ -102,6 +102,26 @@ ui-widget-content:hover {
     font-weight: bold; 
     color: #F39814;
 }
+
+.action-item, 
+.element-header {
+  display: inline-block;
+}
+
+.user-menu {
+  float: right;
+}
+.action-item > span {
+  padding:0 5px;
+  /*line-height: 40px;*/
+}
+div.legacy-menu:hover > div {
+  display: block !important;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #999;
+  z-index: 9999;
+}
 /* JS WIDGETS */
 .task_add_item {
   white-space: normal !important;
