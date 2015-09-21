@@ -78,7 +78,7 @@
 
 	
 	<resource uicomponent="alert" targetcontroller="project" targetaction="list" operation="addUniqueCheck" value="Project name is taken. Choose a new project name." />
-	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addNullCheck" value="To open a new Project, you must provide the Project Name, Facility Name, Facility Address and Client email address." />
+	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addNullCheck" value="To open a new Project, you must provide the Project Name, Facility Name, and Facility Address." />
 	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addUniqueCheck" value="'{0}' is already used for an existing project as a project name. Please choose another name." />
 	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addAddressCheck" value="Error finding the coordinates for facility address. You can edit them on the project map." />
 	<resource uicomponent="alert" targetcontroller="project" targetaction="view" operation="addCoordinatesCheck" value="Invalid coordinates." />
