@@ -8,7 +8,7 @@
     </li>
     <li>
       <label><?php echo $resx["pm_name"]; ?></label>
-      <input name="pm_name" type="text" />
+      <input class='required' name="pm_name" type="text" />
     </li>
     <li>
       <label><?php echo $resx["pm_comp_name"]; ?></label>

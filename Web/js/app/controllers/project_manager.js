@@ -409,14 +409,14 @@ $(document).ready(function() {
   project_manager.fillFormWithRandomData = function() {
     utils.clearForm();
     var number = Math.floor((Math.random() * 1000) + 1);
-    $(".project_form input[name=\"project_name\"]").val("Project " + number);
-    $(".project_form .add-new-item input[name=\"project_number\"]").val("n-" + number);
-    $(".project_form .add-new-item input[name=\"project_desc\"]").val("Description " + number);
-    $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
-    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val("USA");
-    $(".client_form .add-new-item input[name=\"client_company_name\"]").val("Client " + number);
-    $(".client_form .add-new-item textarea[name=\"client_address\"]").val(number + " Somewhere");
-    $(".client_form .add-new-item input[name=\"client_contact_phone\"]").val(Math.floor(Math.random() * 1000000000));
+//    $(".project_form input[name=\"project_name\"]").val("Project " + number);
+//    $(".project_form .add-new-item input[name=\"project_number\"]").val("n-" + number);
+//    $(".project_form .add-new-item input[name=\"project_desc\"]").val("Description " + number);
+//    $(".facility_form .add-new-item input[name=\"facility_name\"]").val("Facility " + number);
+//    $(".facility_form .add-new-item textarea[name=\"facility_address\"]").val("USA");
+//    $(".client_form .add-new-item input[name=\"client_company_name\"]").val("Client " + number);
+//    $(".client_form .add-new-item textarea[name=\"client_address\"]").val(number + " Somewhere");
+//    $(".client_form .add-new-item input[name=\"client_contact_phone\"]").val(Math.floor(Math.random() * 1000000000));
   };
 
   project_manager.updateProjects = function(action, arrayId) {
