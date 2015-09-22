@@ -39,8 +39,8 @@ h3 { margin-top: 10px; }
 
 #pm_info ul { display: none; }
 #pm_info, #ft_info {
-    float: right; 
-    margin-right: 40px
+  float: right; 
+  margin-right: 40px
 }
 #top_header #branding > * { float: left; }
 .top-right-option a { padding: 12px; }
@@ -83,13 +83,13 @@ h3 { margin-top: 10px; }
 }
 
 .container-fluid {
-    padding-right: 0px;
-    padding-top: 10px;
+  padding-right: 0px;
+  padding-top: 10px;
 }
 
 .col-md-1, .col-lg-1 {
-    padding-right: 5px;
-    padding-left: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
 }
 
 .main { border-left: solid 1px #999; }
@@ -97,7 +97,7 @@ h3 { margin-top: 10px; }
 
 /* COMMON FORM ELEMENTS */
 .h4 {
-    margin-right: 3px;
+  margin-right: 3px;
 }
 
 .form_sections {
@@ -118,7 +118,7 @@ h3 { margin-top: 10px; }
 }
 
 .upload_list {
- width: 100%;
+  width: 100%;
 }
 
 .data-form {
@@ -127,30 +127,30 @@ h3 { margin-top: 10px; }
 }
 
 li label {
-    width: 30%;
-    margin-bottom: 3px;
+  width: 30%;
+  margin-bottom: 3px;
 }
 
 li input {
-    width: 65%!important;
-    margin-bottom: 3px;
+  width: 65%!important;
+  margin-bottom: 3px;
 }
 
 .modal-body li { margin-bottom: 5px; }
 
 .instructions {
-    width:100%;
+  width:100%;
 }
 
 
 .address {
-    height: 6em;
-    width: 65%!important;  
+  height: 6em;
+  width: 65%!important;  
 }
 
 .cbox {
-    width: 15px!important;
-    margin-bottom: 3px;
+  width: 15px!important;
+  margin-bottom: 3px;
 }
 
 .welcome > * { padding-left: 10px; } 
@@ -253,15 +253,15 @@ li input {
 }
 
 .map-info-icon-image {
-    width:35px;
-    height:35px;
-    margin: 0 auto;
+  width:35px;
+  height:35px;
+  margin: 0 auto;
 }
 
 .map-info-icon-image1 {
-    width:20px;
-    height:20px;
-    margin: 0 auto;
+  width:20px;
+  height:20px;
+  margin: 0 auto;
 }
 
 #map-info-shape, #map-info-add, #map-info-pan, #map-info-ruler {
@@ -309,8 +309,8 @@ li input {
 
 /* TASK */
 .task_info_input {
- margin-left: 10px;
- margin-top: 25px;
+  margin-left: 10px;
+  margin-top: 25px;
 }
 
 .task_info_input li { padding-bottom: 10px; }
@@ -326,8 +326,8 @@ li input {
 #freq_list { margin-left: 20px; }
 
 .task_box_label {
-    padding-left: 20px;
-    font-weight: bold;
+  padding-left: 20px;
+  font-weight: bold;
 }
 
 .tab_cbox { width: 400px; }
@@ -378,8 +378,8 @@ ui-widget-content:hover {
 }
 
 .confirmbuttons {
-   margin-bottom:0;
-   width:auto;
+  margin-bottom:0;
+  width:auto;
 }
 
 .categorized li.ui-widget-content {
@@ -387,8 +387,8 @@ ui-widget-content:hover {
 }
 
 .tooltip-inner {
-    white-space:pre-wrap;
-   width:auto;
+  white-space:pre-wrap;
+  width:auto;
 
 }
 /* JS WIDGETS */
@@ -428,44 +428,44 @@ ui-widget-content:hover {
 
 /* Active task related CSS */
 .p-desc {
-	font-size: 20px;
-    margin-top: 45px;
+  font-size: 20px;
+  margin-top: 45px;
 }
 
 .notes-container {
-	font-size: 16px;
-    margin-top: 20px;
-	height:200px;
-	overflow-y : scroll;
+  font-size: 16px;
+  margin-top: 20px;
+  height:200px;
+  overflow-y : scroll;
 }
 
 #messages div {
-	margin-bottom:5px;
-	margin-top:5px;
+  margin-bottom:5px;
+  margin-top:5px;
 }
 
 .msg-row {
-	width:100%;
-	height:auto;
-	float:left;
+  width:100%;
+  height:auto;
+  float:left;
 }
 
 .note-user1 {
-	float:left;
-	font-weight:bold;
-	width:28%;
-	min-width:150px;
+  float:left;
+  font-weight:bold;
+  width:28%;
+  min-width:150px;
 }
 .note-user2 {
-	font-weight:bold;
-	color:#A1A1A1;
-	float:left;
-	width:28%;
-	min-width:150px;
+  font-weight:bold;
+  color:#A1A1A1;
+  float:left;
+  width:28%;
+  min-width:150px;
 }
 
 .user-msg {
-	float: right;
+  float: right;
   margin-right: 10px;
   min-width: 320px;
   width: 70%;
@@ -570,3 +570,14 @@ ui-widget-content:hover {
 }
 
 .instructions { height: 495px;}
+
+div.legacy-menu > div,
+div.legacy-menu:hover
+{
+  background-color: #fff;
+}
+div.legacy-menu:hover
+{
+  border: 1px solid #999;
+  border-bottom: 0;
+}

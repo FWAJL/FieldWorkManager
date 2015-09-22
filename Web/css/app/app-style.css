@@ -111,16 +111,26 @@ ui-widget-content:hover {
 .user-menu {
   float: right;
 }
+.action-item > a,
 .action-item > span {
   padding:0 5px;
-  /*line-height: 40px;*/
+  width: 40px;
+  line-height: 40px;
 }
-div.legacy-menu:hover > div {
-  display: block !important;
+
+div.legacy-menu:hover{
+  width: 250px;
+}
+
+div.legacy-menu > div
+{
   position: absolute;
-  background-color: #fff;
-  border: 1px solid #999;
   z-index: 9999;
+  width: 250px;
+  left: 225px;
+}
+.tmp-task-menu {
+  padding: 30px;
 }
 /* JS WIDGETS */
 .task_add_item {
