@@ -126,11 +126,14 @@ div.legacy-menu > div
 {
   position: absolute;
   z-index: 9999;
-  width: 250px;
-  left: 225px;
+  width: 260px;
+  left: 215px;
 }
 .tmp-task-menu {
   padding: 30px;
+}
+.sidebar {
+  padding-left: 10px !important;
 }
 /* JS WIDGETS */
 .task_add_item {

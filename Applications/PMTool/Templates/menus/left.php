@@ -9,7 +9,7 @@
         <nav>
           <!-- CONTENT -->
           <?php
-          if ($user->getAttribute(\Library\Enums\SessionKeys::UserRole) != 2 ) {
+          if ($user->getAttribute(\Library\Enums\SessionKeys::UserRole) != 2) {
             echo $leftMenu;
           } else {
             echo '<div class="tmp-task-menu">The list of task will go here. Hover the 3-bars icon to view the legacy menu.</div>';
