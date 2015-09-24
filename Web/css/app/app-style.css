@@ -102,6 +102,39 @@ ui-widget-content:hover {
     font-weight: bold; 
     color: #F39814;
 }
+
+.action-item, 
+.element-header {
+  display: inline-block;
+}
+
+.user-menu {
+  float: right;
+}
+.action-item > a,
+.action-item > span {
+  padding:0 5px;
+  width: 40px;
+  line-height: 40px;
+}
+
+div.legacy-menu:hover{
+  width: 250px;
+}
+
+div.legacy-menu > div
+{
+  position: absolute;
+  z-index: 9999;
+  width: 260px;
+  left: 215px;
+}
+.tmp-task-menu {
+  padding: 30px;
+}
+.sidebar {
+  padding-left: 10px !important;
+}
 /* JS WIDGETS */
 .task_add_item {
   white-space: normal !important;

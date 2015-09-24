@@ -41,5 +41,3 @@ Web/js/app/controllers/pm_manager.js"></script>-->
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
   </head>
-
-  <body id="home">
