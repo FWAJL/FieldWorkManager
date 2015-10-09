@@ -798,12 +798,14 @@
         <js_file use="head" value="Web/js/app/controllers/mobile_manager.js" />
         <js_file use="head" value="Web/js/addons/fancyapps/source/jquery.fancybox.js" />
         <js_file use="head" value="Web/js/addons/geo.js" />
+        <js_file use="head" value="Web/js/addons/fineuploader/fine-uploader.js" />
       </js_files>
       <css_files>
         <css_file value="Web/css/app/app-mobile-theme.css" />
         <css_file value="Web/css/app/app-mobile-style.css" />
         <css_file value="Web/css/app/app-reponsive.css" />
         <css_file value="Web/js/addons/fancyapps/source/jquery.fancybox.css" />
+        <css_file value="Web/js/addons/fineuploader/fine-uploader-gallery.css" />
         <css_file use="project" />
       </css_files>
       <php_modules>
@@ -812,7 +814,8 @@
         <php_module key="map_module" file_name="map.php" shared="true"/>
         <php_module key="location_list" file_name="location_list.php"/>
         <php_module key="popup_maplegends_module" file_name="popup_maplegends.php" shared="true" />
-        <php_module key="upload_file" file_name="upload_file.php" shared="true" />
+        <php_module key="upload_file" file_name="upload_file.php" />
+        <php_module key="fineuploader_template" file_name="fineuploader_template.php" />
         <php_module key="popup_task_location_info" file_name="popup_task_location_info.php"/>
         <php_module key="popup_msg_module" file_name="popup_msg.php" shared="true" />
         <php_module key="active_list_module" file_name="active_list.php" />
@@ -1330,6 +1333,7 @@
   <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
   <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />
   <route url="file/upload" module="File" action="upload" resxfile="file" type="lib ws" />
+  <route url="file/uploadFine" module="File" action="uploadFine" resxfile="file" type="lib ws" />
   <route url="file/load" module="File" action="load" resxfile="file" type="lib ws" />
   <route url="file/remove" module="File" action="remove" resxfile="file" type="lib ws" />
   <route url="file/loadOne" module="File" action="loadOne" resxfile="file" type="lib ws" />

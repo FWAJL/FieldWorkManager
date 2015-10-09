@@ -8,6 +8,8 @@
   <resource key="message_error_loadOne">Generic problem during the file load.</resource>
   <resource key="message_error_upload">Generic problem during the upload.</resource>
   <resource key="message_success_upload">Upload has been completed successfully.</resource>
+  <resource key="message_error_uploadFine">Generic problem during the upload.</resource>
+  <resource key="message_success_uploadFine">Upload has been completed successfully.</resource>
   <resource key="message_error_remove">Generic problem during the file removal.</resource>
   <resource key="message_success_remove">File removal has been completed successfully.</resource>
   <resource key="message_error_removeMany">File removal has been completed successfully.</resource>

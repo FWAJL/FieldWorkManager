@@ -74,8 +74,8 @@ $(document).ready(function(){
     var showUploadAlert = false;
     showInfoWindow = utils.showInfoWindow;
     function disableShowInfoWindow(id, callback, callbackOnCancel) {utils.showAlert($("#confirmmsg-photoUpload").val(), function(){});};
-    Dropzone.autoDiscover = false;
-    var dropzone = new Dropzone("#document-upload", {maxFiles: 1, timeout: 60000});
+    //Dropzone.autoDiscover = false;
+    //var dropzone = new Dropzone("#document-upload", {maxFiles: 1, timeout: 60000});
     var optionsPosition = {
       desiredAccuracy: 20,
       maxWait: 15000
@@ -130,7 +130,7 @@ $(document).ready(function(){
       $("#location-info-cancel-btn").off('click');
       $("#location-info-cancel-btn").on('click',function(e){
         showInfoWindow = utils.showInfoWindow;
-        dropzone.removeAllFiles(true);
+        //dropzone.removeAllFiles(true);
       });
       $("#task-location-id-selected").val(id);
       selectedMarker = id;
@@ -153,7 +153,7 @@ $(document).ready(function(){
       } else {
         $("#task-location-info-modal-collect-data").show();
       }
-      dropzone.removeAllFiles();
+      /*dropzone.removeAllFiles();
       dropzone.off("sending");
       dropzone.on("sending",function(event, xhr, formData){
         showInfoWindow = disableShowInfoWindow;
@@ -176,7 +176,53 @@ $(document).ready(function(){
             dropzone.removeFile(file);
           }
         }
+      });*/
+
+      /*
+      * New, Fineuploader integration
+      */
+      var galleryUploader = new qq.FineUploader({
+        element: document.getElementById('my-uploader'),
+        template: 'qq-template-gallery',
+        request: {
+          endpoint: config.rootFolder + 'file/uploadFine',
+          inputName: 'file'
+        },
+        form: {
+          element: document.getElementById('document-upload'),
+          autoUpload: true
+        },
+        thumbnails: {
+            placeholders: {
+                waitingPath: config.rootFolder + 'Web/js/addons/fineuploader/placeholders/waiting-generic.png',
+                notAvailablePath: config.rootFolder + 'Web/js/addons/fineuploader/placeholders/not_available-generic.png'
+            }
+        },
+        validation: {
+            allowedExtensions: ['jpeg', 'jpg', 'png']
+        },
+        scaling: {
+          sendOriginal: false,
+          includeExif: false,
+          sizes: [
+            {name: "small", maxSize: 200}
+          ]
+        },
+        callbacks: {
+          onComplete: function(id, name, responseJSON) {
+            //This is the success block that our image is uploaded
+            $("#task-location-info-modal .modal-footer button").removeAttr('disabled');
+            showInfoWindow = utils.showInfoWindow;
+            $('.prompt-modal').modal('hide');
+            if(showUploadAlert) {
+              utils.showAlert($('#confirmmsg-photoUploadFinished').val());
+            }   
+          }
+        }
       });
+
+      //console.log(config.rootFolder);
+
       datacx.post('location/getItem',{location_id: id}).then(function(reply){
         //toastr.success(reply.message);
         var category = $("#document-upload input[name=\"itemCategory\"]").val();
@@ -223,7 +269,7 @@ $(document).ready(function(){
       $("#location-info-cancel-btn").off('click');
       $("#location-info-cancel-btn").on('click',function(e){
         showInfoWindow = utils.showInfoWindow;
-        dropzone.removeAllFiles(true);
+        //dropzone.removeAllFiles(true);
       });
       var imagesOfNewLocation = [];
       $("#document-upload input[name=\"itemId\"]").val('');
@@ -287,7 +333,7 @@ $(document).ready(function(){
           resetTaskLocationDialogForEdit();
         }
       );
-      dropzone.removeAllFiles();
+      /*dropzone.removeAllFiles();
       dropzone.off("sending");
       dropzone.on("sending",function(event, xhr, formData){
         showInfoWindow = disableShowInfoWindow;
@@ -309,7 +355,7 @@ $(document).ready(function(){
             dropzone.removeFile(file);
           }
         }
-      });
+      });*/
     };
     var hideModifyTaskLocationFields = function () {
       //hide/modify irrelevant fields

@@ -1,6 +1,9 @@
 <?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 //\Applications\PMTool\Helpers\CommonHelper::pr($form_modules);
 ?>
+
+<?php require $form_modules[\Applications\PMTool\Resources\Enums\PhpModuleKeys::fineuploader_template]; ?>
+
 <div class="mobile_map right-aside col-no-right-pad main col-lg-12 col-md-12 col-sm-12 col-no-pad">
 
   <div class="content-container container-fluid col-no-pad">

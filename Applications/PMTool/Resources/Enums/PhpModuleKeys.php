@@ -69,6 +69,7 @@ class PhpModuleKeys {
 
   const upload_file = "upload_file";
   const load_file = "load_file";
+  const fineuploader_template = "fineuploader_template";
 
   const notes = "notes";
   const checklist = "checklist";
